@@ -1,0 +1,761 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+   <meta name="Author" content="Phillip Farber">
+   <meta name="GENERATOR" content="Mozilla/4.72 [en] (WinNT; I) [Netscape]">
+   <title>cvs-det</title>
+</head>
+<body>
+
+<h2>
+CVS</h2>
+
+<ul>
+<li>
+&nbsp;$CVSROOT - Repository</li>
+
+<ul>
+<li>
+&nbsp; replicates your directory sturcture&nbsp; e.g. cgi/t/text/ lib/</li>
+</ul>
+
+<li>
+&nbsp;Your directory structure</li>
+
+<li>
+&nbsp;Work directories</li>
+
+<li>
+&nbsp;PCL-CVS mode</li>
+</ul>
+
+<h3>
+A CVS dialog</h3>
+<tt>&nbsp;&nbsp;<b>&nbsp;&nbsp;&nbsp; % cd cgi/t/text</b></tt>
+<br><b><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; % cvs checkout -d foo cgi/t/text</tt></b>
+<br><b><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; % cvs checkout -d bar cgi/t/text</tt></b><b><tt></tt></b>
+<p><b><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; % touch foo/afile.txt</tt></b><b><tt></tt></b>
+<p><b><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; % cvs add afile.txt</tt></b>
+<br><b><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; % cvs commit afile.txt</tt></b>
+<br><b><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; % cvs update afile.txt</tt></b>
+<br><b><tt>&nbsp;</tt></b>
+<br><b><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; % cvs remove afile.txt</tt></b>
+<br><b><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; % cvs status afile.txt</tt></b>
+<br><b><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; % cvs diff afile.txt</tt></b>
+<h3>
+A CVS directory structure</h3>
+<pre>
+./prep/g/gartner/CVS
+./prep/g/gartner/static/CVS
+./prep/g/gartner/static/datapro/CVS
+./prep/g/gartner/static/ras/CVS
+./prep/g/CVS
+./prep/CVS
+./prep/a/amannbib/CVS
+./prep/a/CVS
+./prep/d/dlf/CVS
+./prep/d/dlfcoll/CVS
+./prep/d/CVS
+./prep/e/ethnic/CVS
+./prep/e/CVS
+
+./cgi/i/idresolver/CVS
+./cgi/i/CVS
+./cgi/i/image/p/pfarber/CVS
+./cgi/i/image/test/p/pfarber/CVS
+./cgi/i/image/test/p/pagliere/CVS
+./cgi/i/image/test/j/jweise/CVS
+./cgi/i/image/test/m/mstoef/CVS
+./cgi/i/image/test/s/sooty/CVS
+./cgi/i/image/CVS
+
+./cgi/CVS
+./cgi/t/CVS
+./cgi/t/text/CVS
+./cgi/t/text/test/p/pfarber/CVS
+./cgi/t/text/test/p/pagliere/CVS
+./cgi/t/text/test/j/jweise/CVS
+./cgi/t/text/test/m/mstoef/CVS
+./cgi/t/text/test/s/sooty/CVS
+
+./lib/CVS
+./lib/test/p/pagliere/CVS
+./lib/test/p/pagliere/CollsInfo/CVS
+./lib/test/p/pfarber/CVS
+./lib/test/p/pfarber/CollsInfo/CVS
+./lib/test/j/jweise/CVS
+./lib/test/j/jweise/CollsInfo/CVS
+./lib/test/m/mstoef/CVS
+./lib/test/m/mstoef/CollsInfo/CVS
+./lib/test/s/sooty/CVS
+./lib/test/s/sooty/CollsInfo/CVS
+./lib/CollsInfo/CVS
+
+./bin/CVS
+./bin/i/CVS
+./bin/i/image/imageProcessingScripts/CVS
+./bin/i/image/imageProcessingScripts/dir1/CVS
+./bin/i/image/imageProcessingScripts/save/CVS
+./bin/i/image/imageProcessingScripts/sid_sdk/CVS
+./bin/i/image/CVS
+./bin/i/image/test/p/pfarber/CVS
+./bin/i/image/test/p/pagliere/CVS
+./bin/i/image/test/j/jweise/CVS
+./bin/i/image/test/j/jweise/imageProcessingScripts/CVS
+./bin/i/image/test/j/jweise/imageProcessingScripts/dir1/CVS
+./bin/i/image/test/j/jweise/imageProcessingScripts/save/CVS
+./bin/i/image/test/j/jweise/imageProcessingScripts/sid_sdk/CVS
+./bin/i/image/test/m/mstoef/CVS
+./bin/i/image/test/s/sooty/CVS
+./bin/i/image/p/pfarber/CVS
+./bin/t/CVS
+./bin/t/text/CVS
+./bin/t/text/test/p/pfarber/CVS
+./bin/t/text/test/p/pagliere/CVS
+./bin/t/text/test/j/jweise/CVS
+./bin/t/text/test/m/mstoef/CVS
+./bin/t/text/test/s/sooty/CVS
+./bin/WW/test/p/pfarber/CVS
+./bin/WW/CVS
+
+./obj/t/CVS
+./obj/t/text/CVS
+./obj/t/text/lib/CVS
+./obj/t/text/lib/maps/CVS
+./obj/t/text/lib/db/CVS
+./obj/t/text/lib/db/test/p/pfarber/CVS
+./obj/t/text/lib/db/test/p/pagliere/CVS
+./obj/t/text/lib/db/test/j/jweise/CVS
+./obj/t/text/lib/db/test/s/sooty/CVS
+./obj/t/text/lib/db/test/m/mstoef/CVS
+./obj/i/image/CVS
+./obj/i/image/lib/maps/CVS
+./obj/i/image/lib/db/CVS
+./obj/i/image/lib/db/test/p/pfarber/CVS
+./obj/i/image/lib/db/test/p/pagliere/CVS
+./obj/i/image/lib/db/test/j/jweise/CVS
+./obj/i/image/lib/db/test/s/sooty/CVS
+./obj/i/image/lib/db/test/m/mstoef/CVS
+./obj/i/CVS
+./obj/lib/sgml/CVS
+./obj/lib/CVS
+./obj/CVS
+
+</pre>
+<h3>
+A CVS file list structure</h3>
+<pre>
+.:
+total 24
+drwxrwxr-x  11 bkirschn dlps         512 Sep 28 14:12 ./
+drwxr-xr-x   8 root     root         512 Oct 13 08:44 ../
+drwxr-xr-x   2 bkirschn dlps         512 Feb 29  2000 CVSROOT/
+drwxrwxr-x  10 pagliere dlps         512 Oct 13 11:34 bin/
+drwxrwxr-x  23 bkirschn dlps         512 Oct 13 11:34 cgi/
+drwxrwxr-x   4 bkirschn dlps         512 Jan 31  2000 docs/
+drwxrwxr-x   4 bkirschn dlps        1536 Oct 13 11:34 lib/
+drwxrwxr-x   5 pfarber  dlps         512 Sep 22 14:40 obj/
+drwxrwxr-x   7 bkirschn dlps         512 Sep 20 22:34 prep/
+drwxrwxr-x   4 pagliere dlps         512 Feb 16  2000 txt/
+drwxrwxr-x  21 bkirschn dlps         512 Oct 13 11:34 web/
+
+./bin:
+total 26
+drwxrwxr-x  10 pagliere dlps         512 Oct 13 11:34 ./
+drwxrwxr-x  11 bkirschn dlps         512 Sep 28 14:12 ../
+drwxrwxr-x   2 pfarber  dlps         512 Oct 13 11:34 WW/
+-r-xr-xr-x   1 pfarber  dlps         693 Aug 30 13:28 extract.dd.mfsfiles.pl*
+drwxrwxr-x   3 jweise   dlps         512 Oct 13 11:34 i/
+-r-xr-xr-x   1 pfarber  dlps         625 Aug 30 13:28 inc.extra.dd.pl*
+-r-xr-xr-x   1 pfarber  dlps         867 Aug 30 13:28 output.dd.frag.pl*
+drwxrwxr-x   4 pfarber  dlps         512 Oct 13 11:34 t/
+
+./bin/WW:
+total 94
+drwxrwxr-x   2 pfarber  dlps         512 Oct 13 11:34 ./
+drwxrwxr-x  10 pagliere dlps         512 Oct 13 11:34 ../
+-r--r--r--   1 pfarber  dlps        3486 Aug  4 14:48 Makefile
+-r--r--r--   1 pagliere dlps        2315 Jul 12 12:41 README.wordwheel
+-r-xr-xr-x   1 pfarber  dlps       24847 Oct  9 16:45 makeWordWheelFiles.pl*
+-r--r--r--   1 pfarber  dlps        3734 Oct  9 16:45 makeWordWheelFiles.sample.cfg
+-r--r--r--   1 pagliere dlps        7741 Jul 12 12:41 sample.ww.blank.dd
+-r--r--r--   1 pagliere dlps         569 Jul 12 12:41 sample.ww.inp
+
+
+./bin/i:
+total 6
+drwxrwxr-x   3 jweise   dlps         512 Oct 13 11:34 ./
+drwxrwxr-x  10 pagliere dlps         512 Oct 13 11:34 ../
+drwxrwxr-x   3 jweise   dlps         512 Oct 13 11:34 image/
+
+./bin/i/image:
+total 174
+drwxrwxr-x   3 jweise   dlps         512 Oct 13 11:34 ./
+drwxrwxr-x   3 jweise   dlps         512 Oct 13 11:34 ../
+-r-xr-xr-x   1 pagliere dlps         397 Jul 12 12:41 clean.newlines.inplace.pl*
+-r-xr-xr-x   1 pagliere dlps        8457 Jul 12 12:41 collstats.pl*
+-r-xr-xr-x   1 pagliere dlps        3218 Jul 12 12:41 idb*
+-r-xr-xr-x   1 jweise   dlps        8736 Oct 12 16:36 idbt*
+drwxrwxr-x   5 jweise   dlps        1536 Oct 13 11:34 imageProcessingScripts/
+-r-xr-xr-x   1 pagliere dlps        1391 Jul 12 12:41 imagedbCharConv.pl*
+-r-xr-xr-x   1 jweise   dlps       42971 Oct 10 08:27 imagedbtransform*
+-r-xr-xr-x   1 jweise   dlps        9072 Aug 23 21:17 imageprep*
+-r-xr-xr-x   1 jweise   dlps        6250 Sep 12 11:16 makefieldbrowse.pl*
+
+./bin/i/image/imageProcessingScripts:
+total 6504
+drwxrwxr-x   5 jweise   dlps        1536 Oct 13 11:34 ./
+drwxrwxr-x   3 jweise   dlps         512 Oct 13 11:34 ../
+-r-xr-xr-x   1 jweise   dlps        3622 Sep 28 15:58 accessstats.pl*
+-r-xr-xr-x   1 jweise   dlps         244 Sep 28 15:58 basename*
+-r-xr-xr-x   1 jweise   dlps         259 Sep 28 15:58 basename.pl*
+-r-xr-xr-x   1 jweise   dlps        1795 Sep 28 15:58 blakesidsamp.pl*
+-r-xr-xr-x   1 jweise   dlps         358 Sep 28 15:58 bmptotif*
+-r--r--r--   1 jweise   dlps        1991 Sep 28 15:58 browselisttest
+-r-xr-x--x   1 jweise   dlps        1644 Sep 28 15:58 browsesub.pl*
+-r-xr-x--x   1 jweise   dlps        4499 Sep 28 15:58 browsesub1.pl*
+-r-xr-xr-x   1 jweise   dlps         868 Sep 28 15:58 bytecount.pl*
+-r--r--r--   1 jweise   dlps        9039 Sep 28 15:58 checkinlist
+-r--r--r--   1 jweise   dlps       33739 Sep 28 15:58 comparelist
+-r--r--r--   1 jweise   dlps       15214 Sep 28 15:58 data
+-r--r--r--   1 jweise   dlps        5840 Sep 28 15:58 derivsunique
+drwxrwxr-x   2 jweise   dlps         512 Oct 13 11:34 dir1/
+-r-xr-xr-x   1 jweise   dlps         322 Sep 28 15:58 dirtrav*
+-r-xr-xr-x   1 jweise   dlps         253 Sep 28 15:58 dirtravbase*
+-r-xr-xr-x   1 jweise   dlps         327 Sep 28 15:58 dirtravbhl*
+-r-xr-xr-x   1 jweise   dlps         261 Sep 28 15:58 dirtravtif*
+-r-xr-xr-x   1 jweise   dlps        2050 Sep 28 15:58 divie.pl*
+-r-xr-xr-x   1 jweise   dlps         364 Sep 28 15:58 edwin.pl*
+-r-xr-xr-x   1 jweise   dlps         251 Sep 28 15:58 edwin.pm*
+-r-xr-xr-x   1 jweise   dlps        1316 Sep 28 15:58 exists.pl*
+-r--r--r--   1 jweise   dlps         486 Sep 28 15:58 fin
+-r-xr-xr-x   1 jweise   dlps        1479 Sep 28 15:58 ftpmesl*
+-r-xr-x--x   1 jweise   dlps        4619 Sep 28 15:58 funkyfiles_19980731.pl*
+-r-xr-xr-x   1 jweise   dlps         509 Sep 28 15:58 gammakma*
+-r-xr-xr-x   1 jweise   dlps        1488 Sep 28 15:58 ha101.pl*
+-r--r--r--   1 jweise   dlps     3057937 Sep 28 15:58 image-count-out.txt
+-r-xr-xr-x   1 jweise   dlps        6069 Sep 28 15:58 imagecount.pl*
+-r--r--r--   1 jweise   dlps        1895 Sep 28 15:58 in_dirpaths
+-r--r--r--   1 jweise   dlps       11948 Sep 28 15:58 in_list
+-r-xr-xr-x   1 jweise   dlps         358 Sep 28 15:58 jpgtotif*
+-r-xr-xr-x   1 jweise   dlps         282 Sep 28 15:58 justname.pl*
+-r-xr-xr-x   1 jweise   dlps         657 Sep 28 15:58 kmcsidsamp.pl*
+-r-xr-xr-x   1 jweise   dlps         357 Sep 28 15:58 list-to-menu.pl*
+-r-xr-xr-x   1 jweise   dlps        6762 Sep 28 15:58 make-index-from-file-list.pl*
+-r-xr-xr-x   1 jweise   dlps       11717 Sep 28 15:58 make-sid-from-file-list.pl*
+-r-xr-xr-x   1 jweise   dlps        7753 Sep 28 15:58 make-thumbs-from-file-list.pl*
+-r--r--r--   1 jweise   dlps       40390 Sep 28 15:58 mislist
+-r--r--r--   1 jweise   dlps        2058 Sep 28 15:58 mkpapderiv_rpt_98-9-15
+-r-xr-xr-x   1 jweise   dlps        1598 Sep 28 15:58 mkpapderivs*
+-r-xr-xr-x   1 jweise   dlps        8137 Sep 28 15:58 mrsid_info*
+-r-xr-xr-x   1 jweise   dlps         700 Sep 28 15:58 musart_swap.pl*
+-r-xr-xr-x   1 jweise   dlps         374 Sep 28 15:58 pcdtotif*
+-r-xr-xr-x   1 jweise   dlps         456 Sep 28 15:58 por_name_swap.pl*
+-r-xr-xr-x   1 jweise   dlps        5161 Sep 28 15:58 rename-from-file-list.pl*
+-r-xr-xr-x   1 jweise   dlps         678 Sep 28 15:58 rpwsidsamp.pl*
+drwxrwxr-x   2 jweise   dlps         512 Oct 13 11:34 save/
+drwxrwxr-x   2 jweise   dlps         512 Oct 13 11:34 sid_sdk/
+-r-xr-xr-x   1 jweise   dlps        1763 Sep 28 15:58 sidcount.pl*
+-r-xr-xr-x   1 jweise   dlps        2657 Sep 28 15:58 sidsamp.pl*
+-r-xr-xr-x   1 jweise   dlps         398 Sep 28 15:58 swap.pl*
+-r-xr-xr-x   1 jweise   dlps         400 Sep 28 15:58 swap_ummu.pl*
+-r--r--r--   1 jweise   dlps         174 Sep 28 15:58 tcheck
+-r-xr-xr-x   1 jweise   dlps         263 Sep 28 15:58 test.pl*
+-r-xr-xr-x   1 jweise   dlps         376 Sep 28 15:58 tiftosharptif*
+-r--r--r--   1 jweise   dlps       16558 Sep 28 15:58 tmp.txt
+-r-xr-xr-x   1 jweise   dlps         239 Sep 28 15:58 varsubtest.pl*
+
+./bin/i/image/imageProcessingScripts/dir1:
+total 6
+drwxrwxr-x   2 jweise   dlps         512 Oct 13 11:34 ./
+drwxrwxr-x   5 jweise   dlps        1536 Oct 13 11:34 ../
+
+./bin/i/image/imageProcessingScripts/save:
+total 6
+drwxrwxr-x   2 jweise   dlps         512 Oct 13 11:34 ./
+drwxrwxr-x   5 jweise   dlps        1536 Oct 13 11:34 ../
+
+./bin/i/image/imageProcessingScripts/sid_sdk:
+total 6
+drwxrwxr-x   2 jweise   dlps         512 Oct 13 11:34 ./
+drwxrwxr-x   5 jweise   dlps        1536 Oct 13 11:34 ../
+
+./bin/t:
+total 8
+drwxrwxr-x   4 pfarber  dlps         512 Oct 13 11:34 ./
+drwxrwxr-x  10 pagliere dlps         512 Oct 13 11:34 ../
+drwxrwxr-x   2 pagliere dlps         512 Oct 13 11:34 text/
+
+./bin/t/text:
+total 66
+drwxrwxr-x   2 pagliere dlps         512 Oct 13 11:34 ./
+drwxrwxr-x   4 pfarber  dlps         512 Oct 13 11:34 ../
+-r-xr-xr-x   1 pagliere dlps         726 Aug  2 10:43 editorial.pl*
+-r-xr-xr-x   1 pfarber  dlps       18499 Oct  4 10:33 grandsortbuild.pl*
+-r-xr-xr-x   1 pfarber  dlps        4653 Aug  3 10:22 makepageviewdata.pl*
+-r-xr-xr-x   1 pfarber  dlps        3632 Aug 21 17:18 nodefy*
+-r-xr-xr-x   1 pagliere dlps         934 Aug  2 10:43 notis.mover*
+-r-xr-xr-x   1 pagliere dlps         763 Aug  2 10:43 textclass.pl*
+
+./cgi:
+drwxrwxr-x   4 bkirschn dlps         512 Oct 13 11:34 i/
+drwxrwxr-x   7 bkirschn dlps         512 Oct 13 11:34 t/
+
+./cgi/i:
+total 8
+drwxrwxr-x   4 bkirschn dlps         512 Oct 13 11:34 ./
+drwxrwxr-x  23 bkirschn dlps         512 Oct 13 11:34 ../
+drwxrwxr-x   2 bkirschn dlps         512 Oct 13 11:34 idresolver/
+drwxrwxr-x   2 jweise   dlps        1024 Oct 13 11:34 image/
+
+./cgi/i/idresolver:
+total 12
+drwxrwxr-x   2 bkirschn dlps         512 Oct 13 11:34 ./
+drwxrwxr-x   4 bkirschn dlps         512 Oct 13 11:34 ../
+-r-xr-xr-x   1 bkirschn dlps        3854 Aug 17 09:52 idresolver*
+
+./cgi/i/image:
+total 640
+drwxrwxr-x   2 jweise   dlps        1024 Oct 13 11:34 ./
+drwxrwxr-x   4 bkirschn dlps         512 Oct 13 11:34 ../
+-r--r--r--   1 jweise   dlps        3651 Sep 19 22:17 .isaccess
+-r-xr-xr-x   1 jweise   dlps       92267 Sep 28 16:58 Filter.pm*
+-r-xr-xr-x   1 jweise   dlps       11913 Sep 19 22:17 IsAuthenticate2.pm*
+-r-xr-xr-x   1 jweise   dlps       22576 Oct  5 16:37 Searchbuild.pm*
+-r-xr-xr-x   1 jweise   dlps       11639 Sep 19 22:17 Sid2.pm*
+-r-xr-xr-x   1 jweise   dlps        5219 Sep 27 13:31 Sidget2.pm*
+-r--r--r--   1 jweise   dlps        2718 Sep 19 22:17 authColls.pm
+-r-xr-xr-x   1 jweise   dlps        8168 Sep 27 16:54 collstats-idx*
+-r-xr-xr-x   1 jweise   dlps       10162 Sep 19 22:24 collstats.pl*
+-r-xr-xr-x   1 jweise   dlps        5552 Sep 28 09:41 configcgis.pm*
+-r-xr-xr-x   1 jweise   dlps        7002 Sep 21 15:20 crosssearch-idx*
+-r-xr-xr-x   1 jweise   dlps        7755 Sep 19 22:17 crosssearch.cgi*
+-r-xr-xr-x   1 jweise   dlps        4849 Sep 19 22:17 get_thumbnail.cgi*
+-r-xr-xr-x   1 jweise   dlps       27166 Sep 27 09:33 getimage-idx*
+-r-xr-xr-x   1 jweise   dlps       20426 Sep 19 22:17 getimage.cgi*
+-r-xr-xr-x   1 jweise   dlps        4482 Sep 21 16:37 getthumbnail-idx*
+-r-xr-xr-x   1 jweise   dlps       45869 Oct  5 16:38 image-idx*
+-r-xr-xr-x   1 jweise   dlps       14855 Sep 27 22:35 makeCollectionmaps-idx*
+-r-xr-xr-x   1 jweise   dlps       11181 Sep 19 22:24 makeCollectionmaps.pl*
+
+./cgi/t:
+total 14
+drwxrwxr-x   3 pfarber  dlps        1024 Oct 13 11:34 text/
+
+
+./cgi/t/text:
+total 1424
+drwxrwxr-x   3 pfarber  dlps        1024 Oct 13 11:34 ./
+drwxrwxr-x   7 bkirschn dlps         512 Oct 13 11:34 ../
+-r--r--r--   1 pfarber  dlps        2385 Aug 31 16:36 Ampo20TC.pm
+drwxrwxr-x   2 pfarber  dlps         512 Aug 22 17:38 Attic/
+-r--r--r--   1 pfarber  dlps        6624 Aug 31 16:36 Bookbag.pm
+-r--r--r--   1 pfarber  dlps        8166 Sep 11 13:05 BosniaTC.pm
+-r--r--r--   1 pfarber  dlps        3110 Aug 31 16:36 PageView.cfg
+-r--r--r--   1 pagliere dlps       23261 Oct 13 11:11 PageView.pm
+-r--r--r--   1 pfarber  dlps        3412 Aug 31 16:36 RELEASENOTES
+-r--r--r--   1 pfarber  dlps         280 Aug 31 16:36 Subclasses.pm
+-r--r--r--   1 pfarber  dlps        2443 Aug 31 16:36 TesoTC.pm
+-r--r--r--   1 pfarber  dlps      250982 Oct 12 10:53 TextClass.pm
+-r--r--r--   1 pfarber  dlps      129626 Oct 12 17:26 TextClassUtils.pm
+-r--r--r--   1 pfarber  dlps       13557 Sep 20 12:53 VoltaireTC.pm
+-r--r--r--   1 pfarber  dlps        8030 Aug 31 16:36 YeatsTC.pm
+-r--r--r--   1 pfarber  dlps         647 Aug 31 16:36 comment.tpl
+-r-xr-xr-x   1 pfarber  dlps        9338 Aug 31 16:36 finddependencies.pl*
+-r-xr-xr-x   1 pagliere dlps       63773 Oct 13 11:10 pageviewer-idx*
+-r--r--r--   1 pfarber  dlps        5559 Sep 27 16:04 pageviewer-idx.cfg
+-r--r--r--   1 pfarber  dlps         341 Aug 31 16:36 sessions.blank
+-r-xr-xr-x   1 pagliere dlps       65452 Oct 13 11:13 text-idx*
+-r--r--r--   1 pagliere dlps       10564 Oct 13 11:13 text-idx.cfg
+-r-xr-xr-x   1 pfarber  dlps       78958 Oct  6 15:16 ww2-idx*
+-r--r--r--   1 pfarber  dlps        8023 Sep 27 16:04 ww2-idx.cfg
+
+
+./lib:
+total 1778
+drwxrwxr-x   4 bkirschn dlps        1536 Oct 13 11:34 ./
+drwxrwxr-x  11 bkirschn dlps         512 Sep 28 14:12 ../
+drwxrwxr-x   2 pfarber  dlps         512 Oct 13 11:31 Attic/
+-r--r--r--   1 pagliere dlps        8945 Sep  6 10:13 Bookbag.pm
+-r--r--r--   1 pagliere dlps      244065 Sep  6 10:13 CGI.pm
+-r--r--r--   1 pagliere dlps       10888 Sep  6 10:13 Cache.pm
+drwxrwxr-x   2 pfarber  dlps         512 Oct 13 11:34 CollsInfo/
+-r--r--r--   1 pfarber  dlps       46319 Oct  4 10:36 CollsInfo.pm
+-r--r--r--   1 pfarber  dlps        1978 Sep 25 09:41 DevUtils.pm
+-r--r--r--   1 pfarber  dlps         883 Oct 10 10:59 DlpsSession.cfg
+-r--r--r--   1 pfarber  dlps       19066 Oct 10 10:59 DlpsSession.pm
+-r--r--r--   1 pagliere dlps       20105 Sep  6 10:13 DlpsSessionManager.pm
+-r--r--r--   1 pagliere dlps      113714 Oct 13 11:21 DlpsUtils.pm
+-r--r--r--   1 pagliere dlps        6964 Sep  6 10:13 DomMungingFunctions.pm
+-r--r--r--   1 pagliere dlps       16330 Sep  7 16:21 MEC.pm
+-r--r--r--   1 pagliere dlps       13717 Sep  6 10:13 OT60.pm
+-r--r--r--   1 pagliere dlps        6480 Sep  6 10:13 Pat.pm
+-r--r--r--   1 pagliere dlps       18117 Sep  6 10:13 Pat2.pm
+-r--r--r--   1 pagliere dlps        9562 Sep  6 10:13 Pat2.pm.old
+-r--r--r--   1 pagliere dlps       11181 Sep  6 10:13 ProcIns.pm
+-r--r--r--   1 pagliere dlps       35298 Sep  6 10:13 QueryFactory.pm
+-r--r--r--   1 pfarber  dlps        8693 Sep 25 09:42 RegExpSrch.pm
+-r--r--r--   1 pagliere dlps        3652 Oct  6 14:05 RemoteConnect.pm
+-r--r--r--   1 pagliere dlps       38849 Sep  6 10:13 SSP.pm
+-r--r--r--   1 pagliere dlps       28381 Jun 18  1998 SSP.pm.old
+-r--r--r--   1 pagliere dlps       22826 Sep  6 10:13 SSP2.pm
+-r--r--r--   1 pagliere dlps       16585 Sep  6 10:13 SearchHistory.pm
+-r--r--r--   1 pfarber  dlps        7648 Oct  4 10:36 SearchSet.pm
+-r--r--r--   1 pagliere dlps        8530 Sep  6 10:13 ServePage.pm
+-r--r--r--   1 pagliere dlps        5125 Sep  6 10:13 SessionInterface.pm
+-r--r--r--   1 pagliere dlps        5833 Sep  6 10:13 Set.pm
+-r--r--r--   1 pagliere dlps       10218 Sep  6 10:13 Set2.pm
+-r--r--r--   1 pagliere dlps        5493 Sep  6 10:13 TerminologyMapper.pm
+-r--r--r--   1 pfarber  dlps       28899 Oct  6 15:24 WW.pm
+-r--r--r--   1 pagliere dlps        8775 Sep  6 10:13 WordWheel.pm
+-r--r--r--   1 pagliere dlps       32605 Oct 13 11:29 XPat.pm
+-r--r--r--   1 pfarber  dlps        9534 Oct  4 10:36 XPatResult.pm
+-r--r--r--   1 pfarber  dlps       23965 Oct  4 10:36 XPatResultSet.pm
+-r--r--r--   1 pagliere dlps        1371 Sep  6 10:13 cgi-error-report-lib.pl
+-r--r--r--   1 pagliere dlps        3170 Sep  6 10:13 cgi-lib.pl
+-r--r--r--   1 pagliere dlps        1228 Sep  6 10:13 cgi-security-lib.pl
+-r-xr-xr-x   1 pagliere dlps        6011 Sep  6 10:13 epd-filt.pl*
+-r--r--r--   1 pagliere dlps        4311 Sep  6 10:13 roman_numeral.pm
+-r--r--r--   1 pagliere dlps         333 Sep  6 10:13 sessions.blank
+-r--r--r--   1 pagliere dlps        1301 Sep  6 10:13 ww2.cfg
+
+
+./lib/CollsInfo:
+total 36
+drwxrwxr-x   2 pfarber  dlps         512 Oct 13 11:34 ./
+drwxrwxr-x   4 bkirschn dlps        1536 Oct 13 11:34 ../
+-r--r--r--   1 pfarber  dlps       14862 Sep 26 14:41 CITC.pm
+
+./obj:
+total 10
+drwxrwxr-x   5 pfarber  dlps         512 Sep 22 14:40 ./
+drwxrwxr-x  11 bkirschn dlps         512 Sep 28 14:12 ../
+drwxrwxr-x   3 pfarber  dlps         512 Sep 22 14:40 i/
+drwxrwxr-x   4 pfarber  dlps         512 Sep 22 14:40 lib/
+drwxrwxr-x   3 pfarber  dlps         512 Sep 22 14:40 t/
+
+./obj/i:
+total 6
+drwxrwxr-x   3 pfarber  dlps         512 Sep 22 14:40 ./
+drwxrwxr-x   5 pfarber  dlps         512 Sep 22 14:40 ../
+drwxrwxr-x   4 pfarber  dlps         512 Sep 22 14:51 image/
+
+./obj/i/image:
+total 8
+drwxrwxr-x   4 pfarber  dlps         512 Sep 22 14:51 ./
+drwxrwxr-x   3 pfarber  dlps         512 Sep 22 14:40 ../
+drwxrwxr-x   4 pfarber  dlps         512 Sep 22 14:51 lib/
+drwxrwxr-x   2 pfarber  dlps         512 Sep 22 14:51 maps/
+
+./obj/i/image/lib:
+total 8
+drwxrwxr-x   4 pfarber  dlps         512 Sep 22 14:51 ./
+drwxrwxr-x   4 pfarber  dlps         512 Sep 22 14:51 ../
+drwxrwxr-x   2 pfarber  dlps         512 Sep 22 14:58 db/
+drwxrwxr-x   2 pfarber  dlps         512 Sep 28 09:38 maps/
+
+./obj/i/image/lib/db:
+total 14
+drwxrwxr-x   2 pfarber  dlps         512 Sep 22 14:58 ./
+drwxrwxr-x   4 pfarber  dlps         512 Sep 22 14:51 ../
+-r--r--r--   1 pfarber  dlps        4855 Sep 22 14:36 colldb
+
+./obj/i/image/lib/maps:
+total 12
+drwxrwxr-x   2 pfarber  dlps         512 Sep 28 09:38 ./
+drwxrwxr-x   4 pfarber  dlps         512 Sep 22 14:51 ../
+-r--r--r--   1 jweise   dlps        3233 Sep 28 09:38 images.map
+
+./obj/i/image/maps:
+total 4
+drwxrwxr-x   2 pfarber  dlps         512 Sep 22 14:51 ./
+drwxrwxr-x   4 pfarber  dlps         512 Sep 22 14:51 ../
+
+./obj/lib:
+total 8
+drwxrwxr-x   4 pfarber  dlps         512 Sep 22 14:40 ./
+drwxrwxr-x   5 pfarber  dlps         512 Sep 22 14:40 ../
+drwxrwxr-x   2 pfarber  dlps        1024 Sep 22 14:40 sgml/
+
+./obj/lib/sgml:
+total 280
+drwxrwxr-x   2 pfarber  dlps        1024 Sep 22 14:40 ./
+drwxrwxr-x   4 pfarber  dlps         512 Sep 22 14:40 ../
+-r--r--r--   1 bkirschn dlps        4508 Aug 11 13:53 ISOamsa.ent
+-r--r--r--   1 bkirschn dlps        3496 Aug 11 13:53 ISOamsb.ent
+-r--r--r--   1 bkirschn dlps        1390 Aug 11 13:53 ISOamsc.ent
+-r--r--r--   1 bkirschn dlps        4614 Aug 11 13:53 ISOamsn.ent
+-r--r--r--   1 bkirschn dlps        1867 Aug 11 13:53 ISOamso.ent
+-r--r--r--   1 bkirschn dlps        6050 Aug 11 13:53 ISOamsr.ent
+-r--r--r--   1 bkirschn dlps        3605 Aug 11 13:53 ISObox.ent
+-r--r--r--   1 bkirschn dlps        4314 Aug 11 13:53 ISOcyr1.ent
+-r--r--r--   1 bkirschn dlps        2173 Aug 11 13:53 ISOcyr2.ent
+-r--r--r--   1 bkirschn dlps        1337 Aug 11 13:53 ISOdia.ent
+-r--r--r--   1 bkirschn dlps        3250 Aug 11 13:53 ISOgrk1.ent
+-r--r--r--   1 bkirschn dlps        2040 Aug 11 13:53 ISOgrk2.ent
+-r--r--r--   1 bkirschn dlps        2955 Aug 11 13:53 ISOgrk3.ent
+-r--r--r--   1 bkirschn dlps        3139 Aug 11 13:53 ISOgrk4.ent
+-r--r--r--   1 bkirschn dlps        4551 Aug 11 13:53 ISOlat1.ent
+-r--r--r--   1 bkirschn dlps        7608 Aug 11 13:53 ISOlat2.ent
+-r--r--r--   1 bkirschn dlps        4967 Aug 11 13:53 ISOnum.ent
+-r--r--r--   1 bkirschn dlps        5669 Aug 11 13:53 ISOpub.ent
+-r--r--r--   1 bkirschn dlps        4421 Aug 11 13:53 ISOtech.ent
+-r--r--r--   1 jpwilkin dlps       44204 Aug 18 16:27 bib.dtd
+-r--r--r--   1 bkirschn dlps        4951 Aug 11 13:53 catalog
+-r--r--r--   1 bkirschn dlps        2825 Aug 11 13:53 doctype.bib
+-r--r--r--   1 pagliere dlps        4600 Jul 26 10:54 image.dtd
+-r--r--r--   1 bkirschn dlps         844 Aug 11 13:53 wordwheel.dtd
+
+./obj/t:
+total 6
+drwxrwxr-x   3 pfarber  dlps         512 Sep 22 14:40 ./
+drwxrwxr-x   5 pfarber  dlps         512 Sep 22 14:40 ../
+drwxrwxr-x   4 pfarber  dlps         512 Sep 22 14:51 text/
+
+./obj/t/text:
+total 8
+drwxrwxr-x   4 pfarber  dlps         512 Sep 22 14:51 ./
+drwxrwxr-x   3 pfarber  dlps         512 Sep 22 14:40 ../
+drwxrwxr-x   4 pfarber  dlps         512 Sep 22 14:51 lib/
+drwxrwxr-x   2 pfarber  dlps         512 Sep 22 14:51 maps/
+
+./obj/t/text/lib:
+total 8
+drwxrwxr-x   4 pfarber  dlps         512 Sep 22 14:51 ./
+drwxrwxr-x   4 pfarber  dlps         512 Sep 22 14:51 ../
+drwxrwxr-x   2 pfarber  dlps         512 Oct 13 11:32 db/
+drwxrwxr-x   2 pfarber  dlps         512 Oct 12 15:05 maps/
+
+./obj/t/text/lib/db:
+total 76
+drwxrwxr-x   2 pfarber  dlps         512 Oct 13 11:32 ./
+drwxrwxr-x   4 pfarber  dlps         512 Sep 22 14:51 ../
+-r--r--r--   1 pagliere dlps       36583 Oct 12 10:14 colldb
+
+./obj/t/text/lib/maps:
+total 134
+drwxrwxr-x   2 pfarber  dlps         512 Oct 12 15:05 ./
+drwxrwxr-x   4 pfarber  dlps         512 Sep 22 14:51 ../
+-r--r--r--   1 sooty    dlps        8399 Oct 12 15:05 ampo20.map
+-r--r--r--   1 pfarber  dlps        6378 Sep 22 14:38 bosnia.map
+-r--r--r--   1 pfarber  dlps        7332 Sep 22 14:38 daap20.map
+-r--r--r--   1 pfarber  dlps        5943 Oct 12 15:04 gandf.map
+-r--r--r--   1 pfarber  dlps        7370 Oct 12 15:04 moa.map
+-r--r--r--   1 pfarber  dlps        8254 Sep 22 14:38 teso.map
+-r--r--r--   1 pfarber  dlps        8492 Sep 22 14:38 voltaire.map
+-r--r--r--   1 pfarber  dlps        8841 Sep 22 14:38 yeats.map
+
+./obj/t/text/maps:
+total 4
+drwxrwxr-x   2 pfarber  dlps         512 Sep 22 14:51 ./
+drwxrwxr-x   4 pfarber  dlps         512 Sep 22 14:51 ../
+
+./web:
+total 42
+drwxrwxr-x   4 pfarber  dlps         512 Oct 13 11:34 i/
+drwxrwxr-x   6 pagliere dlps         512 Oct 11 17:28 t/
+
+
+./web/i:
+total 8
+drwxrwxr-x   4 pfarber  dlps         512 Oct 13 11:34 ./
+drwxrwxr-x  21 bkirschn dlps         512 Oct 13 11:34 ../
+drwxrwxr-x   4 pfarber  dlps         512 Sep 28 14:49 image/
+
+./web/i/image:
+total 8
+drwxrwxr-x   4 pfarber  dlps         512 Sep 28 14:49 ./
+drwxrwxr-x   4 pfarber  dlps         512 Oct 13 11:34 ../
+drwxrwxr-x   3 jweise   dlps         512 Sep 28 15:05 all/
+drwxrwxr-x   4 jweise   dlps         512 Sep 28 15:11 info/
+
+./web/i/image/all:
+total 132
+drwxrwxr-x   3 jweise   dlps         512 Sep 28 15:05 ./
+drwxrwxr-x   4 pfarber  dlps         512 Sep 28 14:49 ../
+-r--r--r--   1 jweise   dlps        4610 Sep 21 15:18 boolean.html
+-r--r--r--   1 jweise   dlps       11960 Sep 28 15:05 collsizestats.htm
+-r--r--r--   1 jweise   dlps        4264 Aug 31 16:25 details.html
+-r--r--r--   1 jweise   dlps         912 Aug 31 16:25 erroridresolver.html
+drwxrwxr-x   2 jweise   dlps         512 Sep 28 15:06 graphics/
+-r--r--r--   1 jweise   dlps       11119 Sep 21 15:18 index.html
+-r--r--r--   1 jweise   dlps        5333 Aug 31 16:25 select.html
+-r--r--r--   1 jweise   dlps        3898 Sep 21 15:18 simple.html
+-r--r--r--   1 jweise   dlps        2415 Aug 31 16:25 slideresults.html
+-r--r--r--   1 jweise   dlps        4676 Sep 21 15:18 slideshowresults.html
+-r--r--r--   1 jweise   dlps        4330 Aug 31 16:25 textresults.html
+-r--r--r--   1 jweise   dlps        5194 Aug 31 16:25 thumbresults.html
+
+./web/i/image/all/graphics:
+total 102
+drwxrwxr-x   2 jweise   dlps         512 Sep 28 15:06 ./
+drwxrwxr-x   3 jweise   dlps         512 Sep 28 15:05 ../
+-r--r--r--   1 jweise   dlps       10144 Sep 28 15:01 accessrestricted.jpg
+-r--r--r--   1 jweise   dlps       12408 Sep 28 15:01 error.jpg
+-r--r--r--   1 jweise   dlps        8699 Sep 28 15:01 is.jpg
+-r--r--r--   1 jweise   dlps        5447 Sep 28 15:01 is_abbr.jpg
+-r--r--r--   1 jweise   dlps        8751 Sep 28 15:01 isy.jpg
+-r--r--r--   1 jweise   dlps        1531 Sep 28 15:01 nothumb.gif
+
+./web/i/image/info:
+total 48
+drwxrwxr-x   4 jweise   dlps         512 Sep 28 15:11 ./
+drwxrwxr-x   4 pfarber  dlps         512 Sep 28 14:49 ../
+-r--r--r--   1 jweise   dlps        2838 Sep 28 14:49 about_is.html
+drwxrwxr-x   6 jweise   dlps        1024 Sep 28 15:11 arch/
+-r--r--r--   1 jweise   dlps         838 Sep 28 14:49 contact.html
+-r--r--r--   1 jweise   dlps        1756 Sep 28 14:49 forbidden.html
+drwxrwxr-x   2 jweise   dlps         512 Sep 28 15:11 graphics/
+-r--r--r--   1 jweise   dlps       10562 Sep 28 14:49 guidelines.htm
+-r--r--r--   1 jweise   dlps        2838 Sep 28 14:49 index.html
+
+./web/i/image/info/arch:
+total 1382
+drwxrwxr-x   6 jweise   dlps        1024 Sep 28 15:11 ./
+drwxrwxr-x   4 jweise   dlps         512 Sep 28 15:11 ../
+-r--r--r--   1 jweise   dlps        8818 Sep 28 14:52 Core_Elements.html
+-r--r--r--   1 jweise   dlps       47102 Sep 28 14:52 Image_Tech_Dev_Plan.html
+-r--r--r--   1 jweise   dlps       41948 Sep 28 14:52 Imge_Tch_Dev_Plan_19970618.html
+-r--r--r--   1 jweise   dlps      510390 Sep 28 14:53 MC3bhlpoetry.txt
+-r--r--r--   1 jweise   dlps        4345 Sep 28 14:53 ManageVSAccessChart.PICT
+-r--r--r--   1 jweise   dlps       14077 Sep 28 14:52 arch_summ.html
+drwxrwxr-x   2 jweise   dlps        1024 Sep 28 15:11 comparison_doc/
+-r--r--r--   1 jweise   dlps        7915 Sep 28 14:52 excerptManAcc.html
+-r--r--r--   1 jweise   dlps        4863 Sep 28 14:52 feature_details_Draft.html
+-r--r--r--   1 jweise   dlps        4572 Sep 28 14:52 fed_model_summ.html
+-r--r--r--   1 jweise   dlps         174 Sep 28 14:52 imageplan.html
+-r--r--r--   1 jweise   dlps       14077 Sep 28 14:52 index.html
+-r--r--r--   1 jweise   dlps       11209 Sep 28 14:54 managevsaccess.gif
+-r--r--r--   1 jweise   dlps        6019 Sep 28 14:52 personalcollections.html
+-r--r--r--   1 jweise   dlps        7449 Sep 28 14:53 sample.txt
+drwxrwxr-x   2 jweise   dlps        1024 Sep 28 15:11 templatedocs/
+drwxrwxr-x   2 jweise   dlps         512 Sep 28 15:11 templates/
+drwxrwxr-x   2 jweise   dlps         512 Sep 28 15:11 templates2/
+
+./web/i/image/info/arch/comparison_doc:
+total 384
+drwxrwxr-x   2 jweise   dlps        1024 Sep 28 15:11 ./
+drwxrwxr-x   6 jweise   dlps        1024 Sep 28 15:11 ../
+-r--r--r--   1 jweise   dlps         315 Sep 28 14:58 boolean.html
+-r--r--r--   1 jweise   dlps         312 Sep 28 14:58 comp_boolean.html
+-r--r--r--   1 jweise   dlps         311 Sep 28 14:58 comp_details.html
+-r--r--r--   1 jweise   dlps        5747 Sep 28 14:58 comp_detailsexample.html
+-r--r--r--   1 jweise   dlps        4128 Sep 28 14:58 comp_resultsexample.html
+-r--r--r--   1 jweise   dlps         310 Sep 28 14:58 comp_simple.html
+-r--r--r--   1 jweise   dlps         320 Sep 28 14:58 comp_thumbresults.html
+-r--r--r--   1 jweise   dlps       29912 Sep 28 14:59 compare.doc
+-r--r--r--   1 jweise   dlps        7938 Sep 28 14:59 compare1.gif
+-r--r--r--   1 jweise   dlps        7283 Sep 28 14:59 compare2.gif
+-r--r--r--   1 jweise   dlps        9126 Sep 28 14:59 compare3.gif
+-r--r--r--   1 jweise   dlps       44768 Sep 28 14:59 compare_doc.doc
+-r--r--r--   1 jweise   dlps        8936 Sep 28 14:58 compare_doc.htm
+-r--r--r--   1 jweise   dlps       16263 Sep 28 14:58 compare_doc.html
+-r--r--r--   1 jweise   dlps         304 Sep 28 14:58 details.html
+-r--r--r--   1 jweise   dlps        7580 Sep 28 14:58 detailsexample.html
+-r--r--r--   1 jweise   dlps         787 Sep 28 14:58 diffs_boolean.html
+-r--r--r--   1 jweise   dlps         791 Sep 28 14:58 diffs_details.html
+-r--r--r--   1 jweise   dlps         782 Sep 28 14:58 diffs_simple.html
+-r--r--r--   1 jweise   dlps         740 Sep 28 14:58 diffs_thumbresults.html
+-r--r--r--   1 jweise   dlps       16263 Sep 28 14:58 index.html
+-r--r--r--   1 jweise   dlps       13446 Sep 28 14:58 resultsexample.html
+-r--r--r--   1 jweise   dlps         303 Sep 28 14:58 simple.html
+-r--r--r--   1 jweise   dlps        3649 Sep 28 14:58 textresults.html
+-r--r--r--   1 jweise   dlps         700 Sep 28 14:58 thumbdifs.html
+-r--r--r--   1 jweise   dlps         313 Sep 28 14:58 thumbresults.html
+
+./web/i/image/info/arch/templatedocs:
+total 216
+drwxrwxr-x   2 jweise   dlps        1024 Sep 28 15:11 ./
+drwxrwxr-x   6 jweise   dlps        1024 Sep 28 15:11 ../
+-r--r--r--   1 jweise   dlps        6666 Sep 28 14:54 details.html
+-r--r--r--   1 jweise   dlps        4946 Sep 28 14:54 index.html
+-r--r--r--   1 jweise   dlps        4217 Sep 28 14:54 mock.html
+-r--r--r--   1 jweise   dlps        4626 Sep 28 14:54 mock2.html
+-r--r--r--   1 jweise   dlps        4053 Sep 28 14:54 simple.html
+-r--r--r--   1 jweise   dlps        5753 Sep 28 14:54 slp_boolean.html
+-r--r--r--   1 jweise   dlps        2710 Sep 28 14:54 slp_details.html
+-r--r--r--   1 jweise   dlps       19877 Sep 28 14:54 slp_doc.html
+-r--r--r--   1 jweise   dlps        4946 Sep 28 14:54 slp_index.html
+-r--r--r--   1 jweise   dlps        4168 Sep 28 14:54 slp_simple.html
+-r--r--r--   1 jweise   dlps        2489 Sep 28 14:54 slp_slideresults.html
+-r--r--r--   1 jweise   dlps        4022 Sep 28 14:54 slp_textresults.html
+-r--r--r--   1 jweise   dlps        4998 Sep 28 14:54 slp_thumbresults.html
+-r--r--r--   1 jweise   dlps       19877 Sep 28 14:54 td.html
+-r--r--r--   1 jweise   dlps        3968 Sep 28 14:54 textresults.html
+-r--r--r--   1 jweise   dlps        4750 Sep 28 14:54 thumbresults.html
+
+./web/i/image/info/arch/templates:
+total 48
+drwxrwxr-x   2 jweise   dlps         512 Sep 28 15:11 ./
+drwxrwxr-x   6 jweise   dlps        1024 Sep 28 15:11 ../
+-r--r--r--   1 jweise   dlps        2092 Sep 28 14:55 details.html
+-r--r--r--   1 jweise   dlps        1734 Sep 28 14:55 details_template.html
+-r--r--r--   1 jweise   dlps        9897 Sep 28 14:55 results.html
+-r--r--r--   1 jweise   dlps        2712 Sep 28 14:55 results_template.html
+-r--r--r--   1 jweise   dlps        1330 Sep 28 14:55 searchForm.html
+-r--r--r--   1 jweise   dlps        1708 Sep 28 14:55 thumb.GIF
+
+./web/i/image/info/arch/templates2:
+total 56
+drwxrwxr-x   2 jweise   dlps         512 Sep 28 15:11 ./
+drwxrwxr-x   6 jweise   dlps        1024 Sep 28 15:11 ../
+-r--r--r--   1 jweise   dlps        2092 Sep 28 14:56 details.html
+-r--r--r--   1 jweise   dlps        1523 Sep 28 14:56 details_template.html
+-r--r--r--   1 jweise   dlps        1860 Sep 28 14:57 examplemapping
+-r--r--r--   1 jweise   dlps        9897 Sep 28 14:56 results.html
+-r--r--r--   1 jweise   dlps        2845 Sep 28 14:56 results_template.html
+-r--r--r--   1 jweise   dlps        1216 Sep 28 14:56 searchForm.html
+-r--r--r--   1 jweise   dlps        1242 Sep 28 14:56 templateChangeNotes.html
+-r--r--r--   1 jweise   dlps        1708 Sep 28 14:56 thumb.GIF
+
+./web/i/image/info/graphics:
+total 52
+drwxrwxr-x   2 jweise   dlps         512 Sep 28 15:11 ./
+drwxrwxr-x   4 jweise   dlps         512 Sep 28 15:11 ../
+-r--r--r--   1 jweise   dlps        8711 Sep 28 14:50 is.jpg
+-r--r--r--   1 jweise   dlps        5459 Sep 28 14:50 is_abbr.jpg
+-r--r--r--   1 jweise   dlps        8763 Sep 28 14:50 isy.jpg
+
+
+./web/t:
+total 14
+drwxrwxr-x   6 pagliere dlps         512 Oct 11 17:28 ./
+drwxrwxr-x  21 bkirschn dlps         512 Oct 13 11:34 ../
+drwxrwxr-x   3 pfarber  dlps        1024 Oct 13 11:34 text/
+
+./web/t/text:
+total 494
+drwxrwxr-x   3 pfarber  dlps        1024 Oct 13 11:34 ./
+drwxrwxr-x   6 pagliere dlps         512 Oct 11 17:28 ../
+drwxrwxr-x   2 pfarber  dlps         512 Sep 29 13:41 Attic/
+-r--r--r--   1 pagliere dlps        7164 Oct 13 11:14 bbaglist.tpl
+-r--r--r--   1 pfarber  dlps        7823 Oct 12 17:36 bib.tpl
+-r--r--r--   1 pfarber  dlps       10360 Oct 12 17:36 bibext.tpl
+-r--r--r--   1 pfarber  dlps       12473 Oct 12 17:36 boolean.tpl
+-r--r--r--   1 pfarber  dlps       16203 Oct 12 17:36 booleanext.tpl
+-r--r--r--   1 pfarber  dlps       20374 Oct 12 17:36 header.tpl
+-r--r--r--   1 pfarber  dlps        1723 Oct 12 17:36 note.tpl
+-r--r--r--   1 pfarber  dlps        1840 Sep 28 15:15 pageviewer.frameset.tpl
+-r--r--r--   1 pfarber  dlps        1992 Oct 12 17:36 pageviewer.main.tpl
+-r--r--r--   1 pfarber  dlps       16115 Oct 12 17:36 pageviewer.nav.tpl
+-r--r--r--   1 pfarber  dlps        2196 Oct 12 17:36 pageviewer.picklist.tpl
+-r--r--r--   1 pfarber  dlps       13340 Oct 12 17:36 proximity.tpl
+-r--r--r--   1 pfarber  dlps       16232 Oct 12 17:36 proximityext.tpl
+-r--r--r--   1 pagliere dlps        8968 Oct 13 11:19 reslist.tpl
+-r--r--r--   1 pfarber  dlps        7237 Oct 11 17:27 search.js
+-r--r--r--   1 pfarber  dlps        6345 Oct 12 17:36 searchhistory.tpl
+-r--r--r--   1 pagliere dlps       18600 Oct 13 11:20 simple.tpl
+-r--r--r--   1 pfarber  dlps       17185 Oct 12 17:36 simpleext.tpl
+-r--r--r--   1 pfarber  dlps        5314 Oct 12 17:36 text.tpl
+-r--r--r--   1 pfarber  dlps         344 Oct 12 17:38 textclass-specific.css
+-r--r--r--   1 pfarber  dlps        9566 Aug 30 14:58 textclass.css
+-r--r--r--   1 pfarber  dlps        1791 Aug 30 14:58 textclass.js
+-r--r--r--   1 pfarber  dlps       20444 Oct 12 17:36 ww-full.tpl
+-r--r--r--   1 pfarber  dlps       15016 Oct 12 17:36 ww-start.tpl
+
+</pre>
+
+
+</body>
+</html>

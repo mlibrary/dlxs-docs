@@ -1,0 +1,37 @@
+<?xml version="1.0"?>
+
+<!-- SPO Editorial Services                  -->
+<!-- automatically-generated XML header file -->
+
+<?xml-stylesheet href="../../../pre11-dlxsdocs.xsl" type="text/xsl"?>
+<!DOCTYPE DLPSDOC PUBLIC "-//UM-DLPS//DTD DLPS Publications//EN" "http://docs.umdl.umich.edu/dlps/docs/dlpsdocs.dtd">
+<DLPSDOC>
+<TITLE>Collection Map Files (Finding Aids)</TITLE>
+<HEADER>
+<JOURNAL>DLXS Documentation</JOURNAL>
+<PUBDATE>2002-06-25 17:30:56 EDT</PUBDATE>
+<AUTH1>Powell, Chris</AUTH1>
+<AUTH2></AUTH2>
+<DOCTITLE>Collection Map Files (Finding Aids)</DOCTITLE>
+<VOL>class</VOL>
+<ISS>findaid</ISS>
+<FILE>dlxsdocs-findaid-map</FILE>
+</HEADER>
+
+<BODY><BHEAD>Collection Map Files (Finding Aids)</BHEAD><DIV1><H1>Creating and Modifying the Map File</H1><P>This document describes what we call <I>maps</I> or <I>map files</I>. Map files 
+  contain mapped items where one term or name for the item is mapped to another 
+  term or name. For example, a term used by an HTML form to refer to a searchable 
+  region (e.g., &quot;entire finding aid&quot;) can be mapped 
+  to an XPAT searchable region (e.g., EAD).</P>
+<P>Currently, the format of the map files is SGML and each collection map file 
+  conforms to a simple DTD (other ways of mapping terms, such as a database where 
+  one could map from one column's data to another are possible and have been considered 
+  for implementation). The map is read into a <A HREF="../../program/dlxs-libmodules.xml#terminologymapper">TerminologyMapper</A> 
+  object during the running of the middleware after which the CGI program can 
+  at any time request of the object the mappings for terms. Each mapped item and 
+  its various terms are contained within a &lt;MAPPING&gt; element.</P>
+<P>An example map file for the sample finding aids collection can be found at <TT>$DLXSROOT/misc/f/findaid/maps/samplefa.map</TT>.  Rather than modifying this file, a new map file should be created for each collection. </P><P>Each mapping element in a map file consists of the following:</P>
+<DL>
+<DT><TT>label</TT></DT><DD>This element determines what  will display in the user's browser when constructing searches.  It must match the value used in the <A HREF="../../collmeta/dlxs-collmgr.xml">collmgr</A>.
+</DD><DT><TT>synthetic</TT></DT><DD>This contains the variable name as it is used in the cgi.</DD><DT><TT>native</TT></DT><DD>The &quot;native&quot; element provides an appropriate XPAT search that the system will use to discover the appropriate content.  The search may be simple (e.g., <TT>region EADID</TT>) or complex (e.g., <TT>((region DID within region ARCHDESC) not within region DSC)</TT>)
+</DD><DT><TT>nativeregionname</TT></DT><DD>The element name itself, as it is indexed, without terms used in the XPAT search.</DD></DL></DIV1></BODY></DLPSDOC>

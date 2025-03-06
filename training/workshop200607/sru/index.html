@@ -1,0 +1,84 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+  <title>SRU</title>
+  
+  <meta http-equiv="Content-Type"
+ content="text/html; charset=iso-8859-1">
+ 
+  <link rel="stylesheet" href="../styles.css">
+</head>
+ <body class="mainpalette">
+       
+<h2>SRU</h2>
+  
+<h3><a name="understanding_broker"></a>SRU Implementation</h3>
+  
+<p>We now have an implementation of the SRU protocol, which you can read more about at: <a href="http://www.loc.gov/standards/sru/"
+ target="sample">http://www.loc.gov/standards/sru/</a>.</p>
+  
+<p>We have implemented two of the SRU operations-- explain and searchRetrieve. We are supporting level 0 of the Common Query Language, which performs a keyword search. We hope to add more specific fielded searches some time in the future. Our SRU implementation can be used to search all our BibClass collections.</p>
+  
+<h3><a name="verbs_broker"></a>SRU Operations</h3>
+
+<p class="unixcommand"><strong>explain</strong></p>
+  
+<p>This operation describes your repository.</p>
+
+<p><i>Examples</i>:<br>
+ <a
+ href="http://www.hti.umich.edu/cgi/s/sru/sru?operation=explain"
+ target="sample">http://www.hti.umich.edu/cgi/s/sru/sru?operation=explain</a><br>
+ <a
+ href="http://www.hti.umich.edu/cgi/s/sru/sru?operation"
+ target="sample">http://www.hti.umich.edu/cgi/s/sru/sru?operation</a>
+
+</p>
+  
+<p class="unixcommand"><strong>searchRetrieve</strong></p>
+  
+<p>This verb is used to search and retrieve records from your repository. The records are returned in BibClass format.</p>
+  
+<p><i>Example 1</i>: will search our default collection OAIster and retrieve the number of records with the keyword "law"<br>
+ <a href="http://www.hti.umich.edu/cgi/s/sru/sru?operation=searchRetrieve&query=law" target="sample">http://www.hti.umich.edu/cgi/s/sru/sru?operation=searchRetrieve&query=law</a></p>
+
+<p><i>Example 2</i>: will search the collection requested<br>
+ <a href="http://www.hti.umich.edu/cgi/s/sru/sru?operation=searchRetrieve&query=law&x-collid=oaister" target="sample">http://www.hti.umich.edu/cgi/s/sru/sru?operation=searchRetrieve&query=law&x-collid=oaister</a></p>
+
+<p><i>Example 3</i>: will start retrieving all the "law" records<br>
+ <a href="http://www.hti.umich.edu/cgi/s/sru/sru?operation=searchRetrieve&query=law&x-collid=oaister&startRecord=1&maximumRecords=4" target="sample">http://www.hti.umich.edu/cgi/s/sru/sru?operation=searchRetrieve&query=law&x-collid=oaister&startRecord=1&maximumRecords=4</a></p>
+
+<h3><a name="install_broker"></a>Installing SRU</h3>
+  
+<p><strong>1</strong>. There are a series of parameters that are configured
+during the installation of DLXS. These parameters live in the /$DLXSROOT/cgi/s/sru/sru.cfg
+file. If after installation you need to change any of these parameters, you
+can make the changes to this file directly, or you can run the install script
+again. The install script will remember the entries you made previously.</p>
+  
+<p>The parameters are the following:</p>
+  
+<ul>
+ <li>$gDefaultCollection: The default BibClass collection if no x-collid is passed in. For the University of Michigan Libraries it is "oaister". </li>
+  <li>$gHost: The SRU host. For the University of Michigan Libraries this is "www.hti.umich.edu"</li>
+  <li>$gPort: Your SRU port. For the University of Michigan Libraries this is "620".</li>
+  <li>$gDatabase: The name you are giving your database. For the University of Michigan Libraries this is "dlps". </li>
+  <li>$gTitle: Title for your gateway. For the University of Michigan Libraries we are using "University of Michigan Gateway". </li>
+  <li>$gDescription: A desctription of your gateway.</li>
+</ul>
+  
+<p><strong>2</strong>. Naturally, you'll need to have repository records
+that have been prepared and indexed in BibClass.</p>
+  
+<p><strong>3</strong>. Verify that the /$DLXSROOT/local/apache/conf/httpd.conf
+file contains the following lines:</p>
+  
+<pre>&lt;Directory "$DLXSROOT/cgi/s/SRU"&gt;<br>   SetEnv AUTHZD_COLL ":samplebc:"<br>   SetEnv PUBLIC_COLL ":"<br>&lt;/Directory&gt;<br></pre>
+  
+<p>This will give SRU access to the sample BibClass collection, samplebc.
+  Enter the value of $DLXSROOT, don't leave it as "$DLXSROOT". You will want
+to list all the BibClass collections as you make them available, so that
+SRU will have access to them.</p>
+
+</body>
+</html>

@@ -1,0 +1,631 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+
+<Top xmlns:dlxs="http://www.umdl.umich.edu/dlxs">
+
+  <!-- XSL fallback files -->
+  <XslFallbackFileList>
+  <Filename>bookbagitemsstring.xsl</Filename>
+    <Filename>search.xsl</Filename>
+    <Filename>htmlhead.xsl</Filename>
+    <Filename>navheader.xsl</Filename>
+    <Filename>footer.import.xsl</Filename>
+    <Filename>searchforms.xsl</Filename>
+    <Filename>xsl2htmlutils.xsl</Filename>
+    <Filename>globalvariables.xsl</Filename>
+    <Filename>searchheader.xsl</Filename>
+  </XslFallbackFileList>  
+
+  <!-- Custom OPTIONAL XML for top-level file search.xml<2> -->
+  <CustomXml></CustomXml>
+
+  <SearchTips>
+    <Url>http://quod.lib.umich.edu/cgi/t/text/text-idx?debug=xml;page=simple;c=amverse;tips=1</Url>
+    <Show>false</Show>
+  </SearchTips>
+  
+   <DlxsGlobals><CurrentCgi><Param name="debug">xml</Param>
+<Param name="page">simple</Param>
+<Param name="c">amverse</Param>
+<Param name="cc">amverse</Param>
+</CurrentCgi>
+<CurrentUrl>http://quod.lib.umich.edu/cgi/t/text/text-idx?debug=xml;page=simple;c=amverse;cc=amverse</CurrentUrl>
+<UserAgent>Mozilla/5.0 (Macintosh; U; Intel Mac OS X; en-US; rv:1.8.1.5) Gecko/20070713 Firefox/2.0.0.5</UserAgent>
+<ReferrerHref></ReferrerHref>
+<Sid>68ed23463a2c9521a6b94dc7ca6476c5</Sid>
+
+<EffectiveLanguage>en</EffectiveLanguage>
+<LanguageOptions><OptionalLanguage>en</OptionalLanguage></LanguageOptions>
+<LangMap>
+  
+   <LookupTables>
+  <Lookup id="auth">
+    <Item key="standardlogin.str">Login&#xa0;</Item>
+    <Item key="standardlogout.str">Logout&#xa0;</Item>
+    <Item key="standardusername.str">You are logged in as:&#xa0;</Item>
+    <Item key="athenslogin.str">Athens Login</Item>
+    <Item key="athenslogout.str">Athens Logout</Item>
+    <Item key="shibbolethlogin.str">Shibboleth Login</Item>
+    <Item key="shibbolethlogout.str">Shibboleth Logout</Item>
+  </Lookup>
+ 
+  <Lookup id="misc">
+    <Item key="crosscollection.search.title.str">UMDL Text Collections</Item>
+  </Lookup>
+  <Lookup id="bbagemailoutput">
+    <Item key="bbagemailoutput.str.title">Title: </Item>
+    <Item key="bbagemailoutput.str.author">Author: </Item>
+    <Item key="bbagemailoutput.str.publisher">Publisher: </Item>
+    <Item key="bbagemailoutput.str.date">Date: </Item>
+    <Item key="bbagemailoutput.str.availability">Availability: </Item>
+  </Lookup>
+  <Lookup id="bbagdownloadoutput">
+    <Item key="bbagdownloadoutput.str.title">Title: </Item>
+    <Item key="bbagdownloadoutput.str.author">Author: </Item>
+    <Item key="bbagdownloadoutput.str.publisher">Publisher: </Item>
+    <Item key="bbagdownloadoutput.str.date">Date: </Item>
+    <Item key="bbagdownloadoutput.str.availability">Availability: </Item>
+  </Lookup>
+  <Lookup id="bookbag">
+    <Item key="bookbag.str.holdings">Bookbag holdings</Item>
+    <Item key="bookbag.str.emailbookbagcontents">Email bookbag contents</Item>
+    <Item key="bookbag.str.sendto">Send records to:</Item>
+    <Item key="bookbag.str.emailcontents">Email Contents</Item>
+    <Item key="bookbag.str.bookboagholdings">Bookbag Holdings</Item>
+    <Item key="bookbag.str.downloadcontents">Download Contents</Item>
+    <Item key="bookbag.str.emptycontents">Empty Contents</Item>
+    <Item key="bookbag.str.no.items">There are no items currently in your bookbag.</Item>
+  </Lookup>
+  <Lookup id="bookbagheader">
+    <Item key="bookbagheader.str.linkdirectly">link to this item directly</Item>
+    <Item key="bookbagheader.str.remove">remove from bookbag</Item>
+  </Lookup>
+  <Lookup id="bookbagitemsstring">
+    <Item key="bookbagitemsstring.str.yourlisthas">Your bookbag has </Item>
+    <Item key="bookbagitemsstring.str.itemsingular"> item</Item>
+    <Item key="bookbagitemsstring.str.itemplural"> items</Item>
+  </Lookup>
+  <Lookup id="browse">
+    <Item key="browse.str.browse">Browse </Item>
+    <Item key="browse.str.browsing">Browsing </Item>
+    <Item key="browse.str.browseby">Browse by</Item>
+    <Item key="browse.str.quickbrowse">Quick Browse</Item>
+    <Item key="browse.str.starting.with"> starting with </Item>
+    <Item key="browse.str.no.items">There are no items starting with this letter. Select a linked letter in the table above. </Item>
+    <Item key="browse.str.noauthor">no author</Item>
+    <Item key="browse.str.there.are">There are </Item>
+    <Item key="browse.str.items.in.collection"> items in this collection</Item>
+    <Item key="browse.str.author.publ.column">Author / [Publication date]</Item>
+    <Item key="browse.str.title.column">Title</Item>
+    <Item key="browse.str.subject.column">Subject Term</Item>
+    <Item key="browse.str.itemcount.column">No. of Items</Item>
+  </Lookup>
+
+  <Lookup id="browsecolls">
+    <Item key="browsecolls.str.collcount"> Collections</Item>
+    <Item key="browsecolls.str.homelink">collection home</Item>
+  </Lookup>
+
+  <Lookup id="clipviewer">
+    <Item key="clipviewer.str.showcontents">Show contents for:</Item>
+    <Item key="clipviewer.str.format">Format</Item>
+    <Item key="clipviewer.str.searchresults">&lt;&lt; Search results</Item>
+  </Lookup>
+  <Lookup id="footer">
+    <Item key="footer.str.poweredby">Powered by </Item>
+    <Item key="footer.str.dlxs">DLXS</Item>
+    <Item key="footer.str.commentcontact">To comment or inquire about content, contact </Item>
+    <Item key="footer.str.errorcontact">To report errors, contact </Item>
+    <Item key="footer.str.reprintinfo">Reprint information for this collection</Item>
+  </Lookup>
+  <Lookup id="header">
+    <Item key="header.str.contents">Contents</Item>
+    <Item key="header.str.viewentiretext">View entire text</Item>
+    <Item key="header.str.fullaccess">For full access to this item, please </Item>
+    <Item key="header.str.login">Login </Item>
+    <Item key="header.str.addtobookbag">Add to bookbag</Item>
+    <Item key="header.str.searchthistext"> Search this text</Item>
+    <Item key="header.str.searchthisissue"> Search this issue</Item>
+    <Item key="header.str.othersearchoptions"> Other search options</Item>
+    <Item key="header.str.reprintunavailable">[unavailable for reprint]</Item>
+    <Item key="header.str.orderreprint">Order a reprint</Item>
+    <Item key="header.str.checkorder">Check your order</Item>
+  </Lookup>
+
+<!-- headerutils should be deprecated -->
+  <Lookup id="headerutils">
+    <Item key="headerutils.str.author">Author</Item>
+    <Item key="headerutils.str.title">Title</Item>
+    <Item key="headerutils.str.publicationinfo">Publication Info</Item>
+    <Item key="headerutils.str.title">Title</Item>
+    <Item key="headerutils.str.page">Page </Item>
+    <Item key="headerutils.str.viewarticlepageimage">View image of page containing this article</Item>
+    <Item key="headerutils.str.isbn">ISBN</Item>
+    <Item key="headerutils.str.subjectterms">Subject terms</Item>
+    <Item key="headerutils.str.editor">Editor</Item>
+    <Item key="headerutils.str.edition">Edition</Item>
+    <Item key="headerutils.str.volume">Volume</Item>
+    <Item key="headerutils.str.abbrevvolume">vol.</Item>
+    <Item key="headerutils.str.abbrevnumber">no.</Item>
+    <Item key="headerutils.str.abbrevpages">pp.</Item>
+    <Item key="headerutils.str.issue.title">Issue title</Item>
+    <Item key="headerutils.str.17">Serial</Item>
+    <Item key="headerutils.str.18">Issue</Item>
+    <Item key="headerutils.str.19">Imprint</Item>
+    <Item key="headerutils.str.plural">s</Item>
+    <Item key="headerutils.str.printsource">Print source</Item>
+    <Item key="headerutils.str.22">Availability</Item>
+    <Item key="headerutils.str.23">URL</Item>
+    <Item key="headerutils.str.24">Publication date</Item>
+    <Item key="headerutils.str.25">col.</Item>
+    <Item key="headerutils.str.26">Collection</Item>
+    
+  </Lookup>
+  <Lookup id="navheader">
+    <Item key="navheader.str.textshome">UMDL Texts home</Item>
+    <Item key="navheader.str.home">Home</Item>
+    <Item key="navheader.str.search">Search</Item>
+    <Item key="navheader.str.browse">Browse</Item>
+    <Item key="navheader.str.bookbag">Bookbag</Item>
+    <Item key="navheader.str.help">Help</Item>
+    <Item key="navheader.str.simple">Basic</Item>
+    <Item key="navheader.str.boolean">Boolean</Item>
+    <Item key="navheader.str.proximity">Proximity</Item>
+    <Item key="navheader.str.bib">Bibliographic</Item>
+    <Item key="navheader.str.ww">Word Index</Item>
+    <Item key="navheader.str.wwstart">Word Index</Item>
+    <Item key="navheader.str.history">History</Item>
+  </Lookup>
+  <Lookup id="pageviewer">
+    <Item key="pageviewer.str.pagenumber">Page no.</Item>
+    <Item key="pageviewer.str.format">Format</Item>
+    <Item key="pageviewer.str.searchresults">&lt;&lt; Search results</Item>
+  </Lookup>
+  <Lookup id="picklist">
+    <Item key="picklist.str.morethanoneitem">More than one item was found for this ID number:</Item>
+    <Item key="picklist.str.note">Note</Item>
+    <Item key="picklist.str.listorder">: The items are listed in order of their organization; e.g., in volume/issue order.</Item>
+  </Lookup>
+
+  <Lookup id="reslist">
+    <Item key="reslist.str.of"> of </Item> 
+    <Item key="reslist.str.to"> to </Item> 
+    <Item key="reslist.str.searchresults">Search Results</Item>
+    <Item key="reslist.str.previousitem">&lt;&lt;Previous item</Item>
+    <Item key="reslist.str.nextitem">Next item &gt;&gt;</Item>
+    <Item key="reslist.str.plural">s</Item>
+    <Item key="reslist.str.inthisitem"> in this item</Item>
+    <Item key="reslist.str.previous">&lt;&lt;Previous</Item>
+    <Item key="reslist.str.next">Next&gt;&gt;</Item>
+    <Item key="reslist.str.yousearched">You searched: </Item>
+    <Item key="reslist.str.for"> for </Item>
+    <Item key="reslist.str.results">Results: </Item>
+    <Item key="reslist.str.refinesearch">Refine this search</Item>
+    <Item key="reslist.str.resultsbycollection">Results by collection:</Item>
+  </Lookup>
+  <Lookup id="restricteditem">
+    <Item key="restricteditem.str.1">University of Michigan Digital Library - Access failure.</Item>
+    <Item key="restricteditem.str.2">UM Digital Library</Item>
+    <Item key="restricteditem.str.3"> UMDL Texts </Item>
+    <Item key="restricteditem.str.4"> UM Image Source </Item>
+    <Item key="restricteditem.str.5"> UM Finding Aids </Item>
+    <Item key="restricteditem.str.6"> UM Bibliographic Resources </Item>
+    <Item key="restricteditem.str.7">Sorry, you aren't permitted access to this item.</Item>
+    <Item key="restricteditem.str.8">We have verified that you are a valid authorized user,  but our information indicates that you do not have licensed permission to access this particular resource.</Item>
+    <Item key="restricteditem.str.9">Please use the "Back" feature of your browser to return to the resource you were using.</Item>
+    <Item key="restricteditem.str.10">To inquire about obtaining access to this item for future use, please contact </Item>
+    <Item key="restricteditem.str.11">UMDL Help</Item>
+  </Lookup>
+  <Lookup id="results">
+    <Item key="results.allselectedcolls">All Selected Collections</Item>
+    <Item key="results.searchtype.boolean">boolean</Item>
+    <Item key="results.searchtype.simple">basic</Item>
+    <Item key="results.searchtype.proximity">proximity</Item>
+    <Item key="results.searchtype.bib">bibliographic</Item>
+    <Item key="results.summary.singletextrestricted">Within a single item</Item>
+    <Item key="results.summary.bookbagrestricted">Within bookbag items</Item>
+    <Item key="occurrencetype.hit">hit</Item>
+    <Item key="occurrencetype.record">record</Item>
+    <Item key="occurrencetype.matchingterm">matching term</Item>
+    <Item key="results.str.sortresults">Sort Results</Item>     
+    <Item key="results.str.1">Collection: </Item>
+    <Item key="results.str.2">Search Results: </Item>
+    <Item key="results.str.3"> match</Item>
+    <Item key="results.str.4"> in </Item>
+    <Item key="results.str.5"> of </Item>
+    <Item key="results.str.6"> matching </Item>
+    <Item key="results.str.7"> of </Item>
+    <Item key="results.str.8"> total </Item>
+    <Item key="results.str.9">Login for full access to this item</Item>
+    <Item key="results.str.10">Results details</Item>
+    <Item key="results.str.11">Sort not available: </Item>
+    <Item key="results.str.12">result set too large.</Item>
+    <Item key="results.str.13">Sort by: </Item>
+    <Item key="results.str.14"> match</Item>
+    <Item key="results.str.15"> of "</Item>
+    <Item key="results.str.16">List of all pages</Item>
+    <Item key="results.str.17">Table of contents</Item>
+    <Item key="results.str.18">View first page</Item>
+    <Item key="results.str.19">View article</Item>
+    <Item key="results.str.20">View page containing article</Item>
+    <Item key="results.str.21">Add to bookbag</Item>
+    <Item key="results.str.22">&lt; Return to search results list</Item>
+    <Item key="results.str.23"> match</Item>
+    <Item key="results.str.24"> in </Item>
+    <Item key="results.str.25"> record</Item>
+    <Item key="results.str.26"> matching</Item>
+    <Item key="results.str.27"> record</Item>
+    <Item key="results.str.28"> matching </Item>
+    <Item key="results.str.29"> in </Item>
+    <Item key="results.str.30"> record</Item>
+    <Item key="results.str.31">e</Item>
+    <Item key="results.str.32">s</Item>
+    <Item key="results.str.33">subject</Item>
+    <Item key="results.str.downloadpdf">Download full pdf</Item>
+    <Item key="results.str.viewresults">view results&#xa0;&#187;</Item>
+  </Lookup>
+  <Lookup id="search">
+    <Item key="search.str.1">Basic Search</Item>
+    <Item key="search.str.2">Boolean Search</Item>
+    <Item key="search.str.3">Proximity Search</Item>
+    <Item key="search.str.4">Bibliographic Search</Item>
+    <Item key="search.str.5">Search History</Item>
+    <Item key="search.str.6">Searching within: </Item>
+    <Item key="search.str.7">Check collections to add them to a search.</Item>
+    <Item key="search.str.8">Visit the collection Home site for more information, and for more search options.</Item>
+    <Item key="search.str.9">Currently searching:</Item>
+    <Item key="search.str.10">Collection</Item>
+    <Item key="search.str.11">Number of Texts</Item>
+    <Item key="search.str.12">Hide tips</Item>
+  </Lookup>
+  <Lookup id="searchforms">
+    <Item key="searchforms.str.tip">Tip</Item>
+    <Item key="searchforms.str.1">work* finds "worker," "working," etc.</Item>
+    <Item key="searchforms.str.2">war and peace finds "war and peace"</Item>
+    <Item key="searchforms.str.3">&#x25bc;&#x00a0;More tips</Item>
+    <Item key="searchforms.str.4">Search in:</Item>
+    <Item key="searchforms.str.5">Full text of book bag items</Item>
+    <Item key="searchforms.str.6">Find:</Item>
+    <Item key="searchforms.str.7">Search in:</Item>
+    <Item key="searchforms.str.8">Full text of book bag items</Item>
+    <Item key="searchforms.str.9">Find:</Item>
+    <Item key="searchforms.str.10">Search in:</Item>
+    <Item key="searchforms.str.11">Full text of book bag items</Item>
+    <Item key="searchforms.str.12">Find:</Item>
+    <Item key="searchforms.str.13">Find:</Item>
+    <Item key="searchforms.str.14">in</Item>
+    <Item key="searchforms.str.15">in</Item>
+    <Item key="searchforms.str.16">Limit to:</Item>
+    <Item key="searchforms.str.17">in</Item>
+    <Item key="searchforms.str.18"> and </Item>
+    <Item key="searchforms.str.19">Restrict to genre:</Item>
+    <Item key="searchforms.str.20">Restrict to gender:</Item>
+    <Item key="searchforms.str.21">Restrict to period:</Item>
+    <Item key="searchforms.str.22">Restrict by date range:</Item>
+    <Item key="searchforms.str.23"> and </Item>
+    <Item key="searchforms.str.24">Viewing collections for Group: </Item>
+    <Item key="searchforms.str.25">Check collections to add them to a search</Item>
+  </Lookup>
+  <Lookup id="searchhistory">
+    <Item key="searchhistory.str.1">Basic Search</Item>
+    <Item key="searchhistory.str.2">Boolean Search</Item>
+    <Item key="searchhistory.str.3">Proximity Search</Item>
+    <Item key="searchhistory.str.4">Bibliographic Search</Item>
+    <Item key="searchhistory.str.5">Search History</Item>
+    <Item key="searchhistory.str.6">Word Index Search</Item>
+    <Item key="searchhistory.str.7">Search History</Item>
+    <Item key="searchhistory.str.8">You have no search history.</Item>
+    <Item key="searchhistory.str.9">Click on any search query in the history to resubmit that search.</Item>
+    <Item key="searchhistory.str.10">Search Query</Item>
+    <Item key="searchhistory.str.11">Databases Selected</Item>
+    <Item key="searchhistory.str.12">Total Results</Item>
+  </Lookup>
+  <Lookup id="sort">
+    <Item key="sort.overthreshold">Result set too large</Item>
+    <Item key="sort.notsorted">not sorted</Item>
+    <Item key="sort.author">author</Item>
+    <Item key="sort.title">title</Item>
+    <Item key="sort.dateascending">date ascending</Item>
+    <Item key="sort.datedescending">date descending</Item>
+    <Item key="sort.frequency">frequency</Item>
+  </Lookup>
+  
+  <Lookup id="text.components">
+    <Item key="text.components.str.1">[unnumbered]</Item>
+    <Item key="text.components.str.2">More about this </Item>
+    <Item key="text.components.str.3">(caesura)</Item>
+    <Item key="text.components.str.returntotext">return to text</Item>
+    <Item key="text.components.str.5">[figure]</Item>
+    <Item key="text.components.str.6">[missing figure]</Item>
+    <Item key="text.components.str.7">First published:</Item>
+    <Item key="text.components.str.8">This edition published:</Item>
+    <Item key="text.components.str.9">Author gender: </Item>
+    <Item key="text.components.str.10">Genre: </Item>
+    <Item key="text.components.str.11">Title: </Item>
+    <Item key="text.components.str.12">Page[s]: </Item>
+    <Item key="text.components.str.13">Author: </Item>
+    <Item key="text.components.str.14">Go to first matched term</Item>
+    <Item key="text.components.str.usebackbutton">Use the &quot;back&quot; feature of your browser to return.</Item>
+    <Item key="text.components.str.audio">audio file</Item>
+    <Item key="text.components.str.deletion">[deletion]</Item>
+    <Item key="text.components.str.addition">[addition]</Item>
+    <Item key="text.components.str.clickenlarge">click to enlarge image</Item>
+  </Lookup>
+
+  <Lookup id="text">
+    <Item key="text.str.gostr">Go</Item> 
+    <Item key="text.str.1">&lt;&lt; Previous section</Item>
+    <Item key="text.str.2">Next section &gt;&gt;</Item>
+    <Item key="text.str.3">highlight hits</Item>
+    <Item key="text.str.4">on</Item>
+    <Item key="text.str.5">off</Item>
+  </Lookup>
+  <Lookup id="viewer.utils">
+    <Item key="viewer.utils.str.1">Page size:  </Item>
+    <Item key="viewer.utils.str.2">Print this page</Item>
+    <Item key="viewer.utils.str.3">Print</Item>
+    <Item key="viewer.utils.str.4">To print this page, select "Print" from the File menu of your browser</Item>
+    <Item key="viewer.utils.str.format">Format</Item>
+    <Item key="viewer.utils.str.pageno">Page no.</Item>
+    <Item key="viewer.utils.str.pagesize">Page size</Item>
+    <Item key="viewer.utils.str.searchthistext">Search this text</Item>
+    <Item key="viewer.utils.str.viewentirepage">View entire page</Item>
+    <Item key="viewer.utils.str.figures">Figures</Item>
+    <Item key="viewer.utils.str.fullimagelink">[Enhanced image]</Item>
+  </Lookup>
+  <Lookup id="viewer">
+    <Item key="viewer.ftr.1stpg">First Page</Item>
+    <Item key="viewer.ftr.ack">Acknowledgement</Item>
+    <Item key="viewer.ftr.adv">Advertisement</Item>
+    <Item key="viewer.ftr.app">Appendix</Item>
+    <Item key="viewer.ftr.bib">Bibliography</Item>
+    <Item key="viewer.ftr.blp">Blank Page</Item>
+    <Item key="viewer.ftr.ctp">Cover Title Page</Item>
+    <Item key="viewer.ftr.dig">Digest</Item>
+    <Item key="viewer.ftr.err">Errata</Item>
+    <Item key="viewer.ftr.fnt">Front Matter</Item>
+    <Item key="viewer.ftr.his">History</Item>
+    <Item key="viewer.ftr.ind">Comprehensive Index</Item>
+    <Item key="viewer.ftr.loi">List of Illustrations</Item>
+    <Item key="viewer.ftr.lot">List of Tables</Item>
+    <Item key="viewer.ftr.map">Map</Item>
+    <Item key="viewer.ftr.mis">Miscellaneous</Item>
+    <Item key="viewer.ftr.mss">Manuscript</Item>
+    <Item key="viewer.ftr.not">Notes</Item>
+    <Item key="viewer.ftr.npn">[n/a]</Item>
+    <Item key="viewer.ftr.ord">Ordinances</Item>
+    <Item key="viewer.ftr.pni">Author or Name Index</Item>
+    <Item key="viewer.ftr.pnt">Production Note</Item>
+    <Item key="viewer.ftr.pre">Preface</Item>
+    <Item key="viewer.ftr.ref">References</Item>
+    <Item key="viewer.ftr.reg">Regulations</Item>
+    <Item key="viewer.ftr.rul">Rules</Item>
+    <Item key="viewer.ftr.spi">Special Index</Item>
+    <Item key="viewer.ftr.sui">Subject Index</Item>
+    <Item key="viewer.ftr.sup">Supplement</Item>
+    <Item key="viewer.ftr.tab">Table</Item>
+    <Item key="viewer.ftr.toc">Table of Contents</Item>
+    <Item key="viewer.ftr.tpg">Title Page</Item>
+    <Item key="viewer.ftr.uns"></Item>
+    <Item key="viewer.ftr.ves">Volume End Sheets</Item>
+    <Item key="viewer.ftr.vli">Volume List of Illus</Item>
+    <Item key="viewer.ftr.voi">Volume Index</Item>
+    <Item key="viewer.ftr.vpg">Various Pagination</Item>
+    <Item key="viewer.ftr.vtp">Volume Title Page</Item>
+    <Item key="viewer.ftr.vtv">Volume Title Page Verso</Item>
+    <Item key="viewer.nopagenum">[n/a]</Item>
+
+  </Lookup>
+  <Lookup id="viewtextnote">
+    <Item key="viewtextnote.str.1">view entire text now</Item>
+  </Lookup>
+  <Lookup id="ww">
+    <Item key="ww.str.wordindexsearch">Word Index Search</Item>
+    <Item key="ww.str.search">Search</Item>
+    <Item key="ww.str.new">New </Item>
+    <Item key="ww.str.wordindex">Word Index. </Item>
+    <Item key="ww.str.lookfor">Look for a word or word stem in the word index.</Item>
+    <Item key="ww.str.findword">Find Word or Word Stem:</Item>
+    <Item key="ww.str.term">Term</Item>
+    <Item key="ww.str.occurrences">Occurrences</Item>
+    <Item key="ww.str.usecheckboxes">Use checkboxes to select one or more terms from the list. </Item>
+    <Item key="ww.str.moveupdown">Click directional arrows to move up or down the list, alphabetically.</Item>
+    <Item key="ww.str.clicksearchbutton">Click the "Search for selected terms" button to search for </Item>
+    <Item key="ww.str.any">any</Item>
+    <Item key="ww.str.oftheterms">of the terms.</Item>
+    <Item key="ww.str.quickindex">Quick index. </Item>
+    <Item key="ww.str.selectcharacter">Select a character to view the corresponding word index.</Item>
+  </Lookup>
+ </LookupTables>
+
+</LangMap>
+
+<TemplateName>search</TemplateName>
+<XcollMode>singlecoll</XcollMode>
+
+<CurrentScriptName>/cgi/t/text/text-idx</CurrentScriptName>
+<ScriptName application="text">/cgi/t/text/text-idx</ScriptName>
+<ScriptName application="pageviewer">/cgi/t/text/pageviewer-idx</ScriptName>
+<ScriptName application="findaid">/cgi/f/findaid/findaid-idx</ScriptName>
+<ScriptName application="image">/cgi/i/image/image-idx</ScriptName>
+
+<BookmarkableUrl></BookmarkableUrl>
+<AuthenticationEnabled>1</AuthenticationEnabled>
+<UserAuthenticated>1</UserAuthenticated>
+<AuthenticatedUsername>jweise</AuthenticatedUsername>
+<SupportedAuthSystems><System>um</System></SupportedAuthSystems>
+<Feed>
+  <FeedLink type="short"></FeedLink>
+  <FeedLink type="long"></FeedLink>
+</Feed>
+
+
+<Title>American Verse Project</Title>
+<TitleComplex><img src="/a/amverse/graphics/amverse-sm2.gif" border="0" alt="American Verse Project" /></TitleComplex>
+
+<CacheDirPath>/n1/web/cache/6/8/e/68ed23463a2c9521a6b94dc7ca6476c5/</CacheDirPath>
+<HeadLinks>
+    <CssLink>/t/text/textclass.css</CssLink>
+    <CssLink>/a/amverse/textclass-specific.css</CssLink>
+</HeadLinks>
+
+<BibSearchRegionNames><Name>title</Name><Name>author</Name><Name>citation</Name></BibSearchRegionNames>
+<AllSearchRegionNames><Name>author</Name><Name>citation</Name><Name>full text</Name><Name>lines</Name><Name>paragraphs</Name><Name>poems</Name><Name>title</Name><Name>works</Name></AllSearchRegionNames>
+
+<PrintOnDemandEnabled>false</PrintOnDemandEnabled>
+<SearchHistoryHref>http://quod.lib.umich.edu/cgi/t/text/text-idx?c=amverse;page=history</SearchHistoryHref>
+</DlxsGlobals>
+ 
+ <NavHeader><MainNav>
+	<NavItem>
+		<Name>home</Name>
+		<Tab>true</Tab>
+		<Link>http://quod.lib.umich.edu/cgi/t/text/text-idx?page=home;c=amverse;cc=amverse</Link>
+	</NavItem>
+	<NavItem>
+		<Name>search</Name>
+		<Tab>true</Tab>
+		<Link>http://quod.lib.umich.edu/cgi/t/text/text-idx?c=amverse;page=simple</Link>
+	</NavItem>
+	<NavItem>
+		<Name>browse</Name>
+		<Tab>true</Tab>
+		<Link>http://quod.lib.umich.edu/cgi/t/text/text-idx?c=amverse;page=browse;id=navbarbrowselink;cginame=text-idx</Link>
+	</NavItem>
+	<NavItem>
+		<Name>bookbag</Name>
+		<Tab>true</Tab>
+		<Link>http://quod.lib.umich.edu/cgi/t/text/text-idx?c=amverse;cc=amverse;page=bbaglist</Link>
+	</NavItem>
+	<NavItem>
+		<Name>help</Name>
+		<Tab>true</Tab>
+		<Link>/t/text/help</Link>
+	</NavItem>
+</MainNav>
+<BrowseFields>
+  <Field><Name default="1">author</Name>
+<Link>http://quod.lib.umich.edu/cgi/t/text/text-idx?c=amverse;page=browse;key=author</Link>
+</Field>
+<Field><Name>title</Name>
+<Link>http://quod.lib.umich.edu/cgi/t/text/text-idx?c=amverse;page=browse;key=title</Link>
+</Field>
+
+</BrowseFields>
+ 
+<IncludeGoToXcoll>true</IncludeGoToXcoll>
+<GoToXcoll>http://quod.lib.umich.edu/cgi/t/text/text-idx?page=home</GoToXcoll>
+<ReAuthLink>http://quod.lib.umich.edu/cgi/t/text/text-idx?debug=xml;page=simple;c=amverse;cc=amverse;logout=1</ReAuthLink>
+<BookbagItems>0</BookbagItems>
+</NavHeader>
+
+ <Footer>
+<GraphicsPathUparrow>/t/text/graphics/uparrow.gif</GraphicsPathUparrow>
+<ContactText>hti-info@umich.edu</ContactText>
+<ContactLink>'m'+'a'+'i'+'l'+'t'+'o'+':'+'h'+'t'+'i'+'-'+'i'+'n'+'f'+'o'+'@'+'u'+'m'+'i'+'c'+'h'+'.'+'e'+'d'+'u'</ContactLink>
+<OrgInfoText>DLPS</OrgInfoText>
+<OrgInfoLink>'h'+'t'+'t'+'p'+':'+'/'+'/'+'w'+'w'+'w'+'.'+'u'+'m'+'d'+'l'+'.'+'u'+'m'+'i'+'c'+'h'+'.'+'e'+'d'+'u'</OrgInfoLink>
+</Footer>
+
+
+
+  <SearchType>simple</SearchType>
+  <SearchNav>
+    <NavItem>
+      <Name>simple</Name>
+      <Tab>true</Tab>
+      <Link>http://quod.lib.umich.edu/cgi/t/text/text-idx?c=amverse;cc=amverse;page=simple</Link>
+    </NavItem>
+    <NavItem>
+      <Name>boolean</Name>
+      <Tab>true</Tab>
+      <Link>http://quod.lib.umich.edu/cgi/t/text/text-idx?c=amverse;cc=amverse;page=boolean</Link>
+    </NavItem>
+    <NavItem>
+      <Name>proximity</Name>
+      <Tab>true</Tab>
+      <Link>http://quod.lib.umich.edu/cgi/t/text/text-idx?c=amverse;cc=amverse;page=proximity</Link>
+    </NavItem>
+    <NavItem>
+      <Name>bib</Name>
+      <Tab>true</Tab>
+      <Link>http://quod.lib.umich.edu/cgi/t/text/text-idx?c=amverse;page=bib</Link>
+    </NavItem>
+    <NavItem>
+      <Name>wwstart</Name>
+      <Tab>true</Tab>
+      <Link>http://quod.lib.umich.edu/cgi/t/text/ww2-idx?c=amverse;page=wwstart</Link>
+    </NavItem>
+    <NavItem>
+      <Name>history</Name>
+      <Tab>true</Tab>
+      <Link>http://quod.lib.umich.edu/cgi/t/text/text-idx?c=amverse;page=history</Link>
+    </NavItem>	
+  </SearchNav>
+  
+  <BookbagAddHref></BookbagAddHref>
+  <SearchRestriction>
+   <DocEncodingType>monograph</DocEncodingType>
+    <ItemHeader><?HEADER_XML?></ItemHeader>
+  </SearchRestriction>
+  
+  <!-- this is for the HTML select element (pulldown) of all groups -->
+  <GroupsSelect><?GROUPS_SELECT_XML?></GroupsSelect>
+  
+  <SearchForm>
+    <HiddenVars>
+      <Variable name="c">amverse</Variable><Variable name="cc">amverse</Variable>
+      
+      
+      
+       
+      
+      <Variable name="debug">xml</Variable>
+    </HiddenVars>
+    <SearchQuery>
+      <RegionSearchSelect><Option><Label>full text</Label><Value>full text</Value><Focus>true</Focus></Option><Name>rgn</Name><Default>full text</Default></RegionSearchSelect>
+      <Region1SearchSelect><?REGION1_SEARCH_SELECT_XML?></Region1SearchSelect>
+      <Region2SearchSelect><?REGION2_SEARCH_SELECT_XML?></Region2SearchSelect>
+      <Region3SearchSelect><?REGION3_SEARCH_SELECT_XML?></Region3SearchSelect>
+      <Q1><Name>q1</Name></Q1>
+      <Op2><?OP2_SELECT_XML?></Op2>
+      <Q2><?Q2_INPUT_XML?></Q2>
+      <Amt2><?AMT2_SELECT_XML?></Amt2>
+      <Op3><?OP3_SELECT_XML?></Op3>
+      <Q3><?Q3_INPUT_XML?></Q3>
+      <Amt3><?AMT3_SELECT_XML?></Amt3>
+    </SearchQuery>
+    <CiteRestrictions>
+      <Cite>
+        <Input><Name>cite1</Name></Input>
+        <Restrict><Option><Label>author</Label><Value>author</Value></Option><Option><Label>citation</Label><Value>citation</Value></Option><Option><Label>title</Label><Value>title</Value></Option><Name>cite1restrict</Name><Default></Default>
+</Restrict>
+      </Cite>
+      <Cite>
+        <Input><Name>cite2</Name></Input>
+        <Restrict><Option><Label>author</Label><Value>author</Value></Option><Option><Label>citation</Label><Value>citation</Value></Option><Option><Label>title</Label><Value>title</Value></Option><Name>cite2restrict</Name><Default></Default>
+</Restrict>
+      </Cite>
+    </CiteRestrictions>
+    <OtherRestrictions>
+      <!-- Begin collection specific restrictions -->
+      <GenreSelect>
+        
+      </GenreSelect>
+      <GenderSelect>
+        
+      </GenderSelect>
+      <PeriodSelect>
+        
+      </PeriodSelect>
+      <PubBetweenSelect>
+        
+      </PubBetweenSelect>
+    </OtherRestrictions>
+  </SearchForm>
+  
+  <CollCheckboxList>
+    <?COLL_LIST_WITH_CHECKBOXES_XML?>
+  </CollCheckboxList>
+
+</Top>

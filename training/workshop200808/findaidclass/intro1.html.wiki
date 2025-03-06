@@ -1,0 +1,18 @@
+== Run-through with samplefa/workshopfa ==
+
+* [./old.fcoutline.html#FindaidEncodingPractices Findaid Class Encoding Practices and Processes]  
+** [./old.fcoutline.html#ead2002DTDOverview EAD 2002 DTD Overview]
+** [./old.fcoutline.html#PracticalEADEncodingIssues Practical EAD Encoding Issues]
+** [./old.fcoutline.html#DataPrep Data Preparation]
+* [./old.fcoutline.html#FindaidClassIndexBuildingwithXPAT Findaid Class Index Building with XPAT]
+** [./old.fcoutline.html#SetupDirectoriesforXPATIndex Set Up Directories and Files for XPAT Indexing]
+** [./old.fcoutline.html#BuildtheXPATIndex Build the XPAT Index]
+** [./old.fcoutline.html#FabRegions Fabricated Regions in FindaidClass]
+* [./old.fcoutline.html#FindaidClassCollectiontoWeb Findaid Class Collection to Web]
+** [./old.fcoutline.html#ReviewtheCollectionDatabaseEntrywithCollMgr Review the Collection Database Entry with CollMgr ]
+** [./old.fcoutline.html#ReviewtheGroupsDatabaseEntrywithCollMgr Review the Groups Database Entry with CollMgr] (we will skip)
+** [./old.fcoutline.html#MakeCollectionmaps Make Collection Map] (we will just use samplefa)
+** [./old.fcoutline.html#SetuptheCollectionsWebDirectory Set Up the Collection's Web Directory]
+** [./old.fcoutline.html#TryItOut Try It Out]
+* [./old.fcoutline.html#linking Linking from Finding Aids Using the ID Resolver] (we will skip)
+[intro2.html Next: Run-Through with non-Bentley Finding Aids ]

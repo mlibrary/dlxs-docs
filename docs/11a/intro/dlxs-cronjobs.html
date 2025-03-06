@@ -1,0 +1,78 @@
+<HTML>
+<head>
+<TITLE>Setting up cron jobs for DLXS</TITLE>
+
+
+
+
+
+
+
+<LINK HREF="../dlxsdocs.css" REL="stylesheet" TYPE="text/css"> </head>         <BODY>
+<table class="updateTable" CELLSPACING="3" CELLPADDING="3" BORDER="1">
+<TR>
+<td>Last updated</td>
+<td>2002-07-03 16:12:14 EDT</td>
+</TR>
+<TR>
+<td>Doc Title</td>
+<td>Setting up cron jobs for DLXS</td>
+</TR>
+<TR>
+<td>Author 1</td>
+<td>Snavely, Cory</td>
+</TR>
+<TR>
+<td>Author 2</td>
+<td>Farber, Phillip</td>
+</TR>
+<TR>
+<td>CVS Revision</td>
+<td>$Revision: 1.7 $</td>
+</TR>
+</table>
+
+<DIV CLASS="pageTitle">Setting up cron jobs for DLXS</DIV>
+
+<H1>Sessions</H1>
+<P>All DLXS classes use session management, with session files that need to be occasionally purged. The <TT>managesession.pl</TT> script is supplied as a tool to help with this maintenance task.</P>
+<P>The syntax of the managesession.pl program options is:
+<PRE>
+   managesession.pl [-a age] -m [clean|list] -s [File|MySQL]
+</PRE>
+where
+<BLOCKQUOTE>
+<DL>
+<DT><TT>-a</TT> signifies the maximum <i>age</i> of session inactivity in minutes</DT>
+<DT><TT>-m</TT> signifies the <i>mode</i></DT>
+<DD><TT>clean</TT> will remove sessions that exceed the specified age</DD>
+<DD><TT>list</TT> will simlpy list the sessions that exceed the specified age</DD>
+<DT><TT>-s</TT> signifies the <i>data store</i></DT>
+<DD><TT>File</TT> indicates a file-based (CSV) data store</DD>
+<DD><TT>MySQL</TT> indicates a MySQL-based data store</DD>
+</DL>
+</BLOCKQUOTE>
+</P>
+<P>You <b>must</b> add a crontab entry to clear the session files. For example, the following crontab entry will run hourly, removing data for sessions that have not been accessed in 120 minutes. Replace the string <CODE>$DLXSROOT</CODE> with the DLXSROOT for your installation.</P>
+<P>The default <CODE>SESSION_AGE</CODE> value is 120 minutes.</P>
+<PRE>
+    #
+    # clear old web sessions from DLXS sessions database
+    51 * * * * (DLXSROOT=$DLXSROOT; export DLXSROOT; $DLXSROOT/bin/managesessions.pl -m clean -a 120 -s File)
+</PRE>
+
+
+<H1>Page image cache</H1>
+<P>The DLXS Text Class uses a cache directory for dynamically converted page images. When using Text Class and page images (e.g., with <CODE>tif2gif</CODE>), unless you have enough disk space to keep all converted page images (an approach that can improve performance), you <b>should</b> also add a crontab entry for clearing the converted image files.  We recommend that you add the following lines to the root crontab to clear cached/converted image files.  It will remove cached page images that have not been accessed in a number of days (<CODE>$CACHE_AGE</CODE>).  Replace the strings <CODE>$CACHE_AGE</CODE> and <CODE>$DLXSROOT</CODE>, below, with an acceptable page image lifetime and the DLXSROOT for your installation, respectively.</P>
+<PRE>
+    #
+    # clear temporary files and dirs from DLXS page cache
+    23 1 * * * find $DLXSROOT/web/*/*/*cvtdir \( -name '*.gif' -o -name '*.pdf' \) -type f -atime +$CACHE_AGE -exec rm {} \; 
+    23 5 * * * find $DLXSROOT/web/*/*/*cvtdir -depth -type d -links 2 -exec rmdir -ps {} \;
+</PRE>
+
+</BODY>
+
+                            
+
+</HTML>

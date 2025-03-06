@@ -1,0 +1,17 @@
+<!DOCTYPE TEI.2 PUBLIC "-//TEI//DTD TEI Lite 1.0//EN" [
+<?STYLESPEC "Amverse proofing"
+"http://www.hti.umich.edu/sgml/panorama/amv-prf.ssh">
+<?STYLESPEC "UM HTI American Verse"
+"http://www.hti.umich.edu/sgml/panorama/amverse.ssh">
+<?NAVIGATOR "UM HTI American Verse"
+"http://www.hti.umich.edu/sgml/panorama/amverse.nav">
+<!ENTITY % ISOlat1 PUBLIC "ISO 8879:1986//ENTITIES Added Latin 1//EN">
+<!ENTITY % ISOlat2 PUBLIC "ISO 8879:1986//ENTITIES Added Latin 2//EN">
+<!ENTITY % ISOnum  PUBLIC "ISO 8879:1986//ENTITIES Numeric and
+       Special Graphic//EN">
+<!ENTITY % ISOpub  PUBLIC "ISO 8879:1986//ENTITIES Publishing//EN">
+%ISOlat1
+%ISOlat2
+%ISOpub
+%ISOnum
+]>

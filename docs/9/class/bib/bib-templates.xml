@@ -1,0 +1,75 @@
+<?xml version="1.0"?>
+
+<!-- SPO Editorial Services                  -->
+<!-- automatically-generated XML header file -->
+
+<?xml-stylesheet href="../../../pre11-dlxsdocs.xsl" type="text/xsl"?>
+<!DOCTYPE DLPSDOC PUBLIC "-//UM-DLPS//DTD DLPS Publications//EN" "http://docs.umdl.umich.edu/dlps/docs/dlpsdocs.dtd">
+<DLPSDOC>
+<TITLE>Creating and Editing HTML/Template Files, Bibliographic Class</TITLE>
+<HEADER>
+<JOURNAL>DLXS Documentation</JOURNAL>
+<PUBDATE>2002-07-08 13:12:28 EDT</PUBDATE>
+<AUTH1>Hagedorn, Kat</AUTH1>
+<AUTH2></AUTH2>
+<DOCTITLE>Creating and Editing HTML/Template Files, Bibliographic Class</DOCTITLE>
+<VOL>class</VOL>
+<ISS>bib</ISS>
+<FILE>dlxsdocs-bib-templates</FILE>
+</HEADER>
+
+
+
+<BODY>
+<BHEAD>Creating and Editing HTML/Template Files, Bibliographic Class</BHEAD>
+<DIV1 ID="main">
+<P>The Bibliographic Class relies on default templates for the "simple" and "advanced" search interfaces and builds these from variables in the collection database, as presented through collmgr <A HREF="bib-colldb.xml">colldb</A>. An <TT>index.tpl</TT> is required for each collection, and instructions on editing the <TT>index.tpl</TT> are provided below.  It is also possible to build specialized web pages (e.g., a browse page for a relatively small collection) and link these from the <TT>index.tpl</TT>.  Instructions on creating specialized web pages will be provided at a later date.</P>
+</DIV1>
+
+<DIV1 ID="index.tpl">
+<H2>Editing <TT>index.tpl</TT> for a Collection</H2>
+<P>A <A HREF="bib-sample.tpl">sample <TT>index.tpl</TT></A> is provided as a working example of an <TT>index.tpl</TT>. Items that should be added or changed are in curly braces (e.g., <TT>{ }</TT>).</P>
+<OL>
+<LI>Add the <TT>HEAD</TT> element with the following components:
+<PRE>
+  &lt;head&gt;
+    &lt;title&gt; &lt;/title&gt;
+    &lt;meta content="template generated html"&gt;
+    &lt;link rel="MADE" href="mailto:"&gt;
+    &lt;link rel="STYLESHEET" type="text/css" href="$STYLE_SHEET_URL"&gt;
+    &lt;link rel="STYLESHEET" type="text/css" href="$STYLE_SHEET_SPECIFIC_URL"&gt;
+  &lt;/head&gt;
+</PRE>
+Provide a title for the collection and add the "help" e-mail address in the <TT>LINK</TT> element, as in <TT>LINK rel="MADE" href="mailto:umdl-help@umich.edu"</TT>.</LI>
+<LI>You may choose to add a banner or textual title for the collection within the body of the template.</LI>
+<LI>You may choose to provide one or more paragraphs of descriptive text about the collection within the body of the template.</LI>
+<LI>Provide links to the "simple" and "advanced" search pages using the template variables <TT>$SIMPLE_SEARCH_LINK</TT> and <TT>$BOOLEAN_SEARCH_LINK</TT>, e.g.:
+<PRE>
+              &lt;p align="left"&gt;
+                &lt;a href="$SIMPLE_SEARCH_LINK"&gt;
+                  &lt;font size="4"&gt;Simple Search&lt;/font&gt; &lt;/a&gt;
+                Search for a word or phrase in a title, a main heading or anywhere in the entry. 
+              &lt;/p&gt;
+              
+              &lt;p align="left"&gt;
+                &lt;a href="$BOOLEAN_SEARCH_LINK"&gt;
+                  &lt;font size="4"&gt;Advanced Search&lt;/font&gt;&lt;/a&gt;
+                Search for combinations of words or phrases in a title, main heading or anywhere in the entry.
+              &lt;/p&gt;
+</PRE></LI>
+<LI>You may also provide links to other web pages with embedded links to support activities such as browsing.  Examples and instructions will be provided here at a later date.</LI>
+<LI>Add a link to help pages about a particular collection using the <TT>$COLLECTION_HELP</TT> variable.  The following is one form this might take:
+<PRE>
+   &lt;center&gt;&lt;p&gt;&lt;a href="$COLLECTION_HELP"&gt;Help&lt;/a&gt;&lt;/center&gt;
+</PRE>
+</LI>
+</OL>
+</DIV1>
+
+<DIV1 ID="extrapages">
+<H2>Creating Additional Web Pages</H2>
+<P>Information will be provided about creating supporting web pages for other types of access (e.g., browsing).  For working examples of this, please see the Digital Library Federation's <A HREF="http://www.hti.umich.edu/cgi/b/bib/bib-idx?c=dlf">Digital Library Documents</A> collection.</P>
+</DIV1>
+</BODY>
+
+</DLPSDOC>

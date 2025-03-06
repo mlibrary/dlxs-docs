@@ -1,0 +1,213 @@
+<html>
+<head>
+<title>DLXS Release 5 Release Notes</title>
+
+
+<link href="../12/dlxsdocs.css" rel="stylesheet" type="text/css"> </head>         <body>
+<div class="pageTitle"> DLXS Release Notes</div>
+    
+      <h1>DLXS Release 5 - 30 MAR 2001</h1><h2>General Information</h2>
+      <p>This is the first release that incorporates all three Classes (Text,
+			 Bib, Image) and the Finding Aid middleware in a single release.</p>
+      
+      
+        <h2>XPAT version 5.2.3</h2>
+        
+          <h3>Enhancements</h3>
+          <ul>
+            <li>A new command option and argument to specify a sync message for
+				  startup. The syntax is [-s [ syncargmsg ] ].</li>
+          </ul>
+        
+        
+          <h3>Known Problems</h3>
+          <ul>
+            <li><?xm-replace_text {LI}?></li>
+          </ul>
+        
+      
+      
+        <h2>Text Class version 2.2.3</h2>
+        
+          <h3>Enhancements</h3>
+          <ul>
+            <li></li>
+          </ul>
+        
+        
+          <h3>Known Problems</h3>
+          <ul>
+            <li></li>
+          </ul>
+        
+      
+      
+        <h2>Bib Class version 2.0.2</h2>
+        <p>This release is a significant re-development of BibClass which uses
+			 the DLXS common library modules found in Lib. In particular, it uses a database
+			 for collection data and session management for BookBag and Search History
+			 functionality. </p>
+        
+          <h3>Enhancements</h3>
+          <ul>
+            <li><?xm-replace_text {LI}?></li>
+          </ul>
+        
+        
+          <h3>Known Problems</h3>
+          <ul>
+            <li>Bugzilla #272: BibClass does not build links based on the
+				  'host' field in the database so links to collections hosted on machines other
+				  than the machine running bib-idx will point to to the local machine data which
+				  usually does not exist (rather it is on a remote machine). This will only be a
+				  problem if BibClass colldb contains rows for more than one host.</li>
+          </ul>
+        
+      
+      
+        <h2>Image Class version 1.0.6</h2>
+        
+          <ul>
+            <li>The most current DLXS libraries are now used where applicable.
+				  <ul>
+                <li>DlpsUtils.pm</li>
+                <li>DevUtils.pm </li>
+                <li>QueryFactory.pm </li>
+                <li>TerminologyMapper.pm </li>
+                <li>XPat.pm </li>
+                <li>XPatResult.pm</li>
+                <li>XPatResultSet.pm</li>
+              </ul> </li>
+            <li>CGI parameters conform to DLXS standard</li>
+            <li>Full conformance with standard directory structures.</li>
+          </ul>
+          <p>The primary goal was to make essential changes to keep pace with
+				core DLXS developments. This was intentionally done without drastically
+				modifying the architecture or functionality of the programs. Considerable
+				architectural and functional enhancements are scheduled for version 2 of the
+				Image Class, expected to be released in spring 2001.</p>
+        
+        
+          <h3>Enhancements</h3>
+          <p>There are a few remarkable enhancements in Version 1.</p>
+          <ul>
+            <li>Improved delivery of JPEGs extracted from SID files (better
+				  caching, and believed to be faster) </li>
+            <li>Improved results retrieval (faster retrieval for records with
+				  multiple images) </li>
+            <li>Unlimited Boolean query components (q1 .. qN)</li>
+            <li>Support for advanced image structures (e.g., differentiation
+				  between overviews and details) </li>
+            <li>In the process of adding support for advanced image structures,
+				  the transformation tools were significantly improved upon, further simplifying
+				  collection deployment. </li>
+            <li>Several bugs that caused XPAT sessions to run endlessly were
+				  eliminated. </li>
+            <li>Improved display in situations where thumbnails are not
+				  available, especially for related views.</li>
+            <li>Improved interface for navigating to related views from a
+				  detail view. </li>
+            <li>The transformation process can now find image filenames in any
+				  number of specified fields.</li>
+          </ul>
+          <p>Version 1 includes a significant DTD change, which requires
+				collection metadata to be reprocessed. It is a general goal to keep DTD changes
+				to an absolute minimum.</p>
+        
+        
+          <h3>Dependencies</h3>
+          <ul>
+            <li>The
+				  <a href="http://www.dlxs.org/products/xpat.html">XPAT search
+					 engine</a> </li>
+            <li>
+				  <a>MrSID</a> for compression and delivery of images online.</li>
+            <li>
+				  <a>sgmlnorm</a> for normalizing and validating SGML.</li>
+          </ul>
+        
+      
+      
+        <h2>Finding Aids version 2.0.0</h2>
+        
+          <h3>Enhancements</h3>
+          <ul>
+            <li><?xm-replace_text {LI}?></li>
+          </ul>
+        
+        
+          <h3>Known Problems</h3>
+          <ul>
+            <li><?xm-replace_text {LI}?></li>
+          </ul>
+        
+      
+      
+        <h2>Lib version 2.1.1</h2>
+        <p>This is the first release of the shared DLXS library modules
+			 (collectively known as Lib). Release of Lib as a separately versioned
+			 deliverable gives us needed flexibility to supply updates for functionality
+			 enhancements and bug fixes and to better maintain backward-compatibility when
+			 newer Lib versions are released.</p>
+        
+          <h3>Enhancements</h3>
+          <ul>
+            <li>LibVersion.pm maintains the version number for Lib and via the
+				  Perl 'use' statement allows programs to programatically ensure that the correct
+				  level of functionality is present in the shared modules that compose Lib.</li>
+
+            <li>A new module (GroupsInfo.pm) provides an interface to a DBI
+				  table (
+				  <tt>groups</tt>) which supports the grouping of collection into
+				  named groups. This functionality is used in this release of BibClass.</li>
+            <li>A new module (DbUtils.pm) provides a simple interface built on
+				  top of DBI to connect to a CSV database, read a table and disconnect. </li>
+            <li>Adapted sessions handling to use the new Apache::Session module
+				  version 1.53 , and added configuration options the for the session data store
+				  (File, MySQL, etc.)</li>
+            <li>A subclass module (BookBagItem/BBItemBC.pm) provides a variant
+				  of the BookBagItem class for use by BibClass.</li>
+          </ul>
+        
+        
+          <h3>Backward Compatibility</h3>
+          <p>DLXS  #5 introduces 2 non-backward compatible changes as a
+				result of the move to the Perl DBI database interface and the update of
+				Apache::Session to version 1.53 with its correspondingly different file
+				structure for session management</p>
+          <ul>
+            <li>The TextClass and BibClass configuration variable $gCollDbName
+				  now points to the directory
+				  <i>containing</i> the database tables rather than to the database
+				  file (
+				  <tt>colldb</tt>) itself. Because colldb is a DBI CSV table it can
+				  contain neither blank lines nor comment (#) lines. The "s_" and "a_" data type
+				  prefixes on the column heads have been eliminated also. To convert your colldb,
+				  remove blank and comment lines and the "s_" and "a_" prefixes form the column
+				  heads.</li>
+            <li>The new session file structure now consists of a subdirectory
+				  (e.g.
+				  <tt>/tmp/sessions</tt> ) containing one file per session rather
+				  than consisting of a single file maintaining all sessions. This change was
+				  necessary due to problems with slow access to the CGI attributable to
+				  contention for access to the single semaphore-protected file mechanism. In the
+				  release, remove the session file and create a directory to hold the multiple
+				  session files and a second directory (e.g.
+				  <tt>/tmp/sessionslock</tt>) to hold the lock files which protect
+				  the session files.</li>
+          </ul>
+        
+        
+          <h3>Known Problems</h3>
+          <ul>
+            <li>While much more difficult to reproduce that in the previous
+				  release, due to a race condition, it is still possible to click "add to
+				  bookbag" on multiple items rapidly enough to make the code fail to add one or
+				  more of the clicked items to the BookBag.</li>
+          </ul>
+        
+      
+    
+  </body>
+
+</html>

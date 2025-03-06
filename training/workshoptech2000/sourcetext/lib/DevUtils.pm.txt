@@ -1,0 +1,25 @@
+
+sub GetDevUsernameFromScript
+{
+    my $scriptname = $0;
+    
+    if ( $scriptname =~ m/-idx-(.*?)$/ )
+    {
+        my $username = $1;
+        my $userpath = '/' . substr( $username, 0, 1 ) . '/' . $username;
+	my $usernamepart = '-' . $username;
+	
+        return ( $userpath, $usernamepart );
+    }
+    else
+    {
+        return ( '', '' ); 
+    }
+}
+
+
+# **********************************************************************
+# **********************************************************************
+1;
+
+

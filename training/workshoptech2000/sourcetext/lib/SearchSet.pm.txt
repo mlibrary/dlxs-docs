@@ -1,0 +1,206 @@
+package SearchSet;
+
+use Exporter ();
+@ISA = qw( Exporter );
+
+use QueryFactory;      # call to BaseQuery
+
+# **********************************************************************
+# this module contains subroutines used for creating 
+# pat searches
+
+# The structure of this object is:
+# SearchSet Object->
+#    {'label'}          # label sent by caller to identify this search
+#    {'query'}          # XPat query text
+## **********************************************************************
+
+
+# ----------------------------------------------------------------------
+# NAME      : new
+# PURPOSE   : create new SearchSet object
+#             
+# CALLED BY : main
+# CALLS     : SearchSet->_initialize
+# INPUT     : label, XPat query text
+# RETURNS   : SearchSet object
+# NOTES     : 
+# ----------------------------------------------------------------------
+
+sub new 
+{
+    my $class = shift;
+    my $self = {};
+    bless $self, $class;
+    $self->_initialize(@_);
+    return $self;
+}
+
+# ----------------------------------------------------------------------
+# NAME      : _initialize
+# PURPOSE   : create structure for Search object
+# CALLED BY : new
+# CALLS     : 
+# INPUT     : see new
+# RETURNS   : structured Search object
+# NOTES     : QueryFactory may need some major revisiting. It seems that
+#             right now certain attributes (like the mapper object) need
+#             not be kept in both the SearchSet and the QF objects. Where
+#             best to keep them...?
+# ----------------------------------------------------------------------
+
+sub _initialize 
+{
+    my $self = shift;
+
+    # for keeping track of how many searches there are and in what order
+    $self->{'count'} = 0;
+}
+
+# ----------------------------------------------------------------------
+# NAME         : AddQuery
+# PURPOSE      : adds a Query to this SearchSet object
+# CALLED BY    : main
+# CALLS        : 
+# INPUT        : label, session id, QueryFactory object
+# RETURNS      : XPat name for search
+# SIDE-EFFECTS : adds to SearchSet object
+# NOTES        : 
+# ----------------------------------------------------------------------
+
+sub AddQuery
+{
+    my $self  = shift;
+    my ( $label, $query ) = @_;
+    
+    # set this search's sequence number to the next available one
+    my $count = $self->{'count'};
+    $self->{'count'} = ++$count;
+
+    ## name of search gets Session Id attached so that it is unique 
+    ## in case we piggyback different sessions on one XPat process
+    $self ->{'labels'}{$label}{'query'}      = $query;
+    $self ->{'labels'}{$label}{'searchname'} = $label;
+    $self ->{'labels'}{$label}{'count'}      = $count;
+
+    if ( $ENV{'DEBUG'} >= 3 )
+    {
+        print qq{<h3>added query <font color="blue">\[$query\]</font> to searchset with label <font color="blue">$label</font> and sequence number <font color="blue">$count</font></h3>\n};
+    }
+}
+
+# ----------------------------------------------------------------------
+# NAME         : GetSearchLabels
+# PURPOSE      : return labels of searches in order of the searches' counts
+#                
+# CALLED BY    : TextClass->SubmitSearchSet
+# CALLS        : 
+# INPUT        : 
+# RETURNS      : 
+# GLOBALS      : 
+# SIDE-EFFECTS : 
+# NOTES        : 
+# ----------------------------------------------------------------------
+
+sub GetSearchLabels
+{
+    my $self = shift;
+    
+    my @labels = sort { $self->{'labels'}{$a}{'count'}
+                        <=>
+                          $self->{'labels'}{$b}{'count'}
+                    }    ( keys  ( % { $self->{'labels'} } ) );
+    return @labels;
+}
+
+
+# ----------------------------------------------------------------------
+# NAME         : GetQueryByLabel
+# PURPOSE      : get the XPat query string stored under this label
+# CALLED BY    : TextClass->SubmitSearchSet
+# CALLS        : 
+# INPUT        : 
+# RETURNS      : 
+# GLOBALS      : 
+# SIDE-EFFECTS : 
+# NOTES        : 
+# ----------------------------------------------------------------------
+
+sub GetQueryByLabel
+{
+    my $self  = shift;
+    my $label = shift;
+    
+    return $self->{'labels'}{$label}{'query'};
+}
+
+# ----------------------------------------------------------------------
+# NAME         : GetSearchNameByLabel
+# PURPOSE      : get the XPat search name stored under this label
+# CALLED BY    : 
+# CALLS        : 
+# INPUT        : 
+# RETURNS      : 
+# GLOBALS      : 
+# SIDE-EFFECTS : 
+# NOTES        : 
+# ----------------------------------------------------------------------
+
+sub GetSearchNameByLabel
+{
+    my $self  = shift;
+    my $label = shift;
+    
+    return $self->{'labels'}{$label}{'searchname'};
+}
+
+
+# ----------------------------------------------------------------------
+# NAME         : SetNamedSearchName
+# PURPOSE      : concoct and save an XPat named search name at the object
+#                level so that we can create later searches using this name
+# CALLED BY    : 
+# CALLS        : 
+# INPUT        : 
+# RETURNS      : returns the string it has added
+# GLOBALS      : 
+# SIDE-EFFECTS : 
+# NOTES        : 
+# ----------------------------------------------------------------------
+
+sub SetNamedSearchName
+{
+    my $self = shift;
+    my ( $name, $sid ) = @_;
+    
+    $self->{$name} = $name . $sid;
+    return $self->{$name};
+    
+}
+
+# ----------------------------------------------------------------------
+# NAME         : GetNamedSearchName
+# PURPOSE      : retrieve a previously created XPat named search name for use in a 
+#                dependent search
+# CALLED BY    : 
+# CALLS        : 
+# INPUT        : 
+# RETURNS      : 
+# GLOBALS      : 
+# SIDE-EFFECTS : 
+# NOTES        : 
+# ----------------------------------------------------------------------
+
+sub GetNamedSearchName
+{
+    my $self = shift;
+    my $name = shift;
+    
+    return $self->{$name};
+}
+
+
+## ----------------------------------------------------------------------
+1;
+
+

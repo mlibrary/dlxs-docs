@@ -1,0 +1,40 @@
+<?xml version="1.0"?>
+
+<!-- SPO Editorial Services                  -->
+<!-- automatically-generated XML header file -->
+
+<?xml-stylesheet href="../../pre11-dlxsdocs.xsl" type="text/xsl"?>
+<!DOCTYPE DLPSDOC PUBLIC "-//UM-DLPS//DTD DLPS Publications//EN" "http://docs.umdl.umich.edu/dlps/docs/dlpsdocs.dtd">
+<DLPSDOC>
+<TITLE>DLXS Classes</TITLE>
+<HEADER>
+<JOURNAL>DLXS Documentation</JOURNAL>
+<PUBDATE>2002-03-26 15:06:08 EST</PUBDATE>
+<AUTH1>Wilkin, John Price</AUTH1>
+<AUTH2></AUTH2>
+<DOCTITLE>DLXS Classes</DOCTITLE>
+<VOL>class</VOL>
+<ISS></ISS>
+<FILE>dlxsdocs-class-index</FILE>
+</HEADER>
+
+
+<BODY>
+<BHEAD>DLPS Classes</BHEAD>
+<DIV1 ID="general">
+<P>The following "classes" of content form the structure for DLXS work.  More information on the rationale behind the class-oriented approach is available below.</P>
+<UL>
+<LI><A HREF="/class/bib/bib-index.xml">Bibliographic</A></LI>
+<LI><A HREF="/class/findaid/findaid-index.xml">Finding Aids</A></LI>
+<LI><A HREF="/class/image/image-index.xml">Image</A></LI>
+<LI><A HREF="/class/text/tc-index.xml">Text</A></LI>
+</UL>
+</DIV1>
+<DIV1 ID="general">
+<P>In early 1999, DLPS began formally articulating both "behaviors" for systems and the "classes" of systems to which those behaviors belong.  Rather than focus on an abstract set of possible behaviors, we focused instead on behaviors we could identify in the systems we built, as well as behaviors that we wished to develop--i.e., a pragmatic approach.  In March, 1999, we began to define the classes of systems using a similar (i.e., pragmatic) approach.  Staff were charged with beginning to define and articulate the core classes with the following direction:  "Just as behaviors have a very practical manifestation, classes should be just as practically instantiated by a piece of middleware (or at most some group of associated pieces of middleware). The sorts of classes we've been talking about are image objects in Image Services, [texts] (with MOA as an end point in the spectrum), journals, bibliographic materials, and a type of reference work that resembles encyclopedias."  Further, we said that we "want to make sure this process is not crippled by deep questions of ontology ... and to make sure that it's a part of our current production strategies and thinking. Things will change, of course, and 'classes' that we think of as unitary and monolithic will begin to break out. (For example: At several points, we have talked about the images in Image Services perhaps breaking out off into a separate category those things that are books or manuscripts.)" (jpw e-mail to staff, March 9, 1999)</P>
+
+<P>Responsibility for work on shaping several of the classes was assigned (e.g., John Weise to the image class, and Chris Powell to the text class), and some work was begun.  As before, this pragmatic approach means that the classes will continue to be a work in progress.</P>
+<P>October 28, 2000</P>
+</DIV1>
+</BODY>
+</DLPSDOC>

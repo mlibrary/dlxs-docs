@@ -1,0 +1,964 @@
+##
+
+package QueryFactory;
+
+use CGI;
+use TerminologyMapper;
+
+%recognizedSearchEngines =
+    (
+     'pat50' => 1,
+     'ot60' => 1,
+     );
+
+$error = '';
+
+#  QueryFactory, largely abstract super class for query factories, this
+#  base class generates only "base" queries.  subclasses of QueryFactory
+#  apply to particular collections, and may perform more interesting
+#  manipulations.
+#
+#  the parameters to QueryFactory dont make any requirements of what
+#  appears on the user interface screen, just that whatever gets
+#  submitted to the QueryFactory obey these rules, and be used with these
+#  understandings.
+#
+#  reserved query parameter names (where N is an integer):
+#
+#      qN - a search term that a user has entered (or had entered for them),
+#      some natural language word that we expect to find or use as a literal
+#      in a search.
+#
+#  it is sensical (depending on the kind of search) for there to be
+#  multiple values for each of qN.
+#
+#      type - the name of the kind of search this is, what kind of query
+#      we need to come up with.  there are some general types that have
+#      long-standing notions about them, and collection developers can
+#      devise their own.  in the current repertoire:
+#
+#          boolean (simple?)
+#          proximity
+#          revision of any search
+#          limit a search to works X
+#          table of contents
+#          &c.
+#
+#      rgnN - the name of some region or element or field in whatever
+#      structure in which qN is to be found
+#
+#      rgn - a special region name understood to mean that the base
+#      queries are to be found within regions of this type, in addition
+#      to or in lieu of rgnN specified for each qN.
+#
+#      opN - a boolean or proximity operator for combining the N-1th and Nth
+#      terms
+#
+#      amtN - a proximity amount for the opN proximity operator
+#
+#  i dont believe it to be sensical for there to be multiple values for
+#  these five.
+#
+#  query parameter names that dont conflict with these can exist in any
+#  amount and variety.
+#
+#  there are three "namespaces" that these can exist in:
+#
+#      label
+#      synthetic
+#      native
+#
+#  (as per Distributed.pm) qN are the same in all three namespaces.  rgn,
+#  rgnN, opN, and amtN, are permitted to be different in each, as
+#  directed by a Distributed.pm type mapping from label to synthetic, and
+#  synthetic to native (though the label to native might be permitted as
+#  well...).  query parameters with other names are mapped only if the
+#  implementor provides for their mapping with a similar pair of
+#  mappings, otherwise their values are the same in all three namespaces.
+#  this all in the name of anticipating cross-collection (see the mapping
+#  jazz from Distributed.pm, &c...)
+#
+#
+#  taking in these terms presented to the QueryFactory, it can
+#  regurgitate a base query in (some) native query language, suitable for
+#  restricting and submitting to the search engine.
+#
+#  for simple, boolean, proximity, and revisions of these, the
+#  QueryFactory performs the following to produce a representation of the
+#  "base" query (which other parameters modify or restrict):
+#
+#    * if type is simple, then the base query starts as "qN" where N is
+#      the *lowest number present*.  if there is a matching rgnN, the
+#      search is "qN within rgnN" if there is more than one value
+#      specified for that lowest qN, then the search becomes "(qN1 + qN2
+#      ... qNn)", similarly modified by the matching rgnN if present.
+#
+#
+#    * if type is proximity, the base query must have minimally:
+#
+#           qN opX.amtX qX
+#
+#      where there is qN, some matching opX and amtX and the very next
+#      highest qX where X is greater than N.  if there are matching rgnN
+#      specified, one could have:
+#
+#  	 (qN within rgnN) opX.amtX (qX)
+#  	 (qN) opX.amtX (qX within rgnX)
+#  	 (qN within rgnN) opX.amtX (qX within rgnX)
+#
+#      to add additional terms to this, there must be opX and amtX to
+#      match the qX, and at least some qY such that Y is the lowest
+#      integer greater than X, thus:
+#
+#           ((qN) opX.amtX (qX)) opY.amtY (qY)
+#
+#      and rgnY can be present as well.  so long as for each new qN term,
+#      there is an opN and amtN term to use in combining with the last
+#      term to be added, one can proceed.  this could get one queries as
+#      "normal" as:
+#
+#  	 (q1 op2.amt2 q2) op3.amt3 q3
+#
+#      or as interesting as:
+#
+#           (q2 op30.amt30 q30) op8192.amt8192 q8192
+#
+#      the amt term is not strictly necessary, the collection implementor
+#      could provide a default value.
+#
+#
+#    * if type is boolean, the base query must have minimally:
+# 
+#           rgnN incl qN
+# 
+#      (this is very similar to the simple type, except that we get items
+#      of type rgnN back...).  to have 2 or more terms, things change a bit:
+# 
+#          (rgn incl (rgnN incl qN)) opX (rgn incl (rgnX incl qX))
+# 
+#      rgn, specified or not has to enter the picture logically either as
+#      an explicit ueber container in the context of which the boolean
+#      search is being made, or implicitly as a default specified by the
+#      collection implementor.  the default-default [sic] is whatever the
+#      synthetic ITEM term evaluates to.  adding terms follows the same
+#      rules as proximity: for each new qN and rgnN term, there is an opN
+#      term for the last term to be added.
+# 
+#  the QueryFactory is 'live' in that it never keeps the snippets or
+#  fragments of native query language around beyond the life of a
+#  function call.  this permits different search engines to generate
+#  queries off the same QueryFactory, and for a user to modify query
+#  parameters and have those changes reflected automagically.
+
+sub new {
+    my($class) = shift;
+    my($self) = {};
+    bless $self, $class;
+    return($self->_initialize(@_));
+}
+
+#      expects either a CGI.pm object to be passed, or a reference to a
+#      hash in which are to be found all the query parameters we care
+#      about as the first argument.  
+#
+#      as a second argument, a TerminologyMapper.pm object to be used in
+#      mapping label, synthetic, and native terms.  
+#
+#      as a third argument, a reference to an array of parameter names
+#      that should be mapped.  '\d+' in the name means that a number can
+#      appear in the name.  these values are suitable regular
+#      expressions.
+#
+#      if there is a fourth argument, and it is one of 'label',
+#      'synthetic', or 'native', then what is represented in the first
+#      object is placed in that namespace, and the other namespaces
+#      filled from it.  the default is 'label'.  
+#
+#      there are things common to all QueryFactories, and then the things
+#      the subclass should take care of in _subclass_initialize (which
+#      see).
+
+sub _initialize {
+    my($self) = shift;
+    my($query) = shift;
+    my($mapper) = shift;
+    my($raMappable) = shift;
+
+    if (ref($query) !~ m,CGI, && 
+        ref($query) ne 'HASH') {
+	$error = 'query argument not a CGI or HASH';
+	return undef;
+    }
+
+    if (ref($mapper) ne 'TerminologyMapper') {
+	$error = 'mapper argument not a TerminologyMapper';
+	return undef;
+    }
+
+    ## set this to default and change the pat50Truncation to convert
+    ## "word" to "word" + "word " to avoid the "word<" problem caused
+    ## by our not mapping "<" to " " in the pat50 dd file
+
+    ## 2000-03-23 08:19:46 EST pagliere
+    ## changing explicit truncation behavior to override pat50 behavior
+    ## and to also take care of our not mapping "<" to space.
+    ## See pat50Truncation
+    $self->{'truncation'} = 'explicit';
+
+    $self->{'mapper'} = $mapper;
+
+    if (ref($raMappable) ne 'ARRAY') {
+	$error = 'mappables argument not reference to array, assuming no mapping';
+	$self->{'mappables'} = {};
+    } else {
+	$self->{'mappables'} = {
+	    (map { $_, 1 } @$raMappable),
+	};
+    }
+
+    my($namespace) = 'label';
+
+    if ( $label && ( $label =~ m,(label|synthetic|native),) )
+    {
+        
+ 	$namespace = shift;
+    }
+
+    if (ref($query) =~ m,CGI,)
+    {
+
+	## this is where we are going to put what we have
+	$self->{'namespaces'}{$namespace} = {};
+	my($param);
+	foreach $param ($query->param) {
+	    my(@values) = $query->param($param);
+
+	    ## qN is special, we need to filter out quotation marks of
+	    ## all kinds
+
+	    if ($param =~ m,^q\d+$,) {
+		my($i);
+		for ($i = 0; $i <= $#values; $i++) {
+		    $values[$i] =~ s,[\"\'\`], ,g;
+		}
+	    }
+
+	    ## if more than one value per parameter key, make a hash
+	    ## of all the values, otherwise just set as a value.
+	    if ($#values) {
+		$self->{'namespaces'}{$namespace}{$param} = {
+		    (map { $_, 1 } @values),
+		};
+	    } else {
+		$self->{'namespaces'}{$namespace}{$param} =
+		    $values[0];
+	    }
+	}
+	
+    } elsif (ref($query) eq 'HASH') {
+	## we assume that this hash works as it should already!
+	$self->{'namespaces'}{$namespace} = $query;
+    }
+
+    ## we have installed the initial variables
+    $self->_updateParameterNamespaces($namespace);
+    $self->_subclass_initialize;
+
+    return($self);
+}
+
+#      this function takes as its first argument one of 'label',
+#      'synthetic', or 'native', and makes sure all three namespaces are
+#      correct, using the first argument to determine which of the
+#      namespaces is currently absolutely authoritative (and consequently
+#      immutable).  call this anytime a function changes the value or
+#      (horrors!) the name of a search parameter in any of the
+#      namespaces.
+#
+#      this does things with references, hashes, and mapping, that i
+#      shant try to dissect right now (1998-11-16 17:43:16 EST).
+#
+#      if you want to change the mapping for your QueryFactory,
+#      instantiate a new one with the different mapping.
+
+sub _updateParameterNamespaces 
+{
+    my($self) = shift;
+    my($fromNamespace) = shift;
+
+    my(@topopulate) = grep(/\S/, (($fromNamespace eq 'label' ? '' : 'label'),
+				  ($fromNamespace eq 'synthetic' ? '' : 'synthetic'),
+				  ($fromNamespace eq 'native' ? '' : 'native')));
+
+    ## @topopulte contains those namespaces we need to change or fill.
+    my($master) = $self->{'namespaces'}{$fromNamespace};
+    my($key, $value);
+
+    foreach $toNamespace (@topopulate) {
+	my($ref) = {};
+	
+	foreach $key (keys ( %{ $master } )) {
+
+	    if ($self->IsMappable($key)) {
+		if (ref($master->{$key}) eq 'HASH') {
+		    my($item);
+		    foreach $item (keys ( %{ $master->{$key} } )) {
+			my($mapped) = $self->{'mapper'}->map($item,
+							     $fromNamespace,
+							     $toNamespace);
+			if ($mapped) {
+			    $ref->{$key}{$mapped} = $master->{$key}{$item};
+			} else {
+			    $ref->{$key}{$item} = $master->{$key}{$item};
+			}
+		    }
+		} else {
+		    my($mapped) = $self->{'mapper'}->map($master->{$key},
+							 $fromNamespace,
+							 $toNamespace);
+		    if ($mapped) {
+			$ref->{$key} = $mapped;
+		    } else {
+			$ref->{$key} = $master->{$key};
+		    }
+
+		}
+
+	    } else {
+		if (ref($master->{$key}) eq 'HASH') {
+		    my($item);
+		    foreach $item (keys ( %{ $master->{$key} } )) {
+			$ref->{$key}{$item} = $master->{$key}{$item};
+		    }
+		} else {
+		    $ref->{$key} = $master->{$key};
+		}
+	    }
+
+	}
+
+	$self->{'namespaces'}{$toNamespace} = $ref;
+    }
+}
+
+
+sub IsMappable {
+    my($self) = shift;
+    my($tomap) = shift;
+    my($mappable);
+
+    foreach $mappable (keys (%{ $self->{'mappables'} })) {
+	if ($tomap =~ m,^$mappable$,) {
+	    return(1);
+	}
+    }
+
+    return undef;
+}
+
+sub getqNnames {
+    my($self) = shift;
+    my($native) = $self->{'namespaces'}{'native'};
+    return(sort { $a <=> $b} (map { s,^q,,; $_; } (grep(/q\d+/, keys (%{ $native })))));
+}
+
+sub getamtNnames {
+    my($self) = shift;
+    my($native) = $self->{'namespaces'}{'native'};
+    return(sort { $a <=> $b} (map { s,^amt,,; $_; } (grep(/amt\d+/, keys (%{ $native })))));
+}
+
+sub getrgnNnames {
+    my($self) = shift;
+    my($native) = $self->{'namespaces'}{'native'};
+    return(sort { $a <=> $b} (map { s,^rgn,,; $_; } (grep(/rgn\d+/, keys (%{ $native })))));
+}
+
+sub getopNnames {
+    my($self) = shift;
+    my($native) = $self->{'namespaces'}{'native'};
+    return(sort { $a <=> $b} (map { s,^op,,; $_; } (grep(/op\d+/, keys (%{ $native })))));
+}
+
+sub getrgnname {
+    my($self) = shift;
+    my($native) = $self->{'namespaces'}{'native'};
+    return((grep(/rgn/, keys (%{ $native }))));
+}
+
+#      return a parenthesis-balanced string for the base search
+#      represented by the search parameters currently in this
+#      QueryFactory.  the 'type' parameter determines what kind of string
+#      will be returned, QueryFactory understands presently (1998-11-16
+#      14:22:35 EST):
+#
+#  	simple
+#  	boolean
+#  	proximity
+#
+#      as acceptable base searches.  override this for more interesting
+#      base searches, add functions in the subclass for diverse
+#      functionality.  iff a new search engine needs to be added, its
+#      logic for making base queries falls here.
+#
+#      if there is an argument, it should be a string matching one of the
+#      keys of the %QueryFactory::recognizedSearchEngines, which will
+#      force the QueryFactory to a particular discipline.  if not
+#      specified, 'pat50' is the default behavior.
+
+sub baseQuery
+{
+    my($self) = shift;
+    
+    # see if any search engine name is explicitly passed in
+    my $engine = shift;
+    
+    # set default
+    my $discipline;
+
+    if ( ! defined ( $engine  ) )
+    {
+        $discipline  = 'pat50' . 'BaseQuery';
+    }
+    
+    elsif ($recognizedSearchEngines{$engine}) 
+    {
+	$discipline = $engine . 'BaseQuery';
+    }
+    else 
+    {
+	die qq{$_[0] not recognizedSearchEngine!\n};
+    }
+    
+    # call method whose name is $discipline
+    return($self->$discipline());
+}
+
+## 1999-05-11 09:26:46 EDT, nigelk, need to add affordances for
+## implicit/explicit truncation (UI folks want explicit for bibclass).
+## this should really be here, it should really be an _initialization
+## parameter, the terms should really be munged at initialization
+## time, but we dont know which of the two search engines we support
+## we need to use at initialization time (should this change what
+## seein as how we are going to use pat50 from here on out?).  so,
+## pat50BaseQuery (for now) makes use of a small function and a
+## variable that the main program sets to see if things should be
+## implicitly or explicitly truncated.  the changes made here never
+## propagate to the copies of the values that this QueryFactory object
+## has, nor to the variables used to initialize this QueryFactory,
+## they are volatile internal use only.
+
+sub pat50BaseQuery {
+    my($self) = shift;
+
+    my($native) = $self->{'namespaces'}{'native'};
+    my($mapper) = $self->{'mapper'};
+
+    my($search);
+
+    if ($native->{'type'} eq 'simple') {
+	my(@qParams)   = sort { $a <=> $b; } (map { s,^q,,; $_; }   grep(/q\d+/,   keys (%{ $native })));
+	my(@rgnNParams) = sort { $a <=> $b; } (map { s,^rgn,,; $_; } grep(/rgn\d+/, keys (%{ $native })));
+	my(@rgnParams) = sort { $a <=> $b; } (grep(/^rgn$/, keys (%{ $native })));
+
+	my($q) = 'q' . $qParams[0];
+	if (ref($native->{$q}) eq 'HASH') {
+	    $search =
+                '(' .
+                    join(' + ', map
+                         {
+                             $self->pat50TruncationHandler($_);
+                         }
+                         (keys (%{$native->{$q}}))  ) . ')';
+	} else {
+	    $search = '(' . $self->pat50TruncationHandler($native->{$q}) . ')';
+	}
+
+	if ($qParams[0] == $rgnNParams[0]) {
+	    my($rgn) = 'rgn' . $rgnNParams[0];
+	    $search = qq{($search within ($native->{$rgn}))};
+	}
+
+	if ($rgnParams[0])
+        {
+	    my($rgn) = "rgn";
+            if (!$rgnNParams[0])
+            {
+                $search = qq{($search within ($native->{$rgn}))};
+            }
+            else
+            {
+                my($rgnN) = 'rgn' . $rgnNParams[0];
+                if ($native->{$rgn} ne $native->{$rgnN})
+                {
+                    $search = qq{($search within ($native->{$rgn}))};
+                }
+            }
+	}
+
+	return($search);
+
+    } 
+    elsif ($native->{'type'} eq 'proximity') 
+    {
+
+	my(%qParams)   = (map { s,^q,,; $_, 1; }   grep(/q\d+/,   keys (%{ $native })));
+	my(%rgnNParams) = (map { s,^rgn,,; $_, 1; } grep(/rgn\d+/, keys (%{ $native })));
+	my(%opParams)  = (map { s,^op,,; $_, 1; }  grep(/op\d+/,  keys (%{ $native })));
+	my(%amtParams) = (map { s,^amt,,; $_, 1; } grep(/amt\d+/, keys (%{ $native })));
+	my(@rgnParams) = sort { $a <=> $b; } (grep(/^rgn$/, keys (%{ $native })));
+
+
+	my($q);
+	my($terms) = 0;
+
+      PROXIMITYTERMLOOP:
+	foreach $q (sort {$a <=> $b} (keys (%qParams))) {
+
+	    my($rgnN) = $native->{"rgn$q"};
+	    my($opN) = $native->{"op$q"};
+	    my($amtN) = $native->{"amt$q"};
+	    my($qN) = $native->{"q$q"};
+
+	    if (!$qN) { next PROXIMITYTERMLOOP; }
+
+	    if ($terms < 1) {
+		$search = $self->pat50TruncationHandler($qN);
+		if ($rgnN) {
+		    $search = qq{($search within ($rgnN))};
+		}
+		$terms++;
+	    } else {
+		if ($opN && $amtN) {
+		    if ($rgnN) {
+			$search = qq{($search $opN.$amtN (} . $self->pat50TruncationHandler($qN) . qq{ within ($rgnN)))};
+		    } else {
+			$search = qq{($search $opN.$amtN (} . $self->pat50TruncationHandler($qN) . qq{))};
+		    }
+		} elsif ($opN) {
+		    if ($rgnN) {
+			$search = qq{($search $opN (} . $self->pat50TruncationHandler($qN) . qq{ within ($rgnN)))};
+		    } else {
+			$search = qq{($search $opN (} . $self->pat50TruncationHandler($qN) . qq{))};
+		    }
+		} else {
+		    next PROXIMITYTERMLOOP;
+		}
+		$terms++;
+	    }
+	}
+
+	if ($rgnParams[0]) {
+	    my($rgn) = "rgn";
+	    $search = qq{($search within ($native->{$rgn}))};
+	}
+
+	return($search);
+
+    } elsif ($native->{'type'} eq 'boolean') {
+
+	my(%qParams)   = (map { s,^q,,; $_, 1; }   grep(/q\d+/,   keys (%{ $native })));
+	my(%rgnParams) = (map { s,^rgn,,; $_, 1; } grep(/rgn\d+/, keys (%{ $native })));
+	my(%opParams)  = (map { s,^op,,; $_, 1; }  grep(/op\d+/,  keys (%{ $native })));
+
+	my($rgn) = $native->{'rgn'} || $mapper->map('ITEM', 'synthetic', 'native');
+	my($terms) = 0;
+
+      BOOLEANTERMLOOP:
+	foreach $q (sort {$a <=> $b} (keys (%qParams))) {
+
+	    my($rgnN) = $native->{"rgn$q"};
+	    my($opN) = $native->{"op$q"};
+	    my($qN) = $native->{"q$q"};
+
+	    if (!$qN) { next BOOLEANTERMLOOP; }
+
+	    if ($terms < 1) {
+		if ($rgnN) {
+                    if ($rgn ne $rgnN)
+                    {
+                        $search = qq{(($rgn) incl (($rgnN) incl } . $self->pat50TruncationHandler($qN) . qq{))};
+                    }
+                    else
+                    {
+                        $search = qq{(($rgn) incl (} . $self->pat50TruncationHandler($qN) . qq{))};
+                    }
+		} else {
+		    $search = qq{(($rgn) incl } . $self->pat50TruncationHandler($qN) . qq{)};
+		}
+		$terms++;
+	    } else {
+		if ($opN) {
+		    if ($rgnN) {
+                        if ($rgn ne $rgnN)
+                        {
+                            $search = qq{($search $opN (($rgn) incl (($rgnN) incl } . $self->pat50TruncationHandler($qN) . qq{)))};
+                        }
+                        else
+                        {
+                            $search = qq{($search $opN (($rgn) incl (} . $self->pat50TruncationHandler($qN) . qq{)))};
+                        }
+		    } else {
+			$search = qq{($search $opN (($rgn) incl } . $self->pat50TruncationHandler($qN) . qq{))};
+		    }
+		} else {
+		    next BOOLEANTERMLOOP;
+		}
+		$terms++;
+	    }
+	}
+	return($search);
+    }
+}
+
+## assume that the scalar we are passed is a search term, and check to
+## see if we need to implicitly or explicitly truncate, and modify
+## that search term for pat50 purposes appropriately.
+## $self->{'truncation'} must be set to explicit for anything special
+## to happen, the default is implicit truncation behavior (no changes
+## made to string).
+
+sub pat50TruncationHandler
+{
+    my($self) = shift;
+    my($term) = shift;
+
+#     if ( $self->{'truncation'} eq 'explicit' )
+     {
+         if ( $term =~ m,\*$, )
+         {
+             ## if user enters "*", take it off and let pat50 expand the term
+             ## into a sistring as it will
+             $term =~ s,\s*\*$,,s;
+             $term = '("' . $term . '")';
+         }
+         else
+         {
+             ## if user enters just a term, clean it up and then add
+             ## a space and a "<" and OR them
+             $term =~ s,\s+$, ,s;
+             $term = '("' . $term . ' " + "' . $term . '<")';
+         }
+    
+#     {
+#         if ($term =~ m,\*$,)
+#         {
+#             $term =~ s,\s*\*$,,s;
+#         }
+#         else
+#         {
+#             $term .= ' ';
+#             $term =~ s,\s+$, ,s;
+#         }
+#    }
+     }
+    
+    return($term);
+}
+
+sub ot60BaseQuery {
+    my($self) = shift;
+
+    my($native) = $self->{'namespaces'}{'native'};
+    my($mapper) = $self->{'mapper'};
+
+    my($search);
+
+    if ($native->{'type'} eq 'simple') {
+	my(@qParams)   = sort { $a <=> $b; } (map { s,^q,,; $_; }   grep(/q\d+/,   keys (%{ $native })));
+	my(@rgnParams) = sort { $a <=> $b; } (map { s,^rgn,,; $_; } grep(/rgn\d+/, keys (%{ $native })));
+
+	my($q) = 'q' . $qParams[0];
+	if (ref($native->{$q}) eq 'HASH') {
+	    $search = '("' . join('" + "', keys (%{$native->{$q}})) . '")';
+	} else {
+	    $search = '("' . $native->{$q} . '")';
+	}
+
+	if ($qParams[0] == $rgnParams[0]) {
+	    my($rgn) = 'rgn' . $rgnParams[0];
+	    $search = qq{($search within ($native->{$rgn}))};
+	}
+
+	return($search);
+
+    } elsif ($native->{'type'} eq 'proximity') {
+
+	my(%qParams)   = (map { s,^q,,; $_, 1; }   grep(/q\d+/,   keys (%{ $native })));
+	my(%rgnParams) = (map { s,^rgn,,; $_, 1; } grep(/rgn\d+/, keys (%{ $native })));
+	my(%opParams)  = (map { s,^op,,; $_, 1; }  grep(/op\d+/,  keys (%{ $native })));
+	my(%amtParams) = (map { s,^amt,,; $_, 1; } grep(/amt\d+/, keys (%{ $native })));
+
+	my($q);
+	my($terms) = 0;
+
+      PROXIMITYTERMLOOP:
+	foreach $q (sort {$a <=> $b} (keys (%qParams))) {
+
+	    my($rgnN) = $native->{"rgn$q"};
+	    my($opN) = $native->{"op$q"};
+	    my($amtN) = $native->{"amt$q"};
+	    my($qN) = $native->{"q$q"};
+
+	    if (!$qN) { next PROXIMITYTERMLOOP; }
+
+	    if ($terms < 1) {
+		$search = qq{"$qN"};
+		if ($rgnN) {
+		    $search = qq{($search within ($rgnN))};
+		}
+		$terms++;
+	    } else {
+		if ($opN && $amtN) {
+		    if ($rgnN) {
+			$search = qq{($search $opN.$amtN ("$qN" within ($rgnN)))};
+		    } else {
+			$search = qq{($search $opN.$amtN ("$qN"))};
+		    }
+		} elsif ($opN) {
+		    if ($rgnN) {
+			$search = qq{($search $opN ("$qN" within ($rgnN)))};
+		    } else {
+			$search = qq{($search $opN ("$qN"))};
+		    }
+		} else {
+		    next PROXIMITYTERMLOOP;
+		}
+		$terms++;
+	    }
+	}
+
+	return($search);
+
+    } elsif ($native->{'type'} eq 'boolean') {
+
+	my(%qParams)   = (map { s,^q,,; $_, 1; }   grep(/q\d+/,   keys (%{ $native })));
+	my(%rgnParams) = (map { s,^rgn,,; $_, 1; } grep(/rgn\d+/, keys (%{ $native })));
+	my(%opParams)  = (map { s,^op,,; $_, 1; }  grep(/op\d+/,  keys (%{ $native })));
+
+	my($rgn) = $native->{'rgn'} || $mapper->map('ITEM', 'synthetic', 'native');
+	my($terms) = 0;
+
+      BOOLEANTERMLOOP:
+	foreach $q (sort {$a <=> $b} (keys (%qParams))) {
+
+	    my($rgnN) = $native->{"rgn$q"};
+	    my($opN) = $native->{"op$q"};
+	    my($qN) = $native->{"q$q"};
+
+	    if (!$qN) { next BOOLEANTERMLOOP; }
+
+	    if (ref($qN) eq 'HASH') {
+		my(@qNs) = keys (%{ $qN });
+		my($qNs) = join(' + ', map { qq{\"$_\"}; } @qNs);
+		if ($terms < 1) {
+		    if ($rgnN) {
+			$search = qq{(($rgn) incl (($rgnN) incl ($qNs)))};
+		    } else {
+			$search = qq{(($rgn) incl ($qNs))};
+		    }
+		    $terms++;
+		} else {
+		    if ($opN) {
+			if ($rgnN) {
+			    $search = qq{($search $opN (($rgn) incl (($rgnN) incl ($qNs))))};
+			} else {
+			    $search = qq{($search $opN (($rgn) incl ($qNs)))};
+			}
+		    } else {
+			next BOOLEANTERMLOOP;
+		    }
+		    $terms++;
+		}
+
+	    } else {
+		if ($terms < 1) {
+		    if ($rgnN) {
+			$search = qq{(($rgn) incl (($rgnN) incl "$qN"))};
+		    } else {
+			$search = qq{(($rgn) incl "$qN")};
+		    }
+		    $terms++;
+		} else {
+		    if ($opN) {
+			if ($rgnN) {
+			    $search = qq{($search $opN (($rgn) incl (($rgnN) incl "$qN")))};
+			} else {
+			    $search = qq{($search $opN (($rgn) incl "$qN"))};
+			}
+		    } else {
+			next BOOLEANTERMLOOP;
+		    }
+		    $terms++;
+		}
+	    }
+	}
+	return($search);
+    }
+}
+
+sub NaturalLanguageBaseQuery
+{
+    my($self) = shift;
+    my($db) = shift;
+
+    my($proximityBehavior);
+    if ($db eq 'ot60') {
+	$proximityBehavior = "words";
+    } elsif ($db eq 'pat50') {
+	$proximityBehavior = "characters";
+    } else {
+	$proximityBehavior = "characters";
+    }
+
+    my($label) = $self->{'namespaces'}{'label'};
+    my($mapper) = $self->{'mapper'};
+
+    my($search);
+
+    if ($label->{'type'} eq 'simple') {
+	my(@qParams)   = sort { $a <=> $b; } (map { s,^q,,; $_; }   grep(/q\d+/,   keys (%{ $label })));
+	my(@rgnParams) = sort { $a <=> $b; } (map { s,^rgn,,; $_; } grep(/rgn\d+/, keys (%{ $label })));
+
+	my($q) = 'q' . $qParams[0];
+	if (ref($label->{$q}) eq 'HASH') {
+	    my($last, @rest) = keys (%{$label->{$q}});
+	    $search = '"' . join('", "', @rest) . '", and "' . $last . '"';
+	} else {
+	    $search = qq{"} . $label->{$q} . qq{"};
+	}
+
+	if ($qParams[0] == $rgnParams[0]) {
+	    $search = qq{$search within } . $label->{'rgn' . $rgnParams[0]};
+	}
+
+	return($search);
+
+    } elsif ($label->{'type'} eq 'proximity') {
+
+	my(%qParams)   = (map { s,^q,,; $_, 1; }   grep(/q\d+/,   keys (%{ $label })));
+	my(%rgnParams) = (map { s,^rgn,,; $_, 1; } grep(/rgn\d+/, keys (%{ $label })));
+	my(%opParams)  = (map { s,^op,,; $_, 1; }  grep(/op\d+/,  keys (%{ $label })));
+	my(%amtParams) = (map { s,^amt,,; $_, 1; } grep(/amt\d+/, keys (%{ $label })));
+
+	my($q);
+	my($terms) = 0;
+
+      PROXIMITYTERMLOOP:
+	foreach $q (sort {$a <=> $b} (keys (%qParams))) {
+
+	    my($rgnN) = $label->{"rgn$q"};
+	    my($opN) = $label->{"op$q"};
+	    my($amtN) = $label->{"amt$q"};
+	    my($qN) = $label->{"q$q"};
+
+	    if (!$qN) { next PROXIMITYTERMLOOP; }
+
+	    if ($terms < 1) {
+		$search = qq{"$qN"};
+		if ($rgnN) {
+		    $search = qq{$search within $rgnN};
+		}
+		$terms++;
+	    } else {
+		if ($opN && $amtN) {
+		    if ($rgnN) {
+			$search = qq{$search, $opN within $amtN $proximityBehavior "$qN" within $rgnN};
+		    } else {
+			$search = qq{$search, $opN within $amtN $proximityBehavior "$qN"};
+		    }
+		} elsif ($opN) {
+		    if ($rgnN) {
+			$search = qq{$search, $opN "$qN" within $rgnN};
+		    } else {
+			$search = qq{$search, $opN "$qN"};
+		    }
+		} else {
+		    next PROXIMITYTERMLOOP;
+		}
+		$terms++;
+	    }
+	}
+
+	return($search);
+
+    } elsif ($label->{'type'} eq 'boolean') {
+
+	my(%qParams)   = (map { s,^q,,; $_, 1; }   grep(/q\d+/,   keys (%{ $label })));
+	my(%rgnParams) = (map { s,^rgn,,; $_, 1; } grep(/rgn\d+/, keys (%{ $label })));
+	my(%opParams)  = (map { s,^op,,; $_, 1; }  grep(/op\d+/,  keys (%{ $label })));
+
+	my($rgn) = $label->{'rgn'} || $mapper->map('ITEM', 'synthetic', 'label');
+	my($terms) = 0;
+
+      BOOLEANTERMLOOP:
+	foreach $q (sort {$a <=> $b} (keys (%qParams))) {
+
+	    my($rgnN) = $label->{"rgn$q"};
+	    my($opN) = $label->{"op$q"};
+	    my($qN) = $label->{"q$q"};
+
+	    if (!$qN) { next BOOLEANTERMLOOP; }
+
+	    if (ref($qN) eq 'HASH') {
+		my(@qNs) = keys (%{ $qN });
+		my($qNs) = join(', ', map { qq{\"$_\"}; } @qNs[0..($#qNs-1)]) . 
+		    qq{, and \"$qNs[$#qNs]\"};
+
+		if ($terms < 1) {
+		    if ($rgnN) {
+			$search = qq{$rgnN including $qNs};
+		    } else {
+			$search = qq{$qNs};
+		    }
+		    $terms++;
+		} else {
+		    if ($opN) {
+			if ($rgnN) {
+			    $search = qq{$search, $opN $rgnN including $qNs};
+			} else {
+			    $search = qq{$search, $opN including $qNs};
+			}
+		    } else {
+			next BOOLEANTERMLOOP;
+		    }
+		    $terms++;
+		}
+
+	    } else {
+		if ($terms < 1) {
+		    if ($rgnN) {
+			$search = qq{$rgnN including "$qN"};
+		    } else {
+			$search = qq{"$qN"};
+		    }
+		    $terms++;
+		} else {
+		    if ($opN) {
+			if ($rgnN) {
+			    $search = qq{$search, $opN $rgnN including "$qN"};
+			} else {
+			    $search = qq{$search, $opN including "$qN"};
+			}
+		    } else {
+			next BOOLEANTERMLOOP;
+		    }
+		    $terms++;
+		}
+	    }
+	}
+	if ($rgn) {
+	    $search = qq{$rgn including $search};
+	}
+	return($search);
+    }
+}
+
+#      override this method in your collection-specific QueryFactory
+#      subclass.
+
+sub _subclass_initialize {
+    my($self) = shift;
+}
+
+1;				# truth!

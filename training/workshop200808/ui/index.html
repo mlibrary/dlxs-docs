@@ -1,0 +1,194 @@
+<html>
+<head>
+<title>User Interface Overview</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<link rel="stylesheet" href="../styles.css" type="text/css">
+</head>
+<body bgcolor="#FFFFFF" leftmargin="10" topmargin="10" marginwidth="10" marginheight="10" class="mainpalette">
+<h1> User Interface Overview </h1>
+<ul>
+  <li><a href="#Introduction">Introduction</a></li>
+  <li><a href="#BreakdownofComponents">Breakdown of Components</a>    <ul>
+      <li><a href="#XMLTemplates">XML Templates</a></li>
+      <li><a href="#XML">XML</a></li>
+      <li><a href="#ProcessingInstructions">Processing Instructions</a> </li>
+      <li><a href="#XSL">XSL</a></li>
+      <li><a href="#HTML">HTML</a></li>
+      <li><a href="#LanguageMap">Language Map</a> </li>
+      <li><a href="#Javascript">Javascript</a></li>
+      <li><a href="#CSS">Cascading Style Sheets (CSS)</a></li>
+      <li><a href="#CollectionManager">Collection Manager</a></li>
+    </ul>
+  </li>
+  <li><a href="#fallback">Fallback</a> </li>
+</ul>
+<p>Next: <a href="customizing.htm">User Interface Customization</a> </p>
+<hr size="1" width="90%">
+<p>This document describes the key aspects of DLXS User Interface technology.
+  It is intended as a fairly high level overview. It applies to DLXS Image, Text,
+  and FindAid Classes, but not Bib Class which lags behind in support for XML
+  and XSL. </p>
+<h2><a name="Introduction"></a>Introduction</h2>
+<p>The DLXS Classes are CGI based web applications written using the Perl
+  programming language. The CGIs operate
+   between the web server and the data, and are also known as <em>middleware</em>.
+  The middleware is designed to keep data handling tasks separate from user interface
+  tasks as much as possible. The combination of Perl programming code, XML, and
+  XSLT help to achieve this. Each page served  is created by generating
+  an XML data document and transforming it using XSLT to HTML for display in
+   the browser. </p>
+<p>It is beyond the scope of this documentation to teach the fundamentals of
+  Perl, XML, XSLT and HTML. You may find you can comprehend most of
+  this documentation even if you are not very familiar with some of the technologies.
+  We will start with a high level view, increasing the complexity as we go. </p>
+<p>The diagram below illustrates how a CGI takes an  XML template,
+  populates it with data, and transforms it to HTML using an XSL stylesheet.</p>
+<div class="level2"><img src="graphics/dlxsxmlxslhtml.png" width="522" height="397" border="1"></div>
+<h3>&nbsp;</h3>
+<h2><a name="BreakdownofComponents"></a>Breakdown of Components</h2>
+<h3><a name="XMLTemplates"></a>XML Templates</h3>
+<p>An XML template exists for every page in the DLXS system. An XML
+  template is an XML file that contains
+  placeholders, called <strong>Processing Instructions</strong>. It is the starting
+  point for what will be an XML document full of dynamically generated data. </p>
+<p>Templates vary depending on the purpose of the page. A search form page has
+  different requirements that a search results page, and the templates reflect
+  this. </p>
+<p>Take a look at this complete <a href="search_template.xml" target="_blank">XML template</a> (Not
+  all browsers can display XML. Try Firefox.).
+  It is for a
+  search form page in Text Class.</p>
+<h3><a name="XML"></a>XML</h3>
+<p>The CGI produces an XML document as a result of replacing a templates <strong>Processing
+    Instructions</strong>. The XML contains all of the data to be displayed in
+    the browser, however, the it lacks the formatting instructions needed by
+    the browser to display an attractive and functional user interface. </p>
+<p>Take a look at this <a href="search.xml" target="_blank">XML </a> document.
+  It is the template above after having the PIs replaced by the CGI.</p>
+<p>XML documents used in the user interface are totally different than the XML
+  documents that hold content such as the full text of a book or an electronic
+  Finding Aid, though portions of content will  replace PIs in the XML for search
+  results page. If you want to know more about preparing data as XML, see <a href="http://webservices.itcs.umich.edu/mediawiki/dlxs14/index.php/Data_Conversion_and_Preparation">Data
+  Issues for DLXS</a>.</p>
+<h3><a name="ProcessingInstructions"></a>Processing Instructions</h3>
+<p><strong>Processing Instructions</strong> or<strong> PIs</strong> are replaced
+  by the CGI with
+  dynamically generated data such as search results, and information used to
+  construct menus, forms and links in the user interface. Every Processing Instruction
+  is paired with a handler in the CGI for replacing the PI with data or other
+  information. </p>
+<blockquote> 
+  <p class="unixcommand">&lt;?PI_IDENTIFIER_NAME [modifiername=&quot;value&quot;]*?&gt;</p>
+</blockquote>
+<p>Above you can see the generic form of a Processing Instruction. PIs can optionally
+  have modifiers, though most do not. Modifiers pass additional information to
+  the CGI, affecting the replacement. </p>
+<p>Processing Instructions are usually wrapped by XML tags for structure and
+  context. Some PIs get replaced by small amounts of data, such as the word &quot;true&quot;
+  or &quot;false&quot;, while others are replaced by large amounts of data, sometimes containing
+  additional XML tags.</p>
+<p>The diagram below shows a  snippet of the XML template. </p>
+<p><img src="graphics/xmltemplatesnip.png" alt="Snippet of XML Template showing Processing Instructions." width="530" height="280" border="1"></p>
+<p>Next you see the  snippet of the XML after Processing Instructions
+  have been replacedby the CGI. </p>
+<p><img src="graphics/xmlsnip.png" alt="The snippet of the XML after Processing Instructions have been replacedby the CGI." width="530" height="277" border="1"></p>
+<h3><a name="XSL"></a>XSL</h3>
+<p>XSL is the programming language used to transform the XML to HTML. An XSL
+  program is more commonly called an XSL Stylesheet. Each XML file specifies
+  the XSL Stylesheet to be used for transformation. It is common in DLXS for
+  one stylesheet to incorporate several other stylesheets stored in separate
+  files (for the convenience of sharing code). More on this later.</p>
+<p>Take a look at this <a href="searchforms.xsl" target="_blank">XSL Stylesheet</a>.
+  It is one of the stylesheets used to transform XML to HTML for the search form
+  page in Text Class. You might notice that XSL resembles XML. In fact, it <strong>is</strong>  XML.
+  XML takes on many different forms, one is XSL. You might also notice that an
+  XSL stylesheet contains XSL templates. An XSL template is a little bit like
+  a subroutine or function in other programming languages, and are not to be
+  confused with <a href="#XMLTemplates">XML templates</a>. </p>
+<p>The diagram below shows the snippet of XSL that transforms the XML above to
+  HTML. </p>
+<pre><img src="graphics/xslsnip.png" alt="The snippet of XSL that transforms the XML to HTML." width="521" height="294" border="1"></pre>
+<h4><a name="HTML"></a>HTML</h4>
+<p>HTML is the format output by the CGI to the browser. It is the result of applying
+  the XSL Stylesheet to the XML.</p>
+<p>Take a look at this <a href="search_htmlsource.html" target="_blank">HTML</a>.
+  It is the complete HTML source for the Text Class search form.</p>
+<p>The diagram below shows the snippet of HTML generated by transforming the
+  XML with XSL. </p>
+<p><img src="graphics/htmlsnip.png" alt="The snippet of HTML that is the result of the XML to HTML transformation with XSL." width="521" height="237" border="1"> </p>
+<h3><a name="LanguageMap"></a>Language Map</h3>
+<p>All text that appears as part of the user interface is stored in an XML file.
+  Phrases are assigned keys, and the keys are used in the XSL to retrieve phrases.
+  The potential exists to have interfaces in different languages. A default map
+  resides in the web directory for each Class and is called langmap.en.xml. The
+  CGI incorporates the map file into the XML file. </p>
+<h3><a name="Javascript"></a>Javascript</h3>
+<p>Javascript is another key technology that plays a role in the user interface.
+  Like CSS, Javascript is applied by the browser, not the server.</p>
+<h3><a name="CSS"></a>Cascading Stylesheets (CSS)</h3>
+<p>DLXS uses CSS extensively to further refine the layout of the HTML. Cascading
+  Stylesheets are very different from XSL Stylesheets. XSL Stylesheets affect
+  the structure of the HTML document (e.g., the hierarchy of the elements). Cascading
+  Stylesheets affect the display of the HTML structure. CSS is great for formatting
+  with fonts and colors, and it can even be used to show or hide a portion of
+  the HTML. CSS is applied by the browser, not the server.</p>
+<h3><a name="CollectionManager"></a>Collection Manager</h3>
+<p>Some of the most common customizations can be done in Collection Manager.
+  For example, the title of the collection. Image Class can be customized quite
+  extensively in Collection Manager. For example, the display of data fields
+  can be configured extensively. Customizations are relatively easy to make in
+  Collection Manager. Use it whenever possible. </p>
+<h2><a name="Fallback"></a>Fallback</h2>
+<p>Fallback is a mechanism  used by DLXS CGIs to handle the task of selecting
+  user interface files (e.g., XML templates) based on whether the end user is
+  working at the class, group, or collection level, and whether user interface
+  customizations have been made.</p>
+<p>DLXS allows  collection specific user interface customizations.
+  Similarly, groups of collections can share a custom interface. The DLXS Classes
+  each have a default interface that is used if there are no customizations at
+  the group or collection levels. </p>
+<p>When the CGI needs a user interface file, for example, search.xml for the
+  text class search form, the Fallback mechanism considers a number of factors
+  when choosing a file.</p>
+<ul>
+  <li>How many collections are involved? </li>
+  <li>Is a group involved?</li>
+  <li>Does the file exist
+    in the collection's web directory?</li>
+  <li>Does the collection have a default
+  group?</li>
+  <li>Does the file exist in the group's
+    web directory?</li>
+</ul>
+<p>Fallback is  complex due to the vast number possible situations,
+  but has great benefits. It allows very specific aspects of the user interface
+  to be customized while all other aspects <em>fall
+  back</em> to the defaults at the group or class level. This  reduces
+  duplication and in the long term minimimizes maintenance work (and the headaches
+  that go with it). </p>
+<p><strong>The principal
+    idea is to duplicate code as little as possible, and utilize fallback as
+    much as possible.</strong></p>
+<p>All user interface files are stored in the file system under $DLXSROOT/web.  </p>
+<p>There is a directory for files shared across the classes called &quot;lib&quot; and
+  located at $DLXSROOT/web/lib. </p>
+<p>Each class has a directory in &quot;web&quot;.</p>
+<ul>
+  <li>i/image</li>
+  <li>t/text</li>
+  <li>f/findaid</li>
+  <li>b/bib</li>
+</ul>
+<p>If a group or collection requires customization, it may be necessary to create
+  a web directory based on the group or collection ID. </p>
+<ul>
+  <li>c/collid (e.g., a/amverse)</li>
+  <li>g/groupid (e.g., b/bhl)</li>
+</ul>
+<p>You can see a report of the Fallback file selection process by adding <a href="http://quod.lib.umich.edu/cgi/t/text/text-idx?debug=tpl;page=simple&c=amverse" target="_blank">debug=tpl</a>  to
+  the URL. The CGI first checks for a file in the collection level directory,
+  then group, and finally at the class level. </p>
+<hr size="1" width="90%">
+<p>Next: <a href="customizing.htm">User Interface Customization</a>  </p>
+</body>
+</html>

@@ -1,0 +1,47 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+  <head>
+    <title>Multiple Releases</title>    
+    <link rel="stylesheet" href="../styles.css" type="text/css">
+  </head>
+  <body class="mainpalette" leftmargin="10" topmargin="10"
+    marginwidth="10" marginheight="10">
+    
+    <h1>Multiple DLXS Releases</h1>
+    
+    <h2><a name="intro"></a>Introduction</h2>
+    <p> You might want to have two different releases of DLXS Middleware running at the same time. For example, to keep a past release running in production while installing, configuring and migrating your local UI or code changes to a new release. </p>
+      <p>Given these two installations, you may or may not want to have both releases pointing to the same image files and indexed XML data.</p>
+    
+    <h2><a name="howto" id="howto"></a> Installing and configuring two DLXS releases</h2>
+    
+    <h3>Two DLXSROOT values and two databases</h3>
+    <p>Suppose you already have a pervious DLXS release and database installed.</p>
+    <ol>
+      <li>Install the new release under a new <tt>DLXSROOT</tt> directory.  Give the installer program (<tt>Installer.pl</tt>) this directory when you install. </li>
+      <li>Create another MySQL database for the new install with a different name, e.g. dlxs_v6 as we covered in <a href="dbmigration.html">Database installation and upgrading</a>). Answer the installer prompt for dabase name with the database name for the new installation.</small></li>
+      <li>Configure another virtual host under your web server and point its <tt>DLXSROOT</tt> 
+      to the directory containing the new release. Recall what a <a href="virtualhost.html">virtual host configuration</a>.  Given releases 12 and 13 your URLs might be:
+      <blockquote><tt>diglib12.somewhere.edu/cgi/t/text/text-idx</tt> <br>and<br>
+          <tt>diglib13.somewhere.edu/cgi/t/text/text-idx</tt></li> 
+      <li>Set the <tt>DLXSDATAROOT</tt> environment variable as described below for each virtual host</li> 
+    </ol>
+    
+    <p><b>CAVEAT: </b>The session ID is stored in a cookie.  Search History and Bookbag are stored in the session so crossing between different releases will drop the Search History and Bookbag holdings because the session ID is a handle to a record in the database and different releases have different databses.  Similarly, portfolios are stored in the database. A portfolio created in one release will not be accessible if the user crosses to a different release.
+    </p>
+    
+    <h2>Pointing two different DLXS releases at the same data</h2>
+    <p> Data (SGML/XML, image files) and XPAT indexes occupy a lot of disk space.  DLXS middleware recognizes the <tt>DLXS<font color="#330033">DATA</font>ROOT</tt> environment variable. A given release can point to the data/index/image directories (under <tt>obj</tt>, <tt>idx</tt> and <tt>img</tt>) <font color="#ff0000">outside</font> of its own install tree.</p>
+    <p> If the virtual host for a given DLXS release defines <tt>DLXSDATAROOT</tt>, that value 
+      is used as the path prefix for the <tt> obj</tt>, 
+      <tt>idx</tt> and <tt>img</tt> directories. If <tt>DLXSDATAROOT</tt> is not defined, 
+      the <tt>DLXSROOT</tt> value is used for the path prefix.</p>
+
+    <p>For example, in the virtual host for <font color="#ff0000">release 13</font>, 
+      you could set <tt>DLXSDATAROOT</tt> to <tt>/usr/local/<font color="#ff0000">dlxs12</font></tt> to 
+      have release 13 read data from the release 12 install tree.</p>
+
+    <p>Another scenario might be to have your data in a single location entirely  outside any
+      install trees and use <tt>DLXSDATAROOT</tt> in every virtual host to point at that single location.</p>
+  </body>
+</html>

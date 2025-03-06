@@ -1,0 +1,102 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+
+<html>
+
+<head>
+
+   <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+
+   <meta name="GENERATOR" content="Mozilla/4.72 [en] (WinNT; I) [Netscape]">
+
+   <title>DLXS Programmers &amp; Technical Workshop</title>
+
+<link rel="stylesheet" href="styles.css">
+
+<style type="text/css">
+
+<!--
+
+-->
+
+</style>
+
+</head>
+
+<body class="mainpalette">
+
+
+
+<h3>
+
+Makefile / Data Preparation Overview</h3>
+
+(also see <a href="sourcetext/idx/Makefile.bosnia.txt" target="sourcetext">actual
+
+Makefile</a>)
+
+<ul>
+
+<li>
+
+Principal Collection Targets</li>
+
+
+
+<ul>
+
+<li>
+
+noded: runs <a href="sourcetext/bin/nodefy.txt" target="sourcetext">nodefy</a>
+
+<i>(add NODE attributes to track DIV ancestry)</i></li>
+
+
+
+<li>
+
+validate: runs <a href="http://www.jclark.com/sp/nsgmls.htm" target="external">nsgmls</a>
+
+<i>(validate SGML data)</i></li>
+
+</ul>
+
+
+
+  <ul>
+    <li> norm: runs <a href="http://www.jclark.com/sp/sgmlnorm.htm" target="external">sgmlnorm</a><i> 
+      (<a href="normalize.html" target="mainFrame">normalize SGML data</a>)</i></li>
+    <li> dd<i> (create <a href="xpatindexing-gen.html" target="mainFrame">XPat 
+      index</a> for full text)</i></li>
+    <li> extra<i> (create <a href="fabregions.html" target="mainFrame">fabricated 
+      regions</a> and indexes for them)</i> <i></i></li>
+  </ul>
+
+
+
+<li>
+
+Related Data Targets (discussed later in <a href="relateddata-gen.html">Related
+
+Data</a>)</li>
+
+
+
+<ul>
+
+    <li> pageview: runs <a href="sourcetext/bin/makepageviewdata.pl.txt" target="sourcetext">makepageviewdata.pl</a> 
+      <i>(which creates <a href="sourcetext/pageview.dat.txt" target="sourcetext">pageview.dat</a> 
+      files for page images)</i></li>
+    <li> wordwheel: runs <a href="sourcetext/idx/Makefile.ww.txt" target="sourcetext">Makefile 
+      for WW</a> which runs <a href="sourcetext/idx/makeWordWheelFiles.pl.txt" target="sourcetext"><i>makewordwheel.pl</i></a><i> 
+      (create wordwheel derived SGML)</i></li>
+
+</ul>
+
+</ul>
+
+
+
+</body>
+
+</html>
+

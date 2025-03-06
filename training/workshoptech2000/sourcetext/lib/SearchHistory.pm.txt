@@ -1,0 +1,418 @@
+package SearchHistory;
+
+use Exporter ();
+@ISA = qw( Exporter );
+
+use CGI qw( :standard :html3 escape unescape escapeHTML ); 
+
+
+# **********************************************************************
+# this module contains subroutines used for creating 
+# pat searches
+
+# The structure of this object is:
+# SearchHistory Object->
+#    {'searchcount'}          # number of searches stored
+#    {'maxsearchcount'}       # max number of searches storable
+#    {'normedurls'}           # list of urls for all searches, that have been normalized
+#                               for easier comparison, an array ref
+#    {'items'}                # upper level item to hold actual searches, an array ref
+#             [0]             # first search stored
+#                {'cgi'}      # cgi object for stored search
+#                {'english'}  # search query in English for stored search
+#                {'results'}  # number of results for stored search
+#                {'colls'}    # list of coll ids searched during stored search
+#             [1]             # second search stored
+#             etc.
+#    {'iteratorindex'}        # holds index of next search item to get; index
+#                               works on {'items'} array
+## **********************************************************************
+
+
+# ----------------------------------------------------------------------
+# NAME      : new
+# PURPOSE   : create new SearchHistory object
+#             
+# CALLED BY : main
+# CALLS     : SearchHistory->_initialize
+# INPUT     : 
+# RETURNS   : SearchHistory object
+# NOTES     : 
+# ----------------------------------------------------------------------
+
+sub new 
+{
+    my $class = shift;
+    my $self = {};
+    bless $self, $class;
+    $self->_initialize(@_);
+    return $self;
+}
+
+# ----------------------------------------------------------------------
+# NAME      : _initialize
+# PURPOSE   : create structure for SearchHistory object
+# CALLED BY : new
+# CALLS     : 
+# INPUT     : see new
+# RETURNS   : structured SearchHistory object
+# NOTES     : 
+# ----------------------------------------------------------------------
+
+sub _initialize 
+{
+    my $self = shift;
+
+    # this is configurable
+    $self->{'maxsearchcount'} = 100;
+
+    $self->{'searchcount'} = 0;
+    $self->{'items'} = [ ];
+    $self->{'normedurls'} = [ ];
+
+    $self->{'lastslice'} = '';
+}
+
+# ----------------------------------------------------------------------
+# NAME         : AppendSearch
+# PURPOSE      : adds a search and related info to the front end of
+#                the list of stored searches for this object
+# CALLED BY    : 
+# CALLS        : 
+# INPUT        : 
+# RETURNS      : 
+# SIDE-EFFECTS : 
+# NOTES        : 
+# ----------------------------------------------------------------------
+
+sub AppendSearch
+{
+    my $self  = shift;
+    my ( $cgi, $searchInEnglish, $colls, $totalResults ) = @_;
+
+    # --------------------------------------------------
+    # save the slice info
+    $self->SetLastSlice( $cgi );
+
+    # --------------------------------------------------
+    # only if this is a first slice, do we want to save
+    # this search in the search history array
+    if ( ( $cgi->param( 'start' ) == 1 ) ||
+         ( ! defined ( $cgi-param( 'start' ) ) ) )
+    {
+        # get ref to array of all searches stored
+        my $searchArrayRef = $self->{ 'items' };
+        
+        # make an array of all the normalized urls for all the searches stored so far
+        # so we can check if this new search (cgi) has already been stored (by using grep)
+        my $normedUrlsArrayRef = $self->GetNormedUrls();
+        my $normedUrl = $self->NormalizeUrl ( $cgi );
+        
+        # if new, incoming cgi is not already saved, add it
+        
+        # 2000/07/24 pagliere: commented out grep related code so that all searches
+        # get added to the history, even if that means they get repeated
+        
+        #    if ( ! grep ( /$normedUrl/, @$normedUrlsArrayRef ) )
+      {
+          my %searchInfoHash = ();
+          
+          # remove references to slices, since the search in the search history 
+          # should always repeat the main search (slices are kept in $self->{ 'lastslice'}
+          my $tempCgi = new CGI ( $cgi );
+          
+          $tempCgi->delete( 'size' );
+          $tempCgi->delete( 'start' );
+          
+          $searchInfoHash{ 'cgi' }           = $tempCgi;
+          $searchInfoHash{ 'normalizedurl' } = $self->NormalizeUrl( $tempCgi );
+          $searchInfoHash{ 'english' }       = $searchInEnglish;
+          $searchInfoHash{ 'colls' }         = $colls;
+          $searchInfoHash{ 'results' }       = $totalResults;
+          
+          # add the ref to the info about the search coming in
+          push ( @$searchArrayRef,     \%searchInfoHash );
+          push ( @$normedUrlsArrayRef, $normedUrl );
+          
+          # prune front end of array if necessary
+          if ( scalar ( @$searchArrayRef ) > $self->{'maxsearchcount'} )
+          {
+              splice (
+                      @$searchArrayRef,
+                      0,
+                      scalar ( @$searchArrayRef ) - $self->{'maxsearchcount'} 
+                     );
+          }
+          # update count
+          $self->{ 'searchcount' } =  scalar ( @$searchArrayRef );
+      }    
+    }
+}
+
+
+
+# ----------------------------------------------------------------------
+# NAME         : InitIterator
+# PURPOSE      : set up an order for the GetNextResult to work
+# CALLED BY    : 
+# CALLS        : 
+# INPUT        : 
+# RETURNS      : 
+# GLOBALS      : 
+# SIDE-EFFECTS : 
+# NOTES        : This iterator currently is set up so that results are in
+#                reverse order
+# ----------------------------------------------------------------------
+
+sub InitIterator
+{
+    my $self = shift;
+    
+#    my $searchArrayRef = $self->{ 'items' };
+
+#    $self->{'iterator'} = $searchArrayRef;
+    $self->{'iteratorIndex'} = $#{$self->{ 'items' }};
+}
+
+# ----------------------------------------------------------------------
+# NAME         : GetNextSearchRecord
+# PURPOSE      : return next stored search in this object in order
+#                set up for Iterator
+# CALLED BY    : 
+# CALLS        : 
+# INPUT        : 
+# RETURNS      : array of all parts for this one item
+# GLOBALS      : 
+# SIDE-EFFECTS : 
+# NOTES        : 
+# ----------------------------------------------------------------------
+
+sub GetNextSearchRecord
+{
+    my $self = shift;
+
+    my @searchArray = @ { $self->{'items'} };
+    my $index = $self->{'iteratorIndex'};
+
+    ## see if we are out of bounds
+    if ( ( $index > $#searchArray ) || 
+         ( $index < 0 ) )
+    {
+        return undef;
+    }
+    ## otherwise, all is okay; return next item's information
+    else
+    {
+        my $searchInfoHashRef = $searchArray[$index];
+        my $cgi               = $$searchInfoHashRef{ 'cgi' };
+        my $english           = $$searchInfoHashRef{ 'english' };
+        my $colls             = $$searchInfoHashRef{ 'colls' };
+        my $results           = $$searchInfoHashRef{ 'results' };        
+        
+        my @returnArray = ( $cgi, $english, $colls, $results );
+
+        # increment for next time
+        $self->{'iteratorIndex'} -= 1;        
+        return @returnArray;
+    }
+}
+
+
+# ----------------------------------------------------------------------
+# NAME         : 
+# PURPOSE      : 
+#                
+# CALLED BY    : 
+# CALLS        : 
+# INPUT        : 
+# RETURNS      : 
+# GLOBALS      : 
+# SIDE-EFFECTS : 
+# NOTES        : 
+# ----------------------------------------------------------------------
+
+sub NextSearchRecord
+{
+    my $self = shift;
+
+    my @searchArray = @ { $self->{'items'} };
+    my $index = $self->{'iteratorIndex'};
+
+    ## see if we are out of bounds
+    if ( ( $index < 0 ) ||
+         ( $index > $#searchArray ) )
+    {
+        return undef;
+    }
+
+    ## otherwise, all is okay. return next item's label
+    ## without incrementing the index
+    else
+    {
+        return 1;
+    }
+}
+
+# ----------------------------------------------------------------------
+# NAME         : 
+# PURPOSE      : 
+#                
+# CALLED BY    : 
+# CALLS        : 
+# INPUT        : 
+# RETURNS      : 
+# GLOBALS      : 
+# SIDE-EFFECTS : 
+# NOTES        : 
+# ----------------------------------------------------------------------
+
+sub GetSearchCount
+{ 
+    my $self = shift;
+    
+    return $self->{'searchcount'};
+}
+
+# ----------------------------------------------------------------------
+# NAME         : 
+# PURPOSE      : 
+#                
+# CALLED BY    : 
+# CALLS        : 
+# INPUT        : 
+# RETURNS      : 
+# GLOBALS      : 
+# SIDE-EFFECTS : 
+# NOTES        : 
+# ----------------------------------------------------------------------
+
+sub CompareSearches
+{
+    my $self = shift;
+    my ( $cgiA, $cgiB ) = @_;
+
+    my $p;
+    my $equal = 0;
+    
+    my ( $aString, $bString ) = ( '', '' );
+
+    foreach $p ( $cgiA->param )
+    {
+        my @a =  $cgiA->param($p) ;
+        foreach my $val ( sort ( @a ) )
+        {
+            $aString .= qq{$p=$val};
+        }
+    }
+    foreach $p ( $cgiB->param )
+    {
+        my @a =  $cgiB->param($p) ;
+        foreach my $val ( sort ( @a ) )
+        {
+            $bString .= qq{$p=$val};
+        }
+    }
+    if ( $aString eq $bString )
+    {
+        $equal = 1;
+    }
+}
+
+# ----------------------------------------------------------------------
+# NAME         : 
+# PURPOSE      : 
+#                
+# CALLED BY    : 
+# CALLS        : 
+# INPUT        : 
+# RETURNS      : 
+# GLOBALS      : 
+# SIDE-EFFECTS : 
+# NOTES        : 
+# ----------------------------------------------------------------------
+
+sub NormalizeUrl
+{
+    my $self = shift;
+    my $cgi = shift;
+    
+    my $url = '';
+    my @arguments;
+    
+    foreach my $p ( sort ( $cgi->param ) )
+    {
+        my @a =  $cgi->param($p) ;
+        foreach my $val ( sort ( @a ) )
+        {
+            push ( @arguments, qq{$p=$val} );
+        }
+    }
+    # CGI::escape-ed cgi program plus '?' plus all arguments in alpha order
+    return escape( $cgi->url() . '?' . join ( '&', @arguments ) );
+}
+
+# ----------------------------------------------------------------------
+# NAME         : 
+# PURPOSE      : 
+#                
+# CALLED BY    : 
+# CALLS        : 
+# INPUT        : 
+# RETURNS      : 
+# GLOBALS      : 
+# SIDE-EFFECTS : 
+# NOTES        : 
+# ----------------------------------------------------------------------
+
+sub GetNormedUrls
+{
+    my $self = shift;
+    return $self->{'normedurls'};
+}
+
+# ----------------------------------------------------------------------
+# NAME         : 
+# PURPOSE      : 
+#                
+# CALLED BY    : 
+# CALLS        : 
+# INPUT        : 
+# RETURNS      : 
+# GLOBALS      : 
+# SIDE-EFFECTS : 
+# NOTES        : 
+# ----------------------------------------------------------------------
+
+sub SetLastSlice
+{
+    my $self = shift;
+    my $cgi = shift;
+    
+    $self->{ 'lastslice' } = $cgi->self_url;
+}
+
+
+# ----------------------------------------------------------------------
+# NAME         : 
+# PURPOSE      : 
+#                
+# CALLED BY    : 
+# CALLS        : 
+# INPUT        : 
+# RETURNS      : 
+# GLOBALS      : 
+# SIDE-EFFECTS : 
+# NOTES        : 
+# ----------------------------------------------------------------------
+
+sub GetLastSliceUrl
+{
+    my $self = shift;
+    
+    return $self->{ 'lastslice' };
+}
+
+## ----------------------------------------------------------------------
+1;
+
+

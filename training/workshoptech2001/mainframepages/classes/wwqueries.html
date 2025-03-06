@@ -1,0 +1,34 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+  <head>
+    <title>Wordwheel</title>
+<META http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<LINK rel="stylesheet" href="../../styles.css">
+  </head>
+
+  <body class="mainpalette">
+    <h1>Wordwheel</h1>
+
+    <h2>First Search</h2>
+    <pre>
+      pr.region."E" (( (((region "E") incl ("way " not within (region "E-T"))) 
+                 within (region "ALPHA")) 
+                 within ((region "REALM") incl ((region "REALMNAME") incl "full text"))) 
+                 within ((region "COLL") incl ((region "COLLNAME") incl "ampo20")));
+</pre>
+
+    <h2>Range Search (note trailing space)</h2>
+    <pre>
+      pr.region."E" (((((region "E") 
+                 incl ((region "A-N") 
+                 incl ("161197 "+"161198 "+"161199 "+"161200 "+
+                       "161201 "+"161202 "+"161203 "+"161204 "+
+                       "161205 "+"161206 "+"161207 "+"161208 "+
+                       "161209 "+"161210 "+"161211 "))) 
+                 within (region "ALPHA")) 
+                 within ((region "REALM") incl ((region "REALMNAME") incl "full text"))) 
+                 within ((region "COLL") incl ((region "COLLNAME") incl "ampo20")));
+</pre>
+
+  </body>
+</html>

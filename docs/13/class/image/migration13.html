@@ -1,0 +1,55 @@
+<html>
+<head>
+<title>Migration to Image Class DLXS 13</title>
+
+
+<meta name="description" content="DLXS digital library software system image database documentation for DLXS Image Class. Migration to DLXS 13.">
+
+
+
+ <link href="../../dlxsdocs.css" rel="stylesheet" type="text/css">
+ <style type="text/css">
+<!--
+.style1 {
+	color: #FF0000;
+	font-weight: bold;
+}
+-->
+ </style>
+</head>         <body>
+<div class="pageTitle">
+Migration of Image Class to DLXS 13</div>
+
+<div class="docnavlinks">
+<p><a href="http://www.dlxs.org" target="dlxs">DLXS</a> | 
+<a href="../../index.html">DLXS Documentation</a> | 
+
+<a href="index.html">Image Class Documentation</a> | 
+<a href="http://images.umdl.umich.edu" target="umichimageclass">See Image Class in Action</a></p>
+</div>
+
+
+  <p>This document assumes migration from <strong>DLXS 12/12a </strong>to<strong> DLXS
+      13</strong>.
+</p>
+
+
+
+
+ 
+  <h2><a name="Overview"></a>Summary of Changes</h2>
+
+<p>Read the <a href="../../intro/index.html">DLXS, Getting Started</a> documentation, and this document, completely, before proceeding. You might also want to skim the <a href="/d/dlxs/docs/releasenotes/releasenotes13.html">Release Notes</a>.</p>
+<h3>ImageClassMediaFiles Table Required</h3>
+<p>Image Class requires, as of release 13, that there be an <strong>ImageClassMediaFiles</strong> table. This table is created automatically at installation, but your collections will not work with DLXS 13 until the table has been populated. Please read migration section of <a href="imageloading.html">Image Class Media Loading for Online Delivery</a> for details.</p>
+
+
+<h3><a name="ui"></a>User Interface Migration</h2>
+
+
+<p>If you have customized the user interface using XML/XSL or Perl in previous DLXS versions, it is strongly recommended that you first get your existing collections basically up and running with the default interface before attempting to migrate XML/XSL or Perl customizations from DLXS 12/12a to DLXS 13. Once you have done this, evaluate each customization situation and decide how best to migrate the changes. Ideally, you will simply copy your files over to the new version and be done with it. However, consider the possibility that a) your customizations or similar are already included in DLXS 13, b) changes in DLXS 13 will force modifications to your customizations. As a general principle, you want to avoid unncecessary duplication of code. For example, an XSL customization that requires a change to just one template does not generally require the entire stylesheet to be duplicated.</p>
+<p>See <a href="/d/dlxs/docs/13/ui/index.html">DLXS
+  User Interface</a> documentation for details.  </p>
+</body>
+
+</html>

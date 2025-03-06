@@ -1,0 +1,377 @@
+<?xml version="1.0"?>
+
+<!-- SPO Editorial Services                  -->
+<!-- automatically-generated XML header file -->
+
+<?xml-stylesheet href="../../../pre11-dlxsdocs.xsl" type="text/xsl"?>
+<!DOCTYPE DLPSDOC PUBLIC "-//UM-DLPS//DTD DLPS Publications//EN" "http://docs.umdl.umich.edu/dlps/docs/dlpsdocs.dtd">
+<DLPSDOC>
+<TITLE>Full Text of Text Class's textclass.css</TITLE>
+<HEADER>
+<JOURNAL>DLXS Documentation</JOURNAL>
+<PUBDATE>2002-03-13 13:46:02 EST</PUBDATE>
+<AUTH1>Stoeffler, Matt</AUTH1>
+<AUTH2></AUTH2>
+<DOCTITLE>Full Text of Text Class's textclass.css</DOCTITLE>
+<VOL>class</VOL>
+<ISS>text</ISS>
+<FILE>dlxsdocs-tc-textclass-css</FILE>
+</HEADER>
+
+
+
+  <BODY>
+    <BHEAD>Full Text of textclass.css</BHEAD>
+    <DIV1 ID="main">
+<P>/* html element styles */</P>
+<P>/* margin-less body is a requirement of xcoll-bbag only */<BR/>
+  BODY { margin-top: 0px; <BR/>
+  margin-right: 0px; <BR/>
+  margin-bottom: 0px; <BR/>
+  margin-left: 0px; <BR/>
+  padding-right: 0px <BR/>
+  }</P>
+<P><BR/>
+  H1,H2,H3,H4,H5 { /* set font families */ }</P>
+<P><BR/>
+  A { text-decoration: none }<BR/>
+  /* nav link characteristics */<BR/>
+  A:hover { text-decoration: underline }<BR/>
+  A.nav { color: #FFFFFF; text-decoration: none }<BR/>
+  A.nav:hover { color : #FFCC33; text-decoration: underline }</P>
+<P>PRE { font-family: monospace; font-size: 0.75em }<BR/>
+  TT { font-family: monospace; font-size: 0.75em }<BR/>
+  IMG { border: 0 }<BR/>
+</P>
+<P>LI { list-style : outside; <BR/>
+  list-style-position : outside; <BR/>
+  list-style-type : disc; <BR/>
+  display : block; <BR/>
+  font-family: Arial, Helvetica, sans-serif;<BR/>
+  }<BR/>
+</P>
+<P>UL { padding-top : 0px; <BR/>
+  padding-bottom : 5px; <BR/>
+  border-top : 0px; <BR/>
+  border-bottom : 0px; <BR/>
+  margin-bottom : 0px; <BR/>
+  margin-top : 0px <BR/>
+  } </P>
+<P>/* custom styles */</P>
+<P>/* styles for headers and navigation bars - ANYTEXT XCOLL-BBAG - */<BR/>
+</P>
+<P>/* collection title font */<BR/>
+  .tophead { font-family : Helvetica, Verdana, Arial, sans-serif; <BR/>
+  font-size : 16px; <BR/>
+  font-weight : bold <BR/>
+  }<BR/>
+  <BR/>
+  /* collection title font */<BR/>
+  .topheadlink { font-family : Helvetica, Verdana, Arial, sans-serif; <BR/>
+  font-size : 16px; <BR/>
+  font-weight : bold; <BR/>
+  color: #000000; <BR/>
+  text-decoration: none <BR/>
+  }<BR/>
+  <BR/>
+  /* page main header font */<BR/>
+  .greysubheader { color: #8C8A73; <BR/>
+  font-weight: bold }/* color for hr under nav tabs */<BR/>
+  .navhrcolor { background-color:#999999 } <BR/>
+</P>
+<P>/* background color for nav bar */<BR/>
+  .navcolor { background-color: #666699 } </P>
+<P>/* background color for footer nav bar */<BR/>
+  .footernavcolor { background-color: #BDBDBD } <BR/>
+</P>
+<P>/* background color for header table cells */<BR/>
+  .hdrcolor { background-color: #FFFFFF } <BR/>
+</P>
+<P>/* background color for book bag nav bar */<BR/>
+  .bbnavcolor { background-color: #990000 } <BR/>
+</P>
+<P>/* nav bar fonts */<BR/>
+  .navlinks { font-family: Arial, Helvetica, sans-serif; <BR/>
+  font-size: 12px; <BR/>
+  font-weight: bold; <BR/>
+  color: #666666; <BR/>
+  text-decoration: none<BR/>
+  }<BR/>
+</P>
+<P>/* hilite color for up tab */<BR/>
+  .navhicolor { background-color: #FFFFFF } <BR/>
+</P>
+<P>/* label font for up tabs */<BR/>
+  .navhilinks { font-family: Arial, Helvetica, sans-serif; <BR/>
+  font-size: 12px; <BR/>
+  font-weight: bold; <BR/>
+  text-decoration: none <BR/>
+  }<BR/>
+  <BR/>
+  /* color for tab borders */<BR/>
+  .navdivision { background-color: #666699 } <BR/>
+</P>
+<P>/* links on adv search pages */<BR/>
+  .navlinksroman { font-family: Arial, Helvetica, sans-serif; <BR/>
+  font-weight: normal; <BR/>
+  text-decoration: none <BR/>
+</P>
+<P>}/* controls font size in pull down menus */<BR/>
+  .selectmenu { font-size: 11px }</P>
+<P> /* bgcolor for link to x-coll */<BR/>
+  .xcollnavcolor { background-color: #CCCCFF } <BR/>
+</P>
+<P>/* font for bbag status */<BR/>
+  .navinfo { font-family: Arial, Helvetica, sans-serif; <BR/>
+  font-size: 11px; <BR/>
+  font-weight: normal<BR/>
+  }<BR/>
+</P>
+<P>/* results page summary info */<BR/>
+  .resultsheader { font-family: Arial, Helvetica, sans-serif; <BR/>
+  font-size: 12px; <BR/>
+  font-style: normal; <BR/>
+  font-weight: normal <BR/>
+  }<BR/>
+  <BR/>
+  .indentHdr { /* available to attach to a div for indenting a header block */}</P>
+<P><BR/>
+  /* header styles for search results lists - ANYTEXT XCOLL-BBAG - */<BR/>
+</P>
+<P>/* for title */<BR/>
+  .mainheader { font-family : Arial, Helvetica, sans-serif; <BR/>
+  font-weight : bold; <BR/>
+  color : #333333; <BR/>
+  margin-top: 1em; <BR/>
+  margin-bottom: 0px; <BR/>
+  padding-bottom: 0px<BR/>
+  }<BR/>
+</P>
+<P>.div1head { display : block; <BR/>
+  font-family : Arial, Helvetica, sans-serif; <BR/>
+  margin-bottom : 0px; <BR/>
+  padding-bottom : 0px; <BR/>
+  padding-top : 0px; <BR/>
+  font-weight: normal<BR/>
+  }<BR/>
+</P>
+<P>.div2head { display : block; <BR/>
+  font-family : Arial, Helvetica, sans-serif; <BR/>
+  margin-bottom : 0px; <BR/>
+  padding-bottom : 0px; <BR/>
+  padding-top : 0px; <BR/>
+  margin-top : 0px; <BR/>
+  font-weight: normal<BR/>
+  }<BR/>
+  <BR/>
+</P>
+<P>.div3head { display : block; <BR/>
+  font-family : Arial, Helvetica, sans-serif; <BR/>
+  margin-bottom : 0px; <BR/>
+  padding-bottom : 0px; <BR/>
+  padding-top : 0px; <BR/>
+  margin-top : 0px; <BR/>
+  }<BR/>
+</P>
+<P>.div4head { display : block; <BR/>
+  font-family : Arial, Helvetica, sans-serif; <BR/>
+  margin-bottom : 0px; padding-bottom : 0px; <BR/>
+  padding-top : 0px; <BR/>
+  margin-top : 0px; <BR/>
+  font-weight: normal<BR/>
+  } <BR/>
+  <BR/>
+  /* styles for toc bib pages - ANYTEXT XCOLL-BBAG - */<BR/>
+</P>
+<P>/* font for bibliographic headers */<BR/>
+  .bibinfo { font-family: Arial, Helvetica, sans-serif; <BR/>
+  font-size: 12px <BR/>
+  }<BR/>
+</P>
+<P>/* font for TOC page options */<BR/>
+  .hdroptions { font-family: Arial, Helvetica, sans-serif; <BR/>
+  font-size: 12px <BR/>
+</P>
+<P>}/* other misc body styles */<BR/>
+</P>
+<P>/* highlight color for results lists */<BR/>
+  .hilite { font-weight: bold; <BR/>
+  color: #CC0000 <BR/>
+  }<BR/>
+  .hilitebox { border: 1px; <BR/>
+  border-color: #999999 <BR/>
+  }<BR/>
+</P>
+<P>/* font for release info in footer */<BR/>
+  .releaseversion { font-family: Arial, Helvetica, sans-serif; <BR/>
+  font-size: 10pt; <BR/>
+  font-style: normal; <BR/>
+  color: #666666 <BR/>
+  }<BR/>
+</P>
+<P>.wwquicklink { font-family : Arial, sans-serif; <BR/>
+  font-size : 12px <BR/>
+  } <BR/>
+</P>
+<P>.smalltext { font-family: Arial, Helvetica, sans-serif; <BR/>
+  font-size: 11px; <BR/>
+  font-style: normal <BR/>
+  }<BR/>
+</P>
+<P>.smallheadernormal { font-family: Arial, Helvetica, sans-serif; <BR/>
+  font-size: 12px <BR/>
+  }<BR/>
+</P>
+<P>.smallheader { font-family: Arial, Helvetica, sans-serif; <BR/>
+  font-size: 12px; <BR/>
+  font-weight: bold <BR/>
+  }<BR/>
+</P>
+<P>.indentBlock { margin-right: 7px; <BR/>
+  margin-left: 15px <BR/>
+  }<BR/>
+</P>
+<P>/* attached to div blocks to indent results - ANYTEXT XCOLL-BBAG - */<BR/>
+  .resultslist { margin-left: 10px; <BR/>
+  margin-right: 10px <BR/>
+  }<BR/>
+</P>
+<P>.pageBreak { text-align: center } /* - ANYTEXT - */</P>
+<P><BR/>
+  /* styles for a target window - ANYTEXT - */<BR/>
+  .trgttophead { font-family : serif; <BR/>
+  font-size : 1.25em; <BR/>
+  font-weight : bold <BR/>
+  }<BR/>
+</P>
+<P>.trgtdiv2head { display : block; <BR/>
+  font-family : serif; <BR/>
+  font-size : 1.3em; <BR/>
+  padding-bottom : 3px <BR/>
+  }<BR/>
+  <BR/>
+  .trgtdiv3head { font-family : serif; <BR/>
+  font-size : 1.2em; <BR/>
+  display : block; <BR/>
+  padding-bottom : 3px <BR/>
+  }<BR/>
+</P>
+<P>.trgtdiv4head { font-family : serif; <BR/>
+  font-size : 1.1em; <BR/>
+  display : block <BR/>
+  }<BR/>
+</P>
+<P>.trgttextblock { font-family : serif; <BR/>
+  font-size : 1.0em; <BR/>
+  margin-left: 1.0em <BR/>
+</P>
+<P>}/* styles as yet not in use */<BR/>
+</P>
+<P>/* corresponding heading styles for text pages */<BR/>
+  .textmainheader { display : block; <BR/>
+  margin-top : 20px; <BR/>
+  font-family : sans-serif; <BR/>
+  font-weight : bold; <BR/>
+  font-size : 18px; <BR/>
+  }<BR/>
+</P>
+<P>.textdiv2head { display : block; <BR/>
+  font-family : Arial, Helvetica, sans-serif; <BR/>
+  font-size : 12px; <BR/>
+  text-decoration : none; <BR/>
+  margin-bottom : 0px; <BR/>
+  border-bottom : 0px; <BR/>
+  padding-bottom : 0px; <BR/>
+  border-top : 0px; <BR/>
+  padding-top : 0px; <BR/>
+  margin-top : 0px; <BR/>
+  padding-left : 0.8em; <BR/>
+  font-weight: bold <BR/>
+  }<BR/>
+</P>
+<P>.textdiv3head { font-family : Arial, Helvetica, sans-serif; <BR/>
+  font-size : 12px;<BR/>
+  text-decoration : none; <BR/>
+  display : block; <BR/>
+  margin-bottom : 0px; <BR/>
+  border-bottom : 0px; <BR/>
+  padding-bottom : 0px; <BR/>
+  border-top : 0px; <BR/>
+  padding-top : 0px; <BR/>
+  margin-top : 0px; <BR/>
+  padding-left : 0.8em <BR/>
+  }<BR/>
+</P>
+<P>.textdiv4head { font-family : Helvetica,Verdana,Arial,sans-serif; <BR/>
+  font-size : 1.0em; <BR/>
+  text-decoration : none; <BR/>
+  display : block; <BR/>
+  padding-left : 0.8em; <BR/>
+  padding-bottom : 0em <BR/>
+  }<BR/>
+  <BR/>
+  /* corresponding heading styles for toc pages */<BR/>
+  .tocmainheader { display : block; <BR/>
+  margin-top : 20px; <BR/>
+  font-family : sans-serif; <BR/>
+  font-weight : bold; <BR/>
+  font-size : 18px }<BR/>
+</P>
+<P>.tocdiv2head { display : block; <BR/>
+  font-family : Arial, Helvetica, sans-serif; <BR/>
+  font-size : 12px; <BR/>
+  text-decoration : none; <BR/>
+  margin-bottom : 0px; <BR/>
+  border-bottom : 0px; <BR/>
+  padding-bottom : 0px; <BR/>
+  border-top : 0px; <BR/>
+  padding-top : 0px; <BR/>
+  margin-top : 0px; <BR/>
+  padding-left : 0.8em; <BR/>
+  font-weight: bold <BR/>
+  }<BR/>
+</P>
+<P>.tocdiv3head { font-family : Arial, Helvetica, sans-serif; <BR/>
+  font-size : 12px; <BR/>
+  text-decoration : none; <BR/>
+  display : block; <BR/>
+  margin-bottom : 0px; <BR/>
+  border-bottom : 0px; <BR/>
+  padding-bottom : 0px; <BR/>
+  border-top : 0px; <BR/>
+  padding-top : 0px; <BR/>
+  margin-top : 0px; <BR/>
+  padding-left : 0.8em <BR/>
+  }<BR/>
+</P>
+<P>.tocdiv4head { font-family : Helvetica,Verdana,Arial,sans-serif; <BR/>
+  font-size : 1.0em; <BR/>
+  text-decoration : none; <BR/>
+  display : block; <BR/>
+  padding-left : 0.8em; <BR/>
+  padding-bottom : 0em<BR/>
+  }<BR/>
+  <BR/>
+  /* help file styles */ <BR/>
+  .helpnavhead { font-size: 12px; <BR/>
+  font-weight: bold; <BR/>
+  color: #000000<BR/>
+  }<BR/>
+  <BR/>
+  .helpnav { color: #000000; <BR/>
+  font-size: 10pt <BR/>
+  }<BR/>
+  <BR/>
+  .helpnavlink { text-decoration: none; <BR/>
+  font-size: 10pt <BR/>
+  }<BR/>
+  <BR/>
+  .helpnavheadlink { font-size: 12px; <BR/>
+  font-weight: bold; <BR/>
+  color: #000000; <BR/>
+  text-decoration: none<BR/>
+  }</P>
+    </DIV1>
+  </BODY>
+</DLPSDOC>
+

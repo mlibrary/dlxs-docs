@@ -1,0 +1,2108 @@
+<DB>
+
+  <Text>
+    <MfsFiles>
+      <FileMap>/disks/l1/home/pagliere/dlxs/idx/b/bosnia/bosnia.maps</FileMap>
+      <FilterChain>
+        <SearchView>meta</SearchView>
+        <DisplayView>meta</DisplayView>
+        <RawView>meta</RawView>
+        <DisplayFmt>sgml,DLPSTEXTCLASS,COLL</DisplayFmt>
+        <DefaultDataTag></DefaultDataTag>
+        <FileGroup>
+          <MfsDir>/disks/l1/home/pagliere/dlxs/obj/a/a/s/aas7611.0001.001</MfsDir>
+          <MfsFile>aas7611.0001.001.sgm</MfsFile>
+          <MfsExpand>tree</MfsExpand>
+        </FileGroup>
+        <FileGroup>
+          <MfsDir>/disks/l1/home/pagliere/dlxs/obj/a/b/u/abu0246.0001.001</MfsDir>
+          <MfsFile>abu0246.0001.001.sgm</MfsFile>
+          <MfsExpand>tree</MfsExpand>
+        </FileGroup>
+        <FileGroup>
+          <MfsDir>/disks/l1/home/pagliere/dlxs/obj/a/b/e/abe5413.0001.001</MfsDir>
+          <MfsFile>abe5413.0001.001.sgm</MfsFile>
+          <MfsExpand>tree</MfsExpand>
+        </FileGroup>
+        <FileGroup>
+          <MfsDir>/disks/l1/home/pagliere/dlxs/obj/a/f/g/afg3177.0001.001</MfsDir>
+          <MfsFile>afg3177.0001.001.sgm</MfsFile>
+          <MfsExpand>tree</MfsExpand>
+        </FileGroup>
+      </FilterChain>
+    </MfsFiles>
+  </Text>
+
+  <Indices>
+
+    <Index>
+      <Name></Name>
+      <FastFind>
+        <FastFindCompression>
+          <File>
+            <SysName>bosnia.ffi</SysName>
+            <ModDate>965330031</ModDate>
+            <Offset>0</Offset>
+          </File>
+        </FastFindCompression>
+        <FastFindIndex>
+          <File>
+            <SysName>bosnia.ffc</SysName>
+            <ModDate>965330031</ModDate>
+            <Offset>0</Offset>
+          </File>
+        </FastFindIndex>
+        <FastFindWordList>
+          <File>
+            <SysName>bosnia.ffw</SysName>
+            <ModDate>965330025</ModDate>
+            <Offset>0</Offset>
+          </File>
+        </FastFindWordList>
+      </FastFind>
+      <File>
+        <SysName>/disks/l1/home/pagliere/dlxs/idx/b/bosnia/bosnia.idx</SysName>
+        <ModDate>965330007</ModDate>
+        <Offset>0</Offset>
+      </File>
+      <IndexPoints>
+        <IndexPt> &printable.</IndexPt>
+        <IndexPt>&printable.-</IndexPt>
+        <IndexPt>-&printable.</IndexPt>
+        <IndexPt>&printable.&lt.</IndexPt>
+        <IndexPt>&printable.&amp.</IndexPt>
+      </IndexPoints>
+      <Mappings>
+        <Map><From></From><To></To></Map>
+        <Map><From>&backspace.</From><To> </To></Map>
+        <Map><From>&tab.</From><To> </To></Map>
+        <Map><From>&newline.</From><To> </To></Map>
+        <Map><From>&return.</From><To> </To></Map>
+        <Map><From>!</From><To> </To></Map>
+        <Map><From>"</From><To> </To></Map>
+        <Map><From>#</From><To> </To></Map>
+        <Map><From>$</From><To> </To></Map>
+        <Map><From>%</From><To> </To></Map>
+        <Map><From>&amp.</From><To> </To></Map>
+        <Map><From>'</From><To> </To></Map>
+        <Map><From>(</From><To> </To></Map>
+        <Map><From>)</From><To> </To></Map>
+        <Map><From>*</From><To> </To></Map>
+        <Map><From>+</From><To> </To></Map>
+        <Map><From>,</From><To> </To></Map>
+        <Map><From>-</From><To> </To></Map>
+        <Map><From>.</From><To> </To></Map>
+        <Map><From>:</From><To> </To></Map>
+        <Map><From>;</From><To> </To></Map>
+        <Map><From>=</From><To> </To></Map>
+        <Map><From>&gt.</From><To> </To></Map>
+        <Map><From>?</From><To> </To></Map>
+        <Map><From>@</From><To> </To></Map>
+        <Map><From>A</From><To>a</To></Map>
+        <Map><From>B</From><To>b</To></Map>
+        <Map><From>C</From><To>c</To></Map>
+        <Map><From>D</From><To>d</To></Map>
+        <Map><From>E</From><To>e</To></Map>
+        <Map><From>F</From><To>f</To></Map>
+        <Map><From>G</From><To>g</To></Map>
+        <Map><From>H</From><To>h</To></Map>
+        <Map><From>I</From><To>i</To></Map>
+        <Map><From>J</From><To>j</To></Map>
+        <Map><From>K</From><To>k</To></Map>
+        <Map><From>L</From><To>l</To></Map>
+        <Map><From>M</From><To>m</To></Map>
+        <Map><From>N</From><To>n</To></Map>
+        <Map><From>O</From><To>o</To></Map>
+        <Map><From>P</From><To>p</To></Map>
+        <Map><From>Q</From><To>q</To></Map>
+        <Map><From>R</From><To>r</To></Map>
+        <Map><From>S</From><To>s</To></Map>
+        <Map><From>T</From><To>t</To></Map>
+        <Map><From>U</From><To>u</To></Map>
+        <Map><From>V</From><To>v</To></Map>
+        <Map><From>W</From><To>w</To></Map>
+        <Map><From>X</From><To>x</To></Map>
+        <Map><From>Y</From><To>y</To></Map>
+        <Map><From>Z</From><To>z</To></Map>
+        <Map><From>[</From><To> </To></Map>
+        <Map><From>\</From><To> </To></Map>
+        <Map><From>]</From><To> </To></Map>
+        <Map><From>^</From><To> </To></Map>
+        <Map><From>_</From><To> </To></Map>
+        <Map><From>`</From><To> </To></Map>
+        <Map><From>{</From><To> </To></Map>
+        <Map><From>|</From><To> </To></Map>
+        <Map><From>}</From><To> </To></Map>
+        <Map><From>~</From><To> </To></Map>
+        <Map><From>\300</From><To>a</To></Map>
+        <Map><From>\301</From><To>a</To></Map>
+        <Map><From>\302</From><To>a</To></Map>
+        <Map><From>\303</From><To>a</To></Map>
+        <Map><From>\304</From><To>a</To></Map>
+        <Map><From>\305</From><To>a</To></Map>
+        <Map><From>\307</From><To>c</To></Map>
+        <Map><From>\310</From><To>e</To></Map>
+        <Map><From>\311</From><To>e</To></Map>
+        <Map><From>\312</From><To>e</To></Map>
+        <Map><From>\313</From><To>e</To></Map>
+        <Map><From>\314</From><To>i</To></Map>
+        <Map><From>\315</From><To>i</To></Map>
+        <Map><From>\316</From><To>i</To></Map>
+        <Map><From>\317</From><To>i</To></Map>
+        <Map><From>\321</From><To>n</To></Map>
+        <Map><From>\322</From><To>o</To></Map>
+        <Map><From>\323</From><To>o</To></Map>
+        <Map><From>\324</From><To>o</To></Map>
+        <Map><From>\325</From><To>o</To></Map>
+        <Map><From>\326</From><To>o</To></Map>
+        <Map><From>\330</From><To>o</To></Map>
+        <Map><From>\331</From><To>u</To></Map>
+        <Map><From>\332</From><To>u</To></Map>
+        <Map><From>\333</From><To>u</To></Map>
+        <Map><From>\334</From><To>u</To></Map>
+        <Map><From>\335</From><To>y</To></Map>
+        <Map><From>\337</From><To>s</To></Map>
+        <Map><From>\340</From><To>a</To></Map>
+        <Map><From>\341</From><To>a</To></Map>
+        <Map><From>\342</From><To>a</To></Map>
+        <Map><From>\343</From><To>a</To></Map>
+        <Map><From>\344</From><To>a</To></Map>
+        <Map><From>\345</From><To>a</To></Map>
+        <Map><From>\347</From><To>c</To></Map>
+        <Map><From>\350</From><To>e</To></Map>
+        <Map><From>\351</From><To>e</To></Map>
+        <Map><From>\352</From><To>e</To></Map>
+        <Map><From>\353</From><To>e</To></Map>
+        <Map><From>\354</From><To>i</To></Map>
+        <Map><From>\355</From><To>i</To></Map>
+        <Map><From>\356</From><To>i</To></Map>
+        <Map><From>\357</From><To>i</To></Map>
+        <Map><From>\361</From><To>n</To></Map>
+        <Map><From>\362</From><To>o</To></Map>
+        <Map><From>\363</From><To>o</To></Map>
+        <Map><From>\364</From><To>o</To></Map>
+        <Map><From>\365</From><To>o</To></Map>
+        <Map><From>\366</From><To>o</To></Map>
+        <Map><From>\370</From><To>o</To></Map>
+        <Map><From>\371</From><To>u</To></Map>
+        <Map><From>\372</From><To>u</To></Map>
+        <Map><From>\373</From><To>u</To></Map>
+        <Map><From>\374</From><To>u</To></Map>
+        <Map><From>\375</From><To>y</To></Map>
+        <Map><From>\377</From><To>y</To></Map>
+        <StopWords></StopWords>
+      </Mappings>
+      <LongestMatch>
+        <Length>0</Length>
+        <Resolution>0</Resolution>
+      </LongestMatch>
+      <IntegrityCheck>-1596985544</IntegrityCheck>
+    </Index>
+  </Indices>
+
+  <Regions>
+
+    <Region>
+      <Name>SIGNED</Name>
+      <Desc>SIGNED</Desc>
+      <File>
+        <SysName>/disks/l1/home/pagliere/dlxs/idx/b/bosnia/bosnia.rgn</SysName>
+        <ModDate>965329987</ModDate>
+        <Offset>237384</Offset>
+      </File>
+      <Count>8</Count>
+      <Type>pairs</Type>
+    </Region>
+
+    <Region>
+      <Name>TRAILER</Name>
+      <Desc>TRAILER</Desc>
+      <File>
+        <SysName>/disks/l1/home/pagliere/dlxs/idx/b/bosnia/bosnia.rgn</SysName>
+        <ModDate>965329987</ModDate>
+        <Offset>258696</Offset>
+      </File>
+      <Count>12</Count>
+      <Type>pairs</Type>
+    </Region>
+
+    <Region>
+      <Name>DOCIMPRINT</Name>
+      <Desc>DOCIMPRINT</Desc>
+      <File>
+        <SysName>/disks/l1/home/pagliere/dlxs/idx/b/bosnia/bosnia.rgn</SysName>
+        <ModDate>965329987</ModDate>
+        <Offset>237256</Offset>
+      </File>
+      <Count>12</Count>
+      <Type>pairs</Type>
+    </Region>
+
+    <Region>
+      <Name>DOCEDITION</Name>
+      <Desc>DOCEDITION</Desc>
+      <File>
+        <SysName>/disks/l1/home/pagliere/dlxs/idx/b/bosnia/bosnia.rgn</SysName>
+        <ModDate>965329987</ModDate>
+        <Offset>237328</Offset>
+      </File>
+      <Count>6</Count>
+      <Type>pairs</Type>
+    </Region>
+
+    <Region>
+      <Name>Q1</Name>
+      <Desc>Q1</Desc>
+      <File>
+        <SysName>/disks/l1/home/pagliere/dlxs/idx/b/bosnia/bosnia.rgn</SysName>
+        <ModDate>965329987</ModDate>
+        <Offset>282336</Offset>
+      </File>
+      <Count>108</Count>
+      <Type>pairs</Type>
+    </Region>
+
+    <Region>
+      <Name>EPIGRAPH</Name>
+      <Desc>EPIGRAPH</Desc>
+      <File>
+        <SysName>/disks/l1/home/pagliere/dlxs/idx/b/bosnia/bosnia.rgn</SysName>
+        <ModDate>965329987</ModDate>
+        <Offset>283168</Offset>
+      </File>
+      <Count>30</Count>
+      <Type>pairs</Type>
+    </Region>
+
+    <Region>
+      <Name>REF</Name>
+      <Desc>REF</Desc>
+      <File>
+        <SysName>/disks/l1/home/pagliere/dlxs/idx/b/bosnia/bosnia.rgn</SysName>
+        <ModDate>965329987</ModDate>
+        <Offset>270224</Offset>
+      </File>
+      <Count>1244</Count>
+      <Type>pairs</Type>
+    </Region>
+
+    <Region>
+      <Name>LIST</Name>
+      <Desc>LIST</Desc>
+      <File>
+        <SysName>/disks/l1/home/pagliere/dlxs/idx/b/bosnia/bosnia.rgn</SysName>
+        <ModDate>965329987</ModDate>
+        <Offset>281440</Offset>
+      </File>
+      <Count>66</Count>
+      <Type>pairs</Type>
+    </Region>
+
+    <Region>
+      <Name>DOCTITLE</Name>
+      <Desc>DOCTITLE</Desc>
+      <File>
+        <SysName>/disks/l1/home/pagliere/dlxs/idx/b/bosnia/bosnia.rgn</SysName>
+        <ModDate>965329987</ModDate>
+        <Offset>200088</Offset>
+      </File>
+      <Count>16</Count>
+      <Type>pairs</Type>
+    </Region>
+
+    <Region>
+      <Name>TITLEPAGE</Name>
+      <Desc>TITLEPAGE</Desc>
+      <File>
+        <SysName>/disks/l1/home/pagliere/dlxs/idx/b/bosnia/bosnia.rgn</SysName>
+        <ModDate>965329987</ModDate>
+        <Offset>200152</Offset>
+      </File>
+      <Count>14</Count>
+      <Type>pairs</Type>
+    </Region>
+
+    <Region>
+      <Name>TERM</Name>
+      <Desc>TERM</Desc>
+      <File>
+        <SysName>/disks/l1/home/pagliere/dlxs/idx/b/bosnia/bosnia.rgn</SysName>
+        <ModDate>965329987</ModDate>
+        <Offset>80088</Offset>
+      </File>
+      <Count>10</Count>
+      <Type>pairs</Type>
+    </Region>
+
+    <Region>
+      <Name>TITLEPART</Name>
+      <Desc>TITLEPART</Desc>
+      <File>
+        <SysName>/disks/l1/home/pagliere/dlxs/idx/b/bosnia/bosnia.rgn</SysName>
+        <ModDate>965329987</ModDate>
+        <Offset>199960</Offset>
+      </File>
+      <Count>32</Count>
+      <Type>pairs</Type>
+    </Region>
+
+    <Region>
+      <Name>BYLINE</Name>
+      <Desc>BYLINE</Desc>
+      <File>
+        <SysName>/disks/l1/home/pagliere/dlxs/idx/b/bosnia/bosnia.rgn</SysName>
+        <ModDate>965329987</ModDate>
+        <Offset>237064</Offset>
+      </File>
+      <Count>16</Count>
+      <Type>pairs</Type>
+    </Region>
+
+    <Region>
+      <Name>DOCDATE</Name>
+      <Desc>DOCDATE</Desc>
+      <File>
+        <SysName>/disks/l1/home/pagliere/dlxs/idx/b/bosnia/bosnia.rgn</SysName>
+        <ModDate>965329987</ModDate>
+        <Offset>237216</Offset>
+      </File>
+      <Count>10</Count>
+      <Type>pairs</Type>
+    </Region>
+
+    <Region>
+      <Name>DIV1</Name>
+      <Desc>DIV1</Desc>
+      <File>
+        <SysName>/disks/l1/home/pagliere/dlxs/idx/b/bosnia/bosnia.rgn</SysName>
+        <ModDate>965329987</ModDate>
+        <Offset>235968</Offset>
+      </File>
+      <Count>226</Count>
+      <Type>pairs</Type>
+    </Region>
+
+    <Region>
+      <Name>DOCAUTHOR</Name>
+      <Desc>DOCAUTHOR</Desc>
+      <File>
+        <SysName>/disks/l1/home/pagliere/dlxs/idx/b/bosnia/bosnia.rgn</SysName>
+        <ModDate>965329987</ModDate>
+        <Offset>237000</Offset>
+      </File>
+      <Count>16</Count>
+      <Type>pairs</Type>
+    </Region>
+
+    <Region>
+      <Name>SALUTE</Name>
+      <Desc>SALUTE</Desc>
+      <File>
+        <SysName>/disks/l1/home/pagliere/dlxs/idx/b/bosnia/bosnia.rgn</SysName>
+        <ModDate>965329987</ModDate>
+        <Offset>292856</Offset>
+      </File>
+      <Count>4</Count>
+      <Type>pairs</Type>
+    </Region>
+
+    <Region>
+      <Name>CLOSER</Name>
+      <Desc>CLOSER</Desc>
+      <File>
+        <SysName>/disks/l1/home/pagliere/dlxs/idx/b/bosnia/bosnia.rgn</SysName>
+        <ModDate>965329987</ModDate>
+        <Offset>292888</Offset>
+      </File>
+      <Count>4</Count>
+      <Type>pairs</Type>
+    </Region>
+
+    <Region>
+      <Name>OPENER</Name>
+      <Desc>OPENER</Desc>
+      <File>
+        <SysName>/disks/l1/home/pagliere/dlxs/idx/b/bosnia/bosnia.rgn</SysName>
+        <ModDate>965329987</ModDate>
+        <Offset>286936</Offset>
+      </File>
+      <Count>8</Count>
+      <Type>pairs</Type>
+    </Region>
+
+    <Region>
+      <Name>LABEL</Name>
+      <Desc>LABEL</Desc>
+      <File>
+        <SysName>/disks/l1/home/pagliere/dlxs/idx/b/bosnia/bosnia.rgn</SysName>
+        <ModDate>965329987</ModDate>
+        <Offset>287576</Offset>
+      </File>
+      <Count>152</Count>
+      <Type>pairs</Type>
+    </Region>
+
+    <Region>
+      <Name>SIC</Name>
+      <Desc>SIC</Desc>
+      <File>
+        <SysName>/disks/l1/home/pagliere/dlxs/idx/b/bosnia/bosnia.rgn</SysName>
+        <ModDate>965329987</ModDate>
+        <Offset>300096</Offset>
+      </File>
+      <Count>4</Count>
+      <Type>pairs</Type>
+    </Region>
+
+    <Region>
+      <Name>CIT</Name>
+      <Desc>CIT</Desc>
+      <File>
+        <SysName>/disks/l1/home/pagliere/dlxs/idx/b/bosnia/bosnia.rgn</SysName>
+        <ModDate>965329987</ModDate>
+        <Offset>299528</Offset>
+      </File>
+      <Count>48</Count>
+      <Type>pairs</Type>
+    </Region>
+
+    <Region>
+      <Name>L</Name>
+      <Desc>L</Desc>
+      <File>
+        <SysName>/disks/l1/home/pagliere/dlxs/idx/b/bosnia/bosnia.rgn</SysName>
+        <ModDate>965329987</ModDate>
+        <Offset>296120</Offset>
+      </File>
+      <Count>722</Count>
+      <Type>pairs</Type>
+    </Region>
+
+    <Region>
+      <Name>LG</Name>
+      <Desc>LG</Desc>
+      <File>
+        <SysName>/disks/l1/home/pagliere/dlxs/idx/b/bosnia/bosnia.rgn</SysName>
+        <ModDate>965329987</ModDate>
+        <Offset>299008</Offset>
+      </File>
+      <Count>82</Count>
+      <Type>pairs</Type>
+    </Region>
+
+    <Region>
+      <Name>DIV2</Name>
+      <Desc>DIV2</Desc>
+      <File>
+        <SysName>/disks/l1/home/pagliere/dlxs/idx/b/bosnia/bosnia.rgn</SysName>
+        <ModDate>965329987</ModDate>
+        <Offset>286808</Offset>
+      </File>
+      <Count>24</Count>
+      <Type>pairs</Type>
+    </Region>
+
+    <Region>
+      <Name>ARGUMENT</Name>
+      <Desc>ARGUMENT</Desc>
+      <File>
+        <SysName>/disks/l1/home/pagliere/dlxs/idx/b/bosnia/bosnia.rgn</SysName>
+        <ModDate>965329987</ModDate>
+        <Offset>286616</Offset>
+      </File>
+      <Count>24</Count>
+      <Type>pairs</Type>
+    </Region>
+
+    <Region>
+      <Name>COLL</Name>
+      <Desc>COLL</Desc>
+      <File>
+        <SysName>/disks/l1/home/pagliere/dlxs/idx/b/bosnia/bosnia.rgn</SysName>
+        <ModDate>965329987</ModDate>
+        <Offset>283600</Offset>
+      </File>
+      <Count>8</Count>
+      <Type>pairs</Type>
+    </Region>
+
+    <Region>
+      <Name>DLPSTEXTCLASS</Name>
+      <Desc>DLPSTEXTCLASS</Desc>
+      <File>
+        <SysName>/disks/l1/home/pagliere/dlxs/idx/b/bosnia/bosnia.rgn</SysName>
+        <ModDate>965329987</ModDate>
+        <Offset>283568</Offset>
+      </File>
+      <Count>8</Count>
+      <Type>pairs</Type>
+    </Region>
+
+    <Region>
+      <Name>HEADER</Name>
+      <Desc>HEADER</Desc>
+      <File>
+        <SysName>/disks/l1/home/pagliere/dlxs/idx/b/bosnia/bosnia.rgn</SysName>
+        <ModDate>965329987</ModDate>
+        <Offset>80272</Offset>
+      </File>
+      <Count>8</Count>
+      <Type>pairs</Type>
+    </Region>
+
+    <Region>
+      <Name>TEXT</Name>
+      <Desc>TEXT</Desc>
+      <File>
+        <SysName>/disks/l1/home/pagliere/dlxs/idx/b/bosnia/bosnia.rgn</SysName>
+        <ModDate>965329987</ModDate>
+        <Offset>283536</Offset>
+      </File>
+      <Count>8</Count>
+      <Type>pairs</Type>
+    </Region>
+
+    <Region>
+      <Name>PROFILEDESC</Name>
+      <Desc>PROFILEDESC</Desc>
+      <File>
+        <SysName>/disks/l1/home/pagliere/dlxs/idx/b/bosnia/bosnia.rgn</SysName>
+        <ModDate>965329987</ModDate>
+        <Offset>80224</Offset>
+      </File>
+      <Count>12</Count>
+      <Type>pairs</Type>
+    </Region>
+
+    <Region>
+      <Name>GROUP</Name>
+      <Desc>GROUP</Desc>
+      <File>
+        <SysName>/disks/l1/home/pagliere/dlxs/idx/b/bosnia/bosnia.rgn</SysName>
+        <ModDate>965329987</ModDate>
+        <Offset>300248</Offset>
+      </File>
+      <Count>2</Count>
+      <Type>pairs</Type>
+    </Region>
+
+    <Region>
+      <Name>MILESTONE</Name>
+      <Desc>MILESTONE</Desc>
+      <File>
+        <SysName>/disks/l1/home/pagliere/dlxs/idx/b/bosnia/bosnia.rgn</SysName>
+        <ModDate>965329987</ModDate>
+        <Offset>300192</Offset>
+      </File>
+      <Count>10</Count>
+      <Type>pairs</Type>
+    </Region>
+
+    <Region>
+      <Name>PB</Name>
+      <Desc>PB</Desc>
+      <File>
+        <SysName>/disks/l1/home/pagliere/dlxs/idx/b/bosnia/bosnia.rgn</SysName>
+        <ModDate>965329987</ModDate>
+        <Offset>182752</Offset>
+      </File>
+      <Count>3652</Count>
+      <Type>pairs</Type>
+    </Region>
+
+    <Region>
+      <Name>LB</Name>
+      <Desc>LB</Desc>
+      <File>
+        <SysName>/disks/l1/home/pagliere/dlxs/idx/b/bosnia/bosnia.rgn</SysName>
+        <ModDate>965329987</ModDate>
+        <Offset>198784</Offset>
+      </File>
+      <Count>294</Count>
+      <Type>pairs</Type>
+    </Region>
+
+    <Region>
+      <Name>BACK</Name>
+      <Desc>BACK</Desc>
+      <File>
+        <SysName>/disks/l1/home/pagliere/dlxs/idx/b/bosnia/bosnia.rgn</SysName>
+        <ModDate>965329987</ModDate>
+        <Offset>283496</Offset>
+      </File>
+      <Count>10</Count>
+      <Type>pairs</Type>
+    </Region>
+
+    <Region>
+      <Name>NOTE1</Name>
+      <Desc>NOTE1</Desc>
+      <File>
+        <SysName>/disks/l1/home/pagliere/dlxs/idx/b/bosnia/bosnia.rgn</SysName>
+        <ModDate>965329987</ModDate>
+        <Offset>283352</Offset>
+      </File>
+      <Count>16</Count>
+      <Type>pairs</Type>
+    </Region>
+
+    <Region>
+      <Name>BODY</Name>
+      <Desc>BODY</Desc>
+      <File>
+        <SysName>/disks/l1/home/pagliere/dlxs/idx/b/bosnia/bosnia.rgn</SysName>
+        <ModDate>965329987</ModDate>
+        <Offset>283416</Offset>
+      </File>
+      <Count>10</Count>
+      <Type>pairs</Type>
+    </Region>
+
+    <Region>
+      <Name>FRONT</Name>
+      <Desc>FRONT</Desc>
+      <File>
+        <SysName>/disks/l1/home/pagliere/dlxs/idx/b/bosnia/bosnia.rgn</SysName>
+        <ModDate>965329987</ModDate>
+        <Offset>281704</Offset>
+      </File>
+      <Count>10</Count>
+      <Type>pairs</Type>
+    </Region>
+
+    <Region>
+      <Name>EPB</Name>
+      <Desc>EPB</Desc>
+      <File>
+        <SysName>/disks/l1/home/pagliere/dlxs/idx/b/bosnia/bosnia.rgn</SysName>
+        <ModDate>965329987</ModDate>
+        <Offset>214808</Offset>
+      </File>
+      <Count>3650</Count>
+      <Type>pairs</Type>
+    </Region>
+
+    <Region>
+      <Name>HEAD</Name>
+      <Desc>HEAD</Desc>
+      <File>
+        <SysName>/disks/l1/home/pagliere/dlxs/idx/b/bosnia/bosnia.rgn</SysName>
+        <ModDate>965329987</ModDate>
+        <Offset>233640</Offset>
+      </File>
+      <Count>412</Count>
+      <Type>pairs</Type>
+    </Region>
+
+    <Region>
+      <Name>FIGURE</Name>
+      <Desc>FIGURE</Desc>
+      <File>
+        <SysName>/disks/l1/home/pagliere/dlxs/idx/b/bosnia/bosnia.rgn</SysName>
+        <ModDate>965329987</ModDate>
+        <Offset>235288</Offset>
+      </File>
+      <Count>170</Count>
+      <Type>pairs</Type>
+    </Region>
+
+    <Region>
+      <Name>ENCODINGDESC</Name>
+      <Desc>ENCODINGDESC</Desc>
+      <File>
+        <SysName>/disks/l1/home/pagliere/dlxs/idx/b/bosnia/bosnia.rgn</SysName>
+        <ModDate>965329987</ModDate>
+        <Offset>79920</Offset>
+      </File>
+      <Count>8</Count>
+      <Type>pairs</Type>
+    </Region>
+
+    <Region>
+      <Name>FILEDESC</Name>
+      <Desc>FILEDESC</Desc>
+      <File>
+        <SysName>/disks/l1/home/pagliere/dlxs/idx/b/bosnia/bosnia.rgn</SysName>
+        <ModDate>965329987</ModDate>
+        <Offset>79792</Offset>
+      </File>
+      <Count>8</Count>
+      <Type>pairs</Type>
+    </Region>
+
+    <Region>
+      <Name>TEXTCLASS</Name>
+      <Desc>TEXTCLASS</Desc>
+      <File>
+        <SysName>/disks/l1/home/pagliere/dlxs/idx/b/bosnia/bosnia.rgn</SysName>
+        <ModDate>965329987</ModDate>
+        <Offset>80200</Offset>
+      </File>
+      <Count>6</Count>
+      <Type>pairs</Type>
+    </Region>
+
+    <Region>
+      <Name>TITLESTMT</Name>
+      <Desc>TITLESTMT</Desc>
+      <File>
+        <SysName>/disks/l1/home/pagliere/dlxs/idx/b/bosnia/bosnia.rgn</SysName>
+        <ModDate>965329987</ModDate>
+        <Offset>25280</Offset>
+      </File>
+      <Count>16</Count>
+      <Type>pairs</Type>
+    </Region>
+
+    <Region>
+      <Name>EDITORIALDECL</Name>
+      <Desc>EDITORIALDECL</Desc>
+      <File>
+        <SysName>/disks/l1/home/pagliere/dlxs/idx/b/bosnia/bosnia.rgn</SysName>
+        <ModDate>965329987</ModDate>
+        <Offset>79888</Offset>
+      </File>
+      <Count>8</Count>
+      <Type>pairs</Type>
+    </Region>
+
+    <Region>
+      <Name>PUBLICATIONSTMT</Name>
+      <Desc>PUBLICATIONSTMT</Desc>
+      <File>
+        <SysName>/disks/l1/home/pagliere/dlxs/idx/b/bosnia/bosnia.rgn</SysName>
+        <ModDate>965329987</ModDate>
+        <Offset>79536</Offset>
+      </File>
+      <Count>16</Count>
+      <Type>pairs</Type>
+    </Region>
+
+    <Region>
+      <Name>LANGUSAGE</Name>
+      <Desc>LANGUSAGE</Desc>
+      <File>
+        <SysName>/disks/l1/home/pagliere/dlxs/idx/b/bosnia/bosnia.rgn</SysName>
+        <ModDate>965329987</ModDate>
+        <Offset>284016</Offset>
+      </File>
+      <Count>6</Count>
+      <Type>pairs</Type>
+    </Region>
+
+    <Region>
+      <Name>SOURCEDESC</Name>
+      <Desc>SOURCEDESC</Desc>
+      <File>
+        <SysName>/disks/l1/home/pagliere/dlxs/idx/b/bosnia/bosnia.rgn</SysName>
+        <ModDate>965329987</ModDate>
+        <Offset>79760</Offset>
+      </File>
+      <Count>8</Count>
+      <Type>pairs</Type>
+    </Region>
+
+    <Region>
+      <Name>EXTENT</Name>
+      <Desc>EXTENT</Desc>
+      <File>
+        <SysName>/disks/l1/home/pagliere/dlxs/idx/b/bosnia/bosnia.rgn</SysName>
+        <ModDate>965329987</ModDate>
+        <Offset>25392</Offset>
+      </File>
+      <Count>12</Count>
+      <Type>pairs</Type>
+    </Region>
+
+    <Region>
+      <Name>EDITIONSTMT</Name>
+      <Desc>EDITIONSTMT</Desc>
+      <File>
+        <SysName>/disks/l1/home/pagliere/dlxs/idx/b/bosnia/bosnia.rgn</SysName>
+        <ModDate>965329987</ModDate>
+        <Offset>79712</Offset>
+      </File>
+      <Count>4</Count>
+      <Type>pairs</Type>
+    </Region>
+
+    <Region>
+      <Name>AUTHOR</Name>
+      <Desc>AUTHOR</Desc>
+      <File>
+        <SysName>/disks/l1/home/pagliere/dlxs/idx/b/bosnia/bosnia.rgn</SysName>
+        <ModDate>965329987</ModDate>
+        <Offset>25200</Offset>
+      </File>
+      <Count>20</Count>
+      <Type>pairs</Type>
+    </Region>
+
+    <Region>
+      <Name>PUBPLACE</Name>
+      <Desc>PUBPLACE</Desc>
+      <File>
+        <SysName>/disks/l1/home/pagliere/dlxs/idx/b/bosnia/bosnia.rgn</SysName>
+        <ModDate>965329987</ModDate>
+        <Offset>25856</Offset>
+      </File>
+      <Count>28</Count>
+      <Type>pairs</Type>
+    </Region>
+
+    <Region>
+      <Name>BIBLFULL</Name>
+      <Desc>BIBLFULL</Desc>
+      <File>
+        <SysName>/disks/l1/home/pagliere/dlxs/idx/b/bosnia/bosnia.rgn</SysName>
+        <ModDate>965329987</ModDate>
+        <Offset>79728</Offset>
+      </File>
+      <Count>8</Count>
+      <Type>pairs</Type>
+    </Region>
+
+    <Region>
+      <Name>EDITION</Name>
+      <Desc>EDITION</Desc>
+      <File>
+        <SysName>/disks/l1/home/pagliere/dlxs/idx/b/bosnia/bosnia.rgn</SysName>
+        <ModDate>965329987</ModDate>
+        <Offset>79696</Offset>
+      </File>
+      <Count>4</Count>
+      <Type>pairs</Type>
+    </Region>
+
+    <Region>
+      <Name>TITLE</Name>
+      <Desc>TITLE</Desc>
+      <File>
+        <SysName>/disks/l1/home/pagliere/dlxs/idx/b/bosnia/bosnia.rgn</SysName>
+        <ModDate>965329987</ModDate>
+        <Offset>24536</Offset>
+      </File>
+      <Count>146</Count>
+      <Type>pairs</Type>
+    </Region>
+
+    <Region>
+      <Name>NOTE</Name>
+      <Desc>NOTE</Desc>
+      <File>
+        <SysName>/disks/l1/home/pagliere/dlxs/idx/b/bosnia/bosnia.rgn</SysName>
+        <ModDate>965329987</ModDate>
+        <Offset>285280</Offset>
+      </File>
+      <Count>310</Count>
+      <Type>pairs</Type>
+    </Region>
+
+    <Region>
+      <Name>BIBL</Name>
+      <Desc>BIBL</Desc>
+      <File>
+        <SysName>/disks/l1/home/pagliere/dlxs/idx/b/bosnia/bosnia.rgn</SysName>
+        <ModDate>965329987</ModDate>
+        <Offset>282968</Offset>
+      </File>
+      <Count>50</Count>
+      <Type>pairs</Type>
+    </Region>
+
+    <Region>
+      <Name>ITEM</Name>
+      <Desc>ITEM</Desc>
+      <File>
+        <SysName>/disks/l1/home/pagliere/dlxs/idx/b/bosnia/bosnia.rgn</SysName>
+        <ModDate>965329987</ModDate>
+        <Offset>275200</Offset>
+      </File>
+      <Count>1560</Count>
+      <Type>pairs</Type>
+    </Region>
+
+    <Region>
+      <Name>PUBLISHER</Name>
+      <Desc>PUBLISHER</Desc>
+      <File>
+        <SysName>/disks/l1/home/pagliere/dlxs/idx/b/bosnia/bosnia.rgn</SysName>
+        <ModDate>965329987</ModDate>
+        <Offset>25624</Offset>
+      </File>
+      <Count>30</Count>
+      <Type>pairs</Type>
+    </Region>
+
+    <Region>
+      <Name>IDNO</Name>
+      <Desc>IDNO</Desc>
+      <File>
+        <SysName>/disks/l1/home/pagliere/dlxs/idx/b/bosnia/bosnia.rgn</SysName>
+        <ModDate>965329987</ModDate>
+        <Offset>26128</Offset>
+      </File>
+      <Count>8</Count>
+      <Type>pairs</Type>
+    </Region>
+
+    <Region>
+      <Name>AVAILABILITY</Name>
+      <Desc>AVAILABILITY</Desc>
+      <File>
+        <SysName>/disks/l1/home/pagliere/dlxs/idx/b/bosnia/bosnia.rgn</SysName>
+        <ModDate>965329987</ModDate>
+        <Offset>79504</Offset>
+      </File>
+      <Count>8</Count>
+      <Type>pairs</Type>
+    </Region>
+
+    <Region>
+      <Name>P</Name>
+      <Desc>P</Desc>
+      <File>
+        <SysName>/disks/l1/home/pagliere/dlxs/idx/b/bosnia/bosnia.rgn</SysName>
+        <ModDate>965329987</ModDate>
+        <Offset>53016</Offset>
+      </File>
+      <Count>6622</Count>
+      <Type>pairs</Type>
+    </Region>
+
+    <Region>
+      <Name>LANGUAGE</Name>
+      <Desc>LANGUAGE</Desc>
+      <File>
+        <SysName>/disks/l1/home/pagliere/dlxs/idx/b/bosnia/bosnia.rgn</SysName>
+        <ModDate>965329987</ModDate>
+        <Offset>283896</Offset>
+      </File>
+      <Count>30</Count>
+      <Type>pairs</Type>
+    </Region>
+
+    <Region>
+      <Name>CLASSCODE</Name>
+      <Desc>CLASSCODE</Desc>
+      <File>
+        <SysName>/disks/l1/home/pagliere/dlxs/idx/b/bosnia/bosnia.rgn</SysName>
+        <ModDate>965329987</ModDate>
+        <Offset>80176</Offset>
+      </File>
+      <Count>6</Count>
+      <Type>pairs</Type>
+    </Region>
+
+    <Region>
+      <Name>KEYWORDS</Name>
+      <Desc>KEYWORDS</Desc>
+      <File>
+        <SysName>/disks/l1/home/pagliere/dlxs/idx/b/bosnia/bosnia.rgn</SysName>
+        <ModDate>965329987</ModDate>
+        <Offset>80128</Offset>
+      </File>
+      <Count>6</Count>
+      <Type>pairs</Type>
+    </Region>
+
+    <Region>
+      <Name>DATE</Name>
+      <Desc>DATE</Desc>
+      <File>
+        <SysName>/disks/l1/home/pagliere/dlxs/idx/b/bosnia/bosnia.rgn</SysName>
+        <ModDate>965329987</ModDate>
+        <Offset>26032</Offset>
+      </File>
+      <Count>16</Count>
+      <Type>pairs</Type>
+    </Region>
+
+    <Region>
+      <Name>FOREIGN</Name>
+      <Desc>FOREIGN</Desc>
+      <File>
+        <SysName>/disks/l1/home/pagliere/dlxs/idx/b/bosnia/bosnia.rgn</SysName>
+        <ModDate>965329987</ModDate>
+        <Offset>290512</Offset>
+      </File>
+      <Count>582</Count>
+      <Type>pairs</Type>
+    </Region>
+
+    <Region>
+      <Name>HI1</Name>
+      <Desc>HI1</Desc>
+      <File>
+        <SysName>/disks/l1/home/pagliere/dlxs/idx/b/bosnia/bosnia.rgn</SysName>
+        <ModDate>965329987</ModDate>
+        <Offset>248080</Offset>
+      </File>
+      <Count>2654</Count>
+      <Type>pairs</Type>
+    </Region>
+
+    <Region>
+      <Name>EXTENT-T</Name>
+      <Desc>EXTENT-T</Desc>
+      <File>
+        <SysName>/disks/l1/home/pagliere/dlxs/idx/b/bosnia/bosnia.rgn</SysName>
+        <ModDate>965329987</ModDate>
+        <Offset>25344</Offset>
+      </File>
+      <Count>12</Count>
+      <Type>pairs</Type>
+    </Region>
+
+    <Region>
+      <Name>SIC-T</Name>
+      <Desc>SIC-T</Desc>
+      <File>
+        <SysName>/disks/l1/home/pagliere/dlxs/idx/b/bosnia/bosnia.rgn</SysName>
+        <ModDate>965329987</ModDate>
+        <Offset>300080</Offset>
+      </File>
+      <Count>4</Count>
+      <Type>pairs</Type>
+    </Region>
+
+    <Region>
+      <Name>A-UNIT</Name>
+      <Desc>A-UNIT</Desc>
+      <File>
+        <SysName>/disks/l1/home/pagliere/dlxs/idx/b/bosnia/bosnia.rgn</SysName>
+        <ModDate>965329987</ModDate>
+        <Offset>300112</Offset>
+      </File>
+      <Count>10</Count>
+      <Type>pairs</Type>
+    </Region>
+
+    <Region>
+      <Name>A-ID</Name>
+      <Desc>A-ID</Desc>
+      <File>
+        <SysName>/disks/l1/home/pagliere/dlxs/idx/b/bosnia/bosnia.rgn</SysName>
+        <ModDate>965329987</ModDate>
+        <Offset>283656</Offset>
+      </File>
+      <Count>30</Count>
+      <Type>pairs</Type>
+    </Region>
+
+    <Region>
+      <Name>LANGUAGE-T</Name>
+      <Desc>LANGUAGE-T</Desc>
+      <File>
+        <SysName>/disks/l1/home/pagliere/dlxs/idx/b/bosnia/bosnia.rgn</SysName>
+        <ModDate>965329987</ModDate>
+        <Offset>283776</Offset>
+      </File>
+      <Count>30</Count>
+      <Type>pairs</Type>
+    </Region>
+
+    <Region>
+      <Name>HEADER-T</Name>
+      <Desc>HEADER-T</Desc>
+      <File>
+        <SysName>/disks/l1/home/pagliere/dlxs/idx/b/bosnia/bosnia.rgn</SysName>
+        <ModDate>965329987</ModDate>
+        <Offset>64</Offset>
+      </File>
+      <Count>8</Count>
+      <Type>pairs</Type>
+    </Region>
+
+    <Region>
+      <Name>LANGUSAGE-T</Name>
+      <Desc>LANGUSAGE-T</Desc>
+      <File>
+        <SysName>/disks/l1/home/pagliere/dlxs/idx/b/bosnia/bosnia.rgn</SysName>
+        <ModDate>965329987</ModDate>
+        <Offset>283632</Offset>
+      </File>
+      <Count>6</Count>
+      <Type>pairs</Type>
+    </Region>
+
+    <Region>
+      <Name>PUBPLACE-T</Name>
+      <Desc>PUBPLACE-T</Desc>
+      <File>
+        <SysName>/disks/l1/home/pagliere/dlxs/idx/b/bosnia/bosnia.rgn</SysName>
+        <ModDate>965329987</ModDate>
+        <Offset>25744</Offset>
+      </File>
+      <Count>28</Count>
+      <Type>pairs</Type>
+    </Region>
+
+    <Region>
+      <Name>NOTE1-T</Name>
+      <Desc>NOTE1-T</Desc>
+      <File>
+        <SysName>/disks/l1/home/pagliere/dlxs/idx/b/bosnia/bosnia.rgn</SysName>
+        <ModDate>965329987</ModDate>
+        <Offset>283288</Offset>
+      </File>
+      <Count>16</Count>
+      <Type>pairs</Type>
+    </Region>
+
+    <Region>
+      <Name>COLL-T</Name>
+      <Desc>COLL-T</Desc>
+      <File>
+        <SysName>/disks/l1/home/pagliere/dlxs/idx/b/bosnia/bosnia.rgn</SysName>
+        <ModDate>965329987</ModDate>
+        <Offset>0</Offset>
+      </File>
+      <Count>8</Count>
+      <Type>pairs</Type>
+    </Region>
+
+    <Region>
+      <Name>TEXT1</Name>
+      <Desc>TEXT1</Desc>
+      <File>
+        <SysName>/disks/l1/home/pagliere/dlxs/idx/b/bosnia/bosnia.rgn</SysName>
+        <ModDate>965329987</ModDate>
+        <Offset>300232</Offset>
+      </File>
+      <Count>4</Count>
+      <Type>pairs</Type>
+    </Region>
+
+    <Region>
+      <Name>DLPSTEXTCLASS-T</Name>
+      <Desc>DLPSTEXTCLASS-T</Desc>
+      <File>
+        <SysName>/disks/l1/home/pagliere/dlxs/idx/b/bosnia/bosnia.rgn</SysName>
+        <ModDate>965329987</ModDate>
+        <Offset>32</Offset>
+      </File>
+      <Count>8</Count>
+      <Type>pairs</Type>
+    </Region>
+
+    <Region>
+      <Name>BACK-T</Name>
+      <Desc>BACK-T</Desc>
+      <File>
+        <SysName>/disks/l1/home/pagliere/dlxs/idx/b/bosnia/bosnia.rgn</SysName>
+        <ModDate>965329987</ModDate>
+        <Offset>283456</Offset>
+      </File>
+      <Count>10</Count>
+      <Type>pairs</Type>
+    </Region>
+
+    <Region>
+      <Name>PUBLICATIONSTMT-T</Name>
+      <Desc>PUBLICATIONSTMT-T</Desc>
+      <File>
+        <SysName>/disks/l1/home/pagliere/dlxs/idx/b/bosnia/bosnia.rgn</SysName>
+        <ModDate>965329987</ModDate>
+        <Offset>25440</Offset>
+      </File>
+      <Count>16</Count>
+      <Type>pairs</Type>
+    </Region>
+
+    <Region>
+      <Name>MILESTONE-T</Name>
+      <Desc>MILESTONE-T</Desc>
+      <File>
+        <SysName>/disks/l1/home/pagliere/dlxs/idx/b/bosnia/bosnia.rgn</SysName>
+        <ModDate>965329987</ModDate>
+        <Offset>300152</Offset>
+      </File>
+      <Count>10</Count>
+      <Type>pairs</Type>
+    </Region>
+
+    <Region>
+      <Name>PUBLISHER-T</Name>
+      <Desc>PUBLISHER-T</Desc>
+      <File>
+        <SysName>/disks/l1/home/pagliere/dlxs/idx/b/bosnia/bosnia.rgn</SysName>
+        <ModDate>965329987</ModDate>
+        <Offset>25504</Offset>
+      </File>
+      <Count>30</Count>
+      <Type>pairs</Type>
+    </Region>
+
+    <Region>
+      <Name>A-CORR</Name>
+      <Desc>A-CORR</Desc>
+      <File>
+        <SysName>/disks/l1/home/pagliere/dlxs/idx/b/bosnia/bosnia.rgn</SysName>
+        <ModDate>965329987</ModDate>
+        <Offset>300064</Offset>
+      </File>
+      <Count>4</Count>
+      <Type>pairs</Type>
+    </Region>
+
+    <Region>
+      <Name>A-LANG</Name>
+      <Desc>A-LANG</Desc>
+      <File>
+        <SysName>/disks/l1/home/pagliere/dlxs/idx/b/bosnia/bosnia.rgn</SysName>
+        <ModDate>965329987</ModDate>
+        <Offset>192</Offset>
+      </File>
+      <Count>810</Count>
+      <Type>pairs</Type>
+    </Region>
+
+    <Region>
+      <Name>L-T</Name>
+      <Desc>L-T</Desc>
+      <File>
+        <SysName>/disks/l1/home/pagliere/dlxs/idx/b/bosnia/bosnia.rgn</SysName>
+        <ModDate>965329987</ModDate>
+        <Offset>293232</Offset>
+      </File>
+      <Count>722</Count>
+      <Type>pairs</Type>
+    </Region>
+
+    <Region>
+      <Name>FOREIGN-T</Name>
+      <Desc>FOREIGN-T</Desc>
+      <File>
+        <SysName>/disks/l1/home/pagliere/dlxs/idx/b/bosnia/bosnia.rgn</SysName>
+        <ModDate>965329987</ModDate>
+        <Offset>288184</Offset>
+      </File>
+      <Count>582</Count>
+      <Type>pairs</Type>
+    </Region>
+
+    <Region>
+      <Name>LABEL-T</Name>
+      <Desc>LABEL-T</Desc>
+      <File>
+        <SysName>/disks/l1/home/pagliere/dlxs/idx/b/bosnia/bosnia.rgn</SysName>
+        <ModDate>965329987</ModDate>
+        <Offset>286968</Offset>
+      </File>
+      <Count>152</Count>
+      <Type>pairs</Type>
+    </Region>
+
+    <Region>
+      <Name>TITLE-T</Name>
+      <Desc>TITLE-T</Desc>
+      <File>
+        <SysName>/disks/l1/home/pagliere/dlxs/idx/b/bosnia/bosnia.rgn</SysName>
+        <ModDate>965329987</ModDate>
+        <Offset>23952</Offset>
+      </File>
+      <Count>146</Count>
+      <Type>pairs</Type>
+    </Region>
+
+    <Region>
+      <Name>SALUTE-T</Name>
+      <Desc>SALUTE-T</Desc>
+      <File>
+        <SysName>/disks/l1/home/pagliere/dlxs/idx/b/bosnia/bosnia.rgn</SysName>
+        <ModDate>965329987</ModDate>
+        <Offset>292840</Offset>
+      </File>
+      <Count>4</Count>
+      <Type>pairs</Type>
+    </Region>
+
+    <Region>
+      <Name>A-REND</Name>
+      <Desc>A-REND</Desc>
+      <File>
+        <SysName>/disks/l1/home/pagliere/dlxs/idx/b/bosnia/bosnia.rgn</SysName>
+        <ModDate>965329987</ModDate>
+        <Offset>7208</Offset>
+      </File>
+      <Count>4186</Count>
+      <Type>pairs</Type>
+    </Region>
+
+    <Region>
+      <Name>CLOSER-T</Name>
+      <Desc>CLOSER-T</Desc>
+      <File>
+        <SysName>/disks/l1/home/pagliere/dlxs/idx/b/bosnia/bosnia.rgn</SysName>
+        <ModDate>965329987</ModDate>
+        <Offset>292872</Offset>
+      </File>
+      <Count>4</Count>
+      <Type>pairs</Type>
+    </Region>
+
+    <Region>
+      <Name>LG-T</Name>
+      <Desc>LG-T</Desc>
+      <File>
+        <SysName>/disks/l1/home/pagliere/dlxs/idx/b/bosnia/bosnia.rgn</SysName>
+        <ModDate>965329987</ModDate>
+        <Offset>292904</Offset>
+      </File>
+      <Count>82</Count>
+      <Type>pairs</Type>
+    </Region>
+
+    <Region>
+      <Name>A-TYPE</Name>
+      <Desc>A-TYPE</Desc>
+      <File>
+        <SysName>/disks/l1/home/pagliere/dlxs/idx/b/bosnia/bosnia.rgn</SysName>
+        <ModDate>965329987</ModDate>
+        <Offset>3432</Offset>
+      </File>
+      <Count>944</Count>
+      <Type>pairs</Type>
+    </Region>
+
+    <Region>
+      <Name>FILEDESC-T</Name>
+      <Desc>FILEDESC-T</Desc>
+      <File>
+        <SysName>/disks/l1/home/pagliere/dlxs/idx/b/bosnia/bosnia.rgn</SysName>
+        <ModDate>965329987</ModDate>
+        <Offset>96</Offset>
+      </File>
+      <Count>8</Count>
+      <Type>pairs</Type>
+    </Region>
+
+    <Region>
+      <Name>ARGUMENT-T</Name>
+      <Desc>ARGUMENT-T</Desc>
+      <File>
+        <SysName>/disks/l1/home/pagliere/dlxs/idx/b/bosnia/bosnia.rgn</SysName>
+        <ModDate>965329987</ModDate>
+        <Offset>286520</Offset>
+      </File>
+      <Count>24</Count>
+      <Type>pairs</Type>
+    </Region>
+
+    <Region>
+      <Name>P1</Name>
+      <Desc>P1</Desc>
+      <File>
+        <SysName>/disks/l1/home/pagliere/dlxs/idx/b/bosnia/bosnia.rgn</SysName>
+        <ModDate>965329987</ModDate>
+        <Offset>299720</Offset>
+      </File>
+      <Count>84</Count>
+      <Type>pairs</Type>
+    </Region>
+
+    <Region>
+      <Name>GROUP-T</Name>
+      <Desc>GROUP-T</Desc>
+      <File>
+        <SysName>/disks/l1/home/pagliere/dlxs/idx/b/bosnia/bosnia.rgn</SysName>
+        <ModDate>965329987</ModDate>
+        <Offset>300056</Offset>
+      </File>
+      <Count>2</Count>
+      <Type>pairs</Type>
+    </Region>
+
+    <Region>
+      <Name>NOTE-T</Name>
+      <Desc>NOTE-T</Desc>
+      <File>
+        <SysName>/disks/l1/home/pagliere/dlxs/idx/b/bosnia/bosnia.rgn</SysName>
+        <ModDate>965329987</ModDate>
+        <Offset>284040</Offset>
+      </File>
+      <Count>310</Count>
+      <Type>pairs</Type>
+    </Region>
+
+    <Region>
+      <Name>OPENER-T</Name>
+      <Desc>OPENER-T</Desc>
+      <File>
+        <SysName>/disks/l1/home/pagliere/dlxs/idx/b/bosnia/bosnia.rgn</SysName>
+        <ModDate>965329987</ModDate>
+        <Offset>286904</Offset>
+      </File>
+      <Count>8</Count>
+      <Type>pairs</Type>
+    </Region>
+
+    <Region>
+      <Name>TITLESTMT-T</Name>
+      <Desc>TITLESTMT-T</Desc>
+      <File>
+        <SysName>/disks/l1/home/pagliere/dlxs/idx/b/bosnia/bosnia.rgn</SysName>
+        <ModDate>965329987</ModDate>
+        <Offset>128</Offset>
+      </File>
+      <Count>16</Count>
+      <Type>pairs</Type>
+    </Region>
+
+    <Region>
+      <Name>AUTHOR-T</Name>
+      <Desc>AUTHOR-T</Desc>
+      <File>
+        <SysName>/disks/l1/home/pagliere/dlxs/idx/b/bosnia/bosnia.rgn</SysName>
+        <ModDate>965329987</ModDate>
+        <Offset>25120</Offset>
+      </File>
+      <Count>20</Count>
+      <Type>pairs</Type>
+    </Region>
+
+    <Region>
+      <Name>CIT-T</Name>
+      <Desc>CIT-T</Desc>
+      <File>
+        <SysName>/disks/l1/home/pagliere/dlxs/idx/b/bosnia/bosnia.rgn</SysName>
+        <ModDate>965329987</ModDate>
+        <Offset>299336</Offset>
+      </File>
+      <Count>48</Count>
+      <Type>pairs</Type>
+    </Region>
+
+    <Region>
+      <Name>DIV2-T</Name>
+      <Desc>DIV2-T</Desc>
+      <File>
+        <SysName>/disks/l1/home/pagliere/dlxs/idx/b/bosnia/bosnia.rgn</SysName>
+        <ModDate>965329987</ModDate>
+        <Offset>286712</Offset>
+      </File>
+      <Count>24</Count>
+      <Type>pairs</Type>
+    </Region>
+
+    <Region>
+      <Name>BIBL-T</Name>
+      <Desc>BIBL-T</Desc>
+      <File>
+        <SysName>/disks/l1/home/pagliere/dlxs/idx/b/bosnia/bosnia.rgn</SysName>
+        <ModDate>965329987</ModDate>
+        <Offset>282768</Offset>
+      </File>
+      <Count>50</Count>
+      <Type>pairs</Type>
+    </Region>
+
+    <Region>
+      <Name>ENCODINGDESC-T</Name>
+      <Desc>ENCODINGDESC-T</Desc>
+      <File>
+        <SysName>/disks/l1/home/pagliere/dlxs/idx/b/bosnia/bosnia.rgn</SysName>
+        <ModDate>965329987</ModDate>
+        <Offset>79824</Offset>
+      </File>
+      <Count>8</Count>
+      <Type>pairs</Type>
+    </Region>
+
+    <Region>
+      <Name>TITLEPAGE-T</Name>
+      <Desc>TITLEPAGE-T</Desc>
+      <File>
+        <SysName>/disks/l1/home/pagliere/dlxs/idx/b/bosnia/bosnia.rgn</SysName>
+        <ModDate>965329987</ModDate>
+        <Offset>197360</Offset>
+      </File>
+      <Count>14</Count>
+      <Type>pairs</Type>
+    </Region>
+
+    <Region>
+      <Name>PB-T</Name>
+      <Desc>PB-T</Desc>
+      <File>
+        <SysName>/disks/l1/home/pagliere/dlxs/idx/b/bosnia/bosnia.rgn</SysName>
+        <ModDate>965329987</ModDate>
+        <Offset>168144</Offset>
+      </File>
+      <Count>3652</Count>
+      <Type>pairs</Type>
+    </Region>
+
+    <Region>
+      <Name>A-FTR</Name>
+      <Desc>A-FTR</Desc>
+      <File>
+        <SysName>/disks/l1/home/pagliere/dlxs/idx/b/bosnia/bosnia.rgn</SysName>
+        <ModDate>965329987</ModDate>
+        <Offset>138824</Offset>
+      </File>
+      <Count>3652</Count>
+      <Type>pairs</Type>
+    </Region>
+
+    <Region>
+      <Name>A-N</Name>
+      <Desc>A-N</Desc>
+      <File>
+        <SysName>/disks/l1/home/pagliere/dlxs/idx/b/bosnia/bosnia.rgn</SysName>
+        <ModDate>965329987</ModDate>
+        <Offset>153432</Offset>
+      </File>
+      <Count>3678</Count>
+      <Type>pairs</Type>
+    </Region>
+
+    <Region>
+      <Name>DOCTITLE-T</Name>
+      <Desc>DOCTITLE-T</Desc>
+      <File>
+        <SysName>/disks/l1/home/pagliere/dlxs/idx/b/bosnia/bosnia.rgn</SysName>
+        <ModDate>965329987</ModDate>
+        <Offset>197416</Offset>
+      </File>
+      <Count>16</Count>
+      <Type>pairs</Type>
+    </Region>
+
+    <Region>
+      <Name>A-NODE</Name>
+      <Desc>A-NODE</Desc>
+      <File>
+        <SysName>/disks/l1/home/pagliere/dlxs/idx/b/bosnia/bosnia.rgn</SysName>
+        <ModDate>965329987</ModDate>
+        <Offset>229408</Offset>
+      </File>
+      <Count>250</Count>
+      <Type>pairs</Type>
+    </Region>
+
+    <Region>
+      <Name>DIV1-T</Name>
+      <Desc>DIV1-T</Desc>
+      <File>
+        <SysName>/disks/l1/home/pagliere/dlxs/idx/b/bosnia/bosnia.rgn</SysName>
+        <ModDate>965329987</ModDate>
+        <Offset>230408</Offset>
+      </File>
+      <Count>226</Count>
+      <Type>pairs</Type>
+    </Region>
+
+    <Region>
+      <Name>EPB-T</Name>
+      <Desc>EPB-T</Desc>
+      <File>
+        <SysName>/disks/l1/home/pagliere/dlxs/idx/b/bosnia/bosnia.rgn</SysName>
+        <ModDate>965329987</ModDate>
+        <Offset>200208</Offset>
+      </File>
+      <Count>3650</Count>
+      <Type>pairs</Type>
+    </Region>
+
+    <Region>
+      <Name>TITLEPART-T</Name>
+      <Desc>TITLEPART-T</Desc>
+      <File>
+        <SysName>/disks/l1/home/pagliere/dlxs/idx/b/bosnia/bosnia.rgn</SysName>
+        <ModDate>965329987</ModDate>
+        <Offset>197480</Offset>
+      </File>
+      <Count>32</Count>
+      <Type>pairs</Type>
+    </Region>
+
+    <Region>
+      <Name>LB-T</Name>
+      <Desc>LB-T</Desc>
+      <File>
+        <SysName>/disks/l1/home/pagliere/dlxs/idx/b/bosnia/bosnia.rgn</SysName>
+        <ModDate>965329987</ModDate>
+        <Offset>197608</Offset>
+      </File>
+      <Count>294</Count>
+      <Type>pairs</Type>
+    </Region>
+
+    <Region>
+      <Name>A-FMT</Name>
+      <Desc>A-FMT</Desc>
+      <File>
+        <SysName>/disks/l1/home/pagliere/dlxs/idx/b/bosnia/bosnia.rgn</SysName>
+        <ModDate>965329987</ModDate>
+        <Offset>124216</Offset>
+      </File>
+      <Count>3652</Count>
+      <Type>pairs</Type>
+    </Region>
+
+    <Region>
+      <Name>TERM-T</Name>
+      <Desc>TERM-T</Desc>
+      <File>
+        <SysName>/disks/l1/home/pagliere/dlxs/idx/b/bosnia/bosnia.rgn</SysName>
+        <ModDate>965329987</ModDate>
+        <Offset>80048</Offset>
+      </File>
+      <Count>10</Count>
+      <Type>pairs</Type>
+    </Region>
+
+    <Region>
+      <Name>CLASSCODE-T</Name>
+      <Desc>CLASSCODE-T</Desc>
+      <File>
+        <SysName>/disks/l1/home/pagliere/dlxs/idx/b/bosnia/bosnia.rgn</SysName>
+        <ModDate>965329987</ModDate>
+        <Offset>80152</Offset>
+      </File>
+      <Count>6</Count>
+      <Type>pairs</Type>
+    </Region>
+
+    <Region>
+      <Name>KEYWORDS-T</Name>
+      <Desc>KEYWORDS-T</Desc>
+      <File>
+        <SysName>/disks/l1/home/pagliere/dlxs/idx/b/bosnia/bosnia.rgn</SysName>
+        <ModDate>965329987</ModDate>
+        <Offset>80024</Offset>
+      </File>
+      <Count>6</Count>
+      <Type>pairs</Type>
+    </Region>
+
+    <Region>
+      <Name>PROFILEDESC-T</Name>
+      <Desc>PROFILEDESC-T</Desc>
+      <File>
+        <SysName>/disks/l1/home/pagliere/dlxs/idx/b/bosnia/bosnia.rgn</SysName>
+        <ModDate>965329987</ModDate>
+        <Offset>79952</Offset>
+      </File>
+      <Count>12</Count>
+      <Type>pairs</Type>
+    </Region>
+
+    <Region>
+      <Name>TEXTCLASS-T</Name>
+      <Desc>TEXTCLASS-T</Desc>
+      <File>
+        <SysName>/disks/l1/home/pagliere/dlxs/idx/b/bosnia/bosnia.rgn</SysName>
+        <ModDate>965329987</ModDate>
+        <Offset>80000</Offset>
+      </File>
+      <Count>6</Count>
+      <Type>pairs</Type>
+    </Region>
+
+    <Region>
+      <Name>EDITORIALDECL-T</Name>
+      <Desc>EDITORIALDECL-T</Desc>
+      <File>
+        <SysName>/disks/l1/home/pagliere/dlxs/idx/b/bosnia/bosnia.rgn</SysName>
+        <ModDate>965329987</ModDate>
+        <Offset>79856</Offset>
+      </File>
+      <Count>8</Count>
+      <Type>pairs</Type>
+    </Region>
+
+    <Region>
+      <Name>A-SEQ</Name>
+      <Desc>A-SEQ</Desc>
+      <File>
+        <SysName>/disks/l1/home/pagliere/dlxs/idx/b/bosnia/bosnia.rgn</SysName>
+        <ModDate>965329987</ModDate>
+        <Offset>95000</Offset>
+      </File>
+      <Count>3652</Count>
+      <Type>pairs</Type>
+    </Region>
+
+    <Region>
+      <Name>A-RES</Name>
+      <Desc>A-RES</Desc>
+      <File>
+        <SysName>/disks/l1/home/pagliere/dlxs/idx/b/bosnia/bosnia.rgn</SysName>
+        <ModDate>965329987</ModDate>
+        <Offset>109608</Offset>
+      </File>
+      <Count>3652</Count>
+      <Type>pairs</Type>
+    </Region>
+
+    <Region>
+      <Name>A-REF</Name>
+      <Desc>A-REF</Desc>
+      <File>
+        <SysName>/disks/l1/home/pagliere/dlxs/idx/b/bosnia/bosnia.rgn</SysName>
+        <ModDate>965329987</ModDate>
+        <Offset>80392</Offset>
+      </File>
+      <Count>3652</Count>
+      <Type>pairs</Type>
+    </Region>
+
+    <Region>
+      <Name>TEXT-T</Name>
+      <Desc>TEXT-T</Desc>
+      <File>
+        <SysName>/disks/l1/home/pagliere/dlxs/idx/b/bosnia/bosnia.rgn</SysName>
+        <ModDate>965329987</ModDate>
+        <Offset>80304</Offset>
+      </File>
+      <Count>12</Count>
+      <Type>pairs</Type>
+    </Region>
+
+    <Region>
+      <Name>FRONT-T</Name>
+      <Desc>FRONT-T</Desc>
+      <File>
+        <SysName>/disks/l1/home/pagliere/dlxs/idx/b/bosnia/bosnia.rgn</SysName>
+        <ModDate>965329987</ModDate>
+        <Offset>80352</Offset>
+      </File>
+      <Count>10</Count>
+      <Type>pairs</Type>
+    </Region>
+
+    <Region>
+      <Name>FIGURE-T</Name>
+      <Desc>FIGURE-T</Desc>
+      <File>
+        <SysName>/disks/l1/home/pagliere/dlxs/idx/b/bosnia/bosnia.rgn</SysName>
+        <ModDate>965329987</ModDate>
+        <Offset>231312</Offset>
+      </File>
+      <Count>170</Count>
+      <Type>pairs</Type>
+    </Region>
+
+    <Region>
+      <Name>LIST-T</Name>
+      <Desc>LIST-T</Desc>
+      <File>
+        <SysName>/disks/l1/home/pagliere/dlxs/idx/b/bosnia/bosnia.rgn</SysName>
+        <ModDate>965329987</ModDate>
+        <Offset>258744</Offset>
+      </File>
+      <Count>66</Count>
+      <Type>pairs</Type>
+    </Region>
+
+    <Region>
+      <Name>ITEM-T</Name>
+      <Desc>ITEM-T</Desc>
+      <File>
+        <SysName>/disks/l1/home/pagliere/dlxs/idx/b/bosnia/bosnia.rgn</SysName>
+        <ModDate>965329987</ModDate>
+        <Offset>259008</Offset>
+      </File>
+      <Count>1560</Count>
+      <Type>pairs</Type>
+    </Region>
+
+    <Region>
+      <Name>HI1-T</Name>
+      <Desc>HI1-T</Desc>
+      <File>
+        <SysName>/disks/l1/home/pagliere/dlxs/idx/b/bosnia/bosnia.rgn</SysName>
+        <ModDate>965329987</ModDate>
+        <Offset>237464</Offset>
+      </File>
+      <Count>2654</Count>
+      <Type>pairs</Type>
+    </Region>
+
+    <Region>
+      <Name>AVAILABILITY-T</Name>
+      <Desc>AVAILABILITY-T</Desc>
+      <File>
+        <SysName>/disks/l1/home/pagliere/dlxs/idx/b/bosnia/bosnia.rgn</SysName>
+        <ModDate>965329987</ModDate>
+        <Offset>26160</Offset>
+      </File>
+      <Count>8</Count>
+      <Type>pairs</Type>
+    </Region>
+
+    <Region>
+      <Name>TRAILER-T</Name>
+      <Desc>TRAILER-T</Desc>
+      <File>
+        <SysName>/disks/l1/home/pagliere/dlxs/idx/b/bosnia/bosnia.rgn</SysName>
+        <ModDate>965329987</ModDate>
+        <Offset>237416</Offset>
+      </File>
+      <Count>12</Count>
+      <Type>pairs</Type>
+    </Region>
+
+    <Region>
+      <Name>REF-T</Name>
+      <Desc>REF-T</Desc>
+      <File>
+        <SysName>/disks/l1/home/pagliere/dlxs/idx/b/bosnia/bosnia.rgn</SysName>
+        <ModDate>965329987</ModDate>
+        <Offset>265248</Offset>
+      </File>
+      <Count>1244</Count>
+      <Type>pairs</Type>
+    </Region>
+
+    <Region>
+      <Name>EPIGRAPH-T</Name>
+      <Desc>EPIGRAPH-T</Desc>
+      <File>
+        <SysName>/disks/l1/home/pagliere/dlxs/idx/b/bosnia/bosnia.rgn</SysName>
+        <ModDate>965329987</ModDate>
+        <Offset>281784</Offset>
+      </File>
+      <Count>30</Count>
+      <Type>pairs</Type>
+    </Region>
+
+    <Region>
+      <Name>Q1-T</Name>
+      <Desc>Q1-T</Desc>
+      <File>
+        <SysName>/disks/l1/home/pagliere/dlxs/idx/b/bosnia/bosnia.rgn</SysName>
+        <ModDate>965329987</ModDate>
+        <Offset>281904</Offset>
+      </File>
+      <Count>108</Count>
+      <Type>pairs</Type>
+    </Region>
+
+    <Region>
+      <Name>BODY-T</Name>
+      <Desc>BODY-T</Desc>
+      <File>
+        <SysName>/disks/l1/home/pagliere/dlxs/idx/b/bosnia/bosnia.rgn</SysName>
+        <ModDate>965329987</ModDate>
+        <Offset>281744</Offset>
+      </File>
+      <Count>10</Count>
+      <Type>pairs</Type>
+    </Region>
+
+    <Region>
+      <Name>IDNO-T</Name>
+      <Desc>IDNO-T</Desc>
+      <File>
+        <SysName>/disks/l1/home/pagliere/dlxs/idx/b/bosnia/bosnia.rgn</SysName>
+        <ModDate>965329987</ModDate>
+        <Offset>26096</Offset>
+      </File>
+      <Count>8</Count>
+      <Type>pairs</Type>
+    </Region>
+
+    <Region>
+      <Name>DATE-T</Name>
+      <Desc>DATE-T</Desc>
+      <File>
+        <SysName>/disks/l1/home/pagliere/dlxs/idx/b/bosnia/bosnia.rgn</SysName>
+        <ModDate>965329987</ModDate>
+        <Offset>25968</Offset>
+      </File>
+      <Count>16</Count>
+      <Type>pairs</Type>
+    </Region>
+
+    <Region>
+      <Name>SIGNED-T</Name>
+      <Desc>SIGNED-T</Desc>
+      <File>
+        <SysName>/disks/l1/home/pagliere/dlxs/idx/b/bosnia/bosnia.rgn</SysName>
+        <ModDate>965329987</ModDate>
+        <Offset>237352</Offset>
+      </File>
+      <Count>8</Count>
+      <Type>pairs</Type>
+    </Region>
+
+    <Region>
+      <Name>BIBLFULL-T</Name>
+      <Desc>BIBLFULL-T</Desc>
+      <File>
+        <SysName>/disks/l1/home/pagliere/dlxs/idx/b/bosnia/bosnia.rgn</SysName>
+        <ModDate>965329987</ModDate>
+        <Offset>79632</Offset>
+      </File>
+      <Count>8</Count>
+      <Type>pairs</Type>
+    </Region>
+
+    <Region>
+      <Name>BYLINE-T</Name>
+      <Desc>BYLINE-T</Desc>
+      <File>
+        <SysName>/disks/l1/home/pagliere/dlxs/idx/b/bosnia/bosnia.rgn</SysName>
+        <ModDate>965329987</ModDate>
+        <Offset>236872</Offset>
+      </File>
+      <Count>16</Count>
+      <Type>pairs</Type>
+    </Region>
+
+    <Region>
+      <Name>EDITIONSTMT-T</Name>
+      <Desc>EDITIONSTMT-T</Desc>
+      <File>
+        <SysName>/disks/l1/home/pagliere/dlxs/idx/b/bosnia/bosnia.rgn</SysName>
+        <ModDate>965329987</ModDate>
+        <Offset>79664</Offset>
+      </File>
+      <Count>4</Count>
+      <Type>pairs</Type>
+    </Region>
+
+    <Region>
+      <Name>HEAD-T</Name>
+      <Desc>HEAD-T</Desc>
+      <File>
+        <SysName>/disks/l1/home/pagliere/dlxs/idx/b/bosnia/bosnia.rgn</SysName>
+        <ModDate>965329987</ModDate>
+        <Offset>231992</Offset>
+      </File>
+      <Count>412</Count>
+      <Type>pairs</Type>
+    </Region>
+
+    <Region>
+      <Name>EDITION-T</Name>
+      <Desc>EDITION-T</Desc>
+      <File>
+        <SysName>/disks/l1/home/pagliere/dlxs/idx/b/bosnia/bosnia.rgn</SysName>
+        <ModDate>965329987</ModDate>
+        <Offset>79680</Offset>
+      </File>
+      <Count>4</Count>
+      <Type>pairs</Type>
+    </Region>
+
+    <Region>
+      <Name>DOCAUTHOR-T</Name>
+      <Desc>DOCAUTHOR-T</Desc>
+      <File>
+        <SysName>/disks/l1/home/pagliere/dlxs/idx/b/bosnia/bosnia.rgn</SysName>
+        <ModDate>965329987</ModDate>
+        <Offset>236936</Offset>
+      </File>
+      <Count>16</Count>
+      <Type>pairs</Type>
+    </Region>
+
+    <Region>
+      <Name>DOCEDITION-T</Name>
+      <Desc>DOCEDITION-T</Desc>
+      <File>
+        <SysName>/disks/l1/home/pagliere/dlxs/idx/b/bosnia/bosnia.rgn</SysName>
+        <ModDate>965329987</ModDate>
+        <Offset>237304</Offset>
+      </File>
+      <Count>6</Count>
+      <Type>pairs</Type>
+    </Region>
+
+    <Region>
+      <Name>P-T</Name>
+      <Desc>P-T</Desc>
+      <File>
+        <SysName>/disks/l1/home/pagliere/dlxs/idx/b/bosnia/bosnia.rgn</SysName>
+        <ModDate>965329987</ModDate>
+        <Offset>26192</Offset>
+      </File>
+      <Count>6706</Count>
+      <Type>pairs</Type>
+    </Region>
+
+    <Region>
+      <Name>DOCDATE-T</Name>
+      <Desc>DOCDATE-T</Desc>
+      <File>
+        <SysName>/disks/l1/home/pagliere/dlxs/idx/b/bosnia/bosnia.rgn</SysName>
+        <ModDate>965329987</ModDate>
+        <Offset>237176</Offset>
+      </File>
+      <Count>10</Count>
+      <Type>pairs</Type>
+    </Region>
+
+    <Region>
+      <Name>SOURCEDESC-T</Name>
+      <Desc>SOURCEDESC-T</Desc>
+      <File>
+        <SysName>/disks/l1/home/pagliere/dlxs/idx/b/bosnia/bosnia.rgn</SysName>
+        <ModDate>965329987</ModDate>
+        <Offset>79600</Offset>
+      </File>
+      <Count>8</Count>
+      <Type>pairs</Type>
+    </Region>
+
+    <Region>
+      <Name>DOCIMPRINT-T</Name>
+      <Desc>DOCIMPRINT-T</Desc>
+      <File>
+        <SysName>/disks/l1/home/pagliere/dlxs/idx/b/bosnia/bosnia.rgn</SysName>
+        <ModDate>965329987</ModDate>
+        <Offset>237128</Offset>
+      </File>
+      <Count>12</Count>
+      <Type>pairs</Type>
+    </Region>
+  <Region><Name>main</Name><Desc>main</Desc><File>
+  <SysName>/disks/l1/home/pagliere/dlxs/idx/b/bosnia/main.rgn</SysName>
+  <ModDate>965330032</ModDate>
+  <OffSet>158303</OffSet>
+</File><Count>8</Count><Type>pairs</Type></Region>
+
+<Region><Name>maintitle</Name><Desc>maintitle</Desc><File>
+  <SysName>/disks/l1/home/pagliere/dlxs/idx/b/bosnia/maintitle.rgn</SysName>
+  <ModDate>965330032</ModDate>
+  <OffSet>158303</OffSet>
+</File><Count>10</Count><Type>pairs</Type></Region>
+
+<Region><Name>mainauthor</Name><Desc>mainauthor</Desc><File>
+  <SysName>/disks/l1/home/pagliere/dlxs/idx/b/bosnia/mainauthor.rgn</SysName>
+  <ModDate>965330032</ModDate>
+  <OffSet>158303</OffSet>
+</File><Count>8</Count><Type>pairs</Type></Region>
+
+<Region><Name>mainheader</Name><Desc>mainheader</Desc><File>
+  <SysName>/disks/l1/home/pagliere/dlxs/idx/b/bosnia/mainheader.rgn</SysName>
+  <ModDate>965330032</ModDate>
+  <OffSet>158303</OffSet>
+</File><Count>8</Count><Type>pairs</Type></Region>
+
+<Region><Name>div1head</Name><Desc>div1head</Desc><File>
+  <SysName>/disks/l1/home/pagliere/dlxs/idx/b/bosnia/div1head.rgn</SysName>
+  <ModDate>965330032</ModDate>
+  <OffSet>158303</OffSet>
+</File><Count>226</Count><Type>pairs</Type></Region>
+
+<Region><Name>div2head</Name><Desc>div2head</Desc><File>
+  <SysName>/disks/l1/home/pagliere/dlxs/idx/b/bosnia/div2head.rgn</SysName>
+  <ModDate>965330032</ModDate>
+  <OffSet>158303</OffSet>
+</File><Count>24</Count><Type>pairs</Type></Region>
+
+<Region><Name>alltitles</Name><Desc>alltitles</Desc><File>
+  <SysName>/disks/l1/home/pagliere/dlxs/idx/b/bosnia/alltitles.rgn</SysName>
+  <ModDate>965330032</ModDate>
+  <OffSet>158303</OffSet>
+</File><Count>260</Count><Type>pairs</Type></Region>
+
+
+</Regions>
+</DB>

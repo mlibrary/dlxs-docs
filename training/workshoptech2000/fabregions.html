@@ -1,0 +1,261 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<title>Creating Fabricated Regions</title>
+<link rel="stylesheet" href="styles.css">
+<style type="text/css">
+
+</style>
+</head>
+
+<body class="mainpalette">
+    <h3>Creating Fabricated Regions</h3>
+
+    
+<p>Throughout the documents and discussion so far, we've avoided going into depth 
+  about the concept of fabricated regions, using it but not explaining it on purpose. 
+  The things included in the <b>extra</b> target of the <a href="makefile-gen.html" target="mainFrame">Makefile</a> 
+  perform the steps needed to create a set of regions according to a qualification 
+  or from-here-to-there argument. </p>
+
+    <hr width="50%">
+
+    <h4>What's a Fabricated Region and Why Do We Care?</h4>
+
+    
+<p>As the DLPS platform uses the phrase, a <i>fabricated region</i> is some span 
+  of text in an indexed document not well or exactly defined by the SGML region 
+  distinctions from <b>sgmlrgn</b>, but requires some extra decision-making. 
+  These fabricated regions exist as conveniences for speeding up searching and 
+  displaying meaningful results of a search.</p>
+
+    <p>For the <strong>speeding up searches convenience</strong>,
+      consider an SGML DTD that describes books, using a <tt>DIV</tt>
+      element to describe large divisions in the text like chapters,
+      prefaces, appendices, and the like.  To distinguish different
+      <tt>DIV</tt>s from each other, it has a <tt>TYPE</tt> attribute
+      that takes CDATA.  If a given collection of books marked-up with
+      this DTD all use a <tt>DIV TYPE="ABSTRACT"</tt> tag to surround
+      the abstract of a book, and we know that we will want to allow
+      searches in the abstracts often, we might want to define a
+      fabricated region for all the abstracts of the books, so that
+      "<tt>region abstract</tt>" would be something we could simply
+      refer to (and find out about with <tt>{ddinfo regionnames}</tt>),
+      rather than having to compute <tt>region DIV incl
+      "type=abstract"</tt> each time we wanted to refer to
+      abstracts.
+      </p>
+
+    
+<p>For the <strong>displaying meaningful results convenience</strong>, consider 
+  an SGML DTD that permits deep hierarchy, and a collection of documents that 
+  make extensive use of that deep hierarchy. Just about any <i>Chadwyck-Healey</i> 
+  literature collection you can think of (especially poetry databases) permit 
+  the arbitrary nesting of DIV-like elements, and then frequently use this nesting 
+  ability quite a bit. One of the HTI/DLPS philosophies is to try to provide as 
+  much useful context to the user as possible, and in the case of such a possibly 
+  deep hierarchy, one take on context is to show as much of the hierarchy as possible 
+  when displaying results. We might want search matches to be displayed along 
+  with their structural or logical parents, and some indication of just what those 
+  parents are. </p>
+
+    <p>To further complicate this, the <tt>DIV</tt>s that nest might
+    have a couple of different ways that we could identify them with
+    text meaningful to the user.  We might see in the mark-up:</p>
+
+    <blockquote><tt>&lt;DIV ID="347"&gt;&lt;HEAD&gt;Chapter the 9th: "Hiya Toots!"&lt;/HEAD&gt;</tt></blockquote>
+
+    <p>But at the same time:</p>
+
+    <blockquote><tt>&lt;DIV ID="15.a" TYPE="chapter" NUM="13"&gt;</tt></blockquote>
+
+    
+<p>These both have some identification information on them, but in different ways: 
+  the first example has a nice HEAD element, whose contents are inscrutable to 
+  the program, but which we know represent the title of this section. The second 
+  has no HEAD element, but has a TYPE and NUM attribute for some intelligible, 
+  human understandable title information. We'd like to make a fabricated region 
+  that would capture all the "title" type information for each DIV, regardless 
+  of what kind of DIV it is (we also don't have to recompute it each time; it 
+  will be indexed like any other region.) </p>
+
+    <p>When analysing the documents, and thinking about what kinds of
+      searching and retrieval we want to do on them, we might come up
+      with these kinds of distinctions that we'll want to make often
+      and conveniently.  We then consider defining some fabricated
+      regions.</p>
+
+    <hr width="50%">
+
+    <h4><tt>region</tt> and Qualification</h4>
+
+    <p>These forms of the command are the simplest, in fact we've used
+      them already:</p>
+
+    <blockquote><tt>region A + region B<br>
+        region A - region B<br>
+        region A ^ region B<br>
+        (point set) - region B<br>
+        (point set) ^ region B<br>
+        region A - (point set)<br>
+        region A ^ (point set)<br>
+        region A incl (point or region set)<br>
+        region A within region B<br>
+        region A fby (point or region set)<br>
+        region A near (point or region set)</tt></blockquote>
+
+    
+<p>The above will always evaluate to new region sets.<br>
+  <!--
+With the exceptions of the +, ^, and - expressions, all the members of the new 
+  region set will also be members of the first region expression. <br>
+  In the + expression, all members (with the overlapping and nesting caveats) 
+  of the individual regions will be present. <br>
+  In - and ^ expressions only involving regions, members of the new result set 
+  will all be members of the region set with the shortest lengthwise members (if 
+  this sounds like a fuzzy distinction, that's because it is from our experience...).
+-->
+</p>
+<hr width="50%">
+
+    <h4><tt>region</tt> and From-Here-To-There</h4>
+
+
+    <p>The <tt>region</tt> command:</p>
+
+    <blockquote><tt>region <em>&lt;from&gt;</em> .. <em>&lt;to&gt;</em></tt></blockquote>
+
+    <p>takes a valid point expression in the
+    <strong>&lt;from&gt;</strong>, and some valid point 
+    expression as the <strong>&lt;to&gt;</strong>.  It will compute
+    the resulting regions set as all those spans of text starting at
+    the start offset of each <strong>&lt;from&gt;</strong>s, to
+    and including the start offset of the nearest following
+    <strong>&lt;to&gt;</strong>, with no other
+    <strong>&lt;from&gt;</strong> intervening.  Anytime a
+    <strong>&lt;from&gt;</strong> has no following
+    <strong>&lt;to&gt;</strong>, either because there are none further
+    in the text, or they are all already claimed by some other
+    <strong>&lt;from&gt;</strong>, un-mated
+    <strong>&lt;from&gt;</strong> doesn't appear in the resulting
+    region set.  None of the result regions will overlap.  For
+    instance, in an HTML database we might:</p>
+
+    <blockquote><pre>&gt;&gt; region A
+  5: 50 matches
+&gt;&gt; region BR
+  6: 5 matches
+&gt;&gt; region "A-T" .. "&lt;BR&gt;"
+  7: 2 matches
+&gt;&gt; </pre></blockquote>
+
+    <p>Each of the members in 7 starts with the start tag of an A
+      element, and runs up to the next BR element (we get at the BR
+      element in a back-handed way...), without another A start tag
+      intervening.  Because of the way the BR and A elements fall in
+      this HTML, it can only make two such regions.</p>
+
+<!--
+    <p>The query language reference guide for ot60 leads us to think
+      we can have the <strong><from></strong> be any kind of <em>point
+    or region expression</em>.  To try the same example as above with a
+    point set for the A element start tag, how about:</p>
+
+    <blockquote><pre>>> region "<A" .. "<BR>"
+  9: no match
+[ENUS][Message #:298] Not a data dictionary defined region
+>> </pre></blockquote>
+
+    <p>Hard telling what the problem here is.  My thought is that the
+      command interpreter flunks us here because for some reason it
+      isn't checking against all possibilities for the <tt>region</tt>
+      command.  In any event, if we've had some regions created for us
+      already, either by the <a href="sgmlrgn.html"><tt>sgmlrgn</tt>
+      step</a> or in the <a
+      href="sgmlrgn.html#otbldrgn"><tt>otbld</tt> step</a>, we can
+      satisfy the requirements of the <tt>region</tt> command as it
+      is.</p>
+
+    <p>PAT50 on the other hand, can behave as the ot60 documentation
+    would lead us to think ot60 can behave.</p>
+-->
+
+          <hr width="50%">
+
+    
+<h4>Fabricated Region Examples </h4>
+
+    
+<dl> 
+  <dt><em>I need to reserve all the abstracts for fast searching</em> We need 
+    to know the DTD and usage details as above.</dt>
+  <dd> 
+    <blockquote> 
+      <pre>&gt;&gt; region DIV incl "type=abstract"
+  1: 15 matches
+&gt;&gt; region DIV incl (region "DIV-T" incl "type=abstract")
+  2: 12 matches
+&gt;&gt; </pre>
+    </blockquote>
+    <p>These examples are given in the order of increasing paranoia. The difference 
+      between first and the last has to do with whether or not strings matching 
+      "type=abstract" can occur in more than one kind of place in a DIV (like, 
+      as an attribute on a sub element of a DIV). </p>
+  </dd>
+  <hr width="50%">
+</dl>
+
+  <h4>Exporting a Fabricated Region and Using it in the Index</h4>
+
+<p><i>This example taken from the <a href="sourcetext/idx/bosnia.extra.srch.txt" target="sourcetext">bosnia.extra.srch</a> 
+  file. I want a region that represents a head of a DIV1. I need to find all DIV1s 
+  that have a HEAD. But since there are some DIV1s that do not have HEAD regions, 
+  for those DIV1s I need to get the DIV1 tag itself. I must remember during all 
+  this that the HEAD regions in question must be ones at the DIV1 level, not inside 
+  sub-DIVs.... </i></p>
+
+    
+<blockquote> 
+  <pre>&gt;&gt; ((region "&lt;DIV1".."&lt;/HEAD>") ^ (region DIV1 incl (region HEAD not within region DIV2)))
+ 1: 101 matches
+&gt;&gt; ((region "DIV1-T") ^ (region DIV1 not incl (region HEAD not within region DIV2)))
+ 2: 12 matches
+
+</pre>
+</blockquote>
+<h4>&nbsp;</h4>
+
+    <p>Once we've constructed a search that identifies the regions
+      that we care about, we <tt>export</tt> that region to a file,
+      and incorporate that file into the main index, so that the
+      region we've identified is loaded when the database is run:</p>
+
+    <blockquote>
+  <pre>&gt;&gt; 1 + 2
+ 3: 113 matches
+&gt;&gt; {exportfile "./div1headtest.rgn"}
+&gt;&gt; export
+&gt;&gt; 
+</pre>
+</blockquote>
+
+    
+<p>Now there is a new file <i><b>./div1headtest.rgn</b></i> that is a binary index 
+  file of this new 'virtual' region. We can make <b>XPat</b> aware of it by adding 
+  it to the <b>Regions</b> area of the <tt><b>.dd</b></tt> file. </p>
+
+<p>The <a href="sourcetext/idx/Makefile.bosnia.txt" target="sourcetext"><b>Makefile</b></a> 
+  contains a command which takes commands like these and uses them to create a 
+  <b>.rgn</b> file and a text file <b>coll.extra.dd</b> which is then incorporated 
+  into the main <b>.dd</b> file with the<a href="sourcetext/bin/inc.extra.dd.pl.txt" target="sourcetext"> 
+  <b>inc.extra.pl</b></a> perl script.</p>
+
+<p>We can then refer to the fabricated region with "region div1headtest", and 
+  see "div1headtext" as one of the available regions from <b>{ddinfo regionnames}</b>.</p>
+
+  </body>
+</html>
+

@@ -1,0 +1,183 @@
+<HTML>
+<head>
+<TITLE>Image Class COLLDB (Collection Database)</TITLE>
+
+
+
+
+
+ <LINK HREF="../../dlxsdocs.css" REL="stylesheet" TYPE="text/css"></head>         <BODY>
+<table class="updateTable" CELLSPACING="3" CELLPADDING="3" BORDER="1">
+<TR>
+<td>Last updated</td>
+<td>2003-12-01 11:16:46 EST</td>
+</TR>
+<TR>
+<td>Doc Title</td>
+<td>Image Class COLLDB (Collection Database)</td>
+</TR>
+<TR>
+<td>Author 1</td>
+<td>Weise, John</td>
+</TR>
+<TR>
+<td>CVS Revision</td>
+<td>$Revision: 1.6 $</td>
+</TR>
+</table>
+
+<DIV CLASS="pageTitle">Image Class COLLDB (Collection Database) Configuration</DIV> 
+
+
+  
+  
+<P>The COLLDB (collection database) is for configuration of individual collections. 
+  Many aspects of how a collection is presented in the interface are controlled 
+  by elements in the COLLDB. It is very powerful in that sense, and allows extensive 
+  customization to be done without creation of HTML templates. It is still possible 
+  to create templates and modify style sheets, etc. if that is necessary. Please 
+  see <A HREF="../../ui/dlxs-templates.html">DLXS HTML Templates / Interfaces</A> for an overview.</P>
+<P>Some of the COLLDB elements may have corresponding Processing Instructions. Under 
+  certain situations, the Processing Instruction may override the COLLDB. This 
+  generally happens in a logical fashion. Just be aware of this possibility.</P>
+  <P><strong>The majority of Collmgr Fields are fully documented within Collmgr.
+  This document now only includes extensive information beyond what could be reasonably kept in the Collmgr help document.
+  </strong>
+  </P>
+  
+  
+<H2>Table of COLLDB Field Definitions</H2>
+<table BORDER="1" CELLPADDING="5" CELLSPACING="1" WIDTH="95%">
+  <TBODY> 
+  <TR> 
+    <TH WIDTH="*"> Field Name </TH>
+    <TH WIDTH="*"> Description </TH>
+    <TH WIDTH="*">Example</TH>
+  </TR>
+
+<TR VALIGN="top"> 
+    <td WIDTH="*"><strong>dfltentryflds</strong> and <strong>dfltresentryflds</strong></td>
+    <td WIDTH="*">the list of fields (as abbreviations) to display in entry (full 
+      record) views. to display all fields, enter the value &quot;default&quot;.</td>
+    <td WIDTH="*"> 
+      <DIV ALIGN="left">
+        <P>BHL_IT<BR/>BHL_TIS<BR/>dateconv:on<BR/>BHL_DA<BR/>dateconv:off<BR/>BHL_CR<BR/>BHL_WC<BR/>BHL_CA<BR/>BHL_NO<BR/>BHL_SU<BR/>BHL_G<BR/>BHL_CT<BR/>
+          BHL_CC<BR/>BHL_LO<BR/>BHL_ITNO<BR/>BHL_NE<BR/>BHL_SS<BR/>url:on<BR/>idres:on<BR/>BHL_EL<BR/>url:off<BR/>idres:off<BR/>BHL_RI<BR/>BHL_RE</P>
+        <P>In colldb, values must be listed 1 per line. However within a processing instruction, values must be delimited 
+          by pipes ( &quot;|&quot; ). e.g., MUSART.TI|MUSART.CR|musart.DA</P>
+        <P>Values are not case sensitive. </P>
+        <P>There are several options that may be turned on and off to enhance 
+          the display of records. The options are specified as another value among 
+          abbreviations. When the status of an option is changed, the change is 
+          persistent for all subsequent fields, until the status is changed again. 
+          The exceptions to this are &quot;sectionlabel&quot; and &quot;urltext&quot;, 
+          which are specified as often as needed.</P>
+        <P>The &quot;url&quot; option, for example, causes fields that contain 
+          a URL (and nothing but a URL), to be turned into a hyperlink. It can 
+          be used in conjunction with the &quot;urltext&quot; option, which 
+          allows the link text to be specified. By default the URL itself is used 
+          for the link text. e.g., <BR/>
+          MUSART.TI<BR/>url:on<BR/>urltext:View_Copyright_Statement<BR/>MUSART.cp<BR/>url:off<BR/>MUSART.DA</P>
+        <P>The &quot;hilite&quot; option causes search terms to be hilited. This 
+          option is &quot;on&quot; by default, but if you wanted to turn hiliting 
+          off for several consecutive fields, you could. e.g., MUSART.TI<BR/>hilite:off<BR/>MUSART.DA<BR/>MUSART.PG<BR/>MUSART.LI<BR/>hilite:on<BR/>MUSART.TY</P>
+        <P>The complete list of field options are as follows: </P>
+        <table WIDTH="100%" BORDER="1" CELLSPACING="1" CELLPADDING="1">
+          <TR> 
+            <TH WIDTH="14%">option</TH>
+            <TH WIDTH="31%">values</TH>
+            <TH WIDTH="7%">default</TH>
+            <TH WIDTH="48%">description</TH>
+          </TR>
+          <TR> 
+            <td WIDTH="14%">label</td>
+            <td WIDTH="31%">on/off</td>
+            <td WIDTH="7%">on</td>
+            <td WIDTH="48%">display name of field before field value</td>
+          </TR>
+          <TR> 
+            <td WIDTH="14%" HEIGHT="37">sectionlabel</td>
+            <td WIDTH="31%" HEIGHT="37">text string*<BR/>
+            </td>
+            <td WIDTH="7%" HEIGHT="37">empty</td>
+            <td WIDTH="48%" HEIGHT="37">display a section label before a series 
+              of fields. allows a record to split into sections.</td>
+          </TR>
+          <TR> 
+            <td WIDTH="14%">url</td>
+            <td WIDTH="31%">on/off</td>
+            <td WIDTH="7%">off</td>
+            <td WIDTH="48%">turn the entire contents of the field in to a link. 
+              assumes the field contains a single URL.</td>
+          </TR>
+          <TR> 
+            <td WIDTH="14%">urltext</td>
+            <td WIDTH="31%">text string*</td>
+            <td WIDTH="7%">empty</td>
+            <td WIDTH="48%">display the provided string as the text of the &quot;url&quot; 
+              option link. if &quot;urltext&quot; is not specified, the URL value 
+              is used as the text of the link.</td>
+          </TR>
+          <TR> 
+            <td WIDTH="14%">idres</td>
+            <td WIDTH="31%">on/off</td>
+            <td WIDTH="7%">off</td>
+            <td WIDTH="48%">look the value of the field up in the id resolver 
+              and display the value. use with &quot;url&quot; and/or &quot;urltext&quot; 
+              to turn the value in to a link.</td>
+          </TR>
+          <TR> 
+            <td WIDTH="14%">dateconv</td>
+            <td WIDTH="31%">on/off</td>
+            <td WIDTH="7%">off</td>
+            <td WIDTH="48%"> 
+              <P>displays some ISO format dates in a more human readable form.</P>
+              <P>supports YYYYMMDD, YYYYMMDD/YYYYMMDD and maintains any data that 
+                might follow the date in the field e.g, (ca.)</P>
+            </td>
+          </TR>
+          <TR> 
+            <td WIDTH="14%">hilite</td>
+            <td WIDTH="31%">on/off</td>
+            <td WIDTH="7%">on</td>
+            <td WIDTH="48%"> 
+              <P>hilites search terms in the field. </P>
+              <P>DLXS hiliting supports 3 search fields only (q1 - q3). </P>
+            </td>
+          </TR>
+          <TR> 
+            <td WIDTH="14%">keylinks</td>
+            <td WIDTH="31%">on/off</td>
+            <td WIDTH="7%">off</td>
+            <td WIDTH="48%"> 
+              <P>turns the field value into a url that will search the collection for that value. by default, each word of the field is made into a separate link. the delimiter used to split the field can be specified by the "delim" option.</P>
+            </td>
+          </TR>
+
+          <TR> 
+            <td WIDTH="14%">delim</td>
+            <td WIDTH="31%">1 or more characters</td>
+            <td WIDTH="7%">SPACE</td>
+            <td WIDTH="48%"> 
+              <P>used in conjunction with the keylinks option to split the value of a field into smaller parts by the value delim specifies. for example, if a field holds a list of keywords delimited by "; " delim can be set to ";_" to tell the keylinks option how to split the field. (note: use an underscore for SPACE.)  e.g., delim:;_</P>
+            </td>
+          </TR>
+
+
+        </table>
+        <P>* use underscores for spaces. special characters may not work.</P>
+        <P>The Processing Instruction &quot;RECORDTABLE&quot; has similar functionality.</P>
+      </DIV>
+    </td>
+  </TR>
+
+
+  </TBODY> 
+</table>
+
+
+
+</BODY>
+
+
+</HTML>

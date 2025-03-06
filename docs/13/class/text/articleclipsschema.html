@@ -1,0 +1,45 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+  <head>
+    <title>ArticleClips Table Schema</title>
+  </head>
+
+  <body>
+    <h1>ArticleClips Table Schema</h1>
+<pre>
+        CREATE TABLE ArticleClips (
+           idno      varchar(250) NOT NULL default '',
+           artid     varchar(250) NOT NULL default '',
+           artseq    varchar(250) NOT NULL default '',
+           title     varchar(250) default NULL,
+           id        varchar(250) NOT NULL default '',
+           seq       varchar(250) NOT NULL default '',
+           relseq    varchar(250) NOT NULL default '',
+           pageid    varchar(250) NOT NULL default '',
+           pageseq   varchar(250) NOT NULL default '',
+           pagelabel varchar(250) default NULL,
+         ) TYPE=MyISAM;
+
+        ALTER TABLE ArticleClips ADD INDEX idno (idno (50));
+        ALTER TABLE ArticleClips ADD INDEX artid (id (50));
+</pre>
+
+<p>This table corresponds to the XML DIV structure as follows:</p>
+
+<pre>
+        idno      ->  [&lt;IDNO TYPE="apex">(.*?)&lt;/IDNO>]       idno
+        artid     ->  [&lt;DIV1 ID="(.*?) ...>]                 article id
+        artseq    ->  [&lt;DIV1 ... NODE=".*?:(\d+)]"]          article seq
+        title     ->  [&lt;DIV1 ...>&lt;BIBL>&lt;TITLE>(.*?)&lt;/TITLE>] title
+        id        ->  [&lt;DIV2 REF="(.*?) ...>]                clip id (and filename)
+        seq       ->  [&lt;DIV2 SEQ="(.*?) ...>]                absolute clip seq
+        relseq    ->  [&lt;DIV2 ... ".*?:seq\.(\d+)"]           relative clip seq
+        pageid    ->  [&lt;DIV2 PGREF="(.*?) ...>]              page id
+        pageseq   ->  [&lt;DIV2 PGSEQ="(.*?) ...>]              page seq
+        pagelabel ->  [&lt;DIV2 N="(.*?) ...>]                  page label (N)
+
+</pre>
+
+
+</body>
+</html>

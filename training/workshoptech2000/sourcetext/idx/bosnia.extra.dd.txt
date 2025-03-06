@@ -1,0 +1,42 @@
+<Region><Name>main</Name><Desc>main</Desc><File>
+  <SysName>/disks/l1/home/pagliere/dlxs/idx/b/bosnia/main.rgn</SysName>
+  <ModDate>965330032</ModDate>
+  <OffSet>158303</OffSet>
+</File><Count>8</Count><Type>pairs</Type></Region>
+
+<Region><Name>maintitle</Name><Desc>maintitle</Desc><File>
+  <SysName>/disks/l1/home/pagliere/dlxs/idx/b/bosnia/maintitle.rgn</SysName>
+  <ModDate>965330032</ModDate>
+  <OffSet>158303</OffSet>
+</File><Count>10</Count><Type>pairs</Type></Region>
+
+<Region><Name>mainauthor</Name><Desc>mainauthor</Desc><File>
+  <SysName>/disks/l1/home/pagliere/dlxs/idx/b/bosnia/mainauthor.rgn</SysName>
+  <ModDate>965330032</ModDate>
+  <OffSet>158303</OffSet>
+</File><Count>8</Count><Type>pairs</Type></Region>
+
+<Region><Name>mainheader</Name><Desc>mainheader</Desc><File>
+  <SysName>/disks/l1/home/pagliere/dlxs/idx/b/bosnia/mainheader.rgn</SysName>
+  <ModDate>965330032</ModDate>
+  <OffSet>158303</OffSet>
+</File><Count>8</Count><Type>pairs</Type></Region>
+
+<Region><Name>div1head</Name><Desc>div1head</Desc><File>
+  <SysName>/disks/l1/home/pagliere/dlxs/idx/b/bosnia/div1head.rgn</SysName>
+  <ModDate>965330032</ModDate>
+  <OffSet>158303</OffSet>
+</File><Count>226</Count><Type>pairs</Type></Region>
+
+<Region><Name>div2head</Name><Desc>div2head</Desc><File>
+  <SysName>/disks/l1/home/pagliere/dlxs/idx/b/bosnia/div2head.rgn</SysName>
+  <ModDate>965330032</ModDate>
+  <OffSet>158303</OffSet>
+</File><Count>24</Count><Type>pairs</Type></Region>
+
+<Region><Name>alltitles</Name><Desc>alltitles</Desc><File>
+  <SysName>/disks/l1/home/pagliere/dlxs/idx/b/bosnia/alltitles.rgn</SysName>
+  <ModDate>965330032</ModDate>
+  <OffSet>158303</OffSet>
+</File><Count>260</Count><Type>pairs</Type></Region>
+

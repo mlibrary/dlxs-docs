@@ -1,0 +1,98 @@
+<html>
+<head>
+<title>Image Class Access Control</title>
+
+
+<meta name="description" content="DLXS digital library software system image database documentation for DLXS Image Class. Access control.">
+
+
+ <link href="../../dlxsdocs.css" rel="stylesheet" type="text/css">
+</head>         <body>
+<div class="pageTitle">Image Class Access Control</div>  
+
+<div class="docnavlinks">
+<p><a href="http://www.dlxs.org" target="dlxs">DLXS</a> | 
+<a href="../../index.html">DLXS Documentation</a> | 
+
+<a href="index.html">Image Class Documentation</a> | 
+<a href="http://images.umdl.umich.edu" target="umichimageclass">See Image Class in Action</a></p>
+</div>
+
+
+
+<p>The document on <a href="../../auth/index.html">DLXS Authentication and Authorization</a> covers in depth what you need to do to set up access control for all of DLXS, including Image Class. </p>
+
+<p>A special Image Class option allows collections that are unrestricted at  the collection level, to have  
+    individually identified full-size images restricted at the record level. A good 
+    example of this is the <a href="http://images.umdl.umich.edu/cgi/i/image/image-idx?c=musart">University 
+    of Michigan, Museum of Art</a>. Authorized users (University of Michigan
+    faculty, staff, students) have unrestricted (collection level) access to
+    all text records, thumbnail images, and full size images. Those using the
+    collection from outside the range of valid umich IP addresses are allowed
+    to access all text records, all thumbnail images, and most full-size images,
+    but are restricted from viewing some full-size images that are identified
+    in the item level record as being restricted (due to
+    copyright in the case of the Museum).</p>
+<p>Item level access information is stored in
+  the <strong>m_entryauth</strong> field of the <strong><a href="mediatable.html">media table</a></strong>.  </p>
+<table border="1" cellspacing="0" cellpadding="5">
+  <tbody>
+    <tr>
+      <th width="75">Value</th>
+      <th>Restriction</th>
+    </tr>
+    <tr>
+      <td>world</td>
+      <td>unrestricted access to full-size images.</td>
+    </tr>
+    <tr>
+      <td>[collid]</td>
+      <td>access to full-size images restricted to authorized users of the collection.
+        note: use the actual collid, not "[collid]".</td>
+    </tr>
+    <tr>
+      <td>no access</td>
+      <td>access to full-size image is completely restricted. nobody can see
+        it.</td>
+    </tr>
+  </tbody>
+</table>
+<p>Keep in mind that if the collection is restricted to an authorized group of users at the collection level, the Image Class middleware will not allow unauthorized users to access the image, no matter what the ENTRYAUTH says.</p>
+
+<p>The value of <strong>ENTRYAUTH</strong> is established at the time the
+   data records are loaded to MySQL. The value can be specified
+  globally (for an entire collection). Global configuration is  in the entryauth
+  field of the CollMgr record.</p>
+<p>It is also possible for each record/ENTRY to 
+  have the ENTRYAUTH specified independently. This allows <i>some</i> full-size
+   images to be available to the world, and others to be restricted to certain
+   user groups. In order for this to be utilized, the source data must have
+  a field dedicated to specifying access restrictions for the full-size images
+  associated with the record, and the field must be mapped
+  to the "DLXS_ea" Administrative Field Mappings.</p>
+<p><a href="mysql.html#itemaccess">Administrative Field Mapping</a> is done in the <strong>field_admin_maps</strong>  CollMgr field.</p>
+<p>Currently, if the value of the field mapped to DLXS_ea is "www" or "world" 
+  (not case sensitive) then the ENTRYAUTH will be set to "WORLD" in the SGML&#0160;file.
+</p>
+<p>If the value of the field mapped to DLXS_ea is &quot;nobody&quot; or &quot;no access&quot; (not
+  case sensitive) then the ENTRYAUTH will be set to &quot;no access&quot;. </p>
+<p>Any other value in the DLXS.ea mapped field will result in the ENTRYAUTH MALLOW
+     being set to the value of the third field of the coll-info.txt file. </p>
+<p>See <a href="accesstable.html">Image Class Access Control Summary and 
+  Examples Table</a> for useful examples.</p>
+<h2>Access Restriction by Image Size</h2>
+<p>Restriction of image access by size is also possible by setting the value
+  of <strong>imgsizemax</strong> and <strong>imgsizemin</strong> in <strong>Collmgr</strong>.
+  This is especially useful with JPEG2000 and MrSID files when the largest size
+  is very large and putting a limit on the viewable size is desireable. Please
+  see the help text within Collmgr for more information and allowable values. </p>
+<p>As of DLXS 12a, it is possible
+  to allow a specific list of users to have access to all sizes of images/media,
+  even if a size limit has been placed using imgsizemax. This is done by listing
+  userids in the <strong>privileged_users</strong> <strong>Collmgr</strong> field.
+  This, therefore, requires an authentication mechanism of some sort (see <a href="../../auth/index.html">DLXS
+  Authentication and Authorization</a>).</p>
+<p>&nbsp;</p>
+</body>
+
+</html>

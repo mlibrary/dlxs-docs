@@ -1,0 +1,457 @@
+<html>
+<head>
+<title>DLXS Release 6 Release Notes</title>
+
+
+<link href="../12/dlxsdocs.css" rel="stylesheet" type="text/css"> </head>         <body>
+<div class="pageTitle"> DLXS Release Notes</div>
+    
+      <h1>DLXS Release 6 - 1 OCT 2001</h1><h2>General Information</h2>
+      <p>This is an interim release of DLXS middleware intended to distribute bug fixes, functional enhancements and coding clean-ups which have occurred since the 30 MAR 2001  Release 5. </p>
+        <p>DLXS  Release 6 is comprised of TextClass version
+2.3.0, BibClass version 2.1.0, FindingAids version 2.0.1, ImageClass
+version 1.0.6, Broker version 1.1.0 and XPAT version 5.2.3. </p>
+        <p>These fixes and enhancements apply primarily to TextClass,
+BibClass  and Lib. ImageClass version 1.0.6 and XPAT 5.2.3 (both first
+delivered in DLXS  Release 5) are unchanged in this release.</p>
+        <p>With this release comes the initial delivery of Broker version 1.1.0.</p>
+      
+      
+        <h2>XPAT version 5.2.3</h2>
+        
+          <h3>New and Changed Functionality</h3>
+          <ul>
+            <li>No change from  Release 5</li>
+          </ul>
+        
+        
+          <h3>Fixed Bugs</h3>
+          <ul>
+            <li>n/a</li>
+          </ul>
+        
+        
+          <h3>Known Problems</h3>
+          <ul>
+            <li><code>xmlrgn</code> makes all the region names all uppercase.  Element names in XML are case-sensitive.                                 "P" and "p", for instance, would be two completely different elements.  XPAT cannot work with documents that might have elements with the same name, but different case.  Such documents are rare. </li>
+            <li> <code>xmlrgn</code> will complain: <code>...omitted tag minimization parameter can be omitted only if "OMITTAG NO" is specified on the SGML declaration</code>.  This is unexpected since XML doesn't allow the minimization parameter. The xml.dcl file included with the XPAT distribution can be used to work around these problems. </li>
+            <li> <code>xmlrgn</code> will complain: <code>...general entity "lt" (or "gt" or "amp) not defined and no default entity</code>.    This is unexpected since they are three of the five predefined or "built-in" entities of XML.  The xml.dcl file included with the XPAT distribution can be used to work around these problems. </li>
+          </ul>
+        
+      
+      
+        <h2>Text Class version 2.3.0</h2>
+        
+          <h3>New and Changed Functionality</h3>
+          
+            <h4>cgi/t/text</h4>
+            <ul>
+              <li>subclass modules (in general)
+              <ul>
+                  <li>Mandatory to define <code>maxdepthitems</code> array for each subclasses. Enforced via assertion in base class.  This is because every collection has different "lowest level" elements in reslist display.</li>
+                  <li>Extensive rework of notes handling removed much of the need to over-ride base class notes filtering in the subclasses.  There are now 2 mechanisms to define <code>NOTEPARENT</code> regions: (1) as usual in the <code>coll.extra.srch</code> as a fabricated region and (2) explicitly in the subclass code (if the parent regions may be nested).</li>
+                </ul>
+            </li>
+              <li>Wordwheel
+              <ul>
+                  <li>makeWordWheelFiles.pl: split on all non-alphanumerics including all 8 bit to fix problem with \0255 masquerading as '-'</li>
+                  <li>sample.ww.blank.dd: Added \346 (ae ligature) to &lt;mappings> as 'e' to fix wordwheel problem of aem appearing when 'm' is entered due xpat bug where "æ" is indexed as an empty string.</li>
+                </ul>
+            </li>
+              <li>text-idx
+              <ul>
+                  <li>New customization mechanism: code to import <code>trap</code> routines from DlpsLocalUtils.pm</li>
+                  <li>Added eval around <code>EmailBookBag</code> to trap malformed address message thrown from BookBag.pm</li>
+                  <li>Added <code>AUTHZD_COLL</code> file for debugging as a proxy for auth system to set contents of <code>AUTHZD_COLL</code> environment variable</li>
+                  <li>Added "groups" functionality.  A group is a set of collections.  The group is based on the "groups" database table and is specified by the <code>g</code> URL parameter.  This functionality is as yet not exposed in the user interface. </li>
+                  <li>Added fallback mechanism for locating templates. If handling a pagespec URL parameter we "fallback" from collection-specific directory to a group-specific directory to the class web directory. If xcollmode is 'group' fallback from group to class. If xcollmode is 'colls' no fallback. If not in xcollmode, fallback from collection-specific dir to class web directory.</li>
+                  <li> <code>ValidityChecks</code> makes sure <code>cc</code> matches one of the <code>c</code> URL parameters</li>
+
+                </ul>
+            </li>
+              <li>ww2-idx
+              <ul>
+                  <li>Fix problem with uppercase search term not matching the always lowercase ww sgml data resulting in item not highlighted. </li>
+                  <li>Fix spacing of WORDWHEEL_UP|DOWN_BUTTON</li>
+                  <li>Add <code>Debug_AUTHZD_COLL</code> calls so pageviewer and ww2 can run as stand-alone scripts in debug mode to pick up the list of authorized collections in AUTHZD_COLL file. </li>
+
+                </ul>
+            </li>
+              <li>pageviewer-idx
+              <ul>
+                  <li>Changes to generalize the dlpsid resolver (if only a abc1234 formatted id comes in without 00x.000x volume.issue qualifier). Code put in an installation local Utils file (DlpsLocalUtils) and a subroutine to call the code as a "trap". </li>
+                  <li>Add <code>Debug_AUTHZD_COLL</code> calls so pageviewer and ww2 can run as stand-alone cgi's in debug mode to pick up the list of authorized collections in AUTHZD_COLL file. </li>
+
+                </ul>
+            </li>
+              <li>textclass.cfg
+              <ul>
+                  <li>Changes to handle new <code>trap</code> mechanism </li>
+                  <li>Added German to default languages </li>
+                  <li>Fix authentication problem where static variable hard-coded to "ets" was used instead of the <code>CGI::self_url</code> of the current $cgi object: Delete: $gRedirToAuthSystem = 'http://ets.umdl.umich.edu/t/text'; </li>
+
+                </ul>
+            </li>
+              <li>TextClass.pm
+              <ul>
+                  <li>Changes to handle multiple idno matching trap.</li>
+                  <li>Moved <code>MakeButtonLinkFromDivT</code> routine to TextClass.pm so that it can be overridden.</li>
+                  <li>Moved <code>BuildGoToHeaderViewButton</code> from TextClassUtils to TextClass and changed from a subroutine to method so it can be overridden. </li>
+                  <li>Moved <code>BuildGoToHeaderViewButton</code> from TextClassUtils to TextClass and changed from subroutine to method so it can be overridden </li>
+                  <li>Fixed <code>singlegenre,</code> <code>singlegender</code> and <code>singleperiod</code> not appearing in templates by not deleting the <code>mapped</code> key from the CIO when that object is instantiated and checking for it in <code>TextClass->GetValueByKey</code> </li>
+                  <li>Fix misspelling of "caesura" in <code>TextFilter</code> </li>
+                  <li>Change to <code>GetValueByKey</code> in TextClass.pm to look for those bits of info that come from the CollsInfo object contained in the TextClass object (rather than having come from direct setting of the TextClass object).</li>
+                  <li>Make low encoded text page viewing preserve the line breaks </li>
+                  <li>Significant changes to how notes and their scoping parents are searched for and filtered.   There are now 2 mechanisms to define <code>NOTEPARENT</code> regions: (1) as usual in the <code>coll.extra.srch</code> as a fabricated region and (2) explicitly in the subclass code (if the parent regions may be nested). </li>
+                  <li>Improvements to <code>EDITION[STMT}</code> filtering in <code>_HeaderFilter</code> </li>
+                  <li>Fixed bug where <code>psetoffset</code> was not properly being passed into the XPat object and so was not used in properly calculating the byte offset (used in ordering results) when type was PSet. </li>
+                  <li>Added filtering in <code>TextFilter</code> to remove <code>DLPSTEXTCLASS</code> tags and to add lines for <code>&lt;P TYPE="SKIPLINE"></code> </li>
+                  <li>Added error messages identifying <code>rgn</code> URL parameter value when we have an <code>ASSERT</code> failure trying to terminology map a region </li>
+                  <li>Modified calls to <code>AddPI</code> passing method names rather than coderefs to allow method invocation on derived classes via <code>ProcessPI.</code> </li>
+                  <li>Call <code>_HeaderFilter</code> as a method rather than subroutine </li>
+                  <li>Moved <code>FilterPBs,</code> <code>HI_Filter,</code> <code>FigureFilter</code> from TextClassUtils to TextClass methods.</li>
+                  <li>Added <code>HtmlForNoIndentLevel</code></li>
+                  <li>Made <code>$gTextClassCgi</code> a <code>main::</code> global moved out of TextClassUtils.pm</li>
+                  <li>Fix regexp in <code>ParsePbTag</code> causing Page 'NA' to be displayed for all pages for <code>HEADER_TOC</code> PI.</li>
+                  <li>Added <code>HandleHighlighting</code> to support special input mapping for collections like CME. Special input mapping allows the user to enter uppercase characters as proxies for certain other characters (e.g Middle English 'yogh') that cannot easily be generated at the keyboard and to search for same in specially prepared collection data.</li>
+                  <li>Added filtering to <code>TextFilter</code> to map &lt;S> (textclass.dtd sentence element, html strikethru) to nothing.   Added similar filtering to <code>CleanResidualTags</code> for KWIC handling.</li>
+                  <li> Changed gender restriction query building
+                to include a new fabricated region <code>GENDERWITHIN</code> to handle cases where the <code>GENDER</code> fabricated region is in the <code>HEADER</code> sometimes and within <code>divwithinfo</code> other times.</li>
+                  <li>Added <code>GetNoteMaxDivHead</code> to indicate the deepest level at which NOTE1 or PTR might occur. Needed to know where to start looking for parent DIV (HEAD). Formerly used <code>GetDivHeadRange</code> but that does not work because we don't always display the deepest DIVs in results.</li>
+                  <li>Fixed query in sub <code>PageFilterForLowLel:</code> <code>ENCODINGDESC-T</code> should have been <code>EDITORIALDECL-T</code></li>
+                  <li>Added filtering to <code>TextFilter</code> to better handle the content of <code>&lt;FRONT></code> e.g. in bwrp. Improve stray tag cleanup in general by calling <code>DlpsUtils::RemoveTags</code> </li>
+                  <li>Added <code>FilterFullRegion</code> method called from <code>_ScopedResultsFilter</code> to handle <code>fullregion</code> search results in an subclass over-ridable way.</li>
+                  <li>Add <code>FigureToHTML</code> method (over-ridable) to replace <code>&lt;FIGURE></code> with <code>&lt;img></code> (or whatever). </li>
+                  <li>Add highlighting functionality to notes display.  Links that point to notes that contain hits are displayed in red.  Hits are highlighted  in results displayed in Notes window.</li>
+                </ul>
+            </li>
+              <li>TextClassUtils.pm
+              <ul>
+                  <li>TextClassUtils is now a Perl Class module which is instantiated as a TCUO object by the 3 TextClass cgi programs. As such all the subroutines in TextClassUtils can be over-ridden as methods of a subclass of the TextClassUtils Class. This change requires a new syntax: <code>TextClassUtils::Sub</code> becomes <code>$tcuo->Sub</code> </li>
+                  <li>Now call <code>Find_HTTP_HostName</code> when building links so virtual hosts with different <code>DocumentRoot</code> values are supported. </li>
+                  <li>Added <code>ProcessGraphicsPathPI</code> to handle <code>GRAPHICS_PATH</code> PI for graphics file location fallback mechanism </li>
+
+                </ul>
+            </li>
+            </ul>
+
+          
+          
+            <h4>web/t/text</h4>
+            <ul>
+              <li>templates (in general)
+              <ul>
+                  <li>Add <code>COLL_SPECIFIC_CONTENT</code> PI for inline help </li>
+                  <li>Add <code>GRAPHICS_PATH</code> PI supporting graphics file fallback </li>
+                  <li>Changes to navbars and to main style sheet </li>
+                </ul>
+            </li>
+              <li>pageviewer.frameset.tpl
+              <ul>
+                  <li>Increased vertical real estate </li>
+                </ul>
+            </li>
+              <li>pageviewer.nav.tpl
+              <ul>
+                  <li>Significant layout changes </li>
+                  <li>Minor adjustment to nav background graphics</li>
+                </ul>
+            </li>
+              <li>pageviewer.main.tpl
+              <ul>
+                  <li>Added class=indentBlock to main frame </li>
+                </ul>
+            </li>
+              <li>simpleext.tpl
+              <ul>
+                  <li>Add <code>&lt;input type="hidden" name="type" value="simple"></code> instead of letting it default so statistic gather will be accurate </li>
+                </ul>
+            </li>
+              <li>textclass.css
+              <ul>
+                  <li>Added styles for <code>&lt;SPEAKER></code> and <code>&lt;STAGE></code> elements for theater related collections </li>
+                </ul>
+            </li>
+              <li>ww-full.tpl
+              <ul>
+                  <li>Fix spacing of WORDWHEEL_UP|DOWN_BUTTON and use of smaller arrow graphics </li>
+                </ul>
+            </li>
+            </ul>
+
+          
+          
+            <h4>obj/t/text/maps</h4>
+            <ul>
+              <li>maps in general
+              <ul>
+                  <li>Several new maps added. </li>
+                  <li><code>TARGETPARENT,</code> <code>NOTEPARENT,</code> <code>TARGET</code> removed from most maps.</li>
+                </ul>
+            </li>
+
+            </ul>
+
+          
+          
+            <h4>obj/t/text/db</h4>
+            <ul>
+              <li>groups
+              <ul>
+                  <li>New table: 'groups' added.  See above. </li>
+                </ul>
+            </li>
+              <li>colldb
+              <ul>
+                  <li>Fixed 1500-1600 to read: pre-1600 in some collections.</li>
+                </ul>
+            </li>
+            </ul>
+
+          
+        
+        
+          <h3>Fixed Bugs</h3>
+          <ul>
+            <li>Bugzilla #271 Idnos do not expand when given a 7 digit NOTIS ID, pages cannot be viewed</li>
+            <li>Bugzilla #308 Home links in header do not include session ID</li>
+            <li>Bugzilla #230 First scoped head is a garbage kwic</li>
+            <li>Bugzilla #253 Update code to handle latest version (1.53) of Apache::Session</li>
+            <li>Bugzilla #270 HighlightHit cannot differentiate between text in tags and actual content</li>
+            <li>Bugzilla #293 Collection wordwheel Makefiles need to be changed to not use MFS indexing</li>
+          </ul>
+        
+        
+          <h3>Known Problems</h3>
+          <ul>
+            <li>n/a</li>
+          </ul>
+        
+      
+      
+        <h2>Bib Class version 2.1.0</h2>
+        <p>This release does not include any significant improvements in functionality.  It is focused mainly on bug fixes. Not listed in a separate item below is support for an ID attribute on the A element in bib.map.</p>
+        
+          <h3>New and Changed Functionality</h3>
+          
+            <h4>cgi/b/bib</h4>
+            <ul>
+              <li>bib-idx
+              <ul>
+                  <li>Fixed <code>CleanCgiParameters</code> call to use the one in DlpsUtils instead of the one in main which
+                has bugs.</li>
+                  <li>Fixed <code>ASSERT</code> failure where <code>cc</code> is <code>ALLSELECTED</code> and no Terminology Mapper defined for <code>ALLSELECTED</code> - use default Terminology Mapper since we only need the standard mapping for <code>rgn1</code> </li>
+                  <li>Added call to <code>TerminologyMapper::GetMapfileName</code> for better error reporting.</li>
+                  <li>Fix pagespec/pagename parameter convention to adhere to DLXS parameter standard <code>page=pagespec</code> <code>pagename=somepage.tpl</code></li>
+                  <li>Added AUTHZD_COLL debugging file functionality</li>
+                </ul>
+            </li>
+
+              <li>bibclass.cfg
+              <ul>
+                  <li>Fix authentication problem where static variable hard-coded to "ets" was used instead of the <code>CGI::self_url</code> of the current $cgi object: Delete: <code>$gRedirToAuthSystem</code> = 'http://ets.umdl.umich.edu/t/text'; </li>
+                </ul>
+            </li>
+
+              <li>specific.functionality.cfg
+              <ul>
+                  <li>Many new filters added </li>
+                </ul>
+            </li>
+            </ul>
+          
+        
+        
+          <h3>Fixed Bugs</h3>
+          <ul>
+            <li>Bugzilla #295 DLXS map files not being read. Only bib.map was being read for NonStandardBaseQueryNaturalLanguage</li>
+          </ul>
+        
+        
+          <h3>Known Problems</h3>
+          <ul>
+            <li>Bugzilla #272: BibClass does not build links based on the
+				  'host' field in the database so links to collections hosted on machines other
+				  than the machine running bib-idx will point to to the local machine data which
+				  usually does not exist (rather it is on a remote machine). This will only be a
+				  problem if BibClass colldb contains rows for more than one host.</li>
+          </ul>
+        
+      
+      
+        <h2>Image Class version 1.0.6</h2>
+        
+          <p>This release is identical to that contained in DLXS  Release 5. Considerable
+				architectural and functional enhancements are scheduled for version 2 of the
+				Image Class, expected to be released in late 2001.</p>
+        
+      
+      
+        <h2>Finding Aids version 2.0.1</h2>
+        
+          <h3>New and Changed Functionality</h3>
+          <ul>
+            <li>All non-idresolver code for <code>&lt;DAO></code> filtering has been removed.</li>
+            <li>Fix boolean searches in the Collection Title Field produced no matches.</li>
+          </ul>
+        
+        
+          <h3>Fixed Bugs</h3>
+          <ul>
+            <li>n/a</li>
+          </ul>
+        
+        
+          <h3>Known Problems</h3>
+          <ul>
+            <li>n/a</li>
+          </ul>
+        
+      
+      
+        <h2>Broker version 1.1.0</h2>
+        
+          <h3>Functionality</h3>
+          <ul>
+            <li>This initial release of broker consists of the implementation of the OAI Protocol for metadata harvesting, and the implementation of most of the Dienst verbs. The implementation is Unicode compliant, and uses an interface to a mysql database to create responses for some of the Dienst verbs.</li>
+          </ul>
+        
+        
+          <h3>Fixed Bugs</h3>
+          <ul>
+            <li>n/a</li>
+          </ul>
+        
+        
+          <h3>Known Problems</h3>
+          <ul>
+            <li>n/a</li>
+          </ul>
+        
+      
+      
+        <h2>Lib version 2.4.0</h2>
+        <p>This release of the shared DLXS library modules incorporates some minor enhancements to the API and significant additional functionality in the database interface defined in DbUtils.pm.</p>
+        
+          <h3>New and Changed Functionality</h3>
+          <ul>
+            <li>BookBag.pm
+              <ul>
+                <li>Rename method in <code>DlpsSession::Delete</code> to <code>DeleteSession</code> (also for warning re: redefinition of <code>Delete</code> </li>
+              </ul>
+            </li>
+            <li>CollsInfo.pm
+              <ul>
+                <li>Modifications below the API to generalize data access via DBI. </li>
+                <li><code>AddClassObjects</code> now passes <code>$optionalArgsRef</code> to class <code>new</code> method to support a subclass-able TextClassUtils object at first element of this argument array.</li>
+              </ul>
+            </li>
+            <li>DevUtils.pm
+              <ul>
+                <li>Add <code>Debug_AUTHZD_COLL</code> to support reading debug-time authorized collection list from a file.  This, so all classes can benefit. </li>
+              </ul>
+            </li>
+            <li>
+              <ul>
+                <li>Rename method in <code>DlpsSession::Delete</code> to <code>DeleteSession</code> </li>
+              </ul>
+            </li>
+            <li>DlpsUtils.pm
+              <ul>
+                <li>Added mapping for &amp;grqu; => " in <code>FilterCharEnts_CH_Greek</code> for Chadwick-Heealy collections</li>
+                <li>Added entity mapping for &amp;quest; => '?'</li>
+                <li>Assorted additional character entity filtering additions.</li>
+                <li><code>ReAuthorizeLink</code> changes to fix authentication problem where static variable hard-coded to "ets" was used instead of the <code>CGI::self_url</code> of the current $cgi object.</li>
+                <li>Use temporary cgi in <code>ReAuthorizeLink</code> so sid does not get lost.</li>
+                <li> Add <code>Find_HTTP_HostName</code> to call when building links so virtual hosts with different <code>DocumentRoots</code> will be correct.</li>
+                <li>Added subroutine <code>GetTagAttributes</code> to return key/value hash of attributes/values in a tag.</li>
+                <li>Added <code>GroupGroupResolution</code> to aid in groups processing.</li>
+                <li>Workaround DLPS authentication module problem where %20 mapped to '+' in redirect in <code>ReAuthorizeLink</code>x</li>
+                <li>Improve stray tag cleanup in general by adding <code>DlpsUtils::RemoveTags</code> </li>
+                <li>Call <code>TrimSpaces</code> on each cgi parameter in <code>CleanCgiParameters</code> so we don't pass along "stuff " or even " " to query factory (which accepts this blindly).</li>
+                <li>Added boolean return value to <code>HighlightHit</code> to indicate whether text contained a hit that was highlighted.</li>
+                <li>Add <code>$noSub</code> (parameter to <code>HighlightHit</code> to check for hits without adding highlighting.</li>
+              </ul>
+            </li>
+            <li>GroupsInfo.pm
+              <ul>
+                <li>Modifications below the API to generalize data access via DBI.</li>
+              </ul>
+            </li>
+            <li>ProcIns.pm
+              <ul>
+                <li> <code>ProcIns::ProcessPIs</code> now accepts either a subroutine ref or a string containing (possibly subclassed) object method names for specifying the routine to run to handle a PI.</li>
+                <li>Modified <code>GetParms</code> to return writable copy of parameter array for possible modification (shift) in <code>ProcessPI</code> for method invocation on derived classes.</li>
+              </ul>
+            </li>
+            <li>TerminologyMapper.pm
+              <ul>
+                <li>Added <code>GetMapfileName</code> to retrieve filename for better error reporting. </li>
+              </ul>
+            </li>
+            <li>XPat.pm
+              <ul>
+                <li>Added line to change XPat's default left context of 14 to 0 with "{LeftContext 0}"</li>
+              </ul>
+            </li>
+          </ul>
+        
+        
+          <h3>Backward Compatibility</h3>
+          <p>DLXS  #6 introduces some minor non-backward compatible changes. One, as a result of a generalization in the database connect mechanism, is trivial because the class middleware interface to DbUtils.pm is mediated by the CollsInfo.pm and GroupsInfo.pm APIs this change should have no effect on existing middleware.</p>
+          <ul>
+            <li><code>DbUtils::Connect_DBI</code> replaces <code>DbUtils::Connect_CSV</code> and supports a arbitrary string parameter to define the underlying data store which can be any store supported by a perl DBD driver including CSV, mySql, etc..</li>
+            <li>Rename method in <code>DlpsSession::Delete</code> to <code>DeleteSession.</code></li>
+          </ul>
+        
+        
+          <h3>Fixed Bugs</h3>
+          <ul>
+            <li>167: Add Help Text  </li>
+            <li>183: Use DBI for access to all database-like data  </li>
+            <li>230: First scoped head is a garbage kwic  </li>
+            <li>241: Extend TextClass functionality: level 2 and mixed levels support  </li>
+            <li>243: TextClass help.html missing  </li>
+            <li>245: Javascript on extended proximity search appears to be broken  </li>
+            <li>253: Update code to handle latest version of Apache::Session  </li>
+            <li>261: Change middleware to adhere to new directory conventions  </li>
+            <li>263: Move divdepths and need for notes and entities filtering to colldb  </li>
+            <li>266: Browse page builder has eccentricities  </li>
+            <li>269: Must be able to search any region in TC header  </li>
+            <li>270: Highlighting of hits in SGML  </li>
+            <li>271: idnos do not expand when given a 7 digit NOTIS ID, pages cannot be vie  </li>
+            <li>293: Collection wordwheel Makefiles need to be changed to not use MFS  </li>
+            <li>308: Home links in header blow away session  </li>
+            <li>309: Home link in pageviewer loads in frame, not over frameset  </li>
+            <li>340: Linux tif2gif gives fuzzy, unreadble results  </li>
+            <li>357: TextClassUtils subroutines should be TextClass methods  </li>
+            <li>363: Fix uses of FindHostName() and 'homesite', 'home' colldb for failover  </li>
+            <li>405: Pageviewer defaults to seq=1 should be seq=00000001  </li>
+            <li>409: Implement a more flexible mechanism for collection-specific look-and-feel  </li>
+            <li>447: Results page for searches in header fields have empty "hits in doc" li  </li>
+            <li>476: colldb in TC should not have hard-coded DLXSROOT  </li>
+            <li>478: Port ImageClass and TextClass to MySQL maintaining CSV support  </li>
+            <li>484: Index search takes user to page not found  </li>
+            <li>489: TC regions/colls in the colldb have "order" problems  </li>
+            <li>494: pageviewer rewrite  </li>
+            <li>568: Header.tpl reallignment  </li>
+            <li>602: MoA journal browse pages can't be repurposed  </li>
+            <li>646: No filtering of bibliographic tags in full text  </li>
+          </ul>
+        
+        
+          <h3>Known Problems</h3>
+          <ul>
+            <li>While much more difficult to reproduce that in the previous
+				  release, due to a race condition, it is still possible to click "add to
+				  bookbag" on multiple items rapidly enough to make the code fail to add one or
+				  more of the clicked items to the BookBag.</li>
+          </ul>
+        
+      
+    
+
+    
+          </body>
+
+</html>

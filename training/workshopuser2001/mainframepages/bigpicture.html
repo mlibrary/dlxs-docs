@@ -1,0 +1,43 @@
+<HTML>
+<HEAD>
+<TITLE>The Big Picture</TITLE>
+<META http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<LINK rel="stylesheet" href="../styles.css">
+</HEAD>
+<BODY class="mainpalette">
+<H2>The Big Picture</H2>
+<P>An overview of how XPat and the DLXS Middleware work together to handle the 
+  retrieval and deliver of SGML data. See the <A HREF="../extras/barnapkinoverview.html" TARGET="extras">Bar 
+  Napkin Overview</A>. </P>
+
+<UL>
+  <LI>Data Preparation</LI>
+  <LI>Middleware: translates user input into XPat query, retrieves SGML and delivers 
+    results wrapped in HTML</LI>
+</UL>
+
+
+  
+<H3>Architecture (<I>See <A HREF="http://docs.umdl.umich.edu/arch/general/arch-overview.xml" TARGET="extras">DLPS 
+  documentation Architecture Overview</A></I>)</H3>
+<H3>Middleware Functionality (<I><A HREF="../extras/functionality.html" TARGET="extras">details</A>)</I></H3>
+<H3>Environment (<I><A HREF="../extras/environment.html" TARGET="extras">details</A>)</I></H3>
+<H3>Configuration (<I><A HREF="../extras/configuration.html" TARGET="extras">details</A>)</I></H3>
+<H3>Directory Structure (<I><A HREF="../extras/dirstructure.html" TARGET="extras">details</A>)</I></H3>
+<H3>Other</H3>
+<UL>
+    
+  <LI>Server (we use <A HREF="http://www.apache.org" TARGET="external">Apache</A>) 
+    (see <A HREF="../extras/dirstructure.html#virtualHostInfo" TARGET="mainFrame">virtual 
+    host information</A>)</LI>
+    <LI>Authentication/Authorization 
+      <UL>
+        <LI>DLPS Apache module</LI>
+        <LI>Middleware only requires that a list of auth colls are put in the 
+          environment</LI>
+      </UL>
+    </LI>
+    <LI>xpat daemons to allow cross machine access between Middleware and Xpat</LI>
+  </UL>
+</BODY>
+</HTML>

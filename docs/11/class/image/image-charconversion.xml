@@ -1,0 +1,205 @@
+<?xml version="1.0"?>
+
+<!-- SPO Editorial Services                  -->
+<!-- automatically-generated XML header file -->
+
+<?xml-stylesheet href="../../../pre11-dlxsdocs.xsl" type="text/xsl"?>
+<!DOCTYPE DLPSDOC PUBLIC "-//UM-DLPS//DTD DLPS Publications//EN" "http://docs.umdl.umich.edu/dlps/docs/dlpsdocs.dtd">
+<DLPSDOC>
+<TITLE>Image Class Character Set Conversion</TITLE>
+<HEADER>
+<JOURNAL>DLXS Documentation</JOURNAL>
+<PUBDATE>2002-03-13 11:15:54 EST</PUBDATE>
+<AUTH1>Weise, John</AUTH1>
+<AUTH2></AUTH2>
+<DOCTITLE>Image Class Character Set Conversion</DOCTITLE>
+<VOL>class</VOL>
+<ISS>image</ISS>
+<FILE>dlxsdocs-image-charconversion</FILE>
+</HEADER>
+
+
+<BODY>
+<BHEAD>Image Class Character Set Conversion</BHEAD>
+
+<DIV1 ID="main">
+
+<P><A HREF="mailto:dlxs-help@umich.edu">dlxs-help@umich.edu</A>
+</P>
+
+
+<P>This document tells how to convert illegal text characters to SGML&#0160;compliant 
+  characters. The process is actually closely tied to the <A HREF="image-datatransform.xml">database 
+  transformation process</A>. </P>
+
+<DIV2 ID="introduction">
+<H2>Introduction</H2>
+
+<P>The Image Class&#0160;requires that all text characters comply with
+the ISO 8859
+Latin-1 character set standard. Noncompliant characters may be
+ignored despite the errors generated during validation/normalization
+and the XPAT index will build. The problem, though, is that the
+illegal characters will not be searchable in any usable way.</P>
+
+<P>The transformation program can optionally convert any character to
+any other character. This involves building a character conversion
+table in the form of a Perl module. Here is an example Perl module.</P>
+
+
+
+
+
+
+
+
+
+<PRE>
+    %gCharConv = (
+   
+        '\x88' =&gt; '\xE0',
+        '\x89' =&gt; '\xE2',
+        '\x8A' =&gt; '\xE4',
+        '\x87' =&gt; '\xE1',
+        '\x80' =&gt; '\xC7',
+        '\x9C' =&gt; 'o',
+        '\xB2' =&gt; '&lt;\x3D',
+        '\x10' =&gt; '',
+        '\x85' =&gt; '\x2E \x2E \x2E',
+        'eee'  =&gt; 'ee',
+                  );
+      
+    1; #TRUTH
+</PRE>
+
+
+<P>In this example, most of the characters are represented by their
+hexadecimal (base 16) numbers. This is usually the easiest way to
+specify text characters that may not be displayable in the text file
+that is the Perl module. In other words, you would be challenged to
+type a latin small letter e with circumflex into your Perl module.</P>
+
+<P>The character conversion Perl module is simply a text file that
+must reside in the collection's prep directory. It must be named
+using the following convention:&#0160;<B>collid-charconv</B></P>
+
+<P>Our favorite example, the French Architecture collection, does not
+actually have a character conversion table, but if it did, the path
+and name would be this...</P>
+
+<PRE>$DLXSROOT/prep/f/frarch/frarch-charconv</PRE>
+
+</DIV2>
+<DIV2 ID="determining">
+<H2>Determining Character Mappings</H2>
+
+<P>This section will tell you how to create the cryptic hexadecimal
+character mappings that go into a charconv file. Illegal characters
+most often become evident during the validation/normalization
+process, that is, when the "idb norm collid" command is issued. We'll
+use the "musart" collection as an example for exploration.</P>
+
+
+<PRE>
+    dev:musart % 78 idb norm musart
+    Normalizing musart SGML.
+    $DLXSROOT/bin/i/image/sgmlnorm:/l1/prep/m/musart/ic.musart.unnorm.sgm:
+    <B>111</B>:<B>50</B>:E: non SGML character number <B>142</B>
+</PRE>
+
+<P>In the command line example above, the normalization process
+informs us that there is an illegal character in the
+ic.musart.unnorm.sgm file. It also tells us exactly where it occurs
+within the ic.musart.unnorm.sgm file:&#0160;<B>line
+111</B>, <B>character 50</B>. It also tells
+us that the <B>decimal</B> value of the character is
+<B>142</B>.</P>
+
+<P>If you convert decimal 142 to hexadecimal, the value is 8E. So now
+we know that we must convert the illegal hexadecimal character 8E to
+a legal SGML&#0160;character. The question is, what should it be
+converted to?&#0160;To determine this, it is necessary to look at the
+context of the illegal character.</P>
+
+<P>Continuing with this example, we would...</P>
+
+<UL>
+   <LI>Use a text editor to go to line 111, character 50 of the
+   ic.musart.unnorm.sgm file.</LI>
+   
+   <LI>Look at the word or words the character falls within, which in
+   this case is "Bartolom\216 Esteban Murillo" (Note that the EMACS
+   text editor that was used in this example displays illegal
+   characters not in decimal, not in hexadecimal, but octal! That is
+   why it says "\216".)</LI>
+   
+   <LI>Determine what the appropriate character should be. In this
+   case it should be a Latin small letter e with acute.</LI>
+   
+   <LI>Look at a table of ISO 8859 Latin 1 characters to see if
+   Latin small letter e with acute exists, and since it does, we note
+   the hexadecimal value of it, which is E9.</LI>
+   
+   <LI>Create or modify the musart-charconv file so that it will do
+   the character conversion '\x8E' =&gt; '\xE9'.
+   <B>Important, the charconv file must have
+   executable permissions set.</B> (e.g., chmod +x
+   musart-charconv)<BR/>
+   
+
+<PRE>
+    %gCharConv = (
+        '\x8E' =&gt; '\xE9',
+                  );
+
+      
+    1; #TRUTH</PRE>
+  </LI>
+   
+   <LI>Execute the "idb transform" and "idb norm"&#0160;programs again
+   for the musart collection. All occurrences of the illegal
+   character are converted to legal characters and there
+   should not be any validation/normalization errors, for that
+   character at least.</LI>
+</UL>
+</DIV2>
+
+<DIV2 ID="whatif">
+<H2>What If the Desired Character Is Not Included in the ISO
+8859 Latin 1 Standard Character Set?&#0160;</H2>
+
+<P>If the desired character is not in the <A HREF="http://www.htmlhelp.com/reference/charset/">ISO&#0160;Latin
+1 character set</A>, there are a few options.</P>
+
+<OL>
+   <LI>Convert the character to a character that is similar. Perhaps
+   the same character without a diacritic.</LI>
+   
+   <LI>Use character entities in SGML. Please contact
+   dlxs-help@umich.edu for more information.</LI>
+</OL>
+
+</DIV2>
+<DIV2 ID="searchform">
+<H2>How should special characters be represented in the web search
+form?</H2>
+
+<P>Most of the ISO 8859 Latin 1 characters that are not readily
+available on keyboards may be searched by entering a lesser
+representation. That is, e with acute may be searched by entering a
+plain "e". If an actual e with acute is entered, it will also work.
+This mapping is handled in the XPAT index configuration, which is
+beyond the scope of this document. Please contact dlxs-help@umich.edu
+for more information.</P>
+</DIV2>
+
+<DIV2 ID="filemaker">
+<H2>Handling of Special Characters by FileMaker Pro 5</H2>
+<P>When HTML is exported from FileMaker Pro 5, FileMaker normalizes special characters to ISO 8859 Latin 1 in the form decimal character entities (e.g., &amp;#200;). The idb transformation program converts these to legal Latin 1 characters in the SGML. Although, this does not completely alleviate the need to do conversions.</P>
+</DIV2>
+
+
+
+</DIV1>
+</BODY>
+</DLPSDOC>

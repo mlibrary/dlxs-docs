@@ -1,0 +1,181 @@
+= Troubleshooting DLXS Middleware =
+
+* [#assertionfail Assertion failures]
+* [#servererrors Server errors]
+* [#debugflags Debug flags]
+* [#misctech Tools, checks and techniques]
+** [#commandline Running at the command line]
+** [#perldb Running the Perl debugger at the command line]
+** [#dlpsdev Set the <tt>DLPS_DEV</tt> environment variable]
+** [#pageviewerlog Log files]
+** [#apachelog Apache error log]
+** [#perlmodules Perl module versions]
+** [#configloc Configured vs. actual file locations]
+** [#binsymlinks Paths to binaries stored in <tt>$DLSROOT/bin/symlinks</tt> vs. actual binary locations]
+** [#reltoprod Move "release" rows to "production"]
+** [#removesid Use <tt>newsid=1</tt> URL parameter]
+** [#errormess Remote connect error]
+** [#xsltools XSL and XML tools and tips]
+** [#moretools More tools]
+
+Here are some tools, facilities and techniques useful for troubleshooting problems with the middleware after installation.
+
+== Assertion failures ==
+
+If the CGI program runs but encounters a condition that makes it impossible to perform a specific function it will exit and generate an [assertionfail.html assertion failure page]. An example might be a missing Terminology Mapper map file for one of your collections.
+
+The <tt>DLPS_DEV</tt> environment variable must be set to get this output.
+
+Note that this page displays an optional message about the nature of the failure, the URL that led to the assertion failure and a traceback of the stack up to the point the assertion failed and .
+
+By examining each part you may be able to determine the reason for the failure. Sometimes it is useful to look at the line number in the code mentioned in the traceback to determine why the error occurred especially if no message appears.
+
+== Server errors ==
+
+If you see a page similar to [servererror.html this page] it may due to a syntax error in your code. You can check the code for correct syntax or reveal other errors you encounter when running under the web server by [#commandline running at the command line].
+
+Another possibility is that the location of Perl in your system has changed since the middleware was installed. This means the symlink to Perl in $DLXSROOT/bin/symlinks is now bad. You can change the symlink manually or restore Perl to its original location.
+
+== Debug flags ==
+
+There are several useful debug flags which aid in determining the source of errors. Add '''<tt><nowiki>;debug=</nowiki>''switch''</tt>''' to the URL that caused the error and re-submit the URL in you browser. The [http://www.dlxs.org/docs/13/program/debug.html complete documentation] describes all the debug flags. The most useful values for '''<tt>''switch''</tt>''' are:
+
+; <tt>'''all'''</tt>
+: Turn on all debugging switches. This generates a lot of data.
+; <tt>'''collsinfo'''</tt>
+: Dump the contents of the CollsInfo database object. This lets you check that the database values for each collection, which you think are set, are actually those being used by the program.
+; <tt>'''env'''</tt>
+: dump the environment variables and their values. You can check for the correct values of critical environment variables such as <tt>REMOTE_USER</tt>, <tt>HTTP_HOST</tt>, <tt>AUTHZD_COLL</tt>, <tt>DLXSROOT</tt> and <tt>DOCUMENT_ROOT</tt>. This is a quick sanity check on the values of these environment variables set for CGI program by the web server / virtual host.
+; <tt>'''tpl'''</tt>
+: show the path where files subject to fallback resolution (<tt>.xml, .xsl, .css, .js</tt>) are found.
+; <tt>'''xml'''</tt>
+: emit the raw xml from the middleware not subjected to XSLT transformation to HTML.
+; <tt>'''xslt'''</tt>
+: emit the virtual stylesheet constructed by the middleware.
+; <tt>'''search'''</tt>
+: dump the raw XPAT queries the middleware generated for a given search
+
+== Tools, checks and techniques ==
+
+You can get additional information about what might be going wrong by using the following. It is useful if you can send us this information in support requests too.
+
+=== Running at the command line ===
+
+'''NOTE:''' Whenever you run at the command line, the web server is not in the loop, so set these environment variables in your csh or bash shell:
+
+* set <tt>AUTHZD_COLL</tt> to include the collections that appear in your command line script parameters: <blockquote>''' (csh) % setenv AUTHZD_COLL :moa:moajrnl:sampletc:workshoptc: <br />(bash) % export AUTHZD_COLL=:moa:moajrnl:sampletc:workshoptc: '''</blockquote>
+* set <tt>DLXSROOT</tt><nowiki>: </nowiki><blockquote>''' (csh) % setenv DLXSROOT path_to_the_root_of_your_install_tree <br />(bash) % export DLXSROOT=path_to_the_root_of_your_install_tree '''</blockquote>
+* set <tt>DLPS_DEV</tt> to get more debugging information: <blockquote>''' (csh) % setenv DLPS_DEV 1 <br />(bash) % export DLPS_DEV=1 '''</blockquote>
+
+Given a URL that causes a server error, try running the CGI program at the command line with the same input to get additional information about the problem. For example, given '''<tt>http://pfarber.ws.umdl.umich.edu/cgi/t/text/text-idx?c=sampletc_utf8;page=simple</tt>''' you can run the CGI program at the command line like this (note quotes):
+
+  '''     % cd $DLXSROOT/cgi/t/text     % ./text-idx 'http://pfarber.ws.umdl.umich.edu/cgi/t/text/text-idx?c=sampletc_utf8;page=simple' '''
+ 
+
+=== Running the Perl debugger at the command line ===
+
+You can also run the Perl debugger at the command line with the <tt>'''-d'''</tt> switch and step through the code line by line by typing '<tt>'''n'''</tt>' or run until an error occurs by typing '<tt>'''c'''</tt>' at the Perl debugger prompt <tt>'''DB&lt;1&gt;'''</tt>. This assumes the code compiles and can be executed:
+
+ 
+       '''    % cd $DLXSROOT/cgi/t/text/text-idx    % perl -d  ./text-idx 'http://pfarber.ws.umdl.umich.edu/cgi/t/text/text-idx?c=sampletc;page=simple' '''
+ 
+     ''Current directory is /l1/dev/pfarber/cgi/f/findaid/     Loading DB routines from perl5db.pl version 1.28     Editor support enabled.     Enter h or `h h' for help, or `man perldebug' for more help.     DB&lt;1&gt;''
+ 
+
+=== Set the <tt>DLPS_DEV</tt> environment variable ===
+
+Set <tt>DLPS_DEV</tt> to 1 in your shell (debugging at the command line) or in your virtual host (developing under the browser) to get a full stack trace when a compilation error or runtime assertion failure occurs.
+
+=== Log files ===
+
+Here's a list of log files that will contain status and error messages related to various operations.
+
+{| width="90%" border="1"
+<font size="12pt">| '''Filename'''
+| '''Where configured'''
+| '''Errors logged'''
+|-
+| <tt>/tmp/itemviewmkdiroutput.log</tt>
+| <tt>$DLXSROOT/lib/ItemView.cfg</tt>
+| Pageviewer command errors to process source image files for web delivery and logs of all pageviewer commands when URL has <tt>debug=pageviewer</tt>
+|-
+| <tt>/tmp/classmkdiroutput.log</tt>
+| <tt>$DLXSROOT/lib/LibGlobals.cfg</tt>
+| General commands create cache directories for pageviewer frames and portfolio exports if URL has <tt>debug=pageviewer</tt>. Always logs if command error.
+|-
+| <tt>/tmp/dbconnectionfailures.txt</tt>
+| <tt>Hardcoded in $DLXSROOT/lib/DbUtils.pm</tt>
+| Log of the DBI error string if a <tt>DBI-&gt;connect()</tt> to MySQL fails
+|-
+| /tmp/pageviewmode
+| Hardcoded in $DLXSROOT/lib/ItemView.pm
+| Records the mode (local or remote) of access to page image files. Only logged when URL has <tt>debug=pageviewer</tt>
+</font>|}
+
+=== Apache error log ===
+
+It may be useful to examine the last few entries in the Apache web server's error log in <tt>APACHE/logs/error_log</tt>. You can monitor the log in real time as you send requests to the server from your browser. At your shell command line:
+
+<blockquote>
+
+ '''           % tail -f APACHE/logs/error_log         '''
+
+</blockquote>
+
+=== Perl module versions ===
+
+The Installer prints out a report on missing Perl modules and Perl modules you have installed whose versions differ from the recommended. Double-check this list and make sure all modules are installed and that the versions match. We have found this to be especially important when dealing with the DBI/DBD database interface modules and with Apache::Session related modules.
+
+You can check both existence and version for a given module at the command line. For example, to check DBI and Apache::Session, respectively:
+
+<blockquote>
+
+ 
+         '''perl -e 'use DBI; print "$DBI::VERSION\n"''''
+         ''1.50''
+ 
+         '''perl -e 'use Apache::Session; print "$Apache::Session::VERSION\n"''''
+         ''1.80''
+ 
+
+</blockquote>
+
+=== Configured vs. actual file locations ===
+
+Double check the values in the database (via collmgr) that specify locations for files to verify that they correspond to the actual file locations in your file system.
+
+=== Paths to binaries stored in $DLXSROOT/bin/symlinks vs. actual binary locations ===
+
+The Installer records your answers to prompts about the location of binaries in your system in <tt>$DLXSROOT/bin/symlinks</tt>. Check that you can actually run the binaries from these symlinks.
+
+=== Move "release" rows to "production" ===
+
+If the database edits you make to a collection are not taking effect it may be because you need to "Make a release to production" in '''collmgr'''. Recall that when you edit rows as the user '''dlxsadm''', you are changing the "release" rows, i.e., those keyed by <tt>'''dlxsadm'''</tt>. When you ''run'' the DLXS middleware in production mode (i.e. DLPS_DEV is NOT set), it is reading the rows keyed by <tt>'''production'''</tt>. Your edits are not visible to the running DLXS middleware unless you "Make a release to production".
+
+=== Use newsid=1 URL parameter ===
+
+You can add the <tt>newsid=1</tt> URL parameter to force middleware to create a new session. In past releases this would force a re-read of the collection database. Now the database is always read with each run of the CGI. Forcing a new session will clear accumulated state information and make the middleware behave as it would for a user arriving at site for the first time. Examples of stored information are:
+
+* back pointing links in ImageClass
+* last search key in ImageClass
+* cached item XML in ImageClass
+* application result object in TextClass
+* last sort order in TextClass
+* many others ...
+
+=== Remote connect error ===
+
+There are a few error messages that crop up frequently.
+
+<blockquote>''' Could not start XPAT for only requested collection sampletc ... terminating. Error: Could not fork XPAT process or start remote process or child had exec error. Connection refused at /l1/dev/pfarber/lib/RemoteConnect.pm line 147. '''</blockquote>
+
+This means that the '''<tt>host</tt>''' field for this collection in the database is set to a different value than the virtual host running the CGI program. In this event, the middleware attempts to start XPAT on that remote machine. Unless the remote access daemon ('''dlxsd''') is running on that remote machine (and the collection data and indexes are there too) this error will occur. If your data is never remote, setting '''<tt>host</tt>''' to the value '''<tt>localhost</tt>''' is the simplest solution. Recall this [http://pfarber.ws.umdl.umich.edu/cgi/c/collmgr/collmgr?class=text&type=Collections&collid=sampletc_utf8&submit=edit+working+collection collmgr page]
+
+=== XSL and XML tools and tips ===
+
+* xpath checker
+* xsltwrite and Oxygen or xsltproc
+
+=== More tools ===
+
+[tools.html Here's a list of tools] we've found useful with links to their web sites.

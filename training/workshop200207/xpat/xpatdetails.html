@@ -1,0 +1,397 @@
+<HTML>
+<HEAD>
+<TITLE>XPat Details</TITLE>
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+<LINK REL="stylesheet" HREF="../styles.css" TYPE="TEXT/CSS">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF" LEFTMARGIN="10" TOPMARGIN="10" MARGINWIDTH="10" MARGINHEIGHT="10" CLASS="mainpalette">
+<H3><A NAME="top"></A>XPAT Details</H3>
+<P>Indexing will be covered in detail during the <A HREF="../textclass/tcoutline200207.html#TextClassIndexBuildingwithXPAT">Text 
+  Class Data Preparation</A> section.</P>
+<UL>
+  <LI><A NAME="textindexing"></A><B>Discussion of Text Indexing and </B><B>Region 
+    indexing</B> 
+    <UL>
+      <LI>XPAT indexes strings rather than words</LI>
+      <LI>XPAT indexes SGML or XML regions, allowing searching of text within 
+        regions, regions including text or other regions, etc.</LI>
+    </UL>
+  </LI>
+  <LI> <B><A HREF="#Invoking">Query Language Syntax</A></B> 
+    <UL>
+      <LI><A HREF="#Invoking">Invoking XPAT</A></LI>
+      <LI><A HREF="#points">Identifying Points</A></LI>
+      <LI><A HREF="#sets">Identifying Sets</A></LI>
+      <LI><A HREF="#UsingOps">Using Operators</A></LI>
+    </UL>
+  </LI>
+  <LI><A HREF="#quietonrawmode"><B>&#147;quieton raw&#148; mode and programming 
+    XPAT queries in Perl</B> </A>
+<UL>
+      <LI><A HREF="#quietonrawmode">{quieton raw}</A></LI>
+      <LI><A HREF="#programmingxpat">Programming XPAT queries in Perl</A></LI>
+    </UL>
+  </LI>
+  <LI><B><A HREF="#additional">Additional Details</A></B> (not covered explicitly 
+    during the workshop)</LI>
+</UL>
+<P></P>
+<P>A full list of XPAT commands can be found at: <A HREF="http://www.hti.umich.edu/sgml/pat/pat50manual.html" TARGET="external">http://www.hti.umich.edu/sgml/pat/pat50manual.html</A></P>
+<HR WIDTH="50%">
+<H3><A NAME="syntax"></A>Query Language Syntax</H3>
+<H4><A NAME="Invoking"></A> <SPAN CLASS="sectionheader">Invoking XPAT</SPAN></H4>
+To start an interactive session with XPAT, enter <CODE>xpat</CODE> along with 
+the name of the data dictionary (dd) file.: 
+<BLOCKQUOTE><B><CODE CLASS="unixcommand">% xpat $DLXSROOT/idx/s/sampletc/sampletc.dd</CODE></B></BLOCKQUOTE>
+<I><!-- #BeginLibraryItem "/Library/back to top.lbi" --><A HREF="#top"><I>Back to top</I></A> <!-- #EndLibraryItem --></I>
+<HR WIDTH="25%">
+<H4><A NAME="points"></A><SPAN CLASS="sectionheader">Identifying Points</SPAN></H4>
+In XPAT, a <I>point</I> is a unique byte offset in the full text where XPAT has 
+indexed a string. Enter a string or byte offset in square brackets and set of 
+points is returned: 
+<BLOCKQUOTE> 
+  <P>>> <SPAN CLASS="unixcommand">"prince"</SPAN><BR>
+    1: 375 matches</P>
+  <P>>> <SPAN CLASS="unixcommand">"prince "</SPAN><BR>
+    2: 304 matches</P>
+  <P>>> <SPAN CLASS="unixcommand">[290947]</SPAN><BR>
+    3: one match</P>
+</BLOCKQUOTE>
+<P>The first query finds all semi-infinite strings (sistrings) that begin with 
+  &quot;prince&quot;, the second finds those that are "prince" exactly, the third 
+  finds the string beginning at the byte 290947.<BR>
+</P>
+<!-- #BeginLibraryItem "/Library/back to top.lbi" --><A HREF="#top"><I>Back to top</I></A> <!-- #EndLibraryItem --> 
+<HR WIDTH="25%">
+<H4> <A NAME="Regions"></A><SPAN CLASS="sectionheader">Identifying Regions</SPAN></H4>
+A region in XPAT is a span of text comprising zero or more bytes. <TT>sgmlrgn50</TT> 
+or <TT>multirgn</TT>(discussed in the <A HREF="../textclass/tcoutline200207.html#TextClassIndexBuildingwithXPAT">TextClass 
+Collection Implementation/Indexing Section</A>) handles the create of these regions. 
+<P>To find how many of a particular region type exist, enter <TT>region</TT> plus 
+  the name of the region (double quotes are needed if the name contains non-alphanumeric 
+  characters). 
+<BLOCKQUOTE> 
+  <PRE><CODE>>> <SPAN CLASS="unixcommand">region &quot;DIV1&quot;</SPAN>
+
+&nbsp; 1: 120 matches
+
+>> <SPAN CLASS="unixcommand">region "A-NODE"
+</SPAN>
+&nbsp; 2: 132 matches</CODE></PRE>
+</BLOCKQUOTE>
+<P>Also see the <CODE><A HREF="#ddinfo">{ddinfo regionnames}</A></CODE> command.<BR>
+  Also see the <CODE><A HREF="#history">history</A></CODE> command. </P>
+<!-- #BeginLibraryItem "/Library/back to top.lbi" --><A HREF="#top"><I>Back to top</I></A> <!-- #EndLibraryItem --> 
+<HR WIDTH="25%">
+<H4> <A NAME="sets"></A>Identifying Sets (Named Sets)</H4>
+Any collection of points or regions can be grouped together in a <I>set</I>. Sets 
+can be combined or split with XPAT's boolean operators. All sets created during 
+a session have unique number identifier They can be can given names (<I>name</I> 
+= ). They can be printed out (<B>pr</B>), saved, exported (useful in the creation 
+of <A HREF="../textclass/tcoutline200207.html#TextClassIndexBuildingwithXPAT">"fabricated 
+regions"</A>). Here are just a few examples: 
+<BLOCKQUOTE> 
+  <PRE><CODE>&gt;&gt; <SPAN CLASS="unixcommand">long</SPAN><BR>  1: 532 matches<BR><BR>&gt;&gt; <SPAN CLASS="unixcommand">help</SPAN><BR>  2: 133 matches<BR><BR>&gt;&gt; <SPAN CLASS="unixcommand">1 + 2</SPAN><BR>  3: 665 matches
+
+&gt;&gt; <SPAN CLASS="unixcommand">&quot;subsequently&quot;</SPAN><BR>  4: 5 matches<BR><BR>&gt;&gt; <B><SPAN CLASS="unixcommand">pr</SPAN></B><SPAN CLASS="unixcommand"> 4</SPAN>
+   819525, ..eparture, and subsequently confirmed in their position by the So..
+  2764281, ..ra, and often subsequently during our stay, we walked on the mou..
+  2936185, .. Kara George, subsequently he returned, but unexpectedly, and at..
+   201591, .., whom we met subsequently, however, at Castelnuovo, seemed to r..
+  2104209, .. of Russia.   Subsequently,  however, they showed more discrimin..</CODE>
+
+<CODE>&gt;&gt; <B><SPAN CLASS="unixcommand">mysearch</SPAN></B><SPAN CLASS="unixcommand"> = &quot;lasting&quot;</SPAN><BR>  5: mysearch = 2 matches<BR><BR>&gt;&gt; <B CLASS="unixcommand">pr *mysearch</B><BR>  1380924, ..tion, nothing lasting could be established. The Servians were de..<BR>  2465605, .. room.  After lasting out five hundred years !&lt;/P&gt;&lt;P&gt;Perhaps a l..
+</CODE></PRE>
+</BLOCKQUOTE>
+<P>Also see the <CODE><A HREF="#subset">subset </A></CODE> command.<BR>
+  Also see the <A HREF="#sortorder"><CODE>{sortorder}</CODE></A> setting.<BR>
+  Also see other <A HREF="#Operators">operators and relations</A>.</P>
+<!-- #BeginLibraryItem "/Library/back to top.lbi" --><A HREF="#top"><I>Back to top</I></A> <!-- #EndLibraryItem --> 
+<HR WIDTH="25%">
+<H4> <A NAME="UsingOps"></A>Using the Operators to Make Sets of Interest</H4>
+<P>Using some basic XPAT operators, we can build some very specific searches that 
+  take advantage of the SGML's markup. Here is an actual example from the TextClass 
+  implementation. The following query is actually the basis for the fabricated 
+  region called <B><I>mainauthor </I></B>in most of our text collections. <B>Note</B> 
+  that this query depends on knowing the structure of the document's markup (in 
+  case of TextClass documents, the regions here are essentially the same as in 
+  the TEIHEADER of the TEI.2 DTD.) </P>
+<BLOCKQUOTE> 
+  <PRE>
+<CODE>>> <SPAN CLASS="unixcommand">((region AUTHOR within (region TITLESTMT within region FILEDESC)) 
+     not within (region SOURCEDESC))</SPAN>
+   6: 4 matches 
+
+>> <SPAN CLASS="unixcommand">pr.region.6</SPAN>
+      143, ..&lt;AUTHOR&gt; Holbach, Maude M. &lt;/AUTHOR&gt;..
+   298344, ..&lt;AUTHOR&gt; Yriarte, Charles, 1832-1898. &lt;/AUTHOR&gt;..
+   792438, ..&lt;AUTHOR&gt; Laveleye, Emile de, 1822-1892. &lt;/AUTHOR&gt;..
+  1689410, ..&lt;AUTHOR&gt; Sebright, Georgina Mary Muir (Mackenzie), Lady, d. 1874- &lt;/AUTHOR&gt;..
+  </CODE></PRE>
+</BLOCKQUOTE>
+<HR WIDTH="10%">
+<P>Here we construct a query to return a PSet consisting of hits on a user-entered 
+  search term. We want to display a line containing the immediate context of the 
+  hit and also a title from an enclosing division: </P>
+<P>The query for the user's search is simply: 
+<BLOCKQUOTE> 
+  <P><TT>>> <B><SPAN CLASS="unixcommand">firstsearch</SPAN></B><SPAN CLASS="unixcommand"> 
+    = ("Branivoj " + "Branivoj&lt;")</SPAN></TT> <BR>
+    <TT>&nbsp; <B>7</B>:&nbsp; firstsearch = one match</TT> </P>
+</BLOCKQUOTE>
+<P>To get a division title for the hit we need to build up regions based on the 
+  hit: 
+<BLOCKQUOTE> 
+  <P><TT>>> <B><SPAN CLASS="unixcommand">slicesearch</SPAN></B><SPAN CLASS="unixcommand"> 
+    = subset.1.25 *<B>firstsearch</B></SPAN></TT> <BR>
+    <TT>&nbsp; <B>8</B>: slicesearch = one match</TT> <BR>
+    <TT>>> <B><SPAN CLASS="unixcommand">mainslicesearch</SPAN></B><SPAN CLASS="unixcommand"> 
+    = (region &quot;DLPSTEXTCLASS&quot; incl *<B>slicesearch</B>)</SPAN></TT> 
+    <BR>
+    <TT>&nbsp; <B>9</B>: mainslicesearch = one match</TT> <BR>
+    <TT>>> <B><SPAN CLASS="unixcommand">mainheader</SPAN></B><SPAN CLASS="unixcommand"> 
+    = (region &quot;HEADER&quot; within *<B>mainslicesearch</B>)</SPAN></TT> <BR>
+    <TT>&nbsp; <B>10</B>: mainheader = one match</TT> </P>
+</BLOCKQUOTE>
+<P>Finally to view the content of the region we have constructed we enter: 
+<BLOCKQUOTE> 
+  <P><TT>>> <SPAN CLASS="unixcommand">pr.region.&quot;HEADER&quot; (region <B>*mainheader</B>)</SPAN></TT> 
+  </P>
+</BLOCKQUOTE>
+<P>See also <A HREF="#viewing">viewing sets</A>. 
+<P>&nbsp; 
+<!-- #BeginLibraryItem "/Library/back to top.lbi" --><A HREF="#top"><I>Back to top</I></A> <!-- #EndLibraryItem --> 
+<HR WIDTH="50%">
+<H3><B><A NAME="quietonrawmode"></A>&#147;quieton raw&#148; mode and programming 
+  XPAT queries in Perl</B> </H3>
+<H4><B>&#147;quieton raw&#148; mode</B></H4>
+<P>The default mode, in an interactive XPAT session, is "quietoff". This gives 
+  the results messages you have seen so far: numbered sets, byte offsets followed 
+  by snippets of SGML with ".." on either end, etc. Another mode, and the most 
+  useful for interacting with XPAT programmatically, is "quieton raw". Nothing 
+  seems to happen when one enters:</P>
+<BLOCKQUOTE> 
+  <PRE><CODE>&gt;&gt; <SPAN CLASS="unixcommand">{quieton raw}</SPAN>
+			</CODE></PRE>
+</BLOCKQUOTE>
+<P>However, entering queries now produces results that are tagged in a way that 
+  is easily parsable from within a program. First enter an earlier point search: 
+</P>
+<BLOCKQUOTE> 
+  <PRE><CODE><SPAN CLASS="unixcommand">firstsearch = (&quot;Branivoj &quot; + &quot;Branivoj&lt;&quot;)</SPAN><BR>&lt;SSize&gt;1&lt;/SSize&gt;
+<SPAN CLASS="unixcommand">pr</SPAN><BR>&lt;PSet&gt;&lt;Start&gt;313615&lt;/Start&gt;&lt;Raw&gt;&lt;Size&gt;64&lt;/Size&gt;res du nom de Branivoj
+ s'emparent du territoire qu'ils gouvernen&lt;/Raw&gt;&lt;/PSet&gt;
+</CODE></PRE>
+</BLOCKQUOTE>
+<P>Now enter an earlier region search:</P>
+<BLOCKQUOTE> 
+  <PRE><CODE><SPAN CLASS="unixcommand">((region AUTHOR within (region TITLESTMT within region FILEDESC)) 
+  not within (region SOURCEDESC))</SPAN><BR>&lt;SSize&gt;4&lt;/SSize&gt;
+<SPAN CLASS="unixcommand">pr.region.AUTHOR</SPAN><BR>&lt;RSet&gt;&lt;Start&gt;143&lt;/Start&gt;&lt;End&gt;178&lt;/End&gt;&lt;Raw&gt;&lt;Size&gt;36&lt;/Size&gt;
+&lt;AUTHOR&gt;Holbach, Maude M. &lt;/AUTHOR&gt;&lt;/Raw&gt;&lt;Start&gt;298344&lt;/Start&gt;
+&lt;End&gt;298391&lt;/End&gt;&lt;Raw&gt;&lt;Size&gt;48&lt;/Size&gt;&lt;AUTHOR&gt;Yriarte, Charles, 1832-1898. &lt;/AUTHOR&gt;&lt;/Raw&gt;
+&lt;Start&gt;792438&lt;/Start&gt;&lt;End&gt;792487&lt;/End&gt;&lt;Raw&gt;&lt;Size&gt;50&lt;/Size&gt;
+&lt;AUTHOR&gt;Laveleye, Emile de, 1822-1892. &lt;/AUTHOR&gt;&lt;/Raw&gt;&lt;Start&gt;1689410&lt;/Start&gt;
+&lt;End&gt;1689486&lt;/End&gt;&lt;Raw&gt;&lt;Size&gt;77&lt;/Size&gt;
+&lt;AUTHOR&gt;Sebright, Georgina Mary Muir (Mackenzie), Lady, d. 1874- &lt;/AUTHOR&gt;&lt;/Raw&gt;&lt;/RSet&gt;</CODE></PRE>
+</BLOCKQUOTE>
+<P>Some of these tags are self-explanatory (e.g., SSize = set size). But some 
+  may need a bit of explanation. </P>
+<DL> 
+  <DT>PSet</DT>
+  <DD>These tags surround an entire set of point results.</DD>
+  <DT>RSet</DT>
+  <DD>These tags surround an entire set of region results.</DD>
+  <DT>Start</DT>
+  <DD>Byte offset of beginning of one result, either point or region.</DD>
+  <DT>End</DT>
+  <DD>Byte offset of end of one result, either point set string or region.</DD>
+  <DT>Raw</DT>
+  <DD>The "raw" information of one particular result.</DD>
+  <DT>Size</DT>
+  <DD>Byte offset of end of one result, either point set string or region.</DD>
+  <DT>text following the &lt;/Size&gt; tag</DT>
+  <DD>Actual retrieved text of result.</DD>
+</DL>
+<!-- #BeginLibraryItem "/Library/back to top.lbi" --><A HREF="#top"><I>Back to top</I></A> <!-- #EndLibraryItem --> 
+<HR WIDTH="25%">
+<H4><A NAME="programmingxpat"></A>Programming XPAT queries in Perl</H4>
+<P>XPAT's ability to return results with tags allows a program to parse the results 
+  into pieces. In the DLXS Middleware this is done by a group of DLXS Perl modules. 
+  These modules have methods to let the CGI program interact with XPAT (an XPAT 
+  process is forked off by the CGI program and queries can be made of it at any 
+  time). The main object the code uses is the <B>xpat object</B>. It has methods 
+  for making queries in different ways and for interacting with the forked off 
+  XPAT process. </P>
+<P>Here is some code (from TextClass.pm) that illustrates how the middleware uses 
+  a method of the Perl-based XPAT object (created in an earlier part of the code).</P>
+<BLOCKQUOTE> 
+  <PRE><CODE>...
+my $query = qq{(region mainheader incl ( $idnorgn incl &quot;$idno&quot; ) );};<BR>my ( $error, $result) = $xpat-&gt;GetSimpleResultsFromQuery( $query );<BR>if ( $error )<BR>{ &amp;DlpsUtils::errorBail( qq{Query error in FindXPATContainingIdno: $result} ); }<BR>&amp;DlpsUtils::StripAllRSetCruft( \$result );<BR>$result =~ m,&lt;SSize&gt;(\d+)&lt;/SSize&gt;,;<BR>my $hit = $1;<BR>if ( $hit &gt; 0 )<BR>{
+     $returnXpat = $xpat;<BR>     last;<BR>}
+...
+</CODE></PRE>
+</BLOCKQUOTE>
+<P>While some code, such as this, makes a query via a method, most queries in 
+  the middleware are actually made by other means, through other objects and methods. 
+  Once data has been prepared according to the DLXS Class DTDs, in terms of searching, 
+  the middleware can be thought of as an engine that simply "runs" the data. If 
+  there are any code changes that need to be made by DLXS users, it is usually 
+  when different display of data is needed ("filtering"). That is outside the 
+  scope of this section of the workshop.</P>
+<!-- #BeginLibraryItem "/Library/back to top.lbi" --><A HREF="#top"><I>Back to top</I></A> <!-- #EndLibraryItem --> 
+<HR WIDTH="50%">
+<H3><A NAME="additional"></A>Additional Details (not covered explicitly during 
+  the course of this workshop)</H3>
+<H4> <A NAME="viewing"></A>Viewing Sets</H4>
+<P>The <B CLASS="unixcommand">pr</B> command is the heart of viewing sets. In 
+  an interactive XPAT session, it lets you view the results you've searched for. 
+  Within the middleware, getting the data back from XPAT is just one step; it 
+  is followed by &quot;filtering&quot; operations (Perl substitutions using regular 
+  expressions) to remove or change other tags in the the content and to change 
+  the appearance tof the content; e.g. highlighting hits, etc.</P>
+<P>The format the results that XPAT returns with <TT CLASS="unixcommand">pr</TT> 
+  or <TT CLASS="unixcommand">save</TT> is determined by the current <TT CLASS="unixcommand"><A HREF="#quietonrawmode"><SPAN CLASS="unixcommand">{quieton}</SPAN></A></TT> 
+  setting. There is a big difference between the normal user-sitting-at-the-pat-terminal 
+  interactive mode, and the machine-readable modes. </P>
+<DL> 
+  <DT> <TT CLASS="unixcommand">pr (point-set)</TT></DT>
+  <DD> This prints out the members of the point-set, starting with the first, 
+    according to the current <A HREF="#sortorder" CLASS="unixcommand">{sortorder}</A> 
+    setting.</DD>
+  <DT> <TT CLASS="unixcommand">pr.X shift.-Y (point-set)</TT></DT>
+  <DD> Print the results in the point-set in a string X bytes wide, offset to 
+    the left of the matching point Y bytes. X and Y overide the <TT>settings</TT> 
+    of <TT>{printlength}</TT> and <TT>{leftcontext}</TT> respectively (which are 
+    described <A HREF="#settings">below</A>).</DD>
+  <DT> <TT CLASS="unixcommand">pr.region."region-name" (region-set of type "region-name")</TT></DT>
+  <DD> prints the entire span of each the members in the region set. It seems 
+    redundant to have to tell XPAT the "format" of the region you would like to 
+    see, when it should already know!</DD>
+  <DT>&nbsp; </DT>
+  <DD>&nbsp;</DD>
+  <DT>In interactive mode, the following print the last set created.</DT>
+  <DT><TT CLASS="unixcommand">pr</TT></DT>
+  <BR>
+  <TT CLASS="unixcommand">pr %</TT> <BR>
+  <TT CLASS="unixcommand">pr.X shift.-Y</TT> 
+  <DD>&nbsp; </DD>
+</DL>
+<P><B>Note</B>: The <SPAN CLASS="unixcommand">save</SPAN> command is, in a sense, 
+  the same as the <SPAN CLASS="unixcommand">pr</SPAN> command: <TT CLASS="unixcommand">pr</TT> 
+  displays to STDOUT, <SPAN CLASS="unixcommand">save</SPAN> utputs (appends) to 
+  a file whose name is given by <TT CLASS="unixcommand">{savefile}</TT>. The format 
+  of the output is the same.</P>
+<!-- #BeginLibraryItem "/Library/back to top.lbi" --><A HREF="#top"><I>Back to top</I></A> <!-- #EndLibraryItem --> 
+<HR WIDTH="10%">
+<H4> <A NAME="settings"></A>{settings}</H4>
+Settings control certain behaviors of XPAT during a search session. DLXS middleware 
+explicitly uses the <TT CLASS="unixcommand">{quieton}</TT> command. A full list 
+of XPAT commands, which includes the <SPAN CLASS="unixcommand">{ }</SPAN> settings, 
+can be found at: <A HREF="http://www.hti.umich.edu/sgml/pat/pat50manual.html" TARGET="external">http://www.hti.umich.edu/sgml/pat/pat50manual.html</A><BR>
+&nbsp; 
+<DL> 
+  <DT> <TT CLASS="unixcommand">{printlength #}</TT></DT>
+  <DD> This setting controls the default print window size for point sets, how 
+    many total bytes are given when a point set result is printed. See the discussion 
+    of <TT CLASS="unixcommand">pr</TT> above. Default is 64.</DD>
+  <DT> <TT CLASS="unixcommand"><BR>
+    {leftcontext #}</TT></DT>
+  <DD> This setting controls how many characters before the matching text will 
+    be given when a point set is printed. If there are 100 characters of <TT CLASS="unixcommand">{printlength}</TT>, 
+    and 14 of <TT CLASS="unixcommand">{leftcontext}</TT>, then the point where 
+    the matching text starts will be the 15th character. See the discussion of 
+    <TT>pr</TT> above. Default is 14</DD>
+  . <BR>
+  &nbsp; 
+  <DT> <TT><A NAME="sortorder"></A><SPAN CLASS="unixcommand">{sortorder &lt;order>}</SPAN></TT></DT>
+  <DD>This determines in what order a given set of results is sorted by XPAT. 
+    There are other modes, but DLXS middleware always uses <TT CLASS="unixcommand">{sortorder 
+    occur}</TT>, which is to say that results are returned in the byte order in 
+    which they occur in the source text.</DD>
+  <DT> <TT CLASS="unixcommand"><BR>
+    {savefile "file"}</TT></DT>
+  <DD> Changes the default save file name.</DD>
+  When the <SPAN CLASS="unixcommand">save</SPAN> command is given, results are 
+  appended to the file.<BR>
+  &nbsp; 
+  <DT> <TT CLASS="unixcommand">{exportfile "file"}</TT></DT>
+  <DD> Changes the default export file name. When the <SPAN CLASS="unixcommand">export</SPAN> 
+    command is given, results are appended to the file.</DD>
+</DL>
+<!-- #BeginLibraryItem "/Library/back to top.lbi" --><A HREF="#top"><I>Back to top</I></A> <!-- #EndLibraryItem --> 
+<HR WIDTH="10%">
+<H4 CLASS="sectionheader"> Miscellaneous and Useful Commands</H4>
+<DL> 
+  <DT> <TT><A NAME="ddinfo"></A><SPAN CLASS="unixcommand">{ddinfo regionnames}</SPAN></TT></DT>
+  <DD> Lists all the currently-defined regions. A very useful command for document 
+    analysis</DD>
+  <BR>
+  &nbsp; 
+  <DT> <TT><A NAME="history"></A><SPAN CLASS="unixcommand">history</SPAN></TT></DT>
+  <DD> List of results sets from previously issued searches and the commands that 
+    created them. </DD>
+  <DT>&nbsp;</DT>
+  <DT><TT><A NAME="subset"></A><SPAN CLASS="unixcommand">subset.X.Y A</SPAN></TT></DT>
+  <DD> Make a new set that consists of Y members of A, starting at the Xth member 
+    of A. Members of A start numbering at 1. <B>Note</B>: This command is used 
+    in the middleware to get results in <I>slices</I>.</DD>
+  <DD>&nbsp;</DD>
+  <DT> <TT CLASS="unixcommand">~sync "<I>string</I>"</TT></DT>
+  <DD> A very useful command; basically an echo sort of command. This is used 
+    in the Middleware to signal when XPAT is done sending results. In any of the 
+    <TT>{quieton}</TT> modes, this returns:</DD>
+  <BLOCKQUOTE><TT>&lt;Sync><I>string</I>&lt;/Sync></TT></BLOCKQUOTE>
+  <!-- #BeginLibraryItem "/Library/back to top.lbi" --><A HREF="#top"><I>Back to top</I></A> <!-- #EndLibraryItem --> 
+  <HR WIDTH="10%">
+</DL>
+<H4> <A NAME="Operators"></A><SPAN CLASS="sectionheader">Operators and Relations</SPAN></H4>
+These are the operators most used in the Middleware. 
+<DL> 
+  <DT> <B><TT>A ^ B</TT></B></DT>
+  <DD> the "and" or "intersection" operator: A and B are two sets, or expressions 
+    that evaluate to sets, and the resulting set includes those points or regions 
+    <I>in both A and B that have the exact same start offsets</I>.</DD>
+  <DT> <B><TT>A + B + C + ...</TT></B></DT>
+  <DD> the "or" or "union" operator: A, B, C... are sets. The resulting set (which 
+    is a point set if at least one of the sets being combined is a point set), 
+    consisting of the start offsets of all the points or regions in the original 
+    sets. If <I>all</I> the sets being combined are region sets, then regions 
+    that nest inside other listed regions (either entirely or at their start byte 
+    offset) will be removed from the resultant set.</DD>
+  <DT> <B><TT>A incl B</TT></B></DT>
+  <BR>
+  <B><TT>A not incl B</TT></B> 
+  <DD> A is a region set, B is either a point or region set. The result is a region 
+    set of all members of A that contain at least one member of B, containment 
+    meaning that a given B has a start offset within the inclusive range of a 
+    given A's start and end offsets.</DD>
+  <DT> <B><TT>A within B</TT></B></DT>
+  <BR>
+  <B><TT>A not within B</TT></B> 
+  <DD> In many ways the complement to <SPAN CLASS="unixcommand">incl</SPAN>: A 
+    is a point or region set, B is a region set, the resulting set is all members 
+    of A that are contained (by the start offset rule as under <SPAN CLASS="unixcommand">incl</SPAN>) 
+    in any B. This also takes the <SPAN CLASS="unixcommand">not</SPAN> operator 
+    to return all A's that are not within any B.</DD>
+  <DT> <B><TT>A near B</TT></B></DT>
+  <DD> A and B are either points or regions. The result is all A's whose start 
+    offsets are within # number of bytes of the start offset of any B (# is either 
+    explicitly stated (with <SPAN CLASS="unixcommand">near.#</SPAN>), or taken 
+    from the <TT CLASS="unixcommand">{proximity}</TT> setting). The <SPAN CLASS="unixcommand">not</SPAN> 
+    form returns all A's whose start offsets are not within the specified number 
+    of bytes from the start offset of any B. The nearest B might be earlier or 
+    later in the source file.</DD>
+  <DT> <B><TT>A fby B</TT></B></DT>
+  <DD> This is like the <SPAN CLASS="unixcommand">near</SPAN> operator, except 
+    that an A must be followed within the specified number of bytes by a B to 
+    be in the result set. This can also takes the <SPAN CLASS="unixcommand">not</SPAN> 
+    operator.</DD>
+  <DT> <B>not</B></DT>
+  <DD> This reverses the sense of the expression it modifies, usable with <B CLASS="unixcommand">incl</B>, 
+    <B CLASS="unixcommand">within</B>, <B CLASS="unixcommand">near</B>, and <B CLASS="unixcommand">fby</B>.</DD>
+  <DT>&nbsp;</DT>
+  <DT><!-- #BeginLibraryItem "/Library/back to top.lbi" --><A HREF="#top"><I>Back to top</I></A> <!-- #EndLibraryItem --></DT>
+</DL>
+</BODY>
+</HTML>

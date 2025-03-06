@@ -1,0 +1,82 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+  <head>
+    <title>Image Class Interface Customization</title>
+  </head>
+
+  <body>
+    <h1>Image Class Interface Customization</h1>
+
+<h2>Common Customizations</H2>
+
+<P>Version 2 of Image Class supports interface customization through 6 methods. Of these, only the Collection Database Customizations are required. Unlike version 1 of the Image Class, many collections specific customizations may be done in the colldb, and without creating collections specific templates. It is anticipated that this will be a great time saver.</P>
+
+<OL>
+      <LI>Collection Database Customizations</LI>
+      <LI>Banner Text/Graphic Customization</LI>
+      <LI>Cascading Style Sheet (CSS) Customization</LI>
+      <LI>HTML Template Customization</LI>
+      <LI>Javascript Customization</LI>
+      <LI>Processing Instructions Customization</LI>
+</OL>
+
+<P>It is possible to have cross collection interface files (banner graphics, css, templates, javascript) and collection specific interface files. Cross collection interface files are provided with Image Class.</P>
+
+<P>The methods above may be used independently. For example, you can customize the CSS for an individual collection without creating custom template files, etc. </P>
+
+<P>Cross collection interface files are by default located in the following directories. The location may be modified in the /DLXSROOT/cgi/i/image/imageclass.cfg file.<p>
+<UL>
+<LI>graphics: /DLXSROOT/web/i/image/all/graphics
+<LI>cascading style sheets: /DLXSROOT/web/i/image/all/css</LI>
+<LI>html templates: /DLXSROOT/web/i/image/all</LI>
+<LI>javascript: /DLXSROOT/web/i/image/all/js</LI>
+</UL>
+
+
+<P>Collection specific interface files may be created at /DLXSROOT/web/c/coll.</P>
+
+<P>In general, if a collection specific interface file is not found by the middleware, the cross collection interface file is used.</P>
+
+
+<H3>Customizations in the Collection Database (colldb)</H3>
+
+<P>The collection database provides a great way to implement a collection in a customized fashion without much work. The most essential collection specific interface variables are customizable in the colldb. A few examples are:
+<UL>
+<LI>number of text boxes in the search form</LI>
+<LI>categories/fields for searching</LI>
+<LI>categories/fields to display in results and entry (record) views.</LI>
+</UL>
+
+<P>There is only one colldb, located at /DLXSROOT/obj/i/image/lib/db/colldb. Some of the colldb columns have cross collection counterparts in the /DLXSROOT/cgi/i/image/imageclass.cfg file. See the <a href="http://fizzie.umdl.umich.edu/d/dlps/dlxs/training/workshopuser2001/newicdocs/image_class_colldb.htm">colldb documentation</a> for more info.</P>
+
+
+
+<H3>Banner Text/Graphic Customization</H3>
+<P>This is the most basic customization that may be made. Modify the $gBanner global variable in the /DLXSROOT/cgi/i/image/imageclass.cfg file to change the banner text or graphic for the cross collection templates. Modify the banner column of the colldb for collection specific customization.</P>
+
+<H3>Cascading Style Sheet (CSS) Customization</H3>
+<P>Modify the cross collection CSS file directly, or for collection specific customization create /DLXSROOT/web/c/coll/css and copy an existing CSS to this location and modify it.<P>
+<P>The default Image Class cross collection templates use javascript within the templates to support separate style sheets for Navigator and Internet Explorer 5.</P>
+
+<H3>HTML Template Customization</H3>
+<P>Modify the cross collection template (.tpl) files directly, or for collection specific customization create /DLXSROOT/web/c/coll and copy an existing template (or templates) to this location and modify.<P>
+
+<P>Naming conventions for templates are configured in a global variable in the /DLXSROOT/cgi/i/image/imageclass.cfg file. The variable is %gPagesHandled.<P>
+
+<H3>Processing Instructions</H3>
+<P>Additional functionality may be added to Image Class with the ALLPURPOSE processing instruction (PI). The ALLPURPOSE PI may be inserted anywhere within any of the standard templates. Any desired parameters may be passed in by the PI. The actual functionality must be coded into the /DLXSROOT/cgi/i/image/ICLocalUtils.pm Perl module. The module is distributed with the default "allpurpose" subroutine, which initially does nothing. The "allpurpose" subroutine may be modified to perform certain tasks depending on the parameters passed from the template via the PI.<P>
+
+<P>All essential middleware variables are accessible by the "allpurpose" subroutine. See the ICLocalUtils.pm for details.</P>
+
+
+<H2>Other Customizations</H2>
+
+<H3>Portfolio Interface Files</H3>
+<P>Interface files for portfolios are located in /DLXSROOT/web/i/image/all and begin "bb", e.g. "bbthumbnail.tpl".<P>
+<P>Currently it is not possible to have collection specific portfolio inteface files. However, the basic color scheme for the portfolio templates may be specified in the cross collection CSS files.</P>
+
+
+
+
+  </body>
+</html>

@@ -1,0 +1,150 @@
+<?xml version="1.0"?>
+
+<!-- SPO Editorial Services                  -->
+<!-- automatically-generated XML header file -->
+
+<?xml-stylesheet href="../../../pre11-dlxsdocs.xsl" type="text/xsl"?>
+<!DOCTYPE DLPSDOC PUBLIC "-//UM-DLPS//DTD DLPS Publications//EN" "http://docs.umdl.umich.edu/dlps/docs/dlpsdocs.dtd">
+<DLPSDOC>
+<TITLE>Image  Class</TITLE>
+<HEADER>
+<JOURNAL>DLXS Documentation</JOURNAL>
+<PUBDATE>2002-07-03 17:19:37 EDT</PUBDATE>
+<AUTH1>Weise, John</AUTH1>
+<AUTH2></AUTH2>
+<DOCTITLE>Image  Class</DOCTITLE>
+<VOL>class</VOL>
+<ISS>image</ISS>
+<FILE>dlxsdocs-image-index</FILE>
+</HEADER>
+
+
+<BODY>
+<BHEAD>Guide to Image Class Documentation</BHEAD>
+<DIV1 ID="main">
+
+<P><A HREF="http://images.umdl.umich.edu/">Image
+Services</A><BR/>
+<A HREF="http://www.umdl.umich.edu/">Digital
+Library Production Service</A><BR/>
+University of Michigan<BR/>
+
+<A HREF="http://www.umdl.umich.edu/dlxs/">Digital
+Library eXtension Service </A><BR/>
+<A HREF="mailto:dlxs-help@umich.edu">dlxs-help@umich.edu</A>
+</P>
+
+
+
+<P>This is a guide to all of the Image Class documentation. The
+bolded items are the primary documents of the set.</P>
+
+<P><A HREF="image-characterization.xml"><B>University of Michigan Image Services 
+  Characterization</B></A></P>
+
+
+<P><A HREF="image-imageclass.xml"><B>The Image Class</B></A> (not yet updated for version 2)</P>
+
+<UL>
+   <LI>A detailed definition of the Image Class version 1</LI>
+</UL>
+
+<P><A HREF="image-dtd.xml">Image Class DTD Description</A></P>
+
+<UL>
+   <LI>A breakdown of the DTD&#0160;with examples and
+   descriptions</LI>
+   
+  <LI>The actual <A HREF="image-dtd/image.dtd">DTD</A>.</LI>
+</UL>
+
+<P><B>Installation and Configuration of the Image Class Tools and Middleware</B></P>
+
+<UL>
+  <LI>The DLXS Installer installs and configures Image Class, including two collections (sampleic and workshopic). The document <A HREF="/intro/dlxsintro-index.xml">DLXS, Getting Started</A> is the place to begin.</LI>
+  <LI><A HREF="image-migration.xml">Migration to Image Class Version 2</A> documentation 
+    is also available.</LI>
+</UL>
+
+<P><A HREF="image-datatransform.xml"><B>Image Class Data Transformation</B></A></P>
+
+<UL>
+   <LI>A detailed, step-by-step, guide for the process of
+   transforming an image database to SGML.</LI>
+   
+  <LI><A HREF="image-imagestructures.xml">Image Class - Mapping Image Structures</A> 
+    is detailed documentation for mapping complex image structures for the Image 
+    Class.</LI>
+</UL>
+
+<P><A HREF="image-dc-guidelines.xml"><B>Guidelines for Mapping to Core Categories 
+  for Image Services</B></A></P>
+
+
+<UL>
+   <LI>Guidelines for mapping collection specific data fields to the
+   more general set of fields used for cross collection searching in
+   the Image Class.</LI>
+</UL>
+
+<P><A HREF="image-datareqs.xml">Image Class Data Requirements</A></P>
+
+<UL>
+   <LI>Data requirements for image databases to be deployed in the
+   Image Class.</LI>
+</UL>
+
+<P><A HREF="image-guidelines-data.xml">Preparing Data for Image Services</A></P>
+
+<UL>
+   <LI>Guidelines for preparing data for deployment online by UM,
+   DLPS, Image Services.</LI>
+</UL>
+
+<P><A HREF="image-charconversion.xml">Image Class Character Set Conversion</A></P>
+
+<UL>
+   <LI>How to make illegal SGML characters legal.</LI>
+</UL>
+
+<P><A HREF="image-imageloading.xml"><B>Image Class Image Loading</B></A></P>
+
+<UL>
+  <LI>Describes how to load already processed image files to a production server 
+    for online access.</LI>
+</UL>
+
+
+<P><A HREF="image-imagefilenaming.xml"><B>Image Class Image File Naming</B></A></P>
+
+<UL>
+   <LI>A brief set of requirements and guidelines for image file
+   naming.</LI>
+</UL>
+
+<P><A HREF="image-indexbuild.xml"><B>Image Class Index Building</B></A></P>
+
+<UL>
+   <LI>How to build an Image Class XPAT index.</LI>
+</UL>
+
+<P><A HREF="image-accesscontrol.xml"><B>Image Class Access Control</B></A></P>
+
+<UL>
+   <LI>How to control access at collection and record levels.</LI>
+   
+  <LI><A HREF="image-accesstable.xml">Image Class Access Control Summary and Examples 
+    Table</A> </LI>
+</UL>
+
+<P><A HREF="image-templates.xml"><B>Image Class User Interface Configuration and 
+  Customization </B></A></P>
+
+<UL>
+  <LI>An overview of how to configure and customize the interface.</LI>
+  <LI><A HREF="image-colldb.xml">COLLDB (Collection Database) configuration</A></LI>
+  <LI><A HREF="image-pi.xml">Processing Instructions</A></LI>
+</UL>
+</DIV1>
+</BODY>
+</DLPSDOC>

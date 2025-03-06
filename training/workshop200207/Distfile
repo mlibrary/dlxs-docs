@@ -1,0 +1,17 @@
+# Destination Production Server
+HOSTS = ( dlps4.umdl.umich.edu )
+
+# File Directories to be released
+
+WEB1 = /l1/web/d/dlxs/training/workshop200202
+
+MYSOURCE = ( ${WEB1} )
+
+# Files & Directories to exclude from update
+EXCEPT_PAT  = ( CVS ~ Distfile )
+
+# Release instructions
+(${MYSOURCE}) -> (${HOSTS})
+      install -oremove ;
+      except_pat ${EXCEPT_PAT} ;
+      notify pagliere@umich.edu ;

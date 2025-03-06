@@ -1,0 +1,160 @@
+<?xml version="1.0"?>
+
+<!-- SPO Editorial Services                  -->
+<!-- automatically-generated XML header file -->
+
+<?xml-stylesheet href="../../pre11-dlxsdocs.xsl" type="text/xsl"?>
+<!DOCTYPE DLPSDOC PUBLIC "-//UM-DLPS//DTD DLPS Publications//EN" "http://docs.umdl.umich.edu/dlps/docs/dlpsdocs.dtd">
+<DLPSDOC>
+<TITLE>DLXS Middleware Naming Conventions</TITLE>
+<HEADER>
+<JOURNAL>DLXS Documentation</JOURNAL>
+<PUBDATE>2003-12-04 11:42:45 EST</PUBDATE>
+<AUTH1>Pagliere, Alan</AUTH1>
+<EMAIL1>pagliere@umich.edu</EMAIL1>
+<AUTH2></AUTH2>
+<DOCTITLE>DLXS Middleware Naming Conventions</DOCTITLE>
+<VOL>program</VOL>
+<ISS></ISS>
+<FILE>dlxsdocs-dlxs-name-conventions</FILE>
+</HEADER>
+<BODY>
+<BHEAD>DLXS Middleware Naming Conventions</BHEAD>
+<DIV1>
+<P>Several naming conventions have evolved in the writing of the DLXS Middleware. Being familiar with them
+will help when looking at and possibly making changes to the Middleware code.</P>
+<UL>
+  <LI>Subclass module names</LI>
+  <LI>Variable names for most common object instantiations</LI>
+  <LI>Method names</LI>
+</UL>
+
+<DIV2>
+<H2>Subclass Module Names</H2>
+<P>Subclass modules generally carry some portion, even if abbreviated, of the name of
+its superclass ancestry. For example, the top-level <TT>DLXSClass.pm</TT> is subclassed by <TT>BibClass.pm</TT>
+ and <TT>FullTextClass.pm</TT>.
+The latter is in turn subclassed by <TT>TextClass.pm</TT> and <TT>FindaidClass.pm</TT>. When 
+<TT>TextClass.pm</TT> needs to be subclassed for
+a particular collection, the collection id is used,
+with the first letter capitalized, followed by "TC" to represent "TextClass". So,  in the case of
+"Making of America", whose collection id is "moa", the collection subclass would be called <TT>MoaTC.pm</TT>.</P>
+<P>See the <A HREF="./dlxs-object-hierarchy.xml">DLXS Object Hierarchies</A>.</P>
+</DIV2>
+
+<DIV2>
+<H2>Variable names for most common object instantiations</H2>
+<P>Many DLXS Middleware-specific objects are created and used during the running of the CGI progam.
+When an object is "new-ed up" or instantiated in Perl, a variable which is "blessed" as an object of
+the class in question, is created. A convention has evolved for the naming of the variable by the 
+calling code. Most of the variables have three-letter names (though a few have names of more than three letters).
+The most common ones are listed below. On the left is the object (from the module/Class name). On the right, a typical
+name for the variable that holds the reference to the object.
+</P>
+<P>Being a bit familier with these object names should ease the task of looking through code.
+</P>
+
+<TABLE BORDER="1" CELLPADDING="5">
+<TBODY>
+<TR>
+<TD><B>Class name</B></TD>
+<TD><B>variable name</B></TD>
+</TR>
+<TR>
+	<TD>CollsInfo object</TD>
+	<TD>$cio</TD>
+</TR>
+<TR>
+	<TD>GroupInfo object</TD>
+	<TD>$gio</TD>
+</TR>
+<TR>
+	<TD>ProcIns object</TD>
+	<TD>$pio</TD>
+</TR>
+<TR>
+	<TD>DlpsSession object</TD>
+	<TD>$dso</TD>
+</TR>
+<TR>
+	<TD>ApplicationResult object</TD>
+	<TD>$aro</TD>
+</TR>
+<TR>
+	<TD>XPat object</TD>
+	<TD>$xpat</TD>
+</TR>
+<TR>
+	<TD>XPatResult object</TD>
+	<TD>$xro</TD>
+</TR>
+<TR>
+	<TD>SearchSet object</TD>
+	<TD>$xro</TD>
+</TR>
+<TR>
+	<TD>SearchHistory object</TD>
+	<TD>$sho</TD>
+</TR>
+<TR>
+	<TD>DLXSApp object</TD>
+	<TD>$app</TD>
+</TR>
+<TR>
+	<TD>TextClass object</TD>
+	<TD>$tco</TD>
+</TR>
+<TR>
+	<TD>BibClass object</TD>
+	<TD>$bco</TD>
+</TR>
+<TR>
+	<TD>FindaidClass object</TD>
+	<TD>$fco</TD>
+</TR>
+<TR>
+	<TD>Bookbag object</TD>
+	<TD>$bbo</TD>
+</TR>
+<TR>
+	<TD>BookBagItem object</TD>
+	<TD>$bbi</TD>
+</TR>
+<TR>
+	<TD>QueryFactory object</TD>
+	<TD>$qf</TD>
+</TR>
+<TR>
+	<TD>TerminologyMapper object</TD>
+	<TD>$tm</TD>
+</TR>
+</TBODY>
+</TABLE>
+
+</DIV2>
+
+<DIV2>
+<H2>Method Names</H2>
+<P>DLXS Programmers try to give methods names that are as self-documenting as possible.
+Names are written in proper case; one string with no spaces, in which the words are marked only with
+a capital letter.
+</P>
+<P>Examples include:
+<UL>
+<LI>GetMainSearches</LI>
+<LI>Layer1ResultFormatter</LI>
+<LI>BuildKwicLink</LI>
+<LI>BuildViewEntireTextLink</LI>
+</UL>
+</P>
+</DIV2>
+
+
+<BR />
+<BR />
+<BR />
+<BR />
+
+</DIV1>
+</BODY>
+</DLPSDOC>

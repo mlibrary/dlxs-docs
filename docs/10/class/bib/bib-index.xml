@@ -1,0 +1,53 @@
+<?xml version="1.0"?>
+
+<!-- SPO Editorial Services                  -->
+<!-- automatically-generated XML header file -->
+
+<?xml-stylesheet href="../../../pre11-dlxsdocs.xsl" type="text/xsl"?>
+<!DOCTYPE DLPSDOC PUBLIC "-//UM-DLPS//DTD DLPS Publications//EN" "http://docs.umdl.umich.edu/dlps/docs/dlpsdocs.dtd">
+<DLPSDOC>
+<TITLE>Bibliographic Class</TITLE>
+<HEADER>
+<JOURNAL>DLXS Documentation</JOURNAL>
+<PUBDATE>2003-03-04 09:41:11 EST</PUBDATE>
+<AUTH1>Hagedorn, Kat</AUTH1>
+<EMAIL1>khage@umich.edu</EMAIL1>
+<AUTH2></AUTH2>
+<DOCTITLE>Bibliographic Class</DOCTITLE>
+<VOL>class</VOL>
+<ISS>bib</ISS>
+<FILE>dlxsdocs-bib-index</FILE>
+</HEADER>
+<BODY>
+<BHEAD>Bibliographic Class</BHEAD>
+<DIV1 ID="main">
+<H1>Documentation</H1>
+<OL>
+<LI>About the Bibliographic Class
+<OL>
+<LI><A HREF="bib-about.xml">Basic Overview of the Bibliographic Class</A></LI>
+<LI><A HREF="bib-dtd.xml">The Bibliographic Class DTD</A></LI>
+<LI><A HREF="bib-representative.xml">Representative Resources</A></LI>
+</OL>
+</LI>
+<LI>Steps to Mount a Collection
+<OL>
+<LI><A HREF="bib-indexing.xml">Index Building</A></LI>
+<LI><A HREF="bib-maps.xml">Adding New Searchable Fields</A></LI>
+<LI><A HREF="bib-colldb.xml">Adding Collections to collmgr</A></LI>
+<LI><A HREF="bib-filters.xml">Creating and Editing Filtering Routines</A></LI>
+<LI><A HREF="bib-templates.xml">Creating and Editing HTML/Template Files</A></LI>
+</OL>
+</LI>
+<LI>Getting Data into the Bibliographic Class Format
+<OL>
+<LI><A HREF="bib-transforming.xml">Transforming Bibliographic Files</A></LI>
+<LI><A HREF="bib-character-sets.xml">Character Sets/Representation</A></LI>
+</OL>
+</LI>
+<LI><A HREF="bib-testing.xml">Testing Procedures</A></LI>
+<LI><B>References</B>:  No publications have been written about use of the Bibliographic Class.</LI>
+</OL>
+</DIV1>
+</BODY>
+</DLPSDOC>

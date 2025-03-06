@@ -1,0 +1,96 @@
+<HTML>
+<HEAD>
+<TITLE>Installation</TITLE>
+<META http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<LINK rel="stylesheet" href="../styles.css">
+</HEAD>
+<BODY class="mainpalette" BGCOLOR="#FFFFFF">
+<H2>Installation</H2>
+<P>(<A HREF="mailto:kumarpf@umich.edu">Prarthna Kumar</A>, Digital Library Production 
+  Services) </P>
+<UL>
+  <LI> 
+    <DIV CLASS="MsoNormal">DLXS installation script design</DIV>
+  </LI>
+  <LI>Scope and overview: 
+    <UL>
+      <LI>Script installs the entire toolkit, including middleware for all classes, 
+        plus the XPAT daemons </LI>
+      <LI>Toolkit is installed with an appended version number, i.e., /foo/bar/dlxs-2.5 
+        (where they supply /foo/bar/dlxs as the DLXSROOT and we tack on the -2.5) 
+      </LI>
+    </UL>
+  </LI>
+  <LI>Process: 
+    <UL>
+      <LI>gather general configuration information from user, based on choice 
+        of components (try to preserve this information for a) re-running the 
+        installation and maybe even b) future installs) 
+        <UL>
+          <LI>guess, ask for confirmation, and check platform and OS version </LI>
+          <LI>guess, ask for confirmation, and check location and version of Perl 
+            binary to use </LI>
+          <LI>ask if this is a development or production installation </LI>
+          <LI>ask for preferred database store (CSV, MySQL, Oracle) </LI>
+          <LI>ask for and check writability of DLXS installation directory (DLXSROOT) 
+          </LI>
+          <LI>ask for and check location of Apache server root directory </LI>
+          <LI>(optional) ask for and check location of tif2gif installation directory 
+          </LI>
+          <LI>(optional) ask for and check location of c42pdf installation directory 
+          </LI>
+          <LI>(optional) ask for and check location of Mr.Sid installation directory 
+          </LI>
+          <LI>(optional) ask for and check location of XPAT installation directory 
+          </LI>
+        </UL>
+      </LI>
+      <LI>check requirements 
+        <UL>
+          <LI>required Perl modules (make sure this reflects choice of database 
+            store above) </LI>
+        </UL>
+      </LI>
+      <LI>extract and install deliverables 
+        <UL>
+          <LI>customize shebangs in Perl scripts--check all executable files (!) 
+          </LI>
+          <LI>customize configuration files as needed </LI>
+        </UL>
+      </LI>
+      <LI>supply an Apache configuration file snippet that creates a DLXS virtual 
+        host with all required settings 
+        <UL>
+          <LI>definition of DLXSROOT environment variable </LI>
+          <LI>definitions of AUTHZD_COLL and PUBLIC_COLL environment variables 
+          </LI>
+          <LI>definition of DLPS_DEV environment variable (make sure this reflects 
+            choice of development or production above) </LI>
+        </UL>
+      </LI>
+      <LI>provide example scripts and configuration files that will need root 
+        access for installation 
+        <UL>
+          <LI>crontab entries for cleaning gifcvtdir and sessions databases </LI>
+          <LI>services and inetd.conf entries for installing XPAT daemons </LI>
+          <LI>startup scripts to create /tmp-based directories with special permissions 
+            (CSV databases) </LI>
+          <LI>command to create non-/tmp-based directories with special permissions 
+            (gifcvtdir) </LI>
+        </UL>
+      </LI>
+      <LI>offer to display late-breaking information (dynamically, driven from 
+        contents of media) </LI>
+    </UL>
+  </LI>
+  <LI>Remaining questions: 
+    <UL>
+      <LI>Where are all the places to make post-installation tweaks? Back then, 
+        configuration files were not very well centralized, DLXSROOT was brand 
+        new, Text Class was being born, and documentation was scant. Now we probably 
+        have fewer places to make tweaks. What are they? </LI>
+    </UL>
+  </LI>
+</UL>
+</BODY>
+</HTML>

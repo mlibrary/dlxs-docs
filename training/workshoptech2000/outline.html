@@ -1,0 +1,281 @@
+<html>
+<head>
+<title>Outline</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<link rel="stylesheet" href="styles.css">
+</head>
+
+<body class="mainpalette">
+<h3>Course Outline</h3>
+<ol>
+  <span class="navlink"></span> 
+  <li>Introductions and course objectives </li>
+  <li>DLPS and TextClass Overview 
+    <ol>
+      <li><a href="barnapkinoverview.html" target="mainFrame">Process Overview 
+        DIagram</a></li>
+      <li><a href="environment-gen.html" target="mainFrame">Environment</a></li>
+      <li><a href="docclasses-gen.html" target="mainFrame">Document Classes</a></li>
+      <li><a href="dirstructure-gen.html" target="mainFrame">Directory Structure</a></li>
+      <li><a href="dataprep.html">Data Preparation Overview</a> </li>
+      <li><a href="tccomponents-gen.html" target="mainFrame">Text Class Components</a> 
+        <ol>
+          <li>Perl scripts </li>
+          <li>Objects</li>
+          <li>Modules</li>
+          <li>Subsystems</li>
+        </ol>
+      </li>
+      <li>Image Class 
+        <ol>
+          <li>Images</li>
+          <li>Metadata</li>
+        </ol>
+      </li>
+    </ol>
+  <li><a href="environment-gen.html" target="mainFrame">Environment &amp; Architecture 
+    Details</a> </li>
+  <li><a href="dirstructure-gen.html" target="mainFrame">Directory Structure Details</a> 
+  </li>
+  <ol>
+    <ol>
+    </ol>
+  </ol>
+  <li>Image Class <i> (John Weise, Coordinator of Image Services)</i> 
+    <ol>
+      <li><a href="http://dev.umdl.umich.edu/docs/arch/classes/imageclass/ic_inst.htm" target="mainFrame">Installation 
+        and Configuration</a></li>
+      <li><a href="http://dev.umdl.umich.edu/docs/arch/classes/imageclass/ic_accesscontrol.htm" target="mainFrame">Image 
+        Class Access Retrictions</a></li>
+      <li>Discussion of Approaches to Batch Image Processing</li>
+      <ol>
+        <li><a href="http://dev.umdl.umich.edu/docs/arch/classes/imageclass/" target="mainFrame">Image 
+          Class CD-ROM Loading and Processing</a></li>
+        <li><a href="http://dev.umdl.umich.edu/docs/arch/classes/imageclass/IS_ImageLoading.html%20" target="mainFrame">Image 
+          Class Image Loading</a></li>
+        <li><a href="http://dev.umdl.umich.edu/docs/arch/classes/imageclass/imageprocessing.htm" target="mainFrame">Image 
+          Class Image Processing</a></li>
+      </ol>
+      <li>Image Processing Software Links 
+        <ol>
+          <li><a href="http://www.wizards.dupont.com/cristy/ImageMagick.html" target="mainFrame">ImageMagick</a> 
+            (multiple platforms, free)</li>
+          <li><a href="http://www.equilibrium.com/debab/" target="mainFrame">DeBabelizer</a> 
+            (Win, Mac, not free) </li>
+          <li><a href="http://www.lemkesoft.com/" target="mainFrame">Graphic Converter</a> 
+            (Macintosh only, inexpensive)</li>
+          <li> <a href="http://www.lizardtech.com" target="mainFrame">LizardTech</a> 
+            (MrSID) </li>
+        </ol>
+      </li>
+    </ol>
+  </li>
+  <li>Data Preparation (Part 1) <i>(Chris Powell, Coordinator of Encoded Text 
+    Services)</i>:<br>
+    Encoding & Transformation (see <a href="http://www.umdl.umich.edu/dlxs/training/workshop-user-2000.html" target="external">Encoding 
+    Workshop Information</a>) 
+    <ol>
+      <li>Data Sources 
+        <ol>
+          <li>SGML encoded text</li>
+          <li>Page Images</li>
+          <li>Page Images to SGML encoded text</li>
+        </ol>
+      </li>
+      <li>GUMS/TextClass</li>
+      <li>In line markup (text munging vs. new XPat functionality)</li>
+      <li>Unnumbered, nested, identical elements</li>
+      <li>SGML Tools 
+        <ol>
+          <li>nsgmls, XSLT, perl, sgmlnorm</li>
+        </ol>
+      </li>
+      <li>Transformation</li>
+      <li>Normalization</li>
+      <li>TermMapper & Fabricated regions</li>
+      <li>Levels of Encoding</li>
+    </ol>
+  </li>
+  <li><a href="install-gen.html" target="mainFrame">Installation of DLXS TextClass 
+    Middleware & Content</a> 
+    <ol>
+      <li>extraction of Middleware and content tar files </li>
+      <li>edit of configuration files</li>
+    </ol>
+  </li>
+  <li><a href="makefile-gen.html" target="mainFrame">Makefile</a></li>
+  <li><a href="normalize.html" target="mainFrame">Normalization</a> using <a href="http://www.jclark.com/sp/" target="external">sgmlnorm</a> 
+  </li>
+  <li>XPat Search Engine 
+    <ol>
+      <li><a href="xpat-gen.html" target="mainFrame">History of the software</a> 
+        <ol>
+          <li>OpenText 5.0, Patricia tree structure</li>
+          <li>OpenText 6.0, token based </li>
+          <li><a href="http://www.hti.umich.edu/misc/ssp/reorg-letter.html" target="external">Acquired 
+            source code 1999</a></li>
+          <li>XPat Enhancements to include: nsgmls, XML, Unicode, DOM?</li>
+        </ol>
+      </li>
+      <li><a href="xpatindexing-gen.html" target="mainFrame">Indexing</a> 
+        <ol>
+          <li>What's needed 
+            <ol>
+              <li>Normalized SGML</li>
+              <li>DTD</li>
+              <li>doctype declaration (in a file separate from DTD)</li>
+              <li>Data dictionary file 
+                <ol>
+                  <li>multi-file indexing </li>
+                  <li>structure</li>
+                  <li>how it is created</li>
+                  <li>extra.srch (discussed later) </li>
+                </ol>
+              </li>
+            </ol>
+          </li>
+          <li><a href="xpatindexing-gen.html" target="mainFrame">SGML text data 
+            indexing</a></li>
+          <li><a href="rgnindexing.html" target="mainFrame">Region indexing</a></li>
+        </ol>
+      </li>
+    </ol>
+  </li>
+  <ol>
+    <ol>
+      <li><a href="query-gen.html" target="mainFrame">Query Language</a> 
+        <ol>
+          <li>syntax and usage</li>
+          <li>programming XPat queries in Perl</li>
+          <li>named result sets</li>
+          <li>handled by XPatResultSet object</li>
+        </ol>
+      </li>
+      <li><a href="fabregions.html">Fabricated regions</a> </li>
+    </ol>
+  </ol>
+  <li><a href="relateddata-gen.html" target="mainFrame">Related / Derivative Data</a> 
+    <ol>
+      <li> TextClass 
+        <ol>
+          <li><a href="sourcetext/lib/colldb.txt" target="sourcetext">CollDb</a></li>
+          <li><a href="sourcetext/lib/bosnia.map.txt" target="sourcetext">Mapper</a></li>
+        </ol>
+      </li>
+      <li>Pageview Data Preparation 
+        <ol>
+          <li>page images as TIFF, delivered as GIF and PDF</li>
+          <li>pageview.dat files 
+            <ol>
+              <li><a href="pageviewer-gen.html" target="mainFrame">structure</a></li>
+              <li>use by <a href="sourcetext/cgi/PageView.pm.txt" target="sourcetext">PageView</a> 
+                object</li>
+            </ol>
+          </li>
+        </ol>
+      </li>
+      <li><a href="ww2-gen.html" target="mainFrame">WordWheel Data Preparation</a> 
+        <ol>
+          <li>History</li>
+          <li>Overview of wordwheel data creation</li>
+          <li>directory structure</li>
+          <li>need for previously indexed collection</li>
+          <li>work with Content Specialist / encoders on realms</li>
+          <li>configuration of makewordwheel.cfg </li>
+        </ol>
+      </li>
+    </ol>
+  <li>Program Architecture 
+    <ol>
+      <li><a href="text-idx.html" target="mainFrame">text-idx</a> 
+        <ol>
+          <li>Functional Requirements 
+            <ol>
+              <li>Cross collection searching</li>
+              <li>Cross machine searching</li>
+            </ol>
+          </li>
+          <li>cfg configuration files</li>
+          <li>Objects used 
+            <ol>
+              <li><a href="sourcetext/lib/CGI.pm.txt" target="sourcetext">CGI</a></li>
+              <li><a href="sourcetext/cgi/TextClass.pm.txt" target="sourcetext">TextClass</a></li>
+              <li><a href="sourcetext/lib/CollsInfo.pm.txt" target="sourcetext">CollsInfo</a></li>
+              <li><a href="sourcetext/lib/XPat.pm.txt" target="sourcetext">XPat</a></li>
+              <li><a href="sourcetext/lib/SearchSet.pm.txt" target="sourcetext">SearchSet</a> 
+                and <a href="sourcetext/lib/XPatResultSet.pm.txt" target="sourcetext">XPatResultSet</a></li>
+              <li><a href="sourcetext/lib/RemoteXPatConnect.pm.txt" target="sourcetext">RemoteXPatConnect</a></li>
+              <li><a href="sourcetext/lib/QueryFactory.pm.txt" target="sourcetext">QueryFactory</a> 
+                and <a href="sourcetext/lib/TerminologyMapper.pm.txt" target="sourcetext">TerminolgyMapper</a></li>
+              <li><a href="sourcetext/lib/DlpsSession.pm.txt" target="sourcetext">DlpsSession</a> 
+                / Apache::Session</li>
+              <li><a href="sourcetext/lib/SearchHistory.pm.txt" target="sourcetext">SearchHistory</a></li>
+              <li>Bookbag</li>
+              <li><a href="sourcetext/lib/ProcIns.pm.txt" target="sourcetext">ProcIns</a> 
+              </li>
+            </ol>
+          </li>
+          <li><a href="sourcetext/cgi/text-idx.txt" target="sourcetext">text-idx</a> 
+            walkthrough 
+            <ol>
+              <li><a href="http://dev.hti.umich.edu/docs/projects/sh" target="sourcetext">URL 
+                parameters</a></li>
+              <li>CGI code</li>
+            </ol>
+          </li>
+          <li><a href="http://dev.hti.umich.edu/docs/projects/shared/cgiparms.html" target="external">URL 
+            parameters</a></li>
+        </ol>
+      <li><a href="pageviewer-idx" target="mainFrame">pageviewer-idx</a> 
+        <ol>
+          <li>TIFF, GIF and PDF</li>
+          <li>Objects used 
+            <ol>
+              <li>CGI, CollsInfo, DlpsSession, etc.</li>
+              <li>PageView</li>
+            </ol>
+          </li>
+          <li><a href="pageviewer-gen.html" target="mainFrame">pageview.dat</a> 
+            file</li>
+          <li><a href="http://dev.hti.umich.edu/docs/projects/shared/cgiparms.html" target="external">URL 
+            parameters</a><i></i></li>
+          <li><a href="sourcetext/cgi/pageviewer-idx.cfg.txt" target="sourcetext">pageviewer-idx.cfg</a> 
+            file</li>
+          <li><a href="sourcetext/cgi/pageviewer-idx.txt" target="sourcetext">pageview-idx</a> 
+            walkthrough </li>
+        </ol>
+      </li>
+      <li><a href="ww2-gen.html" target="mainFrame">ww2-idx</a> 
+        <ol>
+          <li><a href="sourcetext/lib/WW.pm.txt" target="sourcetext">WW object</a>, 
+            and others</li>
+          <li>XPat indexed word data</li>
+          <li><a href="sourcetext/cgi/ww2-idx.txt" target="sourcetext">walkthrough</a></li>
+        </ol>
+      </li>
+    </ol>
+  </li>
+  <li>User Interface Issues<i> (Matt Stoeffler, User Interface Specialist)</i> 
+    <ol>
+      <li>TBD</li>
+    </ol>
+  </li>
+  <li><a href="subclassing.html" target="mainFrame">Subclassing the TextClass</a> 
+    <ol>
+      <li>editing of depths for DIVs</li>
+      <li>specific searching</li>
+      <li>specific filtering</li>
+    </ol>
+  </li>
+  <li>In the works</li>
+  <li>Q &amp; A</li>
+  <li><a href="future.html" target="mainFrame">The Future</a> 
+    <ol>
+      <li>XML</li>
+      <li>XSLT</li>
+      <li>Java</li>
+    </ol>
+  </li>
+</ol>
+</body>
+</html>

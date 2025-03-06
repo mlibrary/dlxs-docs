@@ -1,0 +1,141 @@
+<html>
+<head>
+<title>Using Panorama for further analysis and display
+</title>
+</head>
+<body>
+<H2>Using Panorama for further analysis and display</H2>
+<ul><li><a href="#import">Instructions for importing texts created using AuthorEditor into Panorama</a></li>
+<li><a href="#attach">Attatching a Navigator</a></li>
+<li><a href="#style">Creating and Editing Stylesheets</a></li>
+</ul>
+
+<a name="import"><H3>Instructions for importing texts created using AuthorEditor into Panorama</H3>
+
+<ol>
+<li><b>Validate the file within AuthorEditor.</b> Make sure that your file
+will validate before going to the next steps.</li><BR><BR>
+
+<li><b>Export the AE file to a text file.</b>From the file menu, choose
+export. You will be prompted to give the file a new name; use the same
+name, replacing the <i>ae</i> extension with <i>sgm</i>.</li><BR><BR>
+
+<li><b>Updating the SGML header.</b>This step involves several substeps.
+In order to continue processing your new SGML file, you will have to
+replace the AuthorEditor-created header with one that has more
+information. The new header will contain special instructions for use with
+the SGML browser Panorama.</li><br><br>
+<ul>
+<li>Open your newly created .sgm file with a text editor (Microsoft Word is fine).</li>
+<li>Delete the first line. This is the AuthorEditor-created header.</li>
+<li>Insert <a href="/misc/ssp/workshops/top.txt">this text</a>.
+ </li>
+<li><b>For the purposes of this exercise:</b>Delete any processing instructions such as:<br>
+<?STYLESPEC "Amverse proofing"
+"http://www.hti.umich.edu/sgml/panorama/amv-prf.ssh"><br>
+<?STYLESPEC "UM HTI American Verse"
+"http://www.hti.umich.edu/sgml/panorama/amverse.ssh"><br>
+<?NAVIGATOR "UM HTI American Verse"
+"http://www.hti.umich.edu/sgml/panorama/amverse.nav">
+<li>Save your text file.</li>
+<li>Close the text file. If you are using Microsoft Word, you'll get a dialog box that says something
+like "text cannot be saved as is without losing...Do you want to save in
+Word format or as Text Only?" <strong>Save as Text Only</strong>.
+</ul><BR><BR>
+<li>Open Panorama, then open your SGML text file using the Open File
+menu command.</b></li><BR><BR>
+</ol>
+<hr size="1">
+Here are some rudimentary explanations of Panorama stylesheets and navigators.  These are drawn from the online manual and you should consult that (under the Help menu in Panorama publisher) for more details and encouragement.</p>
+<a name="attach"><h3>Attaching a Navigator</h3>
+<p>
+Navigators display a document's table of contents interactively.
+Clicking on an item in the navigator displays the corresponding section of
+the document, making it very easy to browse through longer documents.
+Panorama Publisher allows you to create and edit navigators that can
+display your table of contents as, for example, hierarchical text, simple
+headings, a list of emphasized words, or even (as in the on-line manual),
+a list of figures.</p> 
+
+<P>You create a navigator by choosing which of the document's elements are
+to be included in the navigator. The navigator can be created to reflect
+the hierarchical structure of the elements selected.</P>
+
+
+<P>To create a navigator file, follow these procedures:
+<ol>
+<LI> Choose <i>Attach Navigator</i> from the Navigator menu.</LI>
+<LI> Enter a name for the navigator file in the File Name field of the dialog and click on <b>OK</b>. The <FILE>.nav</FILE> extension is added automatically.</LI>
+ </ol>
+
+<h4>Nested navigator entries</h4>
+<P>You will probably want your navigator entries to be nested in order to
+reflect the structure of the document. As in the illustration above, the
+document might have DIV1 elements (each with an H1 header) which contain DIV2 elements (each with an H2 header). If you choose
+H1 and H2 as simple navigator entries, they will be displayed at the same level in the navigator. If you want the H2 navigator entries to be nested inside the
+H1 entries so that you can show or hide them (by clicking
+on the expanding or contracting icons you should specify H1 parent element whe you create the navigator entry. This is done by clicking on the arrow in the
+Navigator Entry list, and choosing DIV1
+H1 from the list (the element context list is generated
+automatically by Panorama Publisher). This is displayed as DIV1>>H1 in the Defined Entries list. </P>
+
+<P>In general, if you want lower-level navigator entries to be nested, you
+need to include the parent element when you create the higher level navigator entries, provided that the parent element also contains the element used for the lower-level navigator.</P>
+<P>You can choose the parent of the currently selected element by clicking
+on the [P] button to the right of the Navigator Entry pull-down list.</P>
+<P>When you've finished making all of your changes to the navigator entry:
+<ol>
+<LI> Click on [Add] to add this entry to the list of
+defined entries.</LI>
+<LI> To save your navigator definition, click on [OK]. To
+cancel any changes made, click on [ Cancel].</LI>
+</ol>
+</P>
+
+<P>To edit a navigator, choose Edit Navigator from the Navigator menu.</P>
+
+<a name="style"><h3>Creating and Editing Stylesheets</h3>
+
+<p>Panorama's style sheets provide you with a great deal of control over
+the display of any document. The Publisher version allows publishers and
+users to add or create any number of style sheets, each with its own name.
+Style sheets give you control over display attributes such as font, size,
+weight, color, indents, spacing and automatic numbering.</p>
+
+<P>To create a style sheet, follow these procedures. 
+<ol>
+<LI> Open the document that you want to format.</LI>
+<LI>  Choose <i>Attach Style Sheet</i> from the Styles menu (this command can be used only if the DTD  has a public identifier).</LI>
+<LI> Enter a file name for the style sheet in the File
+Name field of the file chooser dialog and click on the
+[OK] button. The .ssh extension is added automatically.</LI>
+<LI> Enter a descriptive name for the style sheet. This name will identify
+the style sheet in the Styles menu.</LI>
+<LI> Click on [OK].</LI>
+</ol>
+The style sheet initially contains some basic, default properties (for
+example, all elements are displayed on separate lines). You will want to
+change these using the style sheet editor.</P>
+
+<P>By default, all elements inherit the styles of their parent element. To
+make creating a new style sheet simpler, begin by setting
+the styles for the highest level element, then change only those styles of
+the lower level elements that you do not want inherited.</P>
+
+<h4>Editing a style sheet</h4>
+<P>You can use the style sheet editor to determine how an element will
+look in a Panorama Publisher document. You can open the style sheet editor
+by clicking the right mouse button in the document window on the text
+whose appearance you want to change, and choosing <i>Edit Style</i>
+from the pop-up menu. The style sheet editor dialog box appears.</P>
+
+<a href="/misc/ssp/workshops/schedule.html">Return to the workshop syllabus</a>
+
+<script src="http://www.google-analytics.com/urchin.js" type="text/javascript">
+</script>
+<script type="text/javascript">
+_uacct = "UA-954893-5";
+urchinTracker();
+</script>
+</body>
+</html>

@@ -1,0 +1,843 @@
+<?xml version="1.0"?>
+
+<!-- SPO Editorial Services                  -->
+<!-- automatically-generated XML header file -->
+
+<?xml-stylesheet href="../../../pre11-dlxsdocs.xsl" type="text/xsl"?>
+<!DOCTYPE DLPSDOC PUBLIC "-//UM-DLPS//DTD DLPS Publications//EN" "http://docs.umdl.umich.edu/dlps/docs/dlpsdocs.dtd">
+<DLPSDOC>
+<TITLE>Image Class Processing Instructions</TITLE>
+<HEADER>
+<JOURNAL>DLXS Documentation</JOURNAL>
+<PUBDATE>2002-07-03 17:23:08 EDT</PUBDATE>
+<AUTH1>Weise, John</AUTH1>
+<AUTH2></AUTH2>
+<DOCTITLE>Image Class Processing Instructions</DOCTITLE>
+<VOL>class</VOL>
+<ISS>image</ISS>
+<FILE>dlxsdocs-image-pi</FILE>
+</HEADER>
+
+
+
+
+<BODY>
+<BHEAD>Image Class Processing Instructions</BHEAD> <DIV1 ID="main"> 
+<P>
+  <A HREF="mailto:dlxs-help@umich.edu">dlxs-help@umich.edu</A></P>
+<p>The following table includes descriptions of all the processing instructions 
+  that appear in Image Class templates, as well as relevant template files in 
+  which they appear. Processing instructions are HTML tags that are processed by 
+  the middleware and replaced with HTML and or Javascript.</p>
+<p>Note that &quot;bookbag&quot; and &quot;portfolio&quot; are equal. PIs and 
+  template names that include &quot;bb&quot; are associated with bookbag/portfolio 
+  functionality.</p>
+<p>Please see <a href="image-templates.xml">Image Class User Interface Configuration 
+  and Customization</a> for an overview.</p>
+
+<table border="1" cellspacing="0" cellpadding="5" bordercolor="#CCCCCC" width="100%">
+  <tr> 
+    <th width="25%" align="left">PI tag</th>
+    <th width="12%" valign="top">Optional parameters</th>
+    <th width="13%" valign="top">Associated templates</th>
+    <th width="50%" valign="top">Description</th>
+  </tr>
+  <tr> 
+    <td valign="top" width="25%"> &lt;?BANNER&gt; </td>
+    <td width="12%" valign="top">none</td>
+    <td width="13%" valign="top"> entry.tpl<BR/>
+      groups.tpl<BR/>
+      index.tpl<BR/>
+      reslist.tpl<BR/>
+      search.tpl<BR/>
+      thumbfull.tpl<BR/>
+      thumbnail.tpl<BR/>
+    </td>
+    <td width="25%" valign="top">inserts the name of the collection or the cross 
+      collection banner (e.g., UM Image Source) in cross collection mode. banner 
+      text is configurable in the &quot;banner&quot; colldb field. Cross collection 
+      banner specified in imageclass.cfg. May be text or graphic.</td>
+  </tr>
+  <tr> 
+    <td valign="top" width="25%"> &lt;?ALLPUROSE&gt; </td>
+    <td width="12%" valign="top">any </td>
+    <td width="13%" valign="top">all </td>
+    <td width="25%" valign="top">this PI does nothing by default, but may be programmed 
+      to do almost anything. The allpurpose routine is in $DLXSROOT/cgi/i/image/ICLocalUtils.pm.</td>
+  </tr>
+  <tr> 
+    <td valign="top" width="25%"> &lt;?BBACTIONFORM&gt; </td>
+    <td width="12%" valign="top">action</td>
+    <td width="13%" valign="top"> bbentry.tpl<BR/>
+      bbreslist.tpl<BR/>
+      bbthumbfull.tpl<BR/>
+      bbthumbnail.tpl<BR/>
+      entry.tpl<BR/>
+      reslist.tpl<BR/>
+      thumbfull.tpl<BR/>
+      thumbnail.tpl<BR/>
+    </td>
+    <td width="25%" valign="top"> 
+      <p>inserts form for activating the various portfolio actions, such as adding 
+        an item to a portfolio.</p>
+      <p><b>action</b> param may be set to: add or remove</p>
+    </td>
+  </tr>
+  <tr> 
+    <td valign="top" width="25%"> &lt;?BBAGINFO&gt; </td>
+    <td width="12%" valign="top">colname</td>
+    <td width="13%" valign="top"> bbentry.tpl<BR/>
+      bbreslist.tpl<BR/>
+      bbslideentry.tpl<BR/>
+      bbthumbfull.tpl<BR/>
+      bbthumbnail.tpl<BR/>
+    </td>
+    <td width="25%" valign="top"> 
+      <p>inserts information about the portfolio, such as the title of the portfolio. 
+        any field of the bookbagdb can be displayed(?).</p>
+      <p>Most often, colname=&quot;bbagname&quot;, which displays the name of 
+        the portfolio.</p>
+    </td>
+  </tr>
+  <tr> 
+    <td valign="top" width="25%"> &lt;?BBAGNAMEFORM&gt; </td>
+    <td width="12%" valign="top">none</td>
+    <td width="13%" valign="top"> bbname.tpl<BR/>
+    </td>
+    <td width="25%" valign="top">inserts form for creating/naming a new portfolio</td>
+  </tr>
+  <tr> 
+    <td valign="top" width="25%"> &lt;?BBAGPICKLIST&gt; </td>
+    <td width="12%" valign="top">action<BR/>
+      type </td>
+    <td width="13%" valign="top"> bbdel.tpl<BR/>
+      bbname.tpl<BR/>
+      bbopen.tpl<BR/>
+    </td>
+    <td width="25%" valign="top"> 
+      <p>insert list of existing portfolios for opening a portfolio or adding 
+        to a portfolio.</p>
+      <p><b>action</b> can be &quot;open&quot; or &quot;add&quot;</p>
+      <p><b>type</b> can be &quot;public&quot; or &quot;private&quot;. <b>type</b> 
+        is only specifice when <b>action</b> is &quot;open&quot;.</p>
+    </td>
+  </tr>
+  <tr> 
+    <td valign="top" width="25%"> &lt;?COLLNAME&gt; </td>
+    <td width="12%" valign="top">none </td>
+    <td width="13%" valign="top"> bbentry.tpl<BR/>
+      bbslideentry.tpl<BR/>
+      entry.tpl<BR/>
+      reslist.tpl<BR/>
+      thumbfull.tpl<BR/>
+      thumbnail.tpl<BR/>
+    </td>
+    <td width="25%" valign="top">inserts the collection name as specified in &quot;collname&quot; 
+      field of colldb or &quot;Multiple Collections&quot; in cross collection 
+      mode.</td>
+  </tr>
+  <tr> 
+    <td valign="top" width="25%"> &lt;?COLLPICK&gt; </td>
+    <td width="12%" valign="top">none</td>
+    <td width="13%" valign="top"> index.tpl<BR/>
+      search.tpl<BR/>
+    </td>
+    <td width="25%" valign="top">inserts a list of collections for selection by 
+      the user</td>
+  </tr>
+  <tr> 
+    <td valign="top" width="25%"> &lt;?COLLPICKARRAYS&gt; </td>
+    <td width="12%" valign="top">none</td>
+    <td width="13%" valign="top"> search.tpl<BR/>
+    </td>
+    <td width="25%" valign="top">inserts javascript arrays that are needed by 
+      collpicker. the arrays hold field lists per coll.</td>
+  </tr>
+  <tr> 
+    <td valign="top" width="25%"> &lt;?COLLPICKBUTTON&gt; </td>
+    <td width="12%" valign="top">none</td>
+    <td width="13%" valign="top"> search.tpl<BR/>
+    </td>
+    <td width="25%" valign="top">inserts a button (but why?)</td>
+  </tr>
+  <tr> 
+    <td valign="top" width="25%"> &lt;?CSSURL&gt; </td>
+    <td width="12%" valign="top">type</td>
+    <td width="13%" valign="top"> bbentry.tpl<BR/>
+      bbname.tpl<BR/>
+      bbopen.tpl<BR/>
+      bbreslist.tpl<BR/>
+      bbslideentry.tpl<BR/>
+      bbthumbfull.tpl<BR/>
+      bbthumbnail.tpl<BR/>
+      entry.tpl<BR/>
+      groups.tpl<BR/>
+      index.tpl<BR/>
+      reslist.tpl<BR/>
+      search.tpl<BR/>
+      thumbfull.tpl<BR/>
+      thumbnail.tpl<BR/>
+    </td>
+    <td width="25%" valign="top">
+      <p>inserts the necessary CSS (cascading style sheet) link depending on the 
+        situation.</p>
+      <p><b>type</b> can be &quot;ie&quot; or &quot;ns&quot; (Internet Explorer 
+        or Netscape)</p>
+    </td>
+  </tr>
+  <tr> 
+    <td valign="top" width="25%"> &lt;?DELETEPORTFOLIO&gt; </td>
+    <td width="12%" valign="top">none</td>
+    <td width="13%" valign="top"> bbreslist.tpl<BR/>
+      bbthumbfull.tpl<BR/>
+      bbthumbnail.tpl<BR/>
+    </td>
+    <td width="25%" valign="top">inserts button to initiate deletion of entire 
+      portfolio </td>
+  </tr>
+  <tr> 
+    <td valign="top" width="25%"> &lt;?DIVBUTTONS&gt; </td>
+    <td width="12%" valign="top">none</td>
+    <td width="13%" valign="top"> bbentry.tpl<BR/>
+      entry.tpl<BR/>
+    </td>
+    <td width="25%" valign="top">inserts the radio buttons used for switching 
+      between &quot;full image&quot;, &quot;description&quot; and &quot;other views&quot; entry views</td>
+  </tr>
+  <tr> 
+    <td valign="top" width="25%"> &lt;?ENTRYID&gt; </td>
+    <td width="12%" valign="top">none</td>
+    <td width="13%" valign="top"> bbentry.tpl<BR/>
+      bbslideentry.tpl<BR/>
+      entry.tpl<BR/>
+    </td>
+    <td width="25%" valign="top">inserts the entry (record) id.</td>
+  </tr>
+  <tr> 
+    <td valign="top" width="25%"> &lt;?FISHEYE&gt; </td>
+    <td width="12%" valign="top">none </td>
+    <td width="13%" valign="top"> reslist.tpl<BR/>
+      thumbfull.tpl<BR/>
+      thumbnail.tpl<BR/>
+    </td>
+    <td width="25%" valign="top">inserts the &quot;fisheye&quot; tool into a 
+      results view. the fisheye tool allows quick jumping among the full range 
+      of results. </td>
+  </tr>
+  <tr> 
+    <td valign="top" width="25%"> &lt;?GROUPNAME&gt; </td>
+    <td width="12%" valign="top">none</td>
+    <td width="13%" valign="top"> index.tpl<BR/>
+      search.tpl<BR/>
+    </td>
+    <td width="25%" valign="top">inserts the name of the group being searched 
+      if in cross collection mode. groups are defined in the &quot;groups&quot; 
+      table. </td>
+  </tr>
+  <tr> 
+    <td valign="top" width="25%"> &lt;?GROUPSLINK&gt; </td>
+    <td width="12%" valign="top">none </td>
+    <td width="13%" valign="top"> index.tpl<BR/>
+      search.tpl<BR/>
+    </td>
+    <td width="25%" valign="top">inserts a link to the group selection page</td>
+  </tr>
+  <tr> 
+    <td valign="top" width="25%"> &lt;?GROUPSPICK&gt; </td>
+    <td width="12%" valign="top">groups</td>
+    <td width="13%" valign="top"> groups.tpl<BR/>
+    </td>
+    <td width="25%" valign="top">inserts a list of groups for selecting a group 
+      to search. the optional "groups" parameter is for specifying a list of groups (as group ids separated by vertical bars/pipes) to include. without a value for the "groups" parameter, all groups are listed by default.</td>
+  </tr>
+  <tr> 
+    <td valign="top" width="25%"> &lt;?CONTACT&gt; </td>
+    <td width="12%" valign="top">type </td>
+    <td width="13%" valign="top"> entry.tpl<BR/>
+      reslist.tpl<BR/>
+      thumbfull.tpl<BR/>
+      thumbnail.tpl<BR/>
+    </td>
+    <td width="25%" valign="top"> 
+      <p>type=&quot;link&quot; inserts value from colldb &quot;contactlink&quot; 
+        field</p>
+      <p>type=&quot;text&quot; inserts value from colldb &quot;contacttext&quot; 
+        field</p>
+      <p>if multiple collection mode, default contact info from imageclass.cfg 
+        is used.</p>
+    </td>
+  </tr>
+  <tr> 
+    <td valign="top" width="25%"> &lt;?HIDDENSID&gt; </td>
+    <td width="12%" valign="top">none </td>
+    <td width="13%" valign="top"> 
+      <p>searchgroup.tpl<BR/>
+        search.tpl<BR/>
+      </p>
+    </td>
+    <td width="25%" valign="top">inserts session id in search form</td>
+  </tr>
+  <tr> 
+    <td valign="top" width="25%"> &lt;?IMAGE&gt; </td>
+    <td width="12%" valign="top">quality<BR/>
+      override </td>
+    <td width="13%" valign="top"> bbentry.tpl<BR/>
+      bbslideentry.tpl<BR/>
+      entry.tpl<BR/>
+    </td>
+    <td width="25%" valign="top"> 
+      <p>inserts an image without a form. this means that the image is not interactive 
+        (you can't click on it to zoom). it is just an image.</p>
+      <p><b>quality</b> = the default size for image display. there are several 
+        ways to specify the <b>quality</b>. </p>
+      <p>examples:</p>
+      <ul>
+        <li>h600 -- height no larger than 600 pixels</li>
+        <li>w600 -- width no larger than 600 pixels</li>
+        <li>m800 -- max dimension of image no larger than 800 pixels</li>
+        <li>min -- smallest available</li>
+        <li>max -- largest available</li>
+        <li>mid -- mid-size among available</li>
+        <li>preview -- defined in imageclass.cfg ($gDefaultPreviewImageSize)</li>
+        <li>screen -- defined in imageclass.cfg ($gDefaultScreenImageSize)</li>
+        <li>integer value -- MrSID res value</li>
+      </ul>
+      <p>Image Class version 1 quality terms are approximately converted to the 
+        above quality terms. </p>
+      <p><b>override</b> should be set to &quot;on&quot; to allow the template 
+        to be overriden by the value of the quality cgi parameter, if present. 
+        See existing templates for examples.</p>
+    </td>
+  </tr>
+  <tr> 
+    <td valign="top" width="25%"> &lt;?IMAGEPANTOOL&gt; </td>
+    <td width="12%" valign="top">quality<BR/>
+      override </td>
+    <td width="13%" valign="top"> bbentry.tpl<BR/>
+      entry.tpl<BR/>
+    </td>
+    <td width="25%" valign="top"> 
+      <p>inserts the interface tool for panning a MrSID image.</p>
+      <p>See &lt;?IMAGE&gt; for description of quality and override values.</p>
+    </td>
+  </tr>
+  <tr> 
+    <td valign="top" width="25%"> &lt;?IMAGESIZETOOL&gt; </td>
+    <td width="12%" valign="top">quality</td>
+    <td width="13%" valign="top"> bbentry.tpl<BR/>
+      entry.tpl<BR/>
+    </td>
+    <td width="25%" valign="top"> 
+      <p>inserts the interface tool for choosing from the range of full-size images 
+        that are available.</p>
+      <p>See &lt;?IMAGE&gt; for description of quality values.</p>
+    </td>
+  </tr>
+  <tr> 
+    <td valign="top" width="25%"> &lt;?IMAGEWITHFORM&gt; </td>
+    <td width="12%" valign="top">quality<br/>
+      override </td>
+    <td width="13%" valign="top"> bbentry.tpl<BR/>
+      entry.tpl<BR/>
+    </td>
+    <td width="25%" valign="top"> 
+      <p>inserts an image with a form. this means that the image is interactive 
+        and can be clicked on for zooming.</p>
+      <p>See &lt;?IMAGE&gt; for description of quality and override values.</p>
+    </td>
+  </tr>
+  <tr> 
+    <td valign="top" width="25%"> &lt;?IMAGEZOOMTOOL&gt; </td>
+    <td width="12%" valign="top"> 
+      <p>quality<BR/>
+        override </p>
+    </td>
+    <td width="13%" valign="top"> bbentry.tpl<BR/>
+      entry.tpl<BR/>
+    </td>
+    <td width="25%" valign="top"> 
+      <p>inserts the interface tool for zooming.</p>
+      <p>See &lt;?IMAGE&gt; for description of quality and override values.</p>
+    </td>
+  </tr>
+  <tr> 
+    <td valign="top" width="25%"> &lt;?INFOTEXT&gt; </td>
+    <td width="12%" valign="top">none </td>
+    <td width="13%" valign="top"> index.tpl<BR/>
+      collinfo.tpl <BR/>
+    </td>
+    <td width="25%" valign="top">inserts the info.txt file if the file is found 
+      in the collections web directory. this allows a collection specific description 
+      to be included for each collection without necessarily creating a collection 
+      specific index.tpl and collinfo.tpl template. the info.txt file may include 
+      HTML tags, but it should not be a complete HTML document. </td>
+  </tr>
+  <tr> 
+    <td valign="top" width="25%"> &lt;?JAVASCRIPTURL&gt; </td>
+    <td width="12%" valign="top">none</td>
+    <td width="13%" valign="top"> bbentry.tpl<BR/>
+      bbreslist.tpl<BR/>
+      bbslideentry.tpl<BR/>
+      bbthumbfull.tpl<BR/>
+      bbthumbnail.tpl<BR/>
+      entry.tpl<BR/>
+      groups.tpl<BR/>
+      index.tpl<BR/>
+      reslist.tpl<BR/>
+      search.tpl<BR/>
+      thumbfull.tpl<BR/>
+      thumbnail.tpl<BR/>
+    </td>
+    <td width="25%" valign="top">inserts link that loads Image Class JavaScript. 
+    </td>
+  </tr>
+  <tr> 
+    <td valign="top" width="25%"> &lt;?LOGINLINK&gt; </td>
+    <td width="12%" valign="top">type<BR/>
+      on </td>
+    <td width="13%" valign="top"> bbentry.tpl<BR/>
+      bbreslist.tpl<BR/>
+      bbslideentry.tpl<BR/>
+      bbthumbfull.tpl<BR/>
+      bbthumbnail.tpl<BR/>
+      entry.tpl<BR/>
+      groups.tpl<BR/>
+      index.tpl<BR/>
+      reslist.tpl<BR/>
+      search.tpl<BR/>
+      thumbfull.tpl<BR/>
+      thumbnail.tpl<BR/>
+    </td>
+    <td width="25%" valign="top"> 
+      <p>inserts login button. if login is turned off in imageclass.cfg, button 
+        is not displayed. </p>
+      <p><b>type</b> can be set to &quot;bbag&quot;, in which case a message precedes 
+        the button encouraging the user to login to use bbag functions. </p>
+      <p><b>on</b> can be set to &quot;white&quot;, which causes the login button 
+        designed to sit on a white background to be loaded (login-white.gif). 
+        usually, login-black.gif is loaded. <b>on</b> can be set to any color, 
+        and the file login-color.gif will be loaded, however only login-white.gif 
+        and login-black.gif are provided.</p>
+    </td>
+  </tr>
+  <tr> 
+    <td valign="top" width="25%"> &lt;?MEDIAONLYBUTTON&gt; </td>
+    <td width="12%" valign="top">none </td>
+    <td width="13%" valign="top"> search.tpl<BR/>
+      searchgroup.tpl <BR/>
+    </td>
+    <td width="25%" valign="top">inserts media restriction in search form (i.e., 
+      search for images only)</td>
+  </tr>
+  <tr> 
+    <td valign="top" width="25%"> &lt;?NEXT&gt; </td>
+    <td width="12%" valign="top">none </td>
+    <td width="13%" valign="top"> reslist.tpl<BR/>
+      thumbfull.tpl<BR/>
+      thumbnail.tpl<BR/>
+    </td>
+    <td width="25%" valign="top">inserts link to next page of results.</td>
+  </tr>
+  <tr> 
+    <td valign="top" width="25%"> &lt;?NEXTENTRY&gt; </td>
+    <td width="12%" valign="top">none </td>
+    <td width="13%" valign="top"> bbentry.tpl<BR/>
+      bbslideentry.tpl<BR/>
+      entry.tpl<BR/>
+    </td>
+    <td width="25%" valign="top">inserts link to next result in entry/record view.</td>
+  </tr>
+  <tr> 
+    <td valign="top" width="25%"> &lt;?NORESULTSMESSAGE&gt; </td>
+    <td width="12%" valign="top">none</td>
+    <td width="13%" valign="top"> noresults.tpl<BR/>
+    </td>
+    <td width="25%" valign="top">inserts message to user about the fact they got 
+      zero results.</td>
+  </tr>
+  <tr> 
+    <td valign="top" width="25%"> &lt;?OPENPORTFOLIO&gt; </td>
+    <td width="12%" valign="top">none </td>
+    <td width="13%" valign="top"> bbentry.tpl<BR/>
+      bbreslist.tpl<BR/>
+      bbslideentry.tpl<BR/>
+      bbthumbfull.tpl<BR/>
+      bbthumbnail.tpl<BR/>
+      entry.tpl<BR/>
+      groups.tpl<BR/>
+      index.tpl<BR/>
+      reslist.tpl<BR/>
+      search.tpl<BR/>
+      thumbfull.tpl<BR/>
+      thumbnail.tpl<BR/>
+    </td>
+    <td width="25%" valign="top">inserts button and link for opening a portfolio</td>
+  </tr>
+  <tr> 
+    <td valign="top" width="25%"> &lt;?PATH&gt; </td>
+    <td width="12%" valign="top">type </td>
+    <td width="13%" valign="top"> bbdel.tpl<BR/>
+      bbentry.tpl<BR/>
+      bbname.tpl<BR/>
+      bbopen.tpl<BR/>
+      bbslideentry.tpl<BR/>
+      entry.tpl<BR/>
+      groups.tpl<BR/>
+      search.tpl<BR/>
+      tips.tpl<BR/>
+    </td>
+    <td width="25%" valign="top">inserts a path of a certain type, most commonly 
+      &quot;web&quot;, which creates a relative URL path to the current web 
+      directory.</td>
+  </tr>
+  <tr> 
+    <td valign="top" width="25%"> &lt;?PREV&gt; </td>
+    <td width="12%" valign="top">none </td>
+    <td width="13%" valign="top"> bbentry.tpl<BR/>
+      bbslideentry.tpl<BR/>
+      entry.tpl<BR/>
+      reslist.tpl<BR/>
+      thumbfull.tpl<BR/>
+      thumbnail.tpl<BR/>
+    </td>
+    <td width="25%" valign="top">inserts link to previous page of results. </td>
+  </tr>
+  <tr> 
+    <td valign="top" width="25%"> &lt;?PREVENTRY&gt; </td>
+    <td width="12%" valign="top">none </td>
+    <td width="13%" valign="top"> bbentry.tpl<BR/>
+      bbslideentry.tpl<BR/>
+      entry.tpl<BR/>
+    </td>
+    <td width="25%" valign="top">inserts link to previous result in entry/record 
+      view. </td>
+  </tr>
+  <tr> 
+    <td valign="top" width="25%"> &lt;?RECORDTABLE&gt; </td>
+    <td width="12%" valign="top"> 
+      <p>fields<BR/>
+        table <BR/>
+        thumb </p>
+    </td>
+    <td width="13%" valign="top"> bbentry.tpl<BR/>
+      bbslideentry.tpl<BR/>
+      entry.tpl<BR/>
+    </td>
+    <td width="25%" valign="top"> 
+      <p>Displays a record in entry (full record) views. Fields and field order 
+        are specified in the colldb field &quot;dfltentryflds,&quot; or may be 
+        overridden by a <b>fields</b> parameter. Whether specified in colldb or 
+        by <b>fields </b>parameter, the rules about how to specify the fields 
+        to display are as follows. </p>
+      <p>Fields must be listed as abbreviations in the order desired and delimited 
+        by pipes ( &quot;|&quot; ). e.g., MUSART.TI|MUSART.CR|musart.DA</p>
+      <p>Values are not case sensitive. </p>
+      <p>There are several options that may be turned on and off to enhance the 
+        display of records. The options are specified inline with the field abbreviations. 
+        When the status of an option is changed, the change is persistent for 
+        all subsequent fields, until the status is changed again. The exceptions 
+        to this are the &quot;sectionlabel&quot; and &quot;urltext&quot;, which 
+        are specified as often as needed.</p>
+      <p>The &quot;url&quot; option, for example, causes fields that contain a 
+        URL (and nothing but a URL), to be turned into a hyperlink. It can be 
+        used in conjunction with the &quot;urltext&quot; option, which makes allows 
+        the link text to be specified. Normally the URL itself is used for the 
+        link text. e.g., <BR/>
+        MUSART.TI|url:on|urltext:View_Copyright_Statement|MUSART.cp|url:off|MUSART.DA</p>
+      <p>The &quot;hilite&quot; option causes search terms to be hilited. This 
+        option is &quot;on&quot; by default, but if you wanted to turn hiliting 
+        off for several consecutive fields, you could. e.g., MUSART.TI|hilite:off|MUSART.DA|MUSART.PG|MUSART.LI|hilite:on|MUSART.TY</p>
+      <p>The complete list of field options are as follows: </p>
+      <table width="100%" border="1" cellspacing="1" cellpadding="1">
+        <tr> 
+          <th width="14%">option</th>
+          <th width="31%">values</th>
+          <th width="7%">default</th>
+          <th width="48%">description</th>
+        </tr>
+        <tr> 
+          <td width="14%">label</td>
+          <td width="31%">on/off</td>
+          <td width="7%">on</td>
+          <td width="48%">display name of field before field value</td>
+        </tr>
+        <tr> 
+          <td width="14%" height="37">sectionlabel</td>
+          <td width="31%" height="37">text string*<BR/>
+          </td>
+          <td width="7%" height="37">empty</td>
+          <td width="48%" height="37">display a section label before a series 
+            of fields. allows a record to split into sections.</td>
+        </tr>
+        <tr> 
+          <td width="14%">url</td>
+          <td width="31%">on/off</td>
+          <td width="7%">off</td>
+          <td width="48%">turn the entire contents of the field into a link. 
+            assumes the field contains a single URL.</td>
+        </tr>
+        <tr> 
+          <td width="14%">urltext</td>
+          <td width="31%">text string*</td>
+          <td width="7%">empty</td>
+          <td width="48%">display the provided string as the text of the &quot;url&quot; 
+            option link. if &quot;urltext&quot; is not specified, the URL value 
+            is used as the text of the link.</td>
+        </tr>
+        <tr> 
+          <td width="14%">idres</td>
+          <td width="31%">on/off</td>
+          <td width="7%">off</td>
+          <td width="48%">look the value of the field up in the id resolver and 
+            display the value. use with &quot;url&quot; and/or &quot;urltext&quot; 
+            to turn the value into a link.</td>
+        </tr>
+        <tr> 
+          <td width="14%">dateconv</td>
+          <td width="31%">on/off</td>
+          <td width="7%">off</td>
+          <td width="48%"> 
+            <p>displays some ISO format dates in a more human readable form.</p>
+            <p>supports YYYYMMDD, YYYYMMDD/YYYYMMDD and maintains any data that 
+              might follow the date in the field e.g, (ca.)</p>
+          </td>
+        </tr>
+        <tr> 
+          <td width="14%">hilite</td>
+          <td width="31%">on/off</td>
+          <td width="7%">on</td>
+          <td width="48%"> 
+            <p>hilites search terms in the field. </p>
+            <p>DLXS hiliting supports 3 search fields only (q1 - q3). </p>
+          </td>
+        </tr>
+      </table>
+      <p>* use underscores for spaces. special characters may not work.</p>
+      <p><b>table</b> parameter may be set to &quot;on&quot; or &quot;off&quot; 
+        to specify whether record is wrapped in a table, or simple text with line 
+        breaks. Default is&quot;on&quot;.</p>
+      <p><b>thumb</b> parameter may be set to &quot;on&quot; or &quot;off&quot; 
+        to specify whether a thumbnail image should be included with the record. 
+        Default is &quot;on&quot;.</p>
+      <p>Cross collection fields are configured in imageclass.cfg.</p>
+    </td>
+  </tr>
+  <tr> 
+    <td valign="top" width="25%"> &lt;?RELATEDVIEWS&gt; </td>
+    <td width="12%" valign="top">none </td>
+    <td width="13%" valign="top"> bbentry.tpl<BR/>
+      entry.tpl<BR/>
+    </td>
+    <td width="25%" valign="top">inserts table of related views for a record (all 
+      of the images associated with a single record). See also documentation on 
+      &quot;Image Structures&quot;.</td>
+  </tr>
+  <tr> 
+    <td valign="top" width="25%"> &lt;?RELATEDVIEWSMENU&gt; </td>
+    <td width="12%" valign="top">none </td>
+    <td width="13%" valign="top"> bbentry.tpl<BR/>
+      entry.tpl<BR/>
+    </td>
+    <td width="25%" valign="top"> 
+      <p>inserts a menu for entry type templates that is a menu of all related 
+        views (aka &quot;other views&quot;). If a record has more than one image 
+        associated with it, then it has related views. the related views menu 
+        is intended for use with colls that need a &quot;pageflipping&quot; function. 
+        <BR/>
+        e.g., &quot;Students on Site&quot;, &quot;Harpers Weekly&quot;.<BR/>
+      </p>
+      <p>uses the colldb for configuration.<BR/>
+        colldb fields used:<BR/>
+        relviewmenu -- on/off switch for the menu<BR/>
+        relviewmenuvals -- specifies which istruct attribute value to use for 
+        menu *display*<BR/>
+        options. default is &quot;CAPTIONS&quot;<BR/>
+        relviewmenuinstruct -- instruction text, if any to put in front of form<BR/>
+        relviewmenuprefx -- prefix string to put in front of each and every displayed 
+        menu <BR/>
+        option</p>
+      <p>if a particular record has only one view/image, a related views menu 
+        is not built/displayed, even if the option is turned on.</p>
+    </td>
+  </tr>
+  <tr> 
+    <td valign="top" width="25%"> &lt;?RESULTSTABLE&gt; </td>
+    <td width="12%" valign="top">x</td>
+    <td width="13%" valign="top"> bbreslist.tpl<BR/>
+      bbthumbfull.tpl<BR/>
+      bbthumbnail.tpl<BR/>
+      reslist.tpl<BR/>
+      thumbfull.tpl<BR/>
+      thumbnail.tpl<BR/>
+    </td>
+    <td width="25%" valign="top"> 
+      <p>Inserts a table of results. Layout varies automatically depending on 
+        the view. </p>
+      <p><b>x</b> parameter is for specifying the number of columns in a table 
+        of thumbnail results. The default is 5.</p>
+      <p>the fields displayed for each results are configurable in the colldb 
+        field called &quot;dfltresflds&quot;. </p>
+      <p>term hiliting happens by default, and without an option to turn it off.</p>
+      <p>optionally, field values may be trimmed to a specific character length 
+        to conserve space in thumbnail views. configure this option in the colldb 
+        field called &quot;resfldtrim&quot;.</p>
+    </td>
+  </tr>
+  <tr> 
+    <td valign="top" width="25%"> &lt;?SEARCHFORM&gt; </td>
+    <td width="12%" valign="top">none </td>
+    <td width="13%" valign="top"> search.tpl<BR/>
+      searchgroup.tpl<BR/>
+    </td>
+    <td width="25%" valign="top">inserts a search form. </td>
+  </tr>
+  <tr> 
+    <td valign="top" width="25%"> &lt;?SEARCHLINK&gt; </td>
+    <td width="12%" valign="top">none </td>
+    <td width="13%" valign="top"> 
+      <p>reslist.tpl<BR/>
+        thumbfull.tpl<BR/>
+        thumbnail.tpl<BR/>
+        index.tpl<BR/>
+        noresults.tpl<BR/>
+        <BR/>
+      </p>
+    </td>
+    <td width="25%" valign="top">inserts link to search form page</td>
+  </tr>
+  <tr> 
+    <td valign="top" width="25%"> &lt;?SLICESUMMARY&gt; </td>
+    <td width="12%" valign="top">none </td>
+    <td width="13%" valign="top"> reslist.tpl<BR/>
+      thumbfull.tpl<BR/>
+      thumbnail.tpl<BR/>
+    </td>
+    <td width="25%" valign="top">inserts a summary of search results. </td>
+  </tr>
+  <tr> 
+    <td valign="top" width="25%"> &lt;?SORTMENU&gt; </td>
+    <td width="12%" valign="top">none</td>
+    <td width="13%" valign="top"> bbreslist.tpl<BR/>
+      bbthumbfull.tpl<BR/>
+      bbthumbnail.tpl<BR/>
+      reslist.tpl<BR/>
+      thumbfull.tpl<BR/>
+      thumbnail.tpl<BR/>
+    </td>
+    <td width="25%" valign="top">inserts sort menu</td>
+  </tr>
+  <tr> 
+    <td valign="top" width="25%"> &lt;?SWITCHENTRYVIEW&gt; </td>
+    <td width="12%" valign="top">view</td>
+    <td width="13%" valign="top"> bbentry.tpl<BR/>
+      bbslideentry.tpl<BR/>
+    </td>
+    <td width="25%" valign="top"> 
+      <p>inserts a URL link for switching between portfolio entry view and portfolio 
+        slideshow view. Likely values are...</p>
+      <p>bbentry</p>
+      <p>bbslideentry </p>
+    </td>
+  </tr>
+  <tr> 
+    <td valign="top" width="25%"> &lt;?THUMBFULLDIVS&gt; </td>
+    <td width="12%" valign="top">none</td>
+    <td width="13%" valign="top"> bbthumbfull.tpl<BR/>
+      thumbfull.tpl<BR/>
+    </td>
+    <td width="25%" valign="top">inserts the set of HTML DIVs, one for every record 
+      included in the page of results, that is used for displaying full records 
+      on the results page (thumb with full record view).</td>
+  </tr>
+  <tr> 
+    <td valign="top" width="25%"> &lt;?THUMBFULLJSARRAYS&gt; </td>
+    <td width="12%" valign="top">none </td>
+    <td width="13%" valign="top"> bbthumbfull.tpl<BR/>
+      thumbfull.tpl<BR/>
+    </td>
+    <td width="25%" valign="top">inserts JavaScript arrays used for dynamically 
+      displaying a full record on the results page when requested.</td>
+  </tr>
+  <tr> 
+    <td valign="top" width="25%"> &lt;?THUMBFULLSTYLE&gt; </td>
+    <td width="12%" valign="top">none </td>
+    <td width="13%" valign="top"> bbthumbfull.tpl<BR/>
+      thumbfull.tpl<BR/>
+    </td>
+    <td width="25%" valign="top">inserts style definitions for positioning of 
+      the full record divs.</td>
+  </tr>
+  <tr> 
+    <td valign="top" width="25%"> &lt;?THUMBNAIL&gt; </td>
+    <td width="12%" valign="top">none </td>
+    <td width="13%" valign="top">entry.tpl<BR/>
+      bbentry.tpl<BR/>
+      slideentry.tpl </td>
+    <td width="25%" valign="top">inserts a thumbnail image. (does this really 
+      work???) </td>
+  </tr>
+  <tr> 
+    <td valign="top" width="25%"> &lt;?VIEWINSTRUCT&gt; </td>
+    <td width="12%" valign="top">none </td>
+    <td width="13%" valign="top"> bbreslist.tpl<BR/>
+      bbthumbfull.tpl<BR/>
+      bbthumbnail.tpl<BR/>
+      reslist.tpl<BR/>
+      thumbfull.tpl<BR/>
+      thumbnail.tpl<BR/>
+    </td>
+    <td width="25%" valign="top">inserts instructions for the user, depending 
+      on the situation.</td>
+  </tr>
+  <tr> 
+    <td valign="top" width="25%"> &lt;?VIEWTABS&gt; </td>
+    <td width="12%" valign="top">none</td>
+    <td width="13%" valign="top"> bbreslist.tpl<BR/>
+      bbthumbfull.tpl<BR/>
+      bbthumbnail.tpl<BR/>
+      reslist.tpl<BR/>
+      thumbfull.tpl<BR/>
+      thumbnail.tpl<BR/>
+    </td>
+    <td width="25%" valign="top">inserts the graphical view tabs that are used 
+      for switching among the results views.</td>
+  </tr>
+  <tr> 
+    <td valign="top" width="25%"> &lt;?VISIBILITY&gt; </td>
+    <td width="12%" valign="top">div</td>
+    <td width="13%" valign="top"> bbentry.tpl<BR/>
+      bbslideentry.tpl<BR/>
+      entry.tpl<BR/>
+    </td>
+    <td width="25%" valign="top"> 
+      <p>inserts styles that control the visibility of DIVs in the entry/record 
+        display. the default divs are listed below, but there are ways to add 
+        or change DIVs if that is of interest. Contact dlxs-info@umich.edu for 
+        guidance.</p>
+      <p>full-image</p>
+      <p>description</p>
+      <p>other-views </p>
+    </td>
+  </tr>
+  <tr> 
+    <td valign="top" width="25%"> &lt;?ZOOMTHUMB&gt; </td>
+    <td width="12%" valign="top">none </td>
+    <td width="13%" valign="top"> entry.tpl<BR/>
+    </td>
+    <td width="25%" valign="top">this is not ready for primetime, but it is a 
+      feature for displaying a thumbnail that has a red box drawn on it indicating 
+      the portion of the full image that is currently being viewed. It is a navigational 
+      tool. </td>
+  </tr>
+    <tr> 
+    <td valign="top" width="25%"> &lt;?RESTRICTSTATUS&gt; </td>
+    <td width="12%" valign="top">none</td>
+    <td width="13%" valign="top">index.tp<BR/>collinfo.tpl
+    </td>
+    <td width="25%" valign="top">inserts authority of the user relative to the 
+      collection</td>
+  </tr>
+</table>
+</DIV1> 
+</BODY>
+</DLPSDOC>

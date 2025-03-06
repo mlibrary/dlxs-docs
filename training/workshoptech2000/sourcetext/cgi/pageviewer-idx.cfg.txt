@@ -1,0 +1,48 @@
+# **********************************************************************
+# required definitions for textclass's pageviewer
+# **********************************************************************
+
+# uses of subclasses of TextClass module
+
+
+# **********************************************************************
+# collection specific TextClass subclassing modules
+use TextClass;
+use VoltaireTC;
+use BosniaTC;
+use TesoTC;
+
+# **********************************************************************
+# name of database to hold collection information
+# Currently 2000-03-14 10:42:56 EST, a tab-delimited file
+# **********************************************************************
+my ( $userpath, $userpart ) = &GetDevUsernameFromScript;
+
+$gCollDbName = $ENV{'DLXSROOT'} . '/lib' . $userpath . '/colldb';
+
+$gDefaultSeq = 1;
+
+## ***** template related info *****
+# **********************************************************************
+# location of html template files (web DocRoot space)
+# **********************************************************************
+$gHtmlDir     = $ENV{'DLXSROOT'} . '/web/t/text' . $userpath . '/';     # actual doc root directory
+$gHtmlDocRoot = '/t/text' . $userpath . '/';            # server doc root alias
+$gScriptDir   = '/cgi/t/text' . $userpath . '/';        # server cgi script root alias
+$gGifConvertDir   = $ENV{'DLXSROOT'} . '/web/t/text' . $userpath . '/gifcvtdir/';        # server web root
+
+$gTextClassCgi = 'http://' . &DlpsUtils::FindHostName . '/cgi/t/text' . $userpath . '/text-idx' . $userpart;
+
+
+%gHtmlTemplates = (
+                  'frameset' =>  $gHtmlDir . 'pageviewer.frameset.tpl',
+                  'nav'      =>  $gHtmlDir . 'pageviewer.nav.tpl',
+                  'main'     =>  $gHtmlDir . 'pageviewer.main.tpl',
+                  'picklist' =>  $gHtmlDir . 'pageviewer.picklist.tpl',
+                  );                
+
+## ***** General configuration
+$adminEmail      = 'hti-info@umich.edu';
+
+# ------------------------------------------------------------
+1;

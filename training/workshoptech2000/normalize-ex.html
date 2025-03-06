@@ -1,0 +1,70 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+   <meta name="GENERATOR" content="Mozilla/4.73 [en] (Win98; U) [Netscape]">
+   <title>Normalization</title>
+<link rel="stylesheet" href="styles.css">
+<style type="text/css">
+<!--
+ul {  line-height: 125%}
+-->
+</style>
+</head>
+<body class="mainpalette">
+
+<h3>
+Normalization of Data</h3>
+<b>Consider this DTD fragment:</b>
+<p>&lt;!ELEMENT E&nbsp; - o&nbsp; ( #PCDATA )&nbsp;&nbsp; >
+<br>&lt;!ATTLIST E
+<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+N&nbsp;&nbsp; NUMBER&nbsp;&nbsp;&nbsp; #REQUIRED
+<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+O&nbsp;&nbsp; NUMBER&nbsp;&nbsp;&nbsp; #REQUIRED
+<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+L&nbsp;&nbsp; #CDATA&nbsp;&nbsp;&nbsp;&nbsp; #IMPLIED >
+<p><b>And this un-normalized sgml fragment:</b>
+<p>&lt;e o="l" n="3" l="emile">emile &lt;/e>
+<br>&lt;e n="4" o="23">georgina
+<br>&lt;e n="5" o="1" l="holbach">holbach &lt;/e>
+<p><b>After normalization we would expect:</b>
+<p>&lt;E N="3" O="1" L="emile">emile &lt;/E>
+<br>&lt;E N="4" O="23">georgina &lt;/E>
+<br>&lt;E N="5" O="1" L="holbach">holbach &lt;/E>
+<br>&nbsp;
+<p><b>So we see that:</b>
+<ul>
+<li>
+The "E" tag, and the "N", "O" and "L"&nbsp; names are now upper case</li>
+
+<li>
+record ends are normalized in a consistent fashion based on element content
+models</li>
+
+<li>
+The "E" tag is a minimized tag which has been supplied explicitly (&lt;/E>).</li>
+
+<li>
+The attributes have been reordered.</li>
+</ul>
+After normalization we can write a perl regular expression to, for example,
+match
+<br>the attribute values and content like this:
+<p>$tag =~ m,&lt;E N=\"([^\"]*?)\" O=\"([^\"]*?)\"( L=\"([^\"]*?)\")?>([^&lt;]*?)&lt;/E>,
+;
+<p>To match on the un-normalized SGML, we would need to handle:
+<ul>
+<li>
+Case.&nbsp; What if we had mixed case tag names ABC, Abc, ABc, etc.?</li>
+
+<li>
+Order:&nbsp; All permutations of attribute ordering</li>
+
+<li>
+Missing end tag:&nbsp; We would have to write a regular expression to match
+any begin tag allowed by the DTD.</li>
+</ul>
+
+</body>
+</html>

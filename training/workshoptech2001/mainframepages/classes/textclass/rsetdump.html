@@ -1,0 +1,958 @@
+<HTML>
+<HEAD>
+<TITLE>Dump of XPatResultSet Objects</TITLE>
+<META http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+</HEAD>
+
+<BODY bgcolor="#FFFFFF" text="#000000">
+<P><FONT face="Arial, Helvetica, sans-serif">Following is a dump (from the perl 
+  debugger) of XPatResultSet Objects. First is an &quot;occurrence&quot; set, 
+  second is a set of PSets, ready for use in the LowLelResultsFilter</FONT></P>
+<PRE>
+  DB&lt;5&gt; x $rset 
+0  XPatResultSet=HASH(0xb43a74) 
+   'name' =&gt; 'occurrences' 
+   'ssizesearches' =&gt; HASH(0xb63238) 
+      '/l2/idx/m/moa1/moa1.dd' =&gt; HASH(0xb6322c) 
+         'hitssearch823a8795dfa4ed0e0d8e1d0723f85859' =&gt; 3165 
+         'recordssearch823a8795dfa4ed0e0d8e1d0723f85859' =&gt; 783 
+      '/l2/idx/m/moa2/moa2.dd' =&gt; HASH(0xb631c0) 
+         'hitssearch823a8795dfa4ed0e0d8e1d0723f85859' =&gt; 2792 
+         'recordssearch823a8795dfa4ed0e0d8e1d0723f85859' =&gt; 754 
+      '/l2/idx/m/moa3/moa3.dd' =&gt; HASH(0xb65c5c) 
+         'hitssearch823a8795dfa4ed0e0d8e1d0723f85859' =&gt; 3114 
+         'recordssearch823a8795dfa4ed0e0d8e1d0723f85859' =&gt; 621 
+      '/l2/idx/m/moa4/moa4.dd' =&gt; HASH(0xb65c14) 
+         'hitssearch823a8795dfa4ed0e0d8e1d0723f85859' =&gt; 4236 
+         'recordssearch823a8795dfa4ed0e0d8e1d0723f85859' =&gt; 661 
+      '/l2/idx/m/moa5/moa5.dd' =&gt; HASH(0xb646a8) 
+         'hitssearch823a8795dfa4ed0e0d8e1d0723f85859' =&gt; 7710 
+         'recordssearch823a8795dfa4ed0e0d8e1d0723f85859' =&gt; 786 
+   'stats' =&gt; HASH(0xb64328) 
+      '/l2/idx/m/moa1/moa1.dd' =&gt; HASH(0xb646d8) 
+         'hits' =&gt; 3165 
+         'records' =&gt; 783 
+      '/l2/idx/m/moa2/moa2.dd' =&gt; HASH(0xb64654) 
+         'hits' =&gt; 2792 
+         'records' =&gt; 754 
+      '/l2/idx/m/moa3/moa3.dd' =&gt; HASH(0xb64660) 
+         'hits' =&gt; 3114 
+         'records' =&gt; 621 
+      '/l2/idx/m/moa4/moa4.dd' =&gt; HASH(0x4d3648) 
+         'hits' =&gt; 4236 
+         'records' =&gt; 661 
+      '/l2/idx/m/moa5/moa5.dd' =&gt; HASH(0xb64594) 
+         'hits' =&gt; 7710 
+         'records' =&gt; 786 
+      'totalmatches' =&gt; 21017 
+      'totalrecords' =&gt; 3605 
+</PRE>
+<HR>
+<PRE>
+  DB&lt;3&gt; x $rset
+0  XPatResultSet=HASH(0xb5cc2c)
+   'name' =&gt; 'reslist'
+   'setsearches' =&gt; HASH(0xb691c0)
+      '' =&gt; HASH(0xb69208)
+         11543227 =&gt; HASH(0xbb78f4)
+            'label' =&gt; 'mainheader96a76ee5eda39508064d770be7ac1e1d'
+            'raw' =&gt; '&lt;HEADER&gt;&lt;FILEDESC&gt;
+&lt;TITLESTMT&gt;
+&lt;TITLE TYPE="245"&gt;A complete history of the Marquis de Lafayette, major-general in the American army in the war of the revolution. Embracing an account of his tour through the United States, to the time of his departure, September, 1825. By an officer in the late army.&lt;/TITLE&gt;
+&lt;/TITLESTMT&gt;
+&lt;EXTENT&gt;506 600dpi TIFF G4 page images&lt;/EXTENT&gt;
+&lt;PUBLICATIONSTMT&gt;
+&lt;PUBLISHER&gt;University of Michigan, Digital Library Production Service&lt;/PUBLISHER&gt;&lt;PUBPLACE&gt;Ann Arbor, Michigan&lt;/PUBPLACE&gt;
+&lt;DATE&gt;2000&lt;/DATE&gt;
+&lt;IDNO TYPE="dlps"&gt;AAM7015.0001.001&lt;/IDNO&gt;
+&lt;AVAILABILITY&gt;
+&lt;P&gt;These pages may freely searched and displayed.  Permission must be received for subsequent distribution in print or electronically.  Please contact dlps-help[at]umich.edu for more information.&lt;/P&gt;
+&lt;/AVAILABILITY&gt;&lt;/PUBLICATIONSTMT&gt;
+&lt;SOURCEDESC&gt;
+&lt;BIBLFULL&gt;
+&lt;TITLESTMT&gt;
+&lt;TITLE TYPE="245"&gt;A complete history of the Marquis de Lafayette, major-general in the American army in the war of the revolution. Embracing an account of his tour through the United States, to the time of his departure, September, 1825. By an officer in the late army.&lt;/TITLE&gt;
+&lt;/TITLESTMT&gt;
+&lt;EXTENT&gt;504 p. front. (port.) 20 cm.&lt;/EXTENT&gt;
+&lt;PUBLICATIONSTMT&gt;&lt;PUBPLACE&gt;Columbus,&lt;/PUBPLACE&gt;&lt;PUBLISHER&gt;J. &amp; H. Miller,&lt;/PUBLISHER&gt;&lt;DATE&gt;1858.&lt;/DATE&gt;&lt;/PUBLICATIONSTMT&gt;
+&lt;/BIBLFULL&gt;
+&lt;/SOURCEDESC&gt;
+&lt;/FILEDESC&gt;
+&lt;ENCODINGDESC&gt;&lt;PROJECTDESC&gt;&lt;P&gt;Header created with script marc2tei.pl on 2001-01-27.&lt;/P&gt;&lt;/PROJECTDESC&gt;&lt;EDITORIALDECL N="1"&gt;&lt;P&gt;This electronic text file was created by Optical Character Recognition (OCR).  No corrections have been made to the OCR-ed text and no editing has been done to the content of the original document.  Encoding has been done through an automated process using the recommendations for Level 1 of the TEI in Libraries Guidelines.  Digital page images are linked to the text file.&lt;/P&gt;&lt;/EDITORIALDECL&gt;&lt;/ENCODINGDESC&gt;&lt;PROFILEDESC&gt;
+&lt;TEXTCLASS&gt;
+&lt;KEYWORDS&gt;&lt;TERM&gt;Lafayette, Marie Joseph Paul Yves Roch Gilbert Du Motier, -- marquis de, -- 1757-1834.&lt;/TERM&gt;&lt;/KEYWORDS&gt;
+&lt;/TEXTCLASS&gt;&lt;/PROFILEDESC&gt;
+&lt;/HEADER&gt;'
+            'rawsize' =&gt; 2070
+            'start' =&gt; 11543227
+            'type' =&gt; 'RSet Raw'
+            'xpat' =&gt; XPat=HASH(0xb5cefc)
+               'dd' =&gt; '/l2/idx/m/moa1/moa1.dd'
+               'host' =&gt; 'dlps4.umdl.umich.edu'
+               'patexec' =&gt; '/l/local/xpat/bin/xpat'
+               'patmode' =&gt; 'remote'
+               'port' =&gt; 619
+               'psetoffset' =&gt; 200
+               'rdr' =&gt; GLOB(0xb6484c)
+                  -&gt; *Symbol::GEN3
+                        FileHandle({*Symbol::GEN3}) =&gt; fileno(9)
+               'separator' =&gt; '&lt;/Sync&gt;'
+               'status' =&gt; 'OK'
+               'wtr' =&gt; GLOB(0xb6484c)
+                  -&gt; REUSED_ADDRESS
+         14810282 =&gt; HASH(0xba2414)
+            'label' =&gt; 'mainheader96a76ee5eda39508064d770be7ac1e1d'
+            'raw' =&gt; '&lt;HEADER&gt;&lt;FILEDESC&gt;
+&lt;TITLESTMT&gt;
+&lt;TITLE TYPE="245"&gt;A memorial of Alice and Phoebe Cary, with some of their later poems. By Mary Clemmer Ames. Illustrated by two portraits on steel.&lt;/TITLE&gt;
+&lt;AUTHOR&gt;Ames, Mary Clemmer, 1839-1884.&lt;/AUTHOR&gt;
+&lt;/TITLESTMT&gt;
+&lt;EXTENT&gt;368 600dpi TIFF G4 page images&lt;/EXTENT&gt;
+&lt;PUBLICATIONSTMT&gt;
+&lt;PUBLISHER&gt;University of Michigan, Digital Library Production Service&lt;/PUBLISHER&gt;&lt;PUBPLACE&gt;Ann Arbor, Michigan&lt;/PUBPLACE&gt;
+&lt;DATE&gt;2000&lt;/DATE&gt;
+&lt;IDNO TYPE="dlps"&gt;AAM7164.0001.001&lt;/IDNO&gt;
+&lt;AVAILABILITY&gt;
+&lt;P&gt;These pages may freely searched and displayed.  Permission must be received for subsequent distribution in print or electronically.  Please contact dlps-help[at]umich.edu for more information.&lt;/P&gt;
+&lt;/AVAILABILITY&gt;&lt;/PUBLICATIONSTMT&gt;
+&lt;SOURCEDESC&gt;
+&lt;BIBLFULL&gt;
+&lt;TITLESTMT&gt;
+&lt;TITLE TYPE="245"&gt;A memorial of Alice and Phoebe Cary, with some of their later poems. By Mary Clemmer Ames. Illustrated by two portraits on steel.&lt;/TITLE&gt;
+&lt;AUTHOR&gt;Ames, Mary Clemmer, 1839-1884.&lt;/AUTHOR&gt;
+&lt;/TITLESTMT&gt;
+&lt;EDITIONSTMT&gt;&lt;EDITION&gt;12th thousand.&lt;/EDITION&gt;
+&lt;/EDITIONSTMT&gt;
+&lt;EXTENT&gt;xii, 351 p. 2 pl. (incl. front.) 19 cm.&lt;/EXTENT&gt;
+&lt;PUBLICATIONSTMT&gt;&lt;PUBPLACE&gt;New York,&lt;/PUBPLACE&gt;&lt;PUBLISHER&gt;Hurd and Houghton,&lt;/PUBLISHER&gt;&lt;DATE&gt;1875.&lt;/DATE&gt;&lt;/PUBLICATIONSTMT&gt;
+&lt;/BIBLFULL&gt;
+&lt;/SOURCEDESC&gt;
+&lt;/FILEDESC&gt;
+&lt;ENCODINGDESC&gt;&lt;PROJECTDESC&gt;&lt;P&gt;Header created with script marc2tei.pl on 2001-01-27.&lt;/P&gt;&lt;/PROJECTDESC&gt;&lt;EDITORIALDECL N="1"&gt;&lt;P&gt;This electronic text file was created by Optical Character Recognition (OCR).  No corrections have been made to the OCR-ed text and no editing has been done to the content of the original document.  Encoding has been done through an automated process using the recommendations for Level 1 of the TEI in Libraries Guidelines.  Digital page images are linked to the text file.&lt;/P&gt;&lt;/EDITORIALDECL&gt;&lt;/ENCODINGDESC&gt;&lt;PROFILEDESC&gt;
+&lt;TEXTCLASS&gt;
+&lt;KEYWORDS&gt;&lt;TERM&gt;Cary, Alice, -- 1820-1871.&lt;/TERM&gt;&lt;TERM&gt;Cary, Phoebe, -- 1824-1871.&lt;/TERM&gt;&lt;/KEYWORDS&gt;
+&lt;/TEXTCLASS&gt;&lt;/PROFILEDESC&gt;
+&lt;/HEADER&gt;'
+            'rawsize' =&gt; 1974
+            'start' =&gt; 14810282
+            'type' =&gt; 'RSet Raw'
+            'xpat' =&gt; XPat=HASH(0xb5cefc)
+               -&gt; REUSED_ADDRESS
+         15322195 =&gt; HASH(0xbb4a74)
+            'label' =&gt; 'mainheader96a76ee5eda39508064d770be7ac1e1d'
+            'raw' =&gt; '&lt;HEADER&gt;&lt;FILEDESC&gt;
+&lt;TITLESTMT&gt;
+&lt;TITLE TYPE="245"&gt;Ballads, lyrics, and hymns. By Alice Cary.&lt;/TITLE&gt;
+&lt;AUTHOR&gt;Cary, Alice, 1820-1871.&lt;/AUTHOR&gt;
+&lt;/TITLESTMT&gt;
+&lt;EXTENT&gt;348 600dpi TIFF G4 page images&lt;/EXTENT&gt;
+&lt;PUBLICATIONSTMT&gt;
+&lt;PUBLISHER&gt;University of Michigan, Digital Library Production Service&lt;/PUBLISHER&gt;&lt;PUBPLACE&gt;Ann Arbor, Michigan&lt;/PUBPLACE&gt;
+&lt;DATE&gt;2000&lt;/DATE&gt;
+&lt;IDNO TYPE="dlps"&gt;AAM7166.0001.001&lt;/IDNO&gt;
+&lt;AVAILABILITY&gt;
+&lt;P&gt;These pages may freely searched and displayed.  Permission must be received for subsequent distribution in print or electronically.  Please contact dlps-help[at]umich.edu for more information.&lt;/P&gt;
+&lt;/AVAILABILITY&gt;&lt;/PUBLICATIONSTMT&gt;
+&lt;SOURCEDESC&gt;
+&lt;BIBLFULL&gt;
+&lt;TITLESTMT&gt;
+&lt;TITLE TYPE="245"&gt;Ballads, lyrics, and hymns. By Alice Cary.&lt;/TITLE&gt;
+&lt;AUTHOR&gt;Cary, Alice, 1820-1871.&lt;/AUTHOR&gt;
+&lt;/TITLESTMT&gt;
+&lt;EXTENT&gt;ix, [1], 333 p. front. (port.) illus. 20 cm.&lt;/EXTENT&gt;
+&lt;PUBLICATIONSTMT&gt;&lt;PUBPLACE&gt;New York,&lt;/PUBPLACE&gt;&lt;PUBLISHER&gt;Hurd and Houghton,&lt;/PUBLISHER&gt;&lt;DATE&gt;1866.&lt;/DATE&gt;&lt;/PUBLICATIONSTMT&gt;
+&lt;/BIBLFULL&gt;
+&lt;/SOURCEDESC&gt;
+&lt;/FILEDESC&gt;
+&lt;ENCODINGDESC&gt;&lt;PROJECTDESC&gt;&lt;P&gt;Header created with script marc2tei.pl on 2001-01-27.&lt;/P&gt;&lt;/PROJECTDESC&gt;&lt;EDITORIALDECL N="1"&gt;&lt;P&gt;This electronic text file was created by Optical Character Recognition (OCR).  No corrections have been made to the OCR-ed text and no editing has been done to the content of the original document.  Encoding has been done through an automated process using the recommendations for Level 1 of the TEI in Libraries Guidelines.  Digital page images are linked to the text file.&lt;/P&gt;&lt;/EDITORIALDECL&gt;&lt;/ENCODINGDESC&gt;&lt;/HEADER&gt;'
+            'rawsize' =&gt; 1575
+            'start' =&gt; 15322195
+            'type' =&gt; 'RSet Raw'
+            'xpat' =&gt; XPat=HASH(0xb5cefc)
+               -&gt; REUSED_ADDRESS
+         15580166 =&gt; HASH(0xbbfbac)
+            'label' =&gt; 'mainheader96a76ee5eda39508064d770be7ac1e1d'
+            'raw' =&gt; '&lt;HEADER&gt;&lt;FILEDESC&gt;
+&lt;TITLESTMT&gt;
+&lt;TITLE TYPE="245"&gt;Ballads, lyrics, and hymns. By Alice Cary.&lt;/TITLE&gt;
+&lt;AUTHOR&gt;Cary, Alice, 1820-1871.&lt;/AUTHOR&gt;
+&lt;/TITLESTMT&gt;
+&lt;EXTENT&gt;352 600dpi TIFF G4 page images&lt;/EXTENT&gt;
+&lt;PUBLICATIONSTMT&gt;
+&lt;PUBLISHER&gt;University of Michigan, Digital Library Production Service&lt;/PUBLISHER&gt;&lt;PUBPLACE&gt;Ann Arbor, Michigan&lt;/PUBPLACE&gt;
+&lt;DATE&gt;2000&lt;/DATE&gt;
+&lt;IDNO TYPE="dlps"&gt;AAM7167.0001.001&lt;/IDNO&gt;
+&lt;AVAILABILITY&gt;
+&lt;P&gt;These pages may freely searched and displayed.  Permission must be received for subsequent distribution in print or electronically.  Please contact dlps-help[at]umich.edu for more information.&lt;/P&gt;
+&lt;/AVAILABILITY&gt;&lt;/PUBLICATIONSTMT&gt;
+&lt;SOURCEDESC&gt;
+&lt;BIBLFULL&gt;
+&lt;TITLESTMT&gt;
+&lt;TITLE TYPE="245"&gt;Ballads, lyrics, and hymns. By Alice Cary.&lt;/TITLE&gt;
+&lt;AUTHOR&gt;Cary, Alice, 1820-1871.&lt;/AUTHOR&gt;
+&lt;/TITLESTMT&gt;
+&lt;EDITIONSTMT&gt;&lt;EDITION&gt;Popular ed.&lt;/EDITION&gt;
+&lt;/EDITIONSTMT&gt;
+&lt;EXTENT&gt;ix, [1], 333 p. front. (port.) illus. 20 cm.&lt;/EXTENT&gt;
+&lt;PUBLICATIONSTMT&gt;&lt;PUBPLACE&gt;New York,&lt;/PUBPLACE&gt;&lt;PUBLISHER&gt;Hurd and Houghton,&lt;/PUBLISHER&gt;&lt;DATE&gt;1874.&lt;/DATE&gt;&lt;/PUBLICATIONSTMT&gt;
+&lt;/BIBLFULL&gt;
+&lt;/SOURCEDESC&gt;
+&lt;/FILEDESC&gt;
+&lt;ENCODINGDESC&gt;&lt;PROJECTDESC&gt;&lt;P&gt;Header created with script marc2tei.pl on 2001-01-27.&lt;/P&gt;&lt;/PROJECTDESC&gt;&lt;EDITORIALDECL N="1"&gt;&lt;P&gt;This electronic text file was created by Optical Character Recognition (OCR).  No corrections have been made to the OCR-ed text and no editing has been done to the content of the original document.  Encoding has been done through an automated process using the recommendations for Level 1 of the TEI in Libraries Guidelines.  Digital page images are linked to the text file.&lt;/P&gt;&lt;/EDITORIALDECL&gt;&lt;/ENCODINGDESC&gt;&lt;/HEADER&gt;'
+            'rawsize' =&gt; 1634
+            'start' =&gt; 15580166
+            'type' =&gt; 'RSet Raw'
+            'xpat' =&gt; XPat=HASH(0xb5cefc)
+               -&gt; REUSED_ADDRESS
+         15841432 =&gt; HASH(0xbb4c44)
+            'label' =&gt; 'mainheader96a76ee5eda39508064d770be7ac1e1d'
+            'raw' =&gt; '&lt;HEADER&gt;&lt;FILEDESC&gt;
+&lt;TITLESTMT&gt;
+&lt;TITLE TYPE="245"&gt;The poetical works of Alice and Phoebe Cary, with a memorial of their lives by Mary Clemmmer.&lt;/TITLE&gt;
+&lt;AUTHOR&gt;Cary, Alice, 1820-1871.&lt;/AUTHOR&gt;
+&lt;/TITLESTMT&gt;
+&lt;EXTENT&gt;452 600dpi TIFF G4 page images&lt;/EXTENT&gt;
+&lt;PUBLICATIONSTMT&gt;
+&lt;PUBLISHER&gt;University of Michigan, Digital Library Production Service&lt;/PUBLISHER&gt;&lt;PUBPLACE&gt;Ann Arbor, Michigan&lt;/PUBPLACE&gt;
+&lt;DATE&gt;2000&lt;/DATE&gt;
+&lt;IDNO TYPE="dlps"&gt;AAM7168.0001.001&lt;/IDNO&gt;
+&lt;AVAILABILITY&gt;
+&lt;P&gt;These pages may freely searched and displayed.  Permission must be received for subsequent distribution in print or electronically.  Please contact dlps-help[at]umich.edu for more information.&lt;/P&gt;
+&lt;/AVAILABILITY&gt;&lt;/PUBLICATIONSTMT&gt;
+&lt;SOURCEDESC&gt;
+&lt;BIBLFULL&gt;
+&lt;TITLESTMT&gt;
+&lt;TITLE TYPE="245"&gt;The poetical works of Alice and Phoebe Cary, with a memorial of their lives by Mary Clemmmer.&lt;/TITLE&gt;
+&lt;AUTHOR&gt;Cary, Alice, 1820-1871.&lt;/AUTHOR&gt;
+&lt;/TITLESTMT&gt;
+&lt;EXTENT&gt;435 p. port.&lt;/EXTENT&gt;
+&lt;PUBLICATIONSTMT&gt;&lt;PUBPLACE&gt;New York,&lt;/PUBPLACE&gt;&lt;PUBLISHER&gt;Hurd and Houghton,&lt;/PUBLISHER&gt;&lt;DATE&gt;1887 [c1876]&lt;/DATE&gt;&lt;/PUBLICATIONSTMT&gt;
+&lt;/BIBLFULL&gt;
+&lt;/SOURCEDESC&gt;&lt;/FILEDESC&gt;
+&lt;ENCODINGDESC&gt;&lt;PROJECTDESC&gt;&lt;P&gt;Header created with script marc2tei.pl on 2001-01-27.&lt;/P&gt;&lt;/PROJECTDESC&gt;&lt;EDITORIALDECL N="1"&gt;&lt;P&gt;This electronic text file was created by Optical Character Recognition (OCR).  No corrections have been made to the OCR-ed text and no editing has been done to the content of the original document.  Encoding has been done through an automated process using the recommendations for Level 1 of the TEI in Libraries Guidelines.  Digital page images are linked to the text file.&lt;/P&gt;&lt;/EDITORIALDECL&gt;&lt;/ENCODINGDESC&gt;&lt;/HEADER&gt;'
+            'rawsize' =&gt; 1651
+            'start' =&gt; 15841432
+            'type' =&gt; 'RSet Raw'
+            'xpat' =&gt; XPat=HASH(0xb5cefc)
+               -&gt; REUSED_ADDRESS
+         17637570 =&gt; HASH(0xbb4ca4)
+            'label' =&gt; 'mainheader96a76ee5eda39508064d770be7ac1e1d'
+            'raw' =&gt; '&lt;HEADER&gt;&lt;FILEDESC&gt;
+&lt;TITLESTMT&gt;
+&lt;TITLE TYPE="245"&gt;The educator; or, Hours with my pupils. By Mrs. Lincoln Phelps ...&lt;/TITLE&gt;
+&lt;AUTHOR&gt;Phelps, Lincoln, Mrs., 1793-1884.&lt;/AUTHOR&gt;
+&lt;/TITLESTMT&gt;
+&lt;EXTENT&gt;360 600dpi TIFF G4 page images&lt;/EXTENT&gt;
+&lt;PUBLICATIONSTMT&gt;
+&lt;PUBLISHER&gt;University of Michigan, Digital Library Production Service&lt;/PUBLISHER&gt;&lt;PUBPLACE&gt;Ann Arbor, Michigan&lt;/PUBPLACE&gt;
+&lt;DATE&gt;2000&lt;/DATE&gt;
+&lt;IDNO TYPE="dlps"&gt;AAM7369.0001.001&lt;/IDNO&gt;
+&lt;AVAILABILITY&gt;
+&lt;P&gt;These pages may freely searched and displayed.  Permission must be received for subsequent distribution in print or electronically.  Please contact dlps-help[at]umich.edu for more information.&lt;/P&gt;
+&lt;/AVAILABILITY&gt;&lt;/PUBLICATIONSTMT&gt;
+&lt;SOURCEDESC&gt;
+&lt;BIBLFULL&gt;
+&lt;TITLESTMT&gt;
+&lt;TITLE TYPE="245"&gt;The educator; or, Hours with my pupils. By Mrs. Lincoln Phelps ...&lt;/TITLE&gt;
+&lt;AUTHOR&gt;Phelps, Lincoln, Mrs., 1793-1884.&lt;/AUTHOR&gt;
+&lt;/TITLESTMT&gt;
+&lt;EXTENT&gt;3 p.l., ix-xxix, 31-363 p. 19 cm.&lt;/EXTENT&gt;
+&lt;PUBLICATIONSTMT&gt;&lt;PUBPLACE&gt;New York,&lt;/PUBPLACE&gt;&lt;PUBLISHER&gt;A. S. Barnes &amp; company,&lt;/PUBLISHER&gt;&lt;DATE&gt;1876.&lt;/DATE&gt;&lt;/PUBLICATIONSTMT&gt;
+&lt;/BIBLFULL&gt;
+&lt;/SOURCEDESC&gt;
+&lt;/FILEDESC&gt;
+&lt;ENCODINGDESC&gt;&lt;PROJECTDESC&gt;&lt;P&gt;Header created with script marc2tei.pl on 2001-01-27.&lt;/P&gt;&lt;/PROJECTDESC&gt;&lt;EDITORIALDECL N="1"&gt;&lt;P&gt;This electronic text file was created by Optical Character Recognition (OCR).  No corrections have been made to the OCR-ed text and no editing has been done to the content of the original document.  Encoding has been done through an automated process using the recommendations for Level 1 of the TEI in Libraries Guidelines.  Digital page images are linked to the text file.&lt;/P&gt;&lt;/EDITORIALDECL&gt;&lt;/ENCODINGDESC&gt;&lt;PROFILEDESC&gt;
+&lt;TEXTCLASS&gt;
+&lt;KEYWORDS&gt;&lt;TERM&gt;Women -- Education&lt;/TERM&gt;&lt;/KEYWORDS&gt;
+&lt;/TEXTCLASS&gt;&lt;/PROFILEDESC&gt;
+&lt;/HEADER&gt;'
+            'rawsize' =&gt; 1747
+            'start' =&gt; 17637570
+            'type' =&gt; 'RSet Raw'
+            'xpat' =&gt; XPat=HASH(0xb5cefc)
+               -&gt; REUSED_ADDRESS
+         19468773 =&gt; HASH(0xbb4d04)
+            'label' =&gt; 'mainheader96a76ee5eda39508064d770be7ac1e1d'
+            'raw' =&gt; '&lt;HEADER&gt;&lt;FILEDESC&gt;
+&lt;TITLESTMT&gt;
+&lt;TITLE TYPE="245"&gt;Poems by David Barker, with historical sketch by Hon. John E. Godfrey.&lt;/TITLE&gt;
+&lt;AUTHOR&gt;Barker, David, 1816-1874.&lt;/AUTHOR&gt;
+&lt;/TITLESTMT&gt;
+&lt;EXTENT&gt;262 600dpi TIFF G4 page images&lt;/EXTENT&gt;
+&lt;PUBLICATIONSTMT&gt;
+&lt;PUBLISHER&gt;University of Michigan, Digital Library Production Service&lt;/PUBLISHER&gt;&lt;PUBPLACE&gt;Ann Arbor, Michigan&lt;/PUBPLACE&gt;
+&lt;DATE&gt;2000&lt;/DATE&gt;
+&lt;IDNO TYPE="dlps"&gt;AAM7861.0001.001&lt;/IDNO&gt;
+&lt;AVAILABILITY&gt;
+&lt;P&gt;These pages may freely searched and displayed.  Permission must be received for subsequent distribution in print or electronically.  Please contact dlps-help[at]umich.edu for more information.&lt;/P&gt;
+&lt;/AVAILABILITY&gt;&lt;/PUBLICATIONSTMT&gt;
+&lt;SOURCEDESC&gt;
+&lt;BIBLFULL&gt;
+&lt;TITLESTMT&gt;
+&lt;TITLE TYPE="245"&gt;Poems by David Barker, with historical sketch by Hon. John E. Godfrey.&lt;/TITLE&gt;
+&lt;AUTHOR&gt;Barker, David, 1816-1874.&lt;/AUTHOR&gt;
+&lt;/TITLESTMT&gt;
+&lt;EXTENT&gt;xxiv, 232 p. front. (port.) 20 cm.&lt;/EXTENT&gt;
+&lt;PUBLICATIONSTMT&gt;&lt;PUBPLACE&gt;Bangor,&lt;/PUBPLACE&gt;&lt;PUBLISHER&gt;Press of S. S. Smith &amp; Son,&lt;/PUBLISHER&gt;&lt;DATE&gt;1876.&lt;/DATE&gt;&lt;/PUBLICATIONSTMT&gt;&lt;NOTESSTMT&gt;&lt;NOTE&gt;Preface signed: Lewis Barker.&lt;/NOTE&gt;&lt;/NOTESSTMT&gt;
+&lt;/BIBLFULL&gt;
+&lt;/SOURCEDESC&gt;&lt;/FILEDESC&gt;
+&lt;ENCODINGDESC&gt;&lt;PROJECTDESC&gt;&lt;P&gt;Header created with script marc2tei.pl on 2001-01-27.&lt;/P&gt;&lt;/PROJECTDESC&gt;&lt;EDITORIALDECL N="1"&gt;&lt;P&gt;This electronic text file was created by Optical Character Recognition (OCR).  No corrections have been made to the OCR-ed text and no editing has been done to the content of the original document.  Encoding has been done through an automated process using the recommendations for Level 1 of the TEI in Libraries Guidelines.  Digital page images are linked to the text file.&lt;/P&gt;&lt;/EDITORIALDECL&gt;&lt;/ENCODINGDESC&gt;&lt;/HEADER&gt;'
+            'rawsize' =&gt; 1700
+            'start' =&gt; 19468773
+            'type' =&gt; 'RSet Raw'
+            'xpat' =&gt; XPat=HASH(0xb5cefc)
+               -&gt; REUSED_ADDRESS
+         19760461 =&gt; HASH(0xbb4d64)
+            'label' =&gt; 'mainheader96a76ee5eda39508064d770be7ac1e1d'
+            'raw' =&gt; '&lt;HEADER&gt;&lt;FILEDESC&gt;
+&lt;TITLESTMT&gt;
+&lt;TITLE TYPE="245"&gt;Town and country; or life at home and abroad, without and within us. By John S. Adams.&lt;/TITLE&gt;
+&lt;AUTHOR&gt;Adams, John S. (John Stowell), d. 1893.&lt;/AUTHOR&gt;
+&lt;/TITLESTMT&gt;
+&lt;EXTENT&gt;382 600dpi TIFF G4 page images&lt;/EXTENT&gt;
+&lt;PUBLICATIONSTMT&gt;
+&lt;PUBLISHER&gt;University of Michigan, Digital Library Production Service&lt;/PUBLISHER&gt;&lt;PUBPLACE&gt;Ann Arbor, Michigan&lt;/PUBPLACE&gt;
+&lt;DATE&gt;2000&lt;/DATE&gt;
+&lt;IDNO TYPE="dlps"&gt;AAM8008.0001.001&lt;/IDNO&gt;
+&lt;AVAILABILITY&gt;
+&lt;P&gt;These pages may freely searched and displayed.  Permission must be received for subsequent distribution in print or electronically.  Please contact dlps-help[at]umich.edu for more information.&lt;/P&gt;
+&lt;/AVAILABILITY&gt;&lt;/PUBLICATIONSTMT&gt;
+&lt;SOURCEDESC&gt;
+&lt;BIBLFULL&gt;
+&lt;TITLESTMT&gt;
+&lt;TITLE TYPE="245"&gt;Town and country; or life at home and abroad, without and within us. By John S. Adams.&lt;/TITLE&gt;
+&lt;AUTHOR&gt;Adams, John S. (John Stowell), d. 1893.&lt;/AUTHOR&gt;
+&lt;/TITLESTMT&gt;
+&lt;EXTENT&gt;[1], 368, [1] p. 20 cm.&lt;/EXTENT&gt;
+&lt;PUBLICATIONSTMT&gt;&lt;PUBPLACE&gt;Boston,&lt;/PUBPLACE&gt;&lt;PUBLISHER&gt;J. Buffum,&lt;/PUBLISHER&gt;&lt;DATE&gt;1855.&lt;/DATE&gt;&lt;/PUBLICATIONSTMT&gt;&lt;NOTESSTMT&gt;&lt;NOTE&gt;Half-title illus.&lt;/NOTE&gt;&lt;/NOTESSTMT&gt;
+&lt;/BIBLFULL&gt;
+&lt;/SOURCEDESC&gt;
+&lt;/FILEDESC&gt;
+&lt;ENCODINGDESC&gt;&lt;PROJECTDESC&gt;&lt;P&gt;Header created with script marc2tei.pl on 2001-01-27.&lt;/P&gt;&lt;/PROJECTDESC&gt;&lt;EDITORIALDECL N="1"&gt;&lt;P&gt;This electronic text file was created by Optical Character Recognition (OCR).  No corrections have been made to the OCR-ed text and no editing has been done to the content of the original document.  Encoding has been done through an automated process using the recommendations for Level 1 of the TEI in Libraries Guidelines.  Digital page images are linked to the text file.&lt;/P&gt;&lt;/EDITORIALDECL&gt;&lt;/ENCODINGDESC&gt;&lt;/HEADER&gt;'
+            'rawsize' =&gt; 1717
+            'start' =&gt; 19760461
+            'type' =&gt; 'RSet Raw'
+            'xpat' =&gt; XPat=HASH(0xb5cefc)
+               -&gt; REUSED_ADDRESS
+         1977941 =&gt; HASH(0xb6778c)
+            'label' =&gt; 'mainheader96a76ee5eda39508064d770be7ac1e1d'
+            'raw' =&gt; '&lt;HEADER&gt;&lt;FILEDESC&gt;
+&lt;TITLESTMT&gt;
+&lt;TITLE TYPE="245"&gt;History of the peace: being a history of England from 1816 to 1854. With an introduction 1800 to 1815. By Harriet Martineau.&lt;/TITLE&gt;
+&lt;AUTHOR&gt;Martineau, Harriet, 1802-1876.&lt;/AUTHOR&gt;
+&lt;/TITLESTMT&gt;
+&lt;EXTENT&gt;470 600dpi TIFF G4 page images&lt;/EXTENT&gt;
+&lt;PUBLICATIONSTMT&gt;
+&lt;PUBLISHER&gt;University of Michigan, Digital Library Production Service&lt;/PUBLISHER&gt;&lt;PUBPLACE&gt;Ann Arbor, Michigan&lt;/PUBPLACE&gt;
+&lt;DATE&gt;2000&lt;/DATE&gt;
+&lt;IDNO TYPE="dlps"&gt;AAM1569.0001.001&lt;/IDNO&gt;
+&lt;AVAILABILITY&gt;
+&lt;P&gt;These pages may freely searched and displayed.  Permission must be received for subsequent distribution in print or electronically.  Please contact dlps-help[at]umich.edu for more information.&lt;/P&gt;
+&lt;/AVAILABILITY&gt;&lt;/PUBLICATIONSTMT&gt;
+&lt;SOURCEDESC&gt;
+&lt;BIBLFULL&gt;
+&lt;TITLESTMT&gt;
+&lt;TITLE TYPE="245"&gt;History of the peace: being a history of England from 1816 to 1854. With an introduction 1800 to 1815. By Harriet Martineau.&lt;/TITLE&gt;
+&lt;AUTHOR&gt;Martineau, Harriet, 1802-1876.&lt;/AUTHOR&gt;
+&lt;/TITLESTMT&gt;
+&lt;EXTENT&gt;4 v. 21 cm.&lt;/EXTENT&gt;
+&lt;PUBLICATIONSTMT&gt;&lt;PUBPLACE&gt;Boston,&lt;/PUBPLACE&gt;&lt;PUBLISHER&gt;Walker, Wise, and company,&lt;/PUBLISHER&gt;&lt;DATE&gt;1865-66.&lt;/DATE&gt;&lt;/PUBLICATIONSTMT&gt;&lt;NOTESSTMT&gt;&lt;NOTE&gt;Book 1 (215 p.) was begun by Charles Knight and completed by G. L. Craik.&lt;/NOTE&gt;&lt;NOTE&gt;Vols. 3-4 published by Walker, Fuller &amp; company.&lt;/NOTE&gt;&lt;/NOTESSTMT&gt;
+&lt;/BIBLFULL&gt;
+&lt;/SOURCEDESC&gt;&lt;/FILEDESC&gt;
+&lt;ENCODINGDESC&gt;&lt;PROJECTDESC&gt;&lt;P&gt;Header created with script marc2tei.pl on 2001-01-27.&lt;/P&gt;&lt;/PROJECTDESC&gt;&lt;EDITORIALDECL N="1"&gt;&lt;P&gt;This electronic text file was created by Optical Character Recognition (OCR).  No corrections have been made to the OCR-ed text and no editing has been done to the content of the original document.  Encoding has been done through an automated process using the recommendations for Level 1 of the TEI in Libraries Guidelines.  Digital page images are linked to the text file.&lt;/P&gt;&lt;/EDITORIALDECL&gt;&lt;/ENCODINGDESC&gt;&lt;PROFILEDESC&gt;
+&lt;TEXTCLASS&gt;
+&lt;KEYWORDS&gt;&lt;TERM&gt;Great Britain -- History -- 19th century&lt;/TERM&gt;&lt;/KEYWORDS&gt;
+&lt;/TEXTCLASS&gt;&lt;/PROFILEDESC&gt;
+&lt;/HEADER&gt;'
+            'rawsize' =&gt; 2030
+            'start' =&gt; 1977941
+            'type' =&gt; 'RSet Raw'
+            'xpat' =&gt; XPat=HASH(0xb5cefc)
+               -&gt; REUSED_ADDRESS
+         20530964 =&gt; HASH(0xbb4dc4)
+            'label' =&gt; 'mainheader96a76ee5eda39508064d770be7ac1e1d'
+            'raw' =&gt; '&lt;HEADER&gt;&lt;FILEDESC&gt;
+&lt;TITLESTMT&gt;
+&lt;TITLE TYPE="245"&gt;Belle Scott; or, Liberty overthrown! A tale for the crisis.&lt;/TITLE&gt;
+&lt;/TITLESTMT&gt;
+&lt;EXTENT&gt;432 600dpi TIFF G4 page images&lt;/EXTENT&gt;
+&lt;PUBLICATIONSTMT&gt;
+&lt;PUBLISHER&gt;University of Michigan, Digital Library Production Service&lt;/PUBLISHER&gt;&lt;PUBPLACE&gt;Ann Arbor, Michigan&lt;/PUBPLACE&gt;
+&lt;DATE&gt;2000&lt;/DATE&gt;
+&lt;IDNO TYPE="dlps"&gt;AAM8182.0001.001&lt;/IDNO&gt;
+&lt;AVAILABILITY&gt;
+&lt;P&gt;These pages may freely searched and displayed.  Permission must be received for subsequent distribution in print or electronically.  Please contact dlps-help[at]umich.edu for more information.&lt;/P&gt;
+&lt;/AVAILABILITY&gt;&lt;/PUBLICATIONSTMT&gt;
+&lt;SOURCEDESC&gt;
+&lt;BIBLFULL&gt;
+&lt;TITLESTMT&gt;
+&lt;TITLE TYPE="245"&gt;Belle Scott; or, Liberty overthrown! A tale for the crisis.&lt;/TITLE&gt;
+&lt;/TITLESTMT&gt;
+&lt;EXTENT&gt;426 p. 20 cm.&lt;/EXTENT&gt;
+&lt;PUBLICATIONSTMT&gt;&lt;PUBPLACE&gt;Columbus,&lt;/PUBPLACE&gt;&lt;PUBLISHER&gt;D. Anderson,; [etc., etc.]&lt;/PUBLISHER&gt;&lt;DATE&gt;1856.&lt;/DATE&gt;&lt;/PUBLICATIONSTMT&gt;
+&lt;/BIBLFULL&gt;
+&lt;/SOURCEDESC&gt;
+&lt;/FILEDESC&gt;
+&lt;ENCODINGDESC&gt;&lt;PROJECTDESC&gt;&lt;P&gt;Header created with script marc2tei.pl on 2001-01-27.&lt;/P&gt;&lt;/PROJECTDESC&gt;&lt;EDITORIALDECL N="1"&gt;&lt;P&gt;This electronic text file was created by Optical Character Recognition (OCR).  No corrections have been made to the OCR-ed text and no editing has been done to the content of the original document.  Encoding has been done through an automated process using the recommendations for Level 1 of the TEI in Libraries Guidelines.  Digital page images are linked to the text file.&lt;/P&gt;&lt;/EDITORIALDECL&gt;&lt;/ENCODINGDESC&gt;&lt;PROFILEDESC&gt;
+&lt;TEXTCLASS&gt;
+&lt;KEYWORDS&gt;&lt;TERM&gt;Slavery -- United States -- Fiction.&lt;/TERM&gt;&lt;/KEYWORDS&gt;
+&lt;/TEXTCLASS&gt;&lt;/PROFILEDESC&gt;
+&lt;/HEADER&gt;'
+            'rawsize' =&gt; 1628
+            'start' =&gt; 20530964
+            'type' =&gt; 'RSet Raw'
+            'xpat' =&gt; XPat=HASH(0xb5cefc)
+               -&gt; REUSED_ADDRESS
+         21083477 =&gt; HASH(0xbb4e24)
+            'label' =&gt; 'mainheader96a76ee5eda39508064d770be7ac1e1d'
+            'raw' =&gt; '&lt;HEADER&gt;&lt;FILEDESC&gt;
+&lt;TITLESTMT&gt;
+&lt;TITLE TYPE="245"&gt;Southland writers. Biographical and critical sketches of the living female writers of the South. With extracts from their writings. By Ida Raymond.&lt;/TITLE&gt;
+&lt;AUTHOR&gt;Raymond, Ida.&lt;/AUTHOR&gt;
+&lt;/TITLESTMT&gt;
+&lt;EXTENT&gt;524 600dpi TIFF G4 page images&lt;/EXTENT&gt;
+&lt;PUBLICATIONSTMT&gt;
+&lt;PUBLISHER&gt;University of Michigan, Digital Library Production Service&lt;/PUBLISHER&gt;&lt;PUBPLACE&gt;Ann Arbor, Michigan&lt;/PUBPLACE&gt;
+&lt;DATE&gt;2000&lt;/DATE&gt;
+&lt;IDNO TYPE="dlps"&gt;AAM8267.0001.001&lt;/IDNO&gt;
+&lt;AVAILABILITY&gt;
+&lt;P&gt;These pages may freely searched and displayed.  Permission must be received for subsequent distribution in print or electronically.  Please contact dlps-help[at]umich.edu for more information.&lt;/P&gt;
+&lt;/AVAILABILITY&gt;&lt;/PUBLICATIONSTMT&gt;
+&lt;SOURCEDESC&gt;
+&lt;BIBLFULL&gt;
+&lt;TITLESTMT&gt;
+&lt;TITLE TYPE="245"&gt;Southland writers. Biographical and critical sketches of the living female writers of the South. With extracts from their writings. By Ida Raymond.&lt;/TITLE&gt;
+&lt;AUTHOR&gt;Raymond, Ida.&lt;/AUTHOR&gt;
+&lt;/TITLESTMT&gt;
+&lt;EXTENT&gt;2 v. 22 cm.&lt;/EXTENT&gt;
+&lt;PUBLICATIONSTMT&gt;&lt;PUBPLACE&gt;Philadelphia,&lt;/PUBPLACE&gt;&lt;PUBLISHER&gt;Claxton, Remsen &amp; Haffelfinger,&lt;/PUBLISHER&gt;&lt;DATE&gt;1870.&lt;/DATE&gt;&lt;/PUBLICATIONSTMT&gt;&lt;NOTESSTMT&gt;&lt;NOTE&gt;Vol. 1 has added t.-p., illustrated in colors.&lt;/NOTE&gt;&lt;/NOTESSTMT&gt;
+&lt;/BIBLFULL&gt;
+&lt;/SOURCEDESC&gt;
+&lt;/FILEDESC&gt;
+&lt;ENCODINGDESC&gt;&lt;PROJECTDESC&gt;&lt;P&gt;Header created with script marc2tei.pl on 2001-01-27.&lt;/P&gt;&lt;/PROJECTDESC&gt;&lt;EDITORIALDECL N="1"&gt;&lt;P&gt;This electronic text file was created by Optical Character Recognition (OCR).  No corrections have been made to the OCR-ed text and no editing has been done to the content of the original document.  Encoding has been done through an automated process using the recommendations for Level 1 of the TEI in Libraries Guidelines.  Digital page images are linked to the text file.&lt;/P&gt;&lt;/EDITORIALDECL&gt;&lt;/ENCODINGDESC&gt;&lt;PROFILEDESC&gt;
+&lt;TEXTCLASS&gt;
+&lt;KEYWORDS&gt;&lt;TERM&gt;American literature -- Southern states.&lt;/TERM&gt;&lt;TERM&gt;Authors, American -- Southern states.&lt;/TERM&gt;&lt;TERM&gt;Women authors -- Southern states.&lt;/TERM&gt;&lt;TERM&gt;American literature -- Women authors&lt;/TERM&gt;&lt;/KEYWORDS&gt;
+&lt;/TEXTCLASS&gt;&lt;/PROFILEDESC&gt;
+&lt;/HEADER&gt;'
+            'rawsize' =&gt; 2107
+            'start' =&gt; 21083477
+            'type' =&gt; 'RSet Raw'
+            'xpat' =&gt; XPat=HASH(0xb5cefc)
+               -&gt; REUSED_ADDRESS
+         22218503 =&gt; HASH(0xbb4e84)
+            'label' =&gt; 'mainheader96a76ee5eda39508064d770be7ac1e1d'
+            'raw' =&gt; '&lt;HEADER&gt;&lt;FILEDESC&gt;
+&lt;TITLESTMT&gt;
+&lt;TITLE TYPE="245"&gt;Southland writers. Biographical and critical sketches of the living female writers of the South. With extracts from their writings. By Ida Raymond.&lt;/TITLE&gt;
+&lt;AUTHOR&gt;Raymond, Ida.&lt;/AUTHOR&gt;
+&lt;/TITLESTMT&gt;
+&lt;EXTENT&gt;464 600dpi TIFF G4 page images&lt;/EXTENT&gt;
+&lt;PUBLICATIONSTMT&gt;
+&lt;PUBLISHER&gt;University of Michigan, Digital Library Production Service&lt;/PUBLISHER&gt;&lt;PUBPLACE&gt;Ann Arbor, Michigan&lt;/PUBPLACE&gt;
+&lt;DATE&gt;2000&lt;/DATE&gt;
+&lt;IDNO TYPE="dlps"&gt;AAM8267.0002.001&lt;/IDNO&gt;
+&lt;AVAILABILITY&gt;
+&lt;P&gt;These pages may freely searched and displayed.  Permission must be received for subsequent distribution in print or electronically.  Please contact dlps-help[at]umich.edu for more information.&lt;/P&gt;
+&lt;/AVAILABILITY&gt;&lt;/PUBLICATIONSTMT&gt;
+&lt;SOURCEDESC&gt;
+&lt;BIBLFULL&gt;
+&lt;TITLESTMT&gt;
+&lt;TITLE TYPE="245"&gt;Southland writers. Biographical and critical sketches of the living female writers of the South. With extracts from their writings. By Ida Raymond.&lt;/TITLE&gt;
+&lt;AUTHOR&gt;Raymond, Ida.&lt;/AUTHOR&gt;
+&lt;/TITLESTMT&gt;
+&lt;EXTENT&gt;2 v. 22 cm.&lt;/EXTENT&gt;
+&lt;PUBLICATIONSTMT&gt;&lt;PUBPLACE&gt;Philadelphia,&lt;/PUBPLACE&gt;&lt;PUBLISHER&gt;Claxton, Remsen &amp; Haffelfinger,&lt;/PUBLISHER&gt;&lt;DATE&gt;1870.&lt;/DATE&gt;&lt;/PUBLICATIONSTMT&gt;&lt;NOTESSTMT&gt;&lt;NOTE&gt;Vol. 1 has added t.-p., illustrated in colors.&lt;/NOTE&gt;&lt;/NOTESSTMT&gt;
+&lt;/BIBLFULL&gt;
+&lt;/SOURCEDESC&gt;
+&lt;/FILEDESC&gt;
+&lt;ENCODINGDESC&gt;&lt;PROJECTDESC&gt;&lt;P&gt;Header created with script marc2tei.pl on 2001-01-27.&lt;/P&gt;&lt;/PROJECTDESC&gt;&lt;EDITORIALDECL N="1"&gt;&lt;P&gt;This electronic text file was created by Optical Character Recognition (OCR).  No corrections have been made to the OCR-ed text and no editing has been done to the content of the original document.  Encoding has been done through an automated process using the recommendations for Level 1 of the TEI in Libraries Guidelines.  Digital page images are linked to the text file.&lt;/P&gt;&lt;/EDITORIALDECL&gt;&lt;/ENCODINGDESC&gt;&lt;PROFILEDESC&gt;
+&lt;TEXTCLASS&gt;
+&lt;KEYWORDS&gt;&lt;TERM&gt;American literature -- Southern states.&lt;/TERM&gt;&lt;TERM&gt;Authors, American -- Southern states.&lt;/TERM&gt;&lt;TERM&gt;Women authors -- Southern states.&lt;/TERM&gt;&lt;TERM&gt;American literature -- Women authors&lt;/TERM&gt;&lt;/KEYWORDS&gt;
+&lt;/TEXTCLASS&gt;&lt;/PROFILEDESC&gt;
+&lt;/HEADER&gt;'
+            'rawsize' =&gt; 2107
+            'start' =&gt; 22218503
+            'type' =&gt; 'RSet Raw'
+            'xpat' =&gt; XPat=HASH(0xb5cefc)
+               -&gt; REUSED_ADDRESS
+         24440761 =&gt; HASH(0xbb4ee4)
+            'label' =&gt; 'mainheader96a76ee5eda39508064d770be7ac1e1d'
+            'raw' =&gt; '&lt;HEADER&gt;&lt;FILEDESC&gt;
+&lt;TITLESTMT&gt;
+&lt;TITLE TYPE="245"&gt;The A B C of finance; or, The money and labor questions familiarly explained to common people, in short and easy lessons. By Simon Newcomb ...&lt;/TITLE&gt;
+&lt;AUTHOR&gt;Newcomb, Simon, 1835-1909.&lt;/AUTHOR&gt;
+&lt;/TITLESTMT&gt;
+&lt;EXTENT&gt;128 600dpi TIFF G4 page images&lt;/EXTENT&gt;
+&lt;PUBLICATIONSTMT&gt;
+&lt;PUBLISHER&gt;University of Michigan, Digital Library Production Service&lt;/PUBLISHER&gt;&lt;PUBPLACE&gt;Ann Arbor, Michigan&lt;/PUBPLACE&gt;
+&lt;DATE&gt;2000&lt;/DATE&gt;
+&lt;IDNO TYPE="dlps"&gt;AAM8789.0001.001&lt;/IDNO&gt;
+&lt;AVAILABILITY&gt;
+&lt;P&gt;These pages may freely searched and displayed.  Permission must be received for subsequent distribution in print or electronically.  Please contact dlps-help[at]umich.edu for more information.&lt;/P&gt;
+&lt;/AVAILABILITY&gt;&lt;/PUBLICATIONSTMT&gt;
+&lt;SERIESSTMT&gt;&lt;TITLE&gt;Harper\'s half-hour series. [v. 32]&lt;/TITLE&gt;&lt;/SERIESSTMT&gt;
+&lt;SOURCEDESC&gt;
+&lt;BIBLFULL&gt;
+&lt;TITLESTMT&gt;
+&lt;TITLE TYPE="245"&gt;The A B C of finance; or, The money and labor questions familiarly explained to common people, in short and easy lessons. By Simon Newcomb ...&lt;/TITLE&gt;
+&lt;AUTHOR&gt;Newcomb, Simon, 1835-1909.&lt;/AUTHOR&gt;
+&lt;/TITLESTMT&gt;
+&lt;EXTENT&gt;3 p.l., [11]-115 p. 12 cm.&lt;/EXTENT&gt;
+&lt;PUBLICATIONSTMT&gt;&lt;PUBPLACE&gt;New York,&lt;/PUBPLACE&gt;&lt;PUBLISHER&gt;Harper &amp; brothers&lt;/PUBLISHER&gt;&lt;DATE&gt;[1877]&lt;/DATE&gt;&lt;/PUBLICATIONSTMT&gt;
+&lt;/BIBLFULL&gt;
+&lt;/SOURCEDESC&gt;
+&lt;/FILEDESC&gt;
+&lt;ENCODINGDESC&gt;&lt;PROJECTDESC&gt;&lt;P&gt;Header created with script marc2tei.pl on 2001-01-27.&lt;/P&gt;&lt;/PROJECTDESC&gt;&lt;EDITORIALDECL N="1"&gt;&lt;P&gt;This electronic text file was created by Optical Character Recognition (OCR).  No corrections have been made to the OCR-ed text and no editing has been done to the content of the original document.  Encoding has been done through an automated process using the recommendations for Level 1 of the TEI in Libraries Guidelines.  Digital page images are linked to the text file.&lt;/P&gt;&lt;/EDITORIALDECL&gt;&lt;/ENCODINGDESC&gt;&lt;PROFILEDESC&gt;
+&lt;TEXTCLASS&gt;
+&lt;KEYWORDS&gt;&lt;TERM&gt;Money&lt;/TERM&gt;&lt;TERM&gt;Labor&lt;/TERM&gt;&lt;/KEYWORDS&gt;
+&lt;/TEXTCLASS&gt;&lt;/PROFILEDESC&gt;
+&lt;/HEADER&gt;'
+            'rawsize' =&gt; 1953
+            'start' =&gt; 24440761
+            'type' =&gt; 'RSet Raw'
+            'xpat' =&gt; XPat=HASH(0xb5cefc)
+               -&gt; REUSED_ADDRESS
+         24697553 =&gt; HASH(0xbb4f44)
+            'label' =&gt; 'mainheader96a76ee5eda39508064d770be7ac1e1d'
+            'raw' =&gt; '&lt;HEADER&gt;&lt;FILEDESC&gt;
+&lt;TITLESTMT&gt;
+&lt;TITLE TYPE="245"&gt;The letter-bag of the Great Western, by Sam Slick. [pseud.]&lt;/TITLE&gt;
+&lt;AUTHOR&gt;Haliburton, Thomas Chandler, 1796-1865.&lt;/AUTHOR&gt;
+&lt;/TITLESTMT&gt;
+&lt;EXTENT&gt;256 600dpi TIFF G4 page images&lt;/EXTENT&gt;
+&lt;PUBLICATIONSTMT&gt;
+&lt;PUBLISHER&gt;University of Michigan, Digital Library Production Service&lt;/PUBLISHER&gt;&lt;PUBPLACE&gt;Ann Arbor, Michigan&lt;/PUBPLACE&gt;
+&lt;DATE&gt;2000&lt;/DATE&gt;
+&lt;IDNO TYPE="dlps"&gt;AAM9052.0001.001&lt;/IDNO&gt;
+&lt;AVAILABILITY&gt;
+&lt;P&gt;These pages may freely searched and displayed.  Permission must be received for subsequent distribution in print or electronically.  Please contact dlps-help[at]umich.edu for more information.&lt;/P&gt;
+&lt;/AVAILABILITY&gt;&lt;/PUBLICATIONSTMT&gt;
+&lt;SOURCEDESC&gt;
+&lt;BIBLFULL&gt;
+&lt;TITLESTMT&gt;
+&lt;TITLE TYPE="245"&gt;The letter-bag of the Great Western, by Sam Slick. [pseud.]&lt;/TITLE&gt;
+&lt;AUTHOR&gt;Haliburton, Thomas Chandler, 1796-1865.&lt;/AUTHOR&gt;
+&lt;/TITLESTMT&gt;
+&lt;EXTENT&gt;xxiii, 232 p. 19 cm.&lt;/EXTENT&gt;
+&lt;PUBLICATIONSTMT&gt;&lt;PUBPLACE&gt;London,&lt;/PUBPLACE&gt;&lt;PUBPLACE&gt;New York [etc.]&lt;/PUBPLACE&gt;&lt;PUBLISHER&gt;G. Routledge and sons, limited&lt;/PUBLISHER&gt;&lt;DATE&gt;[1873]&lt;/DATE&gt;&lt;/PUBLICATIONSTMT&gt;
+&lt;/BIBLFULL&gt;
+&lt;/SOURCEDESC&gt;
+&lt;/FILEDESC&gt;
+&lt;ENCODINGDESC&gt;&lt;PROJECTDESC&gt;&lt;P&gt;Header created with script marc2tei.pl on 2001-01-27.&lt;/P&gt;&lt;/PROJECTDESC&gt;&lt;EDITORIALDECL N="1"&gt;&lt;P&gt;This electronic text file was created by Optical Character Recognition (OCR).  No corrections have been made to the OCR-ed text and no editing has been done to the content of the original document.  Encoding has been done through an automated process using the recommendations for Level 1 of the TEI in Libraries Guidelines.  Digital page images are linked to the text file.&lt;/P&gt;&lt;/EDITORIALDECL&gt;&lt;/ENCODINGDESC&gt;&lt;/HEADER&gt;'
+            'rawsize' =&gt; 1664
+            'start' =&gt; 24697553
+            'type' =&gt; 'RSet Raw'
+            'xpat' =&gt; XPat=HASH(0xb5cefc)
+               -&gt; REUSED_ADDRESS
+         25072085 =&gt; HASH(0xbb4fa4)
+            'label' =&gt; 'mainheader96a76ee5eda39508064d770be7ac1e1d'
+            'raw' =&gt; '&lt;HEADER&gt;&lt;FILEDESC&gt;
+&lt;TITLESTMT&gt;
+&lt;TITLE TYPE="245"&gt;Poems of Paul Hamilton Hayne.&lt;/TITLE&gt;
+&lt;AUTHOR&gt;Hayne, Paul Hamilton, 1830-1886.&lt;/AUTHOR&gt;
+&lt;/TITLESTMT&gt;
+&lt;EXTENT&gt;468 600dpi TIFF G4 page images&lt;/EXTENT&gt;
+&lt;PUBLICATIONSTMT&gt;
+&lt;PUBLISHER&gt;University of Michigan, Digital Library Production Service&lt;/PUBLISHER&gt;&lt;PUBPLACE&gt;Ann Arbor, Michigan&lt;/PUBPLACE&gt;
+&lt;DATE&gt;2000&lt;/DATE&gt;
+&lt;IDNO TYPE="dlps"&gt;AAM9116.0001.001&lt;/IDNO&gt;
+&lt;AVAILABILITY&gt;
+&lt;P&gt;These pages may freely searched and displayed.  Permission must be received for subsequent distribution in print or electronically.  Please contact dlps-help[at]umich.edu for more information.&lt;/P&gt;
+&lt;/AVAILABILITY&gt;&lt;/PUBLICATIONSTMT&gt;
+&lt;SOURCEDESC&gt;
+&lt;BIBLFULL&gt;
+&lt;TITLESTMT&gt;
+&lt;TITLE TYPE="245"&gt;Poems of Paul Hamilton Hayne.&lt;/TITLE&gt;
+&lt;AUTHOR&gt;Hayne, Paul Hamilton, 1830-1886.&lt;/AUTHOR&gt;
+&lt;/TITLESTMT&gt;
+&lt;EDITIONSTMT&gt;&lt;EDITION&gt;Complete ed., with numerous illustrations.&lt;/EDITION&gt;
+&lt;/EDITIONSTMT&gt;
+&lt;EXTENT&gt;xvi, 386 p. front. (port.) illus., plates. 21 cm.&lt;/EXTENT&gt;
+&lt;PUBLICATIONSTMT&gt;&lt;PUBPLACE&gt;Boston,&lt;/PUBPLACE&gt;&lt;PUBLISHER&gt;D. Lothrop and company,&lt;/PUBLISHER&gt;&lt;DATE&gt;1882.&lt;/DATE&gt;&lt;/PUBLICATIONSTMT&gt;&lt;NOTESSTMT&gt;&lt;NOTE&gt;"Biographical sketch" by margaret J. Preston: p. [v]-viii.&lt;/NOTE&gt;&lt;/NOTESSTMT&gt;
+&lt;/BIBLFULL&gt;
+&lt;/SOURCEDESC&gt;&lt;/FILEDESC&gt;
+&lt;ENCODINGDESC&gt;&lt;PROJECTDESC&gt;&lt;P&gt;Header created with script marc2tei.pl on 2001-01-27.&lt;/P&gt;&lt;/PROJECTDESC&gt;&lt;EDITORIALDECL N="1"&gt;&lt;P&gt;This electronic text file was created by Optical Character Recognition (OCR).  No corrections have been made to the OCR-ed text and no editing has been done to the content of the original document.  Encoding has been done through an automated process using the recommendations for Level 1 of the TEI in Libraries Guidelines.  Digital page images are linked to the text file.&lt;/P&gt;&lt;/EDITORIALDECL&gt;&lt;/ENCODINGDESC&gt;&lt;/HEADER&gt;'
+            'rawsize' =&gt; 1758
+            'start' =&gt; 25072085
+            'type' =&gt; 'RSet Raw'
+            'xpat' =&gt; XPat=HASH(0xb5cefc)
+               -&gt; REUSED_ADDRESS
+         26477353 =&gt; HASH(0xc19028)
+            'label' =&gt; 'mainheader96a76ee5eda39508064d770be7ac1e1d'
+            'raw' =&gt; '&lt;HEADER&gt;&lt;FILEDESC&gt;
+&lt;TITLESTMT&gt;
+&lt;TITLE TYPE="245"&gt;Lectures and essays. By Henry Giles.&lt;/TITLE&gt;
+&lt;AUTHOR&gt;Giles, Henry, 1809-1882.&lt;/AUTHOR&gt;
+&lt;/TITLESTMT&gt;
+&lt;EXTENT&gt;320 600dpi TIFF G4 page images&lt;/EXTENT&gt;
+&lt;PUBLICATIONSTMT&gt;
+&lt;PUBLISHER&gt;University of Michigan, Digital Library Production Service&lt;/PUBLISHER&gt;&lt;PUBPLACE&gt;Ann Arbor, Michigan&lt;/PUBPLACE&gt;
+&lt;DATE&gt;2000&lt;/DATE&gt;
+&lt;IDNO TYPE="dlps"&gt;AAM9293.0002.001&lt;/IDNO&gt;
+&lt;AVAILABILITY&gt;
+&lt;P&gt;These pages may freely searched and displayed.  Permission must be received for subsequent distribution in print or electronically.  Please contact dlps-help[at]umich.edu for more information.&lt;/P&gt;
+&lt;/AVAILABILITY&gt;&lt;/PUBLICATIONSTMT&gt;
+&lt;SOURCEDESC&gt;
+&lt;BIBLFULL&gt;
+&lt;TITLESTMT&gt;
+&lt;TITLE TYPE="245"&gt;Lectures and essays. By Henry Giles.&lt;/TITLE&gt;
+&lt;AUTHOR&gt;Giles, Henry, 1809-1882.&lt;/AUTHOR&gt;
+&lt;/TITLESTMT&gt;
+&lt;EXTENT&gt;2 v. 18 cm.&lt;/EXTENT&gt;
+&lt;PUBLICATIONSTMT&gt;&lt;PUBPLACE&gt;Boston,&lt;/PUBPLACE&gt;&lt;PUBLISHER&gt;Ticknor, Reed, and Fields,&lt;/PUBLISHER&gt;&lt;DATE&gt;1851.&lt;/DATE&gt;&lt;/PUBLICATIONSTMT&gt;&lt;NOTESSTMT&gt;&lt;NOTE&gt;v. 1. Falstaff. Crabbe. Moral philosophy of Byron\'s life. Moral spirit of Byron\'s genius. Ebenezer Elliott. Oliver Goldsmith. Spirit of Irish history.--v. 2. Ireland and the Irish. The worth of liberty. True manhood. The pulpit. Patriotism. Economics. Music. The young musician. A day in Springfield. Chatterton. Carlyle. Savage and Dermody.&lt;/NOTE&gt;&lt;/NOTESSTMT&gt;
+&lt;/BIBLFULL&gt;
+&lt;/SOURCEDESC&gt;
+&lt;/FILEDESC&gt;
+&lt;ENCODINGDESC&gt;&lt;PROJECTDESC&gt;&lt;P&gt;Header created with script marc2tei.pl on 2001-01-27.&lt;/P&gt;&lt;/PROJECTDESC&gt;&lt;EDITORIALDECL N="1"&gt;&lt;P&gt;This electronic text file was created by Optical Character Recognition (OCR).  No corrections have been made to the OCR-ed text and no editing has been done to the content of the original document.  Encoding has been done through an automated process using the recommendations for Level 1 of the TEI in Libraries Guidelines.  Digital page images are linked to the text file.&lt;/P&gt;&lt;/EDITORIALDECL&gt;&lt;/ENCODINGDESC&gt;&lt;PROFILEDESC&gt;
+&lt;TEXTCLASS&gt;
+&lt;KEYWORDS&gt;&lt;TERM&gt;English literature&lt;/TERM&gt;&lt;/KEYWORDS&gt;
+&lt;/TEXTCLASS&gt;&lt;/PROFILEDESC&gt;
+&lt;/HEADER&gt;'
+            'rawsize' =&gt; 2021
+            'start' =&gt; 26477353
+            'type' =&gt; 'RSet Raw'
+            'xpat' =&gt; XPat=HASH(0xb5cefc)
+               -&gt; REUSED_ADDRESS
+         26979234 =&gt; HASH(0xc19088)
+            'label' =&gt; 'mainheader96a76ee5eda39508064d770be7ac1e1d'
+            'raw' =&gt; '&lt;HEADER&gt;&lt;FILEDESC&gt;
+&lt;TITLESTMT&gt;
+&lt;TITLE TYPE="245"&gt;The class-book of etymology, designed to promote precision in the use, and facilitate the acquisition of a knowledge of the English language. By James Lynd.&lt;/TITLE&gt;
+&lt;AUTHOR&gt;Lynd, James.&lt;/AUTHOR&gt;
+&lt;/TITLESTMT&gt;
+&lt;EXTENT&gt;350 600dpi TIFF G4 page images&lt;/EXTENT&gt;
+&lt;PUBLICATIONSTMT&gt;
+&lt;PUBLISHER&gt;University of Michigan, Digital Library Production Service&lt;/PUBLISHER&gt;&lt;PUBPLACE&gt;Ann Arbor, Michigan&lt;/PUBPLACE&gt;
+&lt;DATE&gt;2000&lt;/DATE&gt;
+&lt;IDNO TYPE="dlps"&gt;AAM9330.0001.001&lt;/IDNO&gt;
+&lt;AVAILABILITY&gt;
+&lt;P&gt;These pages may freely searched and displayed.  Permission must be received for subsequent distribution in print or electronically.  Please contact dlps-help[at]umich.edu for more information.&lt;/P&gt;
+&lt;/AVAILABILITY&gt;&lt;/PUBLICATIONSTMT&gt;
+&lt;SOURCEDESC&gt;
+&lt;BIBLFULL&gt;
+&lt;TITLESTMT&gt;
+&lt;TITLE TYPE="245"&gt;The class-book of etymology, designed to promote precision in the use, and facilitate the acquisition of a knowledge of the English language. By James Lynd.&lt;/TITLE&gt;
+&lt;AUTHOR&gt;Lynd, James.&lt;/AUTHOR&gt;
+&lt;/TITLESTMT&gt;
+&lt;EDITIONSTMT&gt;&lt;EDITION&gt;Rev. stereotype ed.&lt;/EDITION&gt;
+&lt;/EDITIONSTMT&gt;
+&lt;EXTENT&gt;xxii, 17-284, 58 p. 20 cm.&lt;/EXTENT&gt;
+&lt;PUBLICATIONSTMT&gt;&lt;PUBPLACE&gt;Philadelphia,&lt;/PUBPLACE&gt;&lt;PUBLISHER&gt;E. C. &amp; J. Biddle,&lt;/PUBLISHER&gt;&lt;DATE&gt;1854.&lt;/DATE&gt;&lt;/PUBLICATIONSTMT&gt;
+&lt;/BIBLFULL&gt;
+&lt;/SOURCEDESC&gt;
+&lt;/FILEDESC&gt;
+&lt;ENCODINGDESC&gt;&lt;PROJECTDESC&gt;&lt;P&gt;Header created with script marc2tei.pl on 2001-01-27.&lt;/P&gt;&lt;/PROJECTDESC&gt;&lt;EDITORIALDECL N="1"&gt;&lt;P&gt;This electronic text file was created by Optical Character Recognition (OCR).  No corrections have been made to the OCR-ed text and no editing has been done to the content of the original document.  Encoding has been done through an automated process using the recommendations for Level 1 of the TEI in Libraries Guidelines.  Digital page images are linked to the text file.&lt;/P&gt;&lt;/EDITORIALDECL&gt;&lt;/ENCODINGDESC&gt;&lt;PROFILEDESC&gt;
+&lt;TEXTCLASS&gt;
+&lt;KEYWORDS&gt;&lt;TERM&gt;English language -- Etymology&lt;/TERM&gt;&lt;/KEYWORDS&gt;
+&lt;/TEXTCLASS&gt;&lt;/PROFILEDESC&gt;
+&lt;/HEADER&gt;'
+            'rawsize' =&gt; 1955
+            'start' =&gt; 26979234
+            'type' =&gt; 'RSet Raw'
+            'xpat' =&gt; XPat=HASH(0xb5cefc)
+               -&gt; REUSED_ADDRESS
+         28072964 =&gt; HASH(0xc190e8)
+            'label' =&gt; 'mainheader96a76ee5eda39508064d770be7ac1e1d'
+            'raw' =&gt; '&lt;HEADER&gt;&lt;FILEDESC&gt;
+&lt;TITLESTMT&gt;
+&lt;TITLE TYPE="245"&gt;The first book of etymology, designed to promote precision in the use, and facilitate the acquisition of a knowledge of the English language. For beginners. By James Lynd.&lt;/TITLE&gt;
+&lt;AUTHOR&gt;Lynd, James.&lt;/AUTHOR&gt;
+&lt;/TITLESTMT&gt;
+&lt;EXTENT&gt;220 600dpi TIFF G4 page images&lt;/EXTENT&gt;
+&lt;PUBLICATIONSTMT&gt;
+&lt;PUBLISHER&gt;University of Michigan, Digital Library Production Service&lt;/PUBLISHER&gt;&lt;PUBPLACE&gt;Ann Arbor, Michigan&lt;/PUBPLACE&gt;
+&lt;DATE&gt;2000&lt;/DATE&gt;
+&lt;IDNO TYPE="dlps"&gt;AAM9333.0001.001&lt;/IDNO&gt;
+&lt;AVAILABILITY&gt;
+&lt;P&gt;These pages may freely searched and displayed.  Permission must be received for subsequent distribution in print or electronically.  Please contact dlps-help[at]umich.edu for more information.&lt;/P&gt;
+&lt;/AVAILABILITY&gt;&lt;/PUBLICATIONSTMT&gt;
+&lt;SOURCEDESC&gt;
+&lt;BIBLFULL&gt;
+&lt;TITLESTMT&gt;
+&lt;TITLE TYPE="245"&gt;The first book of etymology, designed to promote precision in the use, and facilitate the acquisition of a knowledge of the English language. For beginners. By James Lynd.&lt;/TITLE&gt;
+&lt;AUTHOR&gt;Lynd, James.&lt;/AUTHOR&gt;
+&lt;/TITLESTMT&gt;
+&lt;EDITIONSTMT&gt;&lt;EDITION&gt;Revised edition.&lt;/EDITION&gt;
+&lt;/EDITIONSTMT&gt;
+&lt;EXTENT&gt;215 p. 20 cm.&lt;/EXTENT&gt;
+&lt;PUBLICATIONSTMT&gt;&lt;PUBPLACE&gt;Philadelphia,&lt;/PUBPLACE&gt;&lt;PUBLISHER&gt;E. C. &amp; J. Biddle,&lt;/PUBLISHER&gt;&lt;DATE&gt;1853.&lt;/DATE&gt;&lt;/PUBLICATIONSTMT&gt;
+&lt;/BIBLFULL&gt;
+&lt;/SOURCEDESC&gt;
+&lt;/FILEDESC&gt;
+&lt;ENCODINGDESC&gt;&lt;PROJECTDESC&gt;&lt;P&gt;Header created with script marc2tei.pl on 2001-01-27.&lt;/P&gt;&lt;/PROJECTDESC&gt;&lt;EDITORIALDECL N="1"&gt;&lt;P&gt;This electronic text file was created by Optical Character Recognition (OCR).  No corrections have been made to the OCR-ed text and no editing has been done to the content of the original document.  Encoding has been done through an automated process using the recommendations for Level 1 of the TEI in Libraries Guidelines.  Digital page images are linked to the text file.&lt;/P&gt;&lt;/EDITORIALDECL&gt;&lt;/ENCODINGDESC&gt;&lt;PROFILEDESC&gt;
+&lt;TEXTCLASS&gt;
+&lt;KEYWORDS&gt;&lt;TERM&gt;English language -- Etymology&lt;/TERM&gt;&lt;/KEYWORDS&gt;
+&lt;/TEXTCLASS&gt;&lt;/PROFILEDESC&gt;
+&lt;/HEADER&gt;'
+            'rawsize' =&gt; 1969
+            'start' =&gt; 28072964
+            'type' =&gt; 'RSet Raw'
+            'xpat' =&gt; XPat=HASH(0xb5cefc)
+               -&gt; REUSED_ADDRESS
+         28593651 =&gt; HASH(0xc19148)
+            'label' =&gt; 'mainheader96a76ee5eda39508064d770be7ac1e1d'
+            'raw' =&gt; '&lt;HEADER&gt;&lt;FILEDESC&gt;
+&lt;TITLESTMT&gt;
+&lt;TITLE TYPE="245"&gt;An elementary dictionary of the English language. By Joseph E. Worcester, LL. D.&lt;/TITLE&gt;
+&lt;AUTHOR&gt;Worcester, Joseph E. (Joseph Emerson), 1784-1865,&lt;/AUTHOR&gt;
+&lt;/TITLESTMT&gt;
+&lt;EXTENT&gt;402 600dpi TIFF G4 page images&lt;/EXTENT&gt;
+&lt;PUBLICATIONSTMT&gt;
+&lt;PUBLISHER&gt;University of Michigan, Digital Library Production Service&lt;/PUBLISHER&gt;&lt;PUBPLACE&gt;Ann Arbor, Michigan&lt;/PUBPLACE&gt;
+&lt;DATE&gt;2000&lt;/DATE&gt;
+&lt;IDNO TYPE="dlps"&gt;AAM9359.0001.001&lt;/IDNO&gt;
+&lt;AVAILABILITY&gt;
+&lt;P&gt;These pages may freely searched and displayed.  Permission must be received for subsequent distribution in print or electronically.  Please contact dlps-help[at]umich.edu for more information.&lt;/P&gt;
+&lt;/AVAILABILITY&gt;&lt;/PUBLICATIONSTMT&gt;
+&lt;SOURCEDESC&gt;
+&lt;BIBLFULL&gt;
+&lt;TITLESTMT&gt;
+&lt;TITLE TYPE="245"&gt;An elementary dictionary of the English language. By Joseph E. Worcester, LL. D.&lt;/TITLE&gt;
+&lt;AUTHOR&gt;Worcester, Joseph E. (Joseph Emerson), 1784-1865,&lt;/AUTHOR&gt;
+&lt;/TITLESTMT&gt;
+&lt;EDITIONSTMT&gt;&lt;EDITION&gt;A new ed., rev. and enl.&lt;/EDITION&gt;
+&lt;/EDITIONSTMT&gt;
+&lt;EXTENT&gt;400 p. 19 cm.&lt;/EXTENT&gt;
+&lt;PUBLICATIONSTMT&gt;&lt;PUBPLACE&gt;Boston,&lt;/PUBPLACE&gt;&lt;PUBLISHER&gt;Swan, Brewer and Tileston,&lt;/PUBLISHER&gt;&lt;DATE&gt;1860.&lt;/DATE&gt;&lt;/PUBLICATIONSTMT&gt;
+&lt;/BIBLFULL&gt;
+&lt;/SOURCEDESC&gt;
+&lt;/FILEDESC&gt;
+&lt;ENCODINGDESC&gt;&lt;PROJECTDESC&gt;&lt;P&gt;Header created with script marc2tei.pl on 2001-01-27.&lt;/P&gt;&lt;/PROJECTDESC&gt;&lt;EDITORIALDECL N="1"&gt;&lt;P&gt;This electronic text file was created by Optical Character Recognition (OCR).  No corrections have been made to the OCR-ed text and no editing has been done to the content of the original document.  Encoding has been done through an automated process using the recommendations for Level 1 of the TEI in Libraries Guidelines.  Digital page images are linked to the text file.&lt;/P&gt;&lt;/EDITORIALDECL&gt;&lt;/ENCODINGDESC&gt;&lt;PROFILEDESC&gt;
+&lt;TEXTCLASS&gt;
+&lt;KEYWORDS&gt;&lt;TERM&gt;English language -- Dictionaries&lt;/TERM&gt;&lt;/KEYWORDS&gt;
+&lt;/TEXTCLASS&gt;&lt;/PROFILEDESC&gt;
+&lt;/HEADER&gt;'
+            'rawsize' =&gt; 1870
+            'start' =&gt; 28593651
+            'type' =&gt; 'RSet Raw'
+            'xpat' =&gt; XPat=HASH(0xb5cefc)
+               -&gt; REUSED_ADDRESS
+         31044507 =&gt; HASH(0xc191a8)
+            'label' =&gt; 'mainheader96a76ee5eda39508064d770be7ac1e1d'
+            'raw' =&gt; '&lt;HEADER&gt;&lt;FILEDESC&gt;
+&lt;TITLESTMT&gt;
+&lt;TITLE TYPE="245"&gt;Rambles among words: their poetry, history and wisdom. By William Swinton.&lt;/TITLE&gt;
+&lt;AUTHOR&gt;Swinton, William, 1833-1892.&lt;/AUTHOR&gt;
+&lt;/TITLESTMT&gt;
+&lt;EXTENT&gt;310 600dpi TIFF G4 page images&lt;/EXTENT&gt;
+&lt;PUBLICATIONSTMT&gt;
+&lt;PUBLISHER&gt;University of Michigan, Digital Library Production Service&lt;/PUBLISHER&gt;&lt;PUBPLACE&gt;Ann Arbor, Michigan&lt;/PUBPLACE&gt;
+&lt;DATE&gt;2000&lt;/DATE&gt;
+&lt;IDNO TYPE="dlps"&gt;AAM9364.0001.001&lt;/IDNO&gt;
+&lt;AVAILABILITY&gt;
+&lt;P&gt;These pages may freely searched and displayed.  Permission must be received for subsequent distribution in print or electronically.  Please contact dlps-help[at]umich.edu for more information.&lt;/P&gt;
+&lt;/AVAILABILITY&gt;&lt;/PUBLICATIONSTMT&gt;
+&lt;SOURCEDESC&gt;
+&lt;BIBLFULL&gt;
+&lt;TITLESTMT&gt;
+&lt;TITLE TYPE="245"&gt;Rambles among words: their poetry, history and wisdom. By William Swinton.&lt;/TITLE&gt;
+&lt;AUTHOR&gt;Swinton, William, 1833-1892.&lt;/AUTHOR&gt;
+&lt;/TITLESTMT&gt;
+&lt;EDITIONSTMT&gt;&lt;EDITION&gt;Rev. ed.&lt;/EDITION&gt;
+&lt;/EDITIONSTMT&gt;
+&lt;EXTENT&gt;iv p., 1 L., [7]-302 p. 18 cm.&lt;/EXTENT&gt;
+&lt;PUBLICATIONSTMT&gt;&lt;PUBPLACE&gt;New York,&lt;/PUBPLACE&gt;&lt;PUBPLACE&gt;Chicago,&lt;/PUBPLACE&gt;&lt;PUBLISHER&gt;Ivison, Blakeman, Taylor &amp; co.,&lt;/PUBLISHER&gt;&lt;DATE&gt;1872.&lt;/DATE&gt;&lt;/PUBLICATIONSTMT&gt;
+&lt;/BIBLFULL&gt;
+&lt;/SOURCEDESC&gt;
+&lt;/FILEDESC&gt;
+&lt;ENCODINGDESC&gt;&lt;PROJECTDESC&gt;&lt;P&gt;Header created with script marc2tei.pl on 2001-01-27.&lt;/P&gt;&lt;/PROJECTDESC&gt;&lt;EDITORIALDECL N="1"&gt;&lt;P&gt;This electronic text file was created by Optical Character Recognition (OCR).  No corrections have been made to the OCR-ed text and no editing has been done to the content of the original document.  Encoding has been done through an automated process using the recommendations for Level 1 of the TEI in Libraries Guidelines.  Digital page images are linked to the text file.&lt;/P&gt;&lt;/EDITORIALDECL&gt;&lt;/ENCODINGDESC&gt;&lt;PROFILEDESC&gt;
+&lt;TEXTCLASS&gt;
+&lt;KEYWORDS&gt;&lt;TERM&gt;English language -- Semantics&lt;/TERM&gt;&lt;/KEYWORDS&gt;
+&lt;/TEXTCLASS&gt;&lt;/PROFILEDESC&gt;
+&lt;/HEADER&gt;'
+            'rawsize' =&gt; 1854
+            'start' =&gt; 31044507
+            'type' =&gt; 'RSet Raw'
+            'xpat' =&gt; XPat=HASH(0xb5cefc)
+               -&gt; REUSED_ADDRESS
+         31457014 =&gt; HASH(0xc19208)
+            'label' =&gt; 'mainheader96a76ee5eda39508064d770be7ac1e1d'
+            'raw' =&gt; '&lt;HEADER&gt;&lt;FILEDESC&gt;
+&lt;TITLESTMT&gt;
+&lt;TITLE TYPE="245"&gt;An etymological dictionary of the English language by John Oswald.&lt;/TITLE&gt;
+&lt;AUTHOR&gt;Oswald, John.&lt;/AUTHOR&gt;
+&lt;/TITLESTMT&gt;
+&lt;EXTENT&gt;600 600dpi TIFF G4 page images&lt;/EXTENT&gt;
+&lt;PUBLICATIONSTMT&gt;
+&lt;PUBLISHER&gt;University of Michigan, Digital Library Production Service&lt;/PUBLISHER&gt;&lt;PUBPLACE&gt;Ann Arbor, Michigan&lt;/PUBPLACE&gt;
+&lt;DATE&gt;2000&lt;/DATE&gt;
+&lt;IDNO TYPE="dlps"&gt;AAM9499.0001.001&lt;/IDNO&gt;
+&lt;AVAILABILITY&gt;
+&lt;P&gt;These pages may freely searched and displayed.  Permission must be received for subsequent distribution in print or electronically.  Please contact dlps-help[at]umich.edu for more information.&lt;/P&gt;
+&lt;/AVAILABILITY&gt;&lt;/PUBLICATIONSTMT&gt;
+&lt;SOURCEDESC&gt;
+&lt;BIBLFULL&gt;
+&lt;TITLESTMT&gt;
+&lt;TITLE TYPE="245"&gt;An etymological dictionary of the English language by John Oswald.&lt;/TITLE&gt;
+&lt;AUTHOR&gt;Oswald, John.&lt;/AUTHOR&gt;
+&lt;/TITLESTMT&gt;
+&lt;EDITIONSTMT&gt;&lt;EDITION&gt;New ed. by Joseph Thomas. Rev. by J. M. Keagy. To which is appended a key, referring the English derivatives in part III to their appropriate Latin, Greek, or other roots, by James Lynd.&lt;/EDITION&gt;
+&lt;/EDITIONSTMT&gt;
+&lt;EXTENT&gt;xxxvi, [19]-523, 58 p. 20 cm.&lt;/EXTENT&gt;
+&lt;PUBLICATIONSTMT&gt;&lt;PUBPLACE&gt;Philadelphia,&lt;/PUBPLACE&gt;&lt;PUBLISHER&gt;E. C. &amp; J. Biddle;&lt;/PUBLISHER&gt;&lt;PUBLISHER&gt;Claxton, Remsen &amp; Haffelfinger,&lt;/PUBLISHER&gt;&lt;DATE&gt;1868.&lt;/DATE&gt;&lt;/PUBLICATIONSTMT&gt;
+&lt;/BIBLFULL&gt;
+&lt;/SOURCEDESC&gt;&lt;/FILEDESC&gt;
+&lt;ENCODINGDESC&gt;&lt;PROJECTDESC&gt;&lt;P&gt;Header created with script marc2tei.pl on 2001-01-27.&lt;/P&gt;&lt;/PROJECTDESC&gt;&lt;EDITORIALDECL N="1"&gt;&lt;P&gt;This electronic text file was created by Optical Character Recognition (OCR).  No corrections have been made to the OCR-ed text and no editing has been done to the content of the original document.  Encoding has been done through an automated process using the recommendations for Level 1 of the TEI in Libraries Guidelines.  Digital page images are linked to the text file.&lt;/P&gt;&lt;/EDITORIALDECL&gt;&lt;/ENCODINGDESC&gt;&lt;PROFILEDESC&gt;
+&lt;TEXTCLASS&gt;
+&lt;KEYWORDS&gt;&lt;TERM&gt;English language -- Etymology&lt;/TERM&gt;&lt;/KEYWORDS&gt;
+&lt;/TEXTCLASS&gt;&lt;/PROFILEDESC&gt;
+&lt;/HEADER&gt;'
+            'rawsize' =&gt; 2004
+            'start' =&gt; 31457014
+            'type' =&gt; 'RSet Raw'
+            'xpat' =&gt; XPat=HASH(0xb5cefc)
+               -&gt; REUSED_ADDRESS
+         3318574 =&gt; HASH(0xb69268)
+            'label' =&gt; 'mainheader96a76ee5eda39508064d770be7ac1e1d'
+            'raw' =&gt; '&lt;HEADER&gt;&lt;FILEDESC&gt;
+&lt;TITLESTMT&gt;
+&lt;TITLE TYPE="245"&gt;History of the peace: being a history of England from 1816 to 1854. With an introduction 1800 to 1815. By Harriet Martineau.&lt;/TITLE&gt;
+&lt;AUTHOR&gt;Martineau, Harriet, 1802-1876.&lt;/AUTHOR&gt;
+&lt;/TITLESTMT&gt;
+&lt;EXTENT&gt;512 600dpi TIFF G4 page images&lt;/EXTENT&gt;
+&lt;PUBLICATIONSTMT&gt;
+&lt;PUBLISHER&gt;University of Michigan, Digital Library Production Service&lt;/PUBLISHER&gt;&lt;PUBPLACE&gt;Ann Arbor, Michigan&lt;/PUBPLACE&gt;
+&lt;DATE&gt;2000&lt;/DATE&gt;
+&lt;IDNO TYPE="dlps"&gt;AAM1569.0002.001&lt;/IDNO&gt;
+&lt;AVAILABILITY&gt;
+&lt;P&gt;These pages may freely searched and displayed.  Permission must be received for subsequent distribution in print or electronically.  Please contact dlps-help[at]umich.edu for more information.&lt;/P&gt;
+&lt;/AVAILABILITY&gt;&lt;/PUBLICATIONSTMT&gt;
+&lt;SOURCEDESC&gt;
+&lt;BIBLFULL&gt;
+&lt;TITLESTMT&gt;
+&lt;TITLE TYPE="245"&gt;History of the peace: being a history of England from 1816 to 1854. With an introduction 1800 to 1815. By Harriet Martineau.&lt;/TITLE&gt;
+&lt;AUTHOR&gt;Martineau, Harriet, 1802-1876.&lt;/AUTHOR&gt;
+&lt;/TITLESTMT&gt;
+&lt;EXTENT&gt;4 v. 21 cm.&lt;/EXTENT&gt;
+&lt;PUBLICATIONSTMT&gt;&lt;PUBPLACE&gt;Boston,&lt;/PUBPLACE&gt;&lt;PUBLISHER&gt;Walker, Wise, and company,&lt;/PUBLISHER&gt;&lt;DATE&gt;1865-66.&lt;/DATE&gt;&lt;/PUBLICATIONSTMT&gt;&lt;NOTESSTMT&gt;&lt;NOTE&gt;Book 1 (215 p.) was begun by Charles Knight and completed by G. L. Craik.&lt;/NOTE&gt;&lt;NOTE&gt;Vols. 3-4 published by Walker, Fuller &amp; company.&lt;/NOTE&gt;&lt;/NOTESSTMT&gt;
+&lt;/BIBLFULL&gt;
+&lt;/SOURCEDESC&gt;&lt;/FILEDESC&gt;
+&lt;ENCODINGDESC&gt;&lt;PROJECTDESC&gt;&lt;P&gt;Header created with script marc2tei.pl on 2001-01-27.&lt;/P&gt;&lt;/PROJECTDESC&gt;&lt;EDITORIALDECL N="1"&gt;&lt;P&gt;This electronic text file was created by Optical Character Recognition (OCR).  No corrections have been made to the OCR-ed text and no editing has been done to the content of the original document.  Encoding has been done through an automated process using the recommendations for Level 1 of the TEI in Libraries Guidelines.  Digital page images are linked to the text file.&lt;/P&gt;&lt;/EDITORIALDECL&gt;&lt;/ENCODINGDESC&gt;&lt;PROFILEDESC&gt;
+&lt;TEXTCLASS&gt;
+&lt;KEYWORDS&gt;&lt;TERM&gt;Great Britain -- History -- 19th century&lt;/TERM&gt;&lt;/KEYWORDS&gt;
+&lt;/TEXTCLASS&gt;&lt;/PROFILEDESC&gt;
+&lt;/HEADER&gt;'
+            'rawsize' =&gt; 2030
+            'start' =&gt; 3318574
+            'type' =&gt; 'RSet Raw'
+            'xpat' =&gt; XPat=HASH(0xb5cefc)
+               -&gt; REUSED_ADDRESS
+         4780206 =&gt; HASH(0xb69190)
+            'label' =&gt; 'mainheader96a76ee5eda39508064d770be7ac1e1d'
+            'raw' =&gt; '&lt;HEADER&gt;&lt;FILEDESC&gt;
+&lt;TITLESTMT&gt;
+&lt;TITLE TYPE="245"&gt;History of the peace: being a history of England from 1816 to 1854. With an introduction 1800 to 1815. By Harriet Martineau.&lt;/TITLE&gt;
+&lt;AUTHOR&gt;Martineau, Harriet, 1802-1876.&lt;/AUTHOR&gt;
+&lt;/TITLESTMT&gt;
+&lt;EXTENT&gt;590 600dpi TIFF G4 page images&lt;/EXTENT&gt;
+&lt;PUBLICATIONSTMT&gt;
+&lt;PUBLISHER&gt;University of Michigan, Digital Library Production Service&lt;/PUBLISHER&gt;&lt;PUBPLACE&gt;Ann Arbor, Michigan&lt;/PUBPLACE&gt;
+&lt;DATE&gt;2000&lt;/DATE&gt;
+&lt;IDNO TYPE="dlps"&gt;AAM1569.0003.001&lt;/IDNO&gt;
+&lt;AVAILABILITY&gt;
+&lt;P&gt;These pages may freely searched and displayed.  Permission must be received for subsequent distribution in print or electronically.  Please contact dlps-help[at]umich.edu for more information.&lt;/P&gt;
+&lt;/AVAILABILITY&gt;&lt;/PUBLICATIONSTMT&gt;
+&lt;SOURCEDESC&gt;
+&lt;BIBLFULL&gt;
+&lt;TITLESTMT&gt;
+&lt;TITLE TYPE="245"&gt;History of the peace: being a history of England from 1816 to 1854. With an introduction 1800 to 1815. By Harriet Martineau.&lt;/TITLE&gt;
+&lt;AUTHOR&gt;Martineau, Harriet, 1802-1876.&lt;/AUTHOR&gt;
+&lt;/TITLESTMT&gt;
+&lt;EXTENT&gt;4 v. 21 cm.&lt;/EXTENT&gt;
+&lt;PUBLICATIONSTMT&gt;&lt;PUBPLACE&gt;Boston,&lt;/PUBPLACE&gt;&lt;PUBLISHER&gt;Walker, Wise, and company,&lt;/PUBLISHER&gt;&lt;DATE&gt;1865-66.&lt;/DATE&gt;&lt;/PUBLICATIONSTMT&gt;&lt;NOTESSTMT&gt;&lt;NOTE&gt;Book 1 (215 p.) was begun by Charles Knight and completed by G. L. Craik.&lt;/NOTE&gt;&lt;NOTE&gt;Vols. 3-4 published by Walker, Fuller &amp; company.&lt;/NOTE&gt;&lt;/NOTESSTMT&gt;
+&lt;/BIBLFULL&gt;
+&lt;/SOURCEDESC&gt;&lt;/FILEDESC&gt;
+&lt;ENCODINGDESC&gt;&lt;PROJECTDESC&gt;&lt;P&gt;Header created with script marc2tei.pl on 2001-01-27.&lt;/P&gt;&lt;/PROJECTDESC&gt;&lt;EDITORIALDECL N="1"&gt;&lt;P&gt;This electronic text file was created by Optical Character Recognition (OCR).  No corrections have been made to the OCR-ed text and no editing has been done to the content of the original document.  Encoding has been done through an automated process using the recommendations for Level 1 of the TEI in Libraries Guidelines.  Digital page images are linked to the text file.&lt;/P&gt;&lt;/EDITORIALDECL&gt;&lt;/ENCODINGDESC&gt;&lt;PROFILEDESC&gt;
+&lt;TEXTCLASS&gt;
+&lt;KEYWORDS&gt;&lt;TERM&gt;Great Britain -- History -- 19th century&lt;/TERM&gt;&lt;/KEYWORDS&gt;
+&lt;/TEXTCLASS&gt;&lt;/PROFILEDESC&gt;
+&lt;/HEADER&gt;'
+            'rawsize' =&gt; 2030
+            'start' =&gt; 4780206
+            'type' =&gt; 'RSet Raw'
+            'xpat' =&gt; XPat=HASH(0xb5cefc)
+               -&gt; REUSED_ADDRESS
+         6468810 =&gt; HASH(0xbb5534)
+            'label' =&gt; 'mainheader96a76ee5eda39508064d770be7ac1e1d'
+            'raw' =&gt; '&lt;HEADER&gt;&lt;FILEDESC&gt;
+&lt;TITLESTMT&gt;
+&lt;TITLE TYPE="245"&gt;History of the peace: being a history of England from 1816 to 1854. With an introduction 1800 to 1815. By Harriet Martineau.&lt;/TITLE&gt;
+&lt;AUTHOR&gt;Martineau, Harriet, 1802-1876.&lt;/AUTHOR&gt;
+&lt;/TITLESTMT&gt;
+&lt;EXTENT&gt;680 600dpi TIFF G4 page images&lt;/EXTENT&gt;
+&lt;PUBLICATIONSTMT&gt;
+&lt;PUBLISHER&gt;University of Michigan, Digital Library Production Service&lt;/PUBLISHER&gt;&lt;PUBPLACE&gt;Ann Arbor, Michigan&lt;/PUBPLACE&gt;
+&lt;DATE&gt;2000&lt;/DATE&gt;
+&lt;IDNO TYPE="dlps"&gt;AAM1569.0004.001&lt;/IDNO&gt;
+&lt;AVAILABILITY&gt;
+&lt;P&gt;These pages may freely searched and displayed.  Permission must be received for subsequent distribution in print or electronically.  Please contact dlps-help[at]umich.edu for more information.&lt;/P&gt;
+&lt;/AVAILABILITY&gt;&lt;/PUBLICATIONSTMT&gt;
+&lt;SOURCEDESC&gt;
+&lt;BIBLFULL&gt;
+&lt;TITLESTMT&gt;
+&lt;TITLE TYPE="245"&gt;History of the peace: being a history of England from 1816 to 1854. With an introduction 1800 to 1815. By Harriet Martineau.&lt;/TITLE&gt;
+&lt;AUTHOR&gt;Martineau, Harriet, 1802-1876.&lt;/AUTHOR&gt;
+&lt;/TITLESTMT&gt;
+&lt;EXTENT&gt;4 v. 21 cm.&lt;/EXTENT&gt;
+&lt;PUBLICATIONSTMT&gt;&lt;PUBPLACE&gt;Boston,&lt;/PUBPLACE&gt;&lt;PUBLISHER&gt;Walker, Wise, and company,&lt;/PUBLISHER&gt;&lt;DATE&gt;1865-66.&lt;/DATE&gt;&lt;/PUBLICATIONSTMT&gt;&lt;NOTESSTMT&gt;&lt;NOTE&gt;Book 1 (215 p.) was begun by Charles Knight and completed by G. L. Craik.&lt;/NOTE&gt;&lt;NOTE&gt;Vols. 3-4 published by Walker, Fuller &amp; company.&lt;/NOTE&gt;&lt;/NOTESSTMT&gt;
+&lt;/BIBLFULL&gt;
+&lt;/SOURCEDESC&gt;&lt;/FILEDESC&gt;
+&lt;ENCODINGDESC&gt;&lt;PROJECTDESC&gt;&lt;P&gt;Header created with script marc2tei.pl on 2001-01-27.&lt;/P&gt;&lt;/PROJECTDESC&gt;&lt;EDITORIALDECL N="1"&gt;&lt;P&gt;This electronic text file was created by Optical Character Recognition (OCR).  No corrections have been made to the OCR-ed text and no editing has been done to the content of the original document.  Encoding has been done through an automated process using the recommendations for Level 1 of the TEI in Libraries Guidelines.  Digital page images are linked to the text file.&lt;/P&gt;&lt;/EDITORIALDECL&gt;&lt;/ENCODINGDESC&gt;&lt;PROFILEDESC&gt;
+&lt;TEXTCLASS&gt;
+&lt;KEYWORDS&gt;&lt;TERM&gt;Great Britain -- History -- 19th century&lt;/TERM&gt;&lt;/KEYWORDS&gt;
+&lt;/TEXTCLASS&gt;&lt;/PROFILEDESC&gt;
+&lt;/HEADER&gt;'
+            'rawsize' =&gt; 2030
+            'start' =&gt; 6468810
+            'type' =&gt; 'RSet Raw'
+            'xpat' =&gt; XPat=HASH(0xb5cefc)
+               -&gt; REUSED_ADDRESS
+         8537599 =&gt; HASH(0xba248c)
+            'label' =&gt; 'mainheader96a76ee5eda39508064d770be7ac1e1d'
+            'raw' =&gt; '&lt;HEADER&gt;&lt;FILEDESC&gt;
+&lt;TITLESTMT&gt;
+&lt;TITLE TYPE="245"&gt;Atrocious judges. Lives of judges infamous as tools of tyrants and instruments of oppression. Compiled from the judicial biographies of John lord Campbell. With an appendix, containing the case of Passmore Williamson. Edited, with an introduction and notes, by Richard Hildreth.&lt;/TITLE&gt;
+&lt;AUTHOR&gt;Campbell, John Campbell, Baron, 1779-1861.&lt;/AUTHOR&gt;
+&lt;/TITLESTMT&gt;
+&lt;EXTENT&gt;436 600dpi TIFF G4 page images&lt;/EXTENT&gt;
+&lt;PUBLICATIONSTMT&gt;
+&lt;PUBLISHER&gt;University of Michigan, Digital Library Production Service&lt;/PUBLISHER&gt;&lt;PUBPLACE&gt;Ann Arbor, Michigan&lt;/PUBPLACE&gt;
+&lt;DATE&gt;2000&lt;/DATE&gt;
+&lt;IDNO TYPE="dlps"&gt;AAM6518.0001.001&lt;/IDNO&gt;
+&lt;AVAILABILITY&gt;
+&lt;P&gt;These pages may freely searched and displayed.  Permission must be received for subsequent distribution in print or electronically.  Please contact dlps-help[at]umich.edu for more information.&lt;/P&gt;
+&lt;/AVAILABILITY&gt;&lt;/PUBLICATIONSTMT&gt;
+&lt;SOURCEDESC&gt;
+&lt;BIBLFULL&gt;
+&lt;TITLESTMT&gt;
+&lt;TITLE TYPE="245"&gt;Atrocious judges. Lives of judges infamous as tools of tyrants and instruments of oppression. Compiled from the judicial biographies of John lord Campbell. With an appendix, containing the case of Passmore Williamson. Edited, with an introduction and notes, by Richard Hildreth.&lt;/TITLE&gt;
+&lt;AUTHOR&gt;Campbell, John Campbell, Baron, 1779-1861.&lt;/AUTHOR&gt;
+&lt;/TITLESTMT&gt;
+&lt;EXTENT&gt;432 p. 19 cm.&lt;/EXTENT&gt;
+&lt;PUBLICATIONSTMT&gt;&lt;PUBPLACE&gt;New York;&lt;/PUBPLACE&gt;&lt;PUBPLACE&gt;Auburn,&lt;/PUBPLACE&gt;&lt;PUBLISHER&gt;Miller, Orton &amp; Mulligan,&lt;/PUBLISHER&gt;&lt;DATE&gt;1856.&lt;/DATE&gt;&lt;/PUBLICATIONSTMT&gt;&lt;NOTESSTMT&gt;&lt;NOTE&gt;Passmore Williamson was imprisoned for contempt of court in refusing to answer to a writ of habeas corpus, issued by the U.S. District court for the Eastern district of Pennsylvania, commanding him to produce the bodies of Jane, Daniel and Isaiah Johnson, slaves of John H. Wheeler. He petitioned the Supreme court of Pennsylvania for a writ of habeas corpus, which was denied.&lt;/NOTE&gt;&lt;NOTE&gt;Introduction.--Roger Le Brabancon.--Robert Tresilian.--Thomas Billing.-- John Fitzjames.--Thomas Fleming.--Nicholas Hyde.--John Brampston.--Robert Heath.--Robert Foster.--Robert Hyde.--John Kelynge.--William Scroggs.--Francis North.--Edmund Saunders.--George Jeffreys.--Robert Wright.--Appendix.&lt;/NOTE&gt;&lt;/NOTESSTMT&gt;
+&lt;/BIBLFULL&gt;
+&lt;/SOURCEDESC&gt;&lt;/FILEDESC&gt;
+&lt;ENCODINGDESC&gt;&lt;PROJECTDESC&gt;&lt;P&gt;Header created with script marc2tei.pl on 2001-01-27.&lt;/P&gt;&lt;/PROJECTDESC&gt;&lt;EDITORIALDECL N="1"&gt;&lt;P&gt;This electronic text file was created by Optical Character Recognition (OCR).  No corrections have been made to the OCR-ed text and no editing has been done to the content of the original document.  Encoding has been done through an automated process using the recommendations for Level 1 of the TEI in Libraries Guidelines.  Digital page images are linked to the text file.&lt;/P&gt;&lt;/EDITORIALDECL&gt;&lt;/ENCODINGDESC&gt;&lt;PROFILEDESC&gt;
+&lt;TEXTCLASS&gt;
+&lt;KEYWORDS&gt;&lt;TERM&gt;Johnson, Jane, -- b. 1820?&lt;/TERM&gt;&lt;TERM&gt;Judges -- Great Britain.&lt;/TERM&gt;&lt;TERM&gt;Contempt of court&lt;/TERM&gt;&lt;TERM&gt;Habeas corpus -- United States.&lt;/TERM&gt;&lt;TERM&gt;Slavery -- United States -- Legal status of slaves in free states.&lt;/TERM&gt;&lt;/KEYWORDS&gt;
+&lt;/TEXTCLASS&gt;&lt;/PROFILEDESC&gt;
+&lt;/HEADER&gt;'
+            'rawsize' =&gt; 3117
+            'start' =&gt; 8537599
+            'type' =&gt; 'RSet Raw'
+            'xpat' =&gt; XPat=HASH(0xb5cefc)
+               -&gt; REUSED_ADDRESS
+   'ssizesearches' =&gt; HASH(0xb6884c)
+      '/l2/idx/m/moa1/moa1.dd' =&gt; HASH(0xb68870)
+         'mainslicesearch96a76ee5eda39508064d770be7ac1e1d' =&gt; 25
+         'slicesearch96a76ee5eda39508064d770be7ac1e1d' =&gt; 25
+   'stats' =&gt; HASH(0xb67738)
+      'slice' =&gt; undef
+      'slicesize' =&gt; 25
+      'start' =&gt; 1
+  DB&lt;4&gt; 
+
+</PRE>
+
+</BODY>
+</HTML>

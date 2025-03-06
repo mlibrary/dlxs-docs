@@ -1,0 +1,82 @@
+<html>
+<head>
+<title>Text Class General Page Layout and Color</title>
+
+
+
+ </head>         <BODY>
+<table class="updateTable" CELLSPACING="3" CELLPADDING="3" border="1">
+<tr>
+<td>Last updated</td>
+<td>2003-03-03 16:50:11 EST</td>
+</tr>
+<tr>
+<td>Doc Title</td>
+<td>Text Class General Page Layout and Color</td>
+</tr>
+<tr>
+<td>Author 1</td>
+<td>Stoeffler, Matt</td>
+</tr>
+<tr>
+<td>CVS Revision</td>
+<td>$Revision: 1.6 $</td>
+</tr>
+</table>
+
+<DIV CLASS="pageTitle">Text Class general page layout and color</div>
+        
+            <P>Default page delivery in Text Class is done via class-level templates that are shared
+                by all instances of the class, though the middleware also supports
+                collection-specific templates for any or all page-based behavior within the class.
+                All default Text Class page templates are based on the same layout approach, which
+                relies on tables (along with transparent spacer gifs) for all positioning and
+                general color or graphic appearance. General layout is shown in <STRONG>Figure 1
+                </STRONG>, which shows top-level tables with borders showing, and using the color
+                scheme for the Voltaire √©lectronique collection. All table cells for header and
+                navigation bar content at this level have default values for the
+                <CODE>bgcolor</CODE> attribute for browsers that are not CSS-capable. Each header
+                and navigation cell also has a default CSS class value and default background image
+                specified in the<CODE>background</CODE> attribute. The background colors created by
+                class and gif allow for flexibility to change appearances for different collections
+                based on the same template. For more on specifiying individual collection
+                appearance, see <a href="#tcIndCollChars">Specifying individual collection characteristics</A>.</P>
+            <TABLE BORDER="0" CELLPADDING="0" CELLSPACING="2">
+                <TBODY>
+                    <TR>
+                        <TD>
+                            <IMG ALT="gen-layout.gif" HEIGHT="368" SRC="graphics/gen-layout.gif" WIDTH="450"/>
+                        </TD>
+                    </TR>
+                    <TR>
+                        <TD>
+                            <STRONG>Figure 1 </STRONG>: top-level table structure of a typical page.</TD>
+                    </TR>
+                </TBODY>
+            </TABLE>
+            <BR/>
+            <P>
+                <STRONG>Figure 2 </STRONG> shows the simple search page for The American Verse
+                collection as it appears normally. Navigation bar labels, page text header markup
+                (not header text content, e.g., &quot;Basic Search&quot;), instruction text and
+                footer text are hard coded, and thus identical across all collections. All other
+                content is specified per collection by processing instructions.</P>
+            <P/>
+            <P/>
+            <TABLE BORDER="0" CELLPADDING="0" CELLSPACING="2">
+                <TBODY>
+                    <TR>
+                        <TD>
+                            <IMG ALT="amverse-basic.gif" SRC="graphics/amverse-basic.gif" STYLE="border: 1px solid 000000"/>
+                        </TD>
+                    </TR>
+                    <TR>
+                        <TD>
+                            <STRONG>Figure 2 </STRONG>: Basic search page for American Verse.</TD>
+                    </TR>
+                </TBODY>
+            </TABLE>
+        
+    </BODY>
+
+</html>

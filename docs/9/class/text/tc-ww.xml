@@ -1,0 +1,53 @@
+<?xml version="1.0"?>
+
+<!-- SPO Editorial Services                  -->
+<!-- automatically-generated XML header file -->
+
+<?xml-stylesheet href="../../../pre11-dlxsdocs.xsl" type="text/xsl"?>
+<!DOCTYPE DLPSDOC PUBLIC "-//UM-DLPS//DTD DLPS Publications//EN" "http://docs.umdl.umich.edu/dlps/docs/dlpsdocs.dtd">
+<DLPSDOC>
+<TITLE>Creating Text Class Word Wheels</TITLE>
+<HEADER>
+<JOURNAL>DLXS Documentation</JOURNAL>
+<PUBDATE>2002-07-08 12:21:49 EDT</PUBDATE>
+<AUTH1>Powell, Chris</AUTH1>
+<AUTH2></AUTH2>
+<DOCTITLE>Creating Text Class Word Wheels</DOCTITLE>
+<VOL>class</VOL>
+<ISS>text</ISS>
+<FILE>dlxsdocs-tc-ww</FILE>
+</HEADER>
+<BODY>
+<BHEAD>Creating Text Class Word Wheels</BHEAD>
+<DIV1>
+<H1>General Information</H1><P>The word wheel tools extract each word in a text and build it into a small SGML file, along with a count of the number of times the word appears in a given collection.  The SGML file is then normalized and indexed, ready to be used by the Text Class middleware.  </P><P>In order to make word wheels available for your collection, you must both build the word wheel and fill in the appropriate fields in the collection manager, indicating the location of the index (the <TT>wwdd</TT> field, usually containing <TT>/idx/c/collid/WW/collid.ww.dd</TT>) and the <TT>wwrealms</TT> and <TT>wwrealmseng</TT> fields, which identify the fields available (e.g., full text, author, title) and indicate how they should appear in the interface (e.g., perhaps as "Full Text" or "all the words" or some other variation on "full text").</P></DIV1><DIV1><H1>Building the Word Wheel</H1><P> In the DLXS release, there are files in the directory $DLXSROOT/bin/WW to help you build the word wheel.  The SGML file that this process creates will be created and stored in the directory <TT>/l1/prep/c/collid/WW</TT> which <B>must</B> exist before you begin running the scripts.
+
+The normalized SGML that results from running all the word wheel creation steps will be stored with the collection SGML in <TT>/l1/obj/c/collid</TT>, and the indexes and data dictionary will be stored in <TT> /l1/idx/c/collid/WW/</TT>.</P><OL><LI>Copy <TT>$DLXSROOT/bin/WW/sample.ww.blank.dd</TT> to
+   <TT>$DLXSROOT/idx/c/collid/WW/collid.ww.blank.dd</TT> and edit it to reflect the name of your collection.</LI><LI>Copy <TT>$DLXSROOT/bin/WW/sample.ww.inp</TT> to <TT>$DLXSROOT/idx/c/collid/WW/collid.ww.inp</TT> and
+   eidt it to add or point to any character entity declarations
+
+necessary for this collection</LI><LI> Copy <TT>$DLXSROOT/bin/WW/Makefile</TT> to <TT>$DLXSROOT/idx/c/collid/idx/WW/Makefile</TT> and
+   edit.
+
+</LI><LI> Copy <TT>$DLXSROOT/bin/WWmakeWordWheelFiles.sample.cfg</TT> to
+   <TT>$DLXSROOT/idx/c/collid/idx/WW/makeWordWheelFiles.cfg</TT> and edit to point to the proper directories.
+
+</LI><LI> cd to <TT>$DLXSROOT/idx/c/collid/WW</TT> and run:
+      <PRE>% $DLXSROOT/bin/WW/makeWordWheelFiles.pl makeWordWheelFiles.cfg
+
+   </PRE>This will create collid.ww.unnorm.sgm in <TT>$DLXSROOT/prep/c/collid/WW</TT>
+
+</LI><LI>collid.ww.unnorm is then normalized (in <TT>$DLXSROOT/obj/c/collid)</TT> and indexed by the
+   Makefile, thereby creating a XPAT indexed wordwheel file for your collection.</LI></OL><P>Note 1: Input to makeWordWheelFiles.pl as specified in the .cfg can
+consist of <B>one or more  </B>.sgm files, e.g., collections indexed with a single file or collections indexed through multi-file system indexing (MFS).</P><P>
+
+Note 2: The configuration (.cfg) file can specify an array of dd files for
+collections that have multiple indexes.
+
+Currently these two mechanisms are mutually exclusive.  Either a
+single collection can have multiple .dd files or a collection
+of multiple .sgm files will have a single index.
+</P>
+</DIV1>
+</BODY>
+</DLPSDOC>

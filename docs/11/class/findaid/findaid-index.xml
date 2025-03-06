@@ -1,0 +1,95 @@
+<?xml version="1.0"?>
+
+<!-- SPO Editorial Services                  -->
+<!-- automatically-generated XML header file -->
+
+<?xml-stylesheet href="../../../pre11-dlxsdocs.xsl" type="text/xsl"?>
+<!DOCTYPE DLPSDOC PUBLIC "-//UM-DLPS//DTD DLPS Publications//EN" "http://docs.umdl.umich.edu/dlps/docs/dlpsdocs.dtd">
+<DLPSDOC>
+<TITLE>Finding Aids Class</TITLE>
+<HEADER>
+<JOURNAL>DLXS Documentation</JOURNAL>
+<PUBDATE>2003-11-03 14:45:57 EST</PUBDATE>
+<AUTH1>Powell, Chris</AUTH1>
+<EMAIL1></EMAIL1>
+<AUTH2>Pagliere, Alan</AUTH2>
+<DOCTITLE>Finding Aids Class</DOCTITLE>
+<VOL>class</VOL>
+<ISS>findaid</ISS>
+<FILE>dlxsdocs-findaid-index</FILE>
+</HEADER>
+<BODY> 
+         <BHEAD>Finding Aids Class Documentation</BHEAD>
+         <DIV1> 
+            <UL> 
+               <LI> 
+                  <A HREF="findaid-overview.xml">Overview of Findaid Class, which 
+                     refers to a document explaining the origin and purposes of 
+                     classes</A>
+               </LI>
+               <LI>Programmer Middleware Documentation 
+                  <UL> 
+                     <LI> 
+                        <A HREF="../../intro/dlxs-install.xml">Installation of 
+                           Middleware</A>
+                     </LI>
+                     <LI> 
+                        <A HREF="../../program/dlxs-programming-index.xml">Other 
+                           General Programming Issues</A>
+                     </LI>
+                  </UL>
+               </LI>
+               <LI>Collection Coordinator Middleware Documentation 
+                  <UL> 
+                     <LI> 
+                        <A HREF="../../collmeta/dlxs-collmgr-fields.xml">Collection 
+                           Metadata Manager (collmgr) Fields </A>
+                     </LI>
+                     <LI> 
+                        <A HREF="../../collmeta/dlxs-maps.xml">DLXS Map Files</A> and 
+						<A HREF="findaid-map.xml">Finding Aids Map Files</A>
+                     </LI>
+                  	<LI>About the User Interface
+						<UL>
+							<LI>General Page Layout and Color: Execution of general page layout in 
+							Findaid Class is not
+							significantly different from that in Text Class.  See the
+							<A HREF="../text/tc-gen-pg-layout.xml">appropriate Text Class document</A>
+							</LI>
+							<LI>Specifying Individual Collection Characteristics: Execution of 
+							individual collection characteristics in findaid class is not significantly different from 
+							that in Text Class.  See the
+							 <A HREF="../text/tc-ind-coll-chars.xml">appropriate Text Class document</A>
+							</LI>
+							<LI><A HREF="fc-templates.xml">Findaid Class Templates</A></LI>
+							<LI><A HREF="fc-pis.xml">Processing Instructions (PIs)</A></LI>
+							<LI><A HREF="fc-graphics.xml">Findaid Class Graphics Files</A></LI>
+							<LI>The Findaid Class CSS Files: <A HREF="fc-findaidclass-css.xml">(findaidclass.css)</A>
+							and <A HREF="fc-findaid_results-css.xml">(findaid_results.css)</A>
+							</LI>
+						</UL>
+					</LI>
+                  </UL>
+               </LI>
+               <LI>Collection Preparation Documentation 
+                  <UL> 
+                     <LI>
+                        <A HREF="findaid-dtd.xml">The Findaid Class DTD 
+                           (ead2002.dtd)</A>
+                     </LI>
+                     <LI>
+                        <A HREF="findaid-prep.xml">Preparing Data for Index Building</A>
+                     </LI>
+                     <LI>
+                        <A HREF="findaid-indexing.xml">Indexing the Collection</A>
+                     </LI>
+                     <LI>
+                        <A HREF="findaid-fabrgn.xml">Fabricated Regions in Findaid 
+                           Class</A>
+                     </LI>
+                  </UL>
+               </LI>
+            </UL>
+         </DIV1>
+      </BODY>
+   </DLPSDOC>

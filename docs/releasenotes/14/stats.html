@@ -1,0 +1,160 @@
+
+==========================================================
+<H4>web/s/stats</H4>
+
+<UL>
+<LI> resource_level_report.xsl
+<UL>
+ <LI>Modify XSLT for new feature of display
+                aggregate stats row.</LI>
+ <LI>Get rid of 'aggregate_only' concept.</LI>
+ <LI>Modify the row counter to ensure that
+                the same number isn't used for more than one row.</LI></UL></LI>
+</UL>
+<UL>
+<LI> help/counter.html
+<UL>
+ <LI>Add documentation about new COUNTER
+                report Database Report 1.</LI></UL></LI>
+</UL>
+==========================================================
+<H4>bin/s/stats</H4>
+
+<UL>
+<LI> cron_copy_apache_log.sh
+<UL>
+ <LI>Simple script to move all Apache log
+                files (other than today's current log file) from /l/local/apache/logs
+                to /l1/prep/s/stats to be parsed for stats.</LI></UL></LI>
+</UL>
+<UL>
+<LI> cron_stats.sh
+<UL>
+ <LI>Modified to process any and all log
+                files in /l1/prep/s/stats/machinename and then gzip
+                them and move them to the logs/ subdirectory (in case
+                a day or more of log files was skipped).</LI></UL></LI>
+</UL>
+<UL>
+<LI> cvstag.stats
+<UL>
+ <LI>Add CvstagHelper</LI>
+ <LI>Add CvstagHelper</LI>
+ <LI>Kadd exit status</LI></UL></LI>
+</UL>
+<UL>
+<LI> port_old_stats_data.pl
+<UL>
+ <LI>Now have to pass Stats::Config object
+                to Stats::Map::Auth constructor.</LI>
+ <LI>Remove from repository. Not used.</LI></UL></LI>
+</UL>
+<UL>
+<LI> process_counter_queue.pl
+<UL>
+ <LI>Create lock file so only one 'process_counter_queue.pl'
+                process can run at a time.</LI>
+ <LI>Added tracking message when exiting
+                because a lock file exists.</LI>
+ <LI>Pass Stats::Config object to COUNTER
+                report creation method, rather than creating other
+                Stats::Config objects from within there.</LI>
+ <LI>Add support for COUNTER Database Report
+                1.</LI>
+ <LI>Send email to admin if process_counter_queue
+                lock file persists.</LI>
+ <LI>Delete rows from 'counter_jobs_queue'
+                table older than X days.</LI>
+ <LI>Remove institution from call to delete_counter_job()
+                (for cases where user is logged in but from unrecognized
+                IP address).</LI></UL></LI>
+</UL>
+<UL>
+<LI> rdist.class
+<UL>
+ <LI>storage server merge. all ridsts go
+                to NASDCMR = ( nas-dcmr.umdl.umich.edu ) NASHATCHER
+                = ( nas-hatcher.umdl.umich.edu ) HOSTS = ( ${NASDCMR}
+                ${NASHATCHER} )</LI>
+ <LI>Do install -oremove rather than just
+                install now on lib directory.</LI>
+ <LI>Add nas-macc (assam and bancha, which
+                are hosting MBooks) to list of destination production
+                servers.</LI></UL></LI>
+</UL>
+<UL>
+<LI> reprocess_stats.pl
+<UL>
+ <LI>Modify script to easily reprocess more
+                than one collection at a time.</LI></UL></LI>
+</UL>
+<UL>
+<LI> stParms.pm
+<UL>
+ <LI>obsolete</LI></UL></LI>
+</UL>
+<UL>
+<LI> stParseI.pl
+<UL>
+ <LI>obsolete</LI></UL></LI>
+</UL>
+<UL>
+<LI> stParseII.pl
+<UL>
+ <LI>obsolete</LI></UL></LI>
+</UL>
+<UL>
+<LI> st_agent.ctl
+<UL>
+ <LI>obsolete</LI></UL></LI>
+</UL>
+<UL>
+<LI> st_text.ctl
+<UL>
+ <LI>obsolete</LI></UL></LI>
+</UL>
+<UL>
+<LI> st_titl_usage.ctl
+<UL>
+ <LI>obsolete</LI></UL></LI>
+</UL>
+<UL>
+<LI> stats_driver.pl
+<UL>
+ <LI>Fixed bug that was causing some hits
+                to be counted towards 'Unknown' rather than the correct
+                institution ID. Idiot!</LI>
+ <LI>Allow for more than one --coll command
+                line parameter so we can run this script for just
+                certain collections (but more than just one).</LI>
+ <LI>If we're running the log parser for
+                just a particular collection, at ^ and $ to the regular
+                expression to match the collection ID exactly.</LI>
+ <LI>Now have to pass Stats::Config object
+                to Stats::Map::Auth constructor.</LI>
+ <LI>Output results even if we're not in
+                debug mode, so we can print them to the log file.</LI>
+ <LI>Just a change in debugging output.</LI></UL></LI>
+</UL>
+==========================================================
+<H4>bin/WW</H4>
+
+<UL>
+<LI> rdist.WW
+<UL>
+ <LI>storage server merge. all ridsts go
+                to NASDCMR = ( nas-dcmr.umdl.umich.edu ) NASHATCHER
+                = ( nas-hatcher.umdl.umich.edu ) HOSTS = ( ${NASDCMR}
+                ${NASHATCHER} )</LI></UL></LI>
+</UL>
+==========================================================
+<H4>cgi/s/stats</H4>
+
+==========================================================
+Log for directory  ( stats since 6apr2007 )
+
+==========================================================
+<H4>misc/s/stats/maps</H4>
+
+
+NOTE: /l1/misc/s/stats/maps/ does not exist

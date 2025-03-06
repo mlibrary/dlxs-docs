@@ -1,0 +1,160 @@
+<html>
+  <head>
+    <title><?TITLE></title>
+    <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+    <link rel="stylesheet" href="<?DOC_ROOT>textclass.css" type="text/css">
+    
+  </head>
+  
+  <body bgcolor="#FFFFFF" marginwidth="0" marginheight="0" leftmargin="0" topmargin="0">
+    <table width="100%" border="0" cellspacing="0" cellpadding="5" bgcolor="#FFFFFF">
+      <tr> 
+        <td valign="bottom" width="75%"> <a name="top"></a> 
+          <h3 class="tophead">
+            <?TITLE>
+          </h3>
+        </td>
+        <td valign="top" width="25%" align="right">
+
+
+          <?RE_AUTH_LINK>
+<!--
+          <a href="<?BOOKBAG_SEARCH_LINK>">
+            <img src="<?DOC_ROOT>images/bbag.gif" width="83" height="21" vspace="1" border="0">
+          </a>
+          &nbsp;<br>
+          <font class="navinfo" size="2">
+            <?BOOKBAG_ITEMS>
+          </font>
+-->
+        </td>
+      </tr>
+      <tr>
+        <!-- NAVBAR   -->
+        <td colspan="2" align="center" bgcolor="#666699" nowrap>
+          
+          <p>
+            <font color="#FFFFFF" class="navlinks">
+              <b>
+                <a href="<?BOOLEAN_SEARCH_LINK>" class="nav">boolean search</a>
+                |
+                <a href="<?PROXIMITY_SEARCH_LINK>" class="nav">proximity search</a>
+<!--
+                |
+                <a href="<?BIB_SEARCH_LINK>" class="nav">bibliography search</a>
+-->
+                |
+                <a href="<?SEARCH_HISTORY_LINK>" class="nav">history</a>
+                |
+                <a href="<?WORDWHEEL_SEARCH_LINK>" class="nav">wordwheel</a>
+                |
+                <a href="<?HELP_LINK>" class="nav">help</a>
+              </b>
+            </font>
+          </p>
+        </td>
+      </tr>
+    </table>
+    <!-- END NAVBAR  -->
+
+    <table width="100%" border="0" cellspacing="0" cellpadding="15">
+      <tr>
+        <td>
+          <h3>
+            Simple search</h3>
+          <p>
+            Enter terms in the form below to search for in your collection list. 
+            <br>
+            <br>
+          <form method="GET" action="<?SCRIPT_NAME>" name="search">
+
+            <input type="hidden" name="type" value="simple">
+
+            <?HIDDEN_REQUESTED_COLLECTIONS>
+            <?HIDDEN_SID>
+
+            <table width="95%" border="0" cellspacing="0" cellpadding="5" align="center">
+              <tr>
+                
+                <td width="15%" nowrap align="right">
+                  <font face="Verdana, Arial, Helvetica, sans-serif" size="2">
+                    Search for:</font>
+                </td>
+                <td width="85%">
+
+                  <?Q1_INPUT size="30" class="formhilite">
+                  
+                </td>
+              </tr>
+              <tr>
+                
+                <td width="15%">
+                  &nbsp;</td>
+                <td width="85%">
+                  
+                  <input type="submit" value="submit search">
+                  
+                </td>
+              </tr>
+            </table>
+          </form>
+          
+          <br>
+          <p>
+            You are currently searching <b><?NUMBER_OF_COLLECTIONS></b>
+            collections containing <b><?NUMBER_OF_TEXTS></b> texts.  
+            Your collection list has these characteristics:</p>
+          <ul>
+            <li>
+              <font face="Verdana, Arial, Helvetica, sans-serif" size="2">
+                <b>genres</b> : <?GENRE_LIST></font>
+            </li>
+            <li>
+              <font face="Verdana, Arial, Helvetica, sans-serif" size="2">
+                <b>genders</b> : <?GENDER_LIST></font>
+            </li>
+            <li>
+              <font face="Verdana, Arial, Helvetica, sans-serif" size="2">
+                <b>language</b> : <?LANGUAGE_LIST></font>
+            </li>
+            <li>
+              <font face="Verdana, Arial, Helvetica, sans-serif" size="2">
+                <b>periods</b> : <?PERIOD_LIST></font>
+            </li>
+          </ul>
+          <p>
+            Use the <b><a href="<?EXT_SIMPLE_SEARCH_FORM_LINK>">extended form</a></b>                        to restrict your search to a custom collection list that matches specified 
+            characteristics (i.e., genre, language, etc.).
+          </p>
+          <table width="95%" cellspacing="0" cellpadding="0" bgcolor="#000000" border="0">
+            <tr>
+              
+              <td>
+                
+                <table width="100%" border="0" cellspacing="1" cellpadding="6">
+                  <tr bgcolor="#8C8A73">
+                    
+                    <td colspan="2" align="center">
+                      <b>
+                        <font color="#FFFFFF" face="Verdana, Arial, Helvetica, sans-serif" size="2">
+                          Collection List</font>
+                      </b>
+                    </td>
+                  </tr>
+                  <tr>
+
+                  <?COLLECTION_LIST>
+
+                </table>
+              </td>
+            </tr>
+          </table>
+        </td>
+      </tr>
+    </table>
+    
+<!--
+    <p class="releaseversion">Release Version: $State: Exp $</p>
+-->
+  </body>
+</html>

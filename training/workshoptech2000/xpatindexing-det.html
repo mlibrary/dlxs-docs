@@ -1,0 +1,274 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+
+<html>
+
+<head>
+
+   <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+
+   <meta name="GENERATOR" content="Mozilla/4.72 [en] (WinNT; I) [Netscape]">
+
+   <title>DLXS Programmers &amp; Technical Workshop</title>
+
+<link rel="stylesheet" href="styles.css">
+
+</head>
+
+<body class="mainpalette">
+
+
+
+<h3>
+
+Indexing with XPat</h3>
+
+
+
+<h4>
+
+How To</h4>
+
+See the information on <a href="dirstructure-gen.html" target="mainFrame">Directory
+
+Structure</a> for information on how we recommend directories to be named
+
+and set up.
+
+<p>Once all the <a href="http://www.umdl.umich.edu/dlxs/training/workshop-user-2000.html" target="external">transformation
+
+and preprocessing</a> is done, the finished, ready to index SGML is placed
+
+in the proper <b><i>obj</i></b> directory.
+
+<p>The collection's <a href="sourcetext/idx/Makefile.bosnia.txt" target="sourcetext">Makefile</a>
+
+has variables that should be edited for the proper paths to the collection's
+
+data, dtd, doctype, etc.
+
+<ul>
+  <li> <b><i><a href="sourcetext/idx/Makefile.bosnia.txt" target="sourcetext">Makefile</a></i></b>: 
+    management of the normalization and indexing steps</li>
+  <li> <b><i><a href="sourcetext/idx/bosnia.blank.dd.txt" target="sourcetext">coll.blank.dd</a></i></b>: 
+    This file is a skeleton of a data dictionary configuration. The Makefile copies 
+    this "blank" or template file onto the corresponding <i><a href="sourcetext/idx/bosnia.dd.txt" target="sourcetext">coll.dd</a></i> 
+    which is then expanded during the actual indexing process.</li>
+  <li> <b><i>coll.init</i></b>: This can conceivably contain any valid XPat command. 
+    But this would mean that they would get loaded each time XPat is invoked. 
+    Since most invocations are via a CGI script, we leave this empty. Unfortunately, 
+    empty does not mean non-existent; it must be there. So, a zero length file 
+    will do!</li>
+  <li> <b><i><a href="sourcetext/idx/bosnia.inp.txt" target="sourcetext">coll.inp</a> 
+    (aka doctype)</i></b>: This file contains a <b>DOCTYPE</b> declaration; it 
+    points to a <b><a href="sourcetext/idx/bosnia.textclass.dtd.txt" target="sourcetext">dtd</a></b>, 
+    which we also usually place in this directory although for some common dtds 
+    which we place in the <b>lib</b> directory for access from many collections. 
+    It may also contain other things, like entity references or APPINFO. <b>Note</b>: 
+    Although with some difficulty, the older pat50 was able to use PUBLIC identifiers, 
+    we find it much easier to use SYSTEM identifiers. The proper use of catalogs 
+    may be an enhancement brougth to <b>XPat</b>.</li>
+  <li> <b><i><a href="sourcetext/idx/bosnia.extra.srch.txt" target="sourcetext">coll.extra.srch</a></i></b>: 
+    used by <a href="sourcetext/idx/Makefile.bosnia.txt" target="sourcetext">Makefile</a> 
+    to create <i>fabricated regions</i> <a href="#FabRegions">(see below)</a>.</li>
+  <br>
+  <p>These next files are created or modified by the XPat indexing process (<b>dbbuild50</b> 
+    or its subprocesses) and the region indexing process<b><i>sgmlrgn50</i></b> 
+    (which are part of the <b><a href="sourcetext/idx/Makefile.bosnia.txt" target="sourcetext">Makefile</a></b> 
+  <li> <b><i>coll.idx</i></b>: The actual index into the text. A binary file.</li>
+  <li> <b><i>coll.rgn</i></b>: Another index into the file. This one is an index 
+    into the regions (usually SGML) that exist in the file.</li>
+  <li> <i><a href="sourcetext/idx/bosnia.dd.txt" target="sourcetext">coll.dd</a></i><a href="sourcetext/idx/bosnia.dd.txt">:</a> 
+    This file contains:</li>
+  <ul>
+    <li> the specifications for the full paths to the text itself and the text 
+      and region indexes.</li>
+    <li> information about index points; that is, points in the stream of text 
+      at which to start a "semi-infinite string".</li>
+    <li> the specification of how characters are mapped to other characters when 
+      receiving a user search term. You're allowed to map any character to any 
+      other character. The &lt;Map> elements in the plain vanilla <b><a href="sourcetext/idx/bosnia.blank.dd.txt" target="sourcetext">coll.blank.dd</a></b> 
+      file account for case insensitivity, and for the mapping of punctuation 
+      characters to spaces (so that word boundaries are recognized). Other mappings 
+      are also possible.</li>
+    <li> list of stopwords. We don't use these, since most of our text is literary 
+      in nature, searching is also allowed on "the" and "of", etc.</li>
+    <li><b>NOTE:</b> this file starts from the <b><a href="sourcetext/idx/bosnia.blank.dd.txt" target="sourcetext">coll.blank.dd</a></b> 
+      file but it is fleshed out after indexing. Interestingly, as you saw before, 
+      this is a tagged ASCII text file and is therefore editable. That could be 
+      dangerous, but it is also handy. Later for <a href="fabregions.html" target="mainFrame">fabricated 
+      regions</a>.... </li>
+  </ul>
+  <br>
+  <b>NOTE:</b> All of the pathnames and directories to which the <b>.dd</b> file 
+  refers need to always exist, either real or symbolic. <b>XPat</b> has the interesting 
+  feature that you could open up the <b>.dd</b> file and change directories and 
+  filenames at whim (to suit whatever moving of largish files you need to do). 
+  Sometimes, though a bit like cheating, it is easier to edit the paths after 
+  moving text and/or index files than to reindex a large amount of text. 
+  <li> The <b><i>idx</i></b> directory in which all these files live will also 
+    serve as the scratch file space used by the indexing process, and as the permanent 
+    home of all the index and region files made by <b>XPat</b>, all the fabricated 
+    region files we make ourselves. The scratch file space is not to be overlooked 
+    if you're tight on space: with a normal token definition and relatively simple 
+    SGML, an indexing run will need between 150% and 175% of the space the final 
+    index and region files take up.</li>
+  <p>One way to index with XPat is with <b>dbbuild50</b>, which is a wrapper for 
+    several other indexing subprocesses. We used to use <b>dbbuild50</b> or even 
+    simply <b>patbld50</b> thusly: 
+  <p><b><i>patbld50 -m 64m -D coll.dd</i></b> 
+  <p>However, we have begun to standardize on more explicit invocations of the 
+    subprocesses. See a typical <b><a href="sourcetext/idx/Makefile.bosnia.txt" target="sourcetext">Makefile</a></b> 
+    for an example of all the proper commands in order or check the printed <b>XPat</b> 
+    documentation. <br>
+    &nbsp; 
+</ul>
+
+The <b><a href="sourcetext/idx/Makefile.bosnia.txt" target="sourcetext">Makefile</a></b>, 
+while indexing, also runs the <b><i>sgmlrgn50</i></b> command. This gives us the 
+all important index built on the regions declared in the DTD and allows searching 
+within SGML regions. 
+<p>
+
+<hr WIDTH="97%">
+
+  <h3> Indexing and Region Building: Hands On</h3>
+  To get more of a feel for the process we'll use the bosnia Makefile to do the 
+  above steps.&nbsp; Recall that prior to this step we did <a href="normalize.html">normalization</a> 
+  (along with nodefy and validate steps). 
+  <blockquote><b><font face="Courier New,Courier">% cd $HOME/dlxs/idx/b/bosnia</font></b> 
+    <br>
+    <b><font face="Courier New,Courier">% make dd</font></b>
+</blockquote> 
+  
+      <hr width="100%">
+      
+<h4> What <i>dbbuild50 </i>(or its equivalent subprocesses) Gets Us</h4>
+      What the <b>dd</b> step gets us depends almost entirely on what was in the 
+<b><a href="sourcetext/idx/bosnia.dd.txt" target="sourcetext">coll.dd</a></b> 
+file: the <i>Index Points</i> and <i>Character Mappings</i>. The Index Points 
+are descriptions of the type of text where where <b>XPat</b> will begin a semi-infinite 
+string. The Mappings we usually use allow for case insensitivity and, in the case 
+of some collections, for search mappings of 8 bit characters, e.g., thorns and 
+eths. 
+<p>We can now fire up the database we've just indexed successfully with: 
+      <blockquote><b><i>pat50 coll.dd</i></b></blockquote>
+      
+<p>and <a href="query-gen.html" target="mainFrame">try some searching</a>. </p>
+<hr WIDTH="100%">
+
+<p>After the <b><i><a href="rgnindexing.html" target="mainFrame">dd</a></i></b> 
+  command, we continue with the <b><i>extra&nbsp; </i></b>make target. This is 
+  a series of perl scripts that use the <b><a href="sourcetext/idx/bosnia.extra.srch.txt" target="sourcetext">coll.extra.srch</a></b> 
+  file, containing <b><i>export</i></b>-ed <b>XPat</b> searches, to create a bit 
+  of text that is then added in the &lt;Regions> area of the <b><a href="sourcetext/idx/bosnia.dd.txt">.dd</a></b> 
+  file. In this way, <b>XPat</b> <b>.rgn</b> files (region indexes) will be created. 
+  In the past, until we knew that we needed fabricated regions, we would usually 
+  comment this out in the <b><a href="sourcetext/idx/Makefile.bosnia.txt" target="sourcetext">Makefile</a></b>. 
+  However, the new TextClass model requires them for regions like <i>page</i> 
+  and <i>mainheader</i>.
+<p>The <b><a href="sourcetext/idx/bosnia.extra.srch.txt" target="sourcetext">coll.extra.srch</a></b> 
+  file contains the searches for all the fabricated regions we want to make. See 
+  <a href="fabregions.html" target="mainFrame">fabricated regions</a>. 
+<p>
+
+<hr WIDTH="100%">
+
+<ul>
+  <h3> Fabricated Region Building: Hands On</h3>
+  To get more of a feel for the process we'll use the bosnia Makefile to do the 
+  above steps. 
+  <p><b><font face="Courier New,Courier">% cd $HOME/dlxs/idx/b/bosnia</font></b> 
+    <br>
+    <b><font face="Courier New,Courier">% make extra</font></b> <br>
+</ul>
+
+
+
+<hr width="75%">
+
+<h4>
+
+For those of you who have used ot60, a note</h4>
+
+It is here that <b><i>pat50</i></b> and <b><i>ot60</i></b> diverge significantly.
+
+When <b><i>pat50</i></b> is reporting location information of points and
+
+regions, it always refers to an absolute byte offset in the database. <b><i>ot60</i></b>
+
+always refers to an absolute <i>token</i> offset in the database, or that
+
+token at which the point or region begins. Unless the definition of token
+
+is "any byte", then <b>tokens != bytes</b>. This did not normally affect
+
+most systems' functionality: many of the SSP platform stunts can be done
+
+either way, because they do not depend on absolute byte offset information.
+
+But there are several stunts the XPat based cgi programs do that now can
+
+and do assume bytes instead of token offsets.<i> Therefore, since from
+
+now on we are dealing only with <b>pat50/XPat</b>, we needn't worry about
+
+how <b>ot60</b> deals with token offset. Yay!</i>
+
+<br>
+
+<hr width="75%">
+
+<p>By the way,some of those byte offset dependent stunts are:
+
+<ul>
+
+<li>
+
+<b>Egregious Inline Markup</b></li>
+
+
+
+<br>Briefly, sometimes we want to be able to provide phrase searching but
+
+are hindered by copious markup. Under <i>XPat</i> we have been known to
+
+do the following: make a mirror database that has whitespace substituted
+
+in for the "egregious" markup in question.
+
+<li>
+
+<b>Ordering Results</b></li>
+
+
+
+<br>As shall be seen in the CGI programs, there is a lot of the DLPS platform
+
+that depends on the offset order of results as they are returned from XPat.</ul>
+
+<b>Aside</b>: one rather interesting bit of functionality that is more
+
+easily accomplished with token-based <b>ot60</b> than with byte-offset-based
+
+<b>pat50</b>
+
+is some of the interesting context and ordering performed in the <b><a href="http://www.hti.umich.edu/micase/" target="external">MiCASE</a></b>
+
+collection.
+
+<br>
+
+<hr width="75%">
+
+<p>After the sgmlrgn50 target and the optional post target for fabricated
+
+regions, depending on the collection, the <b><i>Makefile</i></b> may continue
+
+with the <a href="makefile-gen.html" target="mainFrame">pageview and/or
+
+the wordwheel steps</a>.
+
+</body>
+
+</html>
+

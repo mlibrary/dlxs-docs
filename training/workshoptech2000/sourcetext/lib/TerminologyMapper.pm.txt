@@ -1,0 +1,170 @@
+package TerminologyMapper;
+
+## $Id: TerminologyMapper.pm,v 1.2 1999/03/09 19:12:08 nigelk Exp $
+
+## TerminologyMapper, relatively brain-dead way for getting term
+## mappings into a perl storage structure so that we can chase each
+## and every from-to relation represented.
+
+## the new method expects there to be one argument, a filename of a
+## file whence we can load information that validates under this sgml dtd:
+
+# <!DOCTYPE mappings [
+# <!element mappings o o (mapping)+ >
+# <!element mapping - - (ANY (uniqueness constraint)) >
+# ]>
+
+## with the non-sgml restrictions that 1) there only be element
+## content in a mapping, 2) whatever element content a mapping has,
+## that each element have a unique gi in that mapping.  the element
+## names in a mapping are understood to be TERM TYPES, and the content
+## of those elements are the values of the different TERM TYPES
+## represented that should be mapped onto each other.
+
+## which is to say, any mapping can map zero or one instance of a TERM
+## TYPE to zero or one of each of another TERM TYPE.  the internal
+## storage here is a series of FROM->TO->TERM = MAPPEDTERM hashes.
+
+## the new() constructor can take an optional argument, a reference to
+## a hash whose keys are all TERM TYPEs (eg, element names one is
+## likely to encounter in the mappings) that should be permitted to
+## have more than one value of its own type map to single values of
+## other types.  this is accomplished with FROM->TO->TERM->MAPPEDTERM
+## = true.
+
+## order is significant, this script marches through from start to
+## finish setting up the mappings.  a later definition will overwrite
+## an earlier definition if four all term types except when mapping TO
+## a 'oneToMany' type, which is a special case.  anytime the TO part
+## is a oneToMany, the value of that term type is inserted in a hash
+## as a key of the hash.
+
+## one instantiates one of these objects at the beginning of a script,
+## and it should perform all the mappings one wants.  one invokes the
+## 'map' method with the arguments (in this order):
+##
+##   TERM, FROM, TO
+##
+## the return value will either be undef (nothing found), a single
+## scalar, or a list (if the TO was a oneToMany type);
+
+## one can put any kind of mappings in here one wants.  everything is
+## case sensitive.
+
+sub new {
+    my($class) = shift;
+
+    my($self) = {};
+    bless $self, $class;
+    return($self->_initialize(@_));
+}
+
+sub _initialize {
+    my($self) = shift;
+    my($mappingFile) = shift;
+    if ($_[0] && (ref($_[0]) eq 'HASH')) {
+	$self->{'oneToMany'} = shift;
+    } else {
+	$self->{'oneToMany'} = {};
+    }
+
+    open(MAP, "<$mappingFile") || return undef;
+    my($maps) = join('', <MAP>);
+    $maps =~ s,[\r\n],,g;
+    close(MAP);
+
+    my($mapping) = {};
+    my($oneToMany) = $self->{'oneToMany'};
+
+    while ($maps =~ s,<mapping>(.*?)</mapping>,,) {
+	my($m) = $1;
+	my(%parts);
+	while ($m =~ s,<([a-zA-Z0-9]+)>(.+?)</\1>,,) {
+	    $parts{lc($1)} = $2;
+	}
+
+	foreach $from (keys (%parts)) {
+	    foreach $to (keys (%parts)) {
+		if ($from && $to && ($from ne $to)) {
+		    if ($oneToMany->{$to}) {
+			$mapping->{$from}{$to}{($parts{$from})}{($parts{$to})}++;
+		    } else {
+			$mapping->{$from}{$to}{($parts{$from})} = $parts{$to};
+		    }
+		}
+	    }
+	}
+    }
+
+    $self->{'mapping'} = $mapping;
+
+    return($self);
+}
+
+sub map {
+    my($self) = shift;
+    my($term) = shift;
+    my($from) = shift;
+    my($to) = shift;
+
+    my($mapping) = $self->{'mapping'};
+    my($oneToMany) = $self->{'oneToMany'};
+
+    ## going TO oneOfMany is the only problematic one, as we might
+    ## have multiple mappings there.
+
+    if ($mapping->{$from}{$to}{$term}) {
+	if ($oneToMany->{$to}) {
+	    return(keys (%{ $mapping->{$from}{$to}{$term} } ));
+	} else {
+	    return($mapping->{$from}{$to}{$term});
+	}
+    }
+
+    return undef;
+}
+
+sub keysOfTermType {
+    my($self) = shift;
+    my($type) = shift;
+
+    my($mapping) = $self->{'mapping'};
+
+    if ($mapping->{$type}) {
+	my(%toReturn, $to, $term, $subterm);
+	foreach $to (keys (%{ $mapping->{$type} })) {
+	    foreach $term (keys (%{ $mapping->{$type}{$to} })) {
+		$toReturn{$term}++;
+	    }
+	}
+	return(keys (%toReturn));
+    }
+    return undef;
+}
+
+sub sortedKeysOfTermTypeByOtherTermType {
+    my($self) = shift;
+    my($interestType) = shift;
+    my($sortType) = shift;
+
+    my($mapping) = $self->{'mapping'};
+
+    my(@interestKeys) = $self->keysOfTermType($interestType);
+
+    my(@toReturn) = sort {
+
+	my($aSort,) = $self->map($a, $interestType, $sortType);
+	my($bSort,) = $self->map($b, $interestType, $sortType);
+
+	if ($aSort =~ m,^\d+$, && $bSort =~ m,^\d+$,) {
+	    $aSort <=> $bSort;
+	} else {
+	    $aSort cmp $bSort;
+	}
+
+    } @interestKeys;
+
+    return(@toReturn);
+}
+
+1;				# truth!

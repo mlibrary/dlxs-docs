@@ -1,0 +1,589 @@
+<HTML>
+<HEAD>
+<TITLE>Image Class Collection Implementation</TITLE>
+
+
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+<LINK REL="stylesheet" HREF="../icstyle/icstyles.css" TYPE="TEXT/CSS">
+<LINK REL="stylesheet" HREF="../styles.css" TYPE="TEXT/CSS">
+</HEAD>
+<BODY BGCOLOR="#ffffcc" LEFTMARGIN="15" TOPMARGIN="15" MARGINWIDTH="15" MARGINHEIGHT="15">
+<H1 CLASS="mainpalette">Image Class Collection Implementation</H1>
+<H2 CLASS="mainpalette"><A HREF="file:///maccha/Users/Shared/UMDL/Workshops/workshops200202.html">DLXS Workshop, February 
+  2002</A></H2>
+<P CLASS="mainpalette">Image Class Instructor: <B>John Weise</B></P>
+<P CLASS="mainpalette"><B>(Note: I will be far away on vacation the week before 
+  the workshop. <BR>
+  If you have questions, please address them to <a href="*" onmouseover="this.href='m'+'a'+'i'+'l'+'t'+'o'+':'+'d'+'l'+'p'+'s'+'-'+'h'+'e'+'l'+'p'">DLXS Info</a>. 
+  Thanks.)</B></P>
+<P CLASS="mainpalette">This portion of the DLXS Workshop focuses on implementing 
+  a collection in the Image Class. It is organized as a hands-on lesson, with 
+  the entire process outlined in detail. All of the steps are included so that 
+  it can be repeated or used as a guide later. Links to the detailed Image Class 
+  documentation are included. Check out the database of <A HREF="http://test.images.umdl.umich.edu/cgi/i/image/image-idx?c=workshopic">UM 
+  Campus Photos</A> that we'll be working with in the workshop.</P>
+<P CLASS="mainpalette">A printed copy of this document will be available at the 
+  workshop. </P>
+<HR ALIGN="LEFT" NOSHADE WIDTH="100%">
+<P><SPAN CLASS="mainpalette"><A HREF="#WorkshopDay4ThursdayMorning">Workshop Day 
+  4 &#150; Thursday Morning</A></SPAN></P>
+<UL>
+  <LI><SPAN CLASS="mainpalette"><A NAME="TOCImageClassContentPreppart1">Image 
+    Class Content Prep (part 1)</A></SPAN> 
+    <UL>
+      <LI CLASS="mainpalette"><SPAN CLASS="mainpalette"><A HREF="#CollectionDeploymentChecklist">Choose 
+        a Collection ID and Enable Access</A></SPAN></LI>
+      <LI CLASS="mainpalette"><SPAN CLASS="mainpalette"><A HREF="#PhotoExpedition">Photo 
+        Expedition</A></SPAN></LI>
+      <LI CLASS="mainpalette"><SPAN CLASS="mainpalette"><A HREF="#ReviewProcessandInstalltheImages">Review, 
+        Process, and Install the Images</A></SPAN></LI>
+    </UL>
+  </LI>
+</UL>
+<P><A HREF="#WorkshopDay4ThursdayAfternoon">Workshop Day 4 &#150; Thursday Afternoon</A></P>
+<UL>
+  <LI><SPAN CLASS="mainpalette"><A NAME="TOCImageClassContentPreppart2"></A></SPAN><A HREF="#ImageClassContentPreppart2">Image 
+    Class Content Prep (part 2)</A> 
+    <UL>
+      <LI><A HREF="#AddFilenamestoDatabase">Add Filenames to Database</A></LI>
+      <LI><A HREF="#AddDescriptiveDatatoDatabase">Add Descriptive Data to Database</A></LI>
+      <LI><A HREF="#ConfiguretheDatabaseforSGMLTransformation">Configure the Database 
+        for SGML Transformation</A></LI>
+      <LI><A HREF="#ExporttheDataandtheConfig">Export the Data and the Config</A></LI>
+      <LI><A HREF="#TransferDatatoUnixDataPrepEnvironment">Transfer Data to Unix 
+        Data Prep Environment</A></LI>
+      <LI><A HREF="#CreatetheCollectionInfoFile">Create the Collection Info File</A></LI>
+      <LI><A HREF="#TransformDatatoSGML">Transform Data to SGML</A></LI>
+      <LI><A HREF="#ValidateandNormalizeSGML">Validate and Normalize SGML</A></LI>
+    </UL>
+  </LI>
+</UL>
+<P><A HREF="#WorkshopDay5FridayMorning">Workshop Day 5- Friday Morning</A></P>
+<UL>
+  <LI><A HREF="#ImageClassIndexBuildingwithXPAT"><SPAN CLASS="mainpalette"><A NAME="TOCImageClassIndexBuildingwithXPAT"></A></SPAN>Image 
+    Class Index Building with XPAT</A> 
+    <UL>
+      <LI><A HREF="#SetupDirectoriesforXPATIndex">Setup Directories for XPAT Index</A></LI>
+      <LI><A HREF="#BuildtheXPATIndex">Build the XPAT Index</A></LI>
+    </UL>
+  </LI>
+  <LI><SPAN CLASS="mainpalette"><A NAME="TOCImageClassCollectiontoWeb"></A></SPAN><A HREF="#ImageClassCollectiontoWeb">Image 
+    Class Collection to Web</A> 
+    <UL>
+      <LI><A HREF="#ReviewtheCollectionDatabaseEntrywithCollMgr">Review the Collection 
+        Database Entry with CollMgr </A></LI>
+      <LI><A HREF="#ReviewtheGroupsDatabaseEntrywithCollMgr">Review the Groups 
+        Database Entry with CollMgr</A></LI>
+      <LI><A HREF="#MakeCollectionmaps">Make Collectionmaps</A></LI>
+      <LI><A HREF="#SetuptheCollectionsWebDirectory">Setup the Collection's Web 
+        Directory</A></LI>
+      <LI><A HREF="#TryItOut">Try It Out</A></LI>
+    </UL>
+  </LI>
+</UL>
+<P><A HREF="#WorkshopDay5FridayAfternoon">Workshop Day 5&#150; Friday Afternoon</A></P>
+<UL>
+  <LI><SPAN CLASS="mainpalette"><A NAME="TOCImageClassCollectionCustomization"></A></SPAN> 
+    <A HREF="#ImageClassCollectionCustomizations">Image Class Collection Customization</A><BR>
+  </LI>
+  <LI><SPAN CLASS="mainpalette"><A NAME="TOCImageClassOtheAdvancedTopics"></A></SPAN><A HREF="#ImageClassOtherAdvancedTopics">Image 
+    Class Other/Advanced Topics</A></LI>
+</UL>
+<P><A NAME="WorkshopDay4ThursdayMorning"></A></P>
+<H3 CLASS="dayheader"> Workshop Day 4 &#150; Thursday Morning<A NAME="ImageClassContentPreppart1"></A></H3>
+<H2 CLASS="partheader">Image Class Content Prep (part 1)&nbsp;</H2>
+<P ALIGN="right" CLASS="navlink"><A HREF="#TOCImageClassContentPreppart1">go to 
+  table of contents</A></P>
+<P><SPAN CLASS="mainpalette">In part 1 of Image Class Content Prep we create some 
+  images with the digital camera to add to an existing image database. We will 
+  generate MrSID images and put them in place on the server.</SPAN></P>
+<H3 CLASS="sectionheader"> <A NAME="CollectionDeploymentChecklist"></A> 
+  <HR ALIGN="LEFT" NOSHADE WIDTH="100%">
+  <SPAN CLASS="mainpalette">Choose a Collection ID and Enable Access</SPAN></H3>
+<P CLASS="mainpalette">In this workshop we are working with a collection that 
+  already exists. However if it were a new collection it would be necessary to 
+  choose a collection identifier for it, and to enable web access to the collid. 
+  When choosing a collid, it helps to keep it short and to keep in mind that it 
+  should be unique, not just within Image Class, but across all of the classes. 
+  Consider including a consistent class specific ending on each collid to help 
+  avoid conflicts. For example, <B>workshopic</B> is the collid for the collection 
+  that will be used in this lesson. </P>
+<P CLASS="mainpalette">Managing access to collections will be covered elsewhere 
+  in the workshop, since it applies to all DLXS Classes.</P>
+  <SPAN CLASS="mainpalette">
+<OL>
+  <LI CLASS="mainpalette"><I>choose collid</I></LI>
+  <LI CLASS="mainpalette"><I>enable web access for the collid (setup authentication/authorization)</I></LI>
+</OL>
+</SPAN>
+<H3 CLASS="sectionheader"> <A NAME="PhotoExpedition"></A>
+  <HR ALIGN="LEFT" NOSHADE WIDTH="100%">
+  Photo Expedition</H3>
+<P CLASS="mainpalette">This is where we go out and take some pictures with the 
+  digital camera to add to the existing database. We'll target popular landmarks 
+  that are close to the Library.</P>
+<H3 CLASS="sectionheader"> <A NAME="ReviewProcessandInstalltheImages"></A>
+  <HR ALIGN="LEFT" NOSHADE WIDTH="100%">
+  Review, Process, and Install the Images</H3>
+<P CLASS="mainpalette"><I>Everyone will watch the instructor:</I></P>
+<UL>
+  <LI CLASS="mainpalette">Transfer the images to the desktop computer</LI>
+  <LI CLASS="mainpalette">Review the images</LI>
+  <LI CLASS="mainpalette">Convert the images to the MrSID format 
+    <UL>
+      <LI><I CLASS="mainpalette">Demonstration of Michigan's image processing 
+        methods.</I></LI>
+    </UL>
+  </LI>
+  <LI CLASS="mainpalette">Transfer images to server</LI>
+  <LI CLASS="mainpalette">Build an index directory of the image files using the 
+    imageprep program </LI>
+</UL>
+<H3 CLASS="sectionheader"><I>More Documentation</I></H3>
+<UL>
+  <LI><A HREF="http://docs.umdl.umich.edu/class/image/image-imagefilenaming.xml">Image 
+    Class Image File Naming</A></LI>
+  <LI><A HREF="http://docs.umdl.umich.edu/class/image/image-guidelines-data.xml#imagefiles">Preparing 
+    Data for Image Services: Image Files</A></LI>
+  <LI><A HREF="http://docs.umdl.umich.edu/class/image/image-imageloading.xml">Image 
+    Class Image Loading</A></LI>
+</UL>
+<P><A NAME="WorkshopDay4ThursdayAfternoon"></A></P>
+<H3 CLASS="dayheader">Workshop Day 4 &#150; Thursday Afternoon<A NAME="ImageClassContentPreppart2"></A></H3>
+<H2 CLASS="partheader">Image Class Content Prep (part 2)</H2>
+<P ALIGN="right" CLASS="navlink"><A HREF="#TOCImageClassContentPreppart2">go to 
+  table of contents</A></P>
+<P CLASS="mainpalette">In this part database records will be created for each 
+  image, and basic descriptive info will be added to the database. We will use 
+  FileMaker Pro to edit the database. FileMaker Pro is a useful tool for preparing 
+  data for Image Class, though other tools can be used instead.</P>
+<P CLASS="sectionheader">Each participant will do this work on their own machines.</P>
+<P CLASS="sectionheader">A good convention for naming collection database files 
+  is <B>collid-data.fp5 (e.g. workshopic-data.fp5)</B>.</P>
+<H3 CLASS="sectionheader"> <A NAME="AddFilenamestoDatabase"></A>
+  <HR ALIGN="LEFT" NOSHADE WIDTH="100%">
+  Add Filenames to Database</H3>
+<P CLASS="mainpalette">Import the list of new filenames in to the database. New 
+  records will be created for each. The database is setup to create record ID 
+  numbers and some other information automatically.</P>
+<OL>
+  <LI CLASS="mainpalette">Open <B>collid-data.fp5</B> with Filemaker Pro</LI>
+  <LI CLASS="mainpalette">Choose<B> Import Records...</B> from the <B>File</B> 
+    menu</LI>
+  <LI CLASS="mainpalette">Select the <B>files.xls</B> (of files.txt) file for 
+    import (you will need to know that the first row has data, not field names)</LI>
+  <LI CLASS="mainpalette">Select the <B>add new records</B> import action.</LI>
+  <LI CLASS="mainpalette">Map the incoming filenames to the <B>ImageFilename</B> 
+    field, and make sure the other fields are configured not to import.</LI>
+</OL>
+<P><IMG SRC="icscreenshots/import.JPG" WIDTH="500" HEIGHT="419" BORDER="1"></P>
+<H3 CLASS="sectionheader"> <A NAME="AddDescriptiveDatatoDatabase"></A>
+  <HR ALIGN="LEFT" NOSHADE WIDTH="100%">
+  Add Descriptive Data to Database</H3>
+<P CLASS="mainpalette">Add Title, Photographer, Date (YYYY-MM-DD) and Caption 
+  information for each image (or at least a few!).</P>
+<H3 CLASS="sectionheader"> <A NAME="ConfiguretheDatabaseforSGMLTransformation"></A>
+  <HR ALIGN="LEFT" NOSHADE WIDTH="100%">
+  Configure the Database for SGML Transformation</H3>
+<P CLASS="mainpalette">This is where you specify, for the purposes of transformation 
+  to SGML for Image Class, which fields hold the record ID, image filename, and 
+  caption. Additionally, mappings from the collection specific fields to the common 
+  (i.e., cross collection searching) fields are layed out.</P>
+<P CLASS="mainpalette">Open the configuration file (<B>workshopic-config.fp5</B>), 
+  which is just an empty copy of the database, with all fields defined as <B>text</B> 
+  (no calculations or auto entries, etc.).</P>
+<P CLASS="mainpalette">Create four records as follows:</P>
+
+  
+<P CLASS="mainpalette">As silly as it sounds, put the <B>name of the field</B> 
+  in each field of the<B> first record</B>. Sometimes it is useful to alter the 
+  field name slightly for better presentation online. </P>
+<BLOCKQUOTE>
+  <P><IMG SRC="icscreenshots/fmpconfig1.JPG" WIDTH="500" HEIGHT="257" BORDER="1"><BR>
+  </P>
+</BLOCKQUOTE>
+<P CLASS="mainpalette">The <B>second record</B> must have an <B>abbreviated name</B> 
+  for each field. Each needs to be unique, and they are <B>case sensitive</B> 
+  (see example), but other than that, they can be whatever you want. </P>
+<BLOCKQUOTE>
+  <P><IMG SRC="icscreenshots/fmpconfig2.JPG" BORDER="1" WIDTH="499" HEIGHT="257"><BR>
+  </P>
+</BLOCKQUOTE>
+<P CLASS="mainpalette">The <B>third record</B> must have <B>cross collection</B> 
+  search field <B>abbreviations</B>. </P>
+<BLOCKQUOTE>
+  <P><IMG SRC="icscreenshots/fmpconfig3.JPG" WIDTH="499" HEIGHT="255"><BR>
+  </P>
+</BLOCKQUOTE>
+<P CLASS="mainpalette">The <B>fourth record</B> is for specifying which fields 
+  hold <B>record IDs (IC.id)</B>, <B>image filenames</B> <B>(IC.fn)</B>, and <B>captions 
+  (IC.vi) </B>. </P>
+<BLOCKQUOTE>
+  <P><IMG SRC="icscreenshots/fmpconfig4.JPG" BORDER="1" WIDTH="500" HEIGHT="256"><BR>
+  </P>
+</BLOCKQUOTE>
+<H3 CLASS="sectionheader"><I>More Documentation</I></H3>
+<UL>
+  <LI><A HREF="http://docs.umdl.umich.edu/class/image/image-datatransform.xml#Create%20configuration%20file%20using">Image 
+    Class Data Transformation: <B>Create Configuration File Using FileMaker Pro</B></A></LI>
+  <LI><A HREF="http://docs.umdl.umich.edu/class/image/image-dc-guidelines.xml">Guidelines 
+    for Mapping to Core Categories for Image Services</A></LI>
+</UL>
+<H3 CLASS="sectionheader"> <A NAME="ExporttheDataandtheConfig"></A>
+  <HR ALIGN="LEFT" NOSHADE WIDTH="100%">
+  Export the Data and the Config</H3>
+<P CLASS="mainpalette">The descriptive data records and the configuration data 
+  records must be exported from the database in to HTML tables within HTML files. 
+  FileMaker Pro provides this function. In an upcoming step, the HTML tables will 
+  be read by a Perl script which generates SGML as output.</P>
+<P CLASS="mainpalette">First, for the <B>descriptive data</B> file...</P>
+<UL>
+  <LI CLASS="mainpalette">Select the window for <B>workshopic-data.fp5</B></LI>
+  <LI CLASS="mainpalette">Select the menu item <B>Records:Show All Records</B></LI>
+  <LI CLASS="mainpalette">Select the menu item <B>File:Export Records... </B></LI>
+  <LI CLASS="mainpalette">Choose to save the file on the <B>desktop</B> as<FONT COLOR="#FF0000"> 
+    <B>HTML Table</B></FONT> with the name <B>workshopic-data.<FONT COLOR="#FF0000">htm</FONT></B></LI>
+  <LI CLASS="mainpalette">Click the <B>Move All</B> button to include all fields 
+    in the export</LI>
+  <LI CLASS="mainpalette">Click the Export button to complete the task</LI>
+</UL>
+<P CLASS="mainpalette">Do the same for the configuration file, naming it <B>workshopic-config.htm</B></P>
+<H3 CLASS="sectionheader"><I>More Documentation</I></H3>
+<UL>
+  <LI><A HREF="http://docs.umdl.umich.edu/class/image/image-datatransform.xml#Export%20data%20from%20FileMaker%20Pro">Image 
+    Class Data Transformation:<B> Export data from FileMaker Pro to HTML table 
+    file</B></A></LI>
+  <LI><A HREF="http://docs.umdl.umich.edu/class/image/image-datatransform.xml#Export%20data%20from%20FileMaker%20Pro">Image 
+    Class Data Transformation: <B>Setup the Work Space on the UNIX Development 
+    Server</B></A></LI>
+  <LI><A HREF="http://docs.umdl.umich.edu/class/image/image-datatransform.xml#Transfer%20the%20Exported%20Files%20to">Image 
+    Class Data Transformation: <B>Transfer the Exported Files to the UNIX Development 
+    Server</B></A></LI>
+</UL>
+<H3 CLASS="sectionheader"><A NAME="TransferDatatoUnixDataPrepEnvironment"></A> 
+  <HR ALIGN="LEFT" NOSHADE WIDTH="100%">
+  Transfer Data to Unix Data Prep Environment</H3>
+<P CLASS="mainpalette">The tools for transforming the data to SGML are setup for 
+  use on the unix machine called <B>fizzie.umdl.umich.edu.</B></P>
+<P CLASS="mainpalette">Transfer the the workshopic-data.htm and workshop-config.htm 
+  files to the directory<B> $DLXSROOT/prep/w/workshopic</B>. </P>
+<H3 CLASS="sectionheader"><I>More Documentation</I></H3>
+<UL>
+  <LI><A HREF="http://docs.umdl.umich.edu/class/image/image-datatransform.xml#Transfer%20the%20Exported%20Files%20to">Image 
+    Class Data Transformation: <B>Transfer the Exported Files to the UNIX Development 
+    Server</B></A></LI>
+</UL>
+<H3 CLASS="sectionheader"><A NAME="CreatetheCollectionInfoFile"></A> 
+  <HR ALIGN="LEFT" NOSHADE WIDTH="100%">
+  Create the Collection Info File</H3>
+<P CLASS="mainpalette">The collection info file is a one line text file. The data 
+  in the info file affects how the SGML is generated. The file must be stored 
+  on <B>fizzie.umdl.umich.edu</B> in <B>$DLXSROOT/prep/w/workshop </B>as <B>workshopic-info.txt</B>. 
+  Use a text editor (e.g., vi, xemacs) to create the file.</P>
+<BLOCKQUOTE>
+  <PRE CLASS="unixcommand">cd $DLXSROOT/prep/w/workshopic</PRE>
+  <PRE CLASS="unixcommand">xemacs workshopic-info.txt</PRE>
+</BLOCKQUOTE>
+<P CLASS="mainpalette"><B>CTRL-X CTRL-C</B> to quit (you will be prompted to save)</P>
+<P><SPAN CLASS="mainpalette">Here is a real example of what the 1 line of a collection 
+  info file might can look like:</SPAN></P>
+<BLOCKQUOTE>
+  <PRE>UM Campus Area Photos#John Weise and Contributors#WORLD#both </PRE>
+</BLOCKQUOTE>
+<P CLASS="mainpalette">It is not important yet to understand the purpose of each 
+  of the fields, but basically they mean the following:</P>
+<BLOCKQUOTE> 
+  <PRE>Collection Title#Publisher#Global Setting for Record Level Authentication#Searchable Structures
+</PRE>
+</BLOCKQUOTE>
+<H3 CLASS="sectionheader"><I>More Documentation</I></H3>
+<UL>
+  <LI><A HREF="http://docs.umdl.umich.edu/class/image/image-datatransform.xml#CollectionLevelInformation">Image 
+    Class Data Transformation: <B>Collection Level Information</B></A></LI>
+</UL>
+<H3 CLASS="sectionheader"> <A NAME="TransformDatatoSGML"></A>
+  <HR ALIGN="LEFT" NOSHADE WIDTH="100%">
+  Transform Data to SGML</H3>
+<P CLASS="mainpalette"><B>At this point you must have :</B></P>
+<UL>
+  <LI CLASS="mainpalette"> <B>$DLXSROOT/img/w/workshopic/index</B><BR>
+    This was created by the instructor and is shared by all members of the workshop.<BR>
+  </LI>
+  <LI CLASS="mainpalette"><B>$DLXSROOT/prep/w/workshopic/workshopic-data.htm</B><BR>
+    This is the descriptive data, which was exported from Filemaker Pro.</LI>
+  <LI CLASS="mainpalette"><B>$DLXSROOT/prep/w/workshopic/workshopic-config.htm<BR>
+    </B>This is the configuration data, which was exported from Filemaker Pro.</LI>
+  <LI CLASS="mainpalette"><B>$DLXSROOT/prep/w/workshopic/workshopic-info.txt</B><BR>
+    This is the configuration data, which was created with a text editor.</LI>
+</UL>
+<P CLASS="mainpalette">still on<B> fizzie.umdl.umich.edu...</B></P>
+<BLOCKQUOTE>
+  <PRE CLASS="unixcommand">cd $DLXSROOT/prep/w/workshopic</PRE>
+</BLOCKQUOTE>
+<P CLASS="mainpalette">The report should be similar to the following, though with 
+  more images, etc.</P>
+<BLOCKQUOTE> 
+  <PRE><SPAN CLASS="unixcommand">$DLXSROOT/bin/i/image/idb transform workshopic</SPAN>
+<BR>This report saved as: $DLXSROOT/prep/w/workshopic/workshopic-report.txt<BR>Total Images Found: 36 and Not Found: 0<BR>Total Entries: 36<BR>Total Items: 36<BR>Total Entries Dropped Due To Missing ID:   0<BR>Total Entries Dropped Due To Duplicate ID:   0<BR>Misc Errors/Warnings: <BR>
+NOTE: No character conversion file found.<BR>Illegal characters will be converted to &quot;?&quot; and reported in 
+$DLXSROOT/prep/w/workshopic/workshopic-charreport.txt.
+</PRE>
+</BLOCKQUOTE>
+<P CLASS="mainpalette"><B>ic.workshop.unnorm.sgm</B> has been created. Use <B>less</B> 
+  or <B>more</B> to look at it. </P>
+<BLOCKQUOTE>
+  <PRE CLASS="unixcommand">less ic.workshop.unnorm.sgm</PRE>
+</BLOCKQUOTE>
+<P CLASS="mainpalette">Some things to check for to confirm that the transformation 
+  worked...</P>
+<UL>
+  <LI CLASS="mainpalette"><B>field definitions like this: </B><BR>
+  </LI>
+  <BLOCKQUOTE> 
+    <P CLASS="mainpalette">&lt;BASE NAME=&quot;WORKSHOPIC.ri&quot;&gt;Rights&lt;/BASE&gt;</P>
+  </BLOCKQUOTE>
+  <LI><B CLASS="mainpalette">an <FONT COLOR="#FF0000">ENTRY</FONT> element with 
+    <FONT COLOR="#00FF00"><FONT COLOR="#000099">ENTRYID</FONT></FONT> for each 
+    record:</B> <BR>
+  </LI>
+</UL>
+<UL>
+  <BLOCKQUOTE> 
+    <P CLASS="mainpalette">&lt;<FONT COLOR="#FF0000"><B>ENTRY</B></FONT> ENTRYID=&quot;<B><FONT COLOR="#000099">x-2</FONT></B>&quot; 
+      COLLID=&quot;MCworkshopic&quot; CA=&quot;workshopic&quot;&gt;</P>
+  </BLOCKQUOTE>
+  <LI><SPAN CLASS="mainpalette">an <B><FONT COLOR="#FF0000">I</FONT></B> element 
+    for each image, with an <FONT COLOR="#0000FF"><B><FONT COLOR="#000099">IENTRYID</FONT></B></FONT>:</SPAN> 
+    <BR>
+  </LI>
+</UL>
+<UL>
+  <BLOCKQUOTE> 
+    <P CLASS="mainpalette">&lt;<FONT COLOR="#FF0000">I</FONT> IENTRYID=&quot;<FONT COLOR="#0000FF"><B><FONT COLOR="#000099">workshopic-x-2-1</FONT></B></FONT>&quot; 
+      IID=&quot;1&quot; IT=&quot;1&quot;&gt;</P>
+  </BLOCKQUOTE>
+  <LI><B CLASS="mainpalette">an <FONT COLOR="#FF0000">ISTRUCT</FONT> element for 
+    each image with an <FONT COLOR="#000099">ISENTRYID</FONT>, <FONT COLOR="#009900">M</FONT> 
+    (media filename), and <FONT COLOR="#6600CC">CAPTION</FONT>:</B> <BR>
+  </LI>
+</UL>
+<UL>
+  <BLOCKQUOTE> 
+    <P CLASS="mainpalette">&lt;<FONT COLOR="#FF0000"><B>ISTRUCT</B></FONT> ISENTRYID=&quot;<B><FONT COLOR="#000099">s-workshopic-x-2-1</FONT></B>&quot; 
+      STID=&quot;0&quot; FACE=&quot;UNSPEC&quot; STTY=&quot;SUM<BR>
+      M&quot; X=&quot;1&quot; Y=&quot;1&quot; MT=&quot;IMAGE&quot; MS=&quot;P&quot; 
+      M=&quot;<FONT COLOR="#009900"><B>P2060001</B></FONT>&quot;&gt;<FONT COLOR="#9900FF"><B><FONT COLOR="#6600CC">West 
+      side of building with tree</FONT></B></FONT>&lt;/<B><FONT COLOR="#FF0000">I<BR>
+      STRUCT</FONT></B>&gt;</P>
+  </BLOCKQUOTE>
+  <LI><SPAN CLASS="mainpalette"><B>many <FONT COLOR="#FF0000">C</FONT> elements 
+    with<FONT COLOR="#000099"> field abbreviations</FONT>,<FONT COLOR="#00FF00"> 
+    <FONT COLOR="#009900">field mappings</FONT></FONT>, and<FONT COLOR="#6600CC"> 
+    field data</FONT>: </B> </SPAN> 
+    <BLOCKQUOTE> 
+      <P CLASS="mainpalette">&lt;<FONT COLOR="#FF0000"><B>C</B></FONT> CN=&quot;<FONT COLOR="#0000FF"><B><FONT COLOR="#000099">WORKSHOPIC.ti</FONT></B></FONT>&quot; 
+        CM=&quot;<FONT COLOR="#009900"><B>DC.ti DC.su DLXS.ma</B></FONT>&quot;&gt;<FONT COLOR="#6600CC"><B>William 
+        L. Clements Li<BR>
+        brary</B></FONT>&lt;/<FONT COLOR="#FF0000"><B>C</B></FONT>&gt;</P>
+    </BLOCKQUOTE>
+  </LI>
+</UL>
+<H3 CLASS="sectionheader"><I>More Documentation</I></H3>
+<UL>
+  <LI><A HREF="http://docs.umdl.umich.edu/class/image/image-datatransform.xml#Transform%20the%20Data%20into%20SGML">Image 
+    Class Data Transformation: <B>Transform the Data into SGML</B></A></LI>
+</UL>
+<H3 CLASS="sectionheader"> <A NAME="ValidateandNormalizeSGML"></A>
+  <HR ALIGN="LEFT" NOSHADE WIDTH="100%">
+  Validate and Normalize SGML</H3>
+<P CLASS="mainpalette">This step checks the SGML against the Image Class DTD to 
+  validate the SGML. It also normalizes the SGML, which, if necessary, adjusts 
+  the SGML tagging so that it is consistent in terms of case and order of element 
+  attributes. Finally, all line-breaks are removed so that the SGML is all on 
+  one line.</P>
+<BLOCKQUOTE>
+  <PRE CLASS="unixcommand">$DLXSROOT/bin/i/image/idb norm workshopic</PRE>
+</BLOCKQUOTE>
+<P CLASS="mainpalette">There are not likely to be any errors with the workshopic 
+  data, but tell the instructor if there are. </P>
+<P CLASS="mainpalette">This process creates<B> ic.workshop.norm.sgm</B>. This 
+  is the file that will be used to build an XPAT index.</P>
+<H3 CLASS="sectionheader"><I>More Documentation</I></H3>
+<UL>
+  <LI><A HREF="http://docs.umdl.umich.edu/class/image/image-datatransform.xml#Transform%20the%20Data%20into%20SGML">Image 
+    Class Data Transformation: <B>Transform the Data into SGML</B></A></LI>
+</UL>
+<P><A NAME="WorkshopDay5FridayMorning"></A></P>
+<H3 CLASS="dayheader">Workshop Day 5&#150; Friday Morning<A NAME="ImageClassIndexBuildingwithXPAT"></A></H3>
+<H2 CLASS="partheader">Image Class Index Building with XPAT</H2>
+<P ALIGN="right" CLASS="navlink"><A HREF="#TOCImageClassIndexBuildingwithXPAT">go 
+  to table of contents</A></P>
+<P CLASS="mainpalette">In this section the workshopic SGML will be indexed with 
+  the XPAT search engine, preparing it for use with the DLXS middleware.</P>
+<H3 CLASS="sectionheader"> <A NAME="SetupDirectoriesforXPATIndex"></A>
+  <HR ALIGN="LEFT" NOSHADE WIDTH="100%">
+  Setup Directories for XPAT Index</H3>
+<P CLASS="mainpalette">Two directories are needed to build the XPAT index. A simple 
+  unix shell script has been created that does the work of setting the directories 
+  up for a specific collection. The script usage is <B>$DLXSROOT/bin/i/image/setupcollindex 
+  w/workshopic</B> and it creates the following...</P>
+<OL>
+  <LI CLASS="mainpalette"><B>$DLXSROOT/obj/w/workshopic to contain the SGML file 
+    (ic.workshopic.norm.sgm). <BR>
+    </B> The setupcollindex script sets up the obj directory and copies the workshopic 
+    SGML file to it.</LI>
+  <LI><B><SPAN CLASS="mainpalette">$DLXSROOT/idx/w/workshopic to contain the XPAT 
+    index files</SPAN></B><SPAN CLASS="mainpalette"> <BR>
+    image-blank is a boilerplate XPAT index directory that can be copied for a 
+    new collection index. image-blank is distributed with Image Class. The setupcollindex 
+    script copies the boilerplate files to the workshopic idx directory, and then 
+    modifies the hard coded paths that exist in the boilerplate files.</SPAN> 
+  </LI>
+</OL>
+<P CLASS="mainpalette">To execute setupcollindex...</P>
+<BLOCKQUOTE> 
+  <PRE CLASS="unixcommand">$DLXSROOT/bin/i/image/setupcollindex w/workshopic</PRE>
+  <PRE>using /DLXSROOT.
+setting up /DLXSROOT/idx up for w/workshopic
+done.
+setting up /DLXSROOT/obj up for w/workshopic
+done. 
+
+</PRE>
+</BLOCKQUOTE>
+<H3 CLASS="sectionheader"><I>More Documentation</I></H3>
+<UL>
+  <LI><A HREF="http://docs.umdl.umich.edu/class/image/image-indexbuild.xml">Image 
+    Class XPAT Index Building</A></LI>
+</UL>
+<H3 CLASS="sectionheader"> <A NAME="BuildtheXPATIndex"></A>
+  <HR ALIGN="LEFT" NOSHADE WIDTH="100%">
+  Build the XPAT Index</H3>
+<P CLASS="sectionheader">Everything is now setup to build the XPAT index. The 
+  makefile in the idx directory contains the commands necessary to build the index, 
+  and can be executed easily.</P>
+<PRE CLASS="unixcommand">cd $DLXSROOT/idx/w/workshopic
+make all</PRE>
+<PRE>
+echo &quot;working...&quot;<BR>working...<BR>cp image.blank.dd image.dd<BR>nice -n 19 mfsbld  -D /l1/idx/w/workshopic/image.dd -o image.mfs<BR>nice -n 19 mfsmeta  -o /l1/idx/w/workshopic/image.str -D image.dd<BR>cp image.blank.dd image.dd<BR>nice -n 19 xpatbld -m 256m -D image.dd<BR>nice -n 19 /l/local/xpat/bin/multirgn -o /l1/idx/w/workshopic/image -t tags.txt -D image.dd -displayfmt sgm<BR>nice -n 19 xpatffw  -m 32m -o /l1/idx/w/workshopic/image -D image.dd<BR>nice -n 19 xpatffi  -m 32m -o /l1/idx/w/workshopic/image -D image.dd
+
+</PRE>
+<H3 CLASS="sectionheader"><I>More Documentation</I></H3>
+<UL>
+  <LI><A HREF="http://docs.umdl.umich.edu/class/image/image-indexbuild.xml">Image 
+    Class XPAT Index Building</A></LI>
+</UL>
+<P><A NAME="ImageClassCollectiontoWeb"></A></P>
+<H2 CLASS="partheader">Image Class Collection to Web</H2>
+<P ALIGN="right" CLASS="navlink"><A HREF="#TOCImageClassCollectiontoWeb">go to 
+  table of contents</A></P>
+<P CLASS="mainpalette">These are the final steps in deploying an Image Class collection 
+  online. Here the <B>Collection Manager</B> will be used to review the <B>Collection 
+  Database</B> entry for <B>workshopic</B>. The <B>Collection Manager</B> will 
+  also be used to check the <B>Group Database</B>. Finally, a quick script called 
+  <B>makeCollectionmaps-idx</B> will be run to further configure the middleware 
+  to use the collection. Then it can be tried through a web browser.</P>
+<H3 CLASS="sectionheader"> <A NAME="ReviewtheCollectionDatabaseEntrywithCollMgr"></A>
+  <HR ALIGN="LEFT" NOSHADE WIDTH="100%">
+  Review the Collection Database Entry with CollMgr</H3>
+<P CLASS="mainpalette">Each collection has a record in the collection database 
+  that holds collection specific configurations for the middleware. CollMgr (Collection 
+  Manager) is a web based interface to the collection database that provides functionality 
+  for editing each collection's record. Collections can be checked-out for editing, 
+  checked-in for testing, and released to production. <B>A collection database 
+  record for workshopic has already been created and later we will edit it.</B> 
+  In general, a new collection needs to have a CollMgr record created from scratch 
+  before the middleware can be used. Take a look at the record to become familiar 
+  with it.</P>
+<P CLASS="mainpalette">http://yourworkshopvirtualhost/cgi/c/collmgr/collmgr-idx</P>
+<H3 CLASS="sectionheader"><I>More Documentation</I></H3>
+<UL>
+  <LI><A HREF="http://docs.umdl.umich.edu/class/image/image-colldb.xml">Image 
+    Class COLLDB (Collection Database)</A></LI>
+</UL>
+<H3 CLASS="sectionheader"> <A NAME="ReviewtheGroupsDatabaseEntrywithCollMgr"></A>
+  <HR ALIGN="LEFT" NOSHADE WIDTH="100%">
+  Review the Groups Database Entry with CollMgr</H3>
+<P CLASS="mainpalette">Another function of CollMgr allows the grouping of collections 
+  for cross-collection searching. Any number of collection groups may be created 
+  for Image Class. Image Class requires that there be a group with the groupid 
+  &quot;all&quot;. It is not a requirement that all collections be in this group, 
+  though that's the basic idea. The other classes do not require the group &quot;all&quot; 
+  to exist, and sometime in the future, Image Class probably will not either. 
+  Groups are created and modified using CollMgr. <B>For this workshop, the group 
+  &quot;all&quot; record has already been edited to include the workshopic collection.</B> 
+  Take a look at the record to become familiar with it.</P>
+<P CLASS="mainpalette">http://yourworkshopvirtualhost/cgi/c/collmgr/collmgr-idx</P>
+<H3 CLASS="sectionheader"> <A NAME="MakeCollectionmaps"></A>
+  <HR ALIGN="LEFT" NOSHADE WIDTH="100%">
+  Make Collectionmaps</H3>
+<P CLASS="mainpalette">Collectionmaps.pm is the name of a perl module that contains 
+  data about collection fields. The data are used for translating field name abbreviations 
+  to field names, and vice-versa. Every time a new collection is deployed, or 
+  the field definitions of an existing collection change, the Collectionmaps.pm 
+  file needs to be regenerated. <B>$DLXSROOT/cgi/i/image/makeCollectionmaps-idx 
+  </B>is the program that does this work. </P>
+<P CLASS="mainpalette"><SPAN CLASS="unixcommand">cd $DLXSROOT/cgi/i/image</SPAN></P>
+<P CLASS="mainpalette"><SPAN CLASS="unixcommand">./makeCollectionmaps-idx</SPAN></P>
+<H3 CLASS="sectionheader"> <A NAME="SetuptheCollectionsWebDirectory"></A>
+  <HR ALIGN="LEFT" NOSHADE WIDTH="100%">
+  Setup the Collection's Web Directory</H3>
+<P CLASS="mainpalette">Each collection may have a web directory with custom Cascading 
+  Style Sheets, interface templates, graphics, and javascript. The default is 
+  for a collection to use the web directory for the &quot;all&quot; group, which 
+  is at $DLXSROOT/web/i/image. Optionally, a collection specific web directory 
+  may be created. There is one more purpose of the web directory, which is to 
+  allow quick and easy loading of thumbnails as documents rather than retrieving 
+  thumbnails through slower CGI calls. Enable quick retrieval of thumbnails by 
+  creating a collection specific web directory and a symlink to the thumbnails.</P>
+<BLOCKQUOTE CLASS="unixcommand"> 
+  <PRE>mkdir -p $DLXSROOT/web/w/workshopic</PRE>
+  <PRE>cd $DLXSROOT/web/w/workshopic</PRE>
+  <PRE>ln -s $DLXSROOT/img/w/workshopic/index thumb</PRE>
+</BLOCKQUOTE>
+<P CLASS="sectionheader">&nbsp;</P>
+<H3 CLASS="sectionheader"> <A NAME="TryItOut"></A>
+  <HR ALIGN="LEFT" NOSHADE WIDTH="100%">
+  Try It Out</H3>
+<P CLASS="sectionheader"><A HREF="http://yourworkshopvirtualhost/cgi/i/image/image-idx" TARGET="_blank" CLASS="mainpalette">http://yourworkshopvirtualhost/cgi/i/image/image-idx</A></P>
+<P CLASS="sectionheader"><A NAME="WorkshopDay5FridayAfternoon"></A></P>
+<OL>
+</OL>
+<H3 CLASS="dayheader">Workshop Day 5&#150; Friday Afternoon<A NAME="ImageClassCollectionCustomizations"></A></H3>
+<H2 CLASS="partheader">Image Class Collection Customization</H2>
+<P ALIGN="right" CLASS="navlink"><A HREF="#TOCImageClassCollectionCustomization">go 
+  to table of contents</A></P>
+<P CLASS="mainpalette">Assuming we are on schedule, we will spend this part of 
+  the workshop looking at how to customize Image Class collections using the Collection 
+  Manager, Cascading Style Sheets, Templates, etc.</P>
+<H3 CLASS="sectionheader"><I>More Documentation</I></H3>
+<UL>
+  <LI CLASS="mainpalette"><A HREF="http://docs.umdl.umich.edu/class/image/image-templates.xml">Image 
+    Class User Interface Configuration and Customization</A></LI>
+</UL>
+<P><A NAME="ImageClassOtherAdvancedTopics"></A></P>
+<H2 CLASS="partheader">Image Class Other/Advanced Topics</H2>
+<P ALIGN="right" CLASS="navlink"><A HREF="#TOCImageClassOtheAdvancedTopics">go 
+  to table of contents</A></P>
+<P CLASS="mainpalette">Some topics are beyond what we can cover fully in the workshop. 
+  Below are links to documentation on some of those topics, as well as to the 
+  complete set of Image Class documentation. </P>
+<H3 CLASS="sectionheader"><I>More Documentation</I></H3>
+<UL>
+  <LI CLASS="mainpalette"><A HREF="http://docs.umdl.umich.edu/class/image/imageindex.xml"><B>Guide 
+    to All Image Class Documentation</B></A></LI>
+  <LI><A HREF="http://docs.umdl.umich.edu/class/image/image-dtd.xml">Image Class 
+    DTD Description</A></LI>
+  <LI><A HREF="http://docs.umdl.umich.edu/class/image/image-datatransform.xml">Image 
+    Class Data Transformation</A></LI>
+  <LI><A HREF="http://docs.umdl.umich.edu/class/image/image-imagestructures.xml">Image 
+    Class - Mapping Image Structures</A></LI>
+  <LI><A HREF="http://docs.umdl.umich.edu/class/image/image-charconversion.xml">Image 
+    Class Character Set Conversion</A></LI>
+  <LI><A HREF="http://docs.umdl.umich.edu/class/image/image-accesscontrol.xml">Image 
+    Class Access Control</A></LI>
+</UL>
+<P>&nbsp;</P>
+<P CLASS="sectionheader">&nbsp;</P>
+</BODY>
+</HTML>

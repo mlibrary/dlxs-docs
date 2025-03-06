@@ -1,0 +1,47 @@
+<HTML>
+<HEAD>
+<TITLE>Untitled Document</TITLE>
+<META http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<LINK rel="stylesheet" href="./styles.css">
+
+</HEAD>
+
+<BODY class="navpalette">
+<A class="navlink" href="mainframepages/generalinfo.html" target="mainFrame">General 
+  Information<BR>
+  </A><A class="navlink" href="mainframepages/intro.html" target="mainFrame">Introduction</A><BR>
+  <A class="navlink" href="mainframepages/schedule.html" target="mainFrame"> Schedule</A><BR>
+  <A class="navlink" href="mainframepages/outline.html" target="mainFrame">Workshop 
+  Outline</A>
+<HR width="75%">
+<A class="navlink" href="mainframepages/demo.html" target="mainFrame">Middleware 
+  Demo</A><BR>
+  <A CLASS="navlink" HREF="mainframepages/bigpicture.html" TARGET="mainFrame">Big 
+  Picture</A><BR>
+  &nbsp;&nbsp;&nbsp;&nbsp;<A CLASS="subNavlink" HREF="http://docs.umdl.umich.edu/arch/general/arch-overview.xml" TARGET="external">Architecture</A><BR>
+  &nbsp;&nbsp;&nbsp;&nbsp;<A CLASS="subNavlink" HREF="extras/functionality.html" TARGET="mainFrame">Middleware 
+  Functionality<BR>
+  </A> &nbsp;&nbsp;&nbsp;&nbsp;<A CLASS="subNavlink" HREF="mainframepages/classes/bibclass.html" TARGET="mainFrame">Environment</A><BR>
+  &nbsp;&nbsp;&nbsp;&nbsp;<A CLASS="subNavlink" HREF="extras/configuration.html" TARGET="mainFrame">Configuration<BR>
+  </A> &nbsp;&nbsp;&nbsp;&nbsp;<A CLASS="subNavlink" HREF="extras/dirstructure.html" TARGET="mainFrame">Directory 
+  Structure </A><BR>
+  <A CLASS="navlink" HREF="mainframepages/xpat.html" TARGET="mainFrame">XPat</A><BR>
+  <A CLASS="navlink" HREF="mainframepages/perlmodules.html" TARGET="mainFrame">Perl 
+  Modules and Objects</A><BR>
+  <SPAN CLASS="navlink">Perl CGI Scripts</SPAN><BR>
+  &nbsp;&nbsp;&nbsp;&nbsp;<A CLASS="subNavlink" HREF="mainframepages/classes/bibclass.html" TARGET="mainFrame">BibClass</A><BR>
+  &nbsp;&nbsp;&nbsp;&nbsp;<A CLASS="subNavlink" HREF="mainframepages/classes/imageclass.html" TARGET="mainFrame">Image 
+  Class</A><BR>
+  &nbsp;&nbsp;&nbsp;&nbsp;<A class="subNavlink" href="mainframepages/classes/textclass.html" target="mainFrame">TextClass 
+  </A><BR>
+  &nbsp;&nbsp;&nbsp;&nbsp;<A class="subNavlink" href="mainframepages/classes/pageviewer.html" target="mainFrame">PageViewer</A><BR>
+  &nbsp;&nbsp;&nbsp;&nbsp;<A class="subNavlink" href="mainframepages/classes/wordwheel.html" target="mainFrame">Wordwheel</A><BR>
+  &nbsp;&nbsp;&nbsp;&nbsp;<A class="subNavlink" href="mainframepages/classes/findingaids.html" target="mainFrame">Finding 
+  Aids</A><BR>
+
+<HR width="75%">
+<A class="navlink" href="mainframepages/interface.html" target="mainFrame">User 
+Interface</A><BR>
+<A class="navlink" href="mainframepages/further.html" target="mainFrame">Further Topics</A><BR>
+</BODY>
+</HTML>

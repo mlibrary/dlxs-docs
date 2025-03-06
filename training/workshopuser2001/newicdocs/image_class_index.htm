@@ -1,0 +1,82 @@
+<HTML>
+<HEAD>
+   <TITLE>image_class_index.html</TITLE>
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<H2>XPAT Image Building for Image Class version 2</H2>
+
+<P>These instructions are specific to the soon to be released Image
+Class version 2. If implementing a collection in version 1.06 or
+older, see <A HREF="http://docs.umdl.umich.edu/class/image/image-indexbuild.xml">Image
+Class Index Building</A>.</P>
+
+<P>Image Class version 1.06 (current distribution) uses XPat sgmlrgn
+in the process of building an XPat index. sgmlrgn relies on the Image
+Class DTD&nbsp;to "understand"&nbsp;the structure of the SGML. Image
+Class version 2 (to be distributed soon) uses XPat multirgn instead
+of sgmlrgn. XPAT&nbsp;multirgn uses a simple tags.txt (e.g.,
+/DLXSROOT/idx/i/image-blank/tags.txt) file instead of the DTD&nbsp;to
+identify the structure to be indexed. Since not all elements, tags,
+and attributes of the Image Class DTD&nbsp;need to be searchable, a
+multirgn index can be more efficient to build and search against.</P>
+
+<P>Image Class version 1.06 requires that the data for all image
+collections be combined in a single XPat&nbsp;index. Image Class
+version 2 allows each collection to have an index. This simplifies
+collection implementation since an XPat&nbsp;index with only one
+collection builds much faster than a multi-collection index.</P>
+
+<P><B>Basic Steps for Setting Up a New XPat Index in</B> <B>Image
+Class</B><FONT COLOR="#FF0000"><B> version 2</B></FONT></P>
+
+<OL>
+   <LI>create /DLXSROOT/obj/c/coll directory</LI>
+   
+   <LI>copy valid/normalized SGML to /DLXSROOT/obj/c/coll</LI>
+   
+   <LI>create /DLXSROOT/idx/c/coll</LI>
+   
+   <LI>copy contents of /DLXSROOT/idx/i/image-blank to
+   /DLXSROOT/idx/c/coll</LI>
+   
+   <LI>In the<B> image.blank.dd</B> file, modify all occurrences of
+   <B>/l1/idx </B>and<B> /l1/obj</B> to match local implementation
+   paths.</LI>
+   
+   <LI>In the <B>image.cfg</B> file, modify all occurrences of
+   <B>/l1/idx</B> to match local implementation paths.</LI>
+   
+   <LI>In the<B> image.inp</B> file, modify all occurrences of
+   <B>/l1/lib</B> to match local implementation paths.</LI>
+   
+   <LI>In the <B>Makefile</B> file, modify the occurrence of
+   <B>/l1/idx</B> to match local implementation paths.</LI>
+</OL>
+
+<P>The /DLXSROOT/idx/i/image-blank directory is packaged with Image
+Class as a boiler plate for making new XPAT indexes.</P>
+
+<P>It is OK to put more than one collection in a single XPat
+index.</P>
+
+<P><B>Building the XPat Index</B></P>
+
+<P>Once /DLXSROOT/idx/c/coll and /DLXSROOT/obj/c/coll are setup,
+building the index is a simple matter of issuing the following Make
+command. </P>
+
+<P><B><CODE>cd /DLXSROOT/idx/c/coll</CODE></B></P>
+
+<P><B><KBD>make all</KBD></B></P>
+
+<P>&nbsp;</P>
+
+<P><B>Rebuilding the XPat Index</B></P>
+
+<P>To update an index with a new version of the SGML, replace the sgm
+file in /DLXSROOT/obj/c/coll. And then follow the instructions in the
+above section, <B>Building the XPat Index</B>.</P>
+
+<P></P>
+</BODY>
+</HTML>

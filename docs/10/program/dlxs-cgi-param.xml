@@ -1,0 +1,298 @@
+<?xml version="1.0"?>
+
+<!-- SPO Editorial Services                  -->
+<!-- automatically-generated XML header file -->
+
+<?xml-stylesheet href="../../pre11-dlxsdocs.xsl" type="text/xsl"?>
+<!DOCTYPE DLPSDOC PUBLIC "-//UM-DLPS//DTD DLPS Publications//EN" "http://docs.umdl.umich.edu/dlps/docs/dlpsdocs.dtd">
+<DLPSDOC>
+<TITLE>DLXS CGI Parameter Standards</TITLE>
+<HEADER>
+<JOURNAL>DLXS Documentation</JOURNAL>
+<PUBDATE>2002-10-08 14:05:18 EDT</PUBDATE>
+<AUTH1>Farber, Phillip</AUTH1>
+<AUTH2></AUTH2>
+<DOCTITLE>DLXS CGI Parameter Standards</DOCTITLE>
+<VOL>program</VOL>
+<ISS></ISS>
+<FILE>dlxsdocs-dlxs-cgi-param</FILE>
+</HEADER>
+<BODY>
+    <BHEAD>DLXS CGI Parameter Standards</BHEAD>
+    <DIV1>
+      <P>The following is a catalog of all parameters (arguments supplied in the HTTP query string) supported by DLXS middleware.  These parameters apply to all middleware developed for DLXS collections/classes, as well as existing non-DLXS middleware when it undergoes 
+<I>significant</I> rework to bring it into the DLXS framework. The goals for this are:</P>
+      <OL>
+        <LI>to provide consistency for statistics gathering;</LI>
+        <LI>to provide consistency for interoperability between collections 
+(and between digital libraries in the future);</LI>
+        <LI>and to provide a definition that is scalable for future growth.</LI>
+      </OL> 
+      <P>All keywords used for CGI parameters and region names should adhere to the 
+following naming principles:</P>
+      <OL>
+        <LI>They should not be too short (and thus cryptic) and yet not too long (and thus create browser problems).</LI>
+        <LI>They should be be lowercase.</LI>
+        <LI>They should be alphanumeric only, and include no punctuation.</LI>
+      </OL>
+    </DIV1>
+    <DIV1>
+      <H1>Searches</H1>
+      <P>Most searches make use of one of the three basic search types: simple, boolean, and proximity.  They also use "Region" names derived from the XML or SGML and are reflected in the DLXS <A HREF="./dlxs-libmodules.xml#terminologymapper">TerminologyMapper</A> map file where they are mapped to XPAT region names.  The automatic generation of XPAT queries from these mapped parameters is implemented using the DLXS <A HREF="./dlxs-libmodules.xml#queryfactory">QueryFactory</A> module.</P>
+      <P>The existing list of region names will be expanded as DLXS continues to develop a class-based architecture. Typically, DLXS Collection Managers review existing region naming across similar classes before defining new region names.</P>
+      <P>An unimplemented proposal to make statistics gathering more precise proposes the "<B>nostats</B>" CGI parameter to screen out search results from a usage statistics gathering process. For example, where the search would otherwise produce multiple "hits" when viewing different parts of a result.</P>
+      <TABLE BORDER="1">
+        <TBODY>
+          <TR>
+            <TD><B>Description</B></TD>
+            <TD><B>CGI Parameter: type=</B></TD>
+            <TD><B>CGI Optional Parameter: subtype=</B></TD>
+            <TD><B>Region Names</B></TD></TR>
+          <TR>
+            <TD>simple</TD>
+            <TD>simple</TD>
+            <TD>lookup | browse | headword | orths | bookbag</TD>
+            <TD>n/a</TD></TR>
+          <TR>
+            <TD>boolean</TD>
+            <TD>boolean</TD>
+            <TD>frequency</TD>
+            <TD>author | title | citation | speech</TD></TR>
+          <TR>
+            <TD>proximity</TD>
+            <TD>proximity</TD>
+            <TD>n/a</TD>
+            <TD>n/a</TD></TR>
+          <TR>
+            <TD>random</TD>
+            <TD>random</TD>
+            <TD>n/a</TD>
+            <TD>n/a</TD></TR>
+          <TR>
+            <TD>List of items to search (Image Services)</TD>
+            <TD>ilist</TD>
+            <TD>n/a</TD>
+            <TD>n/a</TD></TR></TBODY></TABLE>
+    </DIV1>
+    <DIV1>
+      <H1>Browses</H1>
+      <P> Note that the following parameters were derived from existing non-DLXS browse categories and that currently none are implemented in DLXS middleware. As these browse categories are implemented in DLXS middleware their descriptions will be expanded in more detail.</P>
+      <TABLE BORDER="1">
+        <TBODY>
+          <TR>
+            <TD>
+      <TABLE BORDER="1">
+                <TBODY>
+                  <TR>
+                    <TD><B>Description</B></TD>
+                    <TD><B>CGI Parameter: browse=</B></TD></TR>
+                  <TR>
+                    <TD>all items by selected author</TD>
+                    <TD>exactauth</TD></TR>
+                  <TR>
+                    <TD>all authors of selected item</TD>
+                    <TD>author</TD></TR>
+                  <TR>
+                    <TD>period</TD>
+                    <TD>period</TD></TR>
+                  <TR>
+                    <TD>wordwheel</TD>
+                    <TD>wordwheel</TD></TR>
+                  <TR>
+                    <TD>volume</TD>
+                    <TD>volume</TD></TR>
+                  <TR>
+                    <TD>bible</TD>
+                    <TD>bible</TD></TR>
+                  <TR>
+                    <TD>title</TD>
+                    <TD>title</TD></TR>
+                  <TR>
+                    <TD>speaker/speech event</TD>
+                    <TD>speaker</TD></TR>
+                  <TR>
+                    <TD>genre</TD>
+                    <TD>genre</TD></TR>
+                  <TR>
+                    <TD>journal</TD>
+                    <TD>journal</TD></TR></TBODY></TABLE></TD>
+            <TD>
+      <TABLE BORDER="1">
+                <TBODY>
+                  <TR>
+                    <TD><B>Description</B></TD>
+                    <TD><B>CGI Parameter: browse=</B></TD></TR>
+                  <TR>
+                    <TD>country</TD>
+                    <TD>country</TD></TR>
+                  <TR>
+                    <TD>classification</TD>
+                    <TD>class</TD></TR>
+                  <TR>
+                    <TD>stencil</TD>
+                    <TD>allstencils</TD></TR>
+                  <TR>
+                    <TD>manuscript</TD>
+                    <TD>allmss</TD></TR>
+                  <TR>
+                    <TD>document</TD>
+                    <TD>alldoc</TD></TR>
+                  <TR>
+                    <TD>subject</TD>
+                    <TD>subject</TD></TR>
+                  <TR>
+                    <TD>culture</TD>
+                    <TD>culture</TD></TR>
+                  <TR>
+                    <TD>tradition</TD>
+                    <TD>tradition</TD></TR>
+                  <TR>
+                    <TD>letter</TD>
+                    <TD>letter</TD></TR>
+                  <TR>
+                    <TD>page</TD>
+                    <TD>page</TD></TR></TBODY></TABLE></TD></TR></TBODY></TABLE>
+    </DIV1>
+    <DIV1>
+      <H1>Views</H1>
+      <P>Note that the following parameters were derived from non-DLXS view categories and that, consequently, many are not yet implemented in DLXS middleware. </P>
+      <TABLE BORDER="1">
+        <TBODY>
+          <TR>
+            <TD><B>Description</B></TD>
+            <TD><B>CGI Parameter: view=</B></TD>
+            <TD><B>Optional CGI Parameter: subview=</B></TD></TR>
+          <TR>
+            <TD>t.o.c.</TD>
+            <TD>toc</TD>
+            <TD>n/a</TD></TR>
+          <TR>
+            <TD>t.o.c. - fullheader</TD>
+            <TD>header</TD>
+            <TD>n/a</TD></TR>
+          <TR>
+            <TD>text</TD>
+            <TD>text</TD>
+            <TD>n/a</TD></TR>
+          <TR>
+            <TD>text - SGML</TD>
+            <TD>sgml</TD>
+            <TD>n/a</TD></TR>
+          <TR>
+            <TD>entry</TD>
+            <TD>entry</TD>
+            <TD>detail | getsid</TD></TR>
+          <TR>
+            <TD>Digital image (gif, jpeg, etc.)</TD>
+            <TD>image</TD>
+            <TD>n/a</TD></TR>
+          <TR>
+            <TD>Digital image (pdf)</TD>
+            <TD>pdf</TD>
+            <TD>n/a</TD></TR>
+          <TR>
+            <TD>results with thumbnail</TD>
+            <TD>thumb</TD>
+            <TD>n/a</TD></TR>
+          <TR>
+            <TD>target (e.g. footnote)</TD>
+            <TD>trgt</TD>
+            <TD>n/a</TD></TR>
+          <TR>
+            <TD>results list</TD>
+            <TD>reslist</TD>
+            <TD>short | detail</TD></TR>
+          <TR>
+            <TD>utterance</TD>
+            <TD>utter</TD>
+            <TD>n/a</TD></TR>
+          <TR>
+            <TD>comparison (formerly a search type)</TD>
+            <TD>compare</TD>
+            <TD>n/a</TD></TR>
+          <TR>
+            <TD>slide-show results (images)</TD>
+            <TD>slide</TD>
+            <TD>n/a</TD></TR></TBODY></TABLE>
+    </DIV1>
+    <DIV1>
+      <H1>Collection Identification</H1> 
+      <P>Any additions or changes to collection parameters must be reviewed by the Architecture group. </P>
+      <TABLE BORDER="1">
+        <TBODY>
+          <TR>
+            <TD><B>Description</B></TD>
+            <TD><B>CGI Parameter:</B></TD></TR>
+          <TR>
+            <TD>Collection identifier (repeatable)</TD>
+            <TD>c=&lt;identifier&gt;</TD></TR>
+          <TR>
+            <TD>Single Collection identifer to retrieve detail</TD>
+            <TD>cc=&lt;identifier&gt;</TD></TR>
+          <TR>
+            <TD>Boolean flag to indicate a cross-collecton search</TD>
+            <TD>xc=1</TD></TR>
+          <TR>
+            <TD>Group (of collections) identifier (repeatable)</TD>
+            <TD>g=&lt;identifier&gt;</TD></TR>
+        </TBODY>
+      </TABLE>
+    </DIV1>
+    <DIV1>
+      <H1>Page</H1> 
+      <P>Any additions or changes to page parameters must be reviewed by the Architecture group. </P>
+      <TABLE BORDER="1">
+        <TBODY>
+          <TR>
+            <TD><B>Description</B></TD>
+            <TD><B>CGI Parameter: page=</B></TD></TR>
+          <TR>
+            <TD>Generate simple search page</TD>
+            <TD>simple</TD></TR>
+          <TR>
+            <TD>Generate boolean search page</TD>
+            <TD>boolean</TD></TR>
+          <TR>
+            <TD>Generate proximity search page</TD>
+            <TD>proximity</TD></TR>
+          <TR>
+            <TD>Generate random search page</TD>
+            <TD>random</TD></TR>
+          <TR>
+            <TD>Generate idlist search page</TD>
+            <TD>idlist</TD></TR>
+          <TR>
+            <TD>Generate wordwheel "start" page</TD>
+            <TD>wwstart</TD></TR>
+          <TR>
+            <TD>Generate wordwheel "full" results page</TD>
+            <TD>wwfull</TD></TR>
+          <TR>
+            <TD>Display current session search history</TD>
+            <TD>history</TD></TR>
+          <TR>
+            <TD>Display current session bookbag</TD>
+            <TD>bbaglist</TD></TR>
+          <TR>
+            <TD>Display bookbag email entry form</TD>
+            <TD>bbagemail</TD></TR></TBODY></TABLE>
+    </DIV1>
+    <DIV1>
+      <H1>Misc</H1> 
+      <P>Any additions or changes to miscellaneous parameters must be reviewed by the Architecture group. </P>
+      <TABLE BORDER="1">
+        <TBODY>
+          <TR>
+            <TD><B>Description</B></TD>
+            <TD><B>CGI Parameter</B></TD></TR>
+          <TR>
+            <TD>Specify arbitrary coll-specific template</TD>
+            <TD>tpl</TD></TR>
+          <TR>
+            <TD>Specify session identifier</TD>
+            <TD>sid</TD></TR>
+        </TBODY>
+      </TABLE>
+    </DIV1>
+  </BODY>
+</DLPSDOC>

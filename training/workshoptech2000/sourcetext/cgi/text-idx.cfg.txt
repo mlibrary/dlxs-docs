@@ -1,0 +1,118 @@
+
+# **********************************************************************
+# required definitions for textclass.pl
+
+# uses of subclasses of TextClass module
+
+
+# **********************************************************************
+# collection specific TextClass subclassing modules
+use TextClass;
+use VoltaireTC;
+use BosniaTC;
+use TesoTC;
+
+
+# **********************************************************************
+# name of database to hold collection information
+# Currently 2000-03-14 10:42:56 EST, a tab-delimited file
+# **********************************************************************
+my ( $userpath ) = &GetDevUsernameFromScript;
+
+$gCollDbName = $ENV{'DLXSROOT'} . '/lib/' . $userpath . '/colldb';
+
+# **********************************************************************
+# location of html template files (web DocRoot space)
+# **********************************************************************
+$gHtmlDir     = $ENV{'DLXSROOT'} . '/web/t/text' . $userpath . '/';     # actual doc root directory
+$gHtmlDocRoot = '/t/text' . $userpath . '/';            # server doc root alias
+$gScriptDir   = '/cgi/t/text' . $userpath . '/';        # server cgi script root alias
+
+$gDefaultSliceSize  = 25;
+$gDefaultStart      = 1;
+
+
+%gPageToSearchHash = (
+                      'simple'       => 'simple',
+                      'simpleext'    => 'simple',
+                      'boolean'      => 'boolean',
+                      'booleanext'   => 'boolean',
+                      'proximity'    => 'proximity',
+                      'proximityext' => 'proximity',
+                     );
+
+
+# **********************************************************************
+# name of html template files for each type of "page" and results
+# **********************************************************************
+%gHtmlTemplates = (
+                   'debug'        => $gHtmlDir . 'debug.tpl',
+
+                   'simple'       => $gHtmlDir . 'simple.tpl',        # short simple page
+                   'simpleext'    => $gHtmlDir . 'simpleext.tpl',  # extended simple page
+                   'boolean'      => $gHtmlDir . 'boolean.tpl',
+                   'booleanext'   => $gHtmlDir . 'booleanext.tpl',
+                   'proximity'    => $gHtmlDir . 'proximity.tpl',
+                   'proximityext' => $gHtmlDir . 'proximityext.tpl',
+
+                   'reslist'      => $gHtmlDir . 'reslist.tpl',
+                   'text'         => $gHtmlDir . 'text.tpl',
+
+                   'history'      => $gHtmlDir . 'searchhistory.tpl',
+
+                   'header'       => $gHtmlDir . 'header.tpl',
+
+                   'trgt'         => $gHtmlDir . 'note.tpl',
+                  );
+
+# for the following arrays (used for html pull down selects),
+# first item is the default or "selected" option
+@gGenres = (
+            'all',
+            'drama',
+            'poetry',
+            'prose fiction',
+            'prose nonfiction',
+          );
+
+@gPeriods = (
+             'all',
+             'pre-1600',
+             '1600-1700',
+             '1700-1800',
+             '1800-1900',
+             '1900-',
+           );
+@gLanguages = (
+               'all',
+               'English',
+               'French',
+               'Spanish',
+              );
+@gGenders = (
+             'all',
+             'female',
+             'male',
+            );
+
+
+#%gSimpleRegions = (
+#                   'Full text' => 1,
+#                  );
+
+
+# **********************************************************************
+# standard errors
+# **********************************************************************
+
+%gERRORS = (
+            'PAGE_NOT_FOUND'    => qq{Cannot find html template page: },
+            'NO_COLLS'          => qq{No collections available: },
+            'NO_Q1'             => qq{You must enter a search term when submitting a search: },
+            'NO_SESSION'        => qq{Problem starting session: },
+            'XPAT_START_ERROR'  => qq{XPat search engine failed start up: },
+            'XPAT_SEARCH_ERROR' => qq{XPat search engine returned an error, call for help: },
+           );
+
+
+1;

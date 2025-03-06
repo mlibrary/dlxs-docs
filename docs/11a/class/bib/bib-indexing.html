@@ -1,0 +1,78 @@
+<HTML>
+<head>
+<TITLE>Index Building, Bibliographic Class</TITLE>
+<LINK HREF="../../dlxsdocs.css" REL="stylesheet" TYPE="text/css">
+</head>
+<BODY>
+<table class="updateTable" CELLSPACING="3" CELLPADDING="3" BORDER="1">
+   <TR>
+      <td>Last updated</td>
+      <td>2003-03-04 09:44:03 EST</td>
+   </TR>
+   <TR>
+      <td>Doc Title</td>
+      <td>Index Building, Bibliographic Class</td>
+   </TR>
+   <TR>
+      <td>Author 1</td>
+      <td>Hagedorn, Kat</td>
+   </TR>
+   <TR>
+      <td>CVS Revision</td>
+      <td>$Revision: 1.6 $</td>
+   </TR>
+</table>
+<DIV CLASS="pageTitle">Index Building, Bibliographic Class</DIV>
+<P>You will need to identify a directory or directories where you plan to store
+   your SGML or XML source file, your index file (approximately 75% of the size
+   of your bibliographic information), your "region" files, and other information
+   such as data dictionaries. We recommend you use the following structure:</P>
+<UL>
+   <LI>Store SGML or XML files in <TT>/{DLXSROOT}/obj/{s}/{sample}/</TT> where <TT>{DLXSROOT}</TT> is
+      the "tree" where you install all DLXS components, <TT>{s}</TT> is the first
+      letter of the name of the collection you are indexing, and <TT>{sample}</TT> is
+      the collection ID of the collection you are indexing. For example, if your
+      collection id is "nyt" and your DLXSROOT is "/l1", you will place the <TT>nyt.xml</TT> file
+      in <TT>/l1/obj/n/nyt/</TT>, e.g., <TT>/l1/obj/n/nyt/nyt.xml</TT>. See <A HREF="http://docs.umdl.umich.edu/arch/general/directory-conventions.html">directory
+      conventions</A> for more information.</LI>
+   <LI>Store index, region, data dictionary, and init files in <TT>/{DLXSROOT}/idx/{s}/{sample}/</TT>,
+      e.g., <TT>/l1/idx/n/nyt/nyt.idx</TT>. See the <A HREF="../../xpat/xpat-index.html">XPAT
+      documentation</A> for more on these types of files.</LI>
+</UL>
+<P>The instructions below assume a sample collection named "nyt" and a DLXSROOT
+   of "/l1", as in the above examples. Please replace these sample names with
+   your local filenames.</P>
+<OL>
+<LI>Ensure that your SGML is fully validated or normalized, or that your XML
+   is fully validated. Use a validating parser such as <A HREF="http://www.jclark.com/sp/nsgmls.htm">nsgmls</A> to
+   accomplish this. <b>NB: Building indexes without validation can cause problems
+   such as unreliable results; data that will not validate should not be put
+   online.</b> Assuming SGML, put the file <TT>nyt.sgm</TT> in <TT>/l1/obj/n/nyt/nyt.sgm</TT></LI>
+<LI>Copy the sample data dictionary file <A HREF="bib-sample.dd"><TT>bib-sample.dd</TT></A> to <TT>/l1/idx/n/nyt/</TT> and
+   rename as <TT>nyt.dd</TT></LI>
+<LI>Edit the <TT>nyt.dd</TT> file to replace<OL>
+   <LI><TT>b/bib-sample/bib-sample.sgm</TT> with <TT>n/nyt/nyt.sgm</TT></LI>
+   <LI><TT>b/bib-sample/bib-sample.idx</TT> with <TT>n/nyt/nyt.idx</TT></LI>
+   <LI>and <TT>b/bib-sample/bib-sample.init</TT> with <TT>n/nyt/nyt.init</TT></LI>
+   </OL></LI>
+<LI>Copy the sample init file <A HREF="bib-sample.init"><TT>bib-sample.init</TT></A> to <TT>/l1/idx/n/nyt/</TT> and
+   rename as <TT>nyt.init</TT></LI>
+<LI>Index your collection using the following command, replacing the value <TT>10m</TT> with
+   an appropriate amount of memory. Please see <A HREF="../../xpat/xpat-index.html">XPAT
+   documentation</A> to determine how much memory to allocate.<BR/>
+&#0160;&#0160;&#0160;&#0160;<TT>xpatbld -m 10m -D /l1/idx/n/nyt/nyt.dd</TT> </LI>
+<LI>Create your region files by issuing the following command.<BR/>
+&#0160;&#0160;&#0160;&#0160;<TT>multirgn -f -D /l1/idx/n/nyt.dd -t bib-regions.tags</TT><BR/>
+   The file <A HREF="bib-regions.tags">bib-regions.tags</A> can be located in
+   any directory and can be deleted after the regions have been indexed. DLPS
+   keeps a copy of this file in <TT>/l1/obj/lib/sgml/bib-regions.tags</TT></LI>
+</OL>
+<P>You have now built indexes and region files for your collection. You can test
+   that things are properly indexed by issuing the command<BR/>
+&#0160;&#0160;&#0160;&#0160;<TT>xpat /l1/idx/n/nyt/nyt.dd</TT><BR/>
+   and then searching a common word (e.g., "<TT>the</TT>") and<BR/>
+&#0160;&#0160;&#0160;&#0160;<TT>region A</TT><BR/>
+   Strategically, it is good to test this from a directory other than the one
+   you indexed in, to ensure that relative or absolute paths are resolving appropriately.</P>
+</BODY>
+</HTML>

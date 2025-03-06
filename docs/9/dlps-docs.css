@@ -1,0 +1,13 @@
+BODY { background-color: #FFFFFF }
+DIV { margin-left : 1.5em }
+.level2 { margin-left : 2em }
+.level3 { margin-left : 4em }
+DIV1 { margin-left : 1.5em }
+DIV2 { margin-left : 2em }
+DIV3 { margin-left : 4em }
+
+H1 { font-family: Times; font-size: 22px; font-weight: bold;} 
+H2 { font-family: Times; font-size: 20px; font-weight: bold;} 
+H3 { font-family: Times; font-size: 18px; font-weight: bold;} 
+H4 { font-family: Times; font-size: 16px; font-weight: bold;} 
+H5 { font-family: Times; font-size: 14px; font-weight: bold;} 

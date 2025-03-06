@@ -1,0 +1,168 @@
+<HTML>
+  <head>
+    <TITLE>Nameresolver2 setup / design</TITLE>
+    <meta HTTP-EQUIV="Content-Type" content="text/html; charset=iso-8859-1">
+    <link rel="stylesheet" href="../icstyle/icstyles.css" type="TEXT/CSS">
+    <link rel="stylesheet" href="../styles.css" type="TEXT/CSS">
+    <style type="text/css">
+      <!--
+      .style1 { color: #FF0907; font-weight: bold; }
+      -->
+    </style>
+  </head>
+  <BODY BGCOLOR="#FFFFFF" TEXT="#000000" CLASS="mainpalette">
+
+    <h1>Nameresolver2</h1>
+
+    <p>Overview, design and installation</p>
+    <span style="font-weight: bold;">What guided the design:</span><br>
+    <ul>
+      <li>Moving away from Bib class</li>
+      <li>Not storing the descriptive metadata</li>
+      <li>MySQL, not xpat for storage</li>
+      <li>idresolver already did almost everything that we wanted</li>
+    </ul>
+     
+    <h2 class="partheader">idresolver vs. nameresolver2 (idresolver-nr)</h2>
+ 
+    <p>The <a href="http://webservices.itcs.umich.edu/mediawiki/dlxs14/index.php/DLXS_IDRESOLVER">idresilver</a>
+    is a simple mechanism for resolving a unique ID to a URL.  The DLXS Classes can use it to, for example, link 
+    digital object identifiers in an Electronic Finding Aid to the actual digital object in another Class.<p>
+
+    <table>
+      <tr>
+        <td><b>idresolver</b>   </td><td>There is always just one URL for each ID in the database.</td>
+      </tr><tr>
+        <td><b>namereslver2</b> </td><td>Records are keyed on id / collection pairs so more than one URL for a given ID can exit.</td>
+      </tr><tr>
+        <td><hr/></td><td><hr/></td>
+      </tr><tr>
+        <td><b>idresolver</b>   </td><td>A URL (marked up in XML) for an ID is returned (see example below).</td>
+      </tr><tr>
+        <td><b>namereslver2</b>   </td><td>If a single entry for an ID is found, the user is redirected to that URL</td>
+      </tr>
+      <tr>
+        <td><b>namereslver2</b>   </td><td>If more than one entry for an ID is found, the user is prompted with links to the item in differnt collections.</td>
+      </tr>
+    </table>
+
+    <p>idresolver example:</p>
+    <pre>
+    http://quod.lib.umich.edu/cgi/i/idresolver/idresolver?id=is.blake.0001
+
+    &lt;ITEM MTIME="2008-07-24 16:28:00">
+      &lt;ID>is.blake.0001&lt;/ID>
+      &lt;URI>http://images.umdl.umich.edu/cgi/i/image/image-idx?view=entry;subview=detail;
+        cc=blakeic;entryid=X-1;viewid=1&lt;/URI>
+    &lt;/ITEM>
+    </pre>
+
+
+    <h2 class="partheader">Nameresolver2 Usage</h2>
+     
+    <h3 class="sectionheader">Table structure:</h3>
+    Database: dlxs<br/>
+    Table name: nameresolver<br/>
+    <br/> <br/>
+    <table>
+      <tr>
+        <th scope="col">id</th>
+	<th scope="col">coll</th>
+	<th scope="col">url</th>
+	<th scope="col">modified (auto- generated)</th>
+     </tr>
+     <tr>
+     	<th scope="row">0599998.0001.001</th>
+	<td>alajournals</td>
+	<td>http://quod.lib.umich.edu/cgi/t/text/text-idx?c=alajournals;idno=0599998.0001.001</td>
+	<td>2008-01-15 09:54:32</td>
+     </tr>
+     <tr>
+     	<th scope="row">0599998</th>
+	<td>alajournals</td>
+	<td>http://quod.lib.umich.edu/cgi/t/text/text-idx?c=alajournals;idno=0599998</td>
+	<td>2008-01-15 09:54:32</td>
+     </tr>
+     <tr>
+     	<th scope="row">BAD1447.0002.001</th>
+	<td>genpub</td>
+	<td>http://quod.lib.umich.edu/cgi/t/text/text-idx?c=genpub;idno=BAD1447.0002.001</td>
+	<td>2008-01-15 10:01:30</td>
+     </tr>
+     <tr>
+     	<th scope="row">BAD1447.0002.001</th>
+	<td>micounty</td>
+	<td>http://quod.lib.umich.edu/cgi/t/text/text-idx?c=micounty;idno=BAD1447.0002.001</td>
+	<td>2008-01-15 10:04:00</td>
+     </tr>
+   </table>
+   
+   <h3 class="sectionheader">Browser Display</h3>
+
+   <ul>
+      <li>Long id - User is forwarded directly to the record with no interim page</li>
+          <ul><li><a href="http://name.umdl.umich.edu/0599998.0001.001">http://name.umdl.umich.edu/0599998.0001.001</a></li></ul> 
+      <li>Short id that corresponds to only 1 long id - User is forwarded
+      directly to the record with no interim page</li>
+          <ul><li><a href="http://name.umdl.umich.edu/B1942529">http://name.umdl.umich.edu/B1942529</a> (long id
+	  <a href="http://name.umdl.umich.edu/B1942529.0001.001">B1942529.0001.001</a>)</li></ul>
+    <li>Short id that links to multiple long ids - User is forwarded to the
+    collection which presents the volumes for that short id</li>
+          <ul><li><a href="http://name.umdl.umich.edu/0599998">http://name.umdl.umich.edu/0599998</a></li></ul>
+    <li>Id in multiple collections - User is provided a list of collections in
+    which the record resides and can choose to view it in any of the
+    collections</li>
+          <ul><li><a href="http://name.umdl.umich.edu/BAD1447.0002.001">http://name.umdl.umich.edu/BAD1447.0002.001</a></li></ul> 
+    </ul>
+
+<h3 class="sectionheader">Location and Modification</h3>
+
+The nameresolver2 files are stored at <span style="font-family: monospace;">$DLXSROOT/bin/n/nameresolver</span>. Files of interest are:
+
+<ul>
+    <li><span style="font-family: monospace;">NRTable.sql</span> - SQL script to create the database table</li>
+    <li><span style="font-family: monospace;">IdParser.pl</span> - Perl script to that extracts the long and short ids,
+    collection, and URL information for each record and loads it to the database
+    </li>
+</ul>
+
+<h3 class="sectionheader">Populating the database</h3>
+
+The <span style="font-family: monospace;">IdParser.pl</span> script has a well-documented usage message. If you run <span style="font-family: monospace;">IdParser.pl -h</span>, you will see a list of available options.  There are several ways to update nameresolver2.
+
+<ul>
+    <li>Option 1: Bib class files</li>
+          <ul><li>This method can be used for the original migration from old
+	  nameresolver to nameresolver2. Consistent with the old nameresolver,
+	  it uses the ID (not IDNO) tag for the identifier.</li></ul>
+          <ul><li>Example: To add all bib class files from a given directory do:
+	  <span style="font-family: monospace;">./IdParser.pl -d fullDirectoryPath</span>. To add a specific bib class file,
+	  add the -f option: <span style="font-family: monospace;">./IdParser.pl -d fullDirectoryPath -f myColl-bib.xml</span>.</li></ul>
+    <li>Option 2: Simplified XML format</li>
+          <ul><li>If you would like to add new records to nameresolver 2, there
+	  is a simpler format than  bib class. This format is:
+	  <span style="font-family: monospace;">&lt;ITEMS&gt;&lt;ITEM&gt;&lt;ID&gt;123&lt;/ID&gt;&lt;COLL&gt;collid&lt;/COLL&gt;&lt;URL&gt;http://&lt;/URL&gt;&lt;/ITEM&gt;&lt;ITEM&gt;...&lt;/ITEM&gt;&lt;/ITEMS&gt;</span>.</li></ul>
+          <ul><li>Example: Add -u to the examples above. <br/>To add all bib class
+	  files from a given directory do: <span style="font-family:
+	  monospace;">./IdParser.pl -d fullDirectoryPath -u</span>.<br/> 
+	  To add a specific bib class file, add the -f option: 
+	  <span style="font-family: monospace;">./IdParser.pl -d fullDirectoryPath -f myRecords.xml -u</span>.</li>
+
+    <li>Option 3: Single id from the command line</li>
+          <ul><li>If you have only a small number of records to add, you can add
+	  them individually from the command line. This will process the long
+	  and short id for the given id.</li></ul>
+          <ul><li>Example: <span style="font-family: monospace;">./IdParser.pl -c collName -i yourIdentifier -l "yourUrl"</span></li></ul>
+    <li>Option 4: Comma-separated value file (spreadsheet for flat text file)</li>
+          <ul><li>This may be the easiest option if you have a large number of
+	  ids to add which have the same base URL.</li></ul>
+          <ul><li>Example: <span style="font-family: monospace;">LoadLLMCIDs.pl</span>. This script is provided as an example
+	  and would have be to altered for your use.</li></ul>
+    <li>Option 5: From UMProvider</li>
+          <ul><li>The UMProvider suite synchronizes with nameresolver to add new
+	  nameresolver records along with new records to the oai
+	  database.</li></ul>
+</ul>
+     
+  </BODY>
+</HTML>

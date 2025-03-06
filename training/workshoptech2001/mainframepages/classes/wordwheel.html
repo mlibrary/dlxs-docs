@@ -1,0 +1,39 @@
+<HTML>
+<HEAD>
+<TITLE>Wordwheel</TITLE>
+<META http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<LINK rel="stylesheet" href="../../styles.css">
+</HEAD>
+<BODY class="mainpalette">
+<H2><a href="./wwqueries.html" target="mainFrame">Wordwheel</a></H2>
+<P>For collections that have valid text (corrected OCR or proofed input), a &quot;wordwheel&quot; 
+  can be created. The XPat indexed text is used by a script to build an index, 
+  with counts of occurrences, of individual words that appear in various regions 
+  (main text or author or title fields). This data is packaged into SGML and indexed 
+  with XPat. The Wordwheel program is then used to access this data. All of this 
+  allows a user to &quot;browse&quot; through and find words that may be similar 
+  to a word s/he is looking for.</P>
+<UL>
+  <LI><B>Data</B> 
+    <UL>
+      <LI>see an <A HREF="../../extras/lincoln.ww.html" TARGET="sample">example 
+        of the data</A></LI>
+    </UL>
+  </LI>
+  <LI><B>Wordwheel Functionality</B> 
+    <UL>
+      <LI>Scroll through words that are alphabetically near and therefore probably 
+        similar to words entered by user</LI>
+    </UL>
+  </LI>
+  <LI><B>Objects, modules used</B> 
+    <UL>
+      <LI>CollsInfo, XPat, RemoteXPat, ProcIns, DlpsSession</LI>
+      <LI>WordWheel (encapsulates wordwheel info)</LI>
+      <LI>CGI, Apache::Session, Auth</LI>
+    </UL>
+  </LI>
+  <LI><B>Flowchart</B> to show decision tree for search, filtering, etc.</LI>
+</UL>
+</BODY>
+</HTML>

@@ -1,0 +1,68 @@
+<html>
+<head>
+<title>addtloverride.pl</title>
+</head>
+<body bgcolor="#FFFFFF">
+<pre>
+
+package TextClass;
+
+# ----------------------------------------------------------------------
+# NAME         : TextFilter
+# CALLS        : SUPER 
+# NOTES        : OVERRIDE the TextClass::TextFilter
+# ----------------------------------------------------------------------
+sub TextFilter
+{
+    my $self = shift;
+    my ( $sRef ) = @_;
+
+    # Make the author BIG, BIG, BIG
+    $$sRef =~ s,(Author\:.*?),&lt;font size=10&gt;$1&lt;/font&gt;,gs;
+
+    return $results = $$sRef;
+}
+
+package SomeSubclass;
+
+use TextClass ();
+
+use vars qw( @ISA );
+@ISA = qw( TextClass );
+
+sub TextFilter
+{
+    my $self = shift;
+    my ( $sRef ) = @_;
+
+    # This is the note anchor of ptr-type notes
+    $self-&gt;Filter_PTR_NotesForText( $sRef );
+
+    my $results = $self-&gt;SUPER::TextFilter( $sRef );
+
+    return $results;
+}
+
+1;
+
+#!/l/local/bin/perl
+
+use TextClass;
+use SomeSubclass;  # if compile time binding
+
+
+require "SomeSubclass.pm"; # if run time binding
+
+
+my $subclassObject = SomeSubclass-&gt;new( $collid );
+
+my $text = qq{Author: Phil Farber&lt;NOTE1 N="1"&gt;DLPS staff&lt;/NOTE1&gt;};
+
+
+$subclassObject-&gt;TextFilter( \$text );
+
+exit;
+
+</pre>
+</body>
+</html>

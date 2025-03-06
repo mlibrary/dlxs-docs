@@ -1,0 +1,190 @@
+<html>
+  <head>
+    <title>Collection Picker</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+    
+    <link rel="stylesheet" href="<?DOC_ROOT>textclass.css" type="text/css">
+  </head>
+  
+  <body bgcolor="#FFFFFF" marginwidth="0" marginheight="0" leftmargin="0" topmargin="0">
+    
+    <table width="100%" border="0" cellspacing="0" cellpadding="5" bgcolor="#FFFFFF">
+      <tr> 
+        <td   valign="bottom" width="75%"> <a name="top"></a> 
+          <h3  class="tophead">X-Collection Searching</h3>
+        </td>
+        <td valign="top" width="25%" align="right">
+          <a href="bbag-moaholdings2.html"><img src="images/bbag.gif" width="83" height="21" vspace="1" border="0">
+          </a>&nbsp;
+          <br>
+          <font class="navinfo" size="2">your bookbag has <b>0</b> items&nbsp;&nbsp;&nbsp;</font>&nbsp;
+        </td>
+      </tr>
+
+      <tr> 
+        <td colspan="2" align="center" bgcolor="#666699"> 
+          <p>
+            <font color="#FFFFFF" class="navlinks"><b>
+                <a href="<?REFINE_SEARCH_LINK>" class="nav">refine search</a>
+                |
+                <a href="<?SIMPLE_SEARCH_LINK>" class="nav">simple search</a>
+                |
+                <a href="<?BOOLEAN_SEARCH_LINK>" class="nav">boolean search</a>
+                |
+                <a href="<?PROXIMITY_SEARCH_LINK>" class="nav">proximity search</a>
+<!--
+                |
+                <a href="<?BIB_SEARCH_LINK>" class="nav">bibliography search</a> 
+-->
+                |
+                <a href="<?SEARCH_HISTORY_LINK>" class="nav">search history</a> 
+                |
+                <a href="<?COLL_PICKER_LINK>" class="nav">collection picker</a>
+              </b></font>
+          </p>
+        </td>
+      </tr>
+    </table>
+    
+    <table width="100%" border="0" cellspacing="0" cellpadding="0">
+      
+      <tr> 
+        <td valign="top"> 
+          
+          <table width="100%" border="0" cellspacing="0" cellpadding="5">
+            <tr> 
+              
+              <td colspan="3" valign="top">
+                <font class="mediumheader">Collection Picker</font> 
+                <p class="smalltext">
+                  The collection picker allows you to assemble a restricted list of collections to search within. Select values for any of the categories below and click the get <i><b>collection list button</b></i> to see a new collection list.
+                </p>
+              </td>
+            </tr>
+            
+            <tr> 
+              <td valign="top" width="5%">&nbsp;</td>
+              
+              <td valign="top" width="85%" align="center"> 
+                <table width="100%" border="0" cellspacing="1" cellpadding="1" align="left">
+                  <tr> 
+                    
+                    <td valign="bottom"><span>subject/genre:<!--#CC9900 --></span></td>
+                    
+                    <td valign="bottom"><span>period:<!--#CC9966 --></span></td>
+                    
+                    <td valign="bottom"><span>language:<!--#FF9933 --></span></td>
+                    
+                    <td valign="bottom"><span>gender:<!--#9999CC --></span></td>
+                  </tr>
+                <form method="GET" name="coll-select-cat" action="<?SCRIPT_NAME>">
+            <tr>
+              <td> 
+                <?GENRE_SELECT>
+              </td>
+              <td> 
+                <?PERIOD_SELECT>
+              </td>
+              <td> 
+                <?LANGUAGE_SELECT>
+              </td>
+              <td> 
+                <?GENDER_SELECT>
+              </td>
+            </tr>
+          </form>
+
+          </table>
+        </td>
+        <td>
+          &nbsp;
+        </td>   
+      </tr>
+      
+    <form method="GET" name="coll-select-submit" action="<?SCRIPT_NAME>" target="collList">
+      <tr valign="top" align="right" bgcolor="#CCCCCC"> 
+        <td colspan="3"> 
+              <input type="button" name="Submit" value="revise collection list" onclick="MM_goToURL('parent','coll-pick-step2.html');return document.MM_returnValue"coll-list.html";>
+              &nbsp;&nbsp;
+ </td>
+    </tr>
+</form>
+</table>
+ 
+ 
+</td>
+</tr>
+</table>
+<table width="100%" border="0" cellspacing="0" cellpadding="8">
+  <tr> 
+    <td> 
+      <p>&nbsp;</p>
+      <p><font face="arial, sans-serif" class="mediumheader">Collection List:</font>
+</p>
+      <p>Use checkboxes to select or deselect individual collection names from 
+        your collection list, then click the save collection list button to perform 
+        a search. To change this list yet again, enter new values in the form 
+        above. </p>
+      <br>
+ 
+     <form method="GET" action="<?SCRIPT_NAME>" name="collectionlist">
+
+      <!-- outer table with grey background -->
+        <table width="90%" border="0" cellspacing="0" cellpadding="0" bgcolor="999999" align="center">
+          <tr> 
+            <td> 
+              <!-- nested table to hold line with save list button and collection list rows -->
+              <table width="100%" border="0" cellspacing="1" cellpadding="7" align="center">
+                <tr align="right"> 
+                  <td colspan="2" bgcolor="#CCCCCC" colspan="2">
+                    <input type="submit" name="subtype" value="save collection list">
+                    &nbsp;&nbsp; </td>
+                </tr>
+                <?COLLECTION_LIST>
+
+                <tr> 
+                  <td width="5%" bgcolor="#FFFFFF"> 
+                    <input type="checkbox" name="checkbox1" value="coll1" checked>
+                  </td>
+                  <td width="95%" bgcolor="#FFFFFF">Collection 1</td>
+                </tr>
+                <tr> 
+                  <td width="5%" bgcolor="#FFFFFF"> 
+                    <input type="checkbox" name="checkbox2" value="coll2" checked>
+                  </td>
+                  <td width="95%" bgcolor="#FFFFFF">Collection 2</td>
+                </tr>
+                <tr> 
+                  <td width="5%" bgcolor="#FFFFFF"> 
+                    <input type="checkbox" name="checkbox3" value="coll3" checked>
+                  </td>
+                  <td width="95%" bgcolor="#FFFFFF">Collection 3</td>
+                </tr>
+                <tr> 
+                  <td width="5%" bgcolor="#FFFFFF"> 
+                    <input type="checkbox" name="checkbox4" value="coll4" checked>
+                  </td>
+                  <td width="95%" bgcolor="#FFFFFF">Collection 4</td>
+                </tr>
+                <tr> 
+                  <td width="5%" bgcolor="#FFFFFF"> 
+                    <input type="checkbox" name="checkbox5" value="coll5" checked>
+                  </td>
+                  <td width="95%" bgcolor="#FFFFFF">Collection 5</td>
+                </tr>
+                <tr> 
+                  <td width="5%" bgcolor="#FFFFFF"> 
+                    <input type="checkbox" name="checkbox6" value="coll6" checked>
+                  </td>
+                  <td width="95%" bgcolor="#FFFFFF">Collection 6</td>
+                </tr>
+              </table>
+            </td>
+          </tr>
+        </table>
+      </form>
+    </td>
+  </tr>
+</table>
+</body>
+</html>

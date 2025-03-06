@@ -1,0 +1,71 @@
+package BosniaTC;
+
+# subclass of TextClass.pm module
+use TextClass ();
+@ISA = qw( TextClass );
+
+## **********************************************************************
+## this is a subclass of TextClass
+## for different search and filtering behavior
+
+# ----------------------------------------------------------------------
+# NAME      : new
+# PURPOSE   : create new object
+#             
+# CALLED BY : main
+# CALLS     : BosniaTC->_initialize
+# INPUT     : $collid, $collname, $subclass, $subclassModule, 
+#              $qtytexts, $homesite, $host, $dd, $map, $patexec,
+#              $port, $lel, $termsearch, $regionsearch
+# RETURNS   : NONE
+# NOTES     : 
+# ----------------------------------------------------------------------
+
+sub new 
+{
+    my $class = shift;
+    my $self = {};
+    bless $self, $class;
+    $self->_initialize(@_);
+    return $self;
+}
+
+# ----------------------------------------------------------------------
+# NAME      : _initialize
+# PURPOSE   : create structure for TextClass object
+# CALLED BY : new
+# CALLS     : 
+# INPUT     : see new
+# RETURNS   : 
+# NOTES     : 
+# ----------------------------------------------------------------------
+
+sub _initialize 
+{
+    my $self = shift;
+    $self->SUPER::_initialize( @_ );
+
+    # ************************************************************
+    # 
+    # configuration info ( override from SUPER those only those that need it)
+    # 
+    # ************************************************************
+    $self->{'divheadrange'} = [ 1, 2 ];
+    
+    $self->{'headdepths'} = {
+                             'mainheader' => 0,
+                             'div1head' => 1,    
+                             'div2head' => 2,
+                            };
+}
+
+
+## ----------------------------------------------------------------------
+1;
+## ----------------------------------------------------------------------
+
+
+
+
+
+

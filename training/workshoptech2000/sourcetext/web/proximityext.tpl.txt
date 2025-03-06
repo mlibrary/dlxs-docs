@@ -1,0 +1,258 @@
+<html>
+  <head>
+    <title><?TITLE></title>
+    <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+    <link rel="stylesheet" href="<?DOC_ROOT>textclass.css" type="text/css">
+  </head>
+  
+ <body bgcolor="#FFFFFF" marginwidth="0" marginheight="0" leftmargin="0" topmargin="0">
+    <table width="100%" border="0" cellspacing="0" cellpadding="5" bgcolor="#FFFFFF">
+      <tr> 
+        <td valign="bottom" width="75%"> <a name="top"></a> 
+          <h3 class="tophead">
+            <?TITLE>
+          </h3>
+        </td>
+        <!-- BOOKBAG -->
+        <td valign="top" width="25%" align="right">
+
+          <?RE_AUTH_LINK>
+<!--
+          <a href="<?BOOKBAG_LINK>">
+            <img src="<?DOC_ROOT>images/bbag.gif" width="83" height="21" vspace="1" border="0">
+          </a>
+          &nbsp;<br>
+          <font class="navinfo" size="2">
+            <?BOOKBAG_ITEMS>&nbsp;&nbsp;&nbsp;</font>
+          &nbsp;
+-->
+        </td>
+      </tr>
+
+     <!-- NAVBAR   -->
+      <tr>
+        <td colspan="2" align="center" bgcolor="#666699" nowrap>
+          
+          <p>
+            <font color="#FFFFFF" class="navlinks">
+              <b>
+                <a href="<?SIMPLE_SEARCH_LINK>" class="nav">simple search</a>
+                |
+                <a href="<?BOOLEAN_SEARCH_LINK>" class="nav">boolean search</a>
+<!--
+                |
+                <a href="<?BIB_SEARCH_LINK>" class="nav">bibliography search</a>
+-->
+                |
+                <a href="<?SEARCH_HISTORY_LINK>" class="nav">history</a>
+                |
+                <a href="<?WORDWHEEL_SEARCH_LINK>" class="nav">wordwheel</a>
+                |
+                <a href="<?HELP_LINK>" class="nav">help</a>
+              </b>
+            </font>
+          </p>
+        </td>
+      </tr>
+
+     <!-- END NAVBAR  -->
+      
+    </table>
+
+    <!-- BEGIN MAIN AREA  -->
+    
+    <table width="100%" border="0" cellspacing="0" cellpadding="15">
+      <tr>
+        <td>
+          <h3>Proximity search</h3>
+        <p>
+            Enter terms in the form below to search for in your collection list. 
+            <br>
+            <br>
+          <form method="GET" action="<?SCRIPT_NAME>" name="search">
+
+            <?HIDDEN_SID>
+            <input type="hidden" name="xc" value="1">
+
+              <table width="95%" border="0" cellspacing="0" cellpadding="5" align="center">
+                <tr> 
+                <td width="16%" nowrap align="right">Search within:</td>
+
+                <td colspan="2"> 
+
+                    <?REGION_SEARCH_SELECT>
+
+                </td>
+              </tr>
+
+     <tr> 
+                <td width="16%" nowrap align="right">for </td>
+
+                <td width="13%" align="left"> 
+                  <?Q1_INPUT size="30" class="formhilite">
+                </td>
+                
+                <td width="71%">&nbsp; </td>
+              </tr>
+              
+
+              <tr> 
+                <td width="16%" nowrap align="right">&nbsp;</td>
+                <td width="13%"> 
+                  <select name="op2">
+                    <option selected>near</option>
+                    <option>not near</option>
+                    <option>followed by</option>
+                    <option>not followed by</option>
+                  </select>
+                  &nbsp; 
+
+                  <?Q2_INPUT size="30" class="formhilite">
+                </td>
+                
+                <td width="71%"><font class="smalltext">(within</font> 
+                  <select name="amt2">
+                    <option selected>80</option>
+                    <option>40</option>
+                    <option>120</option>
+                  </select>
+                  <font class="smalltext">characters)</font> </td>
+              </tr>
+              
+              <tr> 
+                <td width="16%" nowrap align="right">&nbsp;</td>
+                <td width="13%"> 
+                  <select name="op3">
+                    <option selected>near</option>
+                    <option>not near</option>
+                    <option>followed by</option>
+                    <option>not followed by</option>
+                  </select>
+                  &nbsp; 
+                  
+                  <?Q3_INPUT size="30" class="formhilite">
+                </td>
+                  
+                <td width="71%"><font class="smalltext">(within</font> 
+                  <select name="amt3">
+                    <option selected>80</option>
+                    <option>40</option>
+                    <option>120</option>
+                  </select>
+                  <font class="smalltext">characters)</font> </td>
+              </tr>
+              
+              <tr> 
+                <td width="16%" nowrap align="right">&nbsp;</td>
+                <td width="13%"> 
+                  <input name="setsearch" type="submit" value="search within the checked collections">
+                </td>
+                <td width="71%">&nbsp; </td>
+              </tr>
+            </table>
+       
+
+          <br>
+          <p>
+            Go back to <a href="<?BOOLEAN_SEARCH_LINK>"><b>shorter form</b></a>
+          </p> 
+          <p class="smalltext">
+            Select values from any of the categories below to restrict 
+            your search to collections that match only those characteristics. Click 
+            the <i><b>rebuild collection list</b></i> button to display 
+            the collections that match those characteristics.</p>
+
+          <!-- COLLECTION PICKER DISPLAY --> 
+
+            <input type="hidden" name="page" value="proximityext">
+
+            <table width="95%" border="0" cellspacing="1" cellpadding="5">
+              <tr align="left"> 
+                <td> <font face="Verdana, Arial, Helvetica, sans-serif"> <b>
+              <input name="updatecolls" type="submit" value="rebuild collection list">
+                    </b> </font> 
+                </td>
+              </tr>
+            </table>
+            
+	    <table width="95%" border="0" cellspacing="0" cellpadding="0" bgcolor="#000000">
+              <tr>
+                <td>
+                  <table width="100%" border="0" cellspacing="1" cellpadding="6">
+                    <tr align="center"> 
+                      <td align="left" bgcolor="#8C8A73" nowrap width="25%">
+                        <b><font color="#FFFFFF" face="Verdana, Arial, Helvetica, sans-serif" size="2">Collection Characteristics</font></b>
+                      </td>
+                      <td valign="top" bgcolor="#8C8A73" width="75%">
+                        <font color="#FFFFFF" face="Verdana, Arial, Helvetica, sans-serif" size="2"><b>Collection List</b></font>
+                      </td>
+                    </tr>
+                    
+                    <tr align="center"> 
+                      <td align="left" bgcolor="#E7E7D3" width="25%"> 
+                        <p class="smalltext">
+                          <font size="2"><span>subject/genre:</span></font>
+                          <br>
+                          
+                          <?GENRE_SELECT>
+                        </p>
+                        
+                        <p class="smalltext">
+                          <font size="2"><span>period:</span></font>
+                          <br>
+
+                          <?PERIOD_SELECT>
+
+                        <p class="smalltext"> <font size="2"><span>language:</span></font>
+                          <br>
+
+                          <?LANGUAGE_SELECT>
+
+                        </p>
+
+                        <p class="smalltext"><font size="2"><span>gender:</span></font>
+                          <br>
+
+                          <?GENDER_SELECT> 
+
+                        </p>
+                        <br>
+                      </td>
+
+                      <td valign="top" align="left" width="75%" bgcolor="#FFFFFF"> 
+
+                        <!-- BUTTONS  --> 
+                        <!-- COLLECTION LIST  --> 
+                        <p class="smalltext">Select or deselect checkboxes to add or remove 
+                          collections from your search</p>
+                        <table width="95%" border="0" cellspacing="0" cellpadding="0" align="center" bgcolor="#999999">
+                          <tr valign="top"> 
+                            <td> 
+
+                              <table width="100%" border="0" cellspacing="1" cellpadding="4" align="center">
+
+                                <?COLL_LIST_WITH_CHECKBOXES>
+
+                              </table>
+                            </td>
+                          </tr>
+                        </table>
+                        <!-- END COLLECTION LIST  -->
+    
+                      </td>
+                    </tr>
+                  </table>
+                </td>
+              </tr>
+            </table>
+          </form>
+        </td>
+      </tr>
+    </table>
+    
+<!--
+    <p class="releaseversion">Release Version: $State: Exp $</p>
+-->
+    
+  </body>
+</html>

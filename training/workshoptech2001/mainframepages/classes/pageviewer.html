@@ -1,0 +1,48 @@
+<HTML>
+<HEAD>
+<TITLE>Pageviewer</TITLE>
+<META http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<LINK rel="stylesheet" href="../../styles.css">
+</HEAD>
+<BODY class="mainpalette">
+<H2>Pageviewer</H2>
+<P>For collections that have page images, PB tags are inserted into the SGML with 
+  various attributes: image file name, page sequence number, book page number, 
+  feature (type of page), image format, etc. This information allows <I>pageviewer</I> 
+  to navigate the pages, which are displayed as GIFs or PDFs.</P>
+<UL>
+  <LI><B>Data</B> 
+    <UL>
+      <LI>page images are stored as TIFF, but delivered as GIF and PDF</LI>
+      <LI>tools: <A href="http://kalex.engin.umich.edu/tif2gif/" target="external">tif2gif</A> 
+        for GIF converstion and psprint and distiller (changing over to <A href="http://c42pdf.ffii.org/" target="external">c42pdf</A>) 
+        for PDF</LI>
+      <LI>pageview.dat: each SGML document has a pageview.dat file created containing 
+        all the page information from the PB tags (<A href="textclass/pageviewdatdump.html" target="extras">example 
+        pageview.dat file</A> and <A href="textclass/level1sgml.html" target="extras">sgml 
+        file</A> from which it is created) (also <A href="http://www.dlxs.org/training/workshopuser2001/" target="external">see 
+        encoding workshop</A> for information on creation of this file)</LI>
+    </UL>
+  </LI>
+  <LI><B>Pageviewer Functionality</B> 
+    <UL>
+      <LI>Navigation through page images of an SGML document</LI>
+    </UL>
+  </LI>
+  <LI><B>Objects, modules used</B> 
+    <UL>
+      <LI>CollsInfo, XPat, RemoteXPat, ProcIns, DlpsSession</LI>
+      <LI>PageView (encapsulates pageview.dat info; see <A href="textclass/pvodump.html" target="extras">PageView 
+        Object</A>)</LI>
+      <LI>CGI, Apache::Session, Auth</LI>
+    </UL>
+  </LI>
+  <LI><B>Configuration</B> 
+    <UL>
+      <LI>pageviewer.cfg</LI>
+    </UL>
+  </LI>
+  <LI><B>Flowchart</B> to show decision tree for search, filtering, etc.</LI>
+</UL>
+</BODY>
+</HTML>

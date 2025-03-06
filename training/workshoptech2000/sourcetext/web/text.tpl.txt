@@ -1,0 +1,85 @@
+<html>
+  <head>
+    
+    <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+    
+    <link rel="STYLESHEET" type="text/css" href="<?DOC_ROOT>textclass.css">
+    
+  </head>
+  
+  <!-- -------------------------------------------------- -->
+  
+<body bgcolor="#FFFFFF" marginwidth="0" marginheight="0">
+  
+  <!-- -------------------------------------------------- -->
+  
+    <table width="100%" border="0" cellspacing="0" cellpadding="5" bgcolor="#FFFFFF">
+      
+      <tr> 
+        <td width="65%" valign="top"><br>
+          <h3 class="tophead"><?TITLE></h3>
+        </td>
+        
+        
+        <td width="35%" align="right" valign="top" class="navlinks"> 
+
+          <?RE_AUTH_LINK>
+
+<!--
+          <a href="<?BOOKBAG_LINK>">
+            <img src="<?DOC_ROOT>images/bbag.gif" width="83" height="21" vspace="1" border="0">
+          </a>&nbsp;<br>
+          <font class="navinfo" size="2"><?BOOKBAG_ITEMS>&nbsp;&nbsp;&nbsp;</font>&nbsp;
+          <br>
+-->          
+        </td>
+      </tr>
+      
+      <tr> 
+        <td colspan="2" align="center" bgcolor="#666699" nowrap> 
+          <p>
+            <font color="#FFFFFF" class="navlinks"><b>
+                <a href="<?REFINE_SEARCH_LINK>" class="nav">refine search</a>
+                |
+                <a href="<?SIMPLE_SEARCH_LINK>" class="nav">simple search</a>
+                |
+                <a href="<?BOOLEAN_SEARCH_LINK>" class="nav">boolean search</a>
+                |
+                <a href="<?PROXIMITY_SEARCH_LINK>" class="nav">proximity search</a>
+<!--
+                |
+                <a href="<?BIB_SEARCH_LINK>" class="nav">bibliography search</a> 
+-->
+                |
+                <a href="<?SEARCH_HISTORY_LINK>" class="nav">search history</a> 
+                |
+                <a href="<?WORDWHEEL_SEARCH_LINK>" class="nav">wordwheel</a>
+                |
+                <a href="<?HELP_LINK>" class="nav">help</a>
+              </b></font>
+          </p>
+        </td>
+      </tr>
+    </table>
+    
+    <hr>
+    
+    <?RETURN_TO_RESULTS>
+    
+    <hr>
+    
+
+    <table cellspacing="0" cellpadding="2">
+      <tr> 
+        <td valign="bottom">
+          
+          <?SCOPED_HEADS>
+          
+        </td>
+        
+      </tr>
+
+    </table>
+    
+</body>
+</html>

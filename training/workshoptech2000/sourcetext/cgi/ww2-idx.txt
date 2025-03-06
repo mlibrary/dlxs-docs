@@ -1,0 +1,1218 @@
+#!/usr/local/bin/perl
+
+BEGIN 
+{
+    # We must require DevUtils from a know location because we
+    # need it to set up our include path.  The include path points
+    # to the work dir under the cannonical location so we pick up
+    # our ongoing development.  We build a path by pulling e.g.
+    # pafrber off of ww2-idx-pfarber ( a symlink to ww2-idx)
+    # and concatenating /p/pfarber to the cannonical location.
+    # Therefore, in a browser, using the ww2-idx cgi, we
+    # get CVS committed behavior, while using ww2-idx-pfarber
+    # cgi in the URL gives us development behavior.
+    require $ENV{'DLXSROOT'} . '/lib/DevUtils.pm';
+    my ( $userpath  ) = &GetDevUsernameFromScript;
+    
+    unshift( @INC, $ENV{'DLXSROOT'} . '/lib' . $userpath );
+}
+
+# ----------------------------------------------------------------------
+# global variables needed to configure for this specific wordwheel
+require 'ww2-idx.cfg';         
+
+use strict;
+
+# Lincoln Stein's CGI.pm ( restricted since it is quite large )
+use CGI qw( :standard :html3 escape unescape escapeHTML );
+
+# ----------  DLPS related ----------
+use WW;             # OO WW class definitions
+use CollsInfo;      # OO module to find DLPS-wide collection information
+use DlpsSession;    # OO module to manage user session
+use DlpsUtils qw( :DEFAULT );
+use TextClassUtils  qw( :DEFAULT );
+use TextClass;
+
+# ----------  configuration globals ---------------
+use vars qw( 
+	    %gPageParamToHtmlTpl $gHtmlDocRoot %gUserChoices 
+	    $gDefaultRealm %gWWModes $gCollDbName $gWWWindowRadius
+	    $gTextClassCgi %gWWERRORS
+	   );
+
+# ---------------------------------------------------------------------
+#
+# Working CGI for the next-generation ( 2000 ) WordWheel mechanism
+# using a pat50-indexed SGML file rather than a group of tab-delimited
+# files that are grep-ed and employing cross-collection functionality
+# ( multiple pat50 sesions ).
+#
+# ---------------------------------------------------------------------
+#
+# parameters passed in via the URL are:
+#
+#    page=wwstart|wwfull
+#    [sid=5445kh32g54kjhg235k] -- session id if we are a child page
+#    [browse=wordwheel]        -- only for statistics gathering
+#    c=a [c=b ...]       -- initially requested collections
+#    [q1=word]                 -- wordwheel word
+#    [realm=r]                 -- wordwheel realm
+#    [top=n] [bottom=m]        -- last wordwheel position
+#    [chartype=alpha|num|misc] -- wordwheel on number, alpha, stuff
+#
+#    future work: view=detail|combined where we display a wordwheel
+#    which is the union over cross collections ( the current default ) or
+#    a detail where each collection is a separate column in the wordwheel
+#
+# ---------------------------------------------------------------------
+
+## --------------------------------------------------------------------
+##                    MAIN starts
+## --------------------------------------------------------------------
+
+# create the classic CGI object and as a side-effect get all URL parameters
+my $gCgi = new CGI;
+
+# remove all undef or empty URL parameters -- later code expects this
+&DlpsUtils::CleanCgiParameters( $gCgi );
+
+# set debug environment var so that all modules can access it
+if ( $gCgi->param('debug') )
+{
+    &DlpsUtils::SetupHtmlDebugging( $gCgi->param( 'debug' ) );
+}
+
+# ----------------------------------------------------------------------
+# determine what is authorized and what is requested (hardcoded if we are
+# not running under the web server
+if ( ! exists $ENV{'AUTHZD_COLL'} || ( $ENV{'DEBUG'} && ( $ENV{'DEBUG'} eq 'auth' )))
+{
+#    $ENV{'AUTHZD_COLL'} = ( 'yeats:voltaire:bosnia:gandf:ampo20' );
+    $ENV{'AUTHZD_COLL'} = ( 'voltaire' );
+}
+my @gAuthColls = &DlpsUtils::GetAuthListFromENV( );
+
+# Does the URL have any colls that pass authorization? These become
+# the requested colls.
+my $gRequestedCollsRef = &_CollsSelect( $gCgi, \@gAuthColls );
+
+# The session carries around this users' session data: start or
+# inherit existing session based on URL sid=sd20fa5a0ddaf31bb e.g.
+my $gDso = &DlpsUtils::StartSession( $gCgi );
+
+# Update the session with this new requested colls and attach a
+# collection info object with the new data to the session object
+$gDso->UpdateSessionColls( $gCollDbName, \@gAuthColls, $gRequestedCollsRef );
+
+# Bring in session's CollsInfo obj as global
+my $gCio = $gDso->GetCollsInfoObject( );
+
+# Wordwheel object for searching
+my $gWWObj;
+
+# Populate CollsInfo object with TextClass objects to support
+# requested collections (now implicit in the TextClass object)
+$gCio->AddTextClassObjects( );
+
+# Intersect realms over requested collections
+my ( $gRealmsInCommonRef, $gRealmsInCommonEngRef ) = 
+  &_IntersectCollsRealms( $gCio, $gRequestedCollsRef );
+
+# Page template name from URL page parameter
+my $gPage = &_PageSelect( $gCgi );
+
+# if debug is enabled as a URL parameter, dump info
+&_Debug( $gDso, $gCio, $gCgi, \@gAuthColls, $gRequestedCollsRef );
+
+if ( $gPage eq 'wwstart' )
+{
+    &_HandleStartPage( $gCgi, $gDso, $gCio, $gRealmsInCommonRef, $gRealmsInCommonEngRef );
+}
+elsif ( $gPage eq 'wwfull' )
+{
+    # User choice
+    my ( $choice, $mode ) = &_UserChoiceSelect( $gCgi );
+
+    if ( $choice eq 'simplesearch' )
+    {
+	# ----- Redirect to the TextClass Simple Search page -----
+
+	my $redirectURL = &_GetRedirectURL( $gCgi, $gRequestedCollsRef );
+	print( &CGI::redirect( $redirectURL ) );
+    }
+    else
+    {
+	# ----- Scroll existing or construct new wordwheel -----
+		
+	# Character type
+	my $chartype = &_ChartypeSelect( $gCgi );
+	
+	# q1
+	my $q1 = &_Q1Select( $gCgi, $chartype );
+	
+	# Table size is always odd leaving room for a middle
+	# (possibly highlighted) middle row
+	my $tabsize = 2 * $gWWWindowRadius + 1;
+	
+	# Does requested realm make sense vs. requested collections?
+	my $reqRealm = &_RealmSelect( $gCgi, $gCio, $gRequestedCollsRef );
+	
+	# top, bottom
+	my ( $top, $bottom ) = &_SelectTopBottom( $gCgi );
+	
+	#
+	# Instantiate and get results of WW search from WW object
+	#
+	eval
+	{
+	    $gWWObj = new WW(
+			     $gCio,
+			     $reqRealm,
+			     $chartype,
+			     $q1,
+			     $top,
+			     $bottom,
+			     $tabsize,
+			     $mode,
+			    );
+	};
+	if ( $@ )
+	{
+	    &errorBail( $@ );
+	}
+	
+	&_HandleFullPage( $gDso, $gCgi, $gCio, 
+			  $gRealmsInCommonRef, $gRealmsInCommonEngRef,
+			  $chartype, $gWWObj );
+    }
+}
+else
+{
+    &errorBail( $gWWERRORS{'NO_NO'} )
+}
+
+# This saves disk space when we commit the session during Close()
+$gCio->RemoveTextClassObjects();
+
+$gDso->Close;
+
+exit;
+
+## --------------------------------------------------------------------
+##                    MAIN ends
+## --------------------------------------------------------------------
+
+
+# =====================================================================
+#
+#                   SUBROUTINES
+#
+# ===================================================================== 
+
+
+# ----------------------------------------------------------------------
+# NAME      : Debug
+# PURPOSE   : when debug set, dump environment variables, URI variables,
+#             and collection information (from CollsInfo object)
+# CALLED BY : 
+# CALLS     : 
+# INPUT     : 
+# RETURNS   : 
+# NOTES     : 
+# ----------------------------------------------------------------------
+
+sub _Debug
+{
+    my ( $dso, $cio, $cgi, $authCollsRef, $reqCollsRef ) = @_;
+    
+    # ----------------------------------------------------------------------
+    #        debugging requested?
+    if ( $ENV{'DEBUG'} && ( $ENV{'DEBUG'} eq 'all' || $ENV{'DEBUG'} eq 'ww' ) )
+    {
+	print( &CGI::p("Debugging $0"), &CGI::br(), &CGI::hr() );
+	print( &CGI::p(qq{Session ID is: }, $dso->GetSessionId(), &CGI::br(), &CGI::hr() ) );
+
+	print "<br>Authorized Colls: <br>" . (join ( "<br>\n", @$authCollsRef ) );
+	print "<br>Requested Colls: <br>" . (join ( "<br>\n", @$reqCollsRef ) );
+	
+	print( &DlpsUtils::DumpEnvVars );
+	print( &CGI::br() . &CGI::hr() );
+	
+	if ( defined( $cgi ) )
+	{
+	    print( $cgi->dump() );
+	    print( &CGI::br() . &CGI::hr() );
+	}
+	
+	if ( defined( $cio ) )
+	{
+	    print( $cio->HtmlDumpCollsInfo() );
+	    print( &CGI::br() . &CGI::hr() );
+	}        
+    }
+}
+
+# ----------------------------------------------------------------------
+# NAME         : ZeroOutGlobals
+# PURPOSE      : under mod_perl, all instances of this cgi run under
+#                one perl process. To avoid one stepping on the other,
+#                wipe out all globals
+# CALLED BY    : main
+# CALLS        : NONE
+# INPUT        : NONE
+# RETURNS      : NONE
+# GLOBALS      : all globals
+# SIDE-EFFECTS : 
+# NOTES        : 
+# ----------------------------------------------------------------------
+
+sub _ZeroOutGlobals
+{
+
+}
+
+# ----------------------------------------------------------------------
+# NAME         : _GetRedirectURL
+# PURPOSE      : build a URL to redirc to the simple search page
+# CALLED BY    : main
+# CALLS        : NONE
+# INPUT        : NONE
+# RETURNS      : NONE
+# GLOBALS      : NONE
+# SIDE-EFFECTS : 
+# NOTES        : 
+# ----------------------------------------------------------------------
+
+sub _GetRedirectURL
+{
+    my ( $cgi, $reqCollsRef ) = @_;
+    
+    my $redirectCgi = new CGI( "" );
+
+    my @q1 = $cgi->param( 'q1' ) ? $cgi->param( 'q1' ) : 'a';
+    my $sid = $cgi->param( 'sid' );
+    my $realm2region = $cgi->param( 'realm' );
+    
+    $redirectCgi->param( 'q1',    @q1 );
+    $redirectCgi->param( 'sid',   $sid );
+    $redirectCgi->param( 'rgn',   $realm2region );
+    $redirectCgi->param( 'c',     @$reqCollsRef );
+    $redirectCgi->param( 'view',  'reslist' );
+    $redirectCgi->param( 'type',  'simple' );
+    
+    return ( $gTextClassCgi . "?" . $redirectCgi->query_string( ) );
+}
+
+# ----------------------------------------------------------------------
+# NAME      : StartSession
+# PURPOSE   : set the global $gSessionId and creates a DlpsSession object
+#             (which wraps an Apache::Session::DBI object)
+# CALLED BY : main
+# CALLS     : DlpsSession->new
+# INPUT     : 
+# RETURNS   : 
+# GLOBALS   : $gCgi, sets $gSessionId, $gDso
+# NOTES     : 
+# ----------------------------------------------------------------------
+
+sub _StartSession
+{
+    my $cgi = shift;
+    
+    # Get session id if there is one passed in
+    my $sessionId = $cgi->param( 'sid' );     
+    
+    my $dso;
+    eval
+    {
+	$dso = new DlpsSession( $sessionId );
+    };
+    if ( $@ )
+    {
+	&errorBail( $gWWERRORS{'NO_SESSION'} . $@  );
+    }
+    
+    # If there was not a session id passed in, get the one created for
+    # the session object and add it to the cgi object as a URL
+    # parameter.
+    if ( ! $sessionId )
+    {
+	$cgi->param( 'sid', $dso->GetSessionId( ) );
+    }
+
+    return $dso;
+}
+
+# ----------------------------------------------------------------------
+# NAME         : RealmSelect
+# PURPOSE      : 
+# CALLED BY    : main
+# CALLS        : NONE
+# INPUT        : NONE
+# RETURNS      : NONE
+# GLOBALS      : gCgi
+# SIDE-EFFECTS : 
+# NOTES        : 
+# ----------------------------------------------------------------------
+sub _RealmSelect
+{
+    my ( $cgi, $cio, $requestedCollsRef ) = @_;
+    
+    my $realm = $cgi->param( 'realm' );
+    
+    if ( ! $realm )
+    {
+	&errorBail( $gWWERRORS{'NO_REALM'} );
+    }
+    
+    # realm must be valid for at least one collection or it defaults
+    # ('full text') but make sure default is a valid realm over this
+    # subset of collections
+    my $defaultRealmOk = 0;
+    foreach my $coll ( @$requestedCollsRef )
+    {
+	my @collRealms = $cio->GetCollKeyInfo( $coll, 'wwrealms' );
+	
+	foreach my $r ( @collRealms )
+	{
+	    if ( $realm eq $r ) 
+	    {
+		return $realm;
+	    }
+	}
+	# oops! would default work for this coll?
+	foreach my $r ( @collRealms )
+	{
+	    if ( $gDefaultRealm eq $r ) 
+	    {
+		$defaultRealmOk = 1;
+	    }
+	}
+    }
+    
+    if ( ! $defaultRealmOk )
+    {
+	&errorBail( $gWWERRORS{'NO_REALM'} );
+    }
+
+    return $gDefaultRealm;
+}
+
+# ----------------------------------------------------------------------
+# NAME         : _IntersectCollsRealms
+# PURPOSE      : determine what realms the requested colls have in 
+#                commmon, i.e. lowest common denominator realms (LCD)
+# CALLED BY    : main
+# CALLS        : NONE
+# INPUT        : NONE
+# RETURNS      : realms, realms in English
+# GLOBALS      : NONE
+# SIDE-EFFECTS : 
+# NOTES        : Assumes 'full text' is always in common across all realms
+# ----------------------------------------------------------------------
+sub _IntersectCollsRealms
+{
+    my ( $cio, $requestedCollsRef ) = @_;
+    
+    my @collsRealmRefs;
+
+    # get list of realm sets
+    foreach my $coll ( @$requestedCollsRef )
+    {
+	my @collRealms = $cio->GetCollKeyInfo( $coll, 'wwrealms' );
+
+	# XXX skip author until bib serch is implemented
+	@collRealms = grep( !/author/, @collRealms );
+
+	push( @collsRealmRefs, \@collRealms );	    
+    }
+
+    # N-way intersect set of realm sets
+    my @nWayIntersection = &DlpsUtils::GetNWayIntersection( \@collsRealmRefs );
+    my @nWayIntersectionEng;
+
+    # Get the english name for each LCD realm
+COMMONREALMNAME:    
+    foreach my $commonRealm ( @nWayIntersection )
+    {
+	# find English name for LCD realm in some collection
+	foreach my $coll ( @$requestedCollsRef )
+	{
+	    # get this collection's realms
+	    my ( $i, @collRealms ) = ( 0, $cio->GetCollKeyInfo( $coll, 'wwrealms' ) );
+
+	    for ( $i = 0; $i < scalar( @collRealms ); $i++ )
+	    {
+		# if one of coll's realms is one of the LCD realms
+		# save it off
+		if ( $commonRealm eq $collRealms[$i] )
+		{
+		    my @realmEnglish = $cio->GetCollKeyInfo( $coll, 'wwrealmsenglish' );
+
+		    push( @nWayIntersectionEng, $realmEnglish[$i] );
+		    next COMMONREALMNAME;
+		}
+	    }
+	}
+    }
+
+    # Ensure we return at least full text
+    if ( ! @nWayIntersection )
+    {
+	$nWayIntersection[0] = 'full text';
+	$nWayIntersectionEng[0] = 'Full Text';
+    }
+    
+    return ( \@nWayIntersection, \@nWayIntersectionEng );
+}
+
+# ----------------------------------------------------------------------
+# NAME         : PageSelect
+# PURPOSE      : 
+# CALLED BY    : main
+# CALLS        : NONE
+# INPUT        : NONE
+# RETURNS      : NONE
+# GLOBALS      : gCgi
+# SIDE-EFFECTS : 
+# NOTES        : 
+# ----------------------------------------------------------------------
+sub _PageSelect
+{
+    my $cgi = shift;
+    
+    my $pageName = $cgi->param ( 'page' );
+
+    if ( ! $gPageParamToHtmlTpl{$pageName} )
+    {
+	&errorBail( $gWWERRORS{'NO_PAGE'} );
+    }
+
+    return $pageName;
+}
+
+# ----------------------------------------------------------------------
+# NAME         : CollsSelect
+# PURPOSE      : 
+# CALLED BY    : main
+# CALLS        : NONE
+# INPUT        : NONE
+# RETURNS      : NONE
+# GLOBALS      : gCgi
+# SIDE-EFFECTS : 
+# NOTES        : 
+# ----------------------------------------------------------------------
+sub _CollsSelect
+{
+    my ( $cgi, $authCollsRef ) = @_;
+    
+    # intersect URL colls with authorized colls
+    my @requestedColls = &CollectionResolution( $cgi, $authCollsRef );
+
+    if ( scalar ( @requestedColls ) == 0 )
+    {
+	&errorBail( $gWWERRORS{'NO_COLLS'} );
+    }
+
+    return \@requestedColls;
+}
+
+# ----------------------------------------------------------------------
+# NAME         : ChartypeSelect
+# PURPOSE      : 
+# CALLED BY    : main
+# CALLS        : NONE
+# INPUT        : NONE
+# RETURNS      : NONE
+# GLOBALS      : gCgi
+# SIDE-EFFECTS : 
+# NOTES        : 
+# ----------------------------------------------------------------------
+sub _ChartypeSelect
+{
+    my $cgi = shift;
+
+    return $gWWChartypes{'default'} if ( ! $cgi->param( 'chartype' ) );
+    return $cgi->param( 'chartype' );
+}
+
+# ----------------------------------------------------------------------
+# NAME         : _UserChoiceSelect
+# PURPOSE      : determine how the ww-full page should behave.  either
+#                the user scrolled a wordwheel, submitted a list
+#                of checkboxes to a simple search or requested a new
+#                wordwheel. One choice, (search) comes in as a URL parameter
+#                from input submit, while the others are inferred by looking at the up, 
+#                down button parameters, if present
+# CALLED BY    : main
+# CALLS        : NONE
+# INPUT        : NONE
+# RETURNS      : user choice, scrolling mode
+# GLOBALS      : NONE
+# SIDE-EFFECTS : 
+# NOTES        : 
+# ----------------------------------------------------------------------
+sub _UserChoiceSelect
+{
+    my $cgi = shift;
+
+    if ( $cgi->param( 'simplesearch' ) )
+    {
+	return ( $gUserChoices{'simplesearch'}, undef );
+    }
+
+    return ( $gUserChoices{'wordwheel'}, $gWWModes{'prev'} )
+      if ( $cgi->param( 'up.x' ) );
+    return ( $gUserChoices{'wordwheel'}, $gWWModes{'next'} ) 
+      if ( $cgi->param( 'down.x' ) );
+
+    return ( $gUserChoices{'wordwheel'}, $gWWModes{'new'} ) 
+}
+
+
+# ----------------------------------------------------------------------
+# NAME         : _Q1Select
+# PURPOSE      : parse the q1 URL parameter for a *new* wordwheel
+# CALLED BY    : main
+# CALLS        : NONE
+# INPUT        : NONE
+# RETURNS      : NONE
+# GLOBALS      : NONE
+# SIDE-EFFECTS : 
+# NOTES        : we are only interested in a single word so we split
+#                on any whitespace the user may have entered
+# ----------------------------------------------------------------------
+sub _Q1Select
+{
+    my $cgi  = shift;
+    
+    if ( $cgi->param( 'q1' ) )
+    {
+	my $word;
+
+	$word = $cgi->param( 'q1' );
+	$word = lc( $word );
+    
+	# NOTE: these patterns should agree with those in makeWordWheelFiles.pl
+
+	## Remove all non-alphanumeric at beginning
+	while ( $word =~  s/^[\&\!\"\#\$\%\(\)\*\+\,\.\/\:\;\<\=\>\?\@\[\\\]\^\`\{\|\}\~\s\'\-]+// )
+	{;}    
+	## Remove all non-alphanumeric at end
+	while ( $word =~   s/[\&\!\"\#\$\%\(\)\*\+\,\.\/\:\;\<\=\>\?\@\[\\\]\^\`\{\|\}\~\s\'\-]+$// )
+	{;}
+
+	# Split on some embedded non-alphanumeric.  Not '-' because
+	# e.g. of forty-two and not "'" because we treat "d'une" as a
+	# word but catch "mary,john" or hello(goodbye) e.g.
+	my @parts = split( /[\&\!\"\#\$\%\(\)\*\+\,\.\/\:\;\<\=\>\?\@\[\\\]\^\`\{\|\}\~\s]+/, $word);
+	
+	# Just the first "word" entered, thank you very much.
+	return $parts[0];
+    }
+
+    my $chartype = shift;
+
+    return 'a' if ( $chartype eq 'alpha' );
+
+    # Numeric and non-alpha searches do not use a q1.  Those searches
+    # return the complete chartype
+    return '';
+}
+
+
+# ----------------------------------------------------------------------
+# NAME         : _SelectTopBottom
+# PURPOSE      : support scrolling by setting the top,bottom item in the table
+#                based on a previous state.  If top is undef, a wordwheel
+#                is being built for the first time
+# CALLED BY    : main
+# CALLS        : NONE
+# INPUT        : NONE
+# RETURNS      : NONE
+# GLOBALS      : NONE
+# SIDE-EFFECTS : 
+# NOTES        : 
+# ----------------------------------------------------------------------
+sub _SelectTopBottom
+{
+    my $cgi = shift;
+    
+    my $top = $cgi->param( 'top' );
+    my $bottom = $cgi->param( 'bottom' );
+
+    return ( $top, $bottom );
+}
+
+# ----------------------------------------------------------------------
+# NAME         : _BuildWWRadioGroup
+# PURPOSE      : 
+# CALLED BY    : PIO mechanism
+# CALLS        : NONE
+# INPUT        : NONE
+# RETURNS      : NONE
+# GLOBALS      : NONE
+# SIDE-EFFECTS : 
+# NOTES        : 
+# ----------------------------------------------------------------------
+sub _BuildWWRadioGroup
+{
+    my ( $realmsRef, $realmsEngRef, $piParamHashRef ) = @_;
+    
+    my $name;
+    if ( exists( $$piParamHashRef{'name'} ) )
+    { 
+	$name = $$piParamHashRef{'name'}; 
+    }
+    else
+    { 
+	&errorBail( $gWWERRORS{'NO_PI'}, 'Radio Group lacks name.' );
+    }
+    
+    my $columns;
+    if ( exists( $$piParamHashRef{'columns'} ) )
+    { 
+	$columns = $$piParamHashRef{'columns'}; 
+    }
+    else
+    { 
+	$columns = 5;
+    }
+
+    my %labelHash = &DlpsUtils::GetParallelHash( $realmsRef, $realmsEngRef );
+
+    my $radioGroup = &CGI::radio_group( -name    => $name,
+					-labels  => \%labelHash,
+					-values  => $realmsRef,
+					-columns => $columns );
+    
+    return $radioGroup;
+}
+
+# ----------------------------------------------------------------------
+# NAME         : _BuildWWQuickLink
+# PURPOSE      : 
+# CALLED BY    : PIO mechanism
+# CALLS        : NONE
+# INPUT        : NONE
+# RETURNS      : NONE
+# GLOBALS      : NONE
+# SIDE-EFFECTS : 
+# NOTES        : 
+# ----------------------------------------------------------------------
+sub _BuildWWQuickLink
+{
+    my ( $cgi, $realmsRef, $realmsEngRef, $piParamHashRef ) = @_;
+    
+    my $tempCgi = new CGI( "" );
+
+    $tempCgi->param( 'page', 'wwfull' );
+    my @colls = $cgi->param( 'c' );
+    $tempCgi->param( 'c', @colls );
+
+    my ( $quickLink, $i );
+    foreach my $realmEng ( @$realmsEngRef )
+    {
+	$tempCgi->param( 'realm', $$realmsRef[$i++] );
+	
+	# alphabetic
+	my $anchors;
+	my $href;
+	$tempCgi->param( 'chartype', 'alpha' );
+	foreach my $letter ( 'A'..'Z' )
+	{
+	    $tempCgi->param( 'q1', lc( $letter ) );
+	    $href = $ENV{'SCRIPT_NAME'} . '?' . $tempCgi->query_string( );
+	    $anchors .= &CGI::a( {-href => $href}, $letter ) . '&nbsp;';
+	}
+	# numbers
+	$tempCgi->param( 'chartype', 'num' );
+	$tempCgi->param( 'q1', '0' );
+	$href = $ENV{'SCRIPT_NAME'} . '?' . $tempCgi->query_string( );
+	$anchors .= &CGI::a( {-href => $href}, 'Numeric' ) . '&nbsp;';
+	# non-alphanumeric
+	$tempCgi->param( 'chartype', 'misc' );
+	$tempCgi->param( 'q1','_' );
+	$href = $ENV{'SCRIPT_NAME'} . '?' . $tempCgi->query_string( );
+	$anchors .= &CGI::a( {-href => $href}, 'Non-Alphabetic' );
+
+	my $class;
+	if ( exists( $$piParamHashRef{'class'} ) )
+	{ $class = $$piParamHashRef{'class'}; }
+	else
+	{ $class = 'bogus'; }
+
+	$quickLink .= &CGI::p( {-class => $class },
+			      &CGI::b( $realmEng, ':' ),
+			      $anchors ); 
+    }
+
+    return $quickLink;
+}
+
+# ----------------------------------------------------------------------
+# NAME         : _HandleStartPageProcIns
+# PURPOSE      : 
+# CALLED BY    : _HandleStartPage
+# CALLS        : NONE
+# INPUT        : NONE
+# RETURNS      : NONE
+# GLOBALS      : NONE
+# SIDE-EFFECTS : 
+# NOTES        : 
+# ----------------------------------------------------------------------
+sub _HandleStartPageProcIns
+{
+    my ( $cgi, $cio, $htmlPageRef, $realmsRef, $realmsEngRef ) = @_;
+
+    # ProcIns object for use in filtering
+    my $pio = new ProcIns;
+
+    # wordwheel-specific substitutions
+    $pio->AddPI( 'Q1_INPUT', \&DlpsUtils::BuildTextInput, [ $cgi, 'q1' ] );
+    $pio->AddPI( 'WORDWHEEL_RADIO_GROUP', \&_BuildWWRadioGroup, [ $realmsRef, $realmsEngRef ] );
+    $pio->AddPI( 'WORDWHEEL_QUICK_LINK', \&_BuildWWQuickLink, [ $cgi, $realmsRef, $realmsEngRef ] );
+
+    # send off html page, by ref, to get processed
+    $htmlPageRef = $pio->ProcessPIs( $htmlPageRef );
+}
+
+
+# ----------------------------------------------------------------------
+# NAME         : _CleanCgiParameters
+# PURPOSE      : Clone the CGI and remove parameters we do not want to pass
+#                via links built by HandleGeneralProcIns()
+# CALLED BY    : _HandleXXXPage
+# CALLS        : NONE
+# INPUT        : NONE
+# RETURNS      : NONE
+# GLOBALS      : NONE
+# SIDE-EFFECTS : 
+# NOTES        : 
+# ----------------------------------------------------------------------
+sub _CleanCgiParameters
+{
+    my $cgi = shift;
+
+    # Clone the CGI and remove parameters we do not want to pass
+    # via links built by HandleGeneralProcIns()
+    my $cleanCgi = new CGI( $cgi );
+
+    $cleanCgi->delete( 'realm' );
+    $cleanCgi->delete( 'chartype' );
+    $cleanCgi->delete( 'top' );
+    $cleanCgi->delete( 'bottom' );
+    $cleanCgi->delete( 'down' );
+    $cleanCgi->delete( 'up' );
+    $cleanCgi->delete( 'q1' );
+
+    return $cleanCgi;
+}
+
+# ----------------------------------------------------------------------
+# NAME         : _HandleStartPage
+# PURPOSE      : 
+# CALLED BY    : main
+# CALLS        : NONE
+# INPUT        : NONE
+# RETURNS      : NONE
+# GLOBALS      : NONE
+# SIDE-EFFECTS : 
+# NOTES        : 
+# ----------------------------------------------------------------------
+sub _HandleStartPage
+{
+    my ( $cgi, $dso, $cio, $realmsRef, $realmsEngRef ) = @_;
+    
+    # Open template file
+    my $htmlPage = &DlpsUtils::GetHtmlTemplateText( $gPageParamToHtmlTpl{'wwstart'} );
+    
+
+    # Clone the CGI and remove parameters we do not want to pass
+    # via links built by HandleGeneralProcIns()
+    my $cleanCgi = &_CleanCgiParameters( $cgi );
+    
+    # Process re-authrization link (needs un-cleaned CGI)
+    &TextClassUtils::HandleReAuthLink( \$htmlPage, $cgi );
+
+    # Process PIs common to many pages
+    &TextClassUtils::HandleGeneralProcIns( \$htmlPage, $cleanCgi,
+					   $cio, $gHtmlDocRoot, $dso );
+
+    # Process PIs specific to the WordWheel start page
+    &_HandleStartPageProcIns( $cgi, $cio, \$htmlPage, $realmsRef, $realmsEngRef );
+
+    # Send the page with http header prepended
+    &DlpsUtils::OutputHtmlPage( \$htmlPage );
+}
+
+# ----------------------------------------------------------------------
+# NAME         : _BuildWWRadioGroup
+# PURPOSE      : 
+# CALLED BY    : PIO mechanism
+# CALLS        : NONE
+# INPUT        : NONE
+# RETURNS      : NONE
+# GLOBALS      : NONE
+# SIDE-EFFECTS : 
+# NOTES        : 
+# ----------------------------------------------------------------------
+sub _BuildWWCombinedTableRows
+{
+    my ( $cgi, $cio, $wwObj ) = @_;
+
+    my ( $arrayRef, $bestIndex ) = $wwObj->GetCombinedTable( );
+    my $numberOfRows = scalar( @{$arrayRef} );
+    my $t;
+
+    my $i;
+    my $mode = $wwObj->GetMode( );
+    my $emptyTable = 1;
+    for ( $i = 0; $i < $numberOfRows; $i++ )
+    {
+	my $rowColor;
+	if ( ( $mode eq 'new' ) && ( $i == $bestIndex ) )
+	{
+	    $rowColor = '#CCCCCC';
+	}
+	else
+	{
+	    $rowColor = '#FFFFFF';
+	}
+	
+	my $word = $ {$$arrayRef[$i]}[0];
+	my $label = $word;
+	my $occur = $ {$$arrayRef[$i]}[1];
+	
+	&DlpsUtils::FilterCharEnts_Misc( \$label );
+	&DlpsUtils::FilterCharEnts_ISO_Greek( \$label );
+
+	if ( $word )
+	{
+	    $emptyTable = 0;
+
+	    # Get list of already checked items
+	    my @q1 = $cgi->param( 'q1' );
+	    my $checked = ( grep( /^$word$/, @q1 ) ) ? 1 : 0;
+
+	    # Turn off autoescaping so that the already HTML label
+	    # shows up properly
+	    &CGI::autoEscape( undef );
+	    $t .= &CGI::Tr( {-bgcolor => $rowColor},
+			    &CGI::td( 
+				     [
+				      &CGI::checkbox( -name    =>'q1',
+						      -checked => $checked,
+						      -value   => $word,
+						      -label   => $label,
+						      -force   => 'force' ),
+				      $occur
+				     ]
+				    ),
+			  );
+	    &CGI::autoEscape( 1 );
+	}
+    }
+
+    if ( $emptyTable )
+    {
+	$t = &CGI::Tr( {-bgcolor => '#FFFFFF'},
+		       &CGI::td( ["Not Found", 0] )
+		     );
+    }
+    
+    return $t;        
+}
+
+
+# ----------------------------------------------------------------------
+# NAME         : _HandleFullPageProcIns
+# PURPOSE      : 
+# CALLED BY    : _HandleFullPage
+# CALLS        : NONE
+# INPUT        : NONE
+# RETURNS      : NONE
+# GLOBALS      : NONE
+# SIDE-EFFECTS : 
+# NOTES        : 
+# ----------------------------------------------------------------------
+sub _HandleFullPageProcIns
+{
+    my ( $cgi, $cio, $htmlPageRef, $realmsRef, $realmsEngRef, $chartype, $wwObj ) = @_;
+
+    # ProcIns object for use in filtering
+    my $pio = new ProcIns;
+
+    # wordwheel-specific substitutions
+    $pio->AddPI( 'Q1_INPUT', \&DlpsUtils::BuildTextInput, [ $cgi, 'q1' ] );
+    $pio->AddPI( 'WORDWHEEL_RADIO_GROUP', \&_BuildWWRadioGroup, [ $realmsRef, $realmsEngRef ] );
+    $pio->AddPI( 'WORDWHEEL_QUICK_LINK', \&_BuildWWQuickLink, [ $cgi, $realmsRef, $realmsEngRef ] );
+    $pio->AddPI( 'WORDWHEEL_UP_BUTTON', \&_BuildArrowLink, [ 'up', $chartype ] );
+    $pio->AddPI( 'WORDWHEEL_DOWN_BUTTON', \&_BuildArrowLink, [ 'down', $chartype ] );
+    $pio->AddPI( 'SIMPLE_SEARCH_LINK', \&TextUtils::ChangeNavLink, [ $cgi, 'page', 'simple' ] );
+    $pio->AddPI( 'WORDWHEEL_COMBINED_TABLE_ROWS', \&_BuildWWCombinedTableRows, [ $cgi, $cio, $wwObj ] );
+
+    # send off html page, by ref, to get processed
+    $htmlPageRef = $pio->ProcessPIs( $htmlPageRef );
+}
+
+# ----------------------------------------------------------------------
+# NAME         : _HandleFullPageHiddenProcIns
+# PURPOSE      : 
+# CALLED BY    : _HandleFullPage
+# CALLS        : NONE
+# INPUT        : NONE
+# RETURNS      : NONE
+# GLOBALS      : NONE
+# SIDE-EFFECTS : 
+# NOTES        : Put <input type=hidden tags in html to maintain state 
+#                across scrolls
+# ----------------------------------------------------------------------
+sub _HandleFullPageHiddenProcIns
+{
+    my ( $htmlPageRef, $wwObj, $cgi ) = @_;
+
+    # ProcIns object for use in filtering
+    my $pio = new ProcIns;
+
+    # wordwheel-specific substitutions
+    $pio->AddPI( 'HIDDEN_REQUESTED_REALM', \&_BuildHiddenRealm, [ $wwObj ] );
+    $pio->AddPI( 'HIDDEN_REQUESTED_CHARTYPE', \&_BuildHiddenChartype, [ $wwObj ] );
+    $pio->AddPI( 'HIDDEN_REQUESTED_TOPBOTTOM', \&_BuildHiddenTopBottom, [ $wwObj ] );
+    $pio->AddPI( 'HIDDEN_CHECKED_ITEMS', \&_BuildHiddenCheckedItems, [ $cgi, $wwObj ] );
+
+    # send off html page, by ref, to get processed
+    $htmlPageRef = $pio->ProcessPIs( $htmlPageRef );
+}
+
+
+# ----------------------------------------------------------------------
+# NAME         : _HandleFullPage
+# PURPOSE      : 
+# CALLED BY    : main
+# CALLS        : NONE
+# INPUT        : NONE
+# RETURNS      : NONE
+# GLOBALS      : NONE
+# SIDE-EFFECTS : 
+# NOTES        : 
+# ----------------------------------------------------------------------
+sub _HandleFullPage
+{
+    my ( $dso, $cgi, $cio, $realmsRef, $realmsEngRef, $chartype, $wwObj ) = @_;
+    
+    # Open template file
+    my $htmlPage = &DlpsUtils::GetHtmlTemplateText( $gPageParamToHtmlTpl{'wwfull'} );
+
+    # Clone the CGI and remove parameters we do not want to pass
+    # via links built by HandleGeneralProcIns()
+    my $cleanCgi = &_CleanCgiParameters( $cgi );
+
+    # Process re-authrization link (needs un-cleaned CGI)
+    &TextClassUtils::HandleReAuthLink( \$htmlPage, $cgi );
+
+    # Process PIs common to many pages
+    &TextClassUtils::HandleGeneralProcIns( \$htmlPage, $cleanCgi, 
+					   $cio, $gHtmlDocRoot, $dso );
+
+    # Process PIs specific to the WordWheel full page
+    &_HandleFullPageProcIns( $cgi, $cio, \$htmlPage, 
+			     $realmsRef, $realmsEngRef, 
+			     $chartype, $wwObj );
+
+    # Build the hidden links to maintain state
+    &_HandleFullPageHiddenProcIns( \$htmlPage, $wwObj, $cgi );
+
+    # Send the page with http header prepended
+    &DlpsUtils::OutputHtmlPage( \$htmlPage );
+}
+
+# ----------------------------------------------------------------------
+# NAME         : _BuildHiddenRealm
+# PURPOSE      : create html for hidden realm=author, e.g.
+# CALLED BY    : PIO mechanism
+# CALLS        : CGI
+# INPUT        : realm
+# RETURNS      : html text
+# GLOBALS      : NONE
+# SIDE-EFFECTS : 
+# NOTES        : 
+# ----------------------------------------------------------------------
+sub _BuildHiddenRealm
+{
+    my $wwObj = shift;
+
+    my $s = &CGI::hidden( -name     =>'realm',
+                          -default  => $wwObj->GetRealm( ),
+                          -override => 1 );
+
+    return $s;
+};
+
+# ----------------------------------------------------------------------
+# NAME         : _BuildHiddenChartype
+# PURPOSE      : create html for hidden chartype=alpha, e.g.
+# CALLED BY    : PIO mechanism
+# CALLS        : CGI
+# INPUT        : chartype
+# RETURNS      : html text
+# GLOBALS      : NONE
+# SIDE-EFFECTS : 
+# NOTES        : 
+# ----------------------------------------------------------------------
+sub _BuildHiddenChartype
+{
+    my $wwObj = shift;
+
+    my $s = &CGI::hidden( -name     =>'chartype',
+                          -default  => $wwObj->GetChartype( ),
+                          -override => 1 );
+
+    return $s;
+};
+
+# ----------------------------------------------------------------------
+# NAME         : _BuildHiddenTopBottom
+# PURPOSE      : create html for hidden chartype=alpha, e.g.
+# CALLED BY    : PIO mechanism
+# CALLS        : CGI
+# INPUT        : chartype
+# RETURNS      : html text
+# GLOBALS      : NONE
+# SIDE-EFFECTS : 
+# NOTES        : be careful override the URL parameter value, stored in 
+#                the URL parsed implicitly by the implicit CGI object
+#                created when various CGI::subs are called
+# ----------------------------------------------------------------------
+sub _BuildHiddenTopBottom
+{
+    my $wwObj = shift;
+
+    my ( $top, $bottom ) = $wwObj->GetTopBottom( );
+
+    my $t = &CGI::hidden( -name     =>'top',
+                          -default  => $top,
+                          -override => 1 );
+    my $b = &CGI::hidden( -name     =>'bottom', 
+                          -default  => $bottom, 
+                          -override => 1 );
+
+    return $t . $b
+};
+
+# ----------------------------------------------------------------------
+# NAME         : _BuildHiddenCheckedItems
+# PURPOSE      : create html for hidden q1=foo q1=bar, e.g.
+# CALLED BY    : PIO mechanism
+# CALLS        : CGI
+# INPUT        : $gCgi
+# RETURNS      : html text
+# GLOBALS      : NONE
+# SIDE-EFFECTS : 
+# NOTES        : be careful override the URL parameter value, stored in 
+#                the URL parsed implicitly by the implicit CGI object
+#                created when various CGI::subs are called
+# ----------------------------------------------------------------------
+sub _BuildHiddenCheckedItems
+{
+    my ( $cgi, $wwObj ) = @_;
+
+    my @q1 = $cgi->param( 'q1' );
+
+    return if ( ! @q1 );
+
+    # Hidden for each q1 that is not in the window.  Browser will
+    # supply q1 for each checked item in the window
+
+    my ( $arrayRef, $bestIndex ) = $wwObj->GetCombinedTable( );
+    my $numberOfRows = scalar( @{$arrayRef} );
+
+    my $hidden;
+
+  Q1:
+    foreach my $q1 ( @q1 )
+    {
+	my $i;
+	for ( $i = 0; $i < $numberOfRows; $i++ )
+	{
+	    my $word = $ {$$arrayRef[$i]}[0];
+	    next Q1 if ( $q1 eq $word );
+	}
+	
+	$hidden .= &CGI::hidden( -name     =>'q1',
+				 -default  => $q1,
+				 -override => 1 ) . "\n";
+    }
+    
+    return $hidden;
+};
+
+# ----------------------------------------------------------------------
+# NAME         : _BuildArrowLink
+# PURPOSE      : 
+# CALLED BY    : PIO mechanism, _HandleFullPageProcIns
+# CALLS        : CGI
+# INPUT        : NONE
+# RETURNS      : NONE
+# GLOBALS      : NONE
+# SIDE-EFFECTS : 
+# NOTES        : 
+# ----------------------------------------------------------------------
+sub _BuildArrowLink
+{ 
+    my ( $direction, $chartype, $piParamHashRef ) = @_;
+
+    return &CGI::p( '&nbsp;' ) if ( $chartype ne 'alpha' );
+
+
+    my $src;
+    if ( exists( $$piParamHashRef{'src'} ) )
+    { $src = $$piParamHashRef{'src'}; }
+    else
+    { $src = 'bogus'; }
+    my $align;
+    if ( exists( $$piParamHashRef{'align'} ) )
+    { $align = $$piParamHashRef{'align'}; }
+    else
+    { $align = 'RIGHT'; }
+    my $alt;
+    if ( exists( $$piParamHashRef{'alt'} ) )
+    { $alt = $$piParamHashRef{'alt'}; }
+    else
+    { $alt = 'move around in the list'; }
+    my $border;
+    if ( exists( $$piParamHashRef{'border'} ) )
+    { $border = $$piParamHashRef{'border'}; }
+    else
+    { $border = '0'; }
+    my $hspace;
+    if ( exists( $$piParamHashRef{'hspace'} ) )
+    { $hspace = $$piParamHashRef{'hspace'}; }
+    else
+    { $hspace = '10'; }
+    my $vspace;
+    if ( exists( $$piParamHashRef{'vspace'} ) )
+    { $vspace = $$piParamHashRef{'vspace'}; }
+    else
+    { $vspace = '0'; }
+    my $width;
+    if ( exists( $$piParamHashRef{'width'} ) )
+    { $width = $$piParamHashRef{'width'}; }
+    else
+    { $width = '37'; }
+    
+    my $link = &CGI::image_button( -name   => $direction,
+				   -src    => $src,
+				   -align  => $align,
+				   -alt    => $alt,
+				   -border => $border,
+				   -hspace => $hspace,
+				   -vspace => $vspace,
+				   -width  => $width );
+    
+    return $link;
+}
+
+
+__END__;

@@ -1,0 +1,65 @@
+<HTML><HEAD><TITLE>PAT Tutorial Excerpts</TITLE></HEAD>
+<BODY><H2>PAT Tutorial Excerpts</H2>
+<H3>Introducing PAT (page 1)</H3>
+PAT is a text database system.  It is often used to find information in a large collection of documents.
+You type a prefix, word, or phrase; PAT tells you hpw many times it appears in the text.  You can then
+print all or some fraction of the matches, each match surrounded by some context.  You can find prefixes, 
+words or phrases that appear near other specified text, or find those that appear most often.  Searches 
+can also be restricted to certain parts of the text.  Whoever installs PAT to work with a particular database
+defines what characters signal the beginning of a prefix, word, or phrase; what characters (if any) should be 
+interpreted by PAT as other characters (upper case characters as lower, for example); and whether PAT should ignore certain 
+characters completely (common words, for example).
+
+<H3>What is PAT? (page 7)</H3>
+PAT is a useful tool for searching text.  You can use PAT to search for prefixes, words, or phrases.  PAT can search for a 
+lengthy phrase as quickly as for a single word.  PAT can also search for text that appears near other specified text and for
+text that appears frequently.
+<P>
+Using PAT, you can search through the entire text or only a portion.  For example, a search through a collection of technical papers
+can be restricted to only the abstracts.  Restricting searches to selected compontents of the text is easiest
+when the text contains tags that mark the start and end of each component (&lt;abstract&gt; and &lt;/abstract&gt;, for example).
+A collection of technical papers that has its titles, authors, abstracts, and content marked by different tags can be easily segmented into
+compontents for searching.
+
+<H3>How PAT Searches (pages 21-23)</H3>
+PAT takes what you type and looks for an exact replica in the text.  You can match any prefixes, words, or phrases
+that appear in the text by typing them exactly as they appear.  PAT then takes your pattern of characters
+and tries to find the same pattern in the text; PAT has no knowledge of the meaning of the text and no built-in information about synonyms
+to words you type.
+<P>
+It is important to think of PAT strictly as a pattern matcher so you can interpret your results accurately.  For example, if you are using 
+PAT to search an encyclopedia for references to insects, typing <STRONG>insect</STRONG> is a logical starting point.  You will find all
+occurences to the pattern <STRONG>insect</STRONG>; that is, all words that start with the characters <STRONG>i,n,s,e,c,t</STRONG>.
+<P>
+However, there are many categories and classes of insects (bug, fly, vermin) not to mention specific types of
+insects (ladybug, louse, earwig) or even variant names of a specific insect (ladybug, ladybird or lady beetle).
+Furthermore, the term <STRONG>insect</STRONG> misght be misspelled in the text.  None of the above occurences will
+be retrieved by searching for <STRONG>insect</STRONG>.  You must anticipate what words might be used in the text to describe the type of information 
+you are after.  It is the person at the keyboard, not PAT, who investigates and provides the appropriate
+search terms.
+<P>
+PAT knows nothing about grammatical constructs like words or phrases.  PAT can be set up so that when you type a pattern
+like <STRONG>light</STRONG>, the program looks for this pattern anywhere in the text, for example, within delighted, lighted or as the word light.
+Every character in teh text can be matched, or more technically, every character can be <i>indexed</i>.
+<P>
+It is not always desireable that every character be indexed.  It is normally more useful to index by word beginnings
+(unless you are interested in searching suffixes).  You specify what type of index you wish to build as part of the 
+index building procedure for a particular text.
+<P>
+Notice that PAT know nothing about the ends of words.  PAT simply finds whatever begins with what you
+type.  The pattern <STRONG>light</STRONG> results in anything that starts with the characters 
+<STRONG>light</STRONG>, which accounts for the match to <STRONG>lighted</STRONG>.  Similarly, the pattern
+<STRONG>"light "</STRONG> results in anything that starts with the characters <STRONG>light</STRONG> followed
+by a space (PAT does not understand this as a word, just as a sequence of characters, one of which happens to 
+be a space).
+
+
+<A HREF="http://www.hti.umich.edu/sgml/pat/pat50manual.html">PAT 5.0 commands</A>
+<script src="http://www.google-analytics.com/urchin.js" type="text/javascript">
+</script>
+<script type="text/javascript">
+_uacct = "UA-954893-5";
+urchinTracker();
+</script>
+</BODY>
+</HTML>

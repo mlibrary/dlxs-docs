@@ -1,0 +1,123 @@
+<HTML>
+  <head>
+    <TITLE>DLPS DLXS Development Environment Scenarios</TITLE> 
+    <meta HTTP-EQUIV="Content-Type" content="text/html; charset=iso-8859-1">
+      <LINK REL="stylesheet" HREF="../styles.css" TYPE="TEXT/CSS"> 
+    </head>
+  
+  <BODY BGCOLOR="#FFFFFF" LEFTMARGIN="10" TOPMARGIN="10" MARGINWIDTH="10" MARGINHEIGHT="10" CLASS="mainpalette"> 
+    <H2><A NAME="top"></A>DLPS DLXS Development Environment Scenarios </H2>
+    <P>Here are various scenarios to illustrate how we use CVS, multiple rows
+      in the dlxs database, multiple servers (development, production and data
+      prep machines), and rdist to manage all aspects of code development, deployment
+      and release. Follow along with <A HREF="DevEnvironmentDiagram.jpg" TARGET="examples">this
+      diagram</A> in a separate window.</P>
+    <P>As you read through the scenarios, keep in mind the following about the
+       development environment at DLPS: </P>
+    <UL>
+       <LI>each developer has their <SPAN CLASS="unixcommand">$DLXSROOT</SPAN> set
+                to <SPAN CLASS="unixcommand">/l1/dev/username/</SPAN> by their login
+                script.</LI>
+       <LI>each developer has their virtual host Apache configuration set the <SPAN CLASS="unixcommand">$DLXSROOT</SPAN> environment
+                      variable for use in the browser</LI>
+       <LI>all machines have XPat installed</LI> 
+       <LI>all machines have the dlxs daemon running to allow remote access to
+          XPat indexes and data</LI>
+       <LI>each developer has their own row in the dlxs database for each collection
+          and group which is their own personal, alterable &quot;copy&quot; of
+          the &quot;release&quot;
+          (dlxsadm) and &quot;production&quot; rows. <span class="unixcommand">$REMOTE_USER</span> is
+          set when logging in to the <span class="unixcommand">collmgr</span>. It is also set by an Authentication
+          system when running the middleware (this determines which rows are
+          read by the middleware). </LI>
+       <LI><a href="devenvironment.html#dbsupport">more information on the environment variables</a></LI>
+    </UL>
+    <P>Scenarios:</P>
+    <UL>
+       <LI><A HREF="#scenario1">Scenario 1: one developer changing code, testing,
+          and committing changes </A></LI>
+       <LI><A HREF="#scenario2">Scenario 2: updating a developer's code with
+          the latest changes </A></LI>
+       <LI><A HREF="#scenario3">Scenario 3: data update, testing of new
+          data and move to production </A></LI>
+       <LI><A HREF="#scenario4">Scenario 4: updating the &quot;release&quot; directory
+          to test multiple developers' changes </A></LI>
+       <LI><A HREF="#scenario5">Scenario 5: moving latest code to production </A></LI>
+       <LI><A HREF="#scenario6">Scenario 6: tagging and releasing a DLXS
+             Release </A></LI>
+    </UL>
+    <P>&nbsp;</P>
+    <H3><A NAME="scenario1" ID="scenario1"></A> 
+      <SPAN CLASS="sectionheader">Scenario 1: one developer changing code, testing,
+      and committing changes </SPAN></H3>
+    <P>Developer <SPAN CLASS="unixcommand">pagliere</SPAN> works on a file in
+       his own sandbox or &quot;dev space&quot;, <SPAN CLASS="unixcommand">/l1/dev/pagliere/cgi/t/text/TextClass.pm</SPAN>.
+       Since his virtual host <SPAN CLASS="unixcommand">http://pagliere.dev.umdl.umich.edu/</SPAN> sets
+       his <SPAN CLASS="unixcommand">$DLXSROOT</SPAN>       to <SPAN CLASS="unixcommand">/l1/dev/pagliere</SPAN>,
+       all his middleware uses modules such as <SPAN CLASS="unixcommand">/l1/dev/pagliere/cgi/t/text/TextClass.pm</SPAN>       and
+       /<SPAN CLASS="unixcommand">l1/dev/pagliere/lib/DlpsUtils.pm</SPAN>, etc.
+       He tests his code. He decides it is self-consisitent and working. He runs
+       <SPAN CLASS="unixcommand">cvs commit</SPAN> or the DLPS script <SPAN CLASS="unixcommand">commitme
+       pagliere text</SPAN> or uses his <em>xemacs
+       cvs-mode</em> to commit his changes to the repository. </P>
+    <P>The next time other developers cvs update their own dev spaces (see <A HREF="#scenario2">Scenario
+       2</A>), they will have <SPAN CLASS="unixcommand">pagliere's</SPAN> code merged
+       into theirs. </P>
+    <H3><A NAME="scenario2" ID="scenario2"></A> <SPAN CLASS="sectionheader">Scenario
+    2: updating a developer's code with the latest changes</SPAN></H3>
+    <P>Developer <SPAN CLASS="unixcommand">pfarber</SPAN> runs <SPAN CLASS="unixcommand">cvs
+          update</SPAN> or
+       the DLPS script <SPAN CLASS="unixcommand">updateme pfarber all</SPAN> or
+       uses xemacs in cvs-mode to cvs update code in his own dev
+       space. All changes that were committed to the repository are merged into
+       <SPAN CLASS="unixcommand">pfarber's</SPAN> code.</P>
+    <H3><A NAME="scenario3" ID="scenario3"></A> <SPAN CLASS="sectionheader">Scenario
+    3: data update, testing of new data and move to production</SPAN></H3>
+    <P>Developer <SPAN CLASS="unixcommand">sooty</SPAN> receives new data for
+       a collection. She deposits it in the <SPAN CLASS="unixcommand">/l1/prep/c/coll</SPAN> on
+       the data prep machine. She adjusts all her prep scripts, runs them, and
+       creates new data files in <SPAN CLASS="unixcommand">/l1/obj/c/coll</SPAN>       and
+       corresponding indexes in <SPAN CLASS="unixcommand">/l1/idx/c/coll</SPAN>.
+       She opens <SPAN CLASS="unixcommand">collmgr</SPAN>, and changes her own
+       row in the dlxs database so that the <em>host</em> field points to the
+       development machine. When she runs her code, through the browser or the
+       debugger, all requests for data via XPat will go to the development machine
+       and its new data.</P>
+    <P>When she is satisfied that the new data is working correctly, she <SPAN CLASS="unixcommand">rdist</SPAN>s
+       the <SPAN CLASS="unixcommand">/l1/obj/c/coll</SPAN> and <SPAN CLASS="unixcommand">/l1/idx/c/coll</SPAN> directories
+       over to the production machine (and, if necessary, to the development
+       machine). She changes the value of the host field back to the production
+       machine, if she desires. </P>
+    <H3><A NAME="scenario4" ID="scenario4"></A>Scenario 4: updating the &quot;release&quot; directory
+             to test multiple developers' changes</H3>
+    <P>Several developers have been working on different parts of the code, merging
+       (via <SPAN CLASS="unixcommand">cvs update</SPAN> and <SPAN CLASS="unixcommand">cvs
+       commit</SPAN>) their code with the repository's latest/ever-changing
+       code. One developer runs a DLPS script called <SPAN CLASS="unixcommand">updaterelease</SPAN>.
+       which <SPAN CLASS="unixcommand">cvs updates</SPAN> the so-called <em>release</em> directories,<SPAN CLASS="unixcommand"> /l1/cgi/</SPAN>
+       and <SPAN CLASS="unixcommand">/l1/lib/</SPAN>
+       and <SPAN CLASS="unixcommand">/l1/web</SPAN> and <SPAN CLASS="unixcommand">/l1/lib</SPAN>,
+       etc. General testing is done by everyone in the <em>release</em> area. </P>
+    <H3><A NAME="scenario5" ID="scenario5"></A>Scenario 5: moving latest code
+    to production </H3>
+    <P>After the release area's code is tested and felt to be working properly,
+       a <em>build production package </em> script is run which gathers up the
+       latest versions of all the (<SPAN CLASS="unixcommand">/l1/cgi/</SPAN>
+       and <SPAN CLASS="unixcommand">/l1/lib/</SPAN>
+       and <SPAN CLASS="unixcommand">/l1/web</SPAN> and <SPAN CLASS="unixcommand">/l1/lib</SPAN>,
+       etc.) and <SPAN CLASS="unixcommand">rdist</SPAN>s it all to the production
+       machine.</P>
+ 
+  <H3><A NAME="scenario6" ID="scenario6"></A>Scenario 6: tagging and releasing a DLXS
+             Release </H3>
+    <P>After code has been running for a certain length of time in production
+       and it is decided to release to the DLXS community an official DLXS Middleware
+       Release, a <em>build       release package </em> script
+       is run which gathers up the latest versions of all the (<SPAN CLASS="unixcommand">/l1/cgi/</SPAN> and <SPAN CLASS="unixcommand">/l1/lib/</SPAN> and <SPAN CLASS="unixcommand">/l1/web</SPAN> and <SPAN CLASS="unixcommand">/l1/lib</SPAN>,
+    etc.), cvs tags it all and places it in a particular directory on the development
+       machine so that it can all be burned to CD.</P>
+  <!-- #BeginLibraryItem "/Library/back to top.lbi" -->
+    <A HREF="#top"><i>Back to top</i></A> <!-- #EndLibraryItem --> 
+
+  </BODY>
+</HTML>

@@ -1,0 +1,2296 @@
+
+==========================================================
+<H4>lib</H4>
+
+<UL>
+<LI> AuthNZ.pm
+<UL>
+ <LI>IE needs escaped return login url parameter
+                to be the last cgi param. So now it is.</LI>
+ <LI>Implementation of session stored return
+                login url. Ran into a problem with long URLs in IE,
+                so had to do this.</LI></UL></LI>
+</UL>
+<UL>
+<LI> Bookbag.pm
+<UL>
+ <LI>sync with quod.lib file merge</LI></UL></LI>
+</UL>
+<UL>
+<LI> CollsInfo.pm
+<UL>
+ <LI>remove obsolete 'ignoreon' code</LI>
+ <LI>add back ignoreon support</LI>
+ <LI>removed setting of utf8flag for data
+                out of utf8 mysql table</LI>
+ <LI>Added StoreFieldValue routine. It allows
+                middleware to update a Collmgr field value for a single
+                collection and for the current user (production, release,
+                dev/user). The benefit of doing it in Collsinfo is
+                that the cio knows about the current user, making
+                it easy to update only the current user's row.</LI></UL></LI>
+</UL>
+<UL>
+<LI> DLXSApp.pm
+<UL>
+ <LI>emit full path to main XML template
+                for &lt;TemplateName> element</LI>
+ <LI>changed TemplateName to TemplatePath</LI></UL></LI>
+</UL>
+<UL>
+<LI> DbUtils.pm
+<UL>
+ <LI>added random id generation for bookbagdb
+                table. not using auto increment anymore. avoiding
+                potential replication conflicts.</LI>
+ <LI>changed related to the upgraded of
+                dbd::mysql. basically, stop throwing the utf8 switch
+                on data coming out of mysql.</LI>
+ <LI>adjusted utf8 connection</LI>
+ <LI>more utf8 mysql drama</LI>
+ <LI>more utf8 mysql drama</LI>
+ <LI>improvements to uft8 problem situation</LI>
+ <LI>fixed some utf8 basics</LI>
+ <LI>adding quoting of table names, though
+                not exhaustively.</LI>
+ <LI>fixed a bug. optimizeTable would in
+                some cases alter column to be varchar with not enough
+                chars.</LI></UL></LI>
+</UL>
+<UL>
+<LI> DlpsSession.cfg
+<UL>
+ <LI>remove config blocks for release 13</LI></UL></LI>
+</UL>
+<UL>
+<LI> DlpsSession.pm
+<UL>
+ <LI>Changed GetCookieDomain to use $cgi->virtual_host()
+                instead of $ENV{HTTP_HOST} because the env variable
+                includes the port but $cgi->virtual_host does not.
+                Port number should not be specified in cookie domains.</LI></UL></LI>
+</UL>
+<UL>
+<LI> DlpsUtils.pm
+<UL>
+ <LI>Changed SoftASSERT so that it forwards
+                the return value from ASSERT.</LI>
+ <LI>new feedback cgi code. generalized
+                for use outside of just mdp.</LI>
+ <LI>remove duplicate code</LI>
+ <LI>Add RemoveXMLPi for Kwic processing</LI>
+ <LI>Added a simple routine called DebugOut
+                that prints a string within a div (class=debug). Optionally
+                include the name of the sub/method being debugged
+                just by throwing a switch.</LI>
+ <LI>enhancement of DebugOut sub</LI>
+ <LI>fixed some utf8 basics</LI>
+ <LI>moved binmode statement out of dlpsutils
+                (where it messed up image class, probably due to double
+                encoding) and put it in collmgr where needed most.</LI>
+ <LI>Implementation of session stored return
+                login url. Ran into a problem with long URLs in IE,
+                so had to do this.</LI>
+ <LI>fixed bug for ehraf related to cgihistory.
+                ehraf doesn't have a session, so needed to code around
+                that.</LI>
+ <LI>Added sub CarryOverNeededAuthRetParams.
+                (All other params were being dropped when processing
+                a key_authret param, making Athens auth fail.)</LI>
+ <LI>no longer deleting key_authret from
+                session once used, because in rare cases it is used
+                again.</LI>
+ <LI>make no referring URL AFR not send
+                email</LI></UL></LI>
+</UL>
+<UL>
+<LI> FileDetails.pm
+<UL>
+ <LI>new</LI>
+ <LI>removing after move to App dir</LI></UL></LI>
+</UL>
+<UL>
+<LI> ItemView.cfg
+<UL>
+ <LI>add note about pdfopt</LI>
+ <LI>add defaults for jpg as a image format
+                source type</LI></UL></LI>
+</UL>
+<UL>
+<LI> ItemView.pm
+<UL>
+ <LI>add code to set and get the $targetImageFormat
+                so that the DeliverFileHandler knows what format to
+                deliver. It has a different signature that asks for
+                the format but the handlers are called generaiclly
+                and do not receive the format as a parameter form
+                the caller so ...</LI></UL></LI>
+</UL>
+<UL>
+<LI> ItemViewApp.pm
+<UL>
+ <LI>Set defaultpageview if no view is set
+                in ValidityChecks</LI>
+ <LI>add code to set and get the $targetImageFormat
+                so that the DeliverFileHandler knows what format to
+                deliver. It has a different signature that asks for
+                the format but the handlers are called generaiclly
+                and do not receive the format as a parameter form
+                the caller so ...</LI>
+ <LI>Lock urls to cached pages/images to
+                the machine on which they're created to resolve load
+                balancing issue</LI>
+ <LI>backed out locking to machines due
+                to proxy server not configured to deliver those machines</LI>
+ <LI>fix path to cached image to include
+                host when mode is remote</LI></UL></LI>
+</UL>
+<UL>
+<LI> LibGlobals.cfg
+<UL>
+ <LI>remove prompt for database selector</LI>
+ <LI>release 13</LI>
+ <LI>added support for prep mysql server
+                configuration.</LI>
+ <LI>changed mysql prep to slaw</LI>
+ <LI>new feedback cgi code. generalized
+                for use outside of just mdp.</LI>
+ <LI>change productionhosts array to quod.lib</LI></UL></LI>
+</UL>
+<UL>
+<LI> LibVersion.pm
+<UL>
+ <LI>$LibVersion::VERSION = 4.1201; $LibVersion::DLXS_CDROM
+                = '14';</LI>
+ <LI>14</LI></UL></LI>
+</UL>
+<UL>
+<LI> MEC.pm
+<UL>
+ <LI>sync with quod.lib file merge</LI></UL></LI>
+</UL>
+<UL>
+<LI> Pat.pm
+<UL>
+ <LI>sync with quod.lib file merge</LI></UL></LI>
+</UL>
+<UL>
+<LI> ProcIns.pm
+<UL>
+ <LI>Allow string refs for handlers that
+                are subroutines as has well as those that are object
+                emthods</LI>
+ <LI>Removed StripPIPairContents etc. obsolete</LI>
+ <LI>add GetPIs</LI></UL></LI>
+</UL>
+<UL>
+<LI> RegExpSrch.pm
+<UL>
+ <LI>sync with quod.lib file merge</LI></UL></LI>
+</UL>
+<UL>
+<LI> XPat.pm
+<UL>
+ <LI>m,,gs to get all the error messages
+                back from xpat</LI></UL></LI>
+</UL>
+<UL>
+<LI> XsltPIFiller.pm
+<UL>
+ <LI>url for Atom/Rss</LI>
+ <LI>changed TemplateName to TemplatePath</LI>
+ <LI>changed TemplateName to TemplatePath</LI>
+ <LI>removed setting of utf8flag for browse
+                list data.</LI>
+ <LI>removed setting of utf8flag for browse
+                list data.</LI>
+ <LI>removed setting of utf8flag for browse
+                list data.</LI></UL></LI>
+</UL>
+<UL>
+<LI> charheadfilts.pl
+<UL>
+ <LI>sync with quod.lib file merge</LI>
+ <LI>obsolete with sync with quod.lib file
+                merge</LI></UL></LI>
+</UL>
+<UL>
+<LI> fixdoctype.pl
+<UL>
+ <LI>original</LI>
+ <LI>moved to $DLXSROOT/bin/s/samplefa</LI></UL></LI>
+</UL>
+<UL>
+<LI> oaiGlobals.conf
+<UL>
+ <LI>new</LI></UL></LI>
+</UL>
+<UL>
+<LI> stripdoctype.pl
+<UL>
+ <LI>regex will strip complicated DOCTYPE
+                declarations</LI>
+ <LI>moved to $DLXSROOT/bin/f/findaid instead
+                of ../lib since this is findaid specific</LI></UL></LI>
+</UL>
+<UL>
+<LI> App/AccessRights.pm
+<UL>
+ <LI>Initial</LI>
+ <LI>ongoing</LI>
+ <LI>make rights attr call idempotent actoss
+                database lookup failure</LI>
+ <LI>make rights attr call idempotent actoss
+                database lookup failure</LI>
+ <LI>change logic of assertion failures
+                for database errors</LI>
+ <LI>debugging</LI>
+ <LI>add needlogin logic</LI>
+ <LI>refine SSD logic</LI>
+ <LI>remove TIMOTHY for debugging SSD</LI>
+ <LI>debugging</LI>
+ <LI>Support for namespaces on mdp ids</LI>
+ <LI>ongoing namespace issues</LI>
+ <LI>Change key syntax for set_(get_)object
+                Context class</LI>
+ <LI>suppoert source attribute for watermarking</LI>
+ <LI>Fix bug in _determine_access_type for
+                SSD access</LI>
+ <LI>more ssd</LI>
+ <LI>formatting</LI>
+ <LI>special replaced by ssd , new pi SSD_SESSION
+                for UI</LI>
+ <LI>Rewrite ssd access logic</LI>
+ <LI>ongoing work for SSD</LI>
+ <LI>Remove namespace stripping for patron
+                record id tests for SSD</LI>
+ <LI>minor cleanup</LI>
+ <LI>changes due to re-write of App::Identifier.pm</LI>
+ <LI>redo debugging to buffer in session</LI>
+ <LI>read database for wu namespace instead
+                of defaulting to public domain</LI>
+ <LI>use SDRINST for wisconsin skin</LI>
+ <LI>Kfix path to SDR for mb. add names
+                to access type for debuggingremove legacy code from
+                gr and remove session creation dependency in auth</LI>
+ <LI>query for rights using namespace +
+                id</LI>
+ <LI>collapse iddberror and badinput to
+                unknown for access status return value</LI>
+ <LI>No longer use set_utf8_flag</LI>
+ <LI>allow IPO addr to be passed in</LI></UL></LI>
+</UL>
+<UL>
+<LI> App/Action.pm
+<UL>
+ <LI>Initial</LI>
+ <LI>ongoing</LI>
+ <LI>first PI implemented</LI>
+ <LI>Debugging and some rearrangement of
+                the class hierarchy</LI>
+ <LI>write set_facade_member_data, get_facade_member_data,
+                get_last_insert_id</LI>
+ <LI>status messages</LI>
+ <LI>Change key syntax for set_(get_)object
+                Context class</LI>
+ <LI>Add get_name so action know what it's
+                identity is mainly for global Action code based on
+                action name to be executed</LI>
+ <LI>Modified for redirect and ajax optionality</LI>
+ <LI>Improve assignemt of params to redirect
+                URL and handle debug=xml for redirect facade data</LI>
+ <LI>remove status codes</LI>
+ <LI>minor cleanup</LI>
+ <LI>make session always non-empty theough
+                procedural interface "start_session"</LI>
+ <LI>added get/set_transient_facade_member_data
+                get/set_persistent_facade_member_data</LI>
+ <LI>add parameter assertions and defaulting
+                for each operation</LI>
+ <LI>remove App::Operation [get|set]_collection[_set]
+                replacing them with App::Action::[get|set]_transient_facade_member_data
+                $cs and $co are instantiated just once now when the
+                Action base class is initialized. Login operation
+                make temporary collections permanent</LI>
+ <LI>Use Template Method Design Pattern
+                for child initialization</LI>
+ <LI>added status code</LI>
+ <LI>Support for error page and change a=listits
+                to a=listis</LI>
+ <LI>KMake Action facade member data persist
+                across multiple database Actions until it is finally
+                read by a UI Action</LI>
+ <LI>KMake Action facade member data persist
+                across multiple database Actions until it is finally
+                read by a UI Action</LI>
+ <LI>KMake Action facade member data persist
+                across multiple database Actions until it is finally
+                read by a UI Action</LI>
+ <LI>key persistent_facade_member_data segregation
+                by action name instead of time() to avoid accumulation
+                in session object</LI>
+ <LI>facade data debugging</LI></UL></LI>
+</UL>
+<UL>
+<LI> App/App.pm
+<UL>
+ <LI>Initial</LI>
+ <LI>Add set_this_app_url for back links</LI>
+ <LI>remove $self->set_this_app_url($C);</LI>
+ <LI>Support for error page and change a=listits
+                to a=listis</LI>
+ <LI>Skin logic</LI>
+ <LI>production mbooks enabling flag for
+                Restricted Access Page message + link to help</LI>
+ <LI>add ssd to app names</LI>
+ <LI>add ssd to app names</LI>
+ <LI>production mbooks enabling flag for
+                Restricted Access Page message + link to help</LI>
+ <LI>add enabled flag</LI></UL></LI>
+</UL>
+<UL>
+<LI> App/Auth.pm
+<UL>
+ <LI>Initial</LI>
+ <LI>Debugging and some rearrangement of
+                the class hierarchy</LI>
+ <LI>add debug=loggedout</LI>
+ <LI>Change location of DEBUG to App::Debug::Utils</LI>
+ <LI>Change key syntax for set_(get_)object
+                Context class</LI>
+ <LI>debug session. fix logged_in flag on
+                session in Authmake session always non-empty theough
+                procedural interface "start_session"</LI>
+ <LI>add isa_new_login()</LI>
+ <LI>App::Auth::Surrogate implementation
+                to decouple form DLXS</LI></UL></LI>
+</UL>
+<UL>
+<LI> App/Collection.pm
+<UL>
+ <LI>initial. Warning won't compile!</LI>
+ <LI>list_items and add_items now working.</LI>
+ <LI>Implemented delete_items, edit_coll_name
+                edit_description edit_status</LI>
+ <LI>Now calls CollectionSet::coll_owned_by_user
+                instead of having own copy</LI>
+ <LI>Fixed assertion ins sub edit_status</LI>
+ <LI>Added utility routine item_exists Fixed
+                bugs Added a few asserts</LI>
+ <LI>Renamed add_items method to copy_items</LI>
+ <LI>Modified init to check $ENV{DEBUG}='usetesttbl';
+                and read the test tables instead of production tables
+                if it is set.</LI>
+ <LI>Added implementation of limiting to
+                full-text by passing reference to an array ofrights
+                attributes to $co->list_items my ($coll_id, $sort_key,
+                $direction, $slice_start, $recs_per_slice,$rights_ref)
+                = @_;</LI>
+ <LI>Fixed major bug in delete_items where
+                all items were being deleted instead of only requested
+                ones!</LI>
+ <LI>Added use App::Debug::DUtils;</LI>
+ <LI>Fixed bug so that all fields get properly
+                qualified with table name in query creation for list_items</LI>
+ <LI>Added get_collnames_for_item and get_collnames_for_item_and_user
+                to provide the collections column in the item list
+                display Added barcode (extern_item_id) and rights
+                attributes to data returned from list_items</LI>
+ <LI>Added get_coll_data_for_item_and_user
+                to get list of collections owned by this user that
+                item is contained in Added count_full_text to return
+                the number of items in a collection that are full-text
+                (given a list of rights attributes)</LI>
+ <LI>added update_item_count to update the
+                num_items field in the collection table based on a
+                count of the items in the coll_items table Added calls
+                to update_items_count in delete_items and copy_items
+                (See also tests for same) added two methods of counting
+                the items in a collection: count_all_items_for_coll
+                (uses the collection table and should probably be
+                the only public method) count_all_items_for_coll_from_coll_items
+                (uses the coll_items table and is used by the test
+                framework and by the update_item_count method) Should
+                probabably be made a private method!</LI>
+ <LI>Fixed bugs in create_or_update_item_metadata
+                and started to replace $barcode with $extern_id</LI>
+ <LI>Changed all references to "barcode"
+                to use "extern_id" instead since we are using namespaces
+                and non-barcodes for external ids</LI>
+ <LI>Removed extraneous and confusing return
+                statement</LI>
+ <LI>_get_item_id_from_extern_id renameed
+                to get_item_id_from_extern_id</LI>
+ <LI>quoted extern_id in get_item_id_from_extern_id</LI>
+ <LI>formatting, clean up</LI>
+ <LI>formatting, clean up</LI>
+ <LI>formatting, clean up</LI>
+ <LI>protect item_exists from null, empty,
+                undef item_id input parameter</LI>
+ <LI>formatting, clean up</LI>
+ <LI>Added $self->get_coll_owner($coll_id)
+                owner of a collection may not be the same as the current
+                REMOTE_USER!</LI>
+ <LI>new split i/f in COnfig::get</LI>
+ <LI>formatting and tighter regexps</LI>
+ <LI>formatting and use qq{}</LI>
+ <LI>Added item_in_a_collection returns
+                true if item is in at least one collection</LI>
+ <LI>add get_extern_id_from_item_id</LI>
+ <LI>Added methods for use by list search
+                results</LI>
+ <LI>Added $co->get_all_item_ids and stubs
+                for routines to set/get isindexed</LI>
+ <LI>Added optional argument to $co->list_items.
+                if a reference to an array of ids is supplied, list_items
+                will operate only on the subset of the collection
+                containing those items. $co->list_items($coll_id,
+                $sort_key, $direction, $slice_start, $recs_per_slice,$rights_ref,$id_arr_ref);</LI>
+ <LI>Added subs for setting and getting
+                indexing status: set_item_indexed item_isindexed get_unindexed_item_ids
+                and sub for getting all item_ids get_all_item_ids
+                Also put generation of array of ids to string suitable
+                for an IN (1,2,3) query into a subroutine</LI>
+ <LI>Added 'sort_title' to fields returned
+                by get_metadata_for_item_ids</LI>
+ <LI>Added optional $id_array_ref to count_full_text
+                method to limit count to only subset in list of ids
+                Added get_metadata_for_item to get metadata for an
+                item (one at a time operation.) Note: DBI calls need
+                to be reviewed for efficiency</LI>
+ <LI>fixed SQL query in count_full_text</LI>
+ <LI>Changed set_item_indexed to take 2nd
+                arg 0 or 1 to set item to indexed or not indexed</LI>
+ <LI>Added get_full_text_ids($result_id_arrayref,$rights_ref);
+                So we can limit search results to full text only</LI>
+ <LI>production database for mysql and mirlyn</LI>
+ <LI>formatting and pod</LI>
+ <LI>fromatting</LI>
+ <LI>added item_exists_external_id for use
+                by AddMultipleItems added dbh->quote to a few methods
+                that use item_ids so that mdp.123 won't break sql</LI>
+ <LI>Indexing changes and bug fix for massice
+                SQL statement</LI>
+ <LI>more indexing stats sql</LI>
+ <LI>coll_id in filter query (fq)</LI>
+ <LI>Added get_item_index_status and set_items_index_status
+                to get and set the isindexed field in the m_items
+                table. status must be one of the constants in App::Search::States</LI>
+ <LI>Fixed spelling error in POD</LI>
+ <LI>changed get_item_ids and get_item_id_count
+                to use $self->get_XXX_table_name instead of hard coded
+                m_items table names Updated POD for get_item_ids to
+                indicate that it now returns both a reference to an
+                array and an offset.</LI>
+ <LI>fq style is collid, cron job manages
+                indexing</LI>
+ <LI>Added collection_all_indexed which
+                will return true if all items in a collection are
+                indexed (isindexed set to IX_INDEXED) added isindexed
+                to item data array for display later</LI>
+ <LI>ongoing cron fix sql statements</LI>
+ <LI>ongoing cron</LI>
+ <LI>remove methods called by indexing script</LI>
+ <LI>COnstants.pm</LI>
+ <LI>Added methods for index_queue Changed
+                methods for setting index status to set coll_item
+                table These still need testing!</LI>
+ <LI>Modified methods to use new isindex
+                table structure (i.e move from item to coll_item table:
+                isindexed collection_allindexed listitems</LI>
+ <LI>typo</LI>
+ <LI>typo</LI>
+ <LI>debugging</LI>
+ <LI>debugging</LI>
+ <LI>debugging</LI>
+ <LI>add_to_queue now takes ref to array
+                of item_ids instead of a single item id. $co->add_to_queue($\@item_ids,
+                $priority) read_queue_head renamed to read_queue delete_queue_head
+                renamed to delete_queue_entry</LI>
+ <LI>ongoing</LI>
+ <LI>Added is_item_index_failure and related
+                methods to get the m|test _index_failures_table name
+                so UI can provide info on index failures</LI>
+ <LI>Added asserts to check sane arguments
+                for setting index status</LI>
+ <LI>implemented $co->age_queue($min_priority)</LI>
+ <LI>formatting</LI>
+ <LI>debugging</LI>
+ <LI>time reporting</LI>
+ <LI>Added attempts >= IX_MAX_FAIL_ATTEMPTS
+                to test for sub is_item_index_failure</LI>
+ <LI>remove read_queue</LI>
+ <LI>Added $coll_id parameter to add_to_queue
+                method Removed query for isindexed field from list_items
+                method (since field no longer in table)</LI>
+ <LI>Removed various index related functions
+                which are now not needed or used set_index_status_for_item
+                set_index_status_for_coll item_isindexed collection_all_indexed</LI>
+ <LI>adding new implementation of $co->add_to_queue</LI>
+ <LI>Replacing lock version of add_to_queue
+                with version that uses "update on duplicate key" mysql
+                construct instead of separate queries with locking</LI>
+ <LI>Updated code to read index_failures
+                table</LI>
+ <LI>Added method co->one_or_more_items_in_coll
+                for use by PIFiller/Search to make sure that at least
+                one search result item is in the collection (index
+                sync problems)</LI>
+ <LI>set utf8 flag on data going into database</LI>
+ <LI>recently added collection on home page</LI>
+ <LI>No longer use set_utf8_flag</LI></UL></LI>
+</UL>
+<UL>
+<LI> App/CollectionSet.pm
+<UL>
+ <LI>initial</LI>
+ <LI>implemented list_colls and add_coll
+                hard-coded stuff in new/_initialize .</LI>
+ <LI>uniquename and sid now arguements to
+                constructor add_coll now implemented along with check
+                for duplicate collection names</LI>
+ <LI>checkpoint for printing</LI>
+ <LI>bug fixes .</LI>
+ <LI>integration</LI>
+ <LI>changed to App::CollectionSet</LI>
+ <LI>more integration</LI>
+ <LI>Fixed typo/bug in boolean tests, fixed
+                argument processing in list_colls</LI>
+ <LI>Change signature of list_colls</LI>
+ <LI>Revised to correctly use App::Config
+                and getters for tablenames and displayfields</LI>
+ <LI>changed delete_coll to use proper DbUtil
+                call to delete item rows, replaced refs to join_table_name
+                with coll_item_table_name because we may have more
+                join tables in the future</LI>
+ <LI>Debugging and some rearrangement of
+                the class hierarchy</LI>
+ <LI>explicity params in list_colls()</LI>
+ <LI>ongoing</LI>
+ <LI>write set_facade_member_data, get_facade_member_data,
+                get_last_insert_id</LI>
+ <LI>Fixed bug in delete_coll and added
+                $self->get_user_id accessor</LI>
+ <LI>added assertion to make sure $coll_hash_ref->{'shared'}
+                is valid (1 or 0)</LI>
+ <LI>testing problem with assertion to make
+                sure $coll_hash_ref->{'shared'} is valid (1 or 0)</LI>
+ <LI>Fixed assertion to make sure $coll_hash_ref->{'shared'}
+                is valid (1 or 0)</LI>
+ <LI>Changes to allow instantiating a collection
+                object so we can call $co->coll_owned_by_user. (Moved
+                duplicate coll_owned_by_user code out of CollectionSet
+                and now using code in Collection.)</LI>
+ <LI>Added assertion to prevent description
+                of collection > 255 chars</LI>
+ <LI>Modified init to check $ENV{DEBUG}='usetesttbl';
+                and read the test tables instead of production tables
+                if it is set.</LI>
+ <LI>Added use App::Debug::DUtils;</LI>
+ <LI>added get_coll_data_from_user_id for
+                use by PT and List_Items when generating collection
+                selection widget (for copy/move items) my $ary_hashref
+                = $CS->get_coll_data_from_user_id($user_id); returns
+                reference to an array of hashrefs with the keys being
+                MColl_ID and collname returns undef if bad user_id</LI>
+ <LI>renamed _exists_coll_id to exists_coll_id
+                because it needs to be a public method</LI>
+ <LI>FORMATTING</LI>
+ <LI>Added $self->change_owners($old_id,$new_user_id)
+                for changing temp (session id owner) to perm</LI>
+ <LI>new split i/f in COnfig::get</LI>
+ <LI>formatting and tighter regexps</LI>
+ <LI>formatting and tighter regexps</LI>
+ <LI>formatting and use qq{}</LI>
+ <LI>Added delete_all_colls_for_user to
+                delete all rows in both the collection table and the
+                coll_item table owned by given user</LI>
+ <LI>Cleanup</LI>
+ <LI>undo variable masking</LI>
+ <LI>production database for mysql and mirlyn</LI>
+ <LI>redo debugging to buffer in session</LI>
+ <LI>Changed exists_coll_name_for_owner
+                so that its case sensitive ie if a user wants to have
+                foo Foo and FOO they don't count as the same name</LI>
+ <LI>escape coll name</LI></UL></LI>
+</UL>
+<UL>
+<LI> App/Config.pm
+<UL>
+ <LI>Initial</LI>
+ <LI>use Config::Tiny</LI>
+ <LI>Added code to check the return value
+                of Config::Tiny->read and if its undef, to read the
+                error string and ASSERT with informative error message</LI>
+ <LI>Streamline the ASSERT in new()</LI>
+ <LI>new split i/f in COnfig::get</LI>
+ <LI>add local.conf capability</LI>
+ <LI>more debugging info</LI>
+ <LI>debug formatting</LI>
+ <LI>No longer use set_utf8_flag</LI></UL></LI>
+</UL>
+<UL>
+<LI> App/Context.pm
+<UL>
+ <LI>Initial</LI>
+ <LI>first PI implemented</LI>
+ <LI>add has_object()</LI>
+ <LI>cpomments</LI>
+ <LI>Change key syntax for set_(get_)object
+                Context class</LI>
+ <LI>Change key syntax for set_(get_)object
+                Context class</LI>
+ <LI>Support for error page and change a=listits
+                to a=listis</LI></UL></LI>
+</UL>
+<UL>
+<LI> App/Controller.pm
+<UL>
+ <LI>Initial</LI>
+ <LI>remove Distatcher class, not needed</LI>
+ <LI>Support for error page and change a=listits
+                to a=listis</LI></UL></LI>
+</UL>
+<UL>
+<LI> App/Convert.pm
+<UL>
+ <LI>first entry of image pan zoom tools</LI>
+ <LI>enhanced watermarking using arbitrary
+                string of text. currently commented out for jp2.</LI>
+ <LI>blackoutimage fix</LI></UL></LI>
+</UL>
+<UL>
+<LI> App/DUtils.pm
+<UL>
+ <LI>Initial</LI>
+ <LI>debugging</LI>
+ <LI>Debugging and some rearrangement of
+                the class hierarchy</LI>
+ <LI>Moved to Debug/DUtils.pm to Add assertion
+                email</LI></UL></LI>
+</UL>
+<UL>
+<LI> App/Database.pm
+<UL>
+ <LI>Initial</LI>
+ <LI>Debugging and some rearrangement of
+                the class hierarchy</LI>
+ <LI>Change location of DEBUG to App::Debug::Utils</LI>
+ <LI>debugging</LI>
+ <LI>dynamically determine which database
+                to use dev or prod</LI>
+ <LI>debugging</LI>
+ <LI>Change key syntax for set_(get_)object
+                Context class</LI>
+ <LI>always use dev database ... for now</LI>
+ <LI>undo:always use dev database ... for
+                now</LI>
+ <LI>added mysql_enable_utf8 flag available
+                in 4.005 DBD::mysql</LI>
+ <LI>new key db_use_dev_server</LI>
+ <LI>Indexing changes to maintain connectivity
+                actoss timeouts</LI>
+ <LI>fq style is collid, cron job manages
+                indexing</LI>
+ <LI>ongoing interface changes for priority
+                queue</LI></UL></LI>
+</UL>
+<UL>
+<LI> App/DbUtils.pm
+<UL>
+ <LI>Inital</LI>
+ <LI>Debugging and some rearrangement of
+                the class hierarchy</LI>
+ <LI>write set_facade_member_data, get_facade_member_data,
+                get_last_insert_id</LI>
+ <LI>added die to get_last_insert_id</LI>
+ <LI>added del_one_or_more_rows_by_key for
+                use by Collection.</LI>
+ <LI>Added/ported several methods from lib/DbUtils</LI>
+ <LI>Clean up prep_n_execute</LI>
+ <LI>formatting</LI>
+ <LI>clean up unused subs and add generate_unique_id()</LI>
+ <LI>clean up unused subs and add generate_unique_id()</LI>
+ <LI>formatting, clean up</LI>
+ <LI>Indexing changes to maintain connectivity
+                across timeouts</LI>
+ <LI>reserve zeor fro special coll_id /
+                item_id</LI>
+ <LI>debugging</LI></UL></LI>
+</UL>
+<UL>
+<LI> App/Dispatcher.pm
+<UL>
+ <LI>Initial</LI>
+ <LI>Debugging and some rearrangement of
+                the class hierarchy</LI>
+ <LI>not needed</LI></UL></LI>
+</UL>
+<UL>
+<LI> App/FileDetails.pm
+<UL>
+ <LI>new</LI>
+ <LI>changes for better filedetails error
+                catching</LI>
+ <LI>changes for better filedetails error
+                catching</LI></UL></LI>
+</UL>
+<UL>
+<LI> App/Identifier.pm
+<UL>
+ <LI>Initial</LI>
+ <LI>fix collation str offset</LI>
+ <LI>fix collation str offset</LI>
+ <LI>fix stripping of namespace</LI>
+ <LI>ongoing namespace issues</LI>
+ <LI>MIUN &amp; namespaces in general</LI>
+ <LI>MIUN &amp; namespaces in general</LI>
+ <LI>refurbish the debug ids</LI>
+ <LI>add 6 for jp2 testing</LI>
+ <LI>use App::Identifier::id_to_mdp_path</LI>
+ <LI>add get_item_location()</LI>
+ <LI>re-write of App::Identifier.pm</LI>
+ <LI>id=7 for size test</LI>
+ <LI>allow cgi or scalar for validate_id()
+                input param</LI>
+ <LI>add id 8 for zip test</LI>
+ <LI>refactorization for virtual stylesheets
+                in pageturner</LI>
+ <LI>ongoing interface changes for priority
+                queue</LI>
+ <LI>add wu namespace</LI>
+ <LI>add wu namespace offset 5</LI>
+ <LI>add wu namespace offset 5 path prefix
+                = 89</LI>
+ <LI>validate id from public interfaces
+                if it hasn';t been done</LI>
+ <LI>/mdp1 goes to /sdr1</LI>
+ <LI>dataroot = /sdr1</LI>
+ <LI>common zip extraction</LI>
+ <LI>Kmake wu true for is_MDP_metadata</LI>
+ <LI>add has_MARC_metadata and call it for
+                wu items and change semantics of METADATA_TYPE to
+                MARC or TEI</LI>
+ <LI>Ksuppress id=0 emails</LI></UL></LI>
+</UL>
+<UL>
+<LI> App/JsUtils.pm
+<UL>
+ <LI>Initial</LI>
+ <LI>add build_javascript_var</LI>
+ <LI>formatting</LI>
+ <LI>renamed to App::Utils::Js</LI></UL></LI>
+</UL>
+<UL>
+<LI> App/MediaItem.pm
+<UL>
+ <LI>first entry of image pan zoom tools</LI>
+ <LI>path config change</LI></UL></LI>
+</UL>
+<UL>
+<LI> App/ObjFactory.pm
+<UL>
+ <LI>Initial</LI>
+ <LI>cleanup</LI>
+ <LI>Change key syntax for set_(get_)object
+                Context class</LI>
+ <LI>SDRROOT</LI></UL></LI>
+</UL>
+<UL>
+<LI> App/Operation.pm
+<UL>
+ <LI>Initial</LI>
+ <LI>first PI implemented</LI>
+ <LI>Debugging and some rearrangement of
+                the class hierarchy</LI>
+ <LI>ongoing list_colls page XSL development</LI>
+ <LI>ongoing</LI>
+ <LI>Added set_collection and set_collection_set
+                methods</LI>
+ <LI>Restructure CGI parameter validation
+                moving it to the operation instead of the action for
+                closer proximity</LI>
+ <LI>! defined (cgi) *not* ! cgi</LI>
+ <LI>comments</LI>
+ <LI>add parameter assertions and defaulting
+                for each operation</LI>
+ <LI>remove App::Operation [get|set]_collection[_set]
+                replacing them with App::Action::[get|set]_transient_facade_member_data
+                $cs and $co are instantiated just once now when the
+                Action base class is initialized. Login operation
+                make temporary collections permanent</LI></UL></LI>
+</UL>
+<UL>
+<LI> App/PI.pm
+<UL>
+ <LI>Initial</LI>
+ <LI>Final decouple from DLXS ProcIns and
+                ImageUtils</LI>
+ <LI>redo debugging to buffer in session</LI>
+ <LI>redo debugging to buffer in session</LI>
+ <LI>add PI_DEBUG_trap()</LI>
+ <LI>more debugging</LI></UL></LI>
+</UL>
+<UL>
+<LI> App/PIFiller.pm
+<UL>
+ <LI>Initial</LI>
+ <LI>first PI implemented</LI></UL></LI>
+</UL>
+<UL>
+<LI> App/Semaphore.pm
+<UL>
+ <LI>Initial</LI>
+ <LI>moved to lib/App</LI>
+ <LI>different style of object initialization</LI></UL></LI>
+</UL>
+<UL>
+<LI> App/Session.pm
+<UL>
+ <LI>Initial</LI>
+ <LI>Debugging and some rearrangement of
+                the class hierarchy</LI>
+ <LI>Add assertion email</LI>
+ <LI>add set_transient</LI>
+ <LI>debugging</LI>
+ <LI>refine SSD logic</LI>
+ <LI>Change key syntax for set_(get_)object
+                Context class</LI>
+ <LI>comments</LI>
+ <LI>Added set/get_persistent_key</LI>
+ <LI>make session always non-empty theough
+                procedural interface "start_session"</LI>
+ <LI>debug session. fix logged_in flag on
+                session in Authmake session always non-empty theough
+                procedural interface "start_session"</LI>
+ <LI>redo debugging to buffer in session</LI></UL></LI>
+</UL>
+<UL>
+<LI> App/Utils.pm
+<UL>
+ <LI>Initial</LI>
+ <LI>Add if ($ENV{'DLPS_TEST'}) to ASSERT</LI>
+ <LI>ongoing</LI>
+ <LI>debugging</LI>
+ <LI>changed action of ASSERT when ENV{DLPS_TESTING}
+                to warn instead of die</LI>
+ <LI>Debugging and some rearrangement of
+                the class hierarchy</LI>
+ <LI>Added string "ASSERT_FAIL:" to message
+                for assertion failure to facilitate regex matching
+                for assertion failures in test framework</LI>
+ <LI>Add assertion email</LI>
+ <LI>Removed special case for ENV{DLPS_TEST}
+                from ASSERT. We don't need it.(Solution was to wrap
+                any test that could ASSERT in an eval loop and search
+                for ASSERT FAILED string in $@)</LI>
+ <LI>added a large number of utility routines
+                mainly for pageturner</LI>
+ <LI>fix set_utf8</LI>
+ <LI>dynamically determine which database
+                to use dev or prod</LI>
+ <LI>debugging</LI>
+ <LI>rename gen_compute_times to display_stats</LI>
+ <LI>xml cgi param mapping to prevent parser
+                crashes</LI>
+ <LI>fix clean_cgi_params defined($v) nto
+                $v</LI>
+ <LI>MIUN &amp; namespaces in general</LI>
+ <LI>nice debug screen</LI>
+ <LI>debugging</LI>
+ <LI>more DebugScreen stuff</LI>
+ <LI>remove read_file_raw and rewrite read_file</LI>
+ <LI>handle Latin1 inputs to UTF-8 in clean_chars</LI>
+ <LI>remove transcoding from Latin1 until
+                we see a need</LI>
+ <LI>formatting, clean up</LI>
+ <LI>add build_hidden_var_XML</LI>
+ <LI>for adding parameter assertions and
+                defaulting for each operation: tighten up clean_cgi_params()
+                so param values of '' are also removed</LI>
+ <LI>for adding parameter assertions and
+                defaulting for each operation: tighten up clean_cgi_params()
+                so param values of '' are also removed</LI>
+ <LI>fallback implementation</LI>
+ <LI>remove_truncated_cers in clean_cgi_params
+                to handle stuff like "you%26apos"</LI>
+ <LI>add get_hostname</LI>
+ <LI>add get_hostname</LI>
+ <LI>add get_hostname</LI>
+ <LI>added character exclusion in map_chars_to_cers,
+                added add_attribute</LI>
+ <LI>add force param to ASSERT_Code soft_ASSERT</LI>
+ <LI>redo debugging to buffer in session</LI>
+ <LI>Implement unavailable message</LI>
+ <LI>use constant SIZE_IN_BYTES in file_exists</LI>
+ <LI>efficiency for mapping CERs faster</LI>
+ <LI>dataroot = /sdr1 close doc always</LI>
+ <LI>fallback and common header</LI>
+ <LI>ongoing</LI>
+ <LI>SDRROOT</LI>
+ <LI>SDRROOT</LI>
+ <LI>formatting debug msg</LI>
+ <LI>use SDRINST for wisconsin skin</LI>
+ <LI>Implement cosign authentication</LI>
+ <LI>Krelative url builder</LI>
+ <LI>typo in url_to</LI>
+ <LI>Fix occurrence of &amp; and ; that truncate
+                the query string we send Solr</LI>
+ <LI>set utf8</LI>
+ <LI>do not mal apostrophe to apos in clean_cgi_params().
+                better for searching and they don't hurt XML compliance</LI>
+ <LI>decode_utf8() URL parqameters in clean_cgi_params</LI>
+ <LI>No longer use set_utf8_flag</LI></UL></LI>
+</UL>
+<UL>
+<LI> App/View.pm
+<UL>
+ <LI>Initial</LI>
+ <LI>first PI implemented</LI>
+ <LI>debugging</LI>
+ <LI>ongoing list_colls page XSL development</LI>
+ <LI>ongoing</LI>
+ <LI>Add assertion email</LI>
+ <LI>Added a procedural interface to output_data_HTTP()
+                for use in pageturner. Object interface calls the
+                procedural interface but can be over-ridden</LI>
+ <LI>Change key syntax for set_(get_)object
+                Context class</LI>
+ <LI>Modified for redirect and ajax optionality</LI>
+ <LI>Improve assignemt of params to redirect
+                URL and handle debug=xml for redirect facade data</LI>
+ <LI>remove status codes</LI>
+ <LI>add debug url param so it persists</LI>
+ <LI>debugging</LI>
+ <LI>debugging</LI>
+ <LI>fallback implementation</LI>
+ <LI>Final decouple from DLXS ProcIns and
+                ImageUtils</LI>
+ <LI>redo debugging to buffer in session</LI>
+ <LI>redo debugging to buffer in session</LI>
+ <LI>redo debugging to buffer in session</LI>
+ <LI>cleanup</LI>
+ <LI>Support for error page and change a=listits
+                to a=listis</LI>
+ <LI>debuggingKadd timing</LI>
+ <LI>Changed get_redirect_url so that multivalued
+                optional parameters are correctly passed on to the
+                redirect_url. i.e. foo&amp;solrfct=1&solrfct=2</LI>
+ <LI>replaced App::Utils::XSLT</LI>
+ <LI>added redir debug parameter</LI>
+ <LI>Added call to P_output_data_HTTP so
+                that proper http header would get sent along with
+                debugging info for debug=noredir in P_redirect_HTTP</LI>
+ <LI>refactoring for virtual stylesheet
+                functionality in pageturner</LI>
+ <LI>refactorization for virtual stylesheets
+                in pageturner</LI>
+ <LI>fq style is collid, cron job manages
+                indexing</LI>
+ <LI>exit 0; instead of exit;</LI>
+ <LI>typo</LI>
+ <LI>fallback and common header</LI>
+ <LI>SDRROOT</LI>
+ <LI>fix fallback for xsltwrite</LI>
+ <LI>Deal with utf8 differences between
+                dev and prod</LI>
+ <LI>Deal with utf8 differences between
+                dev and prod</LI>
+ <LI>Deal with utf8 differences between
+                dev and prod</LI>
+ <LI>remove commented out code</LI>
+ <LI>special handling for DEBUG_MESSAGE
+                PI</LI>
+ <LI>No longer use set_utf8_flag</LI></UL></LI>
+</UL>
+<UL>
+<LI> App/XSLTUtils.pm
+<UL>
+ <LI>Initial</LI>
+ <LI>added functionality to set current
+                working dir so XSLT engine can resolve relative paths
+                to in &lt;xsl:import></LI>
+ <LI>replaced bu App::Utils::XSLT</LI></UL></LI>
+</UL>
+<UL>
+<LI> App/Action/Bind.pm
+<UL>
+ <LI>Initial</LI>
+ <LI>Debugging and some rearrangement of
+                the class hierarchy</LI>
+ <LI>ongoing</LI>
+ <LI>ongoing</LI>
+ <LI>url parameter defaulting for ListColls</LI>
+ <LI>enhanced structure for %g_action_bindings
+                to support new action for arbitrary pages</LI>
+ <LI>more parameter checking</LI>
+ <LI>Replaced an ASSERT (scalar $cgi->param
+                (foo) with and ASSERT defined $cgi->param(foo)</LI>
+ <LI>Restructure CGI parameter validation
+                moving it to the operation instead of the action for
+                closer proximity</LI>
+ <LI>Restructure CGI parameter validation
+                moving it to the operation instead of the action for
+                closer proximity. remove old defaulting mechanism.</LI>
+ <LI>comments</LI>
+ <LI>Modified for redirect and ajax optionality</LI>
+ <LI>Improve assignemt of params to redirect
+                URL and handle debug=xml for redirect facade data</LI>
+ <LI>add parameter assertions and defaulting
+                for each operation</LI>
+ <LI>default action is listcs</LI>
+ <LI>refactorization for virtual stylesheets
+                in pageturner</LI>
+ <LI>fallback and common header</LI>
+ <LI>add code to binding action to execute
+                early ops (Login)</LI></UL></LI>
+</UL>
+<UL>
+<LI> App/Auth/Auth.pm
+<UL>
+ <LI>App::Auth::Surrogate implementation
+                to decouple form DLXS</LI>
+ <LI>Skin logic</LI>
+ <LI>use SDRINST for wisconsin skin</LI>
+ <LI>remove legacy code from gr and remove
+                session creation dependency in auth</LI>
+ <LI>remove legacy code from gr and remove
+                session creation dependency in auth</LI>
+ <LI>Implement cosign authentication</LI>
+ <LI>test</LI>
+ <LI>test</LI></UL></LI>
+</UL>
+<UL>
+<LI> App/Auth/Surrogate.pm
+<UL>
+ <LI>App::Auth::Surrogate implementation
+                to decouple form DLXS</LI>
+ <LI>SDRROOT</LI>
+ <LI>use SDRINST for wisconsin skin</LI></UL></LI>
+</UL>
+<UL>
+<LI> App/Collection/Test.pm
+<UL>
+ <LI>Initial implementation</LI>
+ <LI>Added ability to test ASSERTS and implemented
+                testing about half the asserts. Need to do rest.</LI>
+ <LI>Added more assertion tests. Added tests
+                for utility routines called by clients: coll_owned_by_user
+                item_exists item_in_collection</LI>
+ <LI>Renamed tests for add_items method
+                to copy_items to correspond to change in name in Collection.pm</LI>
+ <LI>Added tests for rights to tests for
+                create_or_update_item_metadata fixed bug in one of
+                the $DEBUG setup tests for co object</LI>
+ <LI>Modified init to check $ENV{DEBUG}='usetesttbl';
+                and read the test tables instead of production tables
+                if it is set.</LI>
+ <LI>Fixed bug in implementation for choosing
+                test tables vs production tables</LI>
+ <LI>Changed all owner/user_id = suzchap
+                to tburtonw so we can change the tables and do tests
+                with my devhosts over the web</LI>
+ <LI>Changed a couple of tests to correspond
+                to new rights attributes in items Added test for list_items_limit_to_full_text
+                refactored setting up of tables so that both setup
+                (once per test) and teardown? (once at the end of
+                the entire test run) call the routine to set up clean
+                tables. That way we can run mysql against the test
+                tables and they will always be consistant with what
+                gets created at the beginning of every test</LI>
+ <LI>Added test for delete_items to make
+                sure items not in the list of items to be deleted
+                don't get deleted Started changes needed to read global.conf
+                for dbuser and dbpassword Cleaned up _get_dbh added
+                get_config</LI>
+ <LI>Modified _get_dbh and do_create_test_tables
+                to read all settings from global.conf instead of hard-coded.
+                This allows change to mdp database</LI>
+ <LI>added tests for get_coll_name... utility
+                functions</LI>
+ <LI>Added test for count_full_text to return
+                the number of items in a collection that are full-text
+                (given a list of rights attributes)</LI>
+ <LI>Added tests to test that the collection
+                table gets properly updated when items are copied
+                to or deleted from a collection</LI>
+ <LI>Replaced all refs to barcode with ref
+                to extern_id</LI>
+ <LI>remove separate $extern_id paramater</LI>
+ <LI>Added test for $CS->change_owners($old_id,$new_user_id)
+                for changing temp (session id owner) to perm</LI>
+ <LI>Added test for get_metadata_for_item_ids</LI>
+ <LI>Added tests for getting and setting
+                isindexed status, Added begin to set lib in @INC Added
+                use App::Search::Status for testing isindexed status
+                with those constants removed test of added item id,since
+                new id implementation generated random number so we
+                can't predict and test for it</LI>
+ <LI>Updated to use new conf scheme added
+                tests for indexing stuff removed obsolete index test</LI>
+ <LI>Changed tests to reflect schema changes
+                and new tables to support indexing coll_ids in Solr</LI>
+ <LI>Added list_items_index_status test</LI>
+ <LI>Removed tests for age_queue, read_queue,
+                delete_queue because those methods moved out of Collection.pm
+                and into Phil's common script codebase</LI>
+ <LI>Changed test for add_to_queue to test
+                for coll_id Marked these methods for removal after
+                confirmation: collection_all_indexed (remove method
+                and need to call Phil's method instead which queries
+                solr) is_item_index_failure remove method Phil will
+                test his own methods? isindexed (remove method and
+                need to call Phil's method instead which queries solr)
+                list_items (modify calls to not read isindexed column,
+                will need to call Phils method instead) (list_items
+                should not be responsible for this!!) set_index_status_for_coll
+                remove method, not needed (already removed all calls)
+                set_index_status_for_item remove method, not needed
+                (only callers are Phils indexing scripts)</LI>
+ <LI>Added multiple tests for add_to_queue
+                XXX Need to reimplement test that ordering is correct</LI>
+ <LI>Added test for method co->one_or_more_items_in_coll</LI>
+ <LI>SDRROOT</LI></UL></LI>
+</UL>
+<UL>
+<LI> App/Collection/makeTestTables.sql
+<UL>
+ <LI>initial commit</LI></UL></LI>
+</UL>
+<UL>
+<LI> App/Collection/make_test_tables.sql
+<UL>
+ <LI>initial commit</LI>
+ <LI>Added rights attributes to the items</LI>
+ <LI>added item 3 to multiple collections
+                to facilitate testing</LI>
+ <LI>removed naked ampersand in db table
+                Will have to test eventually but should not be able
+                to get into db</LI>
+ <LI>Changed the num_items field in the
+                test_collection table to match the test_coll_items
+                table</LI>
+ <LI>Removed a couple of entries from test_collection
+                so we could use same test tables for testing Collection
+                and CollectionSet</LI>
+ <LI>Added isindexed column and set records
+                3 and 4 to true, rest to false</LI>
+ <LI>Rewrote to reflect schema changes and
+                new tables to support indexing coll_ids in Solr</LI>
+ <LI>Added attempts column to test_index_failure
+                table with appropriate data assuming that IX_MAX_FAIL_ATTEMPTS
+                =50</LI>
+ <LI>Updated to match changes in m_ schema,
+                i.e. no isindexed column, MColl_ID in index queue</LI>
+ <LI>Redid to reflect changes to index_queue
+                schema</LI></UL></LI>
+</UL>
+<UL>
+<LI> App/CollectionSet/Test.pm
+<UL>
+ <LI>initial</LI>
+ <LI>tests for list_items, slicing and sorting
+                added tests for add_items added need to create a startup
+                method to set up clean databases</LI>
+ <LI>Added tests of ASSERTS, still need
+                to finish Need to refactor test harness as in Collection/Test</LI>
+ <LI>Modified init to check $ENV{DEBUG}='usetesttbl';
+                and read the test tables instead of production tables
+                if it is set.</LI>
+ <LI>Switched back to using hardcoded test
+                configuration file until we can redo the setup script
+                to use the same test tables as Collection/Test.pm
+                current hard coded conf files work with hardcoded
+                db setup in this routine. This should be updated/changed!!</LI>
+ <LI>renamed _exists_coll_id to exists_coll_id
+                because it needs to be a public method Added test
+                for get_coll_data_from_userid</LI>
+ <LI>Rewrote to use same repeated creation
+                of test databases as used by Collection/Test.pm All
+                tests except one pass Need to clean up and implement
+                the test that creation of test_collection table is
+                correct</LI>
+ <LI>Added test for change_owners</LI>
+ <LI>SDRROOT</LI></UL></LI>
+</UL>
+<UL>
+<LI> App/CollectionSet/testCollectionSet.conf
+<UL>
+ <LI>initial</LI></UL></LI>
+</UL>
+<UL>
+<LI> App/CollectionSet/testCollectionSet.pl
+<UL>
+ <LI>initial</LI>
+ <LI>SDRROOT</LI></UL></LI>
+</UL>
+<UL>
+<LI> App/Convert/TIFFConvert.pm
+<UL>
+ <LI>first entry of image pan zoom tools</LI>
+ <LI>fixed use statement</LI></UL></LI>
+</UL>
+<UL>
+<LI> App/Convert/jp2Convert.pm
+<UL>
+ <LI>first entry of image pan zoom tools</LI>
+ <LI>fixed use statement</LI>
+ <LI>enhanced watermarking using arbitrary
+                string of text. currently commented out for jp2.</LI></UL></LI>
+</UL>
+<UL>
+<LI> App/Convert/mp3Convert.pm
+<UL>
+ <LI>first entry of image pan zoom tools</LI>
+ <LI>fixed use statement</LI></UL></LI>
+</UL>
+<UL>
+<LI> App/Convert/sidConvert.pm
+<UL>
+ <LI>first entry of image pan zoom tools</LI>
+ <LI>fixed use statement</LI></UL></LI>
+</UL>
+<UL>
+<LI> App/Debug/DUtils.pm
+<UL>
+ <LI>Moved to Debug/DUtils.pm to Add assertion
+                email</LI>
+ <LI>Add assertion email</LI>
+ <LI>ongoing</LI>
+ <LI>Support for namespaces on mdp ids</LI>
+ <LI>formatting</LI>
+ <LI>nice debug screen</LI>
+ <LI>debugging</LI>
+ <LI>debugging</LI>
+ <LI>more debugging</LI>
+ <LI>more debugging</LI>
+ <LI>debugging error pages</LI>
+ <LI>debugging error pages</LI>
+ <LI>support for unavailable page</LI>
+ <LI>support for unavailable page</LI>
+ <LI>more DebugScreen stuff</LI>
+ <LI>no debugging enables if ! debugging_enables()</LI>
+ <LI>terminal debugging</LI>
+ <LI>redo debugging to buffer in session</LI>
+ <LI>Implement unavailable message</LI>
+ <LI>formatting</LI>
+ <LI>bug in message buffering for email</LI>
+ <LI>App::Auth::Surrogate implementation
+                to decouple form DLXS</LI>
+ <LI>add PTGlobals::gFriendUsers for friend
+                accounts</LI>
+ <LI>SDRROOT</LI>
+ <LI>Add $main::MESSAGE_BUFFER support for
+                DEBUG</LI>
+ <LI>Add $main::MESSAGE_BUFFER support for
+                DEBUG</LI>
+ <LI>use SDRINST for wisconsin skin</LI>
+ <LI>production mbooks enabling flag for
+                Restricted Access Page message + link to help</LI>
+ <LI>special handling for DEBUG_MESSAGE
+                PI : new routine DEBUGGING()</LI></UL></LI>
+</UL>
+<UL>
+<LI> App/Debug/Email.pm
+<UL>
+ <LI>Initial to Add assertion email</LI>
+ <LI>Add assertion email</LI>
+ <LI>better ASSERTION message</LI>
+ <LI>dynamically determine which database
+                to use dev or prod</LI>
+ <LI>debugging</LI>
+ <LI>support for unavailable page</LI>
+ <LI>add hostname</LI>
+ <LI>add get_hostname</LI></UL></LI>
+</UL>
+<UL>
+<LI> App/FileDetails/jp2FileDetails.pm
+<UL>
+ <LI>new</LI>
+ <LI>fixed use statement</LI>
+ <LI>better handling of funky filenames</LI>
+ <LI>changes for better filedetails error
+                catching</LI>
+ <LI>changes for better filedetails error
+                catching</LI>
+ <LI>changes for better filedetails error
+                catching</LI>
+ <LI>changes for better filedetails error
+                catching</LI>
+ <LI>changes for better filedetails error
+                catching</LI>
+ <LI>changes for better filedetails error
+                catching</LI>
+ <LI>added caller to name of temp file,
+                to avoid conflicts.</LI></UL></LI>
+</UL>
+<UL>
+<LI> App/FileDetails/sidFileDetails.pm
+<UL>
+ <LI>new</LI>
+ <LI>fixed use statement</LI>
+ <LI>changes for better filedetails error
+                catching</LI>
+ <LI>changes for better filedetails error
+                catching</LI></UL></LI>
+</UL>
+<UL>
+<LI> App/Operation/Status.pm
+<UL>
+ <LI>Initial</LI></UL></LI>
+</UL>
+<UL>
+<LI> App/Search/Constants.pm
+<UL>
+ <LI>Initial</LI>
+ <LI>comments</LI>
+ <LI>IX_MAX_FAIL_ATTEMPTS = 50</LI>
+ <LI>Added IX_MAX_FAIL_ATTEMPTS to exports</LI>
+ <LI>ongoing</LI>
+ <LI>add IX_NO_COLLECTION</LI>
+ <LI>add IX_NO_COLLECTION</LI></UL></LI>
+</UL>
+<UL>
+<LI> App/Search/Document.pm
+<UL>
+ <LI>Initial</LI>
+ <LI>eliminate mapping of single and double
+                quotes in XML ... not needed</LI>
+ <LI>ongoing interface changes for priority
+                queue</LI>
+ <LI>No longer use set_utf8_flag</LI></UL></LI>
+</UL>
+<UL>
+<LI> App/Search/Indexer.pm
+<UL>
+ <LI>Initial</LI>
+ <LI>ongoing solr indexing</LI>
+ <LI>ongoing</LI>
+ <LI>ongoing search</LI>
+ <LI>add force param to ASSERT_Code soft_ASSERT</LI>
+ <LI>timing and subclassing for Solr</LI>
+ <LI>renamed to FullText.pm</LI>
+ <LI>changes for index timings</LI>
+ <LI>allow instantiation of diferent engines
+                and timeouts</LI>
+ <LI>fq style is collid, cron job manages
+                indexing</LI>
+ <LI>ongoing cron fix sql statements</LI>
+ <LI>remove auto_commit and add Constants.pm</LI>
+ <LI>ongoing interface changes for priority
+                queue</LI>
+ <LI>Kongoing</LI>
+ <LI>ongoing</LI>
+ <LI>refactor API for search result object</LI>
+ <LI>ongoing, indexing. test for collid=0</LI>
+ <LI>final?</LI>
+ <LI>ongoing</LI>
+ <LI>return IX_INDEX_FAILURE if ocr can't
+                be read</LI>
+ <LI>better checking for ocr failures to
+                read disk</LI>
+ <LI>go ahead and index ix_index_failure_string</LI>
+ <LI>go ahead and index ix_index_failure_string</LI>
+ <LI>go ahead and index ix_index_failure_string</LI>
+ <LI>debug</LI>
+ <LI>debug</LI>
+ <LI>No longer use set_utf8_flag</LI></UL></LI>
+</UL>
+<UL>
+<LI> App/Search/Query.pm
+<UL>
+ <LI>Initial</LI>
+ <LI>search ongoing</LI>
+ <LI>ongoing debug</LI>
+ <LI>Implement subclasses of Query, Searcher
+                and Result</LI>
+ <LI>fq style is collid, cron job manages
+                indexing</LI>
+ <LI>ongoing cron</LI>
+ <LI>No longer use set_utf8_flag</LI></UL></LI>
+</UL>
+<UL>
+<LI> App/Search/Relevance.pm
+<UL>
+ <LI>Initial</LI>
+ <LI>fixed typo $norm_type vs $type</LI>
+ <LI>search ongoing</LI>
+ <LI>increase ABSOLUTE_SCALE_FACTOR to 10000</LI>
+ <LI>Moved to MBooks (where it really belongs)</LI></UL></LI>
+</UL>
+<UL>
+<LI> App/Search/Result.pm
+<UL>
+ <LI>Initial</LI>
+ <LI>search ongoing</LI>
+ <LI>search ongoing</LI>
+ <LI>Handel collid on result object</LI>
+ <LI>fixed typo in __set_result_ids</LI>
+ <LI>Kdecremtn num_found when removing ids</LI>
+ <LI>return SEARCH_OK or SEARCH_FAILED to
+                reflect http_status</LI>
+ <LI>Implement subclasses of Query, Searcher
+                and Result</LI>
+ <LI>Handle index offline for maintenance</LI>
+ <LI>qtime display</LI>
+ <LI>coll_id in filter query (fq)</LI>
+ <LI>add code to response</LI>
+ <LI>ongoing cron</LI>
+ <LI>cleanup and add response_code accessor</LI></UL></LI>
+</UL>
+<UL>
+<LI> App/Search/Searcher.pm
+<UL>
+ <LI>Initial</LI>
+ <LI>search ongoing</LI>
+ <LI>search ongoing</LI>
+ <LI>Handel collid on result object</LI>
+ <LI>return SEARCH_OK or SEARCH_FAILED to
+                reflect http_status</LI>
+ <LI>Implement subclasses of Query, Searcher
+                and Result</LI>
+ <LI>timing and subclassing for Solr</LI>
+ <LI>timing and subclassing for Solr</LI>
+ <LI>Handle index offline for maintenance</LI>
+ <LI>qtime display</LI>
+ <LI>coll_id in filter query (fq)</LI>
+ <LI>fq style is collid, cron job manages
+                indexing</LI>
+ <LI>refactor API for search result object</LI>
+ <LI>debugging</LI>
+ <LI>Deal with utf8 differences between
+                dev and prod</LI>
+ <LI>email on anything other than a 200
+                response</LI>
+ <LI>debugging</LI>
+ <LI>FIx URL escaping for Unicode chars</LI>
+ <LI>FIx URL escaping for Unicode chars</LI>
+ <LI>No longer use set_utf8_flag</LI></UL></LI>
+</UL>
+<UL>
+<LI> App/Search/States.pm
+<UL>
+ <LI>Initial</LI>
+ <LI>fq style is collid, cron job manages
+                indexing</LI>
+ <LI>remove: use constant IX_NOT_INDEXED_UNCOLLECTED
+                => 2; not needed due to m_index_queue</LI>
+ <LI>obsolete. replaced by Constants.pm</LI></UL></LI>
+</UL>
+<UL>
+<LI> App/Search/Document/Solr.pm
+<UL>
+ <LI>Initial</LI>
+ <LI>ongoing solr indexing</LI>
+ <LI>ongoing</LI>
+ <LI>search ongoing</LI>
+ <LI>now have "page" &lt;field> in schema</LI>
+ <LI>now have "ocr" &lt;field> in schema</LI>
+ <LI>timing and subclassing for Solr</LI>
+ <LI>sort file names for doc building</LI>
+ <LI>changes for index timings</LI>
+ <LI>use cat to make concatenated files</LI>
+ <LI>coll_id in filter query (fq)</LI>
+ <LI>id back in filter query (fq)</LI>
+ <LI>id back in filter query (fq)</LI>
+ <LI>id back in filter query (fq)</LI>
+ <LI>reserve zero fro special coll_id /
+                item_id</LI>
+ <LI>ongoing interface changes for priority
+                queue</LI>
+ <LI>coll_id 0</LI>
+ <LI>Kongoing</LI>
+ <LI>ongoing</LI>
+ <LI>Archive::Zip in prep for unzipping
+                in production</LI>
+ <LI>onging -- close</LI>
+ <LI>final?</LI>
+ <LI>moved to where they belong MBooks::Document::</LI></UL></LI>
+</UL>
+<UL>
+<LI> App/Search/Document/XPAT.pm
+<UL>
+ <LI>Initial</LI>
+ <LI>search ongoing</LI>
+ <LI>zip file extraction</LI>
+ <LI>Kongoing</LI>
+ <LI>stub get_text_for</LI>
+ <LI>moved to where they belong MBooks::Document::</LI></UL></LI>
+</UL>
+<UL>
+<LI> App/Search/XPat/Result.pm
+<UL>
+ <LI>Initial</LI>
+ <LI>redo debugging to buffer in session</LI></UL></LI>
+</UL>
+<UL>
+<LI> App/Search/XPat/ResultSet.pm
+<UL>
+ <LI>Initial</LI></UL></LI>
+</UL>
+<UL>
+<LI> App/Search/XPat/Simple.pm
+<UL>
+ <LI>Initial</LI>
+ <LI>redo debugging to buffer in session</LI>
+ <LI>better error messages</LI>
+ <LI>SDRROOT</LI>
+ <LI>No longer use set_utf8_flag</LI></UL></LI>
+</UL>
+<UL>
+<LI> App/Utils/Date.pm
+<UL>
+ <LI>Initial</LI>
+ <LI>move regexp into App::Util::Date</LI>
+ <LI>don't soft_ASSERT in item_is_serial
+                when there's no LDR due to not being able to fetch
+                metadata from Mirlyn. assume monograph.</LI></UL></LI>
+</UL>
+<UL>
+<LI> App/Utils/Extract.pm
+<UL>
+ <LI>Initial</LI>
+ <LI>production Solr</LI></UL></LI>
+</UL>
+<UL>
+<LI> App/Utils/Js.pm
+<UL>
+ <LI>replaces App::JsUtils</LI></UL></LI>
+</UL>
+<UL>
+<LI> App/Utils/XSLT.pm
+<UL>
+ <LI>replaces App::XSLTUtils</LI></UL></LI>
+</UL>
+<UL>
+<LI> App/View/Fallback.pm
+<UL>
+ <LI>Initial</LI>
+ <LI>Skin logic</LI>
+ <LI>Skin logic</LI></UL></LI>
+</UL>
+<UL>
+<LI> App/View/Skin.pm
+<UL>
+ <LI>Initial</LI>
+ <LI>fallback and common header</LI>
+ <LI>Skin logic</LI>
+ <LI>Skin logic</LI>
+ <LI>use SDRINST for wisconsin skin</LI>
+ <LI>use SDRINST for wisconsin skin</LI></UL></LI>
+</UL>
+<UL>
+<LI> BookBag/BookBagIC.pm
+<UL>
+ <LI>added new method for checking ownership
+                of bookbag</LI></UL></LI>
+</UL>
+<UL>
+<LI> BookBagItem/BBItemTC.pm
+<UL>
+ <LI>Use maintitle, mainauthor, mainheader
+                to add to bookbag</LI></UL></LI>
+</UL>
+<UL>
+<LI> DLXSApp/FullTextApp.pm
+<UL>
+ <LI>added podBindings sub</LI>
+ <LI>Temporary fix for debug=xsltwrite without
+                remote user. Now using $ENV{'DLPS_DEV'}.temp instead
+                of $ENV{REMOTE_USER}.temp which was writing files
+                named .temp when remote user was not set.</LI>
+ <LI>fix for debug=xsltwrite without remote
+                user. Now using REMOTE_USER if defined or $ENV{'DLPS_DEV'}
+                if its defined and not 1 otherwise using "anonymous"</LI></UL></LI>
+</UL>
+<UL>
+<LI> DLXSClass/FullTextClass.pm
+<UL>
+ <LI>Removed line that was stripping out
+                spaces in idno in RestrictBaseQuery. This was causing
+                kwic view queries where the &lt;eadid> contained a space
+                to fail.</LI></UL></LI>
+</UL>
+<UL>
+<LI> Stats/Config.pm
+<UL>
+ <LI>Explicitly specify the format of the
+                config file.</LI>
+ <LI>Add method to return config file name.</LI></UL></LI>
+</UL>
+<UL>
+<LI> Stats/DB.pm
+<UL>
+ <LI>Add method delete_expired_counter_requests()</LI>
+ <LI>Modify query to add a COUNTER job to
+                use 99999 if institution is undefined.</LI></UL></LI>
+</UL>
+<UL>
+<LI> Stats/MainPage.pm
+<UL>
+ <LI>State that COUNTER reports are available
+                starting in May 2007.</LI>
+ <LI>Big rewrite to display aggregate stats
+                rows. Also combined some code and got rid of the extra.</LI>
+ <LI>New code to do COUNTER Database Report
+                1; also, auth algorithm changed again to show aggregate
+                stats *and* stats for a user's institution if their
+                institution can be determined from their IP address.</LI>
+ <LI>Add an additional message to COUNTER
+                request feedback.</LI>
+ <LI>Correct name of DR1.</LI>
+ <LI>Don't provide DR1 yet - its not ready.</LI>
+ <LI>Show COUNTER section in form if user
+                is logged in but IP address is unrecognized.</LI>
+ <LI>Slight modification: If we know the
+                user's institution, but they do not have stats for
+                a given collection and time period, default to 0 for
+                all counts so a row is still displayed for them in
+                the results page with zeros in all fields.</LI></UL></LI>
+</UL>
+<UL>
+<LI> Stats/Resource.pm
+<UL>
+ <LI>Get 'public' attribute from config
+                files to determine if a collection is public or not.</LI>
+ <LI>Allow upper- or lower-case for report
+                types in config file.</LI></UL></LI>
+</UL>
+<UL>
+<LI> Stats/Map/Auth.pm
+<UL>
+ <LI>Constructor now takes Stats::Config
+                object.</LI></UL></LI>
+</UL>
+<UL>
+<LI> Stats/Map/Titles/colldb.pm
+<UL>
+ <LI>Temporarily set $ENV{'HTTP_HOST'} to
+                $$self{'host'}, which is set from the query "SELECT
+                DISTINCT host FROM Collection WHERE userid = 'production'
+                and collid = ..." in case $ENV{'HTTP_HOST'} is not
+                set.</LI></UL></LI>
+</UL>
+<UL>
+<LI> Stats/Reports/COUNTER.pm
+<UL>
+ <LI>Include support for COUNTER Database
+                Report 1.</LI></UL></LI>
+</UL>
+<UL>
+<LI> Stats/Reports/COUNTER/BR1.pm
+<UL>
+ <LI>Clean up Database Report 1 a bit.</LI></UL></LI>
+</UL>
+<UL>
+<LI> Stats/Reports/COUNTER/BR2.pm
+<UL>
+ <LI>Clean up Database Report 1 a bit.</LI></UL></LI>
+</UL>
+<UL>
+<LI> Stats/Reports/COUNTER/BR5.pm
+<UL>
+ <LI>Clean up Database Report 1 a bit.</LI></UL></LI>
+</UL>
+<UL>
+<LI> Stats/Reports/COUNTER/DR1.pm
+<UL>
+ <LI>Add module for COUNTER Database Report
+                1.</LI>
+ <LI>Clean up Database Report 1 a bit.</LI></UL></LI>
+</UL>
+<UL>
+<LI> Stats/Reports/COUNTER/Report1.pm
+<UL>
+ <LI>Pass Stats::Config object to COUNTER
+                creation methods rather than creating other Stats::Config
+                files within these methods.</LI>
+ <LI>Now must pass Stats::Config object
+                to Stats::Map::Auth constructor.</LI>
+ <LI>Return undef if Resource object is
+                not created in the 'match_collid_to_resource()' method
+                - which, in this case, happened because I had removed
+                the collid from the stats config.</LI>
+ <LI>Clean up Database Report 1 a bit.</LI></UL></LI>
+</UL>
+<UL>
+<LI> Stats/Reports/COUNTER/Report2.pm
+<UL>
+ <LI>Pass Stats::Config object to COUNTER
+                creation methods rather than creating other Stats::Config
+                files within these methods.</LI>
+ <LI>Now must pass Stats::Config object
+                to Stats::Map::Auth constructor.</LI>
+ <LI>Return undef if Resource object is
+                not created in the 'match_collid_to_resource()' method
+                - which, in this case, happened because I had removed
+                the collid from the stats config.</LI>
+ <LI>Clean up Database Report 1 a bit.</LI></UL></LI>
+</UL>
+<UL>
+<LI> Stats/Reports/COUNTER/Report5.pm
+<UL>
+ <LI>Pass Stats::Config object to COUNTER
+                creation methods rather than creating other Stats::Config
+                files within these methods.</LI>
+ <LI>Now must pass Stats::Config object
+                to Stats::Map::Auth constructor.</LI>
+ <LI>Return undef if Resource object is
+                not created in the 'match_collid_to_resource()' method
+                - which, in this case, happened because I had removed
+                the collid from the stats config.</LI>
+ <LI>Clean up Database Report 1 a bit.</LI></UL></LI>
+</UL>
+<UL>
+<LI> Stats/Reports/COUNTER/ReportTools.pm
+<UL>
+ <LI>Die if location of COUNTER reports
+                cannot be obtained from the config file.</LI>
+ <LI>Pass Stats::Config object to COUNTER
+                creation methods rather than creating other Stats::Config
+                files within these methods.</LI>
+ <LI>Include support for COUNTER Database
+                Report 1.</LI></UL></LI>
+</UL>
+<UL>
+<LI> Stats/Reports/Custom/Excel.pm
+<UL>
+ <LI>Big rewrite to include aggregate stats
+                rows and use the same struct that is created for HTML
+                reports.</LI>
+ <LI>Get rid of 'aggregate_only' concept.</LI></UL></LI>
+</UL>
+<UL>
+<LI> Stats/Reports/Custom/Tools.pm
+<UL>
+ <LI>Remove file - no longer needed</LI></UL></LI>
+</UL>
+<UL>
+<LI> Stats/Tools/AuthTools.pm
+<UL>
+ <LI>Just added comment.</LI>
+ <LI>Now all users are allowed, but if they
+                are not recognized then they can only see aggregate
+                stats for public collections.</LI></UL></LI>
+</UL>
+<UL>
+<LI> Stats/Tools/DateTools.pm
+<UL>
+ <LI>Fix bug in day() method that returns
+                the current day of the month (it was erroneously adding
+                1).</LI></UL></LI>
+</UL>
+<UL>
+<LI> Stats/Tools/ResourceTools.pm
+<UL>
+ <LI>Big modification to allow unrecognized
+                users to see public collections (aggregate stats only).</LI>
+ <LI>Bug fix: empty the list of coll ids
+                previously built before grabbing all coll ids in the
+                cache, because we don't want to include any that aren't
+                in the cache (but were, say, in the AUTHZD_COLL variable).</LI>
+ <LI>When doing regular expression with
+                coll IDs, use /^..$/ to get the exact coll ID.</LI>
+ <LI>Get rid of 'aggregate_only' concept.
+                Return an array of all coll ids for which the user
+                is an admin.</LI></UL></LI>
+</UL>
+<UL>
+<LI> Stats/XML/BuildXML.pm
+<UL>
+ <LI>This is now used for the Excel custom
+                reports as well as the HTML reports. Now includes
+                aggregate stats rows.</LI>
+ <LI>Get rid of 'aggregate_only' concept.</LI>
+ <LI>utf-8 encode collection name before
+                passing to LibXML method.</LI>
+ <LI>Fix use of utf8::upgrade for collection
+                name</LI>
+ <LI>Slight modification: If we know the
+                user's institution, but they do not have stats for
+                a given collection and time period, default to 0 for
+                all counts so a row is still displayed for them in
+                the results page with zeros in all fields.</LI></UL></LI>
+</UL>
+==========================================================
+Log for directory bin/db ( lib since 6apr2007 )
+
+<UL>
+<LI> dbcmp
+<UL>
+ <LI>release 13</LI>
+ <LI>LibVersion.pm</LI>
+ <LI>alwasy use $UseDevelopmentServer=1
+                -- we're the only ones who use this program</LI></UL></LI>
+</UL>
+<UL>
+<LI> dbdump
+<UL>
+ <LI>release 13</LI>
+ <LI>release 13</LI>
+ <LI>wording</LI>
+ <LI>wording</LI></UL></LI>
+</UL>
+<UL>
+<LI> dbdump.cfg
+<UL>
+ <LI>release 13</LI>
+ <LI>release 13</LI>
+ <LI>Add bab3633.0001.001</LI>
+ <LI>deprecate the row for sampletc</LI>
+ <LI>add demofa</LI>
+ <LI>add oai oaisets</LI>
+ <LI>add nameresolver</LI>
+ <LI>add nameresolver</LI></UL></LI>
+</UL>
+<UL>
+<LI> deleteuser.sql
+<UL>
+ <LI>Initial</LI></UL></LI>
+</UL>
+<UL>
+<LI> droptables.sql
+<UL>
+ <LI>release 13</LI>
+ <LI>add oai oaisets</LI>
+ <LI>add nameresolver</LI></UL></LI>
+</UL>
+<UL>
+<LI> upgrade_5_6
+<UL>
+ <LI>release 13</LI>
+ <LI>release 13</LI></UL></LI>
+</UL>
+<UL>
+<LI> upgrade_5_6.cfg
+<UL>
+ <LI>release 13</LI>
+ <LI>release 13</LI>
+ <LI>Version.version=6.0 release 13</LI>
+ <LI>create table if not exists ImageClassMediaFiles</LI></UL></LI>
+</UL>
+<UL>
+<LI> upgrade_6_7
+<UL>
+ <LI>Initial</LI></UL></LI>
+</UL>
+<UL>
+<LI> upgrade_6_7.cfg
+<UL>
+ <LI>Initial</LI>
+ <LI>add nameresolver, oai, oaisets table
+                creation</LI>
+ <LI>add nameresolver, oai, oaisets table
+                creation</LI>
+ <LI>add nameresolver, oai, oaisets table
+                creation</LI>
+ <LI>add nameresolver, oai, oaisets table
+                creation</LI>
+ <LI>add nameresolver, oai, oaisets table
+                creation</LI></UL></LI>
+</UL>
+==========================================================
+Log for directory bin/browse ( lib since 6apr2007 )
+
+<UL>
+<LI> BrowseUpdate.pm
+<UL>
+ <LI>release 13</LI>
+ <LI>Insertion is now skipped if browse
+                field has no value. Also, field value counts are tallied
+                and reported.</LI></UL></LI>
+</UL>
+<UL>
+<LI> browseutils.cfg
+<UL>
+ <LI>added "an"</LI></UL></LI>
+</UL>
+<UL>
+<LI> ub
+<UL>
+ <LI>more input checking</LI></UL></LI>
+</UL>
+<UL>
+<LI> updatebrowsedb.pl
+<UL>
+ <LI>release 13</LI>
+ <LI>Insertion is now skipped if browse
+                field has no value. Also, field value counts are tallied
+                and reported.</LI>
+ <LI>more input checking</LI></UL></LI>
+</UL>
+<UL>
+<LI> BrowseUpdate/ImageMysqlBU.pm
+<UL>
+ <LI>Added a comment about browse_split.</LI>
+ <LI>commented out a debug statement.</LI></UL></LI>
+</UL>
+==========================================================
+Log for directory bin/installer ( lib since 6apr2007 )
+
+<UL>
+<LI> FindConfigFiles.pl
+<UL>
+ <LI>pre-14 release for workshop</LI></UL></LI>
+</UL>
+<UL>
+<LI> installer-input-rv13-dv6.0
+<UL>
+ <LI>nitial</LI></UL></LI>
+</UL>
+<UL>
+<LI> main.cfg
+<UL>
+ <LI>remove misc/db CSV related opertations</LI>
+ <LI>release 13</LI>
+ <LI>update config files for release 13</LI>
+ <LI>remove replace( "$DLXSROOT/bin/i/image/html2tab.pl",
+                qq{\#!/l/local/bin/perl}, $perlhashbang );</LI>
+ <LI>remove replace( "$DLXSROOT/bin/i/image/tab2html.pl",
+                qq{\#!/l/local/bin/perl}, $perlhashbang );</LI>
+ <LI>restore Text::CSV_XS</LI>
+ <LI>remove ["Net::hostent", 1.01] it is
+                part of Perl</LI>
+ <LI>update Text::CSV_XS should be 0.23</LI>
+ <LI>formatting</LI>
+ <LI>pre-14 release for workshop</LI>
+ <LI>pre-14 release for workshop</LI>
+ <LI>pre-14 release for workshop</LI>
+ <LI>Removed all references to outdated
+                validate.pl script Changed references for samplefa.*inp
+                files to new file names samplefa.ead2002.dcl and samplef.concat.ead.dcl</LI>
+ <LI>Added new R13 patch scripts for perl
+                hash bang replacements</LI>
+ <LI>fixed move of fixdoctype.pl from s/samplefa
+                to f/findaid</LI>
+ <LI>remove replace( "$DLXSROOT/bin/f/findaid/isolat128bit.pl",
+                qq{\#!/l/local/bin/perl}, $perlhashbang );</LI>
+ <LI>removed sampletc obsolete (now just
+                sampletc_utf8)</LI>
+ <LI>Kadd setup_newcoll for findaidclass</LI>
+ <LI>Added section for findaid demofa collection</LI>
+ <LI>["XML::LibXSLT", 1.63], ["XML::LibXML",
+                1.65], from ["XML::LibXSLT", 1.58], ["XML::LibXML",
+                1.58],</LI>
+ <LI>sru, broker20 optional, broker20 deprecated</LI></UL></LI>
+</UL>
+==========================================================
+Log for directory bin/o/oaister ( lib since 6apr2007 )
+
+<UL>
+<LI> RepositoryConfig.cfg
+<UL>
+ <LI>add fixers</LI>
+ <LI>added os</LI>
+ <LI>new repos</LI>
+ <LI>rm doaj3</LI>
+ <LI>added cjh fixer</LI>
+ <LI>added ntrs1</LI></UL></LI>
+</UL>
+<UL>
+<LI> RepositorySets.cfg
+<UL>
+ <LI>new</LI></UL></LI>
+</UL>
+<UL>
+<LI> oaitransform/CollsObj.cfg
+<UL>
+ <LI>new</LI>
+ <LI>fix dev db name</LI>
+ <LI>use config in lib</LI></UL></LI>
+</UL>
+<UL>
+<LI> oaitransform/CollsObj.pm
+<UL>
+ <LI>new</LI>
+ <LI>fix table identification</LI>
+ <LI>missing . in browse pages</LI>
+ <LI>added documentation</LI>
+ <LI>added unicode flattening to sort function</LI>
+ <LI>shorten long URLs on browse pages</LI></UL></LI>
+</UL>
+<UL>
+<LI> oaitransform/DataConditioning.pm
+<UL>
+ <LI>get rid of any remaing, stray sp0t
+                tags</LI></UL></LI>
+</UL>
+<UL>
+<LI> oaitransform/MODSTransform
+<UL>
+ <LI>fix bug where mods record was not ignored
+                for re-exposure if no URL in record</LI>
+ <LI>changed the tree removing mmetadata
+                from the re-exposed XML changed the language code
+                mapping added setSpec to about container</LI>
+ <LI>swap dates in about cont. and change
+                mods loc.goc URL</LI>
+ <LI>remove NS prefix and NS from metadata
+                element</LI>
+ <LI>remove all xmlns attrs as well</LI>
+ <LI>add all orig setSpec to proven. elemetn
+                for mods reexposure</LI>
+ <LI>hack to fix xsi: problem for northwestern</LI>
+ <LI>change to pick up URLs in identifier
+                type = uri</LI></UL></LI>
+</UL>
+<UL>
+<LI> oaitransform/OAITransFixer.pm
+<UL>
+ <LI>new</LI>
+ <LI>fix ntrs</LI>
+ <LI>added cjh</LI>
+ <LI>added ntrs1</LI>
+ <LI>added contentdm</LI>
+ <LI>change contendm</LI>
+ <LI>added filters for contentdm</LI></UL></LI>
+</UL>
+<UL>
+<LI> oaitransform/OAITransform
+<UL>
+ <LI>Make tmp utf8 conditioning file unique.</LI>
+ <LI>added flag to skip dtd validation change
+                the PostXslt process to be after each small file,
+                not the final large one added code to regenerate the
+                perl config files from the xml config files each time
+                this is run</LI>
+ <LI>comment out LoadRepositoryLookTable()
+                and changed SetCurrentArchive() to use XML config
+                value</LI>
+ <LI>fixed x option print message</LI>
+ <LI>do not assume the input XML is utf8
+                when we open it</LI>
+ <LI>move attr removing to after data conditioning</LI>
+ <LI>backout change</LI>
+ <LI>patch to fix latin1 regex problem</LI>
+ <LI>unescape hex and dec ent refs</LI>
+ <LI>change html remove reporting</LI>
+ <LI>added fixer call and other minor changes</LI>
+ <LI>fix @INC</LI>
+ <LI>skip deleted records</LI>
+ <LI>0 if no skipped or deleted records</LI>
+ <LI>add skiped and deleted to repo count</LI>
+ <LI>moved around reporting msg</LI>
+ <LI>get the return from PreprocessXML bug
+                fix</LI>
+ <LI>added more XML cleanup</LI>
+ <LI>semi opt for hex and dec ent refs</LI>
+ <LI>added CollsDB</LI>
+ <LI>always set in_progress in DB</LI></UL></LI>
+</UL>
+<UL>
+<LI> oaitransform/browse.tpl
+<UL>
+ <LI>new</LI></UL></LI>
+</UL>
+<UL>
+<LI> oaitransform/manageCollsDb.pl
+<UL>
+ <LI>new</LI>
+ <LI>fix usage msg</LI>
+ <LI>added revert method</LI>
+ <LI>change settings loading</LI>
+ <LI>just formatting changes</LI></UL></LI>
+</UL>
+<UL>
+<LI> oaitransform/mods-bibclass.xsl
+<UL>
+ <LI>added copyrightDate YR</LI>
+ <LI>urls in own URL tags</LI>
+ <LI>change to pick up URLs in identifier
+                type = uri</LI></UL></LI>
+</UL>
+<UL>
+<LI> oaitransform/mods_repositoryNames.pl
+<UL>
+ <LI>fixed amp;</LI></UL></LI>
+</UL>
+<UL>
+<LI> oaitransform/oai-bibclass3.xsl
+<UL>
+ <LI>added tests for empty elements</LI></UL></LI>
+</UL>
+<UL>
+<LI> oaitransform/repositoryNames.pl
+<UL>
+ <LI>add &amp;amp;</LI>
+ <LI>fix amp;</LI></UL></LI>
+</UL>
+<UL>
+<LI> scripts/Batch_UMHarvest
+<UL>
+ <LI>add skip HTML flag for transform</LI>
+ <LI>allow -x for transform</LI>
+ <LI>added -a to UMHarvester</LI></UL></LI>
+</UL>
+<UL>
+<LI> scripts/ListRecords
+<UL>
+ <LI>message added to die call</LI>
+ <LI>minor cleanup</LI>
+ <LI>added copyright</LI>
+ <LI>error code checking</LI>
+ <LI>support mult. sets</LI>
+ <LI>change log message</LI>
+ <LI>do not exit on OAI error</LI>
+ <LI>fixed log reporting</LI>
+ <LI>fix total</LI>
+ <LI>backout mult. sets option</LI>
+ <LI>for inc harv, make list of dirs, not
+                files, to check for replacement records</LI></UL></LI>
+</UL>
+<UL>
+<LI> scripts/UMHarvester
+<UL>
+ <LI>changed to use the XML config file;
+                requires XML::LibXML now</LI>
+ <LI>added wait flag</LI>
+ <LI>support mult. sets harvests</LI>
+ <LI>ignore log messages about sets</LI>
+ <LI>change back date matching for sets</LI>
+ <LI>backout mult. sets option</LI>
+ <LI>check for sets cfg before trying to
+                parse it, only loop on sets for list records</LI>
+ <LI>id bug fix</LI></UL></LI>
+</UL>
+<UL>
+<LI> scripts/fix-sissa.pl
+<UL>
+ <LI>the real sissa</LI></UL></LI>
+</UL>
+<UL>
+<LI> scripts/id_check.pl
+<UL>
+ <LI>initial version</LI></UL></LI>
+</UL>
+<UL>
+<LI> scripts/rc_check.pl
+<UL>
+ <LI>initial version</LI></UL></LI>
+</UL>
+<UL>
+<LI> scripts/restoreHarvestedData.pl
+<UL>
+ <LI>add support for foo/bar idents</LI></UL></LI>
+</UL>
+<UL>
+<LI> scripts/startIndex.pl
+<UL>
+ <LI>added multirgn</LI></UL></LI>
+</UL>
+==========================================================
+Log for directory misc/db ( lib since 6apr2007 )
+
+<UL>
+<LI> changelog-v7.txt
+<UL>
+ <LI>Initial</LI>
+ <LI>remove bib2class databaseclass</LI></UL></LI>
+</UL>
+<UL>
+<LI> db-dump-v6.0-release.sql
+<UL>
+ <LI>release 13</LI>
+ <LI>release 13</LI>
+ <LI>release 13</LI>
+ <LI>release 13</LI></UL></LI>
+</UL>
+<UL>
+<LI> db-dump-v6.0-workshop.sql
+<UL>
+ <LI>release 13</LI>
+ <LI>release 13</LI>
+ <LI>release 13</LI>
+ <LI>release 13</LI></UL></LI>
+</UL>
+<UL>
+<LI> db-dump-v7.0-release.sql
+<UL>
+ <LI>Initial</LI></UL></LI>
+</UL>
+<UL>
+<LI> db-dump-v7.0-workshop.sql
+<UL>
+ <LI>Initial</LI>
+ <LI>update</LI>
+ <LI>7.0 workshop dump</LI>
+ <LI>add nameresolver</LI></UL></LI>
+</UL>
+==========================================================
+Log for directory web/lib ( lib since 6apr2007 )
+
+<UL>
+<LI> dlxsglobals.xml
+<UL>
+ <LI>url for Atom/Rss</LI>
+ <LI>changed TemplateName to TemplatePath</LI>
+ <LI>changed TemplateName to TemplatePath</LI>
+ <LI>mtag changes</LI></UL></LI>
+</UL>
+<UL>
+<LI> feedback.xsl
+<UL>
+ <LI>new feedback cgi code. generalized
+                for use outside of just mdp.</LI>
+ <LI>these files were moved to web/i/image.</LI></UL></LI>
+</UL>
+<UL>
+<LI> transform.xml
+<UL>
+ <LI>add &lt;xsl:strip-space/></LI>
+ <LI>&lt;xsl:strip-space elements="*"/></LI></UL></LI>
+</UL>
+<UL>
+<LI> transform_xhtml.xml
+<UL>
+ <LI>add &lt;xsl:strip-space/></LI>
+ <LI>&lt;xsl:strip-space elements="*"/></LI></UL></LI>
+</UL>
+<UL>
+<LI> transform_xml.xml
+<UL>
+ <LI>add &lt;xsl:strip-space/></LI>
+ <LI>&lt;xsl:strip-space elements="*"/></LI></UL></LI>
+</UL>
+<UL>
+<LI> xsl2htmlutils.xsl
+<UL>
+ <LI>bboru changes via email from Wisconsin
+                42,43c42 &lt; <!-- added test for value of key('get-lookup',Label)
+                else it returns an empty value if there is a dot in
+                the Label value, as in 'etc.' --> &lt; <xsl:when test="contains(Label,'.')
+                and key('get-lookup',Label)"> --- > &lt;xsl:when test="contains(Label,'.')">
+                70,71c69 &lt; <!-- use 'selected' for valid xhtml -->
+                &lt; <xsl:attribute name="selected">selected</xsl:attribute>
+                --- > &lt;xsl:attribute name="selected">true</xsl:attribute></LI></UL></LI>
+</UL>
+<UL>
+<LI> colllist/as __history__.html
+<UL>
+ <LI>new. required for simile/exhibit (colllist).</LI></UL></LI>
+</UL>
+<UL>
+<LI> colllist/index.html
+<UL>
+ <LI>minor</LI></UL></LI>
+</UL>
+<UL>
+<LI> css/debug.css
+<UL>
+ <LI>CSS file for formatting debug output.</LI>
+ <LI>aesthetic</LI></UL></LI>
+</UL>
+<UL>
+<LI> css/feedback.css
+<UL>
+ <LI>new feedback cgi code. generalized
+                for use outside of just mdp.</LI>
+ <LI>these files were moved to web/i/image.</LI></UL></LI>
+</UL>
+<UL>
+<LI> js/feedback.js
+<UL>
+ <LI>new feedback cgi code. generalized
+                for use outside of just mdp.</LI>
+ <LI>these files were moved to web/i/image.</LI></UL></LI>
+</UL>

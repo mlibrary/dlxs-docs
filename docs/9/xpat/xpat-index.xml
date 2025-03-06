@@ -1,0 +1,39 @@
+<?xml version="1.0"?>
+
+<!-- SPO Editorial Services                  -->
+<!-- automatically-generated XML header file -->
+
+<?xml-stylesheet href="../../pre11-dlxsdocs.xsl" type="text/xsl"?>
+<!DOCTYPE DLPSDOC PUBLIC "-//UM-DLPS//DTD DLPS Publications//EN" "http://docs.umdl.umich.edu/dlps/docs/dlpsdocs.dtd">
+<DLPSDOC>
+<TITLE>The XPAT Search Engine</TITLE>
+<HEADER>
+<JOURNAL>DLXS Documentation</JOURNAL>
+<PUBDATE>2002-03-13 14:25:42 EST</PUBDATE>
+<AUTH1>Wilkin, John Price</AUTH1>
+<AUTH2></AUTH2>
+<DOCTITLE>The XPAT Search Engine</DOCTITLE>
+<VOL>xpat</VOL>
+<ISS></ISS>
+<FILE>dlxsdocs-xpat-index</FILE>
+</HEADER>
+
+                                      
+  <BODY>
+    <BHEAD>The XPAT Search Engine</BHEAD>
+    <DIV1>
+      <P>The XPAT search engine is a <A HREF="http://www.dlxs.org/forms/DLXS-contract.pdf">licensed software program</A>, made available through the University of Michigan's <A HREF="http://www.dlxs.org/">Digital Library eXtension Service</A>.  It is based on the Open Text Corporation's pat50 source code, but has been enhanced by the Digital Library Production Service for DLXS.</P>
+      <P>XPAT is ideally suited to digital library applications, especially those involving large amounts of text.  The indexes XPAT builds are based on a structure called a Patricia Tree, which analyzes substrings of the entire text.  These substrings are also known as semi-infinite strings or sisstrings. (For more information on these, see <I>Information Retrieval: Data Structures and Algorithms</I>, W. B. Frakes and R. S. Baeza-Yates, 1992.)  These semi-infinite strings start at some offset in the entire string of the text file and stretch to the end of the text file (implying that they always overlap with each other), a feature that helps to provide excellent string and phrase searching, which we believe is critical for digital library systems.  Another important feature of XPAT is its ability to index SGML and XML elements, attributes, and tags, giving it the ability to support complex searches that reach into "regions" of text (and even nested regions) based on the markup elements, thus further aiding in full text retrieval.</P>
+      <UL>
+        <LI><A HREF="xpat-manual.xml">XPAT Manual</A> (currently incomplete online; DLXS customers are provided a printed volume of documentation to PAT 5.0, the precursor to XPAT).</LI>
+        <LI>The <A HREF="xpat-commands.xml">XPAT command, syntax, and concept guide</A> is provided online.</LI>
+        <LI><A HREF="xpat-faq.xml">XPAT FAQ</A></LI>
+      </UL>
+      <P>The University of Michigan Digital Library Production Service is committed to continuing to fix bugs and add features to the XPAT search engine.  Although not planned for completion for some time (late 2001 at the earliest), a major addition underway is support for Unicode indexing.</P>
+    </DIV1>
+  </BODY>
+</DLPSDOC>
+
+
+
+

@@ -1,0 +1,546 @@
+#!/l/local/bin/perl
+
+# $Log: makeWordWheelFiles.pl,v $
+# Revision 1.4  2000/06/29 17:51:26  pfarber
+# fix mdash ('--') butted up against words, map &nbsp; to
+# [space] and map sgml to space instead of '' which
+# created bogus 'words' like boo148bar
+#
+# Revision 1.3  2000/06/23 16:01:28  pfarber
+# Cleanup
+#
+# Revision 1.2  2000/06/02 19:09:42  pfarber
+# Checkpoint at completion of WW coding
+#
+# Revision 1.1  2000/04/24 16:22:16  pfarber
+# Initial commit
+#
+
+use strict; 
+
+# **********************************************************************
+# take a config file and generate wordwheel files.
+#  The config file will contain global variables that point this engine
+#  to various places for the collection's dd file, where to put
+#  the generated wordwheel file, etc.
+#  The config file will also have definitions of "realm" names
+#  and what regions in the sgml file correspond to these.
+#
+#  Write out the form expected by WordWheel2.pm, which
+#  is an SGML file for pat50 indexing. Please see WordWheel2.pm (in the 
+#  usual cgi-lib area (/l1/lib).
+# **********************************************************************
+
+
+# **********************************************************************
+BEGIN 
+{
+    unshift (@INC, "/l1/lib");
+}
+
+use strict;
+
+use vars ( 
+	  # ****************************************
+	  #   globals set in config file
+	  # ****************************************
+	  '$gOutFileDir', '$gOutFileSuffix', 
+	  '$gDataDict', '%gCollNameToRegion',
+	  '@gRealms', '%gRealmRegions', '%gRealmRegionFormats',
+	  '$gSeparateDirPerColl', '$gLocale',
+	 );
+
+use Pat2;
+use Set2;
+use SSP2;
+
+## -------------------- Main --------------------
+
+# ****************************************
+#   other globals used herein
+# ****************************************
+my $gConfigFile = shift(@ARGV);
+my $gWordCount;
+my %gAllWords;
+my $debugflag = 1 if $ENV{'MWWDEBUG'};
+
+require $gConfigFile;
+
+
+require 5.004;
+use POSIX qw(locale_h);
+use locale;
+
+setlocale(LC_CTYPE, $gLocale);
+setlocale(LC_COLLATE, $gLocale);
+
+my $gPat = &PATInit ($gDataDict);
+
+my $coll;
+foreach $coll ( keys %gCollNameToRegion )
+{
+    &GatherWordsFromFiles( $coll );
+    &OutputWordWheelFile( $coll );
+    print '- ' x 20;
+    print "\n";
+}
+exit;
+
+##############################
+
+
+########## SUBROUTINES ##########
+
+##################################################
+sub GatherWordsFromFiles
+{
+    my $coll = shift;
+    my $realm;
+    foreach $realm ( @gRealms) 
+    {
+        $gWordCount = 0;
+
+        &CreateRealmResults( $realm, $coll );
+    }
+}
+    
+##################################################
+sub CheckInput
+{
+    if ( $#ARGV != 0 )
+    {
+        print STDOUT "Need name of config file to use as only command line parameter.\n";
+        exit;
+    }
+}
+
+##################################################
+sub CleanResults
+{
+    my $r = shift;
+    my @List;
+
+    $$r =~ s,^<RSet>,,;
+    $$r =~ s,</RSet>$,,;
+    $$r =~ s,<Start>.*?</Start>,,g;
+    $$r =~ s,<End>.*?</End>,,g;
+    $$r =~ s,<sync>.*?</synch>,,g;
+    $$r =~ s,<Size>.*?</Size>,,g;
+    
+
+    $$r =~ s,^<Raw>,,;
+    $$r =~ s,</Raw>$,,;
+
+    @List = split ( /<\/Raw><Raw>/ , $$r) ;
+
+    # Remove tags replacing them by space to avoid creating 'words'
+    # from sgml like e.g. 'all249when' from : 
+    # <L INDENT="1">...and that all</L></LG></DIV2><DIV2 NODE="YC013:2.249"><HEAD>249</HEAD><LG><L>When the Queen
+    my $i;
+    for ( $i = 0; $i <= $#List; $i++ )
+    {
+        $List[$i] =~ s,<[^>]*?>, ,g;
+    }
+
+    return ( @List );
+}
+
+##################################################
+sub CreateRealmResults
+{
+    my ( $realm, $coll ) = @_;
+
+    my $format = $gRealmRegionFormats{$realm};
+    my $region = $gRealmRegions{$realm};
+    
+    print STDOUT "Retrieving region $region within $coll from $gDataDict. This could take a while ...\n\n";
+
+    my $collRegion = $gCollNameToRegion{$coll};
+    my $search = qq{pr.region.$format ($region within $collRegion);};
+
+    my $resultString = $gPat->lowendQuery($search);
+
+    my @results = &CleanResults(\$resultString);
+
+    my $line;
+    my $lineCount = 0;
+    foreach $line ( @results )
+    {
+	# Split on whitespace.  Later we need to fix up cruft
+	# e.g. "mothers,fathers".  Also map "&lt;", "&gt;", and
+	# "&amp;" etc. to " " since they are basically punctuation but
+	# cannot appear as "<", ">", "&" in SGML.
+	$line =~ s,\&#38\;, ,g;
+	$line =~ s,\&#60\;, ,g;
+	$line =~ s,\&#62\;, ,g;
+	$line =~ s,\&emsp\;, ,g;
+	$line =~ s,\&ensp\;, ,g;
+	$line =~ s,\&prime\;, ,g;
+	$line =~ s,\&plus\;, ,g;
+	$line =~ s,\&ndash\;, ,g;
+	$line =~ s,\&mdash\;, ,g;
+	$line =~ s,\&nldr\;, ,g;
+	$line =~ s,\&mldr\;, ,g;
+	$line =~ s,\&hellip\;, ,g;
+	$line =~ s,\&tilde\;, ,g;
+	$line =~ s,\&lcub\;, ,g;
+	$line =~ s,\&rcub\;, ,g;
+	$line =~ s,\&verbar\;, ,g;
+	$line =~ s,\&nbsp\;, ,g;
+
+	$line =~ s,\&amp\;, ,g;
+	$line =~ s,\&lt\;, ,g;
+	$line =~ s,\&gt\;, ,g;
+
+	# Special case: (from Yeats): "acquirements--self-possession,
+	# adaptability, how to dress well, how even to play tennis
+	# decently--you would ..."  Replace '--' with ' ' but allow
+	# "his 'idiot' enemies: A--- who against ..."
+	$line =~ s,([^-])--([^-]),$1 $2,g;
+
+        my $part;
+        foreach $part ( split( /\s+/, $line ) ) 
+        {
+            &ProcessWord( $part, $realm );
+        }
+        $lineCount++;
+        if ( ($lineCount % 1000 ) == 0 )
+        {
+            print STDOUT "Finished line $lineCount\n....";
+        }
+	# debugging: last if ( $lineCount > 200 );
+    }        
+}
+
+# ----------------------------------------------------------------------
+# NAME         : StoreWord
+# PURPOSE      : 
+# CALLED BY    : 
+# CALLS        : 
+# INPUT        : "word" obtained by splitting on whitespace and punctuation
+#                excluding "-" and "'"
+# GLOBALS      : 
+# SIDE-EFFECTS : 
+# NOTES        : Split again on  "-" and "'"
+# ----------------------------------------------------------------------
+sub StoreWord
+{
+    my ( $realm, $word ) = @_;
+    
+    return if ( ! $word );
+
+    $gWordCount++;
+
+    # Words containing "-" and "'" appear here.  This includes leading
+    # chars e.g. "-five" and "'a".  Step on these chars so the word
+    # will sort within a-z.
+    $word =~ s,^[\'\-],,g;
+
+    # Identify the character type by the first character
+    $word =~ m,^(.),;
+    my $character = $1;
+    
+    my $chartype;
+
+    # Sort results into the bins.  Sort "&entref;foo" into the MISC bin for
+    # now until we define a sort order for character entity references.
+    if ( POSIX::isalpha( $character ) )
+    {
+	# Strict alpha or words beginning with character entity refs.
+	# If alpha word comes in with non-alpha word chars, store
+	# it. Later we'll split and store it's constituents too.
+	$chartype = 'ALPHA';
+    }
+    elsif ( POSIX::isdigit( $character ) )
+    {
+	$chartype = 'NUM';
+
+	# If numeric $word came in with non-alpha word chars ( 1775-1776 e.g.)
+	# skip it.  ProcessWord() will split it on "-" later and we'll
+	# process 1775 and 1776 separately
+	return if ( $word =~ m,[\'\-], );
+
+	# Get rid of any non-numeric characters mixed in.  Non-alphanumeric
+	# chars have already been eliminated by this point 
+	$word = &Flatten8bitChars( $word );
+	$word =~ s,[a-z],,g;
+    }
+    else
+    {
+	$chartype = 'MISC';
+    }
+    
+    # Keep count of all words 
+    $gAllWords{$realm}{$chartype}{$word}++;
+    
+    if ( $gWordCount % 20000 == 0 )
+    {
+	print STDOUT "$gWordCount words processed\n";
+    }    
+}
+
+
+# ----------------------------------------------------------------------
+# NAME         : SplitWordCandidate
+# PURPOSE      : 
+# CALLED BY    : 
+# CALLS        : 
+# INPUT        : "word" obtained by splitting on whitespace
+# GLOBALS      : 
+# SIDE-EFFECTS : 
+# NOTES        : Split on leading, trailing and embedded punctuation
+# ----------------------------------------------------------------------
+sub SplitWordCandidate
+{
+    my $candidate = shift;
+
+    $candidate = lc( $candidate );
+
+    # 7 bit non-alphanumeric but part of "words"
+    # ---->  \'\-
+
+    # 7 bit non-alphanumeric chars (except "'", "-" )
+    # ---->  \&\!\"\#\$\%\(\)\*\+\,\.\/\:\;\<\=\>\?\@\[\\\]\^\`\{\|\}\~\s
+
+    # *All* printable 7 bit non-alphanumeric chars (including "'", "-" )
+    # ---->  \&\!\"\#\$\%\(\)\*\+\,\.\/\:\;\<\=\>\?\@\[\\\]\^\`\{\|\}\~\s\'\-
+
+    # NOTE: Should agree with ww2-idx 
+
+    # Remove *All* non-alphanumeric at beginning
+    while ( $candidate =~  s/^[\!\"\#\$\%\(\)\*\+\,\.\/\:\;\<\=\>\?\@\[\\\]\^\`\{\|\}\~\s\'\-]+// )
+    {;}    
+    # Remove *All* non-alphanumeric at end
+    while ( $candidate =~   s/[\!\"\#\$\%\(\)\*\+\,\.\/\:\;\<\=\>\?\@\[\\\]\^\`\{\|\}\~\s\'\-]+$// )
+    {;}
+    
+    # Split on *some* embedded non-alphanumeric.  Not '-' because of
+    # e.g. forty-two and not "'" because we treat "d'une" as a
+    # word but catch "mary,john" or hello(goodbye) e.g.    
+    my @parts = split( /[\&\!\"\#\$\%\(\)\*\+\,\.\/\:\;\<\=\>\?\@\[\\\]\^\`\{\|\}\~\s]+/, $candidate);
+
+    return @parts;
+}
+
+# ----------------------------------------------------------------------
+# NAME         : StoreTrueWords
+# PURPOSE      : Store "true words" and re-split on non-alpha word chars
+#                and store again
+# CALLED BY    : 
+# CALLS        : 
+# INPUT        : list from SplitWordCandidate
+# GLOBALS      : 
+# SIDE-EFFECTS : 
+# NOTES        : 
+# ----------------------------------------------------------------------
+sub StoreTrueWords
+{
+    my $realm = shift;
+    my $trueWordsRef = shift;
+
+    foreach my $trueWord ( @$trueWordsRef )
+    {
+	&StoreWord( $realm, $trueWord );
+
+	# At this point we may be looking at words like "d'une" and
+	# "forty-five" which have been saved as words. Split them
+	# one more time and save their constituents as "words" too.
+	if ( $trueWord =~ m,[\'\-]+, )
+	{
+	    my @subtrueWords = split( /[\'\-]+/, $trueWord );
+	    
+	    foreach my $subtrueWord ( @subtrueWords )
+	    {
+		&StoreWord( $realm, $subtrueWord );
+	    }
+	}
+    }
+}
+
+# ----------------------------------------------------------------------
+# NAME         : ProcessWord
+# PURPOSE      : 
+# CALLED BY    : 
+# CALLS        : 
+# INPUT        : "word" obtained by splitting on whitespace
+# GLOBALS      : 
+# SIDE-EFFECTS : 
+# NOTES        : Split on whitespace so we get
+#                 [punctuation|wordchar]+
+#                 remove leading or trailing punctuation so we get
+#                 wordchar+[wordchar|punctuation]*wordchar+
+#                 remove embedded punctuation except for '-' for dates
+#                 and numbers (forty-two) and "'" for contractions
+#                 when the lemma is formed we remove "'" and "-"
+#                 and flatten 8bit chars.  When we take input from
+#                 the user we also remove "-" and "'" so we can search
+#                 solely on the lemma (but we display the word).
+#                 NOTE: Lemma formation and user input processing have
+#                 to agree on what is a word 
+# ----------------------------------------------------------------------
+sub ProcessWord 
+{
+    my ( $word, $realm ) = @_;
+
+    my $entityCt;
+    my @entityArr;
+    my $wordHasEntity = 0;
+
+    print "ProcessWord: $word\n" if $debugflag;
+
+    # If the input "word" contains a character entity, parse the
+    # word and substitute "sp0t" e.g. to leave the entity intact
+    $entityCt = 0;
+    while ( $word =~ m/(\&[a-zA-Z][a-zA-Z0-9\-]{0,7}\;)/g )
+    {
+	$wordHasEntity = 1;
+	
+	push( @entityArr, $1 );
+	
+	my $mark = 'sp' . $entityCt . 't';
+	
+	$word =~ s,$1,$mark,;
+	$entityCt++;
+    }
+    
+    if ( $wordHasEntity )
+    {
+	# Now can split this "word" without destroying entity
+	# boundaries '&' and ';'
+	my @parts = &SplitWordCandidate( $word );
+	
+	# Put the entities back in
+	foreach my $p ( @parts )
+	{
+	    $entityCt = 0;
+	    foreach my $e ( @entityArr )
+	    {		
+		my $mark = 'sp' . $entityCt . 't';
+		$p =~ s,$mark,$e,;
+		$entityCt++;
+	    }
+	}
+	
+	&StoreTrueWords( $realm, \@parts );
+    }
+    else
+    {
+	my @parts = SplitWordCandidate( $word );
+	
+	&StoreTrueWords( $realm, \@parts );
+    }
+}
+
+##################################################
+sub Flatten8bitChars
+{
+    my $word = shift;
+    
+    $word =~ tr/ÀÁÂÃÄÅÇÈÉÊËÌÍÎÏÑÒÓÔÕÖØÙÚÛÜÝßàáâãäåçèéêëìíîïñòóôõöøùúûüýÿ/aaaaaaceeeeiiiinoooooouuuuysaaaaaaceeeeiiiinoooooouuuuyy/;
+
+    return $word;
+}
+
+# ----------------------------------------------------------------------
+# NAME         : OutputWordWheelFile
+# PURPOSE      : Write the words marked up w/SGML which adheres to the wordwheel.dtd 
+#                to the output file
+# CALLED BY    : 
+# CALLS        : 
+# INPUT        : 
+# GLOBALS      : 
+# SIDE-EFFECTS : 
+# NOTES        : 
+# ----------------------------------------------------------------------
+sub OutputWordWheelFile
+{
+    my $coll = shift;
+    
+    my $dir;
+
+    if ($gSeparateDirPerColl)
+    {
+	$dir = $gOutFileDir . $coll . q{/};
+    }
+    else
+    {
+	$dir = $gOutFileDir . q{/};
+    }
+
+    if ( ! -e $dir )
+    {
+	`/bin/mkdir -m 2775 -p $dir`;
+    }
+
+    my $outFile = $dir . $coll . $gOutFileSuffix;
+
+    open(OUTFILE, ">$outFile")  || die(qq{Cannot open file $outFile for writing: $!});;
+
+    print STDOUT "\nStarting to output to $outFile\n\n";
+
+    print OUTFILE qq{<COLL>\n};
+    print OUTFILE qq{<COLLNAME>$coll</COLLNAME>\n};
+    my $chartype;
+    
+    my $realm;
+    foreach $realm ( sort ( @gRealms ) )
+    {
+        print STDOUT "Working on realm $realm...\n";
+
+        my $sequence = 0;  ## ----- for numbers in I tag -----
+
+        print OUTFILE qq{<REALM>\n<REALMNAME>$realm</REALMNAME>\n};
+
+        foreach $chartype ( sort ( keys ( %{$gAllWords{$realm}} ) ) )
+        {
+            print STDOUT "Working on character type $chartype...\n";
+            
+            print OUTFILE qq{<$chartype>\n};
+            
+            foreach my $word ( sort
+			     {
+				 if ( $a =~ m,^[0-9], ) { $a <=> $b }
+				 else                   { $a cmp $b }
+			     }
+			       ( keys( %{ $gAllWords{$realm}{$chartype} } ) ) ) 
+            {
+		# flatten 8 bit chars and save word in the lemma.  Used for
+		# consistent lowest common denominator word sorting across 
+		# collections that come from different languages
+		if ( lc( $gLocale ) ne 'c' )
+		{
+		    my $lemma = Flatten8bitChars( $word );
+		    if ( $lemma )
+		    {
+			print OUTFILE ( qq{<E N=$sequence O=$gAllWords{$realm}{$chartype}{$word} } .
+					qq{L="$lemma">$word </E>\n} );
+			$sequence++;
+		    }
+		}
+		else
+		{
+		    if ( $word )
+		    {
+			print OUTFILE ( qq{<E N=$sequence O=$gAllWords{$realm}{$chartype}{$word}} .
+					qq{>$word </E>\n} );
+			$sequence++;
+		    }
+		}		
+            }
+            
+            print OUTFILE qq{</$chartype>\n};
+        }
+        
+        print OUTFILE qq{</REALM>\n};
+
+    }
+        print OUTFILE qq{</COLL>\n};
+        close(OUTFILE);
+}
+
+##################################################
+
+__END__;
+
+
+

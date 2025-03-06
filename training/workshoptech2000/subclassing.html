@@ -1,0 +1,41 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<title>DLXS Programmers &amp; Technical Workshop</title>
+<link rel="stylesheet" href="styles.css">
+<style type="text/css">
+<!--
+ul {  line-height: 125%}
+-->
+</style>
+</head>
+
+<body class="mainpalette">
+<h3>Subclassing the TextClass</h3> 
+    <ol>
+      <li>editing of depths for DIVs</li>
+      <li>specific searching</li>
+      <li>specific filtering</li>
+    </ol>
+  
+<p><b><i>Example</i></b>:</p>
+<p>Assume that there is a subroutine/method called <b>TextFilter</b> in the superclass 
+  <b>TextClass.pm</b> that does basic filtering of large portions of text. It 
+  could do &quot;generic&quot; filtering and then call another method named <b>CollSpecificTextFilter</b>. 
+  In the <b>TextClass</b> superclass the <b>CollSpecificTextFilter</b> is an empty 
+  subroutine (essentially an <i>abstract</i> method).</p>
+<p>In any subclass of <b>TextClass</b>, the <b>CollSpecificTextFilter</b> could 
+  be filled in to do specific, other filtering.</p>
+<p>Any object that is an instantiation of the generic <b>TextClass</b> will get 
+  nothing more than the generic filtering, even after the empty <b>CollSpecificTextFilter</b> 
+  routine is called.</p>
+<p>Any object that is an instantiation of a subclass of <b>TextClass</b> will 
+  get the generic filtering (of its superclass's <b>TextFilter</b> method) plus 
+  the <b>CollSpecificTextFilter</b> inside the subclass.</p>
+</body>
+
+</html>
+

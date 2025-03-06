@@ -1,0 +1,282 @@
+<?xml version="1.0"?>
+
+<!-- SPO Editorial Services                  -->
+<!-- automatically-generated XML header file -->
+
+<?xml-stylesheet href="../../../pre11-dlxsdocs.xsl" type="text/xsl"?>
+<!DOCTYPE DLPSDOC PUBLIC "-//UM-DLPS//DTD DLPS Publications//EN" "http://docs.umdl.umich.edu/dlps/docs/dlpsdocs.dtd">
+<DLPSDOC>
+<TITLE>Installation and Configuration of Image Class</TITLE>
+<HEADER>
+<JOURNAL>DLXS Documentation</JOURNAL>
+<PUBDATE>2002-03-13 11:31:54 EST</PUBDATE>
+<AUTH1>Weise, John</AUTH1>
+<AUTH2></AUTH2>
+<DOCTITLE>Installation and Configuration of Image Class</DOCTITLE>
+<VOL>class</VOL>
+<ISS>image</ISS>
+<FILE>dlxsdocs-image-inst</FILE>
+</HEADER>
+
+
+<BODY> <BHEAD>Installation and Configuration 
+of the Image Class Tools and Middleware</BHEAD> <DIV1 ID="main"> 
+<P><A HREF="http://images.umdl.umich.edu/">Image Services</A><BR/>
+  <A HREF="http://www.umdl.umich.edu/">Digital Library Production Service</A><BR/>
+  University of Michigan<BR/>
+  <A HREF="http://www.umdl.umich.edu/dlxs/">Digital Library eXtension Service 
+  </A><BR/>
+  <A HREF="mailto:dlxs-info@umich.edu">dlxs-info@umich.edu</A> </P>
+<P>Please contact dlxs-info@umich.edu if this documentation is insufficient or 
+  unsatisfactory in any way. Comments on how to improve it are encouraged.</P>
+<P><B>Upgrading from the Image Class Beta or Version 1???</B><BR/>
+  Please go straight to <A HREF="image-migration.xml">Migration to Image Class 
+  Version 2</A>.</P>
+<DIV2 ID="new"> 
+<H2>New in Version 2</H2>
+<UL>
+  <LI>XPAT is configured in the colldb (collection database).</LI>
+  <LI>The convention of using image-a, image-b, and image-c for building XPAT 
+    indexes has been dropped, partially because each collection should have it's 
+    own XPAT index now. You could choose to use a similar method with an individual 
+    collection.</LI>
+  <LI>The collid for the sample collection has changed from &quot;frarch&quot; 
+    to &quot;sampleic&quot;.</LI>
+</UL>
+</DIV2> <DIV2 ID="tarfiles"> 
+<H2>Tarball Extraction</H2>
+<P>Follow the <A HREF="/dlxs/tech/dlxs-install.xml">DLXS First Time Extraction</A> 
+  instructions to install the middleware files.</P>
+<B>Description of tarball contents.</B> 
+<OL>
+  <LI>ImageClass_v2-0-?.tar.gz<BR/>
+    This tar file contains the tools for transformation and the middleware.</LI>
+  <LI>ImageClass-docs_v2-0-?.tar.gz<BR/>
+    This contains the documentation for the class in HTML, which is also on-line 
+    at <A HREF="http://docs.umdl.umich.edu/class/image/">http://docs.umdl.umich.edu/class/image/</A>.</LI>
+  <LI>ImageClass-data_v2-0-?.tar.gz<BR/>
+    This includes the base XPAT index files which are essential to the setup of 
+    Image Class. Also included is the sampleic (French Architecture) sample data 
+    which is useful for getting started with the Image Class.</LI>
+</OL>
+</DIV2> <DIV2 ID="notincl"> 
+<H2>Not Included</H2>
+<OL>
+  <LI>MrSID<BR/>
+    <A HREF="http://www.lizardtech.com/">MrSID</A> Retrieve software is not included, 
+    but is available for free from the LizardTech web site. It is necessary to 
+    download the entire <B>LizardTech Image Server</B> in order to get just the 
+    MrSID Retrieve software. The rest of the Content Server is not needed, and 
+    should not be installed. MrSID is not required for the Image Class, but is 
+    highly recommended, and necessary for zooming, panning, and multiple image 
+    size functionality.</LI>
+  <LI>sgmlnorm<BR/>
+    <A HREF="http://www.jclark.com/">sgmlnorm</A> is required for SGML validation 
+    and normalization. It is not provided, but may be downloaded for free.</LI>
+</OL>
+</DIV2> <DIV2 ID="docs"> 
+<H2>Documentation</H2>
+<P>The documentation directory was untarred in the {DLXSROOT} directory and is 
+  called "imageclass". The documentation may be moved to an appropriate directory 
+  based on local conventions. It is also on the web at <A HREF="http://docs.umdl.umich.edu/class/image/">http://docs.umdl.umich.edu/class/image/</A> 
+  .</P>
+</DIV2> <DIV2 ID="mrsid"> 
+<H2>Install MrSID Retrieve</H2>
+<P>Install the MrSID retrieve program in the desired location. As noted above, 
+  it is not provided, and will need to be downloaded from the <A HREF="http://www.lizardtech.com/">LizardTech</A> 
+  web site. MrSID Retrieve is part of the MrSID Content Server. Once you have 
+  extracted MrSID Retrieve from the Content Server package, the remainder can 
+  be deleted.</P>
+</DIV2> <DIV2 ID="configuring"> 
+<H2>Configuring Tools and Middleware</H2>
+<P>Once the software is untarred, it is necessary to configure paths to match 
+  the local environment. Some of the configurations may be done globally, others 
+  require specific files to be edited.</P>
+<UL>
+  <LI>In the <B>$DLXSROOT/cgi/i/image</B> directory, the location of Perl needs 
+    to be updated in all scripts. This may be done by using Perl on the command 
+    line to edit the files in-place, as follows... 
+    <UL>
+      <LI>perl -pi -e 's,/l/local/bin/perl,yourperllocation,' *</LI>
+    </UL>
+  </LI>
+  <LI><B>Edit</B> $DLXSROOT/cgi/i/image/imageclass.cfg, especially the following 
+    variables, but perhaps others as well depending on local implementation. 
+    <UL>
+      <LI><B>$sidinfo</B> and <B>$mrsid</B> Set both to the location of mrsid_retrieve 
+        binary (not provided). If MrSID is not being use, there is no need to 
+        configure these variables.</LI>
+      <LI><B>$sidcache</B> Specify the dir where the middleware temporarily stores 
+        image files for delivery. Only an issue of MrSID is used.</LI>
+      <LI><B>$gDefaultContactLink</B> Please change this variable so that Michigan 
+        doesn't get messages from your users asking for help.</LI>
+      <LI><B>$gDefaultContactText</B> This is the counterpart to $gDefaultContactLink, 
+        and also must be configured for local use.</LI>
+      <LI><B>$gLoginEnabled</B> Set to &quot;0&quot; if you do not have a login 
+        mechanism.</LI>
+      <LI><B>$gLoginUrl</B> Set the URL for your local login mechanism, if you 
+        are using one.</LI>
+      <LI><B>$gBookBagToggle</B> To get started, it is recommended that you set 
+        this variable to &quot;0&quot; to turn off the Portfolio function. Once 
+        you have Image Class up and running, revisit the configuration of Portfolios/BookBag.</LI>
+      <LI><B>$gBanner</B> Set the text/graphic to display at the top of default 
+        web pages.</LI>
+      <LI><B>$gIdResolver</B> Set to null, i.e., $gIdResolver = '';</LI>
+      <LI><B>$gImageFileHost</B> Set to "/".</LI>
+    </UL>
+  </LI>
+  <LI>In the<B> $DLXSROOT/bin/i/image</B> directory the path to Perl in the first 
+    line of each program must be modified to match local implementation. </LI>
+</UL>
+<P>The next step is to make sure that permissions are set properly on all directories 
+  and files. Keep in mind that the web server application needs to have permission 
+  to run programs, read files, and even sometimes write to a directory. Often 
+  the web server runs as user nobody. The following guidelines should help to 
+  set permissions properly, though local implementations may vary on requirements 
+  in this area.</P>
+<UL>
+  <LI>directories should most likely be 775 (e.g., chmod 775 cgi)</LI>
+  <LI>files should most likely be 664</LI>
+  <LI>executables (programs/scripts, etc.) should most likely be 775</LI>
+</UL>
+<P>UNIX Shell environment paths should be added to shell configuration files for 
+  the location of the XPAT search engine. This is essential for building XPAT 
+  indixes and other operations. </P>
+</DIV2> <DIV2 ID="augmentperl"> 
+<H2>Augment Perl</H2>
+<P>Please review <A HREF="/dlxs/dlxs-sysreq.xml">DLXS System Requirements</A> 
+  to make sure system requirements have been met.</P>
+</DIV2> <DIV2 ID="rebuild"> 
+<H2>Rebuild the XPAT Index with the Sample Collection (and do some testing)</H2>
+<P>A sample collection called "French Architecture" with the collid &quot;sampleic&quot; 
+  has been provided for testing and experimentation. In theory it will allow the 
+  tools and middleware to be tested for proper configuration. </P>
+<P>It may have occurred to you that the web server has not yet been configured. 
+  Before doing so, it is probably worthwhile to do some testing on the command 
+  line to make sure things are in order. In order to get the frarch collection 
+  working, the XPAT index needs to be rebuilt due to the fact that the $DLXSROOT 
+  has most likely been configured for local implementation. Rebuilding the index 
+  will be a good test of several things including XPAT. If you get errors, please 
+  double check your configuration before contacting dlxs-info@umich.edu.</P>
+<P>Here are the steps for rebuilding the index. You should find that the ic.sampleic.norm.sgm 
+  file is already in the $DLXSROOT/obj/s/sampleic directory.</P>
+<PRE>cd $DLXSROOT/idx/s/sampleic</PRE>
+<P>There are several files in this directory that have paths hard-coded in them. 
+  The paths need to be updated to match the local environment, and then the XPAT 
+  index needs to be rebuilt. Specifically, the files below need to be edited. 
+  Do not edit any others. </P>
+<ul>
+  <li>image.blank.dd</li>
+  <li>image.inp</li>
+  <li>Makefile</li>
+  <li>image.cfg</li>
+</ul>
+<P>Most likely, it will only be necessary to change occurences of Michigan's DLXSROOT 
+  (i.e., /l1) to your DLXSROOT. Here is one way to go about changing the image.blank.dd 
+  file using Perl on the command line.</P>
+<p></p>
+<PRE>perl -pi -e 's,\/l1,YOURDLXSROOT,g' image.blank.dd</PRE>
+<P>Once the above files have had paths converted, the "all" command included in 
+  the Makefile can be executed to rebuild the XPAT index.</P>
+<P><B>IMPORTANT</B>: if you are working under Solaris, delete all files in $DLXSROOT/idx/s/sampleic 
+  <B>EXCEPT</B> for the following, which you <B>KEEP: Makefile image.blank.dd 
+  image.cfg image.inp tags.txt. </B> The reason is that an index built under one 
+  operating system can not be rebuilt under another without first deleting the 
+  index.</P>
+<PRE>make all</PRE>
+<P>If it works properly, you will not have any errors, and within a minute or 
+  so, it will be done.</P>
+<P>The next step is to check the configuration of this collection in the colldb 
+  to make sure the middleware knows where to find XPAT, the XPAT index, etc. </P>
+<P>It is a <B>very, very good idea</B> to edit the colldb file with a program 
+  such as Microsoft Excel since it is a tab delimited ascii file that is very, 
+  very difficult to edit in a text editor. You may have to transfer the colldb 
+  to a local machine, edit it with Excel, save it again as tab delimited ascii 
+  text, and transfer it back to your dlxs machine. (BTW-- we're working hard on 
+  a better solution.)</P>
+<BLOCKQUOTE> <DIV3 id="lbtip"> 
+  <H3>Tip:</H3>
+  <P>If you use Excel on a Macintosh, be sure to transfer the colldb file as ASCII 
+    if you use FTP. If you use SCP, you may find that the line breaks are not 
+    UNIX compatible after making your edits and saving with Excel. Once you have 
+    transferred the file back to UNIX, you can easily do a check with...</P>
+  <PRE>wc -l colldb</PRE>
+  <P>The result should equal the number of rows/collections you have in your colldb. 
+    If the result is 0, there is most likely a line break problem. This can typically 
+    be solved with the following perl command...</P>
+  <PRE>perl -pi -e 's,\x0D,\x0A,g' colldb</PRE>
+  </DIV3> </BLOCKQUOTE>
+<P>The colldb file is located in...</P>
+<PRE>$DLXSROOT/obj/i/image/lib/db
+</PRE>
+<P>The following colldb fields will probably need to be edited. At this point, 
+  stick to just these until you get things up and running. The assumption is that 
+  your data and middleware are all on the same machine.</P>
+<P>You will find that the colldb has many rows in it. You only need to edit the 
+  row for &quot;sampleic&quot;. The other rows an be deleted, but you might find 
+  it useful to look at them as examples later.</P>
+<TABLE BORDER="1" width="295">
+  <TBODY> 
+  <TR> 
+    <TD width="55">host</TD>
+    <TD width="217">the machine name that xpat and the data are on. the assumption 
+      is that your sample data, at least is on the same machine as the middleware, 
+      just so we can get things up and running.</TD>
+  </TR>
+  <TR> 
+    <TD width="55">contactlink </TD>
+    <TD width="217">change this to something other than umdl-help</TD>
+  </TR>
+  <TR> 
+    <TD width="55">contacttext</TD>
+    <TD width="217">change this to something other than umdl-help</TD>
+  </TR>
+  <TR> 
+    <TD width="55" height="18">xpatexec</TD>
+    <TD width="217" height="18">The path to XPAT on the local machine.</TD>
+  </TR>
+  </TBODY> 
+</TABLE>
+<P>If all is well, the next test can be of the middlware. The "testparams" file 
+  has URL parameters in it. These can be fed to the main CGI program "image-idx". 
+  If everything works, the output will be an HTML page with search results from 
+  the sampleic collection on the query "paris".</P>
+<P>Note that the middleware will not find any of the sampleic images at this point. 
+  That comes a little further down in this documentation.</P>
+<PRE>cd $DLXSROOT/cgi/i/image
+./image-idx &lt; testparams</PRE>
+<P>Again, if things aren't going so well, it will be necessary to review the installation 
+  and configuration steps before contacting dlxs-info@umich.edu for help.</P>
+<P>Next, and we're working in a somewhat odd order, you can try transforming the 
+  original sampleic data to SGML (something which in real situations needs to 
+  be done before building an index, otherwise there is no SGML to build an index 
+  on!). The following commands will generate a new SGML file from the sampleic-data.htm 
+  file. Be sure to check the date on the ic.sampleic.unnorm.sgm file. If it does 
+  not update to the current date and time when the commands are executed, then 
+  something is not working right. </P>
+<P>But first, it is necessary to run the imageprep script, which navigates through 
+  the image file directory and creates an index directory of symlinks to the actual 
+  image files. If you don't do this step, the SGML won't have any image file references 
+  in it.</P>
+<PRE>$DLXSROOT/bin/i/image/imageprep sampleic</PRE>
+<P>Next, the transformation to SGML.</P>
+<PRE>cd $DLXSROOT/prep/s/sampleic
+$DLXSROOT/bin/i/image/idb transform sampleic</PRE>
+<P>...and if that works...</P>
+<PRE>$DLXSROOT/bin/i/image/idb norm sampleic</PRE>
+<P>...which generates the sampleic.norm.sgm file from the sampleic.unnorm.sgm 
+  file.</P>
+<P>In a real situation, you first load your images, run imageprep, load your raw 
+  descriptive data, run idb transform and norm, and then build your XPAT index 
+  and modify your colldb and groups (we skipped groups in this case).</P>
+<P><B>Please read the other documentation to get a full understanding of the steps 
+  required to put a collection online.</B></P>
+</DIV2> <DIV2 ID="serverconfig"> 
+<H2>Web Server Configuration</H2>
+<P>Please see the document <A HREF="image-accesscontrol.xml">Image Class Access 
+  Control</A> to learn how to control access (via web) to the Image Class collections.</P>
+</DIV2> 
+<P> jweise@umich.edu </P>
+</DIV1> 
+</BODY>
+</DLPSDOC>

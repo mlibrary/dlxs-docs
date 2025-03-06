@@ -1,0 +1,114 @@
+<html>
+<head>
+<title>DLXS Release 7 Release Notes</title>
+
+
+<link href="../12/dlxsdocs.css" rel="stylesheet" type="text/css"> </head>         <body>
+<div class="pageTitle"> DLXS Release Notes</div>
+    
+      <h1>DLXS Release 7 - 9 JAN 2002</h1><h2>General Information</h2>
+      <p>This is an interim release of DLXS middleware intended to distribute Image
+  Class version 2.0.0, which is a complete rewrite of the class. </p>
+        <p>DLXS  Release 6 is comprised of TextClass version 2.3.0, BibClass version
+  2.1.0, FindingAids version 2.0.1, ImageClass version 2.0.0, Broker version 1.1.0
+  and XPAT version 5.2.3. </p>
+
+      
+        <h2>XPAT version 5.2.3</h2>
+        
+          <ul>
+            <li>No change from  Release 6</li>
+          </ul>
+          
+        <h2>Text Class version 2.3.0</h2>
+        
+          <ul>
+            <li>No change from  Release 6</li>
+          </ul>
+          
+        <h2>Bib Class version 2.1.0</h2>
+        
+          <ul>
+            <li>No change from  Release 6</li>
+          </ul>
+          
+        <h2>Image Class version 2.0.0</h2>
+        
+          <h3>New and Changed Functionality</h3>
+          <p>Image Class was rewritten to improve performance and to make better use of
+  DLXS Lib, colldb, and groups. To the extent possible, backward compatability
+  for cgi parameters was maintained.</p>
+          <p>Several key enhancements have been made:</p>
+          <ul>
+            <li>Interface redesign</li>
+            <li>Results sorting</li>
+            <li>Portfolios (a.k.a., personal collections)</li>
+            <li>Greater use of common DLXS libraries</li>
+            <li>Support for more image file formats and sizes</li>
+            <li>Support for remote image serving (images may be served from a different
+      machine than the middleware and xpat indexes)</li>
+            <li>Collection specific XPAT indexes</li>
+            <li>Results caching for faster navigation in a result set</li>
+            <li>Support for Cascading Style Sheets</li>
+            <li>Extensive use of COLLDB for collection configuration and customization</li>
+            <li>Collection grouping</li>
+          </ul>
+        
+        
+          <h3>Known Problems</h3>
+          <p>imageclass.cfg attempts to establish connection with mysql for BookBagDB functionality, even if BookBag functionality is turned off. Please make the following adjustments <b>(in bold)</b> to the imageclass.cfg...</p>
+          <pre>### BookBagDB Configuration
+{
+    my $dsn;
+    my $username = 'usernamehidden';
+    my $pw = 'passwordhidden';
+    $gbbagentrydivsdefault = 'full image';
+    $gBbagTableName = 'BookBagDB';
+
+
+<b>    if ($gBookBagToggle)
+      {</b>
+        if ( $ENV{'DLPS_DEV'} )
+          {
+            $dsn = 'DBI:mysql:dlxs:fizzie.umdl.umich.edu:';
+          }
+        else
+          {
+            $dsn = 'DBI:mysql:dlxs:dlps1.umdl.umich.edu:';
+          }
+        eval{ $gDBHBbag = &amp;DbUtils::Connect_DBI($dsn, $username, $pw); };
+        if ( $@ )
+          {
+            &amp;DlpsUtils::errorBail( $@ );
+          }
+<b>
+      }</b>
+  }
+</pre>
+
+        
+        
+        <h2>Finding Aids version 2.0.1</h2>
+        
+          <ul>
+            <li>No change from  Relase #6</li>
+          </ul>
+          
+        <h2>Broker version 1.1.0</h2>
+        
+          <ul>
+            <li>No change from  Release 6</li>
+          </ul>
+          
+        <h2>Lib version 2.4.0</h2>
+        
+          <ul>
+            <li>No change from  Release 6</li>
+          </ul>
+         
+          <h3>Backward Compatibility</h3>
+          <p>No changes from  Release 6</p>
+           
+          </body>
+
+</html>

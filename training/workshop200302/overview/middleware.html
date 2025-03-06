@@ -1,0 +1,25 @@
+<HTML>
+<HEAD>
+<TITLE>Middleware Overview</TITLE>
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+<LINK REL="stylesheet" HREF="../styles.css" TYPE="text/css">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF" CLASS="mainpalette">
+<H3>Middleware Overview</H3><UL>
+  <LI>Object Oriented Perl CGI programs</LI><LI>Set of DLPS-written Perl applications that also use: 
+    <UL>
+      <LI>DLPS-written class, subclass and library modules</LI><LI>Perl modules found 
+        in the standard distribution (information on <A HREF="../installation/installation.html#reqperlmodules">current Perl version</A> in installation notes)</LI><LI><A HREF="../installation/additionalperlmodules.html">Additional Perl modules</A> 
+        freely available through <A HREF="http://www.cpan.org/" TARGET="external">CPAN</A></LI><LI>HTML pages and HTML templates</LI></UL></LI><LI>Interacts, through <A HREF="http://www.perl.com/pub/a/1999/10/DBI.html" TARGET="external">DBI</A>, 
+    with various DLXS-related <A HREF="collmgr.html">databases</A></LI><LI>Basic flow of middleware: 
+    <UL>
+      <LI>Take user input for search</LI><LI>Fork off an <A HREF="xpatoverview.html">XPAT</A> process</LI><LI>Creates as many XPAT queries as needed to retrieve results</LI><LI>Gather up SGML results</LI><LI>Process HTML templates; that is, replace parts of templates with the 
+        search results after filtering them to HTML. This creates the final server 
+        delivered HTML</LI></UL></LI><LI>Through the above modules and databases, the middleware keeps track of collection 
+    and user information (either through a session object or a database): 
+    <UL>
+      <LI>search history</LI><LI>bookbag / portfolio</LI><LI>collection information needed for single collection or cross-collection 
+        searching and display behavior</LI></UL></LI><LI>Pageviewing handled through a separate CGI program which interacts with 
+    a database of page metadata and which uses image conversion software to convert 
+    archived TIFF files into GIF or PDF formats on the fly</LI></UL></BODY>
+</HTML>

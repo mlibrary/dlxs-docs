@@ -1,0 +1,127 @@
+/* html element styles     */
+
+
+/* margin-less body is a requirement of xcoll-bbag only */
+BODY {  background-color: #ffffff; margin-top: 0px; margin-right: 0px; margin-bottom: 0px; margin-left: 0px; padding-right: 0px }
+
+H1,H2,H3,H4,H5 { /* set font families  */ }
+P { font-family : Arial, sans-serif; font-size : 12px } 
+A {  text-decoration: none }
+A.nav { color : #FFFFFF; text-decoration: none }
+
+
+PRE { font-family: monospace; font-size: 0.75em }
+
+TT { font-family: monospace; font-size: 0.75em }
+
+IMG { border: 0 }
+
+LI { list-style : outside; list-style-position : outside; list-style-type : disc; display : block; font-family: Arial, Helvetica, sans-serif; font-size: 12px }
+
+UL { padding-top : 0px; padding-bottom : 0px; border-top : 0px; border-bottom : 0px; margin-bottom : 0px; margin-top : 0px }
+
+
+
+/*      custom styles       */
+
+
+/*  styles for headers and navigation bars  - ANYTEXT XCOLL-BBAG -  */
+.tophead { font-family : Helvetica, Verdana, Arial, sans-serif; font-size : 20px; font-weight : bold; line-height : 1em; margin-bottom :  1px }
+
+.navlinks {  font-family: Arial, Helvetica, sans-serif; font-size: 12px; font-weight: bold; text-decoration: none}
+
+.navinfo {  font-family: Arial, Helvetica, sans-serif; font-size: 11px; font-weight: normal}
+
+.resultsheader {  font-family: Arial, Helvetica, sans-serif; font-size: 12px; font-style: normal; font-weight: normal }
+
+.nextprev { /* probably superceded by resultsheader  - ANYTEXT - */  }
+
+
+.indentHdr { /* available to attach to a div for indenting a header block  */}
+
+/* probably superceded by resultsheader  - ANYTEXT - */ 
+.nameOfThisSlice { font-family : Arial, sans-serif; font-size : 12px; font-weight :  bold }
+
+/* probably superceded by resultsheader  - ANYTEXT - */
+.fisheye { font-family : Arial, sans-serif; font-size : 12px;}
+
+
+
+
+/*  header styles for search results lists  - ANYTEXT  XCOLL-BBAG -  */
+.mainheader {display : block; font-family : sans-serif; font-weight : bold; font-size : 16px}
+
+.div1head { display : block; font-family :  Helvetica, Verdana, Arial, sans-serif; font-size : 15px; margin-bottom : 0px; border-bottom : 0px; padding-bottom : 0px; border-top : 0px; padding-top : 0px; margin-top : 0px; font-weight: bold }
+
+.div2head { display : block; font-family :  Arial, Helvetica, sans-serif; font-size : 14px; text-decoration : none; margin-bottom : 0px; border-bottom : 0px; padding-bottom : 0px; border-top : 0px;  padding-top : 0px; margin-top : 0px; ; font-weight: bold }
+	
+.div3head { font-family :  Arial, Helvetica, sans-serif; font-size : 12px; text-decoration : none; display : block; margin-bottom : 0px; border-bottom : 0px; padding-bottom : 0px; border-top : 0px; padding-top : 0px; margin-top : 0px; }
+
+.div4head { font-family :  Arial, Helvetica, sans-serif; font-size : 12px; text-decoration : none; display : block; padding-bottom : 0em; ; font-weight: normal}
+	
+/*  styles for toc bib pages   - ANYTEXT  XCOLL-BBAG -  */
+.bibinfo {  font-family: Arial, Helvetica, sans-serif; font-size: 12px }
+
+.hdr_options {  font-family: Arial, Helvetica, sans-serif; font-size: 12px }
+
+
+/*  other misc body styles   */
+
+.hilite { font-weight: bold; color: #CC0000 }
+
+.releaseversion {  font-family: Arial, Helvetica, sans-serif; font-size: small; font-style: normal; color: #666666; text-align: right}
+
+.wwquicklink { font-family : Arial, sans-serif; font-size : 12px  } 
+
+.smalltext {  font-family: Arial, Helvetica, sans-serif; font-size: 11px; font-style: normal }
+
+.smallheader {  font-family: Arial, Helvetica, sans-serif; font-size: 12px; font-weight: bold }
+
+.indentBlock {  margin-right: 7px; margin-left: 15px }
+
+/* attached to div blocks to indent results  - ANYTEXT  XCOLL-BBAG -  */
+.resultslist { margin-left: 10px; margin-right: 10px }
+
+.pageBreak { text-align: center }  /* - ANYTEXT - */
+
+.selectelem {  margin-top: 0px; margin-right: 0px; margin-bottom: 0px; margin-left: 0px; padding-top: 0px; padding-right: 0px; padding-bottom: 0px; padding-left: 0px }
+
+
+
+
+/* styles for a target window  - ANYTEXT - */
+.trgttophead { font-family : serif; font-size : 16pt; font-weight : bold; line-height : 1.0em }
+
+.trgtdiv2head { display : block; font-family : serif; font-size : 1.1em; padding-bottom : 3px }
+	
+.trgtdiv3head { font-family : serif; font-size : 1.0em; display : block; padding-bottom : 3px }
+
+.trgtdiv4head { font-family : serif; font-size : 1.0em; display : block }
+
+
+	
+
+/* styles as yet not in use    */
+
+/* corresponding heading styles for text pages  */
+.text_mainheader { display : block; margin-top : 20px; font-family : sans-serif; font-weight : bold; font-size : 18px; }
+
+.text_div2head { display : block; font-family : Arial, Helvetica, sans-serif; font-size : 12px; text-decoration : none; margin-bottom : 0px; border-bottom : 0px; padding-bottom : 0px; border-top : 0px; padding-top : 0px; margin-top : 0px; padding-left : 0.8em; ; font-weight: bold }
+
+.text_div3head { font-family : Arial, Helvetica, sans-serif; font-size : 12px; text-decoration : none; display : block; margin-bottom : 0px; border-bottom : 0px; padding-bottom : 0px; border-top : 0px; padding-top : 0px; margin-top : 0px; padding-left : 0.8em; }
+
+.text_div4head { font-family : Helvetica,Verdana,Arial,sans-serif; font-size : 1.0em; text-decoration : none; display : block; padding-left : 0.8em; padding-bottom : 0em; }
+
+  
+
+/* corresponding heading styles for toc pages  */
+
+.toc_mainheader { display : block; margin-top : 20px; font-family : sans-serif; font-weight : bold; font-size : 18px; }
+
+.toc_div2head { display : block; font-family : Arial, Helvetica, sans-serif; font-size : 12px; text-decoration : none; margin-bottom : 0px; border-bottom : 0px; padding-bottom : 0px; border-top : 0px; padding-top : 0px; margin-top : 0px; padding-left : 0.8em; ; font-weight: bold }
+
+.toc_div3head { font-family : Arial, Helvetica, sans-serif; font-size : 12px; text-decoration : none; display : block; margin-bottom : 0px; border-bottom : 0px; padding-bottom : 0px; border-top : 0px; padding-top : 0px; margin-top : 0px; padding-left : 0.8em; }
+
+.toc_div4head { font-family : Helvetica,Verdana,Arial,sans-serif; font-size : 1.0em; text-decoration : none; display : block; padding-left : 0.8em; padding-bottom : 0em; }
+
+  

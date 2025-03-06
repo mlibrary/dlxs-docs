@@ -1,0 +1,918 @@
+package WW;
+
+# =====================================================================
+#
+# WW (Cross-collection W)ordW)heel) library for retrieving slices of
+# words to be placed in a "word wheel" display. Uses pat50 to index
+# and retrieves words and their occurrences in a database.
+#
+# Author:  Phil Farber 
+# Created: Tue May  2 11:47:56 2000
+#          largely based on Alan Pagliere's XWW which was in turn
+#          based loosely on WordWheel2.pm which was in turn
+#          based loosely on original WordWheel.pm which used
+#          text files to grep through, rather than a pat50-indexed SGML file.
+#
+# Usage:   to get results of WW search from WW.pm module:
+#
+# my $wwResults = new WW (
+#                         $collsInfo,        ## collection information object
+#                         $realm,
+#                         $R::chartype,
+#                         $R::q1,
+#                         $tabsize,
+#                         $mode,
+#                         $top,
+#                         $bottom,
+#                        );
+#
+# =====================================================================
+
+use strict;
+
+use DlpsUtils qw( :DEFAULT );
+use CollsInfo;
+use XPat;
+
+require 'ww2.cfg';
+use vars qw( 
+	    %collectHash %gWWModes %gWWChartypes
+	   );
+
+use Exporter ( );
+use vars qw( @ISA @EXPORT );
+@ISA = qw( Exporter );
+@EXPORT = qw( %gWWChartypes %gWWModes );
+
+# ----- file scoped lexicals -----
+
+my %gRegions = 
+  (
+   'e'         => q{(region "E")},
+   'e-t'       => q{(region "E-T")},
+   'a-n'       => q{(region "A-N")},
+   'a-l'       => q{(region "A-L")},
+   'realm'     => q{(region "REALM")},
+   'realmname' => q{(region "REALMNAME")},
+   'coll'      => q{(region "COLL")},
+   'collname'  => q{(region "COLLNAME")},
+   'alpha'     => q{(region "ALPHA")},
+   'num'       => q{(region "NUM")},
+   'misc'      => q{(region "MISC")},
+  );
+
+my %gRegionFormats = 
+  (
+   'e'         => q{"E"},
+   'e-t'       => q{"E-T"},
+   'realm'     => q{"REALM"},
+   'realmname' => q{"REALMNAME"},
+   'coll'      => q{"COLL"},
+   'collname'  => q{"COLLNAME"},
+   'alpha'     => q{"ALPHA"},
+   'num'       => q{"NUM"},
+   'misc'      => q{"MISC"},
+  );
+
+# Errors
+my %gWWObjERRORS = 
+  (
+   'NO_MODE' => qq{Invalid mode: },
+   'NO_CHAR' => qq{Invalid character type: },
+   'NO_XPAT' => qq{Unable to start XPAT process: },
+   'NO_TERM' => qq{Search term has zero length or consists solely of whitespace. },
+   'NO_RESULT' => qq{Search term not present in collection: },
+  );
+
+
+# ----------------------------------------------------------------------
+# NAME         : 
+# PURPOSE      : 
+# CALLED BY    : 
+# CALLS        : 
+# INPUT        : 
+# RETURNS      : 
+# GLOBALS      : 
+# SIDE-EFFECTS : 
+# NOTES        : 
+# ----------------------------------------------------------------------
+sub new 
+{
+    my $class = shift;
+    my $self = {};
+    bless $self, $class;
+    $self->initialize(@_);
+    return $self;
+}
+
+# ---------------------------------------------------------------------
+# NAME      : initialize
+# PURPOSE   : initialize a WW object
+# CALLED BY : new
+# CALLS     : CollPatInit,
+# INPUT     : see above
+# RETURNS   : object ref
+# GLOBALS   : 
+# SIDE-EFFECTS : 
+# NOTES     : 
+# ---------------------------------------------------------------------
+sub initialize 
+{
+    my $self = shift;
+    my ( $cio, $realm, $chartype, $term, $top, $bottom, $tabsize, $mode ) = @_;
+
+    my @colls =  $cio->GetRequestedCollIds( );
+
+    # valid chartype, mode?
+    die $gWWObjERRORS{'NO_MODE'} . $mode  if ( ! $gWWModes{$mode} );
+    die $gWWObjERRORS{'NO_CHAR'} . $chartype if ( ! $gWWChartypes{$chartype} );
+
+  COLLECTION:
+    foreach my $coll ( @colls )
+    {
+	# Start pat session for this coll
+	eval
+	{
+	    my $pat = $self->_WWStartXPatProcess( $coll, $cio );
+
+	    # If building a new wordwheel do a $term search.
+	    # Otherwise, use either $top or $bottom as the term
+	    # depending on scroll mode
+	    my $searchTerm;
+	  SWITCH: {
+		if ( $mode eq $gWWModes{'prev'} )
+		{
+		    $searchTerm = $top; last SWITCH;
+		}
+		if ( $mode eq $gWWModes{'next'} )
+		{
+		    $searchTerm = $bottom; last SWITCH;
+		}
+		if ( $mode eq $gWWModes{'new'} )
+		{
+		    $searchTerm = $term; last SWITCH;
+		}
+	    }
+	    
+	    my ( $foundWord, $n, $l, $collWindowRef ); 
+	    if ( $gWWChartypes{$chartype} eq 'alpha' )
+	    {
+		# Get closest word match for collection, realm and chartype
+		( $foundWord, $n, $l ) =
+		  &_FirstSearch( $pat, $coll, $realm, $chartype, $searchTerm );
+		
+		if( ! $self->{'bestmatch'}
+		    ||
+		    length( $foundWord ) > length( $self->{'bestmatch'} ) )
+		{
+		    $self->{'bestmatch'} = $foundWord;
+		}
+
+		# Get $collWindowRef which is an array of termarrays
+		$collWindowRef = 
+		  &_RangeSearch( $pat, $coll, $realm, $chartype, $n, $foundWord, $tabsize, $mode );
+	    }
+	    else
+	    {
+		$collWindowRef = &_NonAlphaSearch( $pat, $coll, $realm, $chartype );
+
+		# Don't care, really...
+		$self->{'bestmatch'} = ( $gWWChartypes{$chartype} eq 'num' ) ? "1" : "&";
+	    }
+	    
+	    $self->{'colls'}{$coll}{'window'} = $collWindowRef;
+	    $self->{'colls'}{$coll}{'hitterm'} =  $foundWord;
+	    
+	    # Remember table size to return the right sized slice.  For non alpha
+	    # it is the entire chartype.
+	    $self->{'tabsize'} = ( $gWWChartypes{$chartype} eq 'alpha' ) 
+	      ? $tabsize
+		: scalar ( $$collWindowRef );
+	    $self->{'mode'} = $mode;
+	    $self->{'chartype'} = $chartype;
+	    $self->{'realm'} = $realm;
+
+	    # Done with this pat session
+	    $self->_WWStopXPatProcess( );
+
+	    if ( $ENV{'DEBUG'} && ( $ENV{'DEBUG'} eq 'all' || $ENV{'DEBUG'} eq 'ww' ))
+	    {
+		$self->_WWDumpColl( $coll );
+	    }
+	};
+	if ( $@ )
+	{
+	    # Trap collections for which we cannot fire up PAT (or for
+	    # search failures, etc.) for whatever reason
+	    if ( $ENV{'DEBUG'} && ( $ENV{'DEBUG'} eq 'all' || $ENV{'DEBUG'} eq 'ww' ))
+	    {
+		print( "<pre>Problem with collection: $coll: $@\n</pre>" );
+	    }
+	    
+	    next COLLECTION;
+	}	
+    }
+
+    if ( $ENV{'DEBUG'} && ( $ENV{'DEBUG'} eq 'all' || $ENV{'DEBUG'} eq 'ww' ))
+    {
+	$self->_WWDumpTable( );
+    }
+
+    
+}
+
+# ----------------------------------------------------------------------
+# NAME         : _WWDumpColl
+# PURPOSE      : 
+# CALLED BY    : 
+# CALLS        : 
+# INPUT        : WW object reference implicit 
+# RETURNS      : String of the structure of the object
+# GLOBALS      : 
+# SIDE-EFFECTS : 
+# NOTES        : 
+# ----------------------------------------------------------------------
+sub _WWDumpColl
+{
+    my $self = shift;
+    my $coll = shift;
+
+
+    my $toPrint .=  "<pre>Wordwheel: Individual collection: $coll ******\n";
+
+    # coll indexed element in $self is an anonymous array with a
+    # reference to an array of anonymous arrays of four elements
+    # plus new top and bottom numbers
+    my $collWindowRef = $self->{'colls'}{$coll}{'window'};
+
+    $toPrint .= " Term \tLemma \tSeq \tOcc\n";
+    for my $termListRef ( @$collWindowRef )
+    {
+	my ( $term, $lemma, $seq, $occur ) = @{$termListRef};
+	$toPrint .= " " . join( "\t", $term, $lemma, $seq, $occur ) . "\n";
+    }
+
+    print( $toPrint . "</pre>" );
+}
+
+# ----------------------------------------------------------------------
+# NAME         : _WWDumpTable
+# PURPOSE      : 
+# CALLED BY    : 
+# CALLS        : 
+# INPUT        : WW object reference implicit 
+# RETURNS      : String of the structure of the object
+# GLOBALS      : 
+# SIDE-EFFECTS : 
+# NOTES        : 
+# ----------------------------------------------------------------------
+sub _WWDumpTable
+{
+    my $self = shift;
+    
+    # Return cached copy if it exists
+    if ( ! defined( $self->{'combinedtable'} ) )
+    {
+	$self->GetCombinedTable( );
+    }
+
+    my $tableRef =  $self->{'combinedtable'};
+    
+    my $toPrint = "<pre>Wordwheel: Combined Table Data:\n";
+    my $topTerm = $self->{'top'};
+    my $bottomTerm = $self->{'bottom'};
+    my $bestIndex = $self->{'bestindex'};
+    
+    $toPrint .= "  XColl Top: $topTerm\n  XColl Bottom: $bottomTerm\n  XColl Best Index: $bestIndex\n";
+    $toPrint .= "  TABLE:term\tocc\n";
+    my $i;
+    for ( $i = 0; $i < scalar( @$tableRef ); $i++ )
+    {
+	my $word = $ {$$tableRef[$i]}[0];
+	my $occur = $ {$$tableRef[$i]}[1];
+	
+	$toPrint .= "  \t$word\t$occur\n";
+    }
+    
+    print( $toPrint . "</pre>" );
+}
+
+# ----------------------------------------------------------------------
+# NAME         : GetCombinedTable
+# PURPOSE      : 
+# CALLED BY    : 
+# CALLS        : 
+# INPUT        : WW object
+#                $tabsize - number of table rows
+# RETURNS      : list of 2-element lists: term and total of all its occurences
+# GLOBALS      : 
+# SIDE-EFFECTS : 
+# NOTES        : the rows of the table are indexed 0-relative
+# ----------------------------------------------------------------------
+sub GetCombinedTable
+{
+    my $self = shift;
+
+    local %collectHash;
+
+    my $tabsize = $self->{'tabsize'};
+    my $mode = $self->{'mode'};
+    my $chartype = $self->{'chartype'};
+    
+    my @table;
+
+    # Return cached copy if it exists
+    if ( defined( $self->{'combinedtable'} ) )
+    {
+	return ( $self->{'combinedtable'}, $self->{'bestindex'} );
+    }
+    
+    foreach my $coll ( keys ( %{$self->{'colls'}} ) )
+    {
+	my $collWindowRef = $self->{'colls'}{$coll}{'window'};
+	
+	foreach my $termListRef ( @$collWindowRef )
+	{
+	    # Get separate numbers for each term in this coll
+	    my ( $term, $lemma, $seq, $occur ) = @{$termListRef};
+
+	    # If collection uses lemmas, all words have lemmas so
+	    # $lemma will be defined.  We want to sort across
+	    # collections that may live in different locales so we use
+	    # the lemma instead of the word if available because it
+	    # will sort correctly in the lowest-common-denominator
+	    # locale ('C')
+	    my $tmpLemma = defined( $lemma ) ? $lemma : $term;
+	    
+	    if ( exists( $collectHash{$term} ) )
+	    {
+		$ {$collectHash{$term}}[0] += $occur;
+	    }
+	    else
+	    {
+		$collectHash{$term} = [$occur, $tmpLemma];
+	    }
+	}
+    }
+    
+    # Put into table, in order, the union of all terms and their
+    # occurences
+    for my $term ( sort 
+		 {
+		     my $aLemma = $ {$collectHash{$a}}[1];
+		     my $bLemma = $ {$collectHash{$b}}[1];
+		     
+		     if ( $aLemma =~ m,^[0-9], ) { $aLemma <=> $bLemma }
+		     else                        { $aLemma cmp $bLemma }
+		 }
+		   ( keys( %collectHash ) ) )
+    {
+	push( @table, [$term, $ {$collectHash{$term}}[0]] );
+    }
+
+    # For alphabetic, grab the correct slice based on table size and
+    # scrolling.  For non-alpha just return the entire table.
+    my $bestIndex = undef;
+    if ( $chartype eq 'alpha' )
+    {
+	# Find index of word in combined table which corresponds to
+	# the best match to the original search term
+
+	my $i;
+      FINDBESTINDEX:
+	for ( $i = 0; $i < scalar( @table ); $i++ )
+	{
+	    if ( $self->{'bestmatch'} eq $table[$i][0] )
+	    {
+		$bestIndex = $i;
+		last FINDBESTINDEX;
+	    }
+	}
+	
+	# Take a table sized slice as a function of mode
+	my ( $firstIndex, $lastIndex );
+      SWITCH: {
+	    if ( $mode eq 'new' )
+	    {
+		$firstIndex = Max( 0, $bestIndex - int( $tabsize/2 ) ); last SWITCH;
+	    }
+	    if ( $mode eq 'next' )
+	    {
+		$firstIndex = $bestIndex; last SWITCH;
+	    }
+	    if ( $mode eq 'prev' )
+	    {
+		$firstIndex = Max( 0, $bestIndex - $tabsize + 1 ); last SWITCH;
+	    }
+	}
+	
+	# At boundaries, i.e. 'a' or 'z' the there may not be a full table
+	# sized slice available in @table
+	# $lastIndex = Max( $firstIndex, Min( scalar( @table ), $tabsize ) - 1 );
+	$lastIndex = Min( $firstIndex + $tabsize, scalar( @table ) ) - 1;
+	
+	@table = @table[$firstIndex .. $lastIndex];	
+    }
+
+    # Remember cross collection top and bottom
+    $self->{'top'} = $table[0][0];
+    $self->{'bottom'} = $table[ scalar( @table ) - 1 ][0];
+    
+    $self->{'combinedtable'} = \@table;
+    $self->{'bestindex'} = $bestIndex;
+    
+    return ( \@table, $bestIndex );
+}
+
+
+# ----------------------------------------------------------------------
+# NAME         : GetTopBottom
+# PURPOSE      : 
+# CALLED BY    : 
+# CALLS        : 
+# INPUT        : collection
+# RETURNS      : top and bottom rows of most recent search across collections
+#                chartype
+#                mode
+#                realm
+# GLOBALS      : 
+# SIDE-EFFECTS : 
+# NOTES        : 
+# ----------------------------------------------------------------------
+sub GetTopBottom
+{
+    my $self = shift;
+
+    return ( $self->{'top'}, $self->{'bottom'} );
+}
+
+# ----------------------------------------------------------------------
+# NAME         : GetMode
+# PURPOSE      : 
+# CALLED BY    : 
+# CALLS        : 
+# INPUT        : collection
+# RETURNS      : mode
+# GLOBALS      : 
+# SIDE-EFFECTS : 
+# NOTES        : 
+# ----------------------------------------------------------------------
+sub GetMode
+{
+    my $self = shift;
+
+    return $self->{'mode'};
+}
+
+# ----------------------------------------------------------------------
+# NAME         : GetChartype
+# PURPOSE      : 
+# CALLED BY    : 
+# CALLS        : 
+# INPUT        : collection
+# RETURNS      : chartype
+# GLOBALS      : 
+# SIDE-EFFECTS : 
+# NOTES        : 
+# ----------------------------------------------------------------------
+sub GetChartype
+{
+    my $self = shift;
+
+    return $self->{'chartype'};
+}
+
+# ----------------------------------------------------------------------
+# NAME         : GetRealm
+# PURPOSE      : 
+# CALLED BY    : 
+# CALLS        : 
+# INPUT        : collection
+# RETURNS      : realm
+# GLOBALS      : 
+# SIDE-EFFECTS : 
+# NOTES        : 
+# ----------------------------------------------------------------------
+sub GetRealm
+{
+    my $self = shift;
+
+    return $self->{'realm'};
+}
+
+
+# ----------------------------------------------------------------------
+# NAME         : _FirstSearch 
+# PURPOSE      : 
+# CALLED BY    : 
+# CALLS        : 
+# INPUT        : 
+# RETURNS      : 
+# GLOBALS      : 
+# SIDE-EFFECTS : 
+# NOTES        : 
+# ----------------------------------------------------------------------
+sub _FirstSearch 
+{
+    my ( $pat, $coll, $realmname, $chartype, $term ) = @_;
+    
+    my ( $foundTerm, $n, $l );
+    
+    # Does term actually contain characters 
+    die $gWWObjERRORS{'NO_TERM'} if ( ! length( $term ) || $term !~ m,\S, );
+    
+    # Find the closest match to term requested
+    ( $foundTerm, $n, $l ) = &_FindMatchByTerm( $pat, $term, $realmname, $chartype, $coll );
+    
+    return ( $foundTerm, $n, $l );
+}
+
+
+# ----------------------------------------------------------------------
+# NAME         : _NonAlphaSearch 
+# PURPOSE      : get a window of the entire chartype, either numeric or
+#                non-alphabetic.
+# CALLED BY    : 
+# CALLS        : 
+# INPUT        : 
+# RETURNS      : 
+# GLOBALS      : 
+# SIDE-EFFECTS : 
+# NOTES        : 
+# ----------------------------------------------------------------------
+sub _NonAlphaSearch 
+{
+    my ( $pat, $coll, $realmname, $chartype ) = @_;
+    
+
+    my $nonAlphaRegion = qq{($gRegions{'e'}  within $gRegions{$chartype})};
+    my $collRegion  = qq{($gRegions{'coll'} incl ($gRegions{'collname'} incl "$coll"))};
+    my $realmRegion = qq{($gRegions{'realm'} incl ($gRegions{'realmname'} incl "$realmname"))};
+	
+    my $query;
+
+    $query = qq{(($nonAlphaRegion within $realmRegion) within $collRegion)};
+    $query = qq{pr.region.$gRegionFormats{'e'} $query;};
+	
+    my ( $error, $result ) = $pat->GetSimpleResultsFromQuery( $query );
+    if ( $error )
+    {
+	die $gWWObjERRORS{'NO_RESULT'} . $result;
+    }
+	
+    # $o not really needed, but grabbing for possible future use
+    &_CleanPatCruft( \$result );
+    my @window = &_ParseMultipleResult( \$result );
+	
+    if ( $ENV{'DEBUG'} && ( $ENV{'DEBUG'} eq 'all' || $ENV{'DEBUG'} eq 'ww' ))
+    {
+	print( qq{<p>*** NonAlpha Search ***</p>\n} );
+	print( qq{<p>query: $query</p>\n} );
+	print( qq{<p>result: $result</p>\n} );
+    }
+	
+    # If we've not found anything at all ....
+    if ( scalar( @window ) == 0  )
+    {
+	die $gWWObjERRORS{'NO_FIND'} . "Non-Alphanumeric";
+    }
+
+    return ( \@window );
+}
+
+
+# ----------------------------------------------------------------------
+# NAME         : StartXPatProcess
+# PURPOSE      : start an XPat Process with this object's dd file, patexec
+#                on this object's host
+# CALLED BY    : WW::initialize
+# CALLS        : 
+# INPUT        : 
+# RETURNS      : 
+# GLOBALS      : 
+# SIDE-EFFECTS : 
+# NOTES        : 
+# ----------------------------------------------------------------------
+sub _WWStartXPatProcess
+{
+    my ( $self, $coll, $cio ) = @_;
+    
+    my $xpat = new XPat(
+			&DlpsUtils::FindHostName,
+			$cio->GetCollKeyInfo( $coll, 'host' ),
+			$cio->GetCollKeyInfo( $coll, 'wwdd' ),
+			$cio->GetCollKeyInfo( $coll, 'patexec' ),
+			$cio->GetCollKeyInfo( $coll, 'port' ),
+		       );
+    
+    # if XPat had an error starting up, its status should be 'ERROR'.
+    # if so, set this TextClass's status to False
+    my $xpatStatus =  $xpat->GetStatus();
+    
+    if ( $xpatStatus =~ m/^ERROR/ )
+    {
+	die $gWWObjERRORS{'NO_XPAT'} . $xpatStatus;
+    }
+    
+    $self->{'xpat'} = $xpat;
+
+    return $xpat;
+}
+
+# ----------------------------------------------------------------------
+# NAME         : _StopXPatProcess
+# PURPOSE      : stop an XPat Process
+# CALLED BY    : WW::initialize
+# CALLS        : 
+# INPUT        : 
+# RETURNS      : 
+# GLOBALS      : 
+# SIDE-EFFECTS : 
+# NOTES        : 
+# ----------------------------------------------------------------------
+sub _WWStopXPatProcess
+{
+
+    my $self = shift;
+
+    my $xpat = $self->{'xpat'};
+    $xpat->SendCommand( 'stop' );
+    $self->{'xpat'} = undef;
+}
+
+
+# ----------------------------------------------------------------------
+# NAME         : 
+# PURPOSE      : 
+# CALLED BY    : 
+# CALLS        : 
+# INPUT        : 
+# RETURNS      : 
+# GLOBALS      : 
+# SIDE-EFFECTS : 
+# NOTES        : 
+# ----------------------------------------------------------------------
+sub _CleanPatCruft
+{
+    my $rRef = shift;
+ 
+    $$rRef =~ s,</?RSet>,,g;
+    $$rRef =~ s,<Start>.*?</Start>,,g;
+    $$rRef =~ s,<End>.*?</End>,,g;
+    $$rRef =~ s,<Size>.*?</Size>,,g;
+    $$rRef =~ s,</?Raw>,,g;
+}
+
+
+# ----------------------------------------------------------------------
+# NAME         : 
+# PURPOSE      : 
+# CALLED BY    : 
+# CALLS        : 
+# INPUT        : 
+# RETURNS      : 
+# GLOBALS      : 
+# SIDE-EFFECTS : 
+# NOTES        : 
+# ----------------------------------------------------------------------
+my $resultRegexp = '<E N=\"([^\"]*?)\" O=\"([^\"]*?)\"( L=\"([^\"]*?)\")?>(.*?)[ ]';
+
+sub _ParseSingleResult
+{
+    my $rRef = shift;
+
+    # Find the first match (this assumes WordWheel sgml file was built
+    # in alpha order)
+    if ( $$rRef =~ m,$resultRegexp, )
+    {
+	my $n = $1;
+	my $o = $2;
+	my $l = $4;
+	my $w = $5;
+	
+	return ( $w, $n, $o, $l );
+    }
+    else
+    {
+	# If no matches found, let caller know with an undef
+	return undef;
+    }
+}
+
+
+# ----------------------------------------------------------------------
+# NAME         : _ParseMultipleResult
+# PURPOSE      : 
+# CALLED BY    : 
+# CALLS        : 
+# INPUT        : 
+# RETURNS      : list of four-element arrays, term, its lemma, its seq,
+#                and its occurrences
+# GLOBALS      : 
+# SIDE-EFFECTS : 
+# NOTES        : 
+# ----------------------------------------------------------------------
+sub _ParseMultipleResult
+{
+    my $rRef = shift;
+    my @returnList ;
+
+    my @eList = split ( /<\/E>/, $$rRef );
+	
+    foreach my $e ( @eList )
+    {
+        my ( $w, $n, $o, $l ) = &_ParseSingleResult( \$e );
+
+	push ( @returnList, [ $w , $l, $n, $o ] );
+    }
+    
+    return ( @returnList );
+}
+
+
+# ----------------------------------------------------------------------
+# NAME         : _FindMatchByTerm
+# PURPOSE      : 
+# CALLED BY    : 
+# CALLS        : 
+# INPUT        : pat object,
+#                search term 
+#                collection name,
+#                realm name,
+#                character type,
+# RETURNS      : best match to input term
+# GLOBALS      : 
+# SIDE-EFFECTS : 
+# NOTES        : 
+# ----------------------------------------------------------------------
+sub _FindMatchByTerm
+{
+    my ( $pat, $searchTerm, $realmname, $chartype, $coll ) = @_;
+
+    # Add a space to the term for searching because we create the sgml
+    # like: <E>someword </E>
+    my $term = $searchTerm . ' ';
+    
+    while ( 1 )
+    {
+	my $termRestriction = qq{("$term" not within $gRegions{'e-t'})};
+	my $termRegion = qq{($gRegions{'e'} incl $termRestriction)};
+	my $collRegion  = qq{($gRegions{'coll'} incl ($gRegions{'collname'} incl "$coll"))};
+	my $realmRegion = qq{($gRegions{'realm'} incl ($gRegions{'realmname'} incl "$realmname"))};
+	
+        my $query;
+
+	$query = qq{(( ($termRegion within $gRegions{$chartype}) within $realmRegion) within $collRegion)};
+        $query = qq{pr.region.$gRegionFormats{'e'} $query;};
+	
+        my ( $error, $result ) = $pat->GetSimpleResultsFromQuery( $query );
+	if ( $error )
+	{
+	    die $gWWObjERRORS{'NO_RESULT'} . $result;
+	}
+	
+        # $o not really needed, but grabbing for possible future use
+	&_CleanPatCruft( \$result );
+        my ( $foundTerm, $n, $o, $l ) = &_ParseSingleResult( \$result );
+	
+	if ( $ENV{'DEBUG'} && ( $ENV{'DEBUG'} eq 'all' || $ENV{'DEBUG'} eq 'ww' ))
+        {
+            print( qq{<p>*** First Search ***</p>\n} );
+            print( qq{<p>query: $query</p>\n} );
+            print( qq{<p>result: $result</p>\n} );
+            print( qq{<p>term number: $n</p>\n} );
+            print( qq{<p>occurrences: $o</p>\n} );
+            print( qq{<p>lemma: $l</p>\n} );
+            print( qq{<p>term found: $foundTerm</p>\n} );
+        }
+	
+        if ( defined( $foundTerm ) )
+        {
+            return ( $foundTerm, $n, $l );
+        }
+        else
+        {	    
+            # Loop again with one less character in the $term to find
+            chop ( $term );
+	    
+            # If we've not found anything at all ....
+            if ( length( $term ) == 0  )
+            {
+                die $gWWObjERRORS{'NO_FIND'} . $searchTerm;
+            }
+        }
+    }
+}
+
+
+# ----------------------------------------------------------------------
+# NAME         : _RangeSearch
+# PURPOSE      : 
+# CALLED BY    : 
+# CALLS        : 
+# INPUT        : pat object,
+#                collection name,
+#                realm name,
+#                character type,
+#                n
+#                found word
+#                table size (number of terms to return),
+#                mode,
+#                top (seq. number of top of table),
+#                bottom (seq. number of bottom of table)
+# RETURNS      : a table-sized list (a reference to window list of terms 
+#                from one collectiond and new top and bottom numbers)
+# GLOBALS      : 
+# SIDE-EFFECTS : 
+# NOTES        : 
+# ----------------------------------------------------------------------
+sub _RangeSearch
+{
+    my ( $pat, $coll, $realm, $chartype, $n, $foundWord, $tabsize, $mode ) = @_;
+
+    my ( @window, $topN, $bottomN, @rangeNumberList );
+  SWITCH: {
+	if ( $mode eq $gWWModes{'new'} )
+	{
+	    my $radius = int( $tabsize / 2 );
+	    
+	    $topN = Max( 0, $n - $radius );
+	    $bottomN = $n + $radius;
+	    last SWITCH;
+	}
+	if ( $mode eq $gWWModes{'next'} )
+	{
+	    $topN = $n;
+	    $bottomN = $n + $tabsize - 1;
+	    last SWITCH;
+	}                           
+	if ( $mode eq $gWWModes{'prev'} )
+	{
+	    $bottomN = $n;
+	    $topN = Max( 0, $n - $tabsize + 1 );
+	    last SWITCH;
+	}
+    }
+    
+    # Find the list of terms before and after the search term
+    @rangeNumberList = ( $topN .. $bottomN );
+    
+    my $rangeListText = qq{\"} . join (qq{ \"+\"}, @rangeNumberList ) . qq{ \"};
+    my $collWindowRef = &_GetWindowOfTerms( $pat, $rangeListText, $realm, $coll, $chartype );   
+    
+    return $collWindowRef;
+}
+
+# ----------------------------------------------------------------------
+# NAME         : _GetWindowOfTerms
+# PURPOSE      : 
+# CALLED BY    : 
+# CALLS        : 
+# INPUT        : pat object
+#                string that is a pat search range of sequence numbers 
+#                to search for in N attribute, realm name, collection name 
+# RETURNS      : reference to an array of arrays, the sub arrays having 
+#                4 elements: term, lemma, sequence number, occurences
+# GLOBALS      : 
+# SIDE-EFFECTS : 
+# NOTES        : 
+# ----------------------------------------------------------------------
+sub _GetWindowOfTerms
+{
+    my ( $pat, $rangeListText, $realmname, $coll, $chartype ) = @_;
+
+    my $rangeRegion = qq{($gRegions{'e'} incl ($gRegions{'a-n'} incl ($rangeListText)))};
+    my $collRegion  = qq{($gRegions{'coll'} incl ($gRegions{'collname'} incl "$coll"))};
+    my $realmRegion = qq{($gRegions{'realm'} incl ($gRegions{'realmname'} incl "$realmname"))};
+
+    my $query;    
+
+    $query = qq{((($rangeRegion within $gRegions{$chartype}) within $realmRegion) within $collRegion)};
+    $query = qq{pr.region.$gRegionFormats{'e'} $query;};
+    
+    my ( $error, $result ) = $pat->GetSimpleResultsFromQuery( $query );   
+    if ( $error )
+    {
+	die $gWWObjERRORS{'NO_RESULT'} . $result;
+    }
+    
+    # Get list of four-element arrays: each anonymous subarray is
+    # term, its lemma, its seq, and its occurrences 
+    &_CleanPatCruft( \$result );
+
+    if ( $ENV{'DEBUG'} && ( $ENV{'DEBUG'} eq 'all' || $ENV{'DEBUG'} eq 'ww' ))
+    {
+	print( qq{<p>*** Range Search ***</p>\n} );
+	print( qq{<p>query: $query</p>\n} );
+	print( qq{<p>result: $result</p>\n} );
+    }
+ 
+    my @window = &_ParseMultipleResult( \$result );
+    
+    return ( \@window );
+}
+
+
+1; # Truth
+
+__END__;

@@ -1,0 +1,130 @@
+<?xml version="1.0"?>
+
+<!-- SPO Editorial Services                  -->
+<!-- automatically-generated XML header file -->
+
+<?xml-stylesheet href="../../../pre11-dlxsdocs.xsl" type="text/xsl"?>
+<!DOCTYPE DLPSDOC PUBLIC "-//UM-DLPS//DTD DLPS Publications//EN" "http://docs.umdl.umich.edu/dlps/docs/dlpsdocs.dtd">
+<DLPSDOC>
+<TITLE>Text Class Graphics Files</TITLE>
+<HEADER>
+<JOURNAL>DLXS Documentation</JOURNAL>
+<PUBDATE>2002-07-08 11:47:39 EDT</PUBDATE>
+<AUTH1>Stoeffler, Matt</AUTH1>
+<AUTH2></AUTH2>
+<DOCTITLE>Text Class Graphics Files</DOCTITLE>
+<VOL>class</VOL>
+<ISS>text</ISS>
+<FILE>dlxsdocs-tc-graphics</FILE>
+</HEADER>
+<BODY>
+    <BHEAD>Text Class Graphics Files</BHEAD>
+
+<DIV1 ID="main">
+  
+<P>The following table describes those graphics files that are likely to be used 
+  by any instance of Text Class. All of the files below should be stored in the 
+  <CODE>$DLXSROOT/t/text/graphics</CODE> directory. Saving any alternative 
+  graphics by these names in individual collections' graphics directories will result in variation 
+  of appearance within template-generated pages. The order of reference for graphics 
+  is to reference first any graphic file found in the local collection graphics 
+  directory (i.e., <CODE>$DLXSROOT/c/collid/graphics</CODE>), and, if not 
+  found, to reference the class graphics directory.</P>
+  <TABLE WIDTH="530" BORDER="1" CELLSPACING="0" CELLPADDING="5">
+    <TR> 
+    <TH ALIGN="center" WIDTH="105">Image</TH>
+    <TH ALIGN="center" WIDTH="175">File name</TH>
+    <TH WIDTH="250" ALIGN="center">Description</TH>
+  </TR>
+  <TR> 
+    <TD ALIGN="center" WIDTH="105"><IMG SRC="graphics/aro_upw.gif" WIDTH="17" HEIGHT="17"/></TD>
+    <TD ALIGN="center" WIDTH="175">aro-upw.gif</TD>
+    <TD WIDTH="250" VALIGN="top">Appears in all scrollable pages as a &quot;back 
+      to top&quot; button. </TD>
+  </TR>
+  <TR> 
+    <TD ALIGN="center" WIDTH="105" style="background-color: #9999CC"><IMG SRC="graphics/downarrow_viol.gif" WIDTH="37" HEIGHT="37" BORDER="1"/></TD>
+    <TD ALIGN="center" WIDTH="175">downarrow_viol.gif</TD>
+    <TD WIDTH="250" VALIGN="top">Scroll down button on ww-full.tpl</TD>
+  </TR>
+  <TR> 
+    <TD ALIGN="center" WIDTH="105" style="background-color: #9999CC"><IMG SRC="graphics/uparrow_viol.gif" WIDTH="37" HEIGHT="37" BORDER="1"/></TD>
+    <TD ALIGN="center" WIDTH="175">uparrow_viol.gif</TD>
+    <TD WIDTH="250" VALIGN="top">Scroll up button on ww-full.tpl</TD>
+  </TR>
+  <TR> 
+    <TD ALIGN="center" WIDTH="105"><IMG SRC="graphics/sm-dwnarrow.gif" WIDTH="8" HEIGHT="10" BORDER="1"/></TD>
+    <TD ALIGN="center" WIDTH="175">sm-dwnarrow.gif</TD>
+    <TD WIDTH="250" VALIGN="top">Used to indicate an expanded menu in the help 
+      pages.</TD>
+  </TR>
+  <TR> 
+    <TD ALIGN="center" WIDTH="105"><IMG SRC="graphics/navarrow.gif" WIDTH="7" HEIGHT="10" BORDER="1"/></TD>
+    <TD ALIGN="center" WIDTH="175">navarrow.gif</TD>
+    <TD WIDTH="250" VALIGN="top">Used to indicate an expandable menu in help files.</TD>
+  </TR>
+  <TR> 
+    <TD ALIGN="center" WIDTH="105"><IMG SRC="graphics/plug.gif" WIDTH="10" HEIGHT="20" BORDER="1"/></TD>
+    <TD ALIGN="center" WIDTH="175">plug.gif</TD>
+    <TD WIDTH="250" VALIGN="top">Transparent spacer gif used throughout. hdr-bg1.gif, 
+      hdr-bg2.gif, and hdr-bg3.gif are also transparent gifs used as table background 
+      gifs for header displays. See the section on specifying <A HREF="tc-ind-coll-chars.xml#background">background 
+      colors and gifs</A> for more.</TD>
+  </TR>
+  <TR> 
+    <TD ALIGN="center" WIDTH="105"><IMG SRC="graphics/ret-arrow-generic-grey.gif" WIDTH="16" HEIGHT="15" BORDER="1"/></TD>
+    <TD ALIGN="center" WIDTH="175">ret-arrow-generic-grey.gif</TD>
+    <TD WIDTH="250" VALIGN="top">Used in header.tpl and text.tpl as part of a 
+      link back to search results.</TD>
+  </TR>
+  <TR> 
+    <TD ALIGN="center" WIDTH="105"><IMG SRC="graphics/prevoff.gif" BORDER="1"/></TD>
+    <TD ALIGN="center" WIDTH="175">prevoff.gif</TD>
+    <TD WIDTH="250" VALIGN="top">Used in pageviewer.nav.tpl as the &quot;up&quot; 
+      stage of the previous page button.</TD>
+  </TR>
+  <TR> 
+    <TD ALIGN="center" WIDTH="105"><IMG SRC="graphics/prevon.gif" BORDER="1"/></TD>
+    <TD ALIGN="center" WIDTH="175">prevon.gif</TD>
+    <TD WIDTH="250" VALIGN="top">Used in pageviewer.nav.tpl as the &quot;mouseover&quot; 
+      stage of the previous page button.</TD>
+  </TR>
+  <TR> 
+    <TD ALIGN="center" WIDTH="105"><IMG SRC="graphics/nextoff.gif" BORDER="1"/></TD>
+    <TD ALIGN="center" WIDTH="175">nextoff.gif</TD>
+    <TD WIDTH="250" VALIGN="top">Used in pageviewer.nav.tpl as the &quot;up&quot; 
+      stage of the next page button.</TD>
+  </TR>
+  <TR> 
+    <TD ALIGN="center" WIDTH="105"><IMG SRC="graphics/nexton.gif" BORDER="1"/></TD>
+    <TD ALIGN="center" WIDTH="175">nexton.gif</TD>
+    <TD WIDTH="250" VALIGN="top">Used in pageviewer.nav.tpl as the &quot;mouseover&quot; 
+      stage of the next page button.</TD>
+  </TR>
+  <TR> 
+    <TD ALIGN="center" WIDTH="105" BGCOLOR="666699"><IMG SRC="graphics/ret-arrow-generic.gif" WIDTH="16" HEIGHT="19" BORDER="1"/></TD>
+    <TD ALIGN="center" WIDTH="175">ret-arrow-generic.gif</TD>
+    <TD WIDTH="250" VALIGN="top">Used in pageviewer.nav.tpl as part of the link 
+      back to the results page.</TD>
+  </TR>
+  <TR> 
+    <TD ALIGN="center" WIDTH="105"><IMG SRC="graphics/scale.gif" WIDTH="53" HEIGHT="18" BORDER="1"/></TD>
+    <TD ALIGN="center" WIDTH="175">scale.gif</TD>
+    <TD WIDTH="250" VALIGN="top">Used in pageviewer.nav.tpl as the scale menu 
+      label.</TD>
+  </TR>
+  <TR> 
+    <TD ALIGN="center" WIDTH="105"><IMG SRC="graphics/view.gif" WIDTH="77" HEIGHT="18" BORDER="1"/></TD>
+    <TD ALIGN="center" WIDTH="175">view.gif</TD>
+    <TD WIDTH="250" VALIGN="top">Used in pageviewer.nav.tpl as the page view menu 
+      label.</TD>
+  </TR>
+  <TR> 
+    <TD ALIGN="center" WIDTH="105"><IMG SRC="graphics/goto.gif" WIDTH="53" HEIGHT="18" BORDER="1"/></TD>
+    <TD ALIGN="center" WIDTH="175">goto.gif</TD>
+    <TD WIDTH="250" VALIGN="top">Used in pageviewer.nav.tpl as the goto menu label.</TD>
+  </TR>
+</TABLE>
+</DIV1> 
+ </BODY>
+</DLPSDOC>

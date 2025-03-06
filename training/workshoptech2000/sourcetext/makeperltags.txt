@@ -1,0 +1,59 @@
+#!/l/local/bin/perl
+
+# Wed Apr 26 10:41:40 2000 pfarber
+
+# Each cannonical location is expected to provide a Makefile.TAGS file
+# for that location and for all relevant subdirs below it *except for*
+# workdirs.  That way the cannonical locations' TAGS file finds only
+# committed work and we leave each individual developers' .emacs
+# tags-file-alist to search that developer's workdir (presumably at a
+# higher priority than the cannonical location).
+my @cannonical = ( 
+		  '/l1/bin', 
+		  '/l1/lib', 
+		  '/l1/cgi', 
+		  '/l/local/etc/httpd/cgi-bin' );
+
+
+# subdirs may live under cannonical dirs but not necessarily. We check
+# them because they are the intermediate path to the workdirs where we
+# want to create work specific TAGS files.
+my @subdirs = ( '.', 
+		't/text', 
+		'WW', 
+		'm/micase' );
+
+
+# Each developers work dir
+my @workdirs = ( 'p/pfarber', 
+		 'p/pagliere' );
+
+# make TAGS
+foreach my $c ( @cannonical )
+{
+    #chdir "$c";   
+    #print  "\nMaking TAGS for $c\n";    
+    #`make -f Makefile.TAGS tags`;
+     
+    foreach my $s ( @subdirs )
+    {
+	foreach my $w ( @workdirs )
+	{
+	    if ( -e "$c/$s/$w" )
+	    {
+		chdir "$c/$s/$w";
+		
+		print "\nMaking TAGS for $c/$s/$w\n";
+		
+		# *-idx-* will only check idx files with -username attached
+		# those files only exist in work directories (e.g., /l1/cgi/t/text/p/pagliere)
+		# finally, since a ~ file is only created on the source of the linked 
+		#    foo-idx-username and not on the linked file, this should also
+		#    prevent tags being made on ~ files
+		`(/bin/ls *-idx-* *.cfg *.pl *.pm *.config | etags -) 2> /dev/null`;
+	    }
+	}
+    }
+}
+
+exit;

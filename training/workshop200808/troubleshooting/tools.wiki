@@ -1,0 +1,41 @@
+== Tools<br /> ==
+
+<div class="content">
+
+* '''Firefox plugins'''
+** Chris Pederick's web developer plugin: [http://chrispederick.com/work/firefox/webdeveloper/ http://chrispederick.com/work/firefox/webdeveloper/ ]
+** Firebug debugger plugin: [http://www.getfirebug.com/ http://www.getfirebug.com/ ]
+** XPath tool plugin: https://addons.mozilla.org/en-US/firefox/addon/1095?id=1095
+** Terrence Brooks on Firefox tools: [http://informationr.net/ir/10-2/TB0501.html "Watch this: help for sick pages"] in Information Research 10:2. January 2005
+** Patrick Lauke on Firefox tools [http://www.ariadne.ac.uk/issue42/lauke/ Mozilla Firefox for Rapid Web Development] in ARIADNE 42. January 2005
+* XPath Visualizer for Windows http://www.topxml.com/xpathvisualizer/<br />
+* '''Command line tools'''
+** [http://www.kitebird.com/software/xmlformat/ xmlformat]<nowiki>: Tool for pretty printing XML/XSL (available in perl or ruby )</nowiki>
+** libxml2 libraries used by XML::LibXSLT and XML::LibXML [http://xmlsoft.org/ "libxml2, libxslt"]
+** xmllint (part of libxml2) [http://xmlsoft.org/xmllint.html xmllint man page]
+** xsltproc (part of libxslt2) [http://xmlsoft.org/XSLT/xsltproc2.html xsltproc man page]
+** OpenSP http://openjade.sourceforge.net/download.html#os15
+** http://openjade.sourceforge.net/doc-1.5.1/index.htm
+** osgmls man page http://openjade.sourceforge.net/doc-1.5.1/nsgmls.htm
+** osx man page http://openjade.sourceforge.net/doc-1.5.1/sx.htm
+** osgmlnorm man page http://openjade.sourceforge.net/doc-1.5.1/sgmlnorm.htm
+* '''XML and XSLT editors/debuggers/IDEs'''
+** Oxygen XSLT debugger: http://www.oxygenxml.com/
+** XMLSpy editor and toolset: http://www.altova.com/products/xmlspy/xml_editor.html
+** Sylus Studio XML/XSL suite: http://www.stylusstudio.com/xml_download.html
+* '''Editors with syntax highlighing and other features for XML/XSLT editing'''
+** XEmacs http://www.xemacs.org/
+** [http://www.nedit.org/ NEdit editor]
+** [http://www.jedit.org/ jEdit editor]
+** [http://www.vim.org/ vim (vi improved) editor]
+* '''Unix on Windows'''
+** [http://www.cygwin.com/ cygwin ] (GNU Unix tools and programs for MS Windows)
+** [http://x.cygwin.com/ cygwin X ] (Cygwin X-Windows server for MS Windows)
+** [http://xlivecd.indiana.edu/ XliveCD ] (X-Windows server for MS Windows)
+** [http://www.spinellis.gr/sw/outwit/ outwit ] (toolkit for use with cygwin)
+
+</div>
+----
+<div class="footer">
+
+</div>

@@ -1,0 +1,130 @@
+<?xml version="1.0"?>
+
+<!-- SPO Editorial Services                  -->
+<!-- automatically-generated XML header file -->
+
+<?xml-stylesheet href="../../pre11-dlxsdocs.xsl" type="text/xsl"?>
+<!DOCTYPE DLPSDOC PUBLIC "-//UM-DLPS//DTD DLPS Publications//EN" "http://docs.umdl.umich.edu/dlps/docs/dlpsdocs.dtd">
+<DLPSDOC>
+<TITLE>broker:  An OAI-compliant metadata server</TITLE>
+<HEADER>
+<JOURNAL>DLXS Documentation</JOURNAL>
+<PUBDATE>2002-06-28 11:20:48 EDT</PUBDATE>
+<AUTH1>Blanco, Jose</AUTH1>
+<AUTH2></AUTH2>
+<DOCTITLE>broker:  An OAI-compliant metadata server</DOCTITLE>
+<VOL>collmeta</VOL>
+<ISS></ISS>
+<FILE>dlxsdocs-dlxs-broker</FILE>
+</HEADER>
+<BODY>
+		<BHEAD>An OAI-compliant Metadata Server: broker</BHEAD>
+		<DIV1>
+			<H1>Overview and Contents</H1>
+			<P>
+				<B>Broker</B> is the CGI program that produces XML responses to OAI verbs as dictated by version 1.1 of the OAI protocol. Setting up broker will allow service providers to acccess and harvest metadata about your collections, for the purpose of aggregating and making this metadata, and consequently the collections, more broadly available to the public.</P>
+			<P>
+				<B>Contents</B>:</P>
+			<UL>
+				<LI>
+					<A HREF="#verbs">Verbs</A>
+				</LI>
+				<LI>
+					<A HREF="#sets">Sets</A>
+				</LI>
+			</UL>
+		</DIV1>
+		<DIV1>
+			<H1>
+				<A NAME="verbs"/>Verbs</H1>
+			<DIV2>
+				<P>Setting up broker involves understanding the six verbs behind the protocol.  To learn more about the OAI protocol, see <A HREF="http://www.openarchives.org/">http://www.openarchives.org/</A>.</P>
+				<UL>
+					<LI>
+						<A HREF="#identify">Identify</A>
+					</LI>
+					<LI>
+						<A HREF="#listsets">ListSets</A>
+					</LI>
+					<LI>
+						<A HREF="#listmetadataformats">ListMetadataFormats</A>
+					</LI>
+					<LI>
+						<A HREF="#listidentifiers">ListIdentfiers</A>
+					</LI>
+					<LI>
+						<A HREF="#getrecord">GetRecord</A>
+					</LI>
+					<LI>
+						<A HREF="#listrecords">ListRecords</A>
+					</LI>
+				</UL>
+			</DIV2>
+			<DIV2>
+				<H2>
+					<A NAME="identify"/>Identify</H2>
+				<P>This verb identifies the provider (i.e., you). The response of this verb is created based on the following parameters that reside in $DLXSROOT/cgi/b/broker/<I>broker.cfg</I>, and that are configurable when the dlxs middleware is <A HREF="../intro/dlxs-install.xml">installed</A>:</P>
+				<P>
+					<TT>$gRepositoryID</TT> : for DLPS, the value is <I>dlpscoll</I>
+				</P>
+				<P>
+					<TT>$gRepositoryName</TT> : for DLPS, the value is <I>The University of Michigan. University Library. Digital Library Production Service.</I>
+				</P>
+				<P>
+					<TT>$BaseUrl</TT> : for DLPS, the value is <I>http://www.hti.umich.edu/cgi/b/broker/broker</I>
+				</P>
+				<P>
+					<TT>$AdminEmail</TT> : for DLPS, the value is <I>dlps-broker@umich.edu</I>
+				</P>
+				<P>
+					<TT>$SampleID</TT> : for DLPS, the value is <I>oai:dlpscoll:YEATS-YC023, with YEATS-YC023 being a sample record id ("YC023") from the YEATS collection.</I>
+				</P>
+				<P>
+					<B>Note</B> that when you complete your installation and testing of broker at your institution, you will want to register your <I>broker</I> with OAI at their website [<A HREF="http://www.openarchives.org/">http://www.openarchives.org/</A>].  At that point you will provide them with a repository ID and name, so select  a repository id and a name that is meaningful for your institution. Also note  the value of <TT>$SampleID</TT>. The format that broker uses as input and output for the ID is <TT>oai:repository ID:item identification</TT>.</P>
+			</DIV2>
+			<DIV2>
+				<H2>
+					<A NAME="listsets"/>ListSets</H2>
+				<P>
+					<I>ListSets</I> will list the sets in your repository. Broker views sets as  groups that have OAI access privileges. Therefore, if you create a group using  <I>collmgr</I> (see <A HREF="dlxs-collmgr.xml">documentation for collmgr</A> for  specific steps to do this), and you set the OAI parameter for that group to  be <TT>Y</TT> or <TT>y</TT>,  you will see these groups listed as sets when this verb is issued to <I>broker</I>.  Also, any collections that make up that group will be listed as a set. </P>
+				<P>Because the setSpec values, which corresponds to collid and groupid values, need to be alphanumeric according to the OAI protocol, all groupid and collid values need to be alphanumeric.  Here at DLPS we had collids ending in <TT>-bib</TT>, so <I>broker</I> will remove the hyphens to make them OAI compliant.</P>
+				<P>Set information  is used as an optional input by <I>ListIdentifiers</I> and <I>ListRecords</I>. </P>
+			</DIV2>
+			<DIV2>
+				<H2>
+					<A NAME="listmetadataformats"/>ListMetadataFormats</H2>
+				<P>
+					<I>ListMetadataFormats</I> responds with a list of all the formats supported  by <I>broker</I>. Currently, it responds with: <TT>oai_dc</TT>  (Dublin Core) for a valid identifier passed in, and <TT>oai_dc</TT>  if there are any records in the repository.  DLXS's BibClass format is also supported as an output format.</P>
+			</DIV2>
+			<DIV2>
+				<H2>
+					<A NAME="listidentifiers"/>ListIdentifiers</H2>
+				<P>This verb will list the identifiers,i.e., the unique record locators, in the repository. If a set is not specified,  it will list all the identifiers in groups that have been made OAI enabled. If  a set is specified, it will generate a list of identifiers for the requested set.</P>
+			</DIV2>
+			<DIV2>
+				<H2>
+					<A NAME="getrecord"/>GetRecord</H2>
+				<P>
+					<I>GetRecord</I> will return a single record for the identifier requested,  in the metadata format requested.</P>
+			</DIV2>
+			<DIV2>
+				<H2>
+					<A NAME="listrecords"/>ListRecords</H2>
+				<P>This verb works very much like <I>GetRecord</I>, but instead of returning one record, it creates a list of  records based on the input parameters.</P>
+			</DIV2>
+		</DIV1>
+		<DIV1>
+			<H1>
+				<A NAME="sets"/>Sets</H1>
+			<P>In order for <I>broker</I> to work, you need to create a group or groups made  up of collections that you wish harvesters to gather via <I>broker</I>. You  can do this through <A HREF="dlxs-collmgr.xml">
+					<I>collmgr</I>
+				</A>. Be sure to set  the OAI parameter to <TT>Y</TT> or <TT>y</TT>  for these groups. Most institutions will probably only create one group with  the collections they feel a harvester should have access to, but there are cases  where you want one harvester to harvest one group, and another to harvest another.  In these cases you could create multiple groups and notify the harvester of  the group they may be interested in. When they run their harvester, they will  run them against that group. </P>
+			<P>To put collections online, you should follow the procedures to get <A HREF="../class/bib/bib-index.xml">BibClass</A> collections online,  since <I>broker</I> works against BibClass collections.</P>
+			<P>All searches for data are done with <A HREF="http://docs.umdl.umich.edu/xpat/xpat-index.xml">XPAT</A>.</P>
+			<P>OAI is Unicode compliant, and in the <I>broker</I> cgi, there are routines for converting character entity references used by DLPS to XML numeric character entity references based on the Unicode equivalent for that character. If your institution has character entity references that are not included in the list that the release version of <I>broker</I> uses, you will need to add them to the <b>broker</b> code with the appropriate Unicode values. You will need to add the convertion in the routine <I>ConvertStandardCharEnt</I>
+			</P>
+			<P>There is another routine, <I>ConvertCollectionChars</I>, that converts Latin-1 characters (x0a1 to x0ff) and a few other characters from ISO-8859-* into their Unicode equivalents also represented as XML numeric character entity references. You may need to add  conversions in this routine if your records contain any characters from these ISO encodings not currently handled by <I>broker</I>.</P>
+			<P>In instances where a character entity reference does not have an obvious Unicode equivalent, the character entity reference is unchanged in the output. For example, if there is no obvious Unicode mapping for <TT>&amp;abc;</TT>, <I>broker</I> will output <TT>&amp;abc;</TT>.  The user interface will simple display this string.</P>
+		</DIV1>
+	</BODY>
+</DLPSDOC>

@@ -1,0 +1,56 @@
+# =====================================================================
+#
+# PROGRAM NAME : ww2-idx.config
+# PURPOSE      : declarations of globals specific ww2-idx
+#
+# =====================================================================
+
+$| = 1;
+
+# XXX split into globals that can be edited and thous here for doc purposes
+%gUserChoices = ( 
+                 'simplesearch' => 'simplesearch',
+                 'wordwheel'    => 'wordwheel',
+                );
+
+my ( $userpath, $userpart ) = &GetDevUsernameFromScript;
+
+$gCollDbName = $ENV{'DLXSROOT'} . '/lib' . $userpath . '/colldb';
+$gTextClassCgi = 'http://' . &DlpsUtils::FindHostName . '/cgi/t/text' . $userpath . '/text-idx' . $userpart;
+
+# ----- Location of html template files (web DocRoot space) -----
+$gHtmlDir     = $ENV{'DLXSROOT'} . '/web/t/text' . $userpath . '/';     # actual doc root directory
+$gHtmlDocRoot = '/t/text' . $userpath . '/';            # server doc root alias
+
+%gPageParamToHtmlTpl = (
+                        'wwstart'  => $gHtmlDir . 'ww-start.tpl',
+                        'wwfull'   => $gHtmlDir . 'ww-full.tpl',
+                       );
+
+$gWWWindowRadius = 7;
+
+$gDefaultRealm = 'full text';
+
+# Errors
+%gWWERRORS = (
+	      # ----- ww2-idx related -----
+	      'NO_SESSION' => qq{Problem starting session: },
+	      'NO_FILE' => qq{Cannot open template file: },
+	      'NO_REALM' => qq{Realm not supplied or invalid.},
+	      'NO_COLLS' => qq{No collections available.},
+	      'NO_PAGE' => qq{The URL page parameter is invalid.},
+	      'NO_NO' => qq{Internal CGI error.},
+	      'NO_PI' => qq{Malformed PI:},
+	     );
+
+# =====================================================================
+# collection specific TextClass subclassing modules
+use VoltaireTC;
+use BosniaTC;
+use TesoTC;
+
+
+
+1;
+
+# **********************************************************************

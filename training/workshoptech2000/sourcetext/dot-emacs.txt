@@ -1,0 +1,473 @@
+
+;; -*- Mode: Emacs-Lisp -*-w
+
+;;; This is Phil Farber's .emacs file. It is intended to configure
+;;; gnuemacs 20.x on UNIX under Exceed on NT.  The main functionality
+;;; is a port from my XEmacs environment of my C/C++ coding
+;;; environment.
+
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;			Basic Customization			    ;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+(defvar running-xemacs (string-match "XEmacs\\|Lucid" emacs-version))
+(defvar dialup-connection (not
+			   (and (getenv "DISPLAY")
+				(or
+				 (string-match  "141.211.43.163" (getenv "DISPLAY"))
+				 (string-match  "dev.umdl.umich.edu" (getenv "DISPLAY"))))))
+
+(setq load-path
+      (append
+       (list
+	(expand-file-name "~/emacs/")
+	)
+       load-path))
+
+;;; Safe kill buffers
+(defun kill-buffers ()
+  "Kill all buffers, asking permission on unmodified ones."
+  (interactive)
+  (let ((list (buffer-list)))
+    (while list
+      (let* ((buffer (car list))
+	     (name (buffer-name buffer)))
+	(and (not (string-equal name ""))
+	     (kill-buffer buffer)))
+      (setq list (cdr list))))
+  (cd "~"))
+
+;;; Safer exit
+(defun safe-exit-from-emacs ()
+  (interactive)
+  (if (yes-or-no-p "Do you want to exit ")
+      (save-buffers-kill-emacs)))
+
+;;; Date
+(defun date ()
+  (interactive)
+  (insert (current-time-string)))
+
+;;; Toggle line wrapping buffer locally
+(defun toggle-truncate-lines ()
+  "Toggle line wrapping via truncate-lines variable."
+  (interactive)
+  (if truncate-lines
+      (setq truncate-lines nil)
+    (setq truncate-lines t))
+  (redraw-display))
+
+;;; Toggle search case sensitivity
+(defun toggle-case-fold-search ()
+  "Toggle search case sensitivity via case-fold-search variable."
+  (interactive)
+  (if case-fold-search
+      (progn
+	(setq case-fold-search nil)
+	(message "Case-sensitive search."))
+    (progn
+      (setq case-fold-search t)
+      (message "Case-insensitive search."))))
+
+(defun join-lines (arg)
+  "Join this line to next and fix up whitespace at join.
+With arg, joins that many lines."
+  (interactive "*p")
+  (while (> arg 0)
+    (delete-indentation 1)
+    (setq arg (1- arg))))
+
+;;; Region commenting functions
+(defun yic-comment-region (start end &optional arg)
+  "Add one comment character in front of all lines in the region."
+  (interactive "*r\nP")
+  (if arg (setq comment-start nil))
+  (save-excursion
+    (save-restriction
+      (narrow-to-region
+       (progn (goto-char start) (beginning-of-line) (point))
+       (progn (goto-char end) (end-of-line) (point)))
+      (goto-char (point-min))
+      (or comment-start (setq comment-start (read-input "Comment char?: ")))
+      (while (not (eobp))
+        (beginning-of-line)
+        (insert comment-start)
+        (forward-line 1)))))
+
+(defun yic-uncomment-region (start end &optional arg)
+  "Remove one comment character in front of the lines in the region."
+  (interactive "*r\nP")
+  (if arg (setq comment-start nil))
+  (save-excursion
+    (save-restriction
+      (narrow-to-region
+       (progn (goto-char start) (beginning-of-line) (point))
+       (progn (goto-char end) (end-of-line) (point)))
+      (goto-char (point-min))
+      (or comment-start (setq comment-start (read-input "Comment char?: ")))
+      (while (not (eobp))
+        (if (looking-at (regexp-quote comment-start))
+            (delete-region (match-beginning 0) (match-end 0)))
+        (forward-line 1)))))
+
+(defun map-path ()
+  "Inter-convert Unix-style DOS-style pathnames following point."
+  (interactive)
+  (mark-sexp 1)
+  (narrow-to-region (region-beginning) (region-end))
+  (let ((from-string "\\")
+	(to-string "/"))
+    (if (search-forward "/" nil t)
+	(progn
+	  (setq from-string "/")
+	  (setq to-string "\\")
+	  (goto-char (point-min))))
+    (while (search-forward from-string nil t)
+      (replace-match to-string nil t)))
+  (widen))
+
+(defun c-comment-line ()
+  (interactive)
+  (beginning-of-line)
+  (insert "//")
+  (beginning-of-line)
+  (next-line 1))
+
+;;;
+;;; Appearance and Behaviour
+;;;
+
+;;; Change the values of some variables...
+(setq find-file-use-truenames nil
+      find-file-compare-truenames t
+      minibuffer-confirm-incomplete nil
+      complex-buffers-menu-p t
+      next-line-add-newlines nil
+      )
+;(setq-default mode-line-buffer-identification '("GNU Emacs: %17b"))
+;(setq mode-line-buffer-identification '("GNU Emacs: %17b"))
+
+
+;; Font-lock
+(setq font-lock-support-mode 'fast-lock-mode)
+
+;;; ...and some other variables
+(setq indent-tabs-mode nil) ; tab inserts only spaces not tabs
+(if (and running-xemacs (string= "dev.umdl.umich.edu" (system-name)))
+    (progn
+      (autoload 'mwheel-install "mwheel" "Enable mouse wheel support.")
+      (mwheel-install)))
+(blink-matching-open)
+(setq scroll-step 1)
+(setq-default case-fold-search t)
+(setq-default ediff-ignore-similar-regions t)
+(setq grep-command "grep -n -i -e ") ; case insensitive (-i) grepping
+
+;;; Enable some privileged commands.
+(put 'narrow-to-region 'disabled nil)
+(put 'narrow-to-page 'disabled nil)
+(put 'eval-expression 'disabled nil)
+(put 'set-goal-column 'disabled nil)
+
+;;; Modeline decorations etcetera
+(line-number-mode 1)
+(column-number-mode 1)
+
+;;; Frame decorations, sizes
+;;(setq initial-frame-plist '((width . 90) (height . 30))) or use -geometry
+(if (string-match "^\\([^\.]+\\)\." (system-name))
+    (setq host (substring (system-name) (match-beginning 1) (match-end 1)))
+  (setq host (system-name)))
+(setq frame-title-format
+      '("@" host (buffer-file-name "-%f"
+				   (dired-directory dired-directory "-%b"))))
+
+;;; Global key mappings
+
+;; Rectangle - operations using META. M-button1 is default on
+;; mouse-track-do-rectangle
+(global-set-key [(meta button2)] 'yank-rectangle)
+(global-set-key [(meta button3)] 'kill-rectangle)
+
+(global-set-key "\C-x\C-c"   'safe-exit-from-emacs)
+(global-set-key "\C-z"       'scroll-down)
+(global-set-key "\C-x\C-b"   'electric-buffer-list)
+(global-set-key "\e:"        'goto-line)
+(global-set-key "\eo"        'overwrite-mode)
+(global-set-key "\ep"        'auto-fill-mode)
+(global-set-key "\es"        'toggle-case-fold-search)
+(global-set-key "\et"        'toggle-truncate-lines)
+(global-set-key "\ev"        'view-mode)
+(global-set-key "\em"        'indented-text-mode) ; lose back-to-indentation
+(global-set-key [(control &)] 'join-lines)
+(global-set-key "\C-^"       'cf)
+(global-set-key [(control *)] 'c-comment-line)
+(global-set-key "\C-x*"      'indent-region)
+(global-set-key [(control meta %)] 'query-replace-regexp)
+
+(global-set-key "\C-x9	"    'complete-file-name)
+(global-set-key "\C-x9("     'paren-quote)
+(global-set-key "\C-x9*"     'asterisk-quote)
+(global-set-key "\C-x9:"     'yic-uncomment-region)
+(global-set-key "\C-x9;"     'yic-comment-region)
+(global-set-key "\C-x9<"     'angle-quote)
+(global-set-key "\C-x9\""    'double-quote)
+(global-set-key "\C-x9\`"    'single-backquote)
+(global-set-key "\C-x9\'"    'single-quote)
+(global-set-key "\C-x9_"     'under-quote)
+(global-set-key "\C-x9a"     'align-regexp)
+(global-set-key "\C-x9b"     'bury-buffer)
+(global-set-key "\C-x9c"     'chop)
+(global-set-key "\C-x9d"     'map-path)
+(global-set-key "\C-x9e"     'find-file-at-point)
+(global-set-key "\C-x9f"     'font-lock-mode)
+(global-set-key "\C-x9i"     'iso-accents-mode)
+(global-set-key "\C-x9r"     'recover-context)
+(global-set-key "\C-x9s"     'cvs-status)
+(global-set-key "\C-x9v"     'save-context)
+
+(define-key ctl-x-map "\C-k" 'kill-buffers)
+
+;;; (auto)Load libraries
+;;; --------------
+(autoload 'cf            "cf")
+(autoload 'complete-fn   "complete-fn")
+(autoload 'paren-quote   "qquote")
+(autoload 'double-quote  "qquote")
+(autoload 'single-quote  "qquote")
+(autoload 'under-quote   "qquote")
+(autoload 'angle-quote   "qquote")
+(autoload 'asterisk-quote   "qquote")
+(autoload 'align-regexp  "align-regex")
+(autoload 'complete-file-name "complete-fn")
+(autoload 'font-lock-mode-local "font-lock-local")
+(autoload 'd "dlps")
+(load-library "ascii")
+(load-library "curl")
+(load-library "chop")
+(load-library "counter")
+(load-library "ot")
+(load-library "propagate")
+(if running-xemacs (load-library "misc-extensions"))
+;(if (and (not dialup-connection) running-xemacs) (propagate))
+;;; server
+(if (and (not dialup-connection) running-xemacs) (gnuserv-start))
+
+;;; TAGS
+(defvar perl-suffix-regexp "-idx\\(-pfarber\\)?$\\|\\.config\\|\\.cfg$\\|\\.[pP][Llm]$")
+(if running-xemacs
+    (setq tag-table-alist
+	  '(
+	    (perl-suffix-regexp . (concat (getenv "DLXSROOT") "/cgi/t/text/"))
+	    (perl-suffix-regexp . (concat (getenv "DLXSROOT") "/bin/WW/"))
+	    (perl-suffix-regexp . (concat (getenv "DLXSROOT") "/lib/"))
+	    (perl-suffix-regexp . "/l/local/etc/httpd/cgi-bin/")
+	    (perl-suffix-regexp . "~/TAGS-perl5")
+	    ("\\.el$\\|\.emacs$" . "~/TAGS-xemacs-lisp")
+	    ))
+  (setq tags-table-list
+	(list (concat (getenv "DLXSROOT") "/cgi/t/text/")
+	      (concat (getenv "DLXSROOT") "/bin/WW/")
+	      (concat (getenv "DLXSROOT") "/lib/")
+	      "/l/local/etc/httpd/cgi-bin/"
+	      "~/TAGS-perl5"
+	      "~/TAGS-xemacs-lisp"
+	      )))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;		Customization of Specific Packages / Modes	    ;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+(setq default-major-mode 'indented-text-mode)
+
+;; Hideshow
+(load-library "hideshow")
+
+;; Pending Delete
+;; (if running-xemacs (require 'pending-del))
+
+;; mode-compile
+(autoload 'mode-compile "mode-compile"
+  "Command to compile current buffer file based on the major mode" t)
+(global-set-key "\C-cc" 'mode-compile)
+(autoload 'mode-compile-kill "mode-compile"
+  "Command to kill a compilation launched by `mode-compile'" t)
+(global-set-key "\C-ck" 'mode-compile-kill)
+
+
+;; CPerl mode
+(define-key global-map [(shift meta button3)] 'imenu)
+(autoload 'perl-mode "cperl-mode" "alternate mode for editing Perl programs" t)
+(or (assoc "\\(\\.[pP][Llm]\\|\\.al\\|\\.cfg\\|.config\\|-idx\\)$" auto-mode-alist)
+    (setq auto-mode-alist (cons '("\\(\\.[pP][Llm]\\|\\.al\\|\\.config\\|\\.cfg\\|-idx\\)$" . perl-mode)
+				auto-mode-alist)))
+(setq cperl-mode-hook
+      '(lambda ()
+	 (progn
+	   (hs-minor-mode)
+	   (require 'cc-mode)
+	   (cperl-set-style "C++")
+	   (require 'cperl-mode-extensions)
+	   (setup-cperl-default-tag-hook))))
+
+;; Text mode
+(setq text-mode-hook
+      '(lambda ()
+	 (progn
+	   (auto-fill-mode 1))))
+
+;; Emacs lisp
+(setq emacs-lisp-mode-hook
+      '(lambda ()
+	 (progn
+	   (turn-on-font-lock))))
+
+;; Shell mode
+(or (assoc "\\.conf$" auto-mode-alist)
+    (setq auto-mode-alist (cons '("\\.conf$" . sh-mode) auto-mode-alist)))
+(setq sh-mode-hook
+      '(lambda ()
+	 (progn
+	   (turn-on-font-lock))))
+
+;; SGML mode
+(setq sgml-set-face t)
+(autoload 'sgml-mode "psgml" "Major mode to edit SGML files." t )
+(autoload 'dtd-mode "sgml-mode-extensions" "Major mode to edit DTD files." t )
+(autoload 'fos-mode "sgml-mode-extensions" "Major mode to edit FOSI files." t )
+
+(or (assoc "\\.dd$" auto-mode-alist)
+    (setq auto-mode-alist (cons '("\\.dd$" . sgml-mode) auto-mode-alist)))
+(or (assoc "\\.map$" auto-mode-alist)
+    (setq auto-mode-alist (cons '("\\.map$" . sgml-mode) auto-mode-alist)))
+(or (assoc "\\.ent$" auto-mode-alist)
+    (setq auto-mode-alist (cons '("\\.ent$" . sgml-mode) auto-mode-alist)))
+(or (assoc "\\.fos$" auto-mode-alist)
+    (setq auto-mode-alist (cons '("\\.fos$" . fos-mode) auto-mode-alist)))
+(or (assoc "\\.dtd$" auto-mode-alist)
+    (setq auto-mode-alist (cons '("\\.dtd$" . dtd-mode) auto-mode-alist)))
+
+(setq sgml-mode-hook
+      '(lambda ()
+	 (progn
+	   (require 'sgml-mode-extensions)
+	   (turn-on-font-lock)
+	   )))
+
+(setq dtd-mode-hook
+      '(lambda ()
+	 (progn
+	   (require 'sgml-mode-extensions)
+	   (turn-on-font-lock)
+	   )))
+
+(setq fos-mode-hook
+      '(lambda ()
+	 (progn
+	   (require 'sgml-mode-extensions)
+	   (turn-on-font-lock)
+	   )))
+
+(defvar sgml-validate-command "nsgmls -s -c/usr/local/lib/sgml/catalog %s %s"
+  "*The shell command to validate an SGML document.
+
+This is a `format' control string that by default should contain two
+`%s' conversion specifications: the first will be replaced by the
+value of `sgml-declaration' \(or the empty string, if nil\); the
+second will be replaced by the current buffer's file name \(or the
+empty string, if nil\).
+
+If `sgml-validate-files' is non-nil, the format string should contain
+one `%s' conversion specification for each element of its result.
+
+If sgml-validate-command is a list, then every element should be a
+string.  The strings will be tried in order and %-sequences in the
+string will be replaced according to the list below, if the string contains
+%-sequences with no replacement value the next string will be tried.
+
+%b means the visited file of the current buffer
+%s means the SGML declaration specified in the sgml-declaration variable
+%d means the file containing the DOCTYPE declaration, if not in the buffer
+")
+
+;; HTML mode
+
+(or (assoc "\\.tpl$" auto-mode-alist); recognize .tpl as HTML
+    (setq auto-mode-alist (cons '("\\.tpl$" . html-mode)
+				auto-mode-alist)))
+(setq html-mode-hook
+      '(lambda ()
+	 (progn
+	   (turn-on-font-lock)    ; like it says
+	   (font-lock-mode-local) ; a little fixup ~/emacs/font-lock-mode-local.el
+	   (auto-fill-mode 0))))  ; we don't like our HTML lines to wrap automatically
+
+;; Edebug is a source-level debugger for emacs-lisp programs.
+(autoload 'edebug-defun "edebug")
+(define-key emacs-lisp-mode-map "\C-xx" 'edebug-defun)
+
+;;; Development environments
+(let ((host (downcase (or (getenv "HOST") ""))))
+  (prog1
+      (message (concat "Configuring development environment `dev' on " host))
+      (d "dev")))
+
+;;; Custom
+(custom-set-variables
+ '(lpr-headers-switches nil)
+ '(require-final-newline t)
+ '(gnuserv-kill-quietly t)
+ '(mwheel-follow-mouse t)
+ '(cperl-extra-newline-before-brace t)
+ '(cperl-brace-offset -2)
+ '(lpr-command "lpr")
+ '(cperl-electric-parens nil)
+ '(cperl-auto-newline t)
+ '(delete-key-deletes-forward t)
+ '(auto-save-interval 1000)
+ '(auto-save-directory "~/.autosave/")
+ '(cperl-electric-linefeed nil)
+ '(enable-recursive-minibuffers t)
+ '(cperl-auto-newline-after-colon t)
+ '(tags-build-completion-table nil)
+ '(outline-heading-end-regexp "[
+]" t)
+ '(visible-bell t)
+ '(printer-name "bart")
+ '(outline-regexp "^[ 	]*[*]+" t)
+ '(toolbar-visible-p nil)
+ '(delete-auto-save-files nil)
+ '(cperl-indent-level 4)
+ '(tags-auto-read-changed-tag-files t)
+ '(gnuserv-frame nil)
+ '(outline-mac-style t)
+ '(*try-oblique-before-italic-fonts* t)
+ '(font-lock-mode t nil (font-lock))
+ '(lpr-add-switches t))
+(custom-set-faces
+ '(default ((t (:background "grey92" :size "12pt" :family "Courier"))) t)
+ '(font-lock-string-face ((((class color) (background light)) (:foreground "DarkGreen"))))
+ '(font-lock-reference-face ((((class color) (background light)) (:foreground "red3"))))
+ '(dired-face-flagged ((((class color)) (:background "Gray"))))
+ '(font-lock-variable-name-face ((((class color) (background light)) (:foreground "DarkOrange4" :bold t))))
+ '(font-lock-keyword-face ((((class color) (background light)) (:bold t :foreground "Black"))))
+ '(font-lock-builtin-face ((((class color) (background light)) (:bold t :foreground "Orchid"))))
+ '(font-lock-constant-face ((((class color) (background light)) (:bold t :foreground "CadetBlue"))))
+ '(font-lock-type-face ((((class color) (background light)) (:bold t :foreground "ForestGreen"))))
+ '(cvs-marked-face ((((class color) (background light)) (:foreground "green4" :bold t))))
+ '(bold ((t (:bold t))) t)
+ '(bold-italic ((t (:size "12pt" :family "Courier" :bold t :italic t))) t)
+ '(italic ((t (:size "12pt" :family "Courier" :italic t))) t)
+ '(font-lock-other-type-face ((t (:foreground "orange3" :bold t))) t)
+ '(font-lock-comment-face ((((class color) (background light)) (:foreground "Red"))))
+ '(dired-face-executable ((((class color)) (:foreground "SeaGreen" :bold t))))
+ '(font-lock-function-name-face ((((class color) (background light)) (:foreground "Blue" :bold t))))
+ '(modeline ((t (:foreground "black" :background "grey82" :bold t))) t)
+ '(dired-face-symlink ((((class color)) (:foreground "cyan4"))))
+ '(dired-face-boring ((((class color)) (:foreground "Gray45"))))
+ '(dired-face-marked ((((class color)) (:background "pink")))))
+
+
+(setq minibuffer-max-depth nil)
+(resize-minibuffer-mode 1)

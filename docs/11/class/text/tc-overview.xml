@@ -1,0 +1,111 @@
+<?xml version="1.0"?>
+
+<!-- SPO Editorial Services                  -->
+<!-- automatically-generated XML header file -->
+
+<?xml-stylesheet href="../../../pre11-dlxsdocs.xsl" type="text/xsl"?>
+<!DOCTYPE DLPSDOC PUBLIC "-//UM-DLPS//DTD DLPS Publications//EN" "http://docs.umdl.umich.edu/dlps/docs/dlpsdocs.dtd">
+<DLPSDOC>
+<TITLE>Overview of Text Class</TITLE>
+<HEADER>
+<JOURNAL>DLXS Documentation</JOURNAL>
+<PUBDATE>2002-07-08 12:22:41 EDT</PUBDATE>
+<AUTH1>Powell, Chris</AUTH1>
+<AUTH2></AUTH2>
+<DOCTITLE>Overview of Text Class</DOCTITLE>
+<VOL>class</VOL>
+<ISS>text</ISS>
+<FILE>dlxsdocs-tc-overview</FILE>
+</HEADER>
+<BODY>
+<BHEAD>Overview of Text Class</BHEAD>
+<DIV1>
+<H1>Abstract</H1>
+<P>
+<A NAME="Description"/>The Text Class consists primarily of monographic--books and pamphlets--material, but material such as journals, especially when converted from print and not subject to ongoing work, and letters can also be included. Whether current publishing or historical, whether the work was composed/edited for electronic distribution or print, whether the texts have been fully encoded or are automatically generated from raw OCR and a MARC record, these works are all:</P>
+<OL>
+<LI>extended text, typically of prose, verse, or drama, and (significantly) combinations of these; </LI>
+<LI>typically with a high degree of structure; </LI>
+<LI>and frequently drawn together in large groups or collections </LI>
+</OL>
+<P>Although materials in the proposed Reference Class may become a part of such a collection, we tend to think of members of the Text Class as having a less predictable structure and application. While the <I>typical</I> uses of these materials have much to do with the behaviors we apply to them (e.g., members of the Text Class are often read at length or analyzed for linguistic purposes; a member of the proposed Reference Class is more typically consulted for information), we focus here primarily on the great variability of their organization and the relatively large bodies of material that are assembled. These two factors converge to lead us to treat the organizational characteristics more generically. In an important way, this class more than any other serves as a base class from which new classes grow or can be defined. For more information about the DLPS Classes model, please see the <A HREF="../class-index.xml">DLPS Classes Overview</A>.</P>
+</DIV1>
+<DIV1>
+<H1>Description</H1>
+<DIV2>
+<H2>Basic Characteristics</H2>
+<P>The Text Class federates text collections at the point of access, but also allows access to each collection individually. Access minimally includes full text searching across collections or within a particular collection, bibliographic searching within document metadata, browsing by author or title, and creation of personal collections of texts. </P>
+</DIV2>
+<DIV2>
+<H2>General Characteristics</H2>
+<UL>
+<LI>Allows search and retrieval of electronic texts and portions thereof </LI>
+<LI>Allows searching across multiple collections simultaneously </LI>
+<LI>Allows searching of each collection independently </LI>
+<LI>Displays  a text as HTML and/or as a page image, as appropriate </LI>
+<LI>Allows bookmarking of individual texts </LI>
+<LI>Requires minimal administrative data </LI>
+<LI>Uses a single data model and shared middleware for all collections in the system </LI>
+<LI>Permits access restrictions at the collection level</LI>
+</UL>
+<P>At the University of Michigan, the Text Class access system is administered by the Digital Library Production Service, Encoded Text Services. Encoded Text Services receives data in SGML on a periodic basis from a variety of organizations on and off campus, and handles the process of putting the data online in a production-level environment. </P>
+<P>The Text Class provides no functionality for creating and managing electronic texts in SGML. </P>
+<DIV3>
+<H3>Typical Sources of Data</H3>
+<P>The following sources of data have influenced the process defining the Text Class. Other sources are possible. </P>
+<UL>
+<LI>Libraries: electronic texts and collections, both fully encoded and page images with OCR </LI>
+<LI>Publishers: both "born digital" and retrospectively converted texts </LI>
+<LI>Scholars/authors: electronic texts to support their research and/or teaching </LI>
+</UL>
+</DIV3>
+<DIV3>
+<H3>Typical Applications of the Class</H3>
+<UL>
+<LI>Campus access </LI>
+<LI>Public access </LI>
+</UL>
+</DIV3>
+<DIV3>
+<H3>Behaviors of the Text Class</H3>
+<UL>
+<LI>Cross-collection searching in any combination of collections </LI>
+<LI>Selection of collections by name or by attributes such as period covered, genre, etc. </LI>
+<LI>Collection-specific searching </LI>
+<LI>Simple, Boolean, Proximity, and Bibliography searching </LI>
+<LI>Searching within a user-selected text </LI>
+<LI>Ability to review and revise previous searches </LI>
+<LI>Browsing, either by a canned query embedded in a link, or with the "word wheel" </LI>
+<LI>Viewing of sections of a text or the full text in HTML (when available), page images (when available), or both (when applicable)</LI>
+</UL>
+</DIV3>
+</DIV2>
+<DIV2>
+<H2>General Parameters</H2>
+<P>Electronic texts and electronic versions of previously printed monographs are available in SGML from a number of sources, encoded in a number of different DTDs. While the content of each text is unique, the structure of each text is similar and often encoded in generalizable ways. The Text Class federates collections at the point of access in order to best support the diversity of texts and encoding practices. </P>
+<P>This diversity becomes evident when searching across databases is attempted. It is a considerable achievement that the Text Class supports cross-collection searching, and that it does so without forcing all collections to be encoded at the same level. All collection specific elements are available to the user for search and display when doing a collection specific search. In the cross-collection search, all of the elements that the collections have in common are available; when a collection with a very low level of encoding is included, full-text searching may be the only option presented. </P>
+</DIV2>
+<DIV2>
+<H2>Dynamics</H2>
+<P>The data structure and behaviors of the Text Class best serve the functional requirements of collections of electronic texts grouped by genre, subject, or some other unifying theme. Individual texts can be served alone, but the methods and behaviors of the class will treat the text as a collection containing one item only.</P>
+</DIV2>
+<DIV2>
+<H2>Formal Data Definition</H2>
+<P>
+<A NAME="Descriptive_Metadata__text_"/>The Text Class relies on a single SGML Document Type Definition (DTD) to deliver all collections in the class. The SGML data in the Text Class is converted to the Text Class delivery DTD from the specific encoding DTD for the particular text or collection, often using XML Style Language Transformations (XSLT). The general principles are that there is a common nomenclature for common elements -- paragraphs are &lt;P&gt;, not &lt;P&gt; and &lt;PARA&gt; and &lt;PARAGRAPH&gt; -- and that nested elements of the same name are numbered -- for example, a note element can contain other note elements, so these would be &lt;NOTE1&gt; and &lt;NOTE2&gt; respectively. The Text Class delivery DTD is based roughly on the TEILite DTD as applied by the <A HREF="http://www.indiana.edu/~letrs/tei/">TEI in Libraries Draft Guidelines for Best Encoding Practices.</A> The SGML is then indexed with XPAT and made searchable on the Web by the Text Class middleware. </P>
+<P>Page images, when available, are either 600 dpi TIFFs delivered through the Text Class pageviewer mechanisms as GIFs or PDFs, or continuous tone images delivered via Image Class. </P>
+</DIV2>
+<DIV2>
+<H2>Representative Resource(s)</H2>
+<P>Making of America, Twentieth Century American Poetry.</P>
+<P>The decision process for inclusion of content in the Text Class is roughly based on the following: </P>
+<UL>
+<LI>Text is a monograph or journal issue available in SGML.</LI>
+<LI>Each text has a unique ID.</LI>
+<LI>The campus and/or world community would benefit from access to the information. </LI>
+</UL>
+<P>These are, at best, general guidelines for decision making based on the current state of the Text Class implementation at the University of Michigan. </P>
+</DIV2>
+</DIV1>
+</BODY>
+</DLPSDOC>

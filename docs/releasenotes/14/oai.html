@@ -1,0 +1,2053 @@
+
+==========================================================
+<H4>web/o/oai</H4>
+
+
+NOTE: /l1/web/o/oai/ does not exist
+
+==========================================================
+<H4>bin/o/oai</H4>
+
+<UL>
+<LI> ConfirmPublicDomain.pl
+<UL>
+ <LI>init</LI>
+ <LI>conn to prod DB if not dlps_dev</LI>
+ <LI>need santelli</LI>
+ <LI>Added check for marc21 barcodes (previous
+                version was only oai_dc).</LI>
+ <LI>Added period to a printed comment.</LI>
+ <LI>Added method to allow for other metadata
+                formats if present in database.</LI>
+ <LI>reduce output</LI>
+ <LI>updated for new DB and added some additional
+                reporting</LI>
+ <LI>added _copy table flag and change rights
+                select</LI>
+ <LI>add support for WU. records</LI>
+ <LI>change to use lib config</LI></UL></LI>
+</UL>
+<UL>
+<LI> ConvertToDc.pl
+<UL>
+ <LI>Files for converted from text class
+                to dublin core, which is then loaded into UMProvider.
+                See README in same directory for more information.</LI>
+ <LI>Changed location of source xml (headers
+                from text class).</LI>
+ <LI>Corrected variable spelling.</LI>
+ <LI>Added to usage message.</LI>
+ <LI>Fixed logic for limiting translation
+                to only the files in the collection xml.</LI>
+ <LI>Removed &lt;COLL> wrapper tag from xml
+                so root element is now &lt;RSet></LI>
+ <LI>Changed name of destination file.</LI>
+ <LI>Fixed counter for number of files parsed.</LI>
+ <LI>Fixed spacing in usage message.</LI>
+ <LI>Updated scripts to parse full text
+                or header files depending on the collsInBroker.xml
+                attributes.</LI>
+ <LI>Update documentation for reason of
+                full text vs. header xml files.</LI>
+ <LI>Added check for .ww. and .norm. xml
+                files.</LI>
+ <LI>Fixed typo in variable name.</LI>
+ <LI>Added check for language attribute
+                for each collection.</LI>
+ <LI>Created new subdirectory (dlpscoll)
+                for text class to oai conversion files.</LI></UL></LI>
+</UL>
+<UL>
+<LI> ExtractHeaders.pl
+<UL>
+ <LI>Perl script that queries xpat for the
+                only the &lt;HEADER> sections of the text class XML.
+                This is used by the Text Class to OAI DC conversion.</LI>
+ <LI>Added documentation and removed an
+                unnecessary option.</LI>
+ <LI>Removed debugging statement to console.</LI>
+ <LI>Fixed variable scope (ddPath) compiler
+                error.</LI>
+ <LI>Added escape character for \</LI>
+ <LI>Removed &lt;COLL> wrapper tag from xml
+                so root element is now &lt;RSet></LI>
+ <LI>Changed placement of command to move
+                header files to prep dir.`</LI>
+ <LI>Reverted placement of code for moving
+                header files.</LI>
+ <LI>Added check for sgm files for bie and
+                npc.</LI>
+ <LI>Fix syntax for array in GetFileList</LI>
+ <LI>Troubleshooting sgml.</LI>
+ <LI>Fixed sgm filename issue.</LI>
+ <LI>Updated path for dds for moa and genres
+                since it's different from other collections with multiple
+                xml files.</LI>
+ <LI>Fixed syntax error in else if.</LI>
+ <LI>Changed position of StartXpat call.</LI>
+ <LI>Fixed syntax error in mv statement.</LI>
+ <LI>Closed file handler prior to moving
+                files.</LI>
+ <LI>Added condition to check for fulltext
+                attribute in XML configuration. Now it only calls
+                xpat for the collections which don't have that attr.</LI>
+ <LI>Updated scripts to parse full text
+                or header files depending on the collsInBroker.xml
+                attributes.</LI>
+ <LI>Update documentation for reason of
+                full text vs. header xml files.</LI>
+ <LI>Updated to look for SGM not XML file
+                for oec.</LI>
+ <LI>Added exception handling for oec because
+                data dictionary name is capitalized.</LI>
+ <LI>Debugging shakeR.</LI>
+ <LI>Removed debugging statements.</LI>
+ <LI>Added check for manual attribute for
+                oec. (Must manually use xpat for oec header.)</LI>
+ <LI>Fixed syntax error.</LI>
+ <LI>Created new subdirectory (dlpscoll)
+                for text class to oai conversion files.</LI></UL></LI>
+</UL>
+<UL>
+<LI> OaiList.pl
+<UL>
+ <LI>init</LI>
+ <LI>expanded padding, change token.txt
+                file to add counter</LI>
+ <LI>retry after 503</LI>
+ <LI>change default vals</LI>
+ <LI>work around old libxml problem</LI>
+ <LI>fix</LI>
+ <LI>added copyright</LI>
+ <LI>fixed config path</LI>
+ <LI>added support for writing out ind.
+                files (-w)</LI>
+ <LI>fix bug in sleep for timeout</LI>
+ <LI>up the max requests</LI></UL></LI>
+</UL>
+<UL>
+<LI> OaiToDb.pl
+<UL>
+ <LI>new</LI>
+ <LI>change to use lib config</LI></UL></LI>
+</UL>
+<UL>
+<LI> RepositoryConfig.xml
+<UL>
+ <LI>init</LI>
+ <LI>added quod.lib</LI></UL></LI>
+</UL>
+<UL>
+<LI> TxtToOaiREADME.txt
+<UL>
+ <LI>Read me for conversion from text class
+                to Dublin Core to UM Provider.</LI>
+ <LI>Updated instructions for TextClass
+                to Oai conversion.</LI>
+ <LI>Updated to include call to ExtractHeaders
+                script.</LI>
+ <LI>Removed unnecessary step (manually
+                moving header files)</LI>
+ <LI>Added documentation for 2 scripts for
+                SGML (oec and bie).</LI>
+ <LI>Updated steps for adding &lt;COLL></COLL>
+                tags around oec header file.</LI>
+ <LI>Created new subdirectory (dlpscoll)
+                for text class to oai conversion files.</LI></UL></LI>
+</UL>
+<UL>
+<LI> closeCATREF.pl
+<UL>
+ <LI>Perl script to close open &lt;CATREF>
+                tags in oec collection.</LI>
+ <LI>Added two lines from strip.pl to this
+                file to remove excess xpat characters added when extracting
+                oec headers.</LI>
+ <LI>Added documentation.</LI>
+ <LI>Adding &lt;COLL> tag at beginning and
+                closing &lt;/COLL> tag at end.</LI>
+ <LI>Removed attempt to encapsulate file
+                in &lt;COLL> tags.</LI>
+ <LI>Created new subdirectory (dlpscoll)
+                for text class to oai conversion files.</LI></UL></LI>
+</UL>
+<UL>
+<LI> collsInBroker.xml
+<UL>
+ <LI>Files for converted from text class
+                to dublin core, which is then loaded into UMProvider.
+                See README in same directory for more information.</LI>
+ <LI>Temporarily commented out evd.</LI>
+ <LI>Temporarily commented out genres.</LI>
+ <LI>Updated path for dds for moa and genres
+                since it's different from other collections with multiple
+                xml files.</LI>
+ <LI>Uncommented evd.</LI>
+ <LI>Added attribute to parse full text
+                instead of using xpat to get headers.</LI>
+ <LI>Added back evd.</LI>
+ <LI>Temporarily commented out collections
+                for testing.</LI>
+ <LI>Uncommented bie.</LI>
+ <LI>Commented out oec temporarily.</LI>
+ <LI>Uncommented collections to retest all
+                collections.</LI>
+ <LI>Created new subdirectory (dlpscoll)
+                for text class to oai conversion files.</LI></UL></LI>
+</UL>
+<UL>
+<LI> cvstag.oai
+<UL>
+ <LI>init</LI>
+ <LI>Add CvstagHelper</LI>
+ <LI>Add CvstagHelper</LI>
+ <LI>Kadd exit status</LI>
+ <LI>added prep dist</LI></UL></LI>
+</UL>
+<UL>
+<LI> loadOai.pl
+<UL>
+ <LI>init</LI>
+ <LI>updated perldoc</LI>
+ <LI>change to read in lib gloabal conf</LI></UL></LI>
+</UL>
+<UL>
+<LI> loadTxtToOai.pl
+<UL>
+ <LI>Script for loading the transformed
+                xml files from text class to Dublin Core for the UM
+                Provider. A simpler version of the updateMbooksOai
+                script.</LI>
+ <LI>Updated oaiset assignment so that it's
+                re-assigned with each record (before it was based
+                on only the first record).</LI>
+ <LI>Added option to limit database loading
+                to one collection at a time.</LI>
+ <LI>Fixed typo in variable name.</LI>
+ <LI>Fixed logic error for limiting to one
+                collection.</LI>
+ <LI>Fixed another logic error for loading
+                only one collection.</LI>
+ <LI>Removed debugging statements to the
+                console.</LI>
+ <LI>Adding status update to the console.</LI>
+ <LI>Updated perldoc.</LI>
+ <LI>Updated StoreRecord method for oaisets
+                table.</LI>
+ <LI>Created new subdirectory (dlpscoll)
+                for text class to oai conversion files.</LI></UL></LI>
+</UL>
+<UL>
+<LI> mbooks_harvest_cron.pl
+<UL>
+ <LI>new</LI></UL></LI>
+</UL>
+<UL>
+<LI> mbooks_update.pl
+<UL>
+ <LI>new</LI>
+ <LI>load config now</LI></UL></LI>
+</UL>
+<UL>
+<LI> rdist.class
+<UL>
+ <LI>init</LI>
+ <LI>do not remove global.conf in cgi</LI>
+ <LI>added prep dist</LI></UL></LI>
+</UL>
+<UL>
+<LI> replaceEntities.pl
+<UL>
+ <LI>Perl script for replacing SGML characters
+                in the bie collection with the XML-acceptable hexadecimal
+                version.</LI>
+ <LI>Troubleshooting find-replace.</LI>
+ <LI>Troubleshooting find-replace.</LI>
+ <LI>Replaced syntax error (open curly bracket
+                at EOF)</LI>
+ <LI>Fixed type in output to console.</LI>
+ <LI>Fixed typo (hypen to hyphen)</LI>
+ <LI>Fixed missing semicolon.</LI>
+ <LI>Fixed missing curly bracket for while
+                loop.</LI>
+ <LI>Removed commented out code.</LI>
+ <LI>Incorporated two lines from strip.pl
+                to remove excess characters from xpat that are added
+                when manually saving the headers from the oec collection.</LI>
+ <LI>Moved two lines from strip.pl from
+                this script to closeCATREF.</LI>
+ <LI>Added find-replace for abar entity.</LI>
+ <LI>Created new subdirectory (dlpscoll)
+                for text class to oai conversion files.</LI></UL></LI>
+</UL>
+<UL>
+<LI> revertOaiTbl.pl
+<UL>
+ <LI>new</LI>
+ <LI>load config now</LI></UL></LI>
+</UL>
+<UL>
+<LI> strip.pl
+<UL>
+ <LI>File used to remove xpat code added
+                to the header files manually extracted from xpat (oec).</LI>
+ <LI>Combined the two lines from this file
+                into replaceEntities.pl.</LI></UL></LI>
+</UL>
+<UL>
+<LI> textClassToDc.xsl
+<UL>
+ <LI>Files for converted from text class
+                to dublin core, which is then loaded into UMProvider.
+                See README in same directory for more information.</LI>
+ <LI>Fixed location of &lt;records> opening
+                and ending tag.</LI>
+ <LI>Updated id parsing to accept id's of
+                different types.</LI>
+ <LI>Updated identifier values.</LI>
+ <LI>Fixed mismatched tag.</LI>
+ <LI>Removed () next to identifier if no
+                type attribute is present.</LI>
+ <LI>Fixed mismatched tag.</LI>
+ <LI>Changed template match from Coll to
+                (root node) for &lt;records> tag.</LI>
+ <LI>Debugging extra &lt;records> tags.</LI>
+ <LI>Fixed extra &lt;records> tag issue.</LI>
+ <LI>Removed a couple template calls to
+                try to fix out of memory errors.</LI>
+ <LI>Removed a couple more template calls
+                to try to fix out of memory errors.</LI>
+ <LI>Another try at improving memory allocation.</LI>
+ <LI>Another attempt to improve efficiency.</LI>
+ <LI>Another attempt to improve efficiency.</LI>
+ <LI>Fixed open tag.</LI>
+ <LI>Removed another template (&lt;TEXT>) to
+                improve efficiency.</LI>
+ <LI>Fixed error in call to HEADER template.</LI>
+ <LI>Removed empty "&lt;apply-templates/>"
+                tags to improve efficiency.</LI>
+ <LI>Replaced "copy-of" tags for idno with
+                "value-of"</LI>
+ <LI>Removed &lt;COLL> wrapper tag from xml
+                so root element is now &lt;RSet></LI>
+ <LI>Updated path for header (now Raw/Header)
+                because of xpat formatting.</LI>
+ <LI>Removed "-[collid]" suffix from id,
+                fixed dc:identifier and dc:extent fields based on
+                emails from Kat and Chris.</LI>
+ <LI>Updated dc:date field to use sourcedesc
+                instead of filedesc</LI>
+ <LI>Removed commas after publication place.</LI>
+ <LI>Fixed dc:identifier tag (it was duplicated)</LI>
+ <LI>Added loop for multiple authors. Troubleshooting
+                URL in dc:identifier tag.</LI>
+ <LI>Fixed author dates. Troubleshooting
+                source URL.</LI>
+ <LI>Changed dc:creator template.</LI>
+ <LI>Troubleshooting dc:creator and dc:identifier
+                fields.</LI>
+ <LI>Updated dc:source and dc:identifier
+                tags.</LI>
+ <LI>Modified template to work with both
+                header files and text files to try to fix utf encoding
+                errors.</LI>
+ <LI>Updated subject field.</LI>
+ <LI>Updated check for dlps id (now checks
+                for DLPS and dlps)</LI>
+ <LI>Fixed dc:source URL.</LI>
+ <LI>Updated URL for non-dlps ids (e.g.
+                voltaire)</LI>
+ <LI>Changed dc:source to dc:identifier</LI>
+ <LI>Added colon after publication place.</LI>
+ <LI>Updated dc:author tag.</LI>
+ <LI>Added language parameter, made each
+                tag a "for-each" loop to account for multiples.</LI>
+ <LI>Changed tag around availability statement
+                to dc:description from dc:rights.</LI>
+ <LI>Changed wrapper around AVAILABILITY
+                tag back to dc:rights</LI>
+ <LI>Added check for oec header which uses
+                "TEIHEADER" tags instead of "HEADER".</LI>
+ <LI>Updated for oec exceptions (TEIHEADER)
+                tags.</LI>
+ <LI>Added check for TEIHEADER tags from
+                xpat output for shakeR.</LI>
+ <LI>Moved line breaks to within for loops
+                (before had empty lines)</LI>
+ <LI>Created new subdirectory (dlpscoll)
+                for text class to oai conversion files.</LI></UL></LI>
+</UL>
+<UL>
+<LI> updateMbooksOai.pl
+<UL>
+ <LI>init</LI>
+ <LI>add test to check DLPS_DEV</LI>
+ <LI>support mixed pd/ic records</LI>
+ <LI>but fix in step 2</LI>
+ <LI>fix bug in step 2</LI>
+ <LI>add rights to oai_dc in step 2</LI>
+ <LI>mysql to handle timestamp now</LI>
+ <LI>change for oaisets table</LI>
+ <LI>fixed config path</LI>
+ <LI>fix for mbooks: hier. set</LI>
+ <LI>fix for oaiset bug, remove old set</LI>
+ <LI>fixed date func</LI>
+ <LI>missed semi</LI>
+ <LI>marc21 from db and other major changes</LI>
+ <LI>cleanup code, no real changes</LI>
+ <LI>added DB ping</LI>
+ <LI>added rights cache hash, table names
+                in conf</LI>
+ <LI>change rights select</LI>
+ <LI>change right DB SELECT and cleanup
+                a little</LI>
+ <LI>change to use lib config</LI>
+ <LI>del records in step 1 if not pd</LI></UL></LI>
+</UL>
+<UL>
+<LI> update_conf.xml
+<UL>
+ <LI>init</LI>
+ <LI>update rights stmnt</LI>
+ <LI>added mbooks: to set name</LI>
+ <LI>change prep dir</LI>
+ <LI>some new settings</LI>
+ <LI>Updated hostname for oai dev to clamato
+                from localhost in order to connect from lager</LI>
+ <LI>added table names</LI>
+ <LI>use config in lib now</LI></UL></LI>
+</UL>
+<UL>
+<LI> dlpscoll/ConvertToDc.pl
+<UL>
+ <LI>Moved text class to OAI conversion
+                files into their own subdirectory.</LI>
+ <LI>Removed subdirectory from dlpscoll
+                to provider for consistency.</LI></UL></LI>
+</UL>
+<UL>
+<LI> dlpscoll/ExtractHeaders.pl
+<UL>
+ <LI>Moved text class to OAI conversion
+                files into their own subdirectory.</LI>
+ <LI>Removed subdirectory from dlpscoll
+                to provider for consistency.</LI></UL></LI>
+</UL>
+<UL>
+<LI> dlpscoll/TxtToOaiREADME.txt
+<UL>
+ <LI>Moved text class to OAI conversion
+                files into their own subdirectory.</LI>
+ <LI>Updated instructions to reflect new
+                subdirectory for text class to OAI files.</LI>
+ <LI>Removed subdirectory from dlpscoll
+                to provider for consistency.</LI></UL></LI>
+</UL>
+<UL>
+<LI> dlpscoll/closeCATREF.pl
+<UL>
+ <LI>Moved text class to OAI conversion
+                files into their own subdirectory.</LI>
+ <LI>Removed subdirectory from dlpscoll
+                to provider for consistency.</LI></UL></LI>
+</UL>
+<UL>
+<LI> dlpscoll/collsInBroker.xml
+<UL>
+ <LI>Moved text class to OAI conversion
+                files into their own subdirectory.</LI>
+ <LI>Removed subdirectory from dlpscoll
+                to provider for consistency.</LI></UL></LI>
+</UL>
+<UL>
+<LI> dlpscoll/loadTxtToOai.pl
+<UL>
+ <LI>Moved text class to OAI conversion
+                files into their own subdirectory.</LI>
+ <LI>Removed subdirectory from dlpscoll
+                to provider for consistency.</LI></UL></LI>
+</UL>
+<UL>
+<LI> dlpscoll/replaceEntities.pl
+<UL>
+ <LI>Moved text class to OAI conversion
+                files into their own subdirectory.</LI>
+ <LI>Removed subdirectory from dlpscoll
+                to provider for consistency.</LI></UL></LI>
+</UL>
+<UL>
+<LI> dlpscoll/textClassSGMLToDc.xsl
+<UL>
+ <LI>Special stylesheet for bie since the
+                DTD for the XML is different from the other collections.</LI>
+ <LI>Removed subdirectory from dlpscoll
+                to provider for consistency.</LI></UL></LI>
+</UL>
+<UL>
+<LI> dlpscoll/textClassToDc.xsl
+<UL>
+ <LI>Moved text class to OAI conversion
+                files into their own subdirectory.</LI>
+ <LI>Removed subdirectory from dlpscoll
+                to provider for consistency.</LI></UL></LI>
+</UL>
+<UL>
+<LI> provider/AddCollToSource.pl
+<UL>
+ <LI>Parses the collections given in the
+                configuration file and adds a dc:source tag with the
+                full collection name</LI>
+ <LI>Updated the documentation</LI>
+ <LI>Fixed typo</LI>
+ <LI>Fixed typo in find-replace</LI>
+ <LI>Debugging find-replace</LI>
+ <LI>Updated placement from before dc:publisher
+                tag to after</LI>
+ <LI>Moved dc:source tag to after dc:title.
+                It assumes that all collections have one and only
+                one dc:title field.</LI>
+ <LI>Troubleshooting find-replace</LI>
+ <LI>Updated documentation and arguments</LI>
+ <LI>Removed unnecessary documentation and
+                added overwrite of backup file to the original.</LI>
+ <LI>Troubleshooting switch-case statement
+                in GetDescription</LI>
+ <LI>Added import statement to Switch</LI>
+ <LI>Updated collection descriptions for
+                the necessary titles.</LI>
+ <LI>Removed epd</LI>
+ <LI>Added header (title, description, author)</LI>
+ <LI>Updated name of log</LI>
+ <LI>Troubleshooting multiple dc:source
+                issue</LI>
+ <LI>Fixed syntax error</LI>
+ <LI>fixed syntax error</LI>
+ <LI>Removed debugging statements to console</LI>
+ <LI>Updated to look for dc:pub and dc:creator</LI>
+ <LI>Updated find-replace string</LI>
+ <LI>removed old comment in header</LI>
+ <LI>Added mfsfront</LI>
+ <LI>Updated mqr</LI>
+ <LI>Added dc:source for postid</LI>
+ <LI>Added epv2</LI>
+ <LI>Added epv2</LI>
+ <LI>Removed addCollName attrib from mfsfront
+                since that is now taken care of in the XSL</LI>
+ <LI>Removed addCollName attrib from mqr
+                since this is now handled in the xsl</LI>
+ <LI>Removed addCollName attrib for postid
+                since that is now handled in the xsl</LI>
+ <LI>Added standard U of M header</LI>
+ <LI>Updated messages to console</LI>
+ <LI>Updated name of log file</LI>
+ <LI>Updated to write to logs subdirectory</LI></UL></LI>
+</UL>
+<UL>
+<LI> provider/CheckModifiedColls.pl
+<UL>
+ <LI>Checks to see which collections have
+                been modified since a given update time.</LI>
+ <LI>Removed old code from ExtractHeaders</LI>
+ <LI>Updated output to console</LI>
+ <LI>fixed typo</LI>
+ <LI>debugging last update time</LI>
+ <LI>fixed typo</LI>
+ <LI>troubleshooting negative date</LI>
+ <LI>Adding output for debugging</LI>
+ <LI>debugging date comparison</LI>
+ <LI>Refactored method for comparing date.</LI>
+ <LI>Added methods for static collections.</LI>
+ <LI>Fixed syntax error</LI>
+ <LI>Added file with update times as input</LI>
+ <LI>Fixed syntax error (typo in variable
+                name)</LI>
+ <LI>Added construct to writing to new xml
+                file and for appending to update time file.</LI>
+ <LI>Updated output to console</LI>
+ <LI>Updated time format for last update
+                file</LI>
+ <LI>Updated error message to console</LI>
+ <LI>Troubleshooting local timestamp</LI>
+ <LI>Troubleshooting creating new xml file</LI>
+ <LI>Troubleshooting writing new xml file</LI>
+ <LI>Updated logic for date comparison (substraction
+                was in opposite order before)</LI>
+ <LI>Updated output to new xml file</LI>
+ <LI>Added use statement for file:copy</LI>
+ <LI>Updated code to remove node for a collection
+                that has not been recently updated</LI>
+ <LI>Troubleshooting output to new colls
+                file.</LI>
+ <LI>Updated code to rewrite collection
+                xml</LI>
+ <LI>debugging rewriting xml file.</LI>
+ <LI>Updated output to new xml file</LI>
+ <LI>Updated code to remove &lt;COLL> node
+                if it has not been updated</LI>
+ <LI>Added method to remove blank lines
+                from new xml file.</LI>
+ <LI>Updated code to remove blank lines
+                from xml file.</LI>
+ <LI>Removed excess output to console</LI>
+ <LI>Added header (title, author, desc)</LI>
+ <LI>Updated output to console</LI>
+ <LI>Updated output to console</LI>
+ <LI>Updated output to console</LI>
+ <LI>Testing check for llmc collections</LI>
+ <LI>Fixed syntax errors for llmc</LI>
+ <LI>Fixed llmc syntax errors</LI>
+ <LI>Updated logic for llmc sub collections</LI>
+ <LI>Updated code for colls with multiple
+                XML files</LI>
+ <LI>Fixed syntax error</LI>
+ <LI>Updated for two xml files for lincoln</LI>
+ <LI>Added standard U of M header to code</LI>
+ <LI>Updated output to console</LI>
+ <LI>Updated formatting for output to console</LI>
+ <LI>Updated output to console</LI>
+ <LI>Updated output to console</LI>
+ <LI>Updated error message displayed to
+                console when file cannot be written</LI>
+ <LI>Updated name of log file</LI>
+ <LI>Updated to write to logs subdirectory</LI></UL></LI>
+</UL>
+<UL>
+<LI> provider/CollsAndTypesOfIDs.xls
+<UL>
+ <LI>Spreadsheet that identifies which text
+                class collections are static and what types of ids
+                they have. Used to determine necessary exceptions
+                in the XSL.</LI>
+ <LI>Updated with SPO collections</LI>
+ <LI>Updated info for SPO URLs</LI></UL></LI>
+</UL>
+<UL>
+<LI> provider/ConvertToDc.pl
+<UL>
+ <LI>Added files to new subdirectory (provider)
+                instead of old subdirectory (dlpscoll).</LI>
+ <LI>Updated documentation.</LI>
+ <LI>Added condition to skip collections
+                with the "diffXSL" attribute.</LI>
+ <LI>Fixed syntax error.</LI>
+ <LI>Updated to use different stylesheet
+                for static collections.</LI>
+ <LI>Updated options.</LI>
+ <LI>Updated for bib class files that had
+                XML which were manually fixed and are now located
+                in /l1/prep/o/oai/bibClassExceptions.</LI>
+ <LI>Updated for utf 8 conversion (removed
+                full text attribute and replaced with nonUTF8)</LI>
+ <LI>Updated output to the log.</LI>
+ <LI>Updated documentation to loag to include
+                time of execution.</LI>
+ <LI>Removed references to useFullText</LI>
+ <LI>Removed remaining reference to useFullText</LI>
+ <LI>Updated timestamp formatting in log</LI>
+ <LI>Updated for article-level collections.</LI>
+ <LI>Fixed syntax error (elsif instead of
+                else if)</LI>
+ <LI>Updated ProcessCollection method for
+                articles.</LI>
+ <LI>Updated transform collection for articles</LI>
+ <LI>Updated output to log.</LI>
+ <LI>Fixed missing curly bracket.</LI>
+ <LI>Updated output to console.</LI>
+ <LI>Updated output to the console.</LI>
+ <LI>Updated output to the console.</LI>
+ <LI>Updated Conversion so that records
+                are created for the volume in addition to the records.</LI>
+ <LI>Updated for ncosw (useFullText) attribute</LI>
+ <LI>Updated for SPO collections</LI>
+ <LI>Updated for spo source dir</LI>
+ <LI>Updated comments</LI>
+ <LI>Fixed syntax error</LI>
+ <LI>Fixed syntax error</LI>
+ <LI>Added parameter for type (spo or dlps)
+                to xlst</LI>
+ <LI>Updated check for SPO or DLPS</LI>
+ <LI>Updated check for SPO vs DLPS</LI>
+ <LI>Updated check for SPO vs DLPS (converted
+                to lowercase)</LI>
+ <LI>Added header (title, desc, author)</LI>
+ <LI>Updated output to console and name
+                of log file</LI>
+ <LI>Duplicated output to console to log</LI>
+ <LI>Fixed missing semicolon</LI>
+ <LI>Fixed syntax error</LI>
+ <LI>Updated directory for static files
+                (use the nameresolver prep directory for everything
+                instead of the obj directories)</LI>
+ <LI>Removed commented out code when I was
+                testing updated locating for static bib files</LI>
+ <LI>Added standard U of M header</LI>
+ <LI>Updated output to console</LI>
+ <LI>Made stylesheet parameters set behind
+                the scenes instead of with options</LI>
+ <LI>Updated name of log file</LI>
+ <LI>Updated to write to logs subdirectory</LI></UL></LI>
+</UL>
+<UL>
+<LI> provider/ConvertToUTF8.pl
+<UL>
+ <LI>Replaces convertToUTF8.pl. Parses the
+                collections configuration xml file and converts the
+                collections with the "nonUTF8" attribute to UTF8.</LI>
+ <LI>Updated to convert only those with
+                non.utf8 attribute</LI>
+ <LI>Fixed syntax errors.</LI>
+ <LI>Fixed syntax error in import.</LI>
+ <LI>Fixed open bracket.</LI>
+ <LI>Fixed parser error.</LI>
+ <LI>Fixed parser syntax error (had tried
+                to retrieve node instead of content of node)</LI>
+ <LI>Updated output to log.</LI>
+ <LI>Updated documentation to include time
+                of execution.</LI>
+ <LI>Updated timestamp formatting in log</LI>
+ <LI>Updated output to the console.</LI>
+ <LI>Updated for spo</LI>
+ <LI>fixed typo</LI>
+ <LI>troubleshooting getfilelist</LI>
+ <LI>Updated getfilelist method</LI>
+ <LI>troubleshooting getfiles</LI>
+ <LI>fixed getfilelist</LI>
+ <LI>testing getfilelistbyprefix</LI>
+ <LI>testing getfilelistbyprefix</LI>
+ <LI>testing getfilelistbyprefix</LI>
+ <LI>testing getfilelistbyprefix</LI>
+ <LI>Updated output to log</LI>
+<LI</LI>
+ <LI>updated output to log and console CV:</LI>
+ <LI>updated output to console</LI>
+ <LI>Added header (title, author, desc)</LI>
+ <LI>Updated name of log file</LI>
+ <LI>Duplicated output to console to log</LI>
+ <LI>Fixed missing semicolon</LI>
+ <LI>Fixed syntax error</LI>
+ <LI>Added standard U of M header</LI>
+ <LI>Updated output to console</LI>
+ <LI>Added help option</LI>
+ <LI>Fixed syntax error</LI>
+ <LI>Updated name of log file</LI>
+ <LI>Updated to write to logs subdirectory</LI></UL></LI>
+</UL>
+<UL>
+<LI> provider/ExtractHeaders.pl
+<UL>
+ <LI>Added files to new subdirectory (provider)
+                instead of old subdirectory (dlpscoll).</LI>
+ <LI>Removed utf8 encoding for oec since
+                that is now done by another script/</LI>
+ <LI>Removed unnecessary import (use Encode)</LI>
+ <LI>Updated to look for static attribute
+                in collection configuration XML. For collections without
+                the static attribute, I use xpat to retrieve the text
+                class headers.</LI>
+ <LI>Updated output to log to include time
+                of execution.</LI>
+ <LI>Removed automated call to move header
+                files. When this is done too soon, I get premature
+                end of file errors.</LI>
+ <LI>Updated timestamp formatting in log</LI>
+ <LI>Removed unused option</LI>
+ <LI>Updated output to the console.</LI>
+ <LI>Updated output to the console.</LI>
+ <LI>Updated for useFullText attribute for
+                ncosw</LI>
+ <LI>Fixed typo.</LI>
+ <LI>Updated log for static and useFullText</LI>
+ <LI>Updated for SPO collections</LI>
+ <LI>Updated ddPath for spo</LI>
+ <LI>Updated check to see if dd exists</LI>
+ <LI>Updated ddpath for spo</LI>
+ <LI>Troubleshooting ddPath</LI>
+ <LI>Fixed syntax error</LI>
+ <LI>Updated formatting</LI>
+ <LI>Fixed typo</LI>
+ <LI>troubleshooting ddpath</LI>
+ <LI>troubleshooting ddpath anf filehandling
+                for spo</LI>
+ <LI>Troubleshooting ddpath</LI>
+ <LI>still troubleshooting ddpath</LI>
+ <LI>Fixed ddpath</LI>
+ <LI>Removed typo</LI>
+ <LI>Troubleshooting llmc subcollection
+                headers</LI>
+ <LI>Fixed typo</LI>
+ <LI>Debugging llmc</LI>
+ <LI>Troubleshooting llmc</LI>
+ <LI>testing llmc</LI>
+ <LI>testing llmc</LI>
+ <LI>testing llmc</LI>
+ <LI>Troubleshooting llmc</LI>
+ <LI>fixed typo</LI>
+ <LI>troubleshooting llmc</LI>
+ <LI>working on llmc</LI>
+ <LI>troubleshooting llmc</LI>
+ <LI>Fixed llmc</LI>
+ <LI>Updated for llmc</LI>
+ <LI>Updated output to log</LI>
+ <LI>Updated comments</LI>
+ <LI>Fixed missing semicolon.</LI>
+ <LI>Updated method of writing text class
+                headers to file</LI>
+ <LI>removed utf8 handler</LI>
+ <LI>Updated char encoding</LI>
+ <LI>Updated debugging statements</LI>
+ <LI>Decreased output to console</LI>
+ <LI>experimenting with timestamp of file</LI>
+ <LI>Experimenting with checking the timestamp
+                of a file in order to write the cron job to only load
+                collections that have been updated since a specific
+                date</LI>
+ <LI>Still experimenting with file timestamp</LI>
+ <LI>Still experimenting with file timestamp</LI>
+ <LI>Updated code for file timestamp</LI>
+ <LI>still playing with file timestamp</LI>
+ <LI>still playing with file timestamp</LI>
+ <LI>fixed typo</LI>
+ <LI>fixed logic error (ctime)</LI>
+ <LI>still trying to figure out timestamp</LI>
+ <LI>still troubleshooting timestamp</LI>
+ <LI>still troubleshooting timestamp</LI>
+ <LI>still troubleshooting timestamp</LI>
+ <LI>fixed syntax error</LI>
+ <LI>fixed syntax error</LI>
+ <LI>testing timestamp</LI>
+ <LI>Troubleshooting file timestamp</LI>
+ <LI>troubleshooting file timestamp</LI>
+ <LI>fixed typo on line 344</LI>
+ <LI>fixed typo on line 345</LI>
+ <LI>Troubleshooting timestamp</LI>
+ <LI>troubleshooting timestamp</LI>
+ <LI>Removed code from checking for filestamp.
+                The file CheckModifiedColls replaces that functionality.</LI>
+ <LI>Updated check for SPO or DLPS</LI>
+ <LI>Updated check for SPO vs DLPS</LI>
+ <LI>Updated check for SPO vs DLPS (converted
+                to lowercase)</LI>
+ <LI>Temporarily commented out llmc</LI>
+ <LI>Added header (title, author, desc)</LI>
+ <LI>Updated name of log file</LI>
+ <LI>Duplicated output to console to log</LI>
+ <LI>Fixed missing semicolon</LI>
+ <LI>Uncommented llmc code for extracting
+                headers</LI>
+ <LI>Updated dd path for acls1</LI>
+ <LI>Updated for lincoln (two data dictionaries)</LI>
+ <LI>Updated ddPath for lincoln</LI>
+ <LI>Updated name of header file for lincoln</LI>
+ <LI>Updated for two xml files for lincoln
+                (lincoln and lincoln2)</LI>
+ <LI>Added standard U of M header</LI>
+ <LI>Updated output to the console</LI>
+ <LI>Updated output to console</LI>
+ <LI>Updated name of log file</LI>
+ <LI>Updated to write to logs subdirectory</LI>
+ <LI>Replaced references for /l1/ with $DLXSROOT
+                for cleanness and for the workshop</LI>
+ <LI>Removed leading space for dd path</LI>
+ <LI>Updated to get data dictionary from
+                collmgr instead of constructing the path using the
+                standard convention</LI>
+ <LI>Fixed syntax error in xpat command
+                after refactoring</LI></UL></LI>
+</UL>
+<UL>
+<LI> provider/FixContactInfoInRights.pl
+<UL>
+ <LI>Updates the dlps website and email
+                address in the dc:rights tag of collections with the
+                "fixContacts" attribute.</LI>
+ <LI>Fixed syntax error.</LI>
+ <LI>Added debugging statements.</LI>
+ <LI>Debugging getfilelist issues.</LI>
+ <LI>Updated namespace for path for dc:rights</LI>
+ <LI>Troubleshooting namespace for dc:rights.</LI>
+ <LI>Fixed syntax error.</LI>
+ <LI>Added debugging statements.</LI>
+ <LI>Fixed typo in xpath.</LI>
+ <LI>Troubleshooting xpath.</LI>
+ <LI>Troubleshooting xpath.</LI>
+ <LI>Troubleshooting xpath.</LI>
+ <LI>Troubleshooting xpath.</LI>
+ <LI>Fixed xpath for dc:rights.</LI>
+ <LI>Updated documentation.</LI>
+ <LI>Troubleshooting replaceDatastring</LI>
+ <LI>Troubleshooting appendTextNode</LI>
+ <LI>Troubleshooting appendText</LI>
+ <LI>Removed debugging statement.</LI>
+ <LI>Updated debugging statement.</LI>
+ <LI>Still troubleshooting.</LI>
+ <LI>Added code to rewriting existing file.</LI>
+ <LI>Updated code for rewriting DC file.</LI>
+ <LI>Updated output to the console.</LI>
+ <LI>Reverted back to old version of file.</LI>
+ <LI>Added debugging statements to the console.</LI>
+ <LI>Troubleshooting.</LI>
+ <LI>Fixed missing semicolons.</LI>
+ <LI>Updated output to the console.</LI>
+ <LI>Updated output to the console.</LI>
+ <LI>Updated output to console.</LI>
+ <LI>Update output to console.</LI>
+ <LI>Updated output to the console.</LI>
+ <LI>Updated output to the console.</LI>
+ <LI>Removed debugging statements</LI>
+ <LI>This script is no longer necessary
+                to the new rights statement</LI></UL></LI>
+</UL>
+<UL>
+<LI> provider/FixLincolnRights.pl
+<UL>
+ <LI>Removes UTF8 encoding problem from
+                the dc:rights tag for the lincoln collection</LI>
+ <LI>Troubleshooting find-replace</LI>
+ <LI>File no longer necessary since the
+                problem was caused by double UTF8 encoding lincoln</LI></UL></LI>
+</UL>
+<UL>
+<LI> provider/GenerateReport.pl
+<UL>
+ <LI>Script to generate report of OAI update
+                for Kat.</LI>
+ <LI>Updated summary section</LI>
+ <LI>Removed section about total deleted
+                records (including before update)</LI>
+ <LI>Updated output when no records have
+                been updated</LI>
+ <LI>Updated to include sum of all records
+                updated in addition to breakdown by coll</LI>
+ <LI>Updated formatting of output for updated
+                records</LI>
+ <LI>Updated formatting of output for deleted
+                records</LI>
+ <LI>Updated log error in conditional for
+                deleted records</LI>
+ <LI>Added line breaks for formatting</LI>
+ <LI>Added -t parameter to get number of
+                total records before update in order to track new
+                records</LI>
+ <LI>Uncommented method calls that had been
+                temporarily disabled for debugging</LI>
+ <LI>Updated with new database config</LI>
+ <LI>Removed redundant information about
+                counts, fixed leading zeros, and made small changes
+                to image class counts.</LI>
+ <LI>Updated logic for getting date of last
+                update. Now I get the date from the image class date
+                list, since that is the last of the collections updated.</LI>
+ <LI>Updated timing of when the number of
+                total records is retrieved from the database in order
+                to calculate the number of new records</LI>
+ <LI>Removed old debugging code to console
+                and code that was commented out</LI>
+ <LI>Updated comments to console</LI>
+ <LI>Updated database calls from oai, oaisets
+                to oai_copy and oaisets_copy</LI>
+ <LI>Updated to look at collmgr for total
+                number of image class colls in oai</LI>
+ <LI>Updated to include optional argument
+                c to indicate whether the oai, oaisets tables should
+                be used or the oai_copy and oaisets_copy tables</LI>
+ <LI>updated output to console</LI>
+ <LI>Fix typo in email message</LI>
+ <LI>change to lib config</LI>
+ <LI>Updated ConnectToOaiDb to have option
+                to connect to dev instead of prod</LI>
+ <LI>Fixed syntax error in new database
+                config</LI>
+ <LI>Updated name of report file</LI>
+ <LI>Updated to write to new reports dir</LI></UL></LI>
+</UL>
+<UL>
+<LI> provider/GetNewCollections.pl
+<UL>
+ <LI>Script that checks collmgr for new
+                collections and emails a report</LI>
+ <LI>Uncommented the code to email report
+                (previously commented out for debugging)</LI>
+ <LI>Fixed path for emailing report to look
+                in subdir</LI></UL></LI>
+</UL>
+<UL>
+<LI> provider/LoadDB.pl
+<UL>
+ <LI>Replaces old loadTxtToOai.pl. Loads
+                the DC xml files to the database.</LI>
+ <LI>Updated to read collections cong xml</LI>
+ <LI>Updated documentation.</LI>
+ <LI>Fixed syntax error (forgot to declare
+                "node") variable</LI>
+ <LI>Updated storing record for subsets.</LI>
+ <LI>Troubleshooting identifiers for articles.</LI>
+ <LI>Formatted output to console.</LI>
+ <LI>Updated documentation.</LI>
+ <LI>Updated debugging statement.</LI>
+ <LI>Fixed identifier to replace : for articles
+                with a dash since : OAIPMH specs do not allow the
+                extra colon</LI>
+ <LI>Updated comments</LI>
+ <LI>Updated for spo collections</LI>
+ <LI>Updated check for SPO vs DLPS</LI>
+ <LI>Updated check for SPO vs DLPS (converted
+                to lowercase)</LI>
+ <LI>Updated ConnectToDb method and added
+                parameter to connect to production database</LI>
+ <LI>Added header (title, desc, author)</LI>
+ <LI>Added import of LibGlobals.cfg file</LI>
+ <LI>Updated connectToDb method</LI>
+ <LI>Updated output to log and console</LI>
+ <LI>Updated output to console</LI>
+ <LI>Fixed missing opt (forget p)</LI>
+ <LI>Added standard U of M header</LI>
+ <LI>Updated for mods collections</LI>
+ <LI>Troubleshooting loading mods collections</LI>
+ <LI>Updated messages to console</LI>
+ <LI>Uncommented call to load collection
+                which had been previously commented out for debugging</LI>
+ <LI>Updated to add new records to nameresolver
+                for dlps text collections only. There is also functionality
+                to allowed for persistent deleted records for both
+                dlps and spo but that is currently commented out for
+                testing purposes</LI>
+ <LI>Added debugging statements for adding
+                to NR</LI>
+ <LI>Testing adding to NR2</LI>
+ <LI>Updated code for adding to NR2 for
+                genres collection</LI>
+ <LI>Updated url for genres/genpub</LI>
+ <LI>Updated output to console and log</LI>
+ <LI>Fixed syntax error in sql statement</LI>
+ <LI>removed debugging statement for config</LI>
+ <LI>Fixed spacing in sql statement for
+                deleted records</LI>
+ <LI>Removed debugging statements</LI>
+ <LI>Uncommented code to delete records</LI>
+ <LI>Updated to remove long id from nameresolver
+                for del records</LI>
+ <LI>Commented out deleting record from
+                nameresolver while awaiting response on this issue
+                (should record be deleted or URL updated to tombstone?)</LI>
+ <LI>Updated with new oai database config</LI>
+ <LI>Updated logic for deleting records</LI>
+ <LI>Updated logic to use directory path
+                instead of list of ids to determine if we're processing
+                spo or dlps. This was necessary for the scenario when
+                the user is loading a single collection instead of
+                a list of colls.</LI>
+ <LI>Updated path for mods files</LI>
+ <LI>Uncommented code for loading mods collection</LI>
+ <LI>Updated path for mods files</LI>
+ <LI>Updated to method names to relect connection
+                to oai db instead of mdp db</LI>
+ <LI>Troubleshooting updated name.umdl links
+                in mods collections</LI>
+ <LI>Removed debugging statement for db
+                connection</LI>
+ <LI>Troubleshooting replace name.umdl links
+                for mods</LI>
+ <LI>Updated path for nameresolver links
+                for mods</LI>
+ <LI>Updated logic for adding to nameresolver:
+                Nameresolver ids can contain : but oai cannot so they
+                have dashes instead</LI>
+ <LI>Updated to print to log instead of
+                console for mods</LI>
+ <LI>Updated to indicate whether user is
+                connecting to dev or prod</LI>
+ <LI>Fixed syntax error in printing</LI>
+ <LI>Fixed typo in output to console</LI>
+ <LI>Updated logging and output to console
+                for mods records without URLs</LI>
+ <LI>Added "metadata" wrapper around mods
+                data</LI>
+ <LI>Updated GetFormat method for mods</LI>
+ <LI>Fixed metadata wrapper for mods records</LI>
+ <LI>Removed old debugging statement which
+                printed sql to console</LI>
+ <LI>Updated database calls from oai, oaisets
+                to oai_copy and oaisets_copy</LI>
+ <LI>Fixed line where I forgot to change
+                oaisets to oaisets_copy</LI>
+ <LI>Added option to load to _copy or regular
+                tables in oai db</LI>
+ <LI>updated output to console</LI>
+ <LI>Fixed syntax error</LI>
+ <LI>Updated to auto-reconnect if connection
+                is lost while loading files</LI>
+ <LI>change to lib config</LI>
+ <LI>Updated ConnectToOaiDb to have option
+                to connect to dev instead of prod</LI>
+ <LI>Updated name of log file</LI>
+ <LI>Updated to write to logs subdirectory</LI>
+ <LI>Updated to remove redundant code for
+                adding short id to nameresolver</LI>
+ <LI>Updated to trim set and id before storing
+                record</LI>
+ <LI>manual commit removed due to autocommit</LI>
+ <LI>Updated ConnectToDB to get database
+                name from config xml</LI>
+ <LI>De-coupled from nameresolver so that
+                it is optional to sync with nameresolver</LI></UL></LI>
+</UL>
+<UL>
+<LI> provider/NewOAICollection.jpg
+<UL>
+ <LI>Flow diagram for adding a new collection
+                to UMProvider</LI>
+ <LI>Updated flow chart</LI>
+ <LI>Updated with subdir for reports</LI></UL></LI>
+</UL>
+<UL>
+<LI> provider/OaiConversionFlowDiagram.JPG
+<UL>
+ <LI>A diagram that shows the process flow
+                for the text/bib class to oai_dc conversion</LI>
+ <LI>Updated flow diagram based on changes
+                to the UMProvider process flow</LI>
+ <LI>Renamed to RunOaiTransformation.jpg</LI></UL></LI>
+</UL>
+<UL>
+<LI> provider/README.txt
+<UL>
+ <LI>Readme file for Bib class to DC and
+                Text class to DC transformation system.</LI>
+ <LI>Updated instructions.</LI>
+ <LI>Updated instructions.</LI>
+ <LI>Updated instructions.</LI>
+ <LI>Updated instructions.</LI>
+ <LI>Updated instructions.</LI>
+ <LI>Updated instructions to include FixContactInfoInRights.</LI>
+ <LI>Updated instructions.</LI>
+ <LI>Removed step that is no longer necessary</LI>
+ <LI>Updated with new file.</LI>
+ <LI>Updated for SPO collections config</LI>
+ <LI>Updated instructions for SPO</LI>
+ <LI>Fixed typo</LI>
+ <LI>Updated instructions for ListSets</LI>
+ <LI>Updated ConvertToUTF8 for SPO</LI>
+ <LI>Removed utf8 conversion for spo</LI>
+ <LI>Updated instructions for new script
+                (runOaiComplete)</LI>
+ <LI>Updated instructions</LI>
+ <LI>Added instructions for AddCollToSource.pl</LI>
+ <LI>Updated description of bibClassToDc.xsl</LI>
+ <LI>Updated instructions to include Josh's
+                script for updating collections in the ListSets.</LI>
+ <LI>Updated instructions.</LI>
+ <LI>Updated instructions</LI>
+ <LI>Updated instructions for loading data
+                to prod</LI>
+ <LI>Updated instructions to include how
+                to add a collection</LI>
+ <LI>Added flow diagram.</LI>
+ <LI>Added cron job to list of files</LI>
+ <LI>Updated updateCollConfig.pl instructions</LI>
+ <LI>Updated to include schedule of when
+                cron job runs</LI>
+ <LI>Updated instructions with new filenames</LI>
+ <LI>Updated instructions for image class</LI>
+ <LI>Updated wording for filename descriptions</LI>
+ <LI>Updated filenames for documentation
+                section</LI>
+ <LI>Updated instructions to reflect config
+                changes</LI>
+ <LI>Updated options for ConvertToDc.pl
+                and added new flow diagram NewOAICollection.jpg</LI>
+ <LI>Updated with files for check for new
+                colls in collmgr</LI>
+ <LI>Updated with note for updateCollConfig
+                script</LI></UL></LI>
+</UL>
+<UL>
+<LI> provider/RunOaiConversion.jpg
+<UL>
+ <LI>Updated process flow, renamed form
+                RunOaiTransformation.jpg</LI></UL></LI>
+</UL>
+<UL>
+<LI> provider/RunOaiConversion.pl
+<UL>
+ <LI>This file replaces runOaiComplete.
+                It is s one-stop script to run the whole text class
+                to OAI transformation</LI>
+ <LI>Updated to have two separate execution
+                logs - one for spo and one for dlps</LI>
+ <LI>Uncommented call to load db</LI>
+ <LI>Updated to load to production and accept
+                the parameter to run only dlps or only SPO</LI>
+ <LI>Added header (title, description, author)</LI>
+ <LI>Inserted line breaks in console output</LI>
+ <LI>Updated to accept argument for prod</LI>
+ <LI>Updated spacing in output to console</LI>
+ <LI>Fixed type in opts</LI>
+ <LI>Fixed typo in adding arg to load to
+                DB (forgot space)</LI>
+ <LI>Added standard U of M header</LI>
+ <LI>Updated output to console</LI>
+ <LI>Updated to only do the mv headers command
+                if there are modified colls</LI>
+ <LI>Updated to run mv *headers.xml command
+                only if there are modified collections</LI>
+ <LI>Uncommented code which had been disabled
+                for testing</LI>
+ <LI>Added option to load to _copy or regular
+                tables in oai db</LI>
+ <LI>Updated options for ConvertToDc.pl
+                after updating that script</LI>
+ <LI>Updated call to LoadDB for DLPS classes</LI></UL></LI>
+</UL>
+<UL>
+<LI> provider/RunOaiTransformation.jpg
+<UL>
+ <LI>Process flow diagrams for the UMProvider
+                system</LI>
+ <LI>Renamed to RunOaiConversion.jpg</LI></UL></LI>
+</UL>
+<UL>
+<LI> provider/TxtToOaiREADME.txt
+<UL>
+ <LI>Added files to new subdirectory (provider)
+                instead of old subdirectory (dlpscoll).</LI>
+ <LI>Updated instructions with new subdirectory
+                (provider) and with stylesheet for bie.</LI>
+ <LI>Updated steps for bie.</LI>
+ <LI>Updated steps to reflect processbie.pl</LI>
+ <LI>Updated documentation.</LI>
+ <LI>Updated for processBieAndShakeR.pl</LI>
+ <LI>Updated to convertToUTF8 before any
+                other transformation.</LI>
+ <LI>Updated instructions.</LI>
+ <LI>Renamed to README.txt</LI></UL></LI>
+</UL>
+<UL>
+<LI> provider/UMProviderFlow.jpg
+<UL>
+ <LI>Process flow diagrams for the UMProvider
+                system</LI>
+ <LI>Updated based on change to image class
+                config</LI>
+ <LI>Updated process flow for DLXS workshop</LI>
+ <LI>Updated with subdir for reports</LI>
+ <LI>Updated to include steps where tables
+                are copied</LI></UL></LI>
+</UL>
+<UL>
+<LI> provider/addCollTag.pl
+<UL>
+ <LI>Surrounds a file with the &lt;COLL></COLL>
+                tag. Used for oed.</LI>
+ <LI>Limited to one file instead of adding
+                COLL tag to all files in the given directory</LI>
+ <LI>Added required param: filename.</LI>
+ <LI>Removed commented out code.</LI>
+ <LI>Fixed perl path in script header.</LI>
+ <LI>Updated path to xml file to edit.</LI>
+ <LI>Updated documentation.</LI>
+ <LI>This file is no longer necessary b/c
+                of using the static bib class file for oec.</LI></UL></LI>
+</UL>
+<UL>
+<LI> provider/amjewessTextToDc.xsl
+<UL>
+ <LI>Stylesheet for adding article level
+                metadata to the amjewess collection.</LI>
+ <LI>Replaced by articlesToDc.xsl.</LI></UL></LI>
+</UL>
+<UL>
+<LI> provider/articlesToDc.xsl
+<UL>
+ <LI>Transform used on text class files
+                with article level metadata (amjewess, dencos, moajrnl)</LI>
+ <LI>Added header</LI>
+ <LI>Fixed syntax errors.</LI>
+ <LI>Added linebreak templates.</LI>
+ <LI>Added parameter for collection id.</LI>
+ <LI>Updated handling of NOTE tags for dc:description.</LI>
+ <LI>Fixed formatting issues in output.</LI>
+ <LI>Updated title and publisher formatting.</LI>
+ <LI>Updated publisher formatting.</LI>
+ <LI>Added line breaks.</LI>
+ <LI>Updated tag for records with page numbers.</LI>
+ <LI>Updated spacing.</LI>
+ <LI>Updated line spacing.</LI>
+ <LI>Added line break between identifiers</LI>
+ <LI>Updated dc:source tag prefix for page
+                number from Pages to Page(s)</LI>
+ <LI>Removed extranneous call to "&lt;apply-templates/>"
+                at end.</LI>
+ <LI>Updated title for front matter and
+                handling blank issues.</LI>
+ <LI>Fixed mismatched tag for choose-when</LI>
+ <LI>Updated dc:title for crossc (first
+                article doesn't have volume identified)</LI>
+ <LI>Updated title for ncosw.</LI>
+ <LI>Updated to put article title in &lt;dc:title>
+                and journal title and issue in &lt;dc:source> tag.</LI>
+ <LI>Removed prefix from dc:identifier tags
+                with URLs</LI>
+ <LI>Removed outdated comment</LI>
+ <LI>Updated dc:rights to use new UMDL rights
+                statement</LI>
+ <LI>Updated title for crossc</LI>
+ <LI>Updated title</LI>
+ <LI>Fixed mismatched tag</LI>
+ <LI>Updated source for frontmatter for
+                crossc</LI>
+ <LI>Updated date for crossc articles</LI>
+ <LI>Added line break</LI>
+ <LI>Updated name.umdl.umich.edu link for
+                moajrnl articles</LI>
+ <LI>Fixed mismatched tag</LI>
+<LI</LI>
+ <LI>Fixed mismatched tag CV:</LI>
+ <LI>Updated link for moajrnl articles</LI>
+ <LI>Updated for moajrnl</LI>
+ <LI>Troubleshooting Charcoal Iron Workers
+                in moa</LI>
+ <LI>Fixed syntax error</LI>
+ <LI>Troubleshooting Charcoal Iron Workers</LI>
+ <LI>Troubleshooting Charcoal Iron Workers</LI>
+ <LI>Fixed name.umdl link for Charcoal Iron
+                Workers</LI>
+ <LI>Updated article identifier for moajrnl</LI>
+ <LI>Updated for moajrnl source and publisher
+                as well as crossc link C</LI>
+ <LI>Updated code for crossc article link</LI>
+ <LI>Updated language for crossc</LI>
+ <LI>Updated source and date for crossc</LI>
+ <LI>Updated URLs and rights for SPO collections</LI>
+ <LI>Updated article level link for SPO</LI>
+ <LI>Fixed loop for article links for spo</LI>
+ <LI>Fixed line breaks</LI>
+ <LI>Updated dc:language</LI>
+ <LI>Fixed typo (had dc:author instead of
+                dc:creator)</LI>
+ <LI>Updated dc:source for mdiaarchive</LI>
+ <LI>fixed syntax error</LI>
+ <LI>Updated placement of dc:source tag.
+                Now it is after the dc:title tag.</LI>
+ <LI>Added header (title, desc, author)</LI>
+ <LI>Updated dc:source for basp</LI>
+ <LI>Updated date for mqrarchive</LI>
+ <LI>Updated dc:date for mqrarchive</LI>
+ <LI>Updated path for dc:description</LI>
+ <LI>Updated path for dc:date for mqrarchive</LI>
+ <LI>Fixed open dc:date tag</LI>
+ <LI>Fixed typo in path for dc:date for
+                mqrarchive</LI>
+ <LI>Updated dc:desc for mqrarchive</LI>
+ <LI>Updated dc:date for basp articles</LI>
+ <LI>updated date for basp</LI>
+ <LI>Updated date for mdiaarchive</LI></UL></LI>
+</UL>
+<UL>
+<LI> provider/bibClassToDc.xsl
+<UL>
+ <LI>Transformation sheet for Bib class
+                to DC for static collections.</LI>
+ <LI>Fixed typo.</LI>
+ <LI>Updated dc:subject for static colls</LI>
+ <LI>Updated order of tags (now publisher
+                comes before subject)</LI>
+ <LI>Updated dc:title and dc:source tags</LI>
+ <LI>Replaced dc:author tags with dc:creator</LI>
+ <LI>Updated dc:date and dc:publisher fields
+                to handle multiple publication dates or companies</LI>
+ <LI>Fixed extra /</LI>
+ <LI>Removed extra / in for loops</LI>
+ <LI>Updated to include ISBN number</LI>
+ <LI>Updated path to ISBN identifier</LI>
+ <LI>Updated path to ISBN identifier</LI>
+ <LI>Updated path to ISBN identifier</LI>
+ <LI>Added header (title, desc, author)</LI>
+ <LI>Updated for roper (use only short id
+                for name.umdl link)</LI>
+ <LI>Updated dc:rights for roper</LI>
+ <LI>Fixed syntax error in choose-when statement</LI></UL></LI>
+</UL>
+<UL>
+<LI> provider/bibToDc.xsl
+<UL>
+ <LI>Stylesheet for converting static Bib
+                Class files to dc.</LI>
+ <LI>Updated publication tag.</LI>
+ <LI>Updated type, format, and language
+                fields.</LI>
+ <LI>Updated publisher field.</LI>
+ <LI>Renamed to bibClassToDc.xsl.</LI></UL></LI>
+</UL>
+<UL>
+<LI> provider/bieToDc.xsl
+<UL>
+ <LI>Special XML transform for bie.</LI>
+ <LI>This file is no longer necessary due
+                to using the statis bib class file for bie.</LI></UL></LI>
+</UL>
+<UL>
+<LI> provider/closeCATREF.pl
+<UL>
+ <LI>Added files to new subdirectory (provider)
+                instead of old subdirectory (dlpscoll).</LI>
+ <LI>Updated syntax for replace (unescaped
+                /)</LI>
+ <LI>Remove all CATREF tags since they're
+                not used in OAI record.</LI>
+ <LI>Removed commented out code.</LI>
+ <LI>This file is no longer necessary due
+                to using the static bib class file for oec.</LI></UL></LI>
+</UL>
+<UL>
+<LI> provider/collmgrFullList.txt
+<UL>
+ <LI>List of all collections in collmgr,
+                used to determine new collections</LI></UL></LI>
+</UL>
+<UL>
+<LI> provider/collsInBroker.xml
+<UL>
+ <LI>Added files to new subdirectory (provider)
+                instead of old subdirectory (dlpscoll).</LI>
+ <LI>Added skipXSL attribute for collections
+                with different xsl's.</LI>
+ <LI>Added attribute to indicate that oec
+                is nonUTF8</LI>
+ <LI>Temporarily commented out collections
+                for testing.</LI>
+ <LI>Uncommented collections.</LI>
+ <LI>Updated to show that shakeR has special
+                XSL</LI>
+ <LI>Updated to skip transform of oec until
+                UTF8 issue solved.</LI>
+ <LI>Temporarily commented out collections
+                for testing.</LI>
+ <LI>Updated to indicate that oec uses a
+                different XSL.</LI>
+ <LI>Updated with additional attributes
+                defined in meeting (static collections, collections
+                with article-level data, and mods)</LI>
+ <LI>Added language for teso.</LI>
+ <LI>Updated to indicated bib class collections
+                which had XML which was manually fixed.</LI>
+ <LI>Removed "full" attribute and added
+                "non-UTF8" for dynamic collections.</LI>
+ <LI>Removed excess attributes ("lang" for
+                static colls)</LI>
+ <LI>Added "nonUTF8" attribute to lincoln
+                collection</LI>
+ <LI>Updated with attribute "fixContacts"
+                for the collections which need to have the contact
+                info in the &lt;dc:rights> tag corrected.</LI>
+ <LI>Temporarily commented out non-article
+                collections.</LI>
+ <LI>Added articles attribute for crossc.</LI>
+ <LI>Debugging issue-level information.</LI>
+ <LI>Updated for testing</LI>
+ <LI>Made epd static, testing only epd</LI>
+ <LI>Updated for testing</LI>
+ <LI>Uncommented collections that were temporarily
+                commented out for testing.</LI>
+ <LI>Temporarily commented out dencos articles
+                since that data is not yet ready.</LI>
+ <LI>Uncommented dencos since articles are
+                ready</LI>
+ <LI>Updated attributes for roper</LI>
+ <LI>Added addCollName attribute to necessary
+                collections which don't have the collection name somewhere
+                in the record already.</LI>
+ <LI>Updated attributes for static collections
+                that need collection name added</LI>
+ <LI>Temporarily removed (i.e. commented
+                out) mfs from the list of SPO collections until the
+                collection is ready.</LI>
+ <LI>Uncommented the collections which I
+                had commented out for testing</LI>
+ <LI>This file has been renamed to dlpsColls.xml</LI></UL></LI>
+</UL>
+<UL>
+<LI> provider/convertToUTF8.pl
+<UL>
+ <LI>Script to convert the given file to
+                UTF8. Used for oed.</LI>
+ <LI>Added import for Encode.</LI>
+ <LI>Updated encoding call.</LI>
+ <LI>Updated code for rewriting file.</LI>
+ <LI>Fixed output conversion to utf8.</LI>
+ <LI>Updated to use colls file for configuration
+                instead of single filename input.</LI>
+ <LI>Renamed to ConvertToUTF8.pl</LI></UL></LI>
+</UL>
+<UL>
+<LI> provider/dlpsColls.xml
+<UL>
+ <LI>This file replaces the old collsInBroker.xml.
+                It contains the complete list of DLPS collections
+                to parse.</LI>
+ <LI>Added file desc</LI>
+ <LI>Added attribute "multipleXMLFiles"
+                for collections with multiple xml files in l1/obj/c/collid</LI>
+ <LI>Removed nonUTF8 attribute from lincoln
+                since it was causing double encoding problems in dc:rights</LI>
+ <LI>Updated attributes for roper since
+                I'm now processing it as a static collection.</LI>
+ <LI>Added multipleXMLFiles attribute for
+                lincoln</LI>
+ <LI>Updated collections with mods (6)</LI>
+ <LI>Fixed typo in header</LI></UL></LI>
+</UL>
+<UL>
+<LI> provider/exampleColls.xml
+<UL>
+ <LI>Subset of dlps colls to use for DLXS
+                workshop 08</LI></UL></LI>
+</UL>
+<UL>
+<LI> provider/loadTxtToOai.pl
+<UL>
+ <LI>Added files to new subdirectory (provider)
+                instead of old subdirectory (dlpscoll).</LI>
+ <LI>Updated path to config file.</LI>
+ <LI>Renamed to LoadDB.pl</LI></UL></LI>
+</UL>
+<UL>
+<LI> provider/oai_new_coll_history.txt
+<UL>
+ <LI>Indicates when the check for new collections
+                in collmgr has been executed</LI></UL></LI>
+</UL>
+<UL>
+<LI> provider/oai_update.pl
+<UL>
+ <LI>new</LI>
+ <LI>load config now</LI></UL></LI>
+</UL>
+<UL>
+<LI> provider/oai_update_history.txt
+<UL>
+ <LI>File with the list of times that the
+                oai files for text class were update</LI>
+ <LI>Removed empty last line</LI>
+ <LI>This file has been split into two:
+                one for dlps and one for spo</LI></UL></LI>
+</UL>
+<UL>
+<LI> provider/oai_update_history_dlps.txt
+<UL>
+ <LI>These are the execution logs to determine
+                when DLPS and SPO were last updated</LI>
+ <LI>Changed default update time to Jan
+                31 2008</LI>
+ <LI>Backup of schedule that cron job has
+                run</LI>
+ <LI>Saving backup of latest execution times</LI>
+ <LI>Saving backup of latest execution history</LI>
+ <LI>Committing latest history to cvs for
+                backup purposes</LI>
+ <LI>Committing updated execution history
+                to cvs</LI></UL></LI>
+</UL>
+<UL>
+<LI> provider/oai_update_history_spo.txt
+<UL>
+ <LI>These are the execution logs to determine
+                when DLPS and SPO were last updated</LI>
+ <LI>Change default update time to Jan 31
+                2008</LI>
+ <LI>Backup of schedule that cron job has
+                run</LI>
+ <LI>Saving backup of latest execution times</LI>
+ <LI>Saving backup of latest execution history</LI>
+ <LI>Committing latest history to cvs for
+                backup purposes</LI>
+ <LI>Adding updated execution history to
+                cvs</LI></UL></LI>
+</UL>
+<UL>
+<LI> provider/processBieAndShakeR.pl
+<UL>
+ <LI>Replaces processbie.pl and also calls
+                transform for shakeR.</LI>
+ <LI>Added output to console.</LI>
+ <LI>Replaced with processSGML.pl</LI></UL></LI>
+</UL>
+<UL>
+<LI> provider/processSGML.pl
+<UL>
+ <LI>Processes bie, oec, and shakeR.</LI>
+ <LI>Fixed typo.</LI>
+ <LI>This file is no longer necessary due
+                to using the static bib class files for shaker, bie,
+                oec, and other collections</LI></UL></LI>
+</UL>
+<UL>
+<LI> provider/processbie.pl
+<UL>
+ <LI>Script to replace SGML entities for
+                bie and to call special XSL transform.</LI>
+ <LI>This files has been replace by processBieAndShakeR.pl</LI></UL></LI>
+</UL>
+<UL>
+<LI> provider/replaceEntities.pl
+<UL>
+ <LI>Added files to new subdirectory (provider)
+                instead of old subdirectory (dlpscoll).</LI>
+ <LI>Replaced by processbie.pl.</LI></UL></LI>
+</UL>
+<UL>
+<LI> provider/runOaiComplete
+<UL>
+ <LI>Script that runs the text class to
+                oai conversion from start to finish for both DLPS
+                and SPO</LI>
+ <LI>Added call to new script AddCollToSource</LI>
+ <LI>Updated to include Josh's script for
+                updating collections in the ListSets.</LI>
+ <LI>This file has been replaced by RunOaiConversion.pl</LI></UL></LI>
+</UL>
+<UL>
+<LI> provider/runOaiUpdate
+<UL>
+ <LI>Script that runs the text class to
+                oai conversion from start to finish for both DLPS
+                and SPO</LI>
+ <LI>Renamed to runOaiComplete</LI></UL></LI>
+</UL>
+<UL>
+<LI> provider/sgmlToDc.xsl
+<UL>
+ <LI>Called to transform oec and shakeR.</LI>
+ <LI>Updated path for oec.</LI>
+ <LI>Added exception handling for oec.</LI>
+ <LI>This file is no longer necessary due
+                to using the static bib class files for some collections.</LI></UL></LI>
+</UL>
+<UL>
+<LI> provider/shakeRToDc.xsl
+<UL>
+ <LI>Special stylesheet for shakeR collection.</LI>
+ <LI>Added line break for formatting.</LI>
+ <LI>Replaced with sgmlToDc.xsl.</LI></UL></LI>
+</UL>
+<UL>
+<LI> provider/spoColls.xml
+<UL>
+ <LI>This file replaces the old spoCollsInBroker.xml
+                file. It contains the complete list of SPO collections
+                to transform from text class to oaidc</LI>
+ <LI>Added brief desc as header</LI>
+ <LI>Updated to indicated colls with multiple
+                xml files</LI>
+ <LI>Added addCollName attribute to mfsfront</LI>
+ <LI>Removed addCollName attrib for jep</LI>
+ <LI>Updated mqr</LI>
+ <LI>Added addCollName attrib for postid</LI>
+ <LI>Added addCollName attrib to epv2</LI>
+ <LI>Updated mdiaarchive</LI>
+ <LI>Updated mdiaarchive</LI>
+ <LI>Removed addCollName attrib from mfsfront
+                since that is now taken care of in the XSL</LI>
+ <LI>Removed addCollName attrib from mqr
+                since this is now handled in the xsl</LI>
+ <LI>Removed addCollName attrib for postid
+                since that is now handled in the xsl</LI>
+ <LI>Updated attrib for llmc</LI>
+ <LI>Added dcbooks</LI></UL></LI>
+</UL>
+<UL>
+<LI> provider/spoCollsInBroker.xml
+<UL>
+ <LI>List of SPO's collections to process</LI>
+ <LI>Updated information for four serial
+                collections</LI>
+ <LI>Updated to indicate which collections
+                aren't UTF8</LI>
+ <LI>Updated attribute for mfr</LI>
+ <LI>Added addCollName attribute to necessary
+                collections which don't have the collection name somewhere
+                in the record already.</LI>
+ <LI>This has been replaced by spoColls.xml.
+                It is the complete list of spo collections to transform
+                from text class to oai dc</LI></UL></LI>
+</UL>
+<UL>
+<LI> provider/textClassSGMLToDc.xsl
+<UL>
+ <LI>Added files to new subdirectory (provider)
+                instead of old subdirectory (dlpscoll).</LI>
+ <LI>Replaced with bieToDc.xsl</LI></UL></LI>
+</UL>
+<UL>
+<LI> provider/textClassToDc.xsl
+<UL>
+ <LI>Added files to new subdirectory (provider)
+                instead of old subdirectory (dlpscoll).</LI>
+ <LI>Cleaned up code.</LI>
+ <LI>Removed references to "BIBL" since
+                the only collections which had "BIBL" instead of "BIBLFULL"
+                are the static collections that use a different stylesheet.</LI>
+ <LI>Added check to see if an element has
+                any content. This should fix the empty (identifier)
+                tag issue.</LI>
+ <LI>Changed loop for dc:identifier tag
+                back to choose-when from xsl:if</LI>
+ <LI>Fixed formatting of dc:identifier tag.</LI>
+ <LI>Updated linebreaks</LI>
+ <LI>Updated formatting for civilwar1 collection.</LI>
+ <LI>Updated section for dc:description
+                for civilwar1</LI>
+ <LI>Updated order of dc elements (moved
+                description further down)</LI>
+ <LI>Updated path for description for civilwar1</LI>
+ <LI>Updated spreadsheet to make civilwar1
+                format more general (Now those transformations are
+                called for other collections too)</LI>
+ <LI>Removed handling of author dates since
+                that applied only to the static collections.</LI>
+ <LI>Update title tag for ncosw</LI>
+ <LI>Updated title for endc and lincoln</LI>
+ <LI>Updated syntax for OR</LI>
+ <LI>Updated syntax for or (made lowercase)</LI>
+ <LI>Updated for ncosw</LI>
+ <LI>Fixed open tag</LI>
+ <LI>Updated condition for crossc (now choose-when
+                instead of if)</LI>
+ <LI>Updated dc:title for moajrnl</LI>
+ <LI>Updated for BIBL PUBLISHER info (moajrnl_</LI>
+ <LI>Updated dc:rights</LI>
+ <LI>Updated titles for crossc</LI>
+ <LI>Updated title for crossc</LI>
+ <LI>Fixed mismatched tag</LI>
+ <LI>Fixed mismatched tag</LI>
+ <LI>Added whitespace</LI>
+ <LI>Updated oai identifier to use DLPS
+                for non-static collections (since all non-static collections
+                have a DLPS id)</LI>
+ <LI>Updated oai identifier for acls</LI>
+ <LI>Updated dc:rights for spo</LI>
+ <LI>Fixed dc:rights for spo</LI>
+ <LI>Updated for URLs for SPO</LI>
+ <LI>Updated id type for spo</LI>
+ <LI>Updated logic for dc:identifier</LI>
+ <LI>Updated URL for SPO handles</LI>
+ <LI>Fixed syntax error in dc:identifier</LI>
+ <LI>Fixed syntax error in dc:identifier</LI>
+ <LI>Updated URL for spo</LI>
+ <LI>Updated id types for spo</LI>
+ <LI>Updated dc:publisher</LI>
+ <LI>Updated dc:description</LI>
+ <LI>Updated link for llmc items</LI>
+ <LI>Updated for SPO serial collections.</LI>
+ <LI>Updated dc:title so that now only one
+                dc:title displays instead of multipl</LI>
+ <LI>Fixed empty publisher tag</LI>
+ <LI>Updated dc:publisher tag for when there
+                are multiple publication dates or multiple publishers</LI>
+ <LI>Updated dc:publisher tag again</LI>
+ <LI>Updated name.umdl links for roper</LI>
+ <LI>Updated name.umdl links for roper</LI>
+ <LI>Updated dc:rights for eebo, ecco, lincoln,
+                nal, and evans</LI>
+ <LI>Updated dc:rights for eebo, ecco, lincoln,
+                evans, and nal</LI>
+ <LI>Updated link breaks for dc:rights</LI>
+ <LI>Updated logic in xsl:if for dc:rights</LI>
+ <LI>Updated dc:date for moajrnl</LI>
+ <LI>Updated indentation</LI>
+ <LI>Added header (title, desc, author)</LI>
+ <LI>Fixed typo in path to BIBL Date (moajrnl
+                and icmc)</LI>
+ <LI>Added check for dc:rights to only create
+                tags if the AVAILABILITY tags are not empty</LI>
+ <LI>Updated path for dc:date for SPO collections</LI>
+ <LI>Updated path to dc:source</LI>
+ <LI>Added dc:rights statement with link
+                to UMDL rights statement if there is no AVILABILITY
+                tag for SPO collections</LI>
+ <LI>Fixed open tag</LI>
+ <LI>Updataed dc:date for icmc</LI>
+ <LI>Fixed syntax error</LI>
+ <LI>Removed UMDL rights statement from
+                SPO collections</LI>
+ <LI>Updated dc:creator</LI>
+ <LI>Updated dc:creator</LI>
+ <LI>Troubleshooting author affiliation
+                in icmc</LI>
+ <LI>Fixed open tag om DESCRIP template</LI>
+ <LI>Updated path for author affiliation</LI>
+ <LI>Troubleshooting icmc author affiliation</LI>
+ <LI>Added separator for author affiliation
+                (icmc)</LI>
+ <LI>Removed old template for DESCRIP (author
+                affiliation)</LI>
+ <LI>Troubleshooting author affiliation</LI>
+ <LI>Fixed author affiliation</LI>
+ <LI>Updated author affiliations for spo
+                colls</LI>
+ <LI>Updated dc:creator for did</LI>
+ <LI>Updated dc:source (path for series)</LI>
+ <LI>Updated dc:source (path for series)</LI>
+ <LI>Updated dc:description for SPO</LI>
+ <LI>Updated date for mqrarchive</LI>
+ <LI>Troubleshooting pubplace</LI>
+ <LI>Updated dc:publisher for plag</LI>
+ <LI>Fixed typo in BIBL publisher path</LI>
+ <LI>Updated dc:pub tag for tmr</LI>
+ <LI>Updated dc:desc for tmr</LI>
+ <LI>Fixed typo in normalize-space</LI>
+ <LI>Updated dc:pub</LI>
+ <LI>troubleshooting date for SPO colls</LI>
+ <LI>Updated dc:source for SPO</LI>
+ <LI>Updated dc:source for SPO</LI>
+ <LI>Updated dc:source for SPO</LI>
+ <LI>Troubleshooting multiple dc:date tags</LI>
+ <LI>Updated date for did</LI>
+ <LI>Updated date for icmc</LI>
+ <LI>Updated spacing in dc:source</LI>
+ <LI>Updated dc:source</LI>
+ <LI>Updated dc:source</LI>
+ <LI>Updated dc:source for mfsfront</LI>
+ <LI>Updated dc:source for spo colls</LI>
+ <LI>Updated dc:source for mqrarchive</LI>
+ <LI>Updated dc:source for mqrarchive</LI>
+ <LI>Fixed open tag</LI>
+ <LI>Updated dc:source for mqrarchive and
+                postid</LI>
+ <LI>Removed page number from dc:source
+                for SPO colls</LI>
+ <LI>Removed exception handling for roper
+                since roper now uses bibClassToDc.xsl</LI>
+ <LI>Updated isbn for tmr tag to dc:relation
+                (from dc:identifier)</LI>
+ <LI>Added series title of SPO collections
+                as second dc:title tage per Kevin's request</LI></UL></LI>
+</UL>
+<UL>
+<LI> provider/text_ic_oai_cron.pl
+<UL>
+ <LI>cron to update text and ic class</LI>
+ <LI>Updated for ic</LI>
+ <LI>Added CC to Kat back in (it was temporarily
+                removed for testing)</LI>
+ <LI>Updated to include custom, simplified
+                report for Kat</LI>
+ <LI>Uncommented code which was temporarily
+                disabled for debugging</LI>
+ <LI>Added Josh as recipient of the email
+                report</LI>
+ <LI>Updated to look at collmgr for image
+                class colls in oai</LI>
+ <LI>Updated to include help option so that
+                I can test to see if the code has any syntax errors
+                without actually running it.</LI>
+ <LI>Updated to include optional argument
+                c to indicate that the oai_copy and oaisets_copy tables
+                should be used</LI>
+ <LI>Added option to load to _copy or regular
+                tables in oai db</LI>
+ <LI>Updated for option to write to _copy
+                tables for image class</LI>
+ <LI>Changed name of update report to include
+                the date</LI>
+ <LI>Updated path for reading report</LI></UL></LI>
+</UL>
+<UL>
+<LI> provider/text_oai_cron.pl
+<UL>
+ <LI>Cron job to run the text class to oai
+                conversion on modified collections</LI>
+ <LI>Added import of LibGlobals.cfg file</LI>
+ <LI>Updated to load prod database by default
+                (instructions to load dev can be found in the README)</LI>
+ <LI>Added CC to Kat</LI>
+ <LI>updated for image class</LI>
+ <LI>Updated for image class</LI>
+ <LI>Updated for image class</LI>
+ <LI>Troubleshooting email for image class</LI>
+ <LI>Fixed open bracket</LI>
+ <LI>Troubleshooting updating image class</LI>
+ <LI>Troubleshooting output when updating
+                image class</LI>
+ <LI>Fixed open bracket</LI>
+ <LI>Updated formatting of output</LI>
+ <LI>Fixed syntax error in quotes</LI>
+ <LI>Updated formatting of output</LI>
+ <LI>Updated formatting</LI>
+ <LI>Removed commented out code</LI>
+ <LI>Added check for number of updated records</LI>
+ <LI>Updated formatting of output for num
+                updated records</LI>
+ <LI>Troubleshooting listing updated records</LI>
+ <LI>Troubleshooting db connection for num
+                updated records</LI>
+ <LI>Temporarily Removed code for checking
+                num updated</LI>
+ <LI>Fixed syntax error</LI>
+ <LI>Added Kat back as CC on email (was
+                temporarily removed for testing)</LI>
+ <LI>Renamed text_ic_oai_cron.pl</LI></UL></LI>
+</UL>
+<UL>
+<LI> provider/umprovider_flow_diagrams_and_examples.ppt
+<UL>
+ <LI>PowerPoint presentation for the workshop
+                which includes example transformations and 3 flow
+                charts</LI></UL></LI>
+</UL>
+<UL>
+<LI> provider/updateCollConfig.pl
+<UL>
+ <LI>init</LI>
+ <LI>Added standard U of M header</LI>
+ <LI>Added param to take single collid as
+                input, not just xml list of collids</LI>
+ <LI>Updated options arguments</LI></UL></LI>
+</UL>
+<UL>
+<LI> provider/logs/log_7_21_2008.txt
+<UL>
+ <LI>Example logs for oai provider, commited
+                so that the directory is visible in cvs</LI></UL></LI>
+</UL>
+<UL>
+<LI> provider/logs/log_7_22_2008.txt
+<UL>
+ <LI>Example logs for oai provider, commited
+                so that the directory is visible in cvs</LI></UL></LI>
+</UL>
+<UL>
+<LI> provider/reports-new-colls/newCollReport-2008-7-11.txt
+<UL>
+ <LI>July reports for new collection checks
+                from collmgr</LI></UL></LI>
+</UL>
+<UL>
+<LI> provider/reports-new-colls/newCollReport-2008-7-18.txt
+<UL>
+ <LI>July reports for new collection checks
+                from collmgr</LI></UL></LI>
+</UL>
+<UL>
+<LI> provider/reports-new-colls/newCollReport-2008-7-24.txt
+<UL>
+ <LI>Weekley report from check for new colls
+                in collmgr</LI></UL></LI>
+</UL>
+<UL>
+<LI> provider/reports-new-colls/newCollReport-2008-7-4.txt
+<UL>
+ <LI>July reports for new collection checks
+                from collmgr</LI></UL></LI>
+</UL>
+<UL>
+<LI> provider/reports-oai-update/updateReport.txt
+<UL>
+ <LI>Example oai update report to make directory
+                visible in cvs</LI></UL></LI>
+</UL>
+==========================================================
+<H4>bin/WW</H4>
+
+<UL>
+<LI> rdist.WW
+<UL>
+ <LI>storage server merge. all ridsts go
+                to NASDCMR = ( nas-dcmr.umdl.umich.edu ) NASHATCHER
+                = ( nas-hatcher.umdl.umich.edu ) HOSTS = ( ${NASDCMR}
+                ${NASHATCHER} )</LI></UL></LI>
+</UL>
+==========================================================
+<H4>cgi/o/oai</H4>
+
+<UL>
+<LI> UMProvider.pm
+<UL>
+ <LI>init</LI>
+ <LI>fix xmlns setAttr</LI>
+ <LI>hack to work around old libxml library</LI>
+ <LI>fix CompareDate for same date</LI>
+ <LI>UMProvider.pm</LI>
+ <LI>comment changes only</LI>
+ <LI>major changes: oaisets table added</LI>
+ <LI>Updated perldoc.</LI>
+ <LI>rm VERSION</LI>
+ <LI>minor changes, better error handling</LI>
+ <LI>patch to fix deleted records</LI>
+ <LI>Updated GetRecord and ListMetadataFormats
+                to handle records with identifiers with colons (e.g.
+                articles)</LI>
+ <LI>fix timestamp match</LI>
+ <LI>fix timestamp match</LI>
+ <LI>add a default to GetEarliestDatestamp
+                in case we are not connected to the DB</LI>
+ <LI>added error checking, change data handling
+                to NOT use timestamp</LI>
+ <LI>minor fix</LI>
+ <LI>minor bug fix in error reporting</LI>
+ <LI>added error msg when no idents in LI
+                verb</LI>
+ <LI>added error checking: mult. same arg,
+                remove URL param in response</LI></UL></LI>
+</UL>
+<UL>
+<LI> global.conf
+<UL>
+ <LI>Initial</LI>
+ <LI>move config settings to /lib/</LI></UL></LI>
+</UL>
+<UL>
+<LI> oai
+<UL>
+ <LI>init</LI>
+ <LI>UMProvider.pm</LI>
+ <LI>hack to unescape ] in IC IDs</LI>
+ <LI>don't connect ot the DB for Identify
+                requests</LI>
+ <LI>fix INC path</LI>
+ <LI>combine URL params so we can check
+                for the</LI>
+ <LI>reading different config now</LI>
+ <LI>switch to Config::Tiny</LI>
+ <LI>no changes</LI></UL></LI>
+</UL>
+<UL>
+<LI> oai_conf.xml
+<UL>
+ <LI>init</LI>
+ <LI>added mbooks: set</LI>
+ <LI>added new sets</LI>
+ <LI>added colls</LI>
+ <LI>fixed sets</LI>
+ <LI>added spo sets</LI>
+ <LI>changed set names</LI>
+ <LI>changed data</LI>
+ <LI>moved sets</LI>
+ <LI>Added more detail to archived SPO collections</LI>
+ <LI>Removed mfs temporarily</LI>
+ <LI>Updated wording for mqr</LI>
+ <LI>Updated wording for plagiary</LI>
+ <LI>Arranged dlps image collections alphabetically
+                by collid</LI>
+ <LI>iso-8859-1 try</LI>
+ <LI>flatten char</LI>
+ <LI>Added new image class collection dpa1ic</LI>
+ <LI>added mods</LI>
+ <LI>Added new dlps image collection</LI>
+ <LI>Moved new dlps image collection to
+                alphabetical order</LI>
+ <LI>Updated with new spo collection: dcbooks</LI></UL></LI>
+</UL>
+<UL>
+<LI> sample_config.xml
+<UL>
+ <LI>new</LI>
+ <LI>fix data</LI></UL></LI>
+</UL>
+==========================================================
+Log for directory  ( oai since 6apr2007 )
+
+==========================================================
+<H4>misc/o/oai/maps</H4>
+
+
+NOTE: /l1/misc/o/oai/maps/ does not exist

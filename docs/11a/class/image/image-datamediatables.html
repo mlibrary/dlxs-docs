@@ -1,0 +1,244 @@
+<HTML>
+<head>
+<TITLE>Image Class: Data and Media Tables</TITLE>
+
+
+
+
+
+ <LINK HREF="../../dlxsdocs.css" REL="stylesheet" TYPE="text/css"></head>         <BODY>
+<table class="updateTable" CELLSPACING="3" CELLPADDING="3" BORDER="1">
+<TR>
+<td>Last updated</td>
+<td>2003-12-01 11:20:19 EST</td>
+</TR>
+<TR>
+<td>Doc Title</td>
+<td>Image Class: Data and Media Tables</td>
+</TR>
+<TR>
+<td>Author 1</td>
+<td>Weise, John</td>
+</TR>
+<TR>
+<td>CVS Revision</td>
+<td>$Revision: 1.6 $</td>
+</TR>
+</table>
+
+<DIV CLASS="pageTitle">Image Class: Data and Media Tables</DIV>
+       
+         
+          <H2> 
+            <A NAME="Requirements"></A>
+            Requirements</H2>
+
+<P>You might want to review the <A HREF="image-mysql.html#requirements">technical requirements</A> for MySQL and
+the DLXS System.
+</P>
+        
+         
+          <H2> 
+            <A NAME="Introduction"></A>
+            Introduction</H2>
+
+<P>Detailed instructions for automatic generation of Data and Media
+Tables, including the loading of data, is found in 
+<A HREF="image-mysql.html">Image Class Data Loading: MySQL</A>. This
+document, on the other hand, aims to provide an overview of the role
+of the Data and Media Tables in the functioning of Image Class, as
+well as enough information to generate the tables through alternative
+methods if need be.</P>
+
+        
+         
+          <H2> 
+            <A NAME="DataTable"></A>
+            Data Table</H2>
+          <P>A Data Table is required for each collection. The Data Table holds 
+            descriptive metadata. A collection can have any number of descriptive 
+            metadata fields, and for each there is a column in the Data Table.</P>
+          <P>Field names must be legal MySQL field names, otherwise there are 
+            no restrictions. </P>
+          <P>The Data Table must have a field with unique values that can be used 
+            as record identifiers.</P>
+          <P>A media filename field is necessary if image files or other types 
+            of media are to be displayed by Image Class. Filenames must have filename 
+            extensions. It is best if the filename extension matches that of the 
+            master image file, and not that of the file to be delivered online. 
+            Sometimes they do not differ.</P>
+          <P>If searching of the entire record at once is desired, an additional 
+            field concatenating the values of all other fields is needed. This 
+            is referred to as the "all" field. Name this field using the convention collid_all. </P>
+          <P>The ID field must have a full text index. <b>It is also advisable to add a regular index to this field.</b> Doing so will dramatically improve performance in certain situations. As of release 11a, the icsgml2mysql.pl script does not do add this index automatically.</P>
+	<P>IDs that include hyphens, periods, and basically anything other than alpha-numeric characters should have the ID field mapped to <b>ic_exact</b> in the Collmgr/Colldb field field_admin_maps, which forces it to be searched as an exact phrase. See also the contextual help in Collmgr.</P>
+          <P>Each additional field to be searchable in Image Class must have a 
+            full text index.</P>
+	<P>By default MySQL indexes words as short as 4 characters. To index shorter words, making them searchable, set the minimum word length to 2. This is done a the time MySQL is started. See the install documentation for details. Full text indexes must be rebuilt to take advantage of this change.  The easiest way to do so for a MyISAM table is to use the following statement, which rebuilds the index file:
+<BR /><BR />
+<CODE>REPAIR TABLE tbl_name QUICK</CODE></P>
+        
+         
+          <H2> 
+            <A NAME="Media Table"></A>
+            Media Table</H2>
+          <P>It is recommended that there be a Media Table for every
+collection. Technically, the Media Table is optional. The Media Table contains 
+            detailed information about the media files ( i.e., most often images 
+            ) that are part of a collection. </P>
+          <P>In contrast to the Data Table, the Media Table has a required set 
+            of fields that do not vary.</P>
+          <P>A Media Table is required in the following situations: </P>
+          <UL> 
+	  <LI>A collection includes JPEG2000 (jp2) files.</LI>
+            <LI>A collection includes multiple media file formats. e.g., any collection simultaneously using sid and jp2 files will need a media table.</LI>
+            <LI>A collection includes multiple media files per metadata record.</LI>
+			<LI>Some records of a collection do not have media files.</LI>
+            
+            <LI>Some images of the collection need to be restricted, while others 
+              not.</LI>
+          </UL>
+
+	<P>A Media Table is required in most situations. It is only when the collection follows the simple model of having image files in the sid format, with thumbnails as jpg, and only one image per record that a Media Table is not needed.</P>
+
+<P>The <A HREF="image-mysql.html">data loading tools</A> provided with Image Class always create a
+Media Table. This being the case, there is hardly a reason not to have
+a media table, unless alternative loading methods are in use.</P>
+
+
+		  <P><strong>Note:</strong> The m_id and m_iid fields of the Media Table should be indexed. 
+</P>
+          <P>View the detailed <A HREF="image-mediatable.html">Media Table Definition</A>.</P>
+        
+         
+          <H2> 
+            <A NAME="Table Naming Conventions"></A>
+            Table Naming Conventions</H2>
+          <P>It is recommended that Data and Media Table names relate to the collection 
+            ID. Name the Data Table exactly as the collid, and the Media Table 
+            as "collid_media".</P>
+
+<P>The <A HREF="image-mysql.html">data loading tools</A> provided with
+Image Class initially create "prep" tables, leaving production tables,
+if any exist, alone (refer to <A HREF="image-mysql.html#detailedsteps">Loading Data Records: Detailed Steps</A>). The prep tables are named collid_prep and
+collid_media_prep (substituting the actual collid). Prep tables can be
+tested with the middleware by adding prep=1 to the URL.</P>
+
+
+
+          <P>The table names must be entered in each collection's Collmgr Collection 
+            Database record. Therefore, the tables are not used by Image Class 
+            until the Collmgr record is updated and released.</P>
+        
+         
+          <H2> 
+            <A NAME="Field Naming Conventions"></A>
+            Field Naming Conventions</H2>
+          <P>Field labels, as displayed to the end-user in Image Class are easily 
+            changed on a whim using Collmgr. Field names, on the other hand, are 
+            used behind the scenes for unique identification of fields.</P>
+          <P>Image Class has traditionally relied on abbreviated field names that 
+            follow the convention collid_fieldabbrev, e.g,. bhl_ti for the Title 
+            field of the Bentley Image Bank collection. There is nothing 
+            requiring this convention be followed. There is merit in using brief 
+            field names since they are carried around on the URL, entered multiple 
+            times in the Collmgr Collection Database record, and stored on the 
+            CGI session.</P>
+          <P>Field names must be legal MySQL field names.</P>
+        
+         
+          <H2> 
+            <A NAME="Basic MySQL Commands"></A>
+            Basic MySQL Commands</H2>
+          <P>Please refer to MySQL documentation at <A HREF="http://www.mysql.com">www.mysql.com</A> for full instruction 
+            on how to use the following MySQL commands on the MySQL
+command line.</P>
+<P>The data loading tools provided with Image Class attempt to obviate
+the need for direct interaction with MySQL. Care must be used when
+working directly in the DLXS MySQL database because there are many
+system level tables present and a mistake could disable
+DLXS. </P>
+<P><em><strong>Author's Note:</strong> I know a guy who once
+deleted the entire DLXS database with two brain-dead clicks of a mouse. It took several hours on a Friday evening to recover from backup.</em></P>
+          <P> <HR />Command: 
+            <strong>show</strong>
+            <BR></BR>
+            Purpose: 
+            <strong>list existing tables</strong>
+            <BR></BR>
+            Example: </P>
+          <CODE>show tables;</CODE>
+          <P><HR />Command: 
+            <strong>create</strong>
+            <BR></BR>
+            Purpose: 
+            <strong>creating a new table</strong>
+            <BR></BR>
+            Example (using the collection id "art" using the conventions above):</P>
+          <CODE>create table ( art_id varchar(10), art_fn varchar(12), art_ti 
+            text, art_cr text, art_su text, art_all text ) TYPE=MyISAM;</CODE>
+          <P><HR />Command: 
+            <strong>describe</strong>
+            <BR></BR>
+            Purpose: 
+            <strong>show the field definitions for a table</strong>
+            <BR></BR>
+            Example: </P>
+          <CODE>describe art;</CODE>
+          <P><HR />Command: 
+            <strong>drop</strong>
+            <BR></BR>
+            Purpose: 
+            <strong>drop/delete a table</strong>
+            <BR></BR>
+            Example:</P>
+          <CODE>drop table art;</CODE>
+          <P><HR />Command: 
+            <strong>load</strong>
+            <BR></BR>
+            Purpose: 
+            <strong>load tab delimited ascii data into table</strong>
+            <BR></BR>
+            See also MySQL documentation: 
+            <strong>mysqlimport</strong>
+            <BR></BR>
+            Example:</P>
+          <CODE>load data local infile 'art.txt' into table art;</CODE>
+          <P><HR />Command: 
+            <strong>select</strong>
+            <BR></BR>
+            Purpose: 
+            <strong>submit query and display results</strong>
+            <BR></BR>
+            Examples: </P>
+          <CODE>select count(*) from table art;
+		  select art_ti, art_cr from table 
+            art limit 10;
+			<BR />
+			select art_ti, art_cr from table art where art_cr = 
+            "picasso";</CODE>
+          <P><HR />Command: 
+            <strong>alter</strong>
+            <BR></BR>
+            Purpose: 
+            <strong>adding an index to a field</strong>
+            <BR></BR>
+            Examples: </P>
+          <CODE>alter table art add FULLTEXT art_all (art_all); 
+		  <BR />alter table art 
+            add index art_id (art_id(10));</CODE>
+          <P><HR />Command: 
+            <strong>show</strong>
+            <BR />
+            Purpose: 
+            <strong>show definitions of database components</strong>
+            <BR />
+            Example:</P>
+          <CODE>show create table art;</CODE>
+	<P></P>
+	<P></P>
+        
+      
+    </BODY>
+  
+</HTML>

@@ -1,0 +1,76 @@
+- before anything, ask to have new bib coll authorized: public access and hosted on hti
+- also have stats entry created for new bib coll
+- the xml file should be in /l1/prep/d/dlpscoll/dlpstext/new/ or /l1/prep/d/dlpscoll/dlpsimage/new or /l1/prep/d/dlpscoll/spotext/new
+- move xml file to /l1/obj/d/dlpscoll
+- on sangria, index the xml file
+cd /l1/idx/d/dlpscoll
+- cp the bib-sample.dd
+cp bib-sample.dd busadwp-bib.dd
+- edit busadwp-bib.dd so that /l1/obj/b/bib-sample/bib-sample becomes /l1/obj/d/dlpscoll/busadwp-bib in the three places it's needed
+- create the init file for this coll
+cp bib-sample.init busadwp-bib.init
+- find out how big your obj file is
+ls -la /l1/obj/d/dlpscoll/busadwp-bib.xml
+- index the file
+xpatbldu -m [x]m -D busadwp-bib.dd 
+- where [x] = up to two times the size of the busadwp-bib.xml file, but no more than 75% of the RAM on the server
+- multirgn -f -D busadwp-bib.dd -t bib-regions.tags
+- add a record in collmgr
+collectionid = busadwp-bib
+collname = University of Michigan Business Administration Working Papers
+appmodule = BibApp
+browseable = no
+extendedname = University of Michigan Business Administration Working Papers
+hold = no
+homesite = http://www.hti.umich.edu
+host = www.hti.umich.edu
+locale = en_US.UTF-8
+map = bib.map
+objdir = /d/dlpscoll
+port = 620
+primaryhref = default
+primarytitle = text:University of Michigan Business Administration Working Papers
+querylanguage = xpat
+rendering = perl
+secondarytitle = default
+sortthreshold = 1000
+subclassmodule = BibClass
+webdir = /d/dlpscoll/busadwp-bib
+authsystems = um
+colldescr = [a description based on the original coll description]
+dd = /idx/d/dlpscoll/busadwp-bib.dd
+regionsearch = entire record [and] author [and] title
+- move your index from sangria to clamato and dlps10, and thus production
+cd /l1/bin/b/bib
+rdist -f rdist.dlpscoll -m clamato.umdl.umich.edu
+rdist -s hti -f rdist.dlpscoll
+- authorize yourself to look at the collection, before it is officially authorized
+cd /l1/dev/[uniqname]/cgi/b/bib
+- add busadwp-bib to AUTHZD_COLL
+- create an HTML index page for your collection.
+cd /l1/dev/[uniqname]/web/d/dlpscoll
+mkdir busadwp-bib
+cvs add busadwp-bib
+cp sample_index.tpl busadwp-bib
+cd busadwp-bib
+mv sample_index.tpl index.tpl
+- open the index.tpl file and change the <title> and <h2> tags to reflect the full name of the collection, and add the description from colldescr
+- cvs add index.tpl
+- cvs commit index.tpl
+- update the release script to incorporate these for release.
+cd /l1/dev/[uniqname]/bin/b/bib
+- add '/web/d/dlpscoll/busadwp-bib' => '-R', # recurse to cvstag.bib
+cvs commit cvstag.bib
+- find the range of dates in the collection
+- go back to sangria
+xpatu /l1/idx/d/dlpscoll/busadwp-bib.dd
+region YR
+{savefile "dates"}
+save.region.1
+/l1/prep/d/dlpscoll/scripts/daterange.pl dates | sort | uniq | more
+- go back to the record in collmgr and add:
+minmaxyearstart = [first date]
+minmaxyearend = [last date]
+- look at everything at http://[uniqname].dev.umdl.umich.edu/cgi/b/bib/bib-idx?c=busadwp-bib
+- choose the groups you want to add the collection to in collmgr
+- for OAI, choose the oaiall group

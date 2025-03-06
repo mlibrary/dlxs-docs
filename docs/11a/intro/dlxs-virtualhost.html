@@ -1,0 +1,82 @@
+<html>
+<head>
+<title>DLXS Virtual Host Example</title>
+
+
+
+ </head>         <BODY>
+<table class="updateTable" CELLSPACING="3" CELLPADDING="3" border="1">
+<tr>
+<td>Last updated</td>
+<td>2003-08-08 15:03:08 EDT</td>
+</tr>
+<tr>
+<td>Doc Title</td>
+<td>DLXS Virtual Host Example</td>
+</tr>
+<tr>
+<td>Author 1</td>
+<td>Farber, Phillip</td>
+</tr>
+<tr>
+<td>CVS Revision</td>
+<td>$Revision: 1.8 $</td>
+</tr>
+</table>
+
+<DIV CLASS="pageTitle">DLXS Virtual Host Example</div>
+    
+      
+      <H1>Example Apache virtual host configuration</H1>
+      
+      <BLOCKQUOTE>           
+        <PRE>&lt;VirtualHost 141.211.000.00:80&gt;
+<BR />  ServerName somewhere.dlxs10.edu
+<BR />
+<BR />  DocumentRoot          /usr/local/dlxs10/web
+<BR />  ScriptAlias   /cgi/   /usr/local/dlxs10/cgi/
+<BR />
+<BR />  SetEnv DLXSROOT       /usr/local/dlxs10
+<BR />  <FONT COLOR="#ff0000"># optional</FONT> 
+<BR />  <FONT COLOR="#FF0000">SetEnv DLXSDATAROOT   /usr/local/dlxs8</FONT> 
+<BR />  SetEnv REMOTE_USER    user01
+<BR />  SetEnv USERID         user01
+<BR />  UnsetEnv DLPS_DEV<BR />  <FONT COLOR="#FF0000"># optional
+<BR />  SetEnv DLPS_DEV       user01</FONT>
+<BR />
+<BR />  &lt;Directory /usr/local/dlxs10/cgi/b/bib&gt;
+<BR />    SetEnv AUTHZD_COLL  :amverse-bib:samplebc:
+<BR />    SetEnv PUBLIC_COLL  :
+<BR />  &lt;/Directory&gt;
+<BR />
+<BR />  &lt;Directory /usr/local/dlxs10/cgi/i/image&gt;
+<BR />    SetEnv AUTHZD_COLL  :
+<BR />    SetEnv PUBLIC_COLL  :sampleic:workshopic:
+<BR />  &lt;/Directory&gt;
+<BR />
+<BR />  &lt;Directory /usr/local/dlxs10/cgi/t/text&gt;
+<BR />    SetEnv AUTHZD_COLL  :moajrnl:moa:sampletc:workshoptc:
+<BR />    SetEnv PUBLIC_COLL  :
+<BR />  &lt;/Directory&gt;
+<BR />
+<BR />  &lt;Directory "/usr/local/dlxs10/cgi/c/collmgr"&gt;
+<BR />    AuthName "DLXS collection management"
+<BR />    AuthType Basic
+<BR />
+<BR />    AuthUserFile conf/htpasswd.dlxs
+<BR />
+<BR />    Require user dlxsadm
+<BR />  &lt;/Directory&gt;
+<BR />&lt;/VirtualHost&gt;
+<BR />          
+</PRE>
+      </BLOCKQUOTE>
+      <BR />
+      
+    
+    
+  </BODY>
+
+                            
+
+</html>

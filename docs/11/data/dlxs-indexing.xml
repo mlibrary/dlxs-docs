@@ -1,0 +1,35 @@
+<?xml version="1.0"?>
+
+<!-- SPO Editorial Services                  -->
+<!-- automatically-generated XML header file -->
+
+<?xml-stylesheet href="..
+ /../pre11-dlxsdocs.xsl" type="text/xsl"?>
+<!DOCTYPE DLPSDOC PUBLIC "-//UM-DLPS//DTD DLPS Publications//EN" "http://docs.umdl.umich.edu/dlps/docs/dlpsdocs.dtd">
+<DLPSDOC>
+<TITLE>Indexing Data for DLXS Implementations</TITLE>
+<HEADER>
+<JOURNAL>DLXS Documentation</JOURNAL>
+<PUBDATE>2002-05-23 16:33:57 EDT</PUBDATE>
+<AUTH1>Powell, Chris</AUTH1>
+<AUTH2></AUTH2>
+<DOCTITLE>Indexing Data for DLXS Implementations</DOCTITLE>
+<VOL>data</VOL>
+<ISS></ISS>
+<FILE>dlxsdocs-dlxs-indexing</FILE>
+</HEADER>
+<BODY>
+<BHEAD>Indexing Data for DLXS Implementations</BHEAD>
+<DIV1>
+<P>This document links to documentation on indexing your collections with the <A HREF="../xpat/xpat-index.xml">XPAT engine</A>.  When creating an index, you are indexing the words in the collection, then indexing the SGML/XML (the
+structural metadata).  For more general information on indexing with XPat, please see the <A HREF="../xpat/xpat-manual.xml">XPat Manual</A></P>
+<UL>
+<LI><A HREF="../class/text/tc-indexing.xml">Text Class Specific Instructions on XPAT indexing of data</A></LI>
+<LI><A HREF="../class/image/image-indexbuild.xml">Image Class Specific Instructions on XPAT indexing of data</A></LI>
+<LI><A HREF="../class/bib/bib-indexing.xml">Bib Class Specific Instructions on XPAT indexing of data</A></LI>
+<LI><A HREF="../class/findaid/findaid-indexing.xml">Finding Aids Class Specific Instructions on XPAT indexing of data</A></LI>
+</UL>
+</DIV1>
+</BODY>
+</DLPSDOC>
+

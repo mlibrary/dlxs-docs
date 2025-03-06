@@ -1,0 +1,893 @@
+package CollsInfo;
+
+use Exporter ();
+@ISA = qw( Exporter );
+
+unshift ( @INC, '.' );
+
+
+use DlpsUtils;
+
+# ----------------------------------------------------------------------
+# The structure of this object is:
+# CollsInfo Object->
+#   (a hash 'colls' for all authorized collections
+#     {'colls'}{ $collid }  =  TextClass Object (or subclass object of TextClass)
+#
+#     {'authcollcount'}  = number of authorized collections
+#     {'authtextscount'} = number of texts in authorized collections
+#     {'reqcollcount'}   = number of requested collections
+#     {'reqtextscount'}  = number of textsin requested collections
+#
+#
+# ----------------------------------------------------------------------
+
+#####use Tie::DBI;
+
+my %CollsInfoHash = ();
+
+# **********************************************************************
+# NAME      : new
+# PURPOSE   : create a CollsInfo object
+# CALLED BY : main
+# CALLS     : initialize
+# INPUT     : text file with delimted DB, ref to array of permitted collections
+# RETURNS   : object ref
+# NOTES     : 
+# **********************************************************************
+
+sub new 
+{
+    my $class = shift;
+    my $self = {};
+    bless $self, $class;
+    $self->_initialize(@_);
+    return $self;
+}
+
+# **********************************************************************
+# NAME      : _initialize
+# PURPOSE   : to populate the CollsInfo object (eventually this should be
+#             a call through DBI to a database rather than to the hash above)
+#             See the other, commented out intialized sub below.
+# CALLED BY : CollsInfo::new
+# CALLS     : 
+# INPUT     : ;-delimted file, ref to array of permitted collections
+# RETURNS   : NONE
+# NOTES     : adds collection info to object for just those collections 
+#             permitted
+#             ** eventually this should be a DBI based database access, but
+#             as of now 2000-03-14 22:57:21 EST we can't get DBI::CSV to work;
+#             so, simply parsing my own ;-delimted text file.
+# **********************************************************************
+
+sub _initialize 
+{
+    my $self = shift;
+
+    my $collDbFile   = shift;
+    my $authCollsRef = shift;
+    my $reqCollsRef  = shift;
+
+    my ( $authCollCount, $reqCollCount, $authTextsCount, $reqTextsCount ) = ( 0, 0, 0, 0 );
+    my ( @authCollsCommonTermSearchRegions, @authCollsCommonRegionSearchRegions,
+         @reqCollsCommonTermSearchRegions, @reqCollsCommonRegionSearchRegions,
+         @reqCollsCommonGenres, @reqCollsCommonGenders, 
+         @reqCollsCommonPeriods, @reqCollsCommonLanguagess,
+       );
+    
+    # debug?
+    if ( $gDebug >= 1 )
+    {     print qq{<h1>Inside CollsInfo initialize routine</h1>\n};    }
+
+    # this will eventually hold the lowest value of all the collections' LEL values
+    # set high now and compare all incoming to it.
+    my $lowestLel = 999;
+
+    # open and read in tab-delimited file
+    open ( DBFILE, "<$collDbFile" ) or
+      &DlpsUtils::errorBail( qq{Could not open $collDbFile for reading: $!\n} );
+
+
+    # read in file line by line
+ LINE:
+    while (<DBFILE>)
+    {
+        chomp;
+        my ( 
+            $collid, $collname, $subclass, $subclassModule, 
+            $qtytexts, $homesite, $host, $webdir, $objdir,
+            $dd, $wwdd, $map, $patexec,
+            $port, $lel, $termsearch, $regionsearch,
+            $wwrealms, $wwrealmsenglish,
+            $genres, $genders, $periods, $languages,
+            $locale,
+           ) = split ( /\t/ );
+
+
+
+        # skip first line of column headers
+        next LINE if ( $collid eq 'collid' );
+        
+        # skip blank and commented (# as first character) lines
+        next LINE if ( m,(^#)|(^\s*$), );
+
+        # if the line read is in the permitted collections (those in @$rColls), add to object
+        if ( grep ( /$collid/, @$authCollsRef ) )
+        {
+            $self->{'colls'}{$collid}{'collid'}          = $collid;
+            $self->{'colls'}{$collid}{'collname'}        = $collname;
+            $self->{'colls'}{$collid}{'subclass'}        = $subclass;
+            $self->{'colls'}{$collid}{'subclassModule'}  = $subclassModule;
+            $self->{'colls'}{$collid}{'qtytexts'}        = $qtytexts;
+            $self->{'colls'}{$collid}{'homesite'}        = $homesite;
+            $self->{'colls'}{$collid}{'host'}            = $host;
+            $self->{'colls'}{$collid}{'webdir'}          = $webdir;     
+            $self->{'colls'}{$collid}{'objdir'}          = $objdir;
+            $self->{'colls'}{$collid}{'dd'}              = $dd;
+            $self->{'colls'}{$collid}{'wwdd'}            = $wwdd;
+            $self->{'colls'}{$collid}{'map'}             = $map;
+            $self->{'colls'}{$collid}{'patexec'}         = $patexec;
+            $self->{'colls'}{$collid}{'port'}            = $port;
+            $self->{'colls'}{$collid}{'lel'}             = $lel;
+            $self->{'colls'}{$collid}{'termsearch'}      = $termsearch;
+            $self->{'colls'}{$collid}{'regionsearch'}    = $regionsearch;
+            $self->{'colls'}{$collid}{'wwrealms'}        = $wwrealms;
+            $self->{'colls'}{$collid}{'wwrealmsenglish'} = $wwrealmsenglish;
+            $self->{'colls'}{$collid}{'genres'}          = $genres;
+            $self->{'colls'}{$collid}{'genders'}         = $genders;
+            $self->{'colls'}{$collid}{'periods'}         = $periods;
+            $self->{'colls'}{$collid}{'languages'}       = $languages;
+            $self->{'colls'}{$collid}{'locale'}          = $locale;
+
+
+            $authCollCount++;
+            $authTextsCount += $qtytexts;
+            
+            # keep track of all search regions for authzd collections
+            push ( @authCollsCommonTermSearchRegions, split( /\|/, $termsearch ) );
+            push ( @authCollsCommonRegionSearchRegions, split( /\|/, $regionsearch ) );
+
+            
+            if ( grep ( /$collid/, @$reqCollsRef ) )
+            {
+                $self->{'colls'}{$collid}{'requested'}   = 1;
+                
+                $reqCollCount++;
+                $reqTextsCount += $qtytexts;
+                
+                # keep track of all search regions for requested colls
+                push ( @reqCollsCommonTermSearchRegions, split( /\|/, $termsearch ) );
+                push ( @reqCollsCommonRegionSearchRegions, split( /\|/, $regionsearch ) );
+
+                # keep track of all genres, genders, periods and languages for requested colls
+                push ( @reqCollsCommonGenres, split( /\|/, $genres ) );
+                push ( @reqCollsCommonGenders, split( /\|/, $genders ) );
+                push ( @reqCollsCommonPeriods, split( /\|/, $periods ) );
+                push ( @reqCollsCommonLanguages, split( /\|/, $languages ) );
+
+                # keep track of the lowest LEL fo all requested collections
+                if ( $self->{'colls'}{$collid}{'lel'} < $lowestLel )
+                {    $lowestLel = $self->{'colls'}{$collid}{'lel'};    }
+            }
+        }
+    }
+    close ( DBFILE );
+
+    # save the "lowest common denominator" of all the LELs encountered
+    $self->{'lowestlel'}  = $lowestLel;
+
+    # store away counts of collections and texts
+    $self->{'authcollcount'}  = $authCollCount;
+    $self->{'authtextscount'} = $authTextsCount;
+    $self->{'reqcollcount'}   = $reqCollCount;
+    $self->{'reqtextscount'}  = $reqTextsCount;
+
+    # store away lists of common regions
+    &DlpsUtils::SortUniquifyList( \@authCollsCommonTermSearchRegions );
+    $self->{'authcommontermsearchregions'}  = \@authCollsCommonTermSearchRegions;
+    &DlpsUtils::SortUniquifyList( \@authCollsCommonRegionSearchRegions );
+    $self->{'authcommonregionsearchregions'}  = \@authCollsCommonRegionSearchRegions;
+
+    &DlpsUtils::SortUniquifyList( \@reqCollsCommonTermSearchRegions );
+    $self->{'reqcommontermsearchregions'}  = \@reqCollsCommonTermSearchRegions;
+    &DlpsUtils::SortUniquifyList( \@reqCollsCommonRegionSearchRegions );
+    $self->{'reqcommonregionsearchregions'}  = \@reqCollsCommonRegionSearchRegions;
+
+    &DlpsUtils::SortUniquifyList( \@reqCollsCommonGenres );
+    $self->{'reqcommongenres'}  = \@reqCollsCommonGenres;
+    &DlpsUtils::SortUniquifyList( \@reqCollsCommonGenders );
+    $self->{'reqcommongenders'}  = \@reqCollsCommonGenders;
+    &DlpsUtils::SortUniquifyList( \@reqCollsCommonPeriods );
+    $self->{'reqcommonperiods'}  = \@reqCollsCommonPeriods;
+    &DlpsUtils::SortUniquifyList( \@reqCollsCommonLanguages );
+    $self->{'reqcommonlanguages'}  = \@reqCollsCommonLanguages;
+    
+ }
+
+# ----------------------------------------------------------------------
+# NAME         : 
+# PURPOSE      : 
+#                
+# CALLED BY    : 
+# CALLS        : 
+# INPUT        : 
+# RETURNS      : 
+# GLOBALS      : 
+# SIDE-EFFECTS : 
+# NOTES        : 
+# ----------------------------------------------------------------------
+
+sub AddTextClassObjects
+{
+    my $self = shift;
+    
+    my @allColls = $self->GetCollIds( );
+    my @reqColls = $self->GetRequestedCollIds( );
+
+    foreach my $collid ( @allColls )
+    {
+        my $subclassModule = $self->GetCollKeyInfo( $collid, 'subclassModule'  );
+        
+        if ( $subclassModule )
+        {
+            $subclassModule =~ s,\.pm$,,;
+            if ( $ENV{'DEBUG'} >=2 )
+            {
+                print "<h1><font color=\"red\">setting up $subclassModule object for $collid</font></h1>\n";   
+            }  
+
+	    # Graceful handling here in case the caller has not
+	    # "use"'d the sub-class module which defines the "new"
+	    # method
+	    eval
+	    {
+		# create and store TextClass object (or subclass of it)
+                my $tco = 
+		  $subclassModule->new( 
+				       $self->GetCollKeyInfo( $collid, 'collid' ),
+				       $self->GetCollKeyInfo( $collid, 'collname' ),
+				       $self->GetCollKeyInfo( $collid, 'subclass' ),
+				       $self->GetCollKeyInfo( $collid, 'subclassModule' ),
+				       $self->GetCollKeyInfo( $collid, 'qtytexts' ),
+				       $self->GetCollKeyInfo( $collid, 'homesite' ),
+				       $self->GetCollKeyInfo( $collid, 'host' ),
+				       $self->GetCollKeyInfo( $collid, 'webdir' ),
+				       $self->GetCollKeyInfo( $collid, 'objdir' ),
+				       $self->GetCollKeyInfo( $collid, 'dd' ),
+				       $self->GetCollKeyInfo( $collid, 'wwdd' ),
+				       $self->GetCollKeyInfo( $collid, 'map' ),
+				       $self->GetCollKeyInfo( $collid, 'patexec' ),
+				       $self->GetCollKeyInfo( $collid, 'port' ),
+				       $self->GetCollKeyInfo( $collid, 'lel' ),
+				       $self->GetCollKeyInfo( $collid, 'termsearch', 'byref' ),
+				       $self->GetCollKeyInfo( $collid, 'regionsearch', 'byref' ),
+				       $self->GetCollKeyInfo( $collid, 'wwrealms', 'byref' ),
+				       $self->GetCollKeyInfo( $collid, 'wwrealmsenglish', 'byref' ),
+				       $self->GetCollKeyInfo( $collid, 'genres', 'byref' ),
+				       $self->GetCollKeyInfo( $collid, 'genders', 'byref' ),
+				       $self->GetCollKeyInfo( $collid, 'periods', 'byref' ),
+				       $self->GetCollKeyInfo( $collid, 'languages', 'byref' ),
+				       $self->GetCollKeyInfo( $collid, 'locale' ),
+
+				      );
+                $self->{'colls'}{$collid}{'tco'} = $tco;
+	    };
+
+	    if ( $@ )
+	    {
+		&DlpsUtils::errorBail( "Subclass module $subclassModule not \"use\"\'d: " . $@ );
+	    }
+        }
+            
+        else
+        { 
+            &DlpsUtils::errorBail( "No textclass module defined");
+        }
+    }
+}
+
+
+# ----------------------------------------------------------------------
+# NAME         : RemoveTextClassObjects
+# PURPOSE      : 
+#                
+# CALLED BY    : 
+# CALLS        : 
+# INPUT        : 
+# RETURNS      : 
+# GLOBALS      : 
+# SIDE-EFFECTS : 
+# NOTES        : 
+# ----------------------------------------------------------------------
+
+sub RemoveTextClassObjects
+{
+    my $self = shift;
+    
+    undef ( $self->{'colls'} );
+}
+
+# **********************************************************************
+# NAME      : Commented_out_intialize
+# PURPOSE   : 
+#             
+# CALLED BY : 
+# CALLS     : 
+# INPUT     : database table name, reference to array of collection ids
+# RETURNS   : initialized object
+# NOTES     : this should be an inquiry made to the colldb through DBI
+# **********************************************************************
+
+sub Commented_out_initialize
+{
+    my $self = shift;
+    my $authCollsRef = shift;
+    my $reqCollsRef  = shift;
+    
+    my ( $authCount, $reqCount ) = ( 0, 0);
+
+    my %collDb = ();
+    tie %collDb, 'Tie::DBI', {
+                              db => 'CSV:csv_sep_char=\\;',
+                              table => $gCollDbName,
+                              key => 'collid'
+                             };
+    
+    foreach my $collid ( keys %collDb )
+    {
+
+        $self->{'colls'}{$collid} = $collid;
+
+    }
+
+
+    $self->{'authcount'} = $authCount;
+    $self->{'reqcount'} = $reqCount;
+}
+
+
+# **********************************************************************
+# NAME      : GetCollKeyInfo
+# PURPOSE   : retrieve information about a particular key for a 
+#             particular coll in the CollsInfo object
+# CALLED BY : 
+# CALLS     : NONE
+# INPUT     : collection id, key value
+# RETURNS   : value of key for the coll
+# NOTES     : the caller should know whether it is asking for an array 
+#             of values or just one scalar. This routine will split on
+#             the separator if there is one.
+# **********************************************************************
+
+sub GetCollKeyInfo
+{
+    my $self = shift;
+    my ( $collid, $key, $byRef ) = @_;
+
+    my $value = $self->{'colls'}{$collid}{$key} ;
+
+    my ( @returnArray, $returnScalar );
+    
+    # if there is no | just return scalar value
+    if ( $value !~ m,\|, )
+    {
+        return $value;
+    }
+    # otherwise, this is a "|" delimited list, so...
+    # see if there caller wanted the list returned by ref or just as a list
+    # ( default is as list; i.e., must ask specifically for list by ref
+    else
+    {
+        @returnArray = split ( /\|/, $value );
+
+        if ( defined ( $byRef ) )
+        {
+            return \@returnArray;
+        }            
+        else
+        {
+            return @returnArray;
+        }
+    }        
+
+}
+
+# **********************************************************************
+# NAME      : GetTextClassObjByCollId
+# PURPOSE   : retrieve the TextClass object for a particular coll
+#             in the CollsInfo object
+# CALLED BY : main::HandleSearch 
+# CALLS     : NONE
+# INPUT     : collection id
+# RETURNS   : reference to hash of keys and their values for the coll
+# NOTES     : 
+# **********************************************************************
+
+sub GetTextClassObjByCollId
+{
+    my $self   = shift;
+    my $collid = shift;
+
+    return $self->{'colls'}{$collid}{'tco'};
+}
+
+
+# **********************************************************************
+# NAME      : GetCollIds
+# PURPOSE   : get the list of collids in the object
+# CALLED BY : main
+# CALLS     : NONE
+# INPUT     : collection object
+# RETURNS   : array of all coll ids in the object
+# NOTES     : 
+# **********************************************************************
+
+sub GetCollIds
+{
+    my $self = shift;
+
+    my @colls = sort ( keys ( %{$self->{'colls'}} ) );
+
+    return ( @colls );
+}
+
+# **********************************************************************
+# NAME      : GetRequestedCollIds
+# PURPOSE   : get the list of collids in the object that are flagged as 
+#             requested
+# CALLED BY : main::CompareColls
+# CALLS     : NONE
+# INPUT     : NONE
+# RETURNS   : array of all coll ids in the object that are flagged
+# NOTES     : 
+# **********************************************************************
+
+sub GetRequestedCollIds
+{
+    my $self = shift;
+    my @toReturn = ();
+    
+    foreach my $collid ( keys ( %{$self->{'colls'}} ) )
+    {
+        if ( $self->{'colls'}{$collid}{'requested'} )
+        {
+           push ( @toReturn, $collid );
+       }           
+    }
+    return ( sort (@toReturn ) );
+}
+
+# **********************************************************************
+# NAME      : GetReqTextsNumber
+# PURPOSE   : get the number of texts in the requested collections
+# CALLED BY : PageHandling::various
+# CALLS     : NONE
+# INPUT     : NONE
+# RETURNS   : number of texts in requested colls of CollsInfo object
+# NOTES     : 
+# **********************************************************************
+
+sub GetReqTextsNumber
+{
+    my $self = shift;
+    return ( $self->{'reqtextscount'} );
+}
+
+# **********************************************************************
+# NAME      : GetReqCollsCount
+# PURPOSE   : get the number of requested collections
+# CALLED BY : PageHandling:: various
+# CALLS     : NONE
+# INPUT     : NONE
+# RETURNS   : number of requested colls in CollsInfo object
+# NOTES     : 
+# **********************************************************************
+
+sub GetReqCollsCount
+{
+    my $self = shift;
+    return ( $self->{'reqcollcount'} );
+}
+
+# ----------------------------------------------------------------------
+# NAME         : GetLowestLel
+# PURPOSE      : return the lowest of all the LEL values for requested colls
+#                
+# CALLED BY    : 
+# CALLS        : 
+# INPUT        : 
+# RETURNS      : value of object's lowestLEL
+# GLOBALS      : 
+# SIDE-EFFECTS : 
+# NOTES        : 
+# ----------------------------------------------------------------------
+
+sub GetLowestLel
+{
+    my $self = shift;
+    return ( $self->{'lowestlel'} );
+}
+
+
+# ----------------------------------------------------------------------
+# NAME         : GetAuthCollsCommonRegionsSearchRegions
+# PURPOSE      : get sorted, uniq-ed list of all regionsearch region names
+#                for all authorized collections
+# CALLED BY    : ANY
+# CALLS        : NONE
+# INPUT        : NONE
+# RETURNS      : array
+# GLOBALS      : NONE
+# SIDE-EFFECTS : NONE
+# NOTES        : 
+# ----------------------------------------------------------------------
+
+sub GetAuthCollsCommonRegionSearchRegions
+{
+    my $self = shift;
+    my @returnArray = @{ $self->{'authcommonregionsearchregions'} };
+    return @returnArray;
+}
+
+# ----------------------------------------------------------------------
+# NAME         : GetAuthCollsCommonRegionsSearchRegions
+# PURPOSE      : get sorted, uniq-ed list of all termsearch region names
+#                for all authorized collections
+# CALLED BY    : ANY
+# CALLS        : NONE
+# INPUT        : NONE
+# RETURNS      : array
+# GLOBALS      : NONE
+# SIDE-EFFECTS : NONE
+# NOTES        : 
+# ----------------------------------------------------------------------
+
+sub GetAuthCollsCommonTermSearchRegions
+{
+    my $self = shift;
+    my @returnArray = @{ $self->{'authcommontermsearchregions'} };
+    return @returnArray;
+}
+
+# ----------------------------------------------------------------------
+# NAME         : GetReqCollsCommonRegionsSearchRegions
+# PURPOSE      : get sorted, uniq-ed list of all regionsearch region names
+#                for all requested collections
+# CALLED BY    : ANY
+# CALLS        : NONE
+# INPUT        : NONE
+# RETURNS      : array
+# GLOBALS      : NONE
+# SIDE-EFFECTS : NONE
+# NOTES        : 
+# ----------------------------------------------------------------------
+
+sub GetReqCollsCommonRegionSearchRegions
+{
+    my $self = shift;
+    my @returnArray = @{ $self->{'reqcommonregionsearchregions'} };
+    return @returnArray;
+}
+
+# ----------------------------------------------------------------------
+# NAME         : GetReqCollsCommonRegionsSearchRegions
+# PURPOSE      : get sorted, uniq-ed list of all termsearch region names
+#                for all requested collections
+# CALLED BY    : ANY
+# CALLS        : NONE
+# INPUT        : NONE
+# RETURNS      : array
+# GLOBALS      : NONE
+# SIDE-EFFECTS : NONE
+# NOTES        : 
+# ----------------------------------------------------------------------
+
+sub GetReqCollsCommonTermSearchRegions
+{
+    my $self = shift;
+    my @returnArray = @{ $self->{'reqcommontermsearchregions'} };
+    return @returnArray;
+}
+
+# ----------------------------------------------------------------------
+# NAME         : GetReqCollsCommonGenres
+# PURPOSE      : get sorted, uniq-ed list of all genres
+#                for all requested collections
+# CALLED BY    : ANY
+# CALLS        : NONE
+# INPUT        : NONE
+# RETURNS      : array
+# GLOBALS      : NONE
+# SIDE-EFFECTS : NONE
+# NOTES        : 
+# ----------------------------------------------------------------------
+
+sub GetReqCollsCommonGenres
+{
+    my $self = shift;
+    my @returnArray = @{ $self->{'reqcommongenres'} };
+    return @returnArray;
+}
+
+# ----------------------------------------------------------------------
+# NAME         : GetReqCollsCommonGenders
+# PURPOSE      : get sorted, uniq-ed list of all genders
+#                for all requested collections
+# CALLED BY    : ANY
+# CALLS        : NONE
+# INPUT        : NONE
+# RETURNS      : array
+# GLOBALS      : NONE
+# SIDE-EFFECTS : NONE
+# NOTES        : 
+# ----------------------------------------------------------------------
+
+sub GetReqCollsCommonGenders
+{
+    my $self = shift;
+    my @returnArray = @{ $self->{'reqcommongenders'} };
+    return @returnArray;
+}
+
+
+# ----------------------------------------------------------------------
+# NAME         : GetReqCollsCommonPeriods
+# PURPOSE      : get sorted, uniq-ed list of all periods
+#                for all requested collections
+# CALLED BY    : ANY
+# CALLS        : NONE
+# INPUT        : NONE
+# RETURNS      : array
+# GLOBALS      : NONE
+# SIDE-EFFECTS : NONE
+# NOTES        : 
+# ----------------------------------------------------------------------
+
+sub GetReqCollsCommonPeriods
+{
+    my $self = shift;
+    my @returnArray = @{ $self->{'reqcommonperiods'} };
+    return @returnArray;
+}
+
+# ----------------------------------------------------------------------
+# NAME         : GetReqCollsCommonPeriods
+# PURPOSE      : get sorted, uniq-ed list of all periods
+#                for all requested collections
+# CALLED BY    : ANY
+# CALLS        : NONE
+# INPUT        : NONE
+# RETURNS      : array
+# GLOBALS      : NONE
+# SIDE-EFFECTS : NONE
+# NOTES        : 
+# ----------------------------------------------------------------------
+
+sub GetReqCollsCommonLanguages
+{
+    my $self = shift;
+    my @returnArray = @{ $self->{'reqcommonlanguages'} };
+    return @returnArray;
+}
+
+
+# **********************************************************************
+# NAME      : HtmlDumpCollsInfo
+# PURPOSE   : for debugging, creates html string with CollsInfo object data
+# CALLED BY : main
+# CALLS     : 
+# INPUT     : CollsInfo object
+# RETURNS   : string of html
+# NOTES     : 
+# **********************************************************************
+
+sub HtmlDumpCollsInfo
+{
+    my $self = shift;
+    my $s = '';
+    
+    $s .= qq{<h1>Dumping information on CollsInfo Object: $self</h1>\n};
+    $s .= qq{<b>Number of authorized collections:</b> } . $self->{'authcollcount'} . qq{<br>\n};
+    $s .= qq{<b>Number of authorized texts:</b> } . $self->{'authtextscount'} . qq{<br>\n};
+    $s .= qq{<b>Number of requested collections:</b> } . $self->{'reqcollcount'} . qq{<br>\n};
+    $s .= qq{<b>Number of requested texts:</b> } . $self->{'reqtextscount'} . qq{<br>\n};
+
+    $s .= qq{<br><br>\n};
+    
+    foreach my $collid ( keys %{$self->{'colls'}} )
+    {
+        if ( $self->{'colls'}{$collid}{'requested'} )
+        {
+            $s .= qq{Collection flagged as requested<br>\n};
+        }
+        
+        # retrieve TextClass object for this collid
+        my $tco = $self->{'colls'}{$collid}{'tco'};
+        
+        $s .= qq{Coll Id: }          . $tco->GetValueByKey ('collid')       . qq{<br>\n};
+        $s .= qq{Coll Name: }        . $tco->GetValueByKey ('collname')     . qq{<br>\n};
+        $s .= qq{Subclass: }         . $tco->GetValueByKey ('subclass')     . qq{<br>\n};
+        $s .= qq{Number of Texts: }  . $tco->GetValueByKey ('qtytexts')     . qq{<br>\n};
+        $s .= qq{Home Site: }        . $tco->GetValueByKey ('homesite')     . qq{<br>\n};
+        $s .= qq{Host: }             . $tco->GetValueByKey ('host')         . qq{<br>\n};
+        $s .= qq{DataDict: }         . $tco->GetValueByKey ('dd')           . qq{<br>\n};
+        $s .= qq{TermMapper: }       . $tco->GetValueByKey ('map')          . qq{<br>\n};
+        $s .= qq{Pat Executable: }   . $tco->GetValueByKey ('patexec')      . qq{<br>\n};
+        $s .= qq{Port: }             . $tco->GetValueByKey ('port')         . qq{<br>\n};
+        $s .= qq{LEL: }              . $tco->GetValueByKey ('lel')          . qq{<br>\n};
+        $s .= qq{Term Search: }      . $tco->GetValueByKey ('termsearch')   . qq{<br>\n};
+        $s .= qq{Region Search: }    . $tco->GetValueByKey ('regionsearch') . qq{<br>\n};
+        $s .= qq{WW Realm: }         . $tco->GetValueByKey ('wwrealms')     . qq{<br>\n};
+        $s .= qq{WW Realm English: } . $tco->GetValueByKey ('wwrealmsenglish') . qq{<br>\n};
+        $s .= qq{Genres: }           . $tco->GetValueByKey ('genres') . qq{<br>\n};
+        $s .= qq{Genders: }          . $tco->GetValueByKey ('genders') . qq{<br>\n};
+        $s .= qq{Periods: }          . $tco->GetValueByKey ('periods') . qq{<br>\n};
+        $s .= qq{Languages: }        . $tco->GetValueByKey ('languages') . qq{<br>\n};
+        $s .= qq{<br>\n};
+        
+    }
+    return $s;
+    
+}
+
+
+# ----------------------------------------------------------------------
+# NAME         : UpdateCrossCollNumbers
+# PURPOSE      : add to this object the total hits and records for
+#                the search (needed for the Guide Frame information)
+# CALLED BY    : main::RunSearches
+# CALLS        : GetCollIds, GetTextClassObjByCollId, ...
+# INPUT        : 
+# RETURNS      : 
+# GLOBALS      : 
+# SIDE-EFFECTS : 
+# NOTES        : 
+# ----------------------------------------------------------------------
+
+sub UpdateCrossCollNumbers
+{
+    my $self = shift;
+    my ( $sid, $name ) = @_;
+
+    my ( $totalMatches, $totalRecords ) = ( 0, 0 );
+
+    foreach my $collid ( $self->GetRequestedCollIds )
+    {
+        my $tco = $self->GetTextClassObjByCollId( $collid );
+        my $rset = $tco->GetXPatResultSet( $name );
+        $totalMatches += $rset->GetMainSearchResult( $sid );
+
+        $totalRecords += $rset->GetMainSubsetResult( $sid );
+    }
+
+    $self->SetTotalHits( $totalMatches );
+    $self->SetTotalRecords( $totalRecords );
+}
+
+
+# ----------------------------------------------------------------------
+# NAME         : GetTotalRecords
+# PURPOSE      : simple get function to retrieve total records in all collections
+#                
+# CALLED BY    : 
+# CALLS        : 
+# INPUT        : 
+# RETURNS      : 
+# GLOBALS      : 
+# SIDE-EFFECTS : 
+# NOTES        : 
+# ----------------------------------------------------------------------
+
+sub GetTotalRecords
+{
+    my $self = shift;
+    return $self->{'totalrecords'};
+}
+
+# ----------------------------------------------------------------------
+# NAME         : SetTotalRecords
+# PURPOSE      : simple set function to store total records in all collections
+#                
+# CALLED BY    : 
+# CALLS        : 
+# INPUT        : 
+# RETURNS      : 
+# GLOBALS      : 
+# SIDE-EFFECTS : 
+# NOTES        : 
+# ----------------------------------------------------------------------
+
+sub SetTotalRecords
+{
+    my $self = shift;
+    my $n    = shift;
+
+    $self->{'totalrecords'} = $n;
+}
+
+# ----------------------------------------------------------------------
+# NAME         : GetTotalHits
+# PURPOSE      : simple get function to retrieve total matches in all collections
+#                
+# CALLED BY    : 
+# CALLS        : 
+# INPUT        : 
+# RETURNS      : 
+# GLOBALS      : 
+# SIDE-EFFECTS : 
+# NOTES        : 
+# ----------------------------------------------------------------------
+
+sub GetTotalHits
+{
+    my $self = shift;
+    return $self->{'totalhits'};
+}
+
+# ----------------------------------------------------------------------
+# NAME         : SetTotalHits
+# PURPOSE      : simple set function to store total matches in all collections
+#                
+# CALLED BY    : 
+# CALLS        : 
+# INPUT        : 
+# RETURNS      : 
+# GLOBALS      : 
+# SIDE-EFFECTS : 
+# NOTES        : 
+# ----------------------------------------------------------------------
+
+sub SetTotalHits
+{
+    my $self = shift;
+    my $n    = shift;
+    $self->{'totalhits'} = $n;
+}
+
+
+# ----------------------------------------------------------------------
+# NAME         : CheckRequestedStatus
+# PURPOSE      : see if a collection in this object is marked as requested
+# CALLED BY    : 
+# CALLS        : 
+# INPUT        : coll id
+# RETURNS      : true or falase
+# GLOBALS      : 
+# SIDE-EFFECTS : 
+# NOTES        : 
+# ----------------------------------------------------------------------
+sub CheckRequestedStatus
+{
+    my $self = shift;
+    my $collid = shift;
+    
+    return ( $self->{'colls'}{$collid}{'requested'} ) ;
+}
+
+# ----------------------------------------------------------------------
+# NAME         : SetRequestedStatus
+# PURPOSE      : set the requested status of a collection
+# CALLED BY    : 
+# CALLS        : 
+# INPUT        : coll id, status ( 1 or 0 )
+# RETURNS      : 
+# GLOBALS      : 
+# SIDE-EFFECTS : 
+# NOTES        : 
+# ----------------------------------------------------------------------
+
+sub SetRequestedStatus
+{
+    my $self = shift;
+    my $collid = shift;
+    my $status = shift;
+    
+    $self->{'colls'}{$collid}{'requested'} = $status ;
+}
+
+
+# **********************************************************************
+1;
+
+

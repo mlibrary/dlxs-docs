@@ -1,0 +1,11 @@
+== Findaid Class Outline ==
+
+* Overview
+* Comparison with Text Class
+* Run through with samplefa/workshopfa
+* Repeat with non-Bentley finding aids
+** Troubleshooting and resolving problems
+** (prep scripts, config files, perl code, XSL)
+** Discussion of tips from other Finding Aids implementors
+
+[intro1.html Next]

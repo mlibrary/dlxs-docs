@@ -1,0 +1,107 @@
+<html>
+  <head>
+    <title>FIGURE Resolution</title>
+    <link href="../../dlxsdocs.css" rel="stylesheet" type="text/css">
+  </head>
+  <body>
+    <div class="pageTitle">FIGURE Resolution</div>
+
+    <h1>Introduction</h1>
+    <p>This document describes the mechanisms and programs used by DLXS for accessing and displaying images that are defined by the FIGURE element in TextClass document markup.</p>
+    <ul>
+      <li><a href="#figureelement">The FIGURE Element</a> </li>
+      <li><a href="#generalresolution">FIGURE Resolution in General</a> 
+        <ul>
+          <li><a href="#idresolvermech">The IdResolver Resolution Mechanism</a> </li>
+          <li><a href="#filesystemmech">The Filesystem Resolution Mechanism</a> </li>
+        </ul>
+      </li>
+      <li><a href="#defaultbehavior">Default Behavior and Custom Configuration</a> </li>
+      
+    </ul>
+    <h1><a name="figureelement"></a>The FIGURE Element</h1>
+    <p>The FIGURE element is used in TextClass markup to encode the occurrence of a figure in a text document.  The FIGURE element's ENTITY attribute carries the ID that the middleware resolves to an image file on disk or to an image under management by ImageClass.</p>
+    <p>If the document is a TEI Level 1 (page image document viewable in Pageviewer) the FIGURE tag supplies additional data about the bitonal page image beyond that supplied by the PB tag.   The additional data might be a second continuous tone scan of the entire page or a continuous tone scan of a plate within the page.  The middleware makes the contone images viewable under ImageClass via links built in the full OCR text of the document (in cases where that OCR is displayable) or via <a href="pageviewer.html#pageviewFig">additional links in Pageviewer</a>.  For higher TEI levels, the FIGURE tag typically calls out the occurrence of an inline figure, the image for which is usually on disk but may also be retrievable from ImageClass through the IdResolver mechanism described in the <a href="pageviewer.html#DLXS_IDResolver">IdResolver section</a> of the Pageviewer documentation.</p>
+    <p>The balance of this document describes how the FIGURE element is resolved into an image via two mechanisms: <i>Filesystem resolution</i> and <i>IdResolver resolution</i>.  Also described is how the resolution can be affected by writing subclasses of TextClass.</p>
+
+    
+
+    <h1><a name="generalresolution"></a>FIGURE Resolution in General</h1>
+    <p>The resolution mechanism is summarized in the following diagram</p>
+    <p>&lt;FIGURE ENTITY="abc"&gt; &#x2192; transform "abc" to key &#x2192; lookup key &#x2192; URL or file system path</p>
+    <p>The document markup is parsed and the ENTITY attribute value of a given FIGURE tag is extracted.  The attribute value is transformed into a key/path suitable for lookup via the DLXS IdResolver or by looking on the disk. If IdResolver is used, the corresponding ImageClass URL is returned. If the filesystem is used, the path to the file in the web space is determined.   This URL/path becomes the value of a new attribute which is added to the FIGURE tag and passed along for eventual processing by the XSL stylesheet (principally <tt>text.components.xsl</tt>). The XSL stylesheet typically transforms the FIGURE tag together with its attributes into an HTML <B>img</B> tag, possibly wrapped with an HTML anchor (<B>a</B>) tag, if a popup window or link into ImageClass is required to view the image of the figure.</p>
+    <p>Actually, depending on the situation, the middleware adds two or three new attributes to the FIGURE tag for XSL processing. They are <b>FIGTYPE</b>, <b>HREF_1</b> and <b>HREF_2</b>.  Collection-specific configuration referred to below is discussed in the <a href="#defaultbehavior">configuration section</a> later in this document.
+
+      <ol>
+        <li><b>FIGTYPE</b> carries one of two values:
+          <ul>
+            <li><b>INLINE</b> when the configuration is for figures that appear inline with the text.  In this case, only of the <B>HREF_1</B> attribute will appear.
+            </li>
+            <li><b>THUMB</b> when the configuration is for figures that have thumbnail images that appear inline with the text.  In this case, both of the <B>HREF_*</B> attributes will appear.</li>
+          </ul>
+        </li>
+        <li><b>HREF_1</b> is the URL or web space path to the inline image when <b>FIGTYPE=INLINE</b> or to a thumbnail image of the full sized image when <b>FIGTYPE=THUMB</b>.</li>
+        <li><b>HREF_2</b> is the URL or web space path to the full sized version of the figure image when <b>FIGTYPE=THUMB</b>.</li>
+      </ol>
+    </p>
+    <p><b>Note: </b>The <tt>debug=resolver</tt> URL parameter can be added to the end of the URL to see the action of the resolver as it operates on the ENTITY attribute of the FIGURE tag.  </p>
+
+    <h3><a name="idresolvermech"></a>The IdResolver Resolution Mechanism</h3>
+    <p>If the configuration indicates figure images are "external", i.e. that the figure images are managed in ImageClass or by a 3rd-party host, the IdResolver is used to resolve the ID to an ImageClass or 3rd-party URL.  The Idresolver mechanism is described in the <a href="pageviewer.html#DLXS_IDResolver">IdResolver section</a> of the Pageviewer documentation. </p>
+
+
+    <h3><a name="filesystemmech"></a>The Filesystem Resolution Mechanism</h3>
+    <p>If the configuration indicates figure images are not "external", the figure images should be found as files in the web space.  The middleware constructs a default path to the image in the web speace as <tt>/webdir/images/<i>ENTITY</i>.extension</tt> where <B>webdir</B> is the collmgr value for the collection and <TT>extension</TT> comes from a list (.gif, .jpg, etc.).  The middleware tests for file existence in the web space for each extension until a hit occurs.  This allows files of several different formats to coexist in the web space. </p>
+    <p>The DLXS directory convention is to store these image files in <tt>DLXSROOT/img/c/coll</tt> and make a symbolic link to that directoy in <tt>DLXSROOT/web/c/coll</tt> called <TT>images</TT>.</p>
+
+    <h1><a name="defaultbehavior">Default Behavior and Custom Configuration</a> </h1>
+    <p>The default for the figure resolution mechanism assumes all figures are inline, on disk, without corresponding thumbnail images.  Within this constraint it is possible to change the way the path to the disk file is generated to derive a number of naming conventions based on the bare entity attribute value.  This is described below. </p>
+    <p>Modifying the described configuration of the figure resolution mechanism is accomplished by writing a subclass of the TextClass package for each affected collection.  The size of the methods that need to be written is small, typically just a line or two of code. </p>
+    <p>Following is a synopsis of the methods provided for subclassing. Please consult the code in <tt>DLXSROOT/cgi/t/text/TextClass.pm</tt> and its subclasses for more detail.</p>
+    <ul>
+      <li><b>ExternalFigFullImage</b> by default returns 0 indicating that figure images are on disk.  Override this and return 1 to indicate images should be resolved into ImageClass or 3rd-party URLs by IdResolver. </li>
+      <li><b>ExternalFigThumb</b> by default returns 0 indicating that thumbnail images of figures are on disk.  Override this and return 1 to indicate thumbnail images should be resolved into ImageClass or 3rd-party URLs by IdResolver.</li>
+      <li><b>CollUsesThumbs</b> by default returns 0.  Override this and return 1 to indicate that figures should be rendered as inline thumbnails linked to a full sized version of the image.  Note that thumbnails and their full sized counterparts can reside under ImageClass or be accessed directly from the disk.</li>
+      <li><b>GenerateExternalId</b> returns the default format for the IdResolver ID (key) as <tt>ic-<i>collid-idno</i>-<i>ENTITY</i>-[th|rec]</tt> where  <b>th</b> is for the thumb and  <b>rec</b> is for the full sized image. <b><i>ENTITY</i></b> is the value of the <b>ENTITY</b> attribute in the &lt;FIGURE&gt; tag in the XML.  By overriding this method, different ID schemes can be implemented. </li>
+      <li><b>GenerateFilesysPathElement</b> by default simply returns the element for concatenation as described above.  In the case where <b>CollUsesThumbs</b> is true and thumbnails and full sized images are on disk, this method can be overridden to supply different names for the thumbnails and full sized image files.</li>
+      <li><b>FigureUriHook</b> by default returns the URL passed in.  For collections where the URL of the image needs to be wrapped in a javascript call this method can be subclassed. </li>
+      <li><b>SyntheticAttrsHook</b> can be subclassed to add additional attributes to the FIGURE tag for specialized process by the XSL stylesheets for collection-specific customization.</li>
+      <li><b>FilesysIdResolver</b> This method can be subclassed to supply a custom list of file extensions to check if the base class default list is not inclusive enough.  In the subclass implementation, the list is passed as the optional last parameter to an invocation of the base class method, i.e. as <tt>SUPER::FilesysIdResolver</tt>.</li>
+    </ul>
+
+
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+
+  </body>
+
+</html>

@@ -1,0 +1,188 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<title>Region Indexing</title>
+<link rel="stylesheet" href="styles.css">
+<style type="text/css">
+
+</style>
+</head>
+
+<body class="mainpalette">
+
+    <h3>The <b>sgmlrgn</b> Step</h3>
+
+    
+<p>The <b>sgmlrgn50</b> command creates a coll.rgn file, an index into every SGML 
+  region in the text.</p>
+<p>The command, outside the Makefile, would look like this:</p>
+
+    <blockquote>
+      
+  <pre>sgmlrgn50 -m region -o /dir/coll -D /dir/coll.dd doctype coll.sgm</pre>
+</blockquote>
+
+    
+<p>where the <b>-m region</b> tells <b>sgmlrgn50</b> that it is building regions, 
+  the <b>-o <i>directory</i></b> tells it where the output file should go, the 
+  <b>-D ddfile</b> tells it what <b>.dd</b> file to use. The next argument is 
+  the <b><b>doctype</b></b> file to use (usually <b>collname.inp</b>, and the 
+  last argument is the sgml data file. </p>
+
+    <hr width="50%">
+
+    <h4><a name="sgmlrgn">What <b>sgmlrgn50</b> Gets Us</a></h4>
+
+    <p>The <b>sgmlrgn</b> step identifies main SGML <em>elements</em>
+      and constructs them as <em>regions</em>.  To make things as precise
+      as possible:</p>
+
+    <ul>
+      <li>an <em>element</em> is a formal sgml construct in the DTD,
+        identifying part of the logical structure of a document, and
+        physically represented by a start and end tag.</li>
+
+      <li>a <em>region</em> is some span of text in a pat50 database,
+        identified by its start and end byte offsets.</li>
+
+      <li>an <em>sgml region</em> is a region that often
+        <strong>coincides</strong> with some aspect of an
+        <em>element</em>.</li>
+
+      
+  <li>a <em>fabricated region</em> is a region that we've specified ourselves 
+	somehow, not generated directly or in whole by <b>sgmlrgn</b> (this is a 
+	DLPS term).</li>
+
+    </ul>
+
+
+    <p>What elements we have is determined by our use of the DTD.
+      What sgml regions we have is determined by the DTD:
+      <b>sgmlrgn</b> makes the following regions for us
+      automatically:</p>
+
+    <ul>
+      <li><b><strong>ELEMENT</strong></b> a region for each element
+      declared in the DTD (whether or not it is used in the document
+      instances!).  This begins at the STAGO of the start tag, and
+      ends at the <em>last non-word character after the
+      ETAGO of the end tag</em>.  The name of the region is the same
+      as the generic identifier for the element, in uppercase.</li>
+
+      <li><b><strong>ELEMENT-T</strong></b> a region for the start
+        tag of each element <em>used in the document</em>.  This
+        begins at the STAGO of the start tag, and ends at the <em>last
+        non-word character after the ETAGO of the start
+        tag</em>.  The name of the region is the name of the generic
+        identifier of the element in uppercase followed by '-T'.</li>
+
+      
+  <li><b><strong>A-ATTRIB</strong></b> a region for each attribute used in the 
+	document (and oddly enough, where their elements appear, they are always considered 
+	to have been used, so there are always members (but possibly null strings) 
+	in these regions!). This begins with the first significant character of the 
+	attribute value itself, and continues to the <em>last non-word character after 
+	the formal end of the attribute value</em>. The name of the region is the 
+	attribute name in uppercase, preceded by a 'A-'. Attributes declared with 
+	the same name in different elements are in the same region.</li>
+    </ul>
+
+    <p>So, if we had a proper SGML database of some HTML documents, we
+      would have sgml regions like the following:</p>
+
+    <blockquote><b>HTML<br>
+      P<br>
+      STRONG<br>
+      META-T<br>
+      INPUT-T<br>
+      A-HREF<br>
+      A-NAME<br>
+      A-ALT<br>
+      </b></blockquote>
+
+    <p>For empty elements, those elements that have a start tag, and
+      no content or end tag (say, IMG or BR), region ELEMENT and
+      region "ELEMENT-T" are congruent.</p>
+
+    <blockquote><strong>NOTE:</strong> regions whose names have
+      characters other than [A-Za-z0-9] in them <em>must</em> be
+      double-quoted to be interpreted by pat50 correctly.  All the
+      A-ATTRIB and ELEMENT-T regions must be so quoted, as must things
+      like TEI.2.  Fine argument for always double-quoting region
+      names.</blockquote>
+
+    <p>We can print out a list of all currently defined regions with
+      the fabulously useful <b>{ddinfo regionnames}</b> command:</p>
+
+    <blockquote>
+  <pre>&gt;&gt; {ddinfo regionnames}
+HTML-T [ ]
+HEAD-T [ ]
+TITLE-T [ ]
+TITLE [ ]
+A-NAME [ ]
+A-CONTENT [ ]
+META-T [ ]
+META [ ]
+HEAD [ ]
+A-BGCOLOR [ ]
+BODY-T [ ]
+A-ALIGN [ ]
+...
+DIV-T [ ]
+H3-T [ ]
+H3 [ ]
+DIV [ ]
+A-SRC [ ]
+A-ALT [ ]
+IMG-T [ ]
+IMG [ ]
+BR-T [ ]
+BR [ ]
+&gt;&gt; 
+</pre>
+</blockquote>
+
+    <p>The [ ] would usually hold some user-defined descriptive or
+      annotative text about the region under PAT50 (say, how or why it
+      was made by whom, especially important for fabricated regions), viz.:</p>
+
+    <blockquote>
+  <pre>
+    &lt;Region&gt;
+      &lt;Name&gt;A-OTHERSOURCE&lt;/Name&gt;
+      &lt;Desc&gt;attribute describing the other source...&lt;/Desc&gt;
+      &lt;File&gt;
+        &lt;SysName&gt;/home/pagliere/dlxs/idx/t/text/main.rgn&lt;/SysName&gt;
+        &lt;ModDate&gt;898201323&lt;/ModDate&gt;
+        &lt;Offset&gt;2279824&lt;/Offset&gt;
+      &lt;/File&gt;
+      &lt;Count&gt;4240&lt;/Count&gt;
+      &lt;Type&gt;pairs&lt;/Type&gt;
+    &lt;/Region&gt;
+</pre>
+</blockquote>
+
+    
+<p>Which renders in XPat in a <b>{ddinfo regionnames}</b> command as:</p>
+
+    <blockquote><pre>
+A-OTHERSOURCE [attribute describing the other source...]
+</pre></blockquote>
+
+    
+<p>We've never actually used this. We're not even sure there is a reason for using 
+  this. </p>
+
+    
+<p><b>{ddinfo regionnames}</b> not only lists the sgml regions defined, but 
+  also any <a href="fabrgns.html">fabricated regions</a>. </p>
+
+    <hr width="50%">
+
+  </body>
+</html>

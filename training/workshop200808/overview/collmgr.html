@@ -1,0 +1,54 @@
+<html>
+  <head>
+    <title>Collection Manager</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+      <link rel="stylesheet" href="../styles.css" type="text/css">
+  </head>
+  <body bgcolor="#FFFFFF" class="mainpalette">
+    
+    <h3> Collection Manager (collmgr)<br>
+    </h3>
+    
+    <p><b>collmgr</b> is a CGI program that functions as an interface to the <a href="databases.html">collection 
+        and group databases</a>. Collmgr is basically an interface to the collection and group tables in the DLXS <a href="http://www.mysql.com" target="external">MySQL</a> database. </p>
+    
+    <p><b>Let's look at a few examples</b> of how collmgr is used to 
+      manage collection data.  To invoke collmgr: <a href="http://______.ws.umdl.umich.edu/cgi/c/collmgr/collmgr" target="external">http://______.ws.umdl.umich.edu/cgi/c/collmgr/collmgr</a> (replace ______ with you account user id.  </p>
+    
+    
+    <ul>
+      <li>Configure text strings and/or images that normally appear in header and footer </li>
+      <li>Configure which data/index directory to use</li>
+      <li>Configure which web configuration directory to use (xml,xsl and css collection specific templates) </li>
+      <li>Configure which fields are offered in the search menus and other search configuration </li>
+      <li>Set up browsing and configure various browsing related options </li>
+      <li><strong>Moving rows from release to production</strong>; Discussed in detail later</li>
+    </ul>
+  </li>
+  </ul>
+    <hr width="50%">
+      <p>For a full list of the tables in the collection and group database, 
+        see the <a href="http://www.dlxs.org/docs/13/collmeta/index.html" target="external">DLXS 
+          documentation on the metadata database schema</a>.</p>
+      <p><b>Workshop Note: </b><i>The workshop setup is different than  the DLPS development 
+          setup described in detail in the documentation.  </i> The workshop setup  probably reflects how most sites will set up and use the Collection Manager. The main differences between the DLPS development setup described in <a href="http://www.dlxs.org/docs/13/collmeta/colldatabases.html#interaction" target="external">DLXS 
+          Documentation on the Interaction between database rows, users, DLXS 
+          Middleware and collmgr</a> are:</p>
+      <ul>
+        
+        <li>workshop is in a production environment (no <span class="unixcommand">DLPS_DEV</span> environment variable set)</li>
+        <li> no user rows, only release and production rows; therefore, 
+          no checkin checkout</li>
+        <li>'release to production' option always visible because the 
+          <b>$REMOTE_USER</b> environment variable is  set to <span class="unixcommand">dlxsadm</span>
+          by  &quot;Basic Auth&quot; in the virtual host for the workshop
+        </p>
+      </ul>
+      For more information on how the <b>$REMOTE_USER</b> environment variable  and <strong>$DLPS_DEV </strong>environment 
+      variables affect the data values retrieved from the database (how 
+      to control testing vs. production vs. individual developers' environments) see the <a href="http://www.dlxs.org/docs/13/collmeta/colldatabases.html#interaction" target="external">DLXS 
+        Documentation on the Interaction between database rows, users, DLXS 
+        Middleware and collmgr</a>. 
+      
+  </body>
+</html>

@@ -1,0 +1,444 @@
+<html>
+<head>
+<TITLE>User Interface</TITLE>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<LINK REL="stylesheet" HREF="../styles.css" TYPE="text/css">
+<style type="text/css">
+<!--
+.status {
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-size: 12px;
+	font-weight: bold;
+	text-transform: uppercase;
+	color: #CC0033;
+}
+.PItag {
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-size: 12px;
+}
+-->
+</style>
+</head>
+<BODY bgcolor="#FFFFFF" leftmargin="10" topmargin="10" marginwidth="10" marginheight="10" CLASS="mainpalette">
+<H1> User Interface - reviewing changes in release 10</H1>
+<UL>
+  <LI> <A HREF="#overview">Changes in functionality and templates in TC releases
+  		8, 9 and 10:	an	overview</A> 
+    <UL>
+      <LI>
+      <A HREF="#genarch">General architectural issues</A>
+      </LI>
+      <LI> <A HREF="#nav">Changes to navigation</A> </LI>
+      <LI>
+      <A HREF="#search">Changes to search interfaces</A> 
+      </LI>
+    </UL>
+  </LI>
+ </UL>
+<P><A NAME="main"> </A> </P>
+<HR size="1" WIDTH="90%">
+
+<P>&nbsp;</P><H2><A NAME="overview"></A>
+	Changes in functionality and templates in TC releases
+	  <BR>
+8, 9 and 10:	an	overview</H2>
+<div class="level1"></div>
+<P>Many of the pieces of the DLXS Text Class UI introduced in release 8 remain
+	in releases 9 and 10, including continued use of cascading CSS stylesheets,
+	and fallback mechanisms that allow piecemeal substitution of template or template
+	components for individual collections, while still utilizing class defaults.
+	In general the underlying page layout has also remained the same. For a review
+	of HTML templates and procedures for customizing template design, see the release
+	<A HREF="userinterface-r10.html">10 UI	overview</A> 
+	from the February 2003 workshop.</P>
+<P>The most significant  changes, both in functionality and system architecture,
+	over	the	last	3	releases	include	...</P>
+<UL>
+	<LI>The addition of bibliographic field restrictions to search forms for individual
+		collections only (
+ 	 <STRONG>release 9</STRONG>
+	 )</LI>
+  <LI>Addition of DHTML pull down navigation menu for search options (
+  	<STRONG>release
+  		10</STRONG>
+ 	 )</LI>
+  <LI>The introduction of collection groups and the subsequent revising of the
+  	cross-collection interface (
+  	<STRONG>release 10</STRONG>
+ 	 )</LI>
+  <LI>The revisions to search results the provide for a simplified first layer
+  	of initial results, with additional results detail moved to a separate layer;
+  	thus alllowing consistency and interfiling of initial results for multiple
+  	collection searches (
+  	<STRONG>release 10</STRONG>
+ 	 ).</LI>
+  <LI>The introduction of imported template &quot;chunks&quot; that make some template
+  	delivery more modular, and improve ease of template maintenance.</LI>
+</UL>
+<P>&nbsp;</P>
+<div class="level1"></div>
+<div class="level2"></div>
+<H3><A NAME="genarch" ID="genarch"> </A> </H3>
+<H3>General archictectural issues</H3>
+<P>Changes to DLXS text Class templates were relatively minor between releases 
+  8 and 9: the most significant change coming in the introduction of PIs for new 
+  restriction fields in collection-specific search forms. Changes to the user 
+  interface for release 10, however, were more significant. The introduction of 
+  imported &quot;chunk &quot; templates made it possible to extract repeatable 
+  elements from one or more templates into separate components that could be more 
+  easily managed. The navheader.chnk is perhaps the most significant of these. 
+  It contains the header and navigation bar portion of each template, and is thus 
+  imported by all templates that require a navigation bar. See a <A HREF="tc_tpl-PIs8_2_10.html">synopsis 
+  of template and PI migrations</A> from release 8 to 10 to view the progression 
+  of template/web files and the most important PIs. <STRONG>Figure 1</STRONG> 
+  illustrates the general layout of a typical template page in release 10. </P>
+<TABLE BORDER="0" CELLPADDING="7" CELLSPACING="2">
+  <TR> 
+    <TD bgcolor="#CCCCCC"><IMG SRC="graphics/gen-layout-top_r1_c1.gif" ALT="" name="genlayouttop_r1_c1" WIDTH="450" HEIGHT="79" hspace="4" vspace="4" border="0"><BR clear="all"><SPAN STYLE="font-family: verdana,arial,sans-serif; font-size:10px">navheader.chnk</SPAN></TD>
+  </TR>
+  <TR> 
+    <TD bgcolor="#C5C5E2"><IMG SRC="graphics/gen-layout-bottom.gif" WIDTH="450" HEIGHT="262" hspace="4" vspace="4"><BR clear="all"><SPAN STYLE="font-family: verdana,arial,sans-serif; font-size:10px">[anytemplate].tpl</SPAN></TD>
+  </TR>
+  <TR> 
+    <TD><B>Figure 1</B> : Release 10 template layout showing division between 
+      main template content and the imported navheader &quot;chunk&quot; file..</TD>
+  </TR>
+</TABLE>
+<P>&nbsp;
+</P>
+<div class="level2"></div>
+<H4><A NAME="nav" ID="nav"> </A> </H4>
+<H3>Changes to navigation</H3>
+<P>Managing page navigation in release 10 is different from previous releases,
+	 then, in two significant ways: First, is that navigation HTML need only be
+	maintained 
+  in one place, since it is now contained in an imported file. Because navigation
+	 bar HTML is in one place, &quot;state&quot; information is now no longer stored
+	  individually (e.g., the browse tab &quot;up&quot; state; the search tab &quot;up&quot; 
+  state) in the HTML of each template, but is &quot;anchored&quot; to the navigation
+   bar HTML via ID attributes linked to CSS, and &quot;turned on&quot; conditionally
+    in various templates. More specifics of how the &quot;state&quot; information
+     is created is given in the 
+  <A HREF="userinterface-r10.html#hdrtabs">UI document</A> 
+  from the Winter 2003 workshop. </P>
+<P>The second way release 10 navigation maintenance is different from previous 
+  releases is that release 10 utilizes, by default, a DHTML pull-down menu for 
+  search options. The elements of the dynamic menu are illlustrated in <STRONG>Figure 
+  2</STRONG> below.</P>
+<TABLE BORDER="0" CELLPADDING="0" CELLSPACING="2">
+	<TR>
+	 <TD><IMG HEIGHT="318" WIDTH="565" SRC="graphics/nav-dmenu-layout.gif">
+</TD>
+	</TR>
+	<TR>
+		<TD><B>Figure 2</B>
+			:&quot;close-up&quot; of the navigation bar, showing main DHTML menu components.</TD>
+	</TR>
+</TABLE>
+<P>HTML from <CODE>navheader.chnk</CODE> file is shown below; included here are 
+  the two layers that constitute the hidden pull-down search menu, and the portion 
+  of the navigation bar that triggers the menu (in highlighted colors). Since 
+  the only portion of the menu that comes from the CGI are the search type link 
+  hrefs, changing the look or shape of the menu is simply a matter of editing 
+  the menu HTML. (Well, almost: the &quot;closer&quot; layer, which lays under 
+  the drop down menu layer, should always be top-alligned with the menu layer, 
+  but sufficiently wide and deep enough to provide a margin outside the left, 
+  bottom, and right edges of the menu layer.) The javascript invoked by the search 
+  link (in green below) opens the pull menu &quot;snapped&quot; to the image with 
+  ID=&quot;menuanchor&quot; (shown in red). This means that so long as menuanchor 
+  is present in relation to the search tab, the pull-down menu will always appear 
+  in relation to the navigation bar. The javascript functions that execute the 
+  menu behavior are contained in the <CODE>jsheader.chnk</CODE> template, and 
+  are imported into the page at load time.</P>
+<BLOCKQUOTE>
+	<SPAN STYLE="font-family: courier; font-size:11px">
+	 &lt;td id="sep1" width="1"&gt;
+	 <BR>
+	 <SPAN STYLE="color:red">
+	 	&lt;
+	 	img src="/t/text/graphics/plug.gif" width="1" height="23" border="0" vspace="0" hspace="0" name="menuanchor" id="menuanchor" alt="design graphic
+	 	"
+	 	&gt;
+	 </SPAN>&lt;/td&gt;
+	 <BR>
+              &lt;!-- search  --&gt;
+              <BR>&lt;!-- this nav bar tab is conditionally included by the cgi  --&gt;
+              <BR>&lt;?INCLUDE_SEARCH_TAB&gt;
+              <BR>&lt;td id="searchtab" width="90" height="23" align="center" nowrap&gt;
+              &nbsp;
+              <BR>&lt;span class="navlinks"&gt;
+        <BR>
+&nbsp;
+<SPAN STYLE="color:009900">
+	&lt;
+		a id="searchlink" href="&lt;?SIMPLE_SEARCH_LINK&gt;" class="nav" onMouseOver="P7_Snap('menuanchor','closer',-70,25,'menuanchor','ddsearchmenu',-50,25);P7_autoLayers(0,'ddsearchmenu','closer')"&gt;
+</SPAN>Search&lt;img name="navmenuarrow" src="/t/text/graphics/navdwnarrow.gif" alt="design graphic" width="16" height="8" border="0"&gt;&lt;/a&gt;&lt;/span&gt;
+        <BR>&lt;/td&gt;
+              <BR>&lt;td id="sep2" width="1"&gt;&lt;img src="/t/text/graphics/plug.gif" width="1" height="1" border="0" alt="design graphic"&gt;
+            &lt;/td&gt;
+            <BR>
+	          <BR>&lt;div style="position:absolute; left:15px; top:70px; width:420px; height:22px;
+		z-index:3; visibility: hidden;" id="ddsearchmenu"&gt; 
+  &lt;table width="420" border="0" cellspacing="0" cellpadding="0"&gt;
+    &lt;tr&gt; 
+      &lt;td bgcolor="#666666"&gt;
+      <BR>&lt;table width="100%" border="0" cellspacing="1" cellpadding="0"&gt;
+          <BR> 
+&nbsp;&lt;tr&gt; 
+            <BR>
+&nbsp;
+&nbsp;&lt;td class="mencellup"  height="22" bgcolor="#E5E5E5" nowrap&gt;&nbsp;
+	    <BR>
+&nbsp;
+&nbsp;&lt;span class="smallformfont"&gt;&lt;a class="menunav" href="&lt;?SIMPLE_SEARCH_LINK&gt;"&gt;Basic&lt;/a&gt;&lt;/span&gt;
+	    &nbsp;
+	    <BR>
+	    &nbsp;
+	    &nbsp;
+	    |
+	    <BR>
+&nbsp;&nbsp;
+	    &lt;span class="smallformfont"&gt;&lt;a class="menunav" href="&lt;?BOOLEAN_SEARCH_LINK&gt;"&gt;Boolean&lt;/a&gt;&lt;/span&gt;
+	    <BR>
+	    &nbsp;
+	    &nbsp;
+	      |
+	      <BR>
+&nbsp;&nbsp;
+      &lt;span class="smallformfont"&gt;&lt;a class="menunav" href="&lt;?PROXIMITY_SEARCH_LINK&gt;"&gt;Proximity&lt;/a&gt;&lt;/span&gt;
+      <BR>
+      &nbsp; 
+      &nbsp;
+	      |
+	      <BR>
+&nbsp;&nbsp;
+      &lt;span class="smallformfont"&gt;&lt;a class="menunav" href="&lt;?SEARCH_HISTORY_LINK&gt;"&gt;Search
+	    History&lt;/a&gt;&lt;/span&gt;&nbsp;
+      <BR>
+&nbsp;
+&nbsp;&lt;/td&gt;
+          <BR>
+&nbsp;&lt;/tr&gt;
+          <BR>&lt;/table&gt;&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/table&gt;
+&lt;/div&gt;
+<BR>
+&lt;div id="closer" style="position:absolute; left:3px; top:70px; width:460px;
+height:50px; z-index:2; visibility: hidden;"&gt;&lt;a href="javascript:;" onMouseOver="P7_autoLayers(0)"&gt;&lt;img
+src="/t/text/graphics/plug.gif" name="Image1" width="460" height="50" hspace="0" vspace="0" border="0" id="Image1" alt="design
+graphic"&gt;&lt;/a&gt;&lt;/div&gt;
+    <BR>&lt;!-- end menu divs  --&gt;</SPAN>
+</BLOCKQUOTE>
+<P>In summary, the relevant files for managing navigation look and feel for a
+	collection include the following files, any of which can be customized for
+	individual collections.</P>
+<BLOCKQUOTE>
+<DL><DT>
+	<CODE>navheader.chnk</CODE>
+</DT>
+  <DD>Contains html and PIs for the page header, the navigation bar, and the
+  	pull-down menu layers.</DD>
+	<BR>
+	<BR>
+	<DT>
+		<CODE>jsheader.chnk</CODE>
+	</DT>
+  <DD>Contains the javascript files necessary to execute the pull-down search
+  	menu.</DD>
+	<BR>
+	<BR>
+	<DT>
+		<CODE>browsetabstyle.css</CODE>
+	</DT>
+  <DD>Contains the appropriate CSS style rules that determine the appearance
+  	of the browse tab in it's &quot;up&quot; state. This stylesheet is invoked through
+  	the 
+  	&lt;?NAV_TAB_STYLE_OVERRIDES&gt; PI that appears in a browse template.</DD>
+	<BR>
+	<BR>
+	<DT>
+		<CODE>searchtabstyles.css</CODE>
+	</DT>
+  <DD>Analogous to 
+  	<CODE>browsetabstyle.css</CODE>
+ 	 . Contains the appropriate CSS style rules
+  	that	determine	the	appearance	of the search tab in it's
+&quot;
+	up
+&quot;
+	
+state. This stylesheet is invoked through	the
+&lt;?NAV_TAB_STYLE_OVERRIDES&gt;
+	
+PI that appears in the 
+<CODE>search.tpl</CODE> 
+template.</DD>
+  <BR>
+	<BR>
+	<DT>
+		<CODE>textclass.css / textclass-specific.css</CODE>
+	</DT>
+  <DD>Contain class default or collection specific CSS style rules that determine
+  	the appearance of the navigation bar colors and fonts.</DD>
+</DL>
+</BLOCKQUOTE>
+<A NAME="search" ID="search"> </A> 
+<H3 align="left">Changes to search interfaces</H3>
+<div class="level1"></div>
+<P>Search templates are the most changed in release 10. As shown in the 
+	<A HREF="tc_tpl-PIs8_2_10.html">synopsis 
+  of template and PI migrations</A> document, the multiple search templates for 
+  each search scenario have been replaced by a single parent search template, 
+  <CODE>search.tpl</CODE>
+  , and several importable &quot;chunk&quot;
+  files. Excerpts from search.tpl
+  and one such imported chunk, simplesearchform.chnk, are shown below. Each imported
+  chunk contains a complete table containing only the individual form elements
+  (or their PI aliases) that are required.</P>
+<BLOCKQUOTE>
+	<CODE>--
+		<STRONG>search.tpl</STRONG>
+ --                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        </CODE>
+	<BR>
+	<SPAN STYLE="font-family: courier; font-size:11px">
+	&lt;form method="GET" action="&lt;?SCRIPT_NAME cginame="text-idx"&gt;" name="search" &lt;?FORM_VALIDATE&gt;&gt;
+            <BR>&lt;table border="0" cellspacing="0" cellpadding="4"&gt;
+                <BR>&lt;tr&gt; 
+                    <BR>&lt;input type="hidden" name="type" value="&lt;?SEARCH_TYPE&gt;" /&gt;
+                    <BR>&lt;?HIDDEN_REQUESTED_COLLECTIONS&gt;
+                    <BR>&lt;?HIDDEN_SID&gt;
+                    <BR>&lt;?HIDDEN_XC&gt;
+                    <BR>&lt;?HIDDEN_IDNO&gt;
+                    <BR>&lt;?HIDDEN_BOOKBAG&gt;
+                    <BR>&lt;?HIDDEN_G&gt; 
+                    <BR>&lt;?HIDDEN_XG&gt;
+                    <BR>&lt;?HIDDEN_DEBUG&gt;
+
+                  <BR>&lt;td width="10" align="left" valign="top" bgcolor="ffffff"&gt;&lt;img src="/t/text/graphics/plug.gif" width="10" height="5" border="0"&gt;&lt;/td&gt;
+                  <BR>&lt;td colspan="2" align="left" valign="top" bgcolor="ffffff"&gt; 
+
+                  <BR><BR>&lt;!--  SEARCH FORM --&gt;
+                  <BR>
+                  <SPAN STYLE="color:red">
+                  	&lt;
+                  	?CHUNK type="page
+                  	"
+                  	&gt;
+                  </SPAN>
+                  <BR>&lt;!-- END SEARCH FORM --&gt;
+
+                  <BR>&lt;/td&gt;
+                <BR>&lt;/tr&gt;
+                <BR>
+  </SPAN>
+</BLOCKQUOTE>
+<BLOCKQUOTE>
+	<CODE>--
+		<STRONG>simplesearchform.chnk</STRONG>
+	 --
+	</CODE>
+	<SPAN STYLE="color:red;font-family: courier; font-size:11px">
+ <BR>&lt;table border="0" cellspacing="0" cellpadding="7"&gt;
+                      <BR>&lt;tr bgcolor="#e5e5e5"&gt; 
+                       <BR> &lt;td align="right" nowrap&gt;&lt;span class="formfont"&gt;Search in:&lt;/span&gt;<BR>&lt;/td&gt;
+                        <BR>&lt;td colspan="2" align="left"&gt; 
+
+                            <BR>&lt;?REGION_SEARCH_SELECT class="selectmenu"&gt;
+
+                         <BR> &lt;/td&gt;
+                        <BR>&lt;/tr&gt;
+                       <BR> &lt;tr bgcolor="#e5e5e5"&gt; 
+                        <BR>&lt;td align="right"&gt;<BR>&lt;span class="formfont"&gt;Find:&lt;/span&gt;&lt;/td&gt;
+                        <BR>&lt;td align="left" nowrap&gt;
+
+                         <BR>&lt;?Q1_INPUT size="30" class="formhilite"&gt;
+                         <BR><BR>...
+                         <BR>
+                         &lt;/table&gt;
+</SPAN></BLOCKQUOTE>
+<P>&nbsp;</P>
+<P>The path from release 8/9 to 10 involves these file substitutions ...</P>
+<TABLE BORDER="1" CELLSPACING="1" CELLPADDING="4" bordercolor="cccccc">
+	<TR>
+		<TD CLASS="PItag">bib.tpl </TD>
+		<TD CLASS="PItag" nowrap>search.tpl -
+	&gt;
+			
+bibsearchform.chnk </TD>
+	</TR>
+	<TR>
+		<TD CLASS="PItag">bibext.tpl </TD>
+		<TD CLASS="PItag" nowrap>N/A</TD>
+	</TR>
+	<TR>
+		<TD CLASS="PItag">boolean.tpl </TD>
+		<TD CLASS="PItag" nowrap>search.tpl -
+&gt;
+			booleansearchform.chnk </TD>
+	</TR>
+	<TR>
+		<TD CLASS="PItag">booleanbbag.tpl </TD>
+		<TD CLASS="PItag" nowrap>bbagsearch.tpl -
+	&gt;
+			
+bbagbooleansearchform.chnk</TD>
+	</TR>
+	<TR>
+		<TD CLASS="PItag">booleanext.tpl </TD>
+		<TD CLASS="PItag" nowrap>N/A</TD>
+	</TR>
+	<TR>
+		<TD CLASS="PItag">proximity.tpl </TD>
+		<TD CLASS="PItag" nowrap>search.tpl -
+&gt;
+			proximitysearchform.chnk </TD>
+	</TR>
+	<TR>
+		<TD CLASS="PItag">proximitybbag.tpl </TD>
+		<TD CLASS="PItag" nowrap>bbagsearch.tpl -
+&gt;
+			bbagproximitysearchform.chnk </TD>
+	</TR>
+	<TR>
+		<TD CLASS="PItag">proximityext.tpl </TD>
+		<TD CLASS="PItag" nowrap>N/A</TD>
+	</TR>
+	<TR>
+		<TD CLASS="PItag">searchhistory.tpl </TD>
+		<TD CLASS="PItag" nowrap>searchhistory.tpl </TD>
+	</TR>
+	<TR>
+		<TD CLASS="PItag">simple.tpl </TD>
+		<TD CLASS="PItag" nowrap>search.tpl -
+&gt;
+			simplesearchform.chnk </TD>
+	</TR>
+	<TR>
+		<TD CLASS="PItag">simplebbag.tpl </TD>
+		<TD CLASS="PItag" nowrap>bbagsearch.tpl -
+&gt;
+			bbagsimplesearchform.chnk </TD>
+	</TR>
+	<TR>
+		<TD CLASS="PItag">simpleext.tpl </TD>
+		<TD CLASS="PItag" nowrap>N/A</TD>
+	</TR>
+	<TR>
+		<TD CLASS="PItag">ww-full.tpl </TD>
+		<TD CLASS="PItag" nowrap>ww-full.tpl -
+	&gt;
+			
+ww-fullnewsearchform.chnk + ww-fullscrollform.chnk </TD>
+	</TR>
+	<TR>
+		<TD CLASS="PItag">ww-start.tpl </TD>
+		<TD CLASS="PItag" nowrap>ww-full.tpl -
+	&gt;
+			
+ww-fullnewsearchform.chnk</TD>
+	</TR>
+</TABLE>
+<P>&nbsp;</P>
+</BODY>
+</html>

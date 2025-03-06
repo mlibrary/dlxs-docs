@@ -1,0 +1,330 @@
+<HTML>
+<head>
+<TITLE>Directory Conventions</TITLE>
+ <link href="../dlxsdocs.css" rel="stylesheet" type="text/css">
+
+</head>
+
+<BODY>
+<H2>DLXS Directory Conventions</H2>
+
+<OL>
+<LI><A HREF="#rationale">Rationale</A></LI>
+<LI><A HREF="#conventions-middleware">Conventions for Content and Middleware</A></LI>
+<LI><A HREF="#conventions-software">Conventions for Software Packages</A></LI>
+<LI><A HREF="#data-flow">"Data Flow" Describing the Preparation and Release of a Collection</A></LI>
+</OL>
+
+<A NAME="rationale"></A>
+<H3>Rationale</H3>
+<P>Multiply the amount of data you have by the number of people dealing
+with it and you get a metric of complexity indicating how badly you need
+conventions.  Having some basic directory conventions solves some general problems:</P>
+<UL>
+<LI>things are easier to find (e.g., for DLXS distributions)</LI>
+<LI>things are easier to move</LI>
+<LI>it's easier to tell when you have found the thing you're looking for (i.e.,
+if it's in the right place, it generally must be the authoritative version)</LI>
+</UL>
+<P>With respect to content and middleware, a good convention:</P>
+<UL>
+<LI>protects data (e.g. XML, images), indexes, and CGI middleware from being accidentally served
+to a client by the web server</LI>
+<LI>protects static HTML and XML from CGI-related security holes</LI>
+<LI>insulates the web server software from the content and middleware, which makes web server upgrades easier</LI>
+</UL>
+<P>From a system administration point of view, a good convention:</P>
+<UL>
+<LI>provides a structure that's pretty easy to traverse and can scale up without getting leggy</LI>
+<LI>allows for the coexistence of different classes and collections on a single
+server</LI>
+
+</UL>
+
+<A NAME="conventions-middleware"></A>
+<H3>Conventions for Content and Middleware</H3>
+<P>Content should be organized by DLPS identifier or, if that's unavailable,
+collection identifier. Middleware and everything else should be organized
+by collection identifier.</P>
+<P>The basic scheme is as follows:</P>
+<table CELLSPACING="5" border="1"><TBODY>
+<TR VALIGN="TOP">
+<td>
+<P><TT>&lt;prefix>/bin/c/class</TT></P>
+<P>or</P>
+<P><TT>&lt;prefix>/bin/c/collection</TT></P>
+</td>
+
+<td>loading/munging/processing scripts
+<UL>
+<LI>
+optionally by class or collection, if appropriate</LI>
+
+<LI>
+<i>typically on the staging server, not production servers</i></LI>
+</UL>
+</td>
+</TR>
+
+<TR VALIGN="TOP">
+<td>
+<P><TT>&lt;prefix>/cgi/c/class</TT></P>
+<P>or</P>
+<P><TT>&lt;prefix>/cgi/c/collection</TT></P>
+</td>
+
+<td>CGI middleware
+<UL>
+<LI>
+by class or collection</LI>
+
+</UL>
+</td>
+</TR>
+
+<TR VALIGN="TOP">
+<td><TT>&lt;prefix>/img/c/collection</TT></td>
+
+<td>
+continuous tone image data
+<UL>
+<LI>
+non-web-ready (archival) images, to be delivered through middleware; i.e., like image services</LI>
+<LI>
+web-ready (GIF, JPEG, PNG) images which are licensed content but to be delivered directly; to make this
+work, there is typically a symbolic link from %lt;prefix>/web; see below</LI>
+</UL>
+
+</td>
+</TR>
+
+<TR VALIGN="TOP">
+<td><TT>&lt;prefix>/idx/c/collection</TT></td>
+
+<td>search indexes and index-related files</td>
+</TR>
+
+<TR VALIGN="TOP">
+<td>
+<P><TT>&lt;prefix>/lib/[c/class]</TT></P>
+<P>or</P>
+<P><TT>&lt;prefix>/lib/[c/collection]</TT></P>
+</td>
+
+<td>CGI middleware library modules
+<UL>
+<LI>
+optionally by class or collection, if appropriate</LI>
+</UL>
+</td>
+</TR>
+
+<TR VALIGN="TOP">
+<td>
+<P><TT>&lt;prefix>/misc/[c/class/]</TT></P>
+<P>or</P>
+<P><TT>&lt;prefix>/misc/[c/collection/]</TT></P>
+
+</td>
+
+<td>
+additional files for DLXS distribution that don't belong elsewhere: e.g., DTDs, character entity sets, catalogs, etc.
+<UL>
+<LI>
+optionally by class or collection, if appropriate</LI>
+</UL>
+
+</td>
+</TR>
+
+<TR VALIGN="TOP">
+<td>
+<P><TT>&lt;prefix>/misc/db</TT></P>
+
+
+</td>
+
+<td>
+text-based databases: e.g., DLXS sessions database in CSV format
+
+
+</td>
+</TR>
+
+<TR VALIGN="TOP">
+<td>
+<P><TT>&lt;prefix>/misc/[c/class/]maps</TT></P>
+<P>or</P>
+<P><TT>&lt;prefix>/misc/[c/collection/]maps</TT></P>
+
+</td>
+
+<td>
+region map files
+<UL>
+<LI>
+optionally by class or collection, if appropriate</LI>
+</UL>
+
+</td>
+</TR>
+
+<TR VALIGN="TOP">
+<td><TT>&lt;prefix>/obj/c/collection</TT></td>
+
+<td>production content organized by collection identifier
+<UL>
+<LI>
+<TT>.raw</TT> for "raw" (i.e., unprocessed OCR) text</LI>
+
+<LI>
+<TT>.sgm</TT> for "cooked" (i.e., proofed and encoded) text</LI>
+
+<LI>
+<TT>.tif</TT> for page images, etc.</LI>
+</UL>
+</td>
+</TR>
+
+<TR VALIGN="TOP">
+<td><TT>&lt;prefix>/obj/d/l/p/dlpsid.vvvv.iii</TT></td>
+
+<td>production content organized by DLPS identifier
+<UL>
+<LI>
+same file naming conventions as above</LI>
+</UL>
+</td>
+</TR>
+
+<TR VALIGN="TOP">
+<td><TT>&lt;prefix>/prep/c/collection</TT></td>
+
+<td>pre-production (munge-in-process) content organized by collection identifier
+<UL>
+<LI>
+same file naming conventions as above</LI>
+
+<LI>
+<i>typically on the staging server, not production servers</i></LI>
+</UL>
+</td>
+</TR>
+
+<TR VALIGN="TOP">
+<td><TT>&lt;prefix>/prep/d/l/p/dlpsid.vvvv.iii</TT></td>
+
+<td>pre-production (munge-in-process) content organized by DLPS identifier
+<UL>
+<LI>
+same file naming conventions as above</LI>
+
+<LI>
+<i>typically on the staging server, not production servers</i></LI>
+</UL>
+</td>
+</TR>
+
+<TR VALIGN="TOP">
+<td><TT>&lt;prefix>/web/c/collection</TT></td>
+
+<td>static HTML pages
+<UL>
+</UL>
+</td>
+</TR>
+
+<TR VALIGN="TOP">
+<td>
+<P><TT>&lt;prefix>/web/c/class/graphics</TT></P>
+<P>or</P>
+<P><TT>&lt;prefix>/web/c/collection/graphics</TT></P>
+</td>
+
+<td>user interface glitter: banners, icons, logos, etc.
+<UL>
+<LI>
+optionally by class or collection, if appropriate</LI>
+</UL>
+</td>
+</TR>
+
+<TR VALIGN="TOP">
+<td>
+<P><TT>&lt;prefix>/web/c/class/images</TT></P>
+<P>or</P>
+<P><TT>&lt;prefix>/web/c/collection/images</TT></P>
+</td>
+
+<td>
+<P>web-ready image content served directly, usually figures that appear in text collections</P>
+<P>if image content is licensed, files are stored in &lt;prefix>/img (see above) and this
+is just a symbolic link</P>
+
+<UL>
+<LI>
+optionally by class or collection, if appropriate</LI>
+</UL>
+</td>
+</TR></TBODY>
+</table>
+
+<P><TT>&lt;prefix></TT> varies from installation to installation. All DLPS
+servers use <i>at least</i> the prefix <TT>/l1</TT>; most have additional
+file systems named <TT>/l2</TT>, <TT>/l3</TT>, etc.</P>
+<P>Note that although classes and parts of the organization can also exist at this level (for example, <TT>h/hti</TT> for the Humanities Text Initiative or <TT>i/is</TT> for Image Services), the individual collections would exist within their own spaces, i.e., <TT>&lt;prefix>/.../m/musart</TT>.</P>
+<P><i>Personal</i> directories can also exist at this level, i.e., <TT>&lt;prefix>/cgi/c/csnavely</TT>,
+for areas to do testing in.</P>
+<P>The organization of files <i>below</i> the levels described here is
+outside the scope of this convention. We don't feel a need to prescribe
+a structure for inside /l1/web/b/bas, for example. Of course, consistency
+between like things is good practice.</P>
+
+
+<H3>Conventions for Software Packages</H3><A NAME="conventions-software"></A>
+
+<H4>Basic Convention</H4>
+<P>The DLPS institutional convention is that software should be installed as</P>
+<BLOCKQUOTE>
+<P><TT>/l/local/<i>package</i>-<i>version</i></TT></P>
+</BLOCKQUOTE>
+<P>where</P>
+<BLOCKQUOTE>
+<P><i><TT>package</TT></i> is the proper name of the software package, preferably lowercase (e.g. "apache"), and<BR/>
+<i><TT>version</TT></i> is the full version number (e.g. "1.3.9"), if available.</P>
+</BLOCKQUOTE>
+<P>Likewise, source code can be found in</P>
+<BLOCKQUOTE>
+<P><TT>/l/local/src/<i>package</i>-<i>version</i></TT></P>
+</BLOCKQUOTE>
+<P>or compressed up in a tarball named</P>
+<BLOCKQUOTE>
+<P><TT>/l/local/src/<i>package</i>-<i>version</i>.tar.gz</TT></P>
+</BLOCKQUOTE>
+
+
+<H2>Special Cases</H2>
+<P>For cases where a version-independent path is needed or wanted, a symbolic
+link should be created:</P>
+<BLOCKQUOTE>
+<P><TT>/l/local/<i>package</i></TT> -> <TT>/l/local/<i>package</i>-<i>version</i></TT></P>
+</BLOCKQUOTE>
+<P>For commonly-used utilities that are conventionally installed in places like /usr/local/bin, a symbolic link should be created in <TT>/l/local/bin</TT>:</P>
+<BLOCKQUOTE>
+<P><TT>/l/local/bin/<i>command</i></TT> -> <TT>/l/local/<i>package/[subpath/]command</i></TT></P>
+</BLOCKQUOTE>
+<P>if present, or</P>
+<BLOCKQUOTE>
+<P><TT>/l/local/bin/<i>command</i></TT> -> <TT>/l/local/<i>package</i>-<i>version/[subpath/]command</i></TT></P>
+</BLOCKQUOTE>
+
+
+<A NAME="data-flow"></A>
+<H3>Data Flow Describing the Preparation and Release of a Collection</H3>
+<P>Looking at the conventions from a "process" point of view, the following
+diagram illustrates how we use the directory conventions
+in the workflow of preparing and releasing a collection.
+<BR/><img src="dirstructuredfd_suz2.png  " alt="data flow diagram"/></P>
+</BODY>
+
+</HTML>

@@ -1,0 +1,50 @@
+<HTML>
+<HEAD>
+<TITLE>Configuration</TITLE>
+<META http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<LINK rel="stylesheet" href="../styles.css">
+</HEAD>
+<BODY class="mainpalette">
+<H3>Exercise</H3>
+
+    
+<P>Here is a &quot;filtering&quot; exercise, to get your Perl regexps in gear 
+  in preparation for the DLXS Programmer's Workshop. Email <A HREF="mailto:pagliere@umich.edu">pagliere@umich.edu</A> 
+  to be sent the exercise files:</P>
+
+<UL>
+  <LI>test.sgml</LI>
+  <LI>test.html</LI>
+  <LI>sgml2html.pl</LI>
+</UL>
+<P>Place these files in any directory you wish. Don't look at the <I>sgml2html.pl</I>.</P>
+<P> <B>Note</B>: keep in mind that this is only a &quot;filtering&quot; exercise. 
+  This is provided only to help you get started thinking in perl regexps and thinking 
+  about the issue of displaying SGML on a web page. Filtering is only one small 
+  part of DLXS software and of what we'll be covering in class. We still need 
+  to talk about searching, retrieving, packaging up results, how to combine results 
+  once filtered into HTML templates, subclassing for behavior changes, configuration 
+  of DLXS software, and so on.</P>
+<P> <B>Your assignment</B>, should you decide to accept it, is to write a perl 
+  script that takes <I>test.sgml</I> as input and produces a file like <I>test.html</I> 
+  as output.</P>
+
+    <P> Study the sgml file to get a sense of its structure. Some information 
+      about it is given below. View the html file in a browser and also look at 
+      its source to give you an idea of what the output should be.<BR>
+      The general rules are:</P>
+<OL>
+  <LI>display the TITLE element from the HEADER as the title of the html window 
+    and as an H1 in the html itself</LI>
+  <LI>A DIV1 may contain a DIV2 (There are only two levels of DIVs. ). Always 
+    print the AUTHOR and the HEAD information for each DIV.</LI>
+  <LI>Indent DIV2s using &quot;blockquote&quot;</LI>
+  <LI>print all lines from the poems</LI>
+  <LI>display in the html the line numbers of the lines (N attribute in the L 
+    tag)</LI>
+  <LI>Only when you are done with your first take or two of the program, are you 
+    &quot;allowed&quot; to look at the source of the perl file</LI>
+  <LI>Have fun.</LI>
+</OL>
+</BODY>
+</HTML>

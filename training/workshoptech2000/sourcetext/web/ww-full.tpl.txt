@@ -1,0 +1,136 @@
+<html>
+  <head>
+    <title><?TITLE></title>
+    <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+
+    <link rel="stylesheet" href="<?DOC_ROOT>textclass.css" type="text/css">
+  </head>
+  <body bgcolor="#FFFFFF" leftmargin="0" topmargin="0" marginwidth="0" marginheight="0">
+    <table width="100%" border="0" cellspacing="0" cellpadding="5" bgcolor="#FFFFFF">
+      <tr> 
+	<td valign="bottom" width="75%"> <a name="top"></a> 
+	  <h3 class="tophead"><?TITLE></h3>
+	</td>
+	<td>    
+	  <?RE_AUTH_LINK>
+	</td>
+	<!-- <td valign="top" width="25%" align="right">
+	  <a href="<?BOOKBAG_LINK>">
+	    <img src="<?DOC_ROOT>images/bbag.gif" width="83" height="21" vspace="1" border="0">
+	  </a>&nbsp;<br>
+	  <font class="navinfo" size="2"><?BOOKBAG_ITEMS></font>&nbsp;
+      </td> -->
+      </tr>
+      <tr> 
+	<td colspan="2" align="center" bgcolor="#666699" nowrap> 
+	  <p>
+	    <font color="#FFFFFF" class="navlinks">
+	      <b>
+                <a href="<?SIMPLE_SEARCH_LINK>" class="nav">simple search</a>
+                |
+                <a href="<?BOOLEAN_SEARCH_LINK>" class="nav">boolean search</a>
+                |
+                <a href="<?PROXIMITY_SEARCH_LINK>" class="nav">proximity search</a>
+<!--
+                |
+                <a href="<?BIB_SEARCH_LINK>" class="nav">bibliography search</a> 
+-->
+                |
+                <a href="<?WORDWHEEL_SEARCH_LINK>" class="nav">word wheel</a>	
+		|
+                <a href="<?SEARCH_HISTORY_LINK>" class="nav">search history</a> 
+	      </b>
+	    </font></p>
+	</td>
+      </tr>
+    </table>
+
+    <div align="left" class="indentBlock"><br>
+      <h3><b>Word wheel search</b></h3>
+      <br>
+      <table width="93%" border="0" cellspacing="0" cellpadding="5" align="center">
+	<tr> 
+	  <td valign="top" width="11%" align="right">
+	    <font class="headertextbold" color="#000000" face="Arial, Helvetica, sans-serif">
+	      <b>Look for:</b>
+	    </font>
+	  </td>
+	  <td valign="top" width="89%"> 
+	    <form method="GET" action="<?SCRIPT_NAME>">
+	      <input type="hidden" name="page" value="wwfull">
+	      <?HIDDEN_REQUESTED_COLLECTIONS>
+	      <?HIDDEN_SID>
+
+	      <?Q1_INPUT size="25" class="formhilite" default="">
+	      <input type="submit" name="wordwheel" value="Get new word wheel">
+	      <p>
+		<?WORDWHEEL_RADIO_GROUP name="realm" columns="5">
+	      </p>
+	    </form>
+	  </td>
+	</tr>
+      </table>
+      <br>
+      <br>
+      
+      <!-- OUTSIDE CONTAINER TABLE  --> 
+      <form method="GET" action="<?SCRIPT_NAME>">
+	<input type="hidden" name="page" value="wwfull">
+	<?HIDDEN_REQUESTED_COLLECTIONS>
+	<?HIDDEN_SID>
+	
+	<?HIDDEN_REQUESTED_REALM>
+	<?HIDDEN_REQUESTED_CHARTYPE>
+	<?HIDDEN_REQUESTED_TOPBOTTOM>
+	<?HIDDEN_CHECKED_ITEMS>
+	
+	<table border="1" cellspacing="0" cellpadding="0" width="93%" align="center">
+	  <tr>
+	    <td valign="top"> 
+	      <!-- HEADER TABLE   --> 
+	      <table border="0" cellpadding="6" cellspacing="0" width="100%" bgcolor="#9999CC">
+		<tr> 
+		  <td valign="top" nowrap colspan="2"> 
+		    <p>
+		      <font class="headertext" color="#FFFFFF" face="arial,sanserif">Use
+			checkboxes to select one or more terms from the list. 
+		      </font>
+		    </p>
+		    <p>
+		      <font class="headertext" color="#FFFFFF" face="arial,sanserif">
+			<input type="submit" name="simplesearch" value="Get selected items">
+		      </font> 
+		    </p>
+		  </td>
+		  <td align=right nowrap width="29%">
+		    <?WORDWHEEL_UP_BUTTON name="up" src="/t/text/images/uparrow_viol.gif" alt="scroll up in the list" align="right" border="0" hspace="10" vspace="0" width="37">
+		    <?WORDWHEEL_DOWN_BUTTON name="up" src="/t/text/images/downarrow_viol.gif" alt="scroll down in the list" align="right" border="0" hspace="10" vspace="0" width="37">
+		  </td>
+		</tr>
+	      </table>
+	      
+	      <table border=1 cellpadding=4 cellspacing=0 width="100%">
+		<tr> 
+		  <td width="65%"><b>term</b></td>
+		  <td width="35%"><b>occurences</b></td>
+		</tr>
+		<?WORDWHEEL_COMBINED_TABLE_ROWS>
+	      </table>
+	    </td>
+	  </tr>
+	</table>
+      </form>
+      <br>
+      
+      <table width="93%" border="0" cellspacing="0" cellpadding="5" align="center">
+	<tr valign="top"> 
+	  <td>
+	    <?WORDWHEEL_QUICK_LINK class="wwquicklink">
+	  </td>
+	</tr>
+      </table>
+      <p align="left">&nbsp;  
+    </div>
+    <!-- p class="releaseversion">Release Version: $State: Exp $</p -->
+  </body>
+</html>

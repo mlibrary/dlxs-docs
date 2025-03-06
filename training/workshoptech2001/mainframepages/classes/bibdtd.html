@@ -1,0 +1,136 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+  <head>
+    <title>BibClass DTD</title>
+    <META http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+    <LINK rel="stylesheet" href="../../styles.css">
+  </head>
+  
+  <body class="mainpalette">
+    <h1>BibClass DTD</h1>
+    
+    <pre>
+    <!-- each bibliographic database consists of entries -->
+&lt;!<b>ELEMENT</b> BIBDB o o  (GROUP)+ >
+&lt;!<b>ELEMENT</b> GROUP o o     (COLL?,A+)>
+&lt;!<b>ELEMENT</b> COLL o o (#PCDATA) >
+&lt;!-- record element, called "A", is based on TEI "biblFull" -->
+&lt;!-- A = RECORD -->
+&lt;!<b>ELEMENT</b> A - -              (B, C?, D*, E?, F?, G*, H*, I2?, J?)>
+&lt;!-- B = TITLESTMT -->
+&lt;!<b>ELEMENT</b> B - -              ((K)*,(L|M|N|O|Q|R)*)>
+&lt;!-- C = EDITIONSTMT -->
+&lt;!<b>ELEMENT</b> C - -              ((S,(R)*)|(P)+)>
+&lt;!-- D = EXTENT -->
+&lt;!<b>ELEMENT</b> D - -              (#PCDATA) >
+&lt;!-- E = PUBLICATIONSTMT -->
+&lt;!<b>ELEMENT</b> E - -              (((T?, U?) | AG), V?, W*, X?, YR*)+>
+&lt;!-- F = SERIESSTMT -->
+&lt;!<b>ELEMENT</b> F - -              (K+, Z?)> &lt;!-- added cite (i.e., Z) for serial ref, jpw -->
+&lt;!-- G = NOTESSTMT -->
+&lt;!<b>ELEMENT</b> G - -              ((AA)+)>
+&lt;!-- H = SOURCEDESC -->
+&lt;!<b>ELEMENT</b> H - -              (P|AB|AC)+>
+&lt;!-- I2 = TEXTCLASS -->
+&lt;!<b>ELEMENT</b> I2 - -     (SG*,KW*) >
+&lt;!-- J = HLDGSTMT -->
+&lt;!<b>ELEMENT</b> J - -              (LOC*,URL*,COLLS) >
+&lt;!-- K = TITLE -->
+&lt;!<b>ELEMENT</b> K - -      (#PCDATA|I|GRK|SUB)+ >
+&lt;!-- L = AUTHOR -->
+&lt;!<b>ELEMENT</b> L - -      (#PCDATA) >
+&lt;!-- M = EDITOR -->
+&lt;!<b>ELEMENT</b> M - -      (#PCDATA) >
+&lt;!-- N = SPONSOR -->
+&lt;!<b>ELEMENT</b> N - -      (#PCDATA) >
+&lt;!-- O = FUNDER -->
+&lt;!<b>ELEMENT</b> O - -      (#PCDATA) >
+&lt;!-- P = P -->
+&lt;!<b>ELEMENT</b> P - -      (#PCDATA|I)* >
+&lt;!-- Q = PRINCIPAL -->
+&lt;!<b>ELEMENT</b> Q - -      (#PCDATA) >
+&lt;!-- R = RESPSTMT -->
+&lt;!<b>ELEMENT</b> R - -              (AD, AE) >
+&lt;!-- S = EDITION -->
+&lt;!<b>ELEMENT</b> S - -      (#PCDATA|I)* >
+&lt;!-- T = PUBLISHER -->
+&lt;!<b>ELEMENT</b> T - -      (#PCDATA|I)* >
+&lt;!-- U = PUBPLACE -->
+&lt;!<b>ELEMENT</b> U - -      (#PCDATA) >
+&lt;!-- V = ADDRESS -->
+&lt;!<b>ELEMENT</b> V - -         (#PCDATA | VV) >
+&lt;!-- VV = STREET AND CONTACT INFO FOR ETHNIC DIRECTORY -->
+&lt;!<b>ELEMENT</b> VV - -        (ST*, PH*, FX*, EM*, URL*) >
+&lt;!-- ST = STREET -->
+&lt;!<b>ELEMENT</b> ST - -        (#PCDATA) >
+&lt;!-- PH = PHONE -->
+&lt;!<b>ELEMENT</b> PH - -        (#PCDATA) >
+&lt;!-- FX = FAX -->
+&lt;!<b>ELEMENT</b> FX - -        (#PCDATA) >
+&lt;!-- EM = EMAIL -->
+&lt;!<b>ELEMENT</b> EM - -        (#PCDATA) >
+&lt;!-- W = IDNO -->
+&lt;!<b>ELEMENT</b> W - -      (#PCDATA) >
+&lt;!-- X = AVAILABILITY -->
+&lt;!<b>ELEMENT</b> X - -              (#PCDATA|(P)+)>
+&lt;!-- Y = DATE -->
+&lt;!<b>ELEMENT</b> Y - -              (#PCDATA)>
+&lt;!-- Z = CITE -->
+&lt;!<b>ELEMENT</b> Z - -              (#PCDATA|((YR,PG)|(VO?,IS?,PG?)))>
+&lt;!-- AA = NOTE -->
+&lt;!<b>ELEMENT</b> AA - -     (#PCDATA|P|I|SUB)*>
+&lt;!-- AB = BIBL -->
+&lt;!<b>ELEMENT</b> AB - -        (K|L|S|N|M|AH|T|U|P|B|D|E|F|C|G)* >
+&lt;!-- AC = BIBLFULL -->&lt;!-- was not defined in first DTD -->
+&lt;!-- AD = NAME -->
+&lt;!<b>ELEMENT</b> AD - -     (#PCDATA)>
+&lt;!-- AE = RESP -->
+&lt;!<b>ELEMENT</b> AE - -     (#PCDATA)>
+&lt;!-- AF = TERM -->
+&lt;!<b>ELEMENT</b> AF - -     (#PCDATA|I)+>
+&lt;!-- AG = IMPRINT -->
+&lt;!<b>ELEMENT</b> AG - -        (#PCDATA)>
+&lt;!-- AH = BIBLSCOPE -->
+&lt;!<b>ELEMENT</b> AH - -        (#PCDATA|I)*>
+&lt;!-- IS = ISS -->
+&lt;!-- IS = ISS -->
+&lt;!-- IS = ISS -->
+&lt;!<b>ELEMENT</b> IS - -     (#PCDATA)>
+&lt;!-- I = ITALIC -->
+&lt;!<b>ELEMENT</b> I - -      (#PCDATA)>
+&lt;!-- KW = KW -->
+&lt;!<b>ELEMENT</b> KW - -        (AF)+ >
+&lt;!-- PG = PG -->
+&lt;!<b>ELEMENT</b> PG - -     (#PCDATA)>
+&lt;!-- SG = SUBGRP -->
+&lt;!<b>ELEMENT</b> SG - -     (SU)*> &lt;!-- SU/SG from BAS; keep and map to keyword/term? -->
+&lt;!-- SU = SUB from BAS -->
+&lt;!<b>ELEMENT</b> SU - -     (#PCDATA)> 
+&lt;!-- SUB = subscript -->
+&lt;!<b>ELEMENT</b> SUB - -    (#PCDATA)> 
+&lt;!-- VO = VOL -->
+&lt;!<b>ELEMENT</b> VO - -     (#PCDATA)>
+&lt;!-- YR = YR -->
+&lt;!<b>ELEMENT</b> YR - -     (#PCDATA)>
+&lt;!-- LOC = LOC -->
+&lt;!-- URL = URL -->
+&lt;!-- GRK = Greek -->
+&lt;!<b>ELEMENT</b> (LOC|URL|GRK) - - (#PCDATA|I)*>
+&lt;!-- COLLS = collections -->
+&lt;!<b>ELEMENT</b> COLLS - - (COLL)+ >
+
+&lt;!-- TYPE attribute is A in all of these cases -->
+&lt;!<B>ATTLIST</B> A  A (A|B|C|D) "A"
+                ID ID #REQUIRED 
+                DT CDATA #REQUIRED > &lt;!-- DT att was "REC.DT" -->
+&lt;!<B>ATTLIST</B> V  A CDATA #IMPLIED>
+&lt;!<B>ATTLIST</B> W  A CDATA #IMPLIED>
+&lt;!<B>ATTLIST</B> AA A CDATA #IMPLIED>
+&lt;!<B>ATTLIST</B> KW A CDATA #IMPLIED>
+&lt;!<B>ATTLIST</B> K  A CDATA #IMPLIED>
+&lt;!<B>ATTLIST</B> SU A (COUNTRY|1|2|3|4) "1" >
+&lt;!<B>ATTLIST</B> YR A CDATA #IMPLIED>
+
+  </pre>
+  </body>
+</html>

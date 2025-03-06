@@ -1,0 +1,70 @@
+.mainpalette {
+	color: #333333;
+	background-color: #EEEEEE;
+	font-family: "Arial", "Helvetica", "sans-serif"
+}
+
+.navpalette {
+  color: #333333;
+  background-color: #CCCCCC;
+  link: #996633;
+  font-family: "Arial", "Helvetica", "sans-serif";
+  font-size: medium
+  }
+
+.toppalette {
+ color: #000000;
+ background-color: #858BA9;
+ font-family: "Arial", "Helvetica", "sans-serif"
+ }
+ 
+ h3 {
+   color: #333300;
+   font-family: "Arial", "Helvetica", "sans-serif"
+   }
+
+.header {  font-family: "Arial", "Helvetica", "sans-serif"; font-weight: bold}
+.navlink {  font-family: "Arial", "Helvetica", "sans-serif"; color: #333300; text-decoration: none; font-size: 12px}
+ul {  line-height: 125%}
+ol {  line-height: 125%}
+a {  font-family: "Arial", "Helvetica", "sans-serif"; color: #0000CC; text-decoration: none}
+.dayheader { color: #FFFFCC; background-color: #3300CC; font-family: "Arial", "Helvetica", "sans-serif" }
+.partheader { color: #333300; background-color: #ACB7E0; font-family: "Arial", "Helvetica", "sans-serif" }
+.sectionheader { color: #333333; link: #996633; font-family: "Arial", "Helvetica", "sans-serif"; font-size: medium }
+.unixcommand {  color: #990000; font-weight: normal}
+h5 {  font-style: italic}
+.warning {
+	font-family: Arial, Helvetica, sans-serif;
+	font-style: italic;
+	color: #CC3300;
+}
+.markupsnippet {
+	font-size: 12px;
+}
+.blankTableCell {
+	background-color: #333300;
+}
+.usedTableCell {
+	background-color: #FFFFFF;
+}
+
+.deemphasize
+{ 
+  color: #a0a0f0;
+  }
+
+table {
+border:0.1em solid black;
+border-collapse:collapse;
+font-family:Arial,Helvetica,sans-serif;
+font-size:14px;
+text-align: left;
+background-color: white;
+padding: 5px; 
+}
+
+td, th
+{
+padding: 5px; 
+}
+

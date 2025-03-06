@@ -1,0 +1,53 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+  <head>
+    <title>Database Installation and Upgrading</title>
+    
+    <link rel="stylesheet" href="../styles.css" type="text/css">
+  </head>
+  <body class="mainpalette" leftmargin="10" topmargin="10"
+    marginwidth="10" marginheight="10">
+    
+    <h1>Database Installation and Upgrading</h1>
+    <ul>
+      <li><a href="#dbmove">Database installation</a></li>
+      <li><a href="#dbconversion">Database upgrading</a></li>
+    </ul>
+    
+    <h3><a name="dbmove"></a>Database installation</h3>
+    <p>For brand new DLXS middleware installations, create a new MySQL database following these <a href="http://www.dlxs.org/docs/13/installation/index.html#mysqlconfig">MySQL database configuration instructions</a> in the main documentation.</p>
+    
+    <p>After the database is created, the next step is to install the sample database data contained in  <tt> <a href="http://www.dlxs.org/products/archive-by-CDROM/13/Lib/src/misc/db/db-dump-v6.0-release.sql">$DLXSROOT/misc/db/db-dump-v6.0-release.sql</a></tt>.</p>
+    <p>  Let <tt><b>dlxs_v6</b></tt> be the database name you chose for this installation. Note that this is the database name you supplied at the prompt when you ran the Installer.  Use the <b>mysql</b> command line client to load the dump file like this:<br><br></p><center> <code>% mysql -u dlxsadm -p dlxs_v6 &lt; $DLXSROOT/misc/db/db-dump-v6.0-release.sql</code></center></p><p>That's it!</p>
+    
+    <h3><a name="dbconversion"></a>Database upgrading</h3>
+    <p>If you already have a DLXS database set up for an earlier release, make a copy of it and then upgrade the copy to support the newly installed DLXS release. </p>
+    <p>
+      Let's say your current database is named <tt><b>dlxs_v5</b></tt> and the new database will be named <tt><b>dlxs_v6</b></tt>. To make a copy of your current MySQL database and upgrade it:
+      <ol>
+        <li>dump  <tt>dlxs_v5</tt> using:<blockquote><tt> mysqldump -u dlxsadm -p dlxs_v5 > dlxs_v5_dump.sql</tt></blockquote>  </li>
+        <li>create an empty <tt>dlxs_v6</tt> database as described in <a href="http://www.dlxs.org/docs/13/installation/index.html#mysqlconfig">MySQL database configuration instructions</a> in the main documentation.</li>
+        <li>load <tt>dlxs_v5_dump.sql</tt> into <tt>dlxs_v6</tt>: <blockquote><tt>mysql -u dlxsadm -p dlxs_v6 < dlxs_v5_dump.sql</tt></blockquote></li>
+        <li>upgrade the copy of <tt>dlxs_v5</tt> that you loaded into <tt>dlxs_v6</tt>:
+          <blockquote><tt>$DLXSROOT/bin/db/upgrade_5_6</tt></blockquote> where <tt>$DLXSROOT</tt> is the root of the new DLXS release 13 installation. This means <tt>upgrade_5_6</tt> will act on the database name you supplied when you installed release 13.  </li>
+      </ol>
+   </p>
+
+    <p>If your existing database version is more than one version behind 6, run the <tt>$DLXSROOT/bin/db/upgrade_*</tt> sequentially on the copied database, starting with the version of the copied database.</p>
+    <p>For example if you copied <tt>dlxs_v3</tt> into <tt>dlxs_v6</tt> then run, in order: <tt>$DLXSROOT/bin/db/upgrade_3_4, $DLXSROOT/bin/db/upgrade_4_5</tt> and finally <tt>$DLXSROOT/bin/db/upgrade_5_6</tt>.  Again, <tt>$DLXSROOT</tt> would be the root of the new DLXS release 13 installation.</p>
+    <p>
+      For reference:
+      <table border="1" width="30%">
+        <tr><td><b>DLXS release</b></td><td><b>database version</b></td></tr>
+        <tr><td>8</td><td>1</td></tr>
+        <tr><td>9</td><td>2</td></tr>
+        <tr><td>10</td><td>3</td></tr>
+        <tr><td>11, 11a</td><td>4</td></tr>
+        <tr><td>12, 12a</td><td>5</td></tr>
+        <tr><td>13</td><td>6</td></tr>
+      </table>
+    </p>
+
+
+  </body>
+</html>

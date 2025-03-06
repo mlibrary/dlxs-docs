@@ -1,0 +1,67 @@
+<?xml version="1.0"?>
+
+<!-- SPO Editorial Services                  -->
+<!-- automatically-generated XML header file -->
+
+<?xml-stylesheet href="../../../pre11-dlxsdocs.xsl" type="text/xsl"?>
+<!DOCTYPE DLPSDOC PUBLIC "-//UM-DLPS//DTD DLPS Publications//EN" "http://docs.umdl.umich.edu/dlps/docs/dlpsdocs.dtd">
+<DLPSDOC>
+<TITLE>Migration to Image Class Version 2</TITLE>
+<HEADER>
+<JOURNAL>DLXS Documentation</JOURNAL>
+<PUBDATE>2002-07-03 17:21:57 EDT</PUBDATE>
+<AUTH1>Weise, John</AUTH1>
+<AUTH2></AUTH2>
+<DOCTITLE>Migration to Image Class Version 2</DOCTITLE>
+<VOL>class</VOL>
+<ISS>image</ISS>
+<FILE>dlxsdocs-image-migration</FILE>
+</HEADER>
+
+
+
+
+<BODY>
+<BHEAD>Migration to Image Class Version 2</BHEAD>
+<DIV1 ID="main">
+
+
+<P><A HREF="mailto:dlxs-help@umich.edu">dlxs-help@umich.edu</A>
+</P>
+
+
+<P><b>General Recommendations</b></P>
+
+<UL>
+  <LI>Read the <A HREF="/intro/dlxsintro-index.xml">DLXS, Getting Started</A> documentation, and this document, completely, before proceeding.</LI>
+</UL>
+
+<P>The following is a list of the changes 
+  to the system that are most likely to cause problems if you are not aware 
+  of them.</P>
+<P>If you are migrating from the <B>BETA</B> release version of Image Class to Image 
+  Class Version 2:</P>
+
+<UL>
+  <LI><b>Pretty much every aspect of the system has changed from data to middleware. 
+    You will need to run imageprep, retransform your data, and build new indexes, 
+    in addition to the new steps necessary with Version 2.</b></LI>
+
+</UL>
+<P>If you are migrating from Image Class version 1.06 to version 2: 
+  <UL>
+    <LI>Image Class now relies on DLXS level access control. The .isaccess file is no longer used. See <A HREF="image-accesscontrol.xml">Image Class Access Control</A> for more information.</LI>
+    <LI>The <B>imageprep</B> program has changed significantly and you'll need 
+      to run it on all of your collections. It has a backward compatability option (see $DLXSROOT/bin/i/image/imageprep.cfg) in case you need to have your old and new versions of Image Class sharing $DLXSROOT/img during transition.</LI>
+    <LI>Version 2 expects collection-specific web directory symlinks to <B>"thumb"</B> 
+      to point to $DLXSROOT/img/c/coll/index, not $DLXSROOT/img/c/coll/index/thumb.</LI>
+    <LI>It is necessary to use COLLMGR to add your collections to the <B>colldb and groups</B>, 
+      database otherwise they will not function.</LI>
+    <LI>It is necessary to run <B>makeCollectionmaps-idx</B>, which resides in 
+      $DLXSROOT/cgi/i/image. Do this after the colldb and groups files have been 
+      updated. In fact, every time a collection is added or the coll-config file changes, rerun makeCollectionmaps-idx.</LI>
+  </UL>
+  </P>
+</DIV1> 
+</BODY>
+</DLPSDOC>

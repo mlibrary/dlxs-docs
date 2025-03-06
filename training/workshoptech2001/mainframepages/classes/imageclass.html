@@ -1,0 +1,81 @@
+<HTML>
+<HEAD>
+<TITLE>ImageClass</TITLE>
+<META http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<LINK rel="stylesheet" href="../../styles.css">
+</HEAD>
+<BODY class="mainpalette">
+<H2>ImageClass</H2>
+<P>The Image Class is specifically an access system for image databases. Michigan provides an image database hosting <a href="http://docs.umdl.umich.edu/class/image/image-characterization.xml">service</a> to the campus.
+<UL>
+  <LI><B>Data</B> 
+    <UL>
+      <LI>Image Class is intended for continuous tone (8 bit grayscale, 24 bit color) images. Supported are thumbnail images in the JFIF/JPEG format and full size images at multiple resolutions in the SID (MrSid from <a href="http://www.lizardtech.com/" target="_new">LizardTech</a>. Master images are typically in the TIF format.</LI>
+      <LI>Descriptive metadata about images comes from a variety of database sources and is SGML encoded (see also <a href="http://docs.umdl.umich.edu/class/image/image-dtd.xml">Image Class DTD</a>) and indexed with XPat.</LI>
+    </UL>
+  </LI>
+  <LI><B><a href="http://docs.umdl.umich.edu/class/image/image-imageclass.xml">Image Class Functionality</a></B> 
+    <UL>
+      <LI>Retrieve text data and thumbnails</LI>
+      <LI>Retrieve full record and large image</LI>
+      <LI>Search across multiple collections, or a single collection</LI>
+      <LI>Create personal <B>Portfolios</b> of images, saved on the server for use at a later date.</LI>
+    </UL>
+  <LI><B>Getting Things Done</B>
+    <UL>
+      <LI><B>Sessions</B> are used to carry along IDs for search results and information about collections (collsinfo object).</LI>
+      <LI><B>Collection Database</B> (<a href="../../../workshopuser2001/newicdocs/image_class_colldb.htm">colldb</a>) is used for configuration of collections.</LI>
+      <LI><B>Use of IDs for results navigation</B></LI>
+      <LI><B><a href="http://docs.umdl.umich.edu/class/image/image-accesscontrol.xml">Access Retrictions</a></B></LI>
+      <LI><B>MrSid</B></LI>
+      <LI><B>Objects, modules used</B>
+      <UL>
+        <LI>CollsInfo, GroupsInfo, XPat, and XPatResultSet, Query Factory and TermMapper, BookBag, ProcIns, DlpsSession, DbUtils</LI>
+        <LI>CGI, Apache::Session, Auth</LI>
+      </UL>
+      </LI>
+    </UL>
+    </LI>
+
+    <LI><B>Bookbag for portfolio</B> (saving in a database)</LI>
+    <LI><B>Image Retrieval</B>:
+      <UL>
+        <LI>thumbnails</LI>
+        <LI>getimage-idx</LI>
+        <LI>MrSid interactions complexity</LI>
+        <LI>jpeg</LI>
+      </UL>
+    </LI>
+    <LI><B><a href="imageclassflow.JPG">Flowchart</a></B> to show decision tree for Search, ID cache, Portfolio, 
+    ... 
+    </LI>
+
+
+  <LI><B><a href="../../../workshopuser2001/newicdocs/image_class_interface.htm">Customization/Configuration</a></B> 
+    <UL>
+      <LI><a href="../../../workshopuser2001/newicdocs/image_class_colldb.htm">colldb</a>, groups, imageclass.cfg</LI>
+      <LI><B>Interface Customization</B> 
+        <UL>
+          <LI>xcoll, coll specific</LI>
+          <LI>JavaScript</LI>
+          <LI>CSS</LI>
+        </UL>
+      </LI>
+      <LI><B>Code customization</B> 
+      <UL>
+        <LI><a href="icnewdocstech/allpurposevars.htm">&lt;?ALLPURPOSE&gt;</a></LI>
+        <LI>Other</LI>
+      </UL>
+      </LI>
+    </UL>
+  </LI>
+
+  <LI><B>Documentation</B>
+    <UL>
+      <LI><a href="http://docs.umdl.umich.edu/class/image/imageindex.xml">http://docs.umdl.umich.edu/class/image/imageindex.xml</a></LI>
+    </UL>
+  </LI>
+
+</UL>
+</BODY>
+</HTML>

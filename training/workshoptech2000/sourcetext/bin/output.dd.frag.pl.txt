@@ -1,0 +1,21 @@
+#!/l/local/bin/perl
+
+# take a stream of (<SSize>\d+</SSize><Sync>[^<]+</Sync>)+ and
+# send to STDOUT the appropriate <Region> entries, assuming
+# that they are $ARGV[0] preficed in SysName
+
+undef $/;
+
+if ($ARGV[0]) { $path = shift(@ARGV); }
+
+while (<>) {
+    @items = grep(!/^(\s*|SSize|Sync)$/, split(/<\/?(SSize|Sync)>/, $_));
+    while (@items) {
+	print "<Region><Name>$items[1]</Name><Desc>$items[1]</Desc><File>\n";
+	print "  <SysName>$path$items[1].rgn</SysName>\n";
+	print "  <ModDate>" . time . "</ModDate>\n";
+	print "  <OffSet>158303</OffSet>\n";
+	print "</File><Count>" . ($items[0] * 2) . "</Count><Type>pairs</Type></Region>\n\n";
+	shift(@items); shift(@items);
+    }
+}

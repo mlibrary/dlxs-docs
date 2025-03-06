@@ -1,0 +1,55 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+  <head>
+    <title>Finding Aids</title>
+  </head>
+
+  <body>
+
+
+<h3>Overview of Preprocessing and Encoding considerations</h3>
+<p>  Data Prep</p>
+<ol>
+	 <li><a href="#DataPrepStep1">validating the  files individually</a> against
+	    the EAD <em>2002</em> DTD<br>
+	    <strong>make validateeach</strong><br>
+	 </li>
+	 <li><a href="#DataPrepStep2">concatenating the files into one larger XML file</a><br>
+       <strong>make prepdocs</strong><br></li>
+	 <li><a href="#DataPrepStep3">validating the concatenated file</a> against the
+	    <em>dlxsead2002</em> DTD:<br>
+	    <strong>make validate</strong><br>
+	 </li>
+<li><a href="#DataPrepStep4">"normalizing" the concatenated file.</a><br>
+	    <strong>make norm</strong><br>
+</li>
+<li><a href="#DataPrepStep5">validating the normalized concatenated file against the
+	    <em>dlxsead2002</em> DTD</a><br>
+	    <strong>make validate</strong><br>
+</li>
+</ol>
+<pre>
+&lt;COLL&gt;<br>&lt;ead&gt;&lt;eadheader&gt;&lt;eadid&gt;1&lt;/eadid&gt;...&lt;/eadheader&gt;... content&lt;/ead&gt;<br>&lt;ead&gt;&lt;eadheader&gt;&lt;eadid&gt;2&lt;/eadid&gt;...&lt;/eadheader&gt;... content&lt;/ead&gt;<br>&lt;ead&gt;&lt;eadheader&gt;&lt;eadid&gt;3&lt;/eadid&gt;...&lt;/eadheader&gt;... content&lt;/ead&gt;<br>&lt;/COLL&gt;
+
+</pre>
+
+<p><strong>WARNING!</strong> &nbsp;&nbsp; If are extra characters or some other problem with the part of the program that strips out the xml declaration and the docytype declearation the file will end up like:</p>
+
+<pre>
+&lt;COLL&gt;<br>baddata&lt;ead&gt;&lt;eadheader&gt;&lt;eadid&gt;1&lt;/eadid&gt;...&lt;/eadheader&gt;... content&lt;/ead&gt;<br>baddata&lt;ead&gt;&lt;eadheader&gt;&lt;eadid&gt;2&lt;/eadid&gt;...&lt;/eadheader&gt;... content&lt;/ead&gt;<br>baddata&lt;ead&gt;&lt;eadheader&gt;&lt;eadid&gt;3&lt;/eadid&gt;...&lt;/eadheader&gt;... content&lt;/ead&gt;<br>&lt;/COLL&gt;</pre>
+<p>Indexing
+     </p>
+     <ol>
+<li><b>make singledd</b> indexes words for texts that
+		have been concatenated into on large file for a collection. This is the
+	 recommended process. </li>
+	 <li><b>make xml</b> indexes the XML structure by
+		reading the DTD. Validates as it indexes. </li>
+	    
+	 <li><b>make post</b> builds and indexes fabricated
+		regions based on the XPAT queries stored in the workshopfa.extra.srch file.</li>
+</ol>
+<a href="fcoutline.html">Return to main outline</a>
+
+  </body>
+</html>

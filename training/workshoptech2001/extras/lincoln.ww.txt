@@ -1,0 +1,66 @@
+<WW> 
+<COLL> 
+<COLLNAME>lincoln</COLLNAME> 
+<REALM> 
+<REALMNAME>author</REALMNAME> 
+<ALPHA> 
+<E N="0" O="16" L="abraham">abraham </E> 
+<E N="1" O="16" L="lincoln">lincoln </E> 
+</ALPHA> 
+<NUM> 
+<E N="2" O="16" L="1809">1809 </E> 
+<E N="3" O="16" L="1865">1865 </E> 
+</NUM> 
+</REALM> 
+<REALM> 
+<REALMNAME>full text</REALMNAME> 
+<ALPHA> 
+<E N="0" O="33624" L="a">a </E> 
+<E N="1" O="4" L="a's">a's </E> 
+<E N="2" O="2" L="a'vache">a'vache </E> 
+
+...
+
+<E N="68" O="2" L="abode">abode </E> 
+<E N="69" O="2" L="abodes">abodes </E> 
+<E N="70" O="57" L="abolish">abolish </E> 
+<E N="71" O="41" L="abolished">abolished </E> 
+<E N="72" O="2" L="abolishes">abolishes </E> 
+<E N="73" O="20" L="abolishing">abolishing </E> 
+<E N="74" O="17" L="abolishment">abolishment </E> 
+<E N="75" O="174" L="abolition">abolition </E> 
+<E N="76" O="38" L="abolitionism">abolitionism </E> 
+<E N="77" O="39" L="abolitionist">abolitionist </E> 
+
+...
+
+<E N="2325" O="1" L="babbett">babbett </E> 
+<E N="2326" O="1" L="babbit">babbit </E> 
+<E N="2327" O="3" L="babbitt">babbitt </E> 
+<E N="2328" O="23" L="babcock">babcock </E> 
+<E N="2329" O="1" L="babcock's">babcock's </E> 
+<E N="2330" O="1" L="babe">babe </E> 
+<E N="2331" O="2" L="babel">babel </E> 
+<E N="2332" O="2" L="baber">baber </E> 
+<E N="2333" O="8" L="baby">baby </E> 
+
+...
+
+<E N="20" O="8" L="the">the </E> 
+<E N="21" O="8" L="volume">volume </E> 
+<E N="22" O="16" L="works">works </E> 
+</ALPHA> 
+<NUM> 
+<E N="23" O="1" L="1">1 </E> 
+<E N="24" O="1" L="2">2 </E> 
+<E N="25" O="1" L="3">3 </E> 
+<E N="26" O="1" L="4">4 </E> 
+<E N="27" O="1" L="5">5 </E> 
+<E N="28" O="1" L="6">6 </E> 
+<E N="29" O="1" L="7">7 </E> 
+<E N="30" O="1" L="8">8 </E> 
+</NUM> 
+</REALM> 
+</COLL> 
+</WW> 
+ 

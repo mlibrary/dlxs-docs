@@ -1,0 +1,35 @@
+<?xml version="1.0"?>
+
+<!-- SPO Editorial Services                  -->
+<!-- automatically-generated XML header file -->
+
+<?xml-stylesheet href="../../pre11-dlxsdocs.xsl" type="text/xsl"?>
+<!DOCTYPE DLPSDOC PUBLIC "-//UM-DLPS//DTD DLPS Publications//EN" "http://docs.umdl.umich.edu/dlps/docs/dlpsdocs.dtd">
+<DLPSDOC>
+<TITLE>User Interface Issues</TITLE>
+<HEADER>
+<JOURNAL>DLXS Documentation</JOURNAL>
+<PUBDATE>2002-07-08 11:50:28 EDT</PUBDATE>
+<AUTH1>Stoeffler, Matt</AUTH1>
+<AUTH2></AUTH2>
+<DOCTITLE>User Interface Issues</DOCTITLE>
+<VOL>ui</VOL>
+<ISS></ISS>
+<FILE>dlxsdocs-ui-index</FILE>
+</HEADER>
+
+
+
+  <BODY>
+    <BHEAD>User Interface Issues</BHEAD>
+<DIV1>
+<P>DLXS User Interface documentation describes both the scope of functions provided to the end user for collections implemented via the DLXS class middleware, and the means by which individual characteristics of collections which are instances of the class are configured.</P>
+   
+<P>A general overview of class functionality is provided in the <A HREF="dlxs-functionality.xml">DLXS Functionality Overview</A>.  The configuration of collection characteristics is achieved through a combination of HTML Templates, containing special processing instructions, and the ProcIns Module, which is responsible for resolving them into the HTML that is delivered to the user. <A HREF="dlxs-templates.xml">HTML Templates / Interfaces</A> gives a general overview of the components of interface configuration across all classes.  Issues of configuration specific to a class are contained under individual class headings.</P>
+<UL>
+<LI><A HREF="dlxs-functionality.xml">DLXS Functionality Overview</A></LI>
+<LI><A HREF="dlxs-templates.xml">HTML Templates / Interfaces</A></LI>
+</UL>
+</DIV1>
+</BODY>
+</DLPSDOC>

@@ -1,0 +1,59 @@
+<?xml version="1.0"?>
+
+<!-- SPO Editorial Services                  -->
+<!-- automatically-generated XML header file -->
+
+<?xml-stylesheet href="../../../pre11-dlxsdocs.xsl" type="text/xsl"?>
+<!DOCTYPE DLPSDOC PUBLIC "-//UM-DLPS//DTD DLPS Publications//EN" "http://docs.umdl.umich.edu/dlps/docs/dlpsdocs.dtd">
+<DLPSDOC>
+<TITLE>Basic Overview of the Bibliographic Class</TITLE>
+<HEADER>
+<JOURNAL>DLXS Documentation</JOURNAL>
+<PUBDATE>2002-07-08 12:59:13 EDT</PUBDATE>
+<AUTH1>Hagedorn, Kat</AUTH1>
+<AUTH2></AUTH2>
+<DOCTITLE>Basic Overview of the Bibliographic Class</DOCTITLE>
+<VOL>class</VOL>
+<ISS>bib</ISS>
+<FILE>dlxsdocs-bib-about</FILE>
+</HEADER>
+
+
+
+<BODY>
+<BHEAD>Basic Overview of the Bibliographic Class</BHEAD>
+<DIV1 ID="description">
+
+<P>The Bibliographic Class includes a range of descriptive metadata, from the minimal (cf. Wing) to the expansive (cf. MARC records or information extracted from the TEI Header). Entities in this class have a relatively flat structure (i.e., no nesting) and a high degree of relational organization in the way that they use controlled vocabularies or name authorities. Most instances within the Bibliographic Class are collections of bibliographic citations, but may also be collections of entries describing entities other than books or journal articles (e.g., coins, photographs, ostraca, or other objects). The primary behaviors of the class are relatively limited, focusing primarily on searching, display, and management (e.g., collecting together citations of primary interest from a much larger collection of valid citations). Entities in the Bibliographic Class are typically displayed as brief citations or more expansive citations, with and without field labels, and in different formats suitable for different purposes (e.g., downloading). While issues such as display are simple compared to texts, users have come to expect more sophisticated methods for navigating and managing large numbers of results, e.g., sorting on different indexes, or using a "shopping cart" model of collecting the information together for subsequent uses.  For more information on the range of bibliographic resources supported by this Class, as well as "tensions" implicit in the Class's definition, please see <A HREF="bib-representative.xml">Representative Resources</A>.</P>
+
+<P>The DLXS Bibliographic Class was not intended to replace robust, large-scale bibliographic systems like the library catalog, but to accomplish resource discovery across a large body of bibliographic information managed <I>outside of large integrated library systems</I>.  Implementation is relatively simple and therefore extremely cost-effective (typically more cost-effective than a similar implementation in an integrated library system), and because of this the DLXS Bibliographic Class may have continuing value as a cost-effective system for databases like <I>Wing</I> or the indexes to the <I>London Times</I> and <I>New York Times</I>.  Nevertheless, we believe that the opportunity for much tighter integration of full text resources and the library management systems may make many applications of the DLXS Bibliographic Class obsolete.</P>
+
+</DIV1> 
+<DIV1 ID="related">
+<H1>Related Resources</H1>
+<OL>
+<LI><A HREF="bib-dtd.xml">Bibliographic Class DTD</A></LI>
+<LI><A HREF="bib-representative.xml">Representative Resources</A></LI>
+<LI><A HREF="bib-testing.xml">Testing Procedures</A></LI>
+<LI><B>References</B>:  No publications have been written about use of the Bibliographic Class.</LI>
+</OL>
+</DIV1>
+<DIV1 ID="terminology">
+<H1>Notes on Nomenclature:</H1>
+<DL>
+<DT>Collection:</DT><DD>Bibliographic indexes are referred to as "collections" for the sake of convenience.  A bibliographic index, or collection, consists of all bibliographic fields in SGML or XML format, conforming to the bib.dtd.</DD>
+<DT>Field:</DT><DD>We use the term <TT>field</TT> to describe any bounded and named area of searchable information in a bibliographic collection.  Most will correspond to <TT>elements</TT> in the SGML or XML DTD (e.g., the <TT>YR</TT> element, used for date information), but fields may also correspond to a searchable <TT>attribute</TT>, <TT>tag</TT>, or some "synthetic" body of information such as a subset of elements containing specific information.  In XPAT syntax, a <TT>field</TT> is referred to as a <TT>region</TT>.</DD>
+<DT>Index:</DT><DD>We use the term <TT>index</TT> to describe any machine-built searchable indexes created by <a href="../../xpat/xpat-indexing-overview.xml">xpatbld</a>, including xpatbld's word and phrase indexes and its "region" indexes (i.e., for searching SGML/XML elements and attributes as containers of information; see <TT>Field</TT>, above).</DD>
+</DL>
+</DIV1>
+<DIV1 ID="todo">
+<H1>Planned Additions and Enhancements to the Bibliographic Class</H1>
+<P>Bibliographic Class enhancements and additions include:</P>
+<OL>
+<LI><B>Word wheel</B>:  The <a href="../class/text/tc-ww.xml">word wheel</a> functionality currently available in TextClass will be incorporated in a subsequent release of the Bibliographic Class.</LI>
+<LI><B>Search by most recent records</B>:  This has been implemented for the <A HREF="http://bas.umdl.umich.edu/b/bas">Bibliography of Asian Studies</A> and may be added in a future release.</LI>
+<LI><B>Open Archives harvesting capability</B>:  Support for the Open Archives harvesting routines has been implemented in the <A HREF="../../collmeta/dlxs-broker.xml">broker</A>.</LI>
+</OL>
+</DIV1>
+</BODY>
+</DLPSDOC>

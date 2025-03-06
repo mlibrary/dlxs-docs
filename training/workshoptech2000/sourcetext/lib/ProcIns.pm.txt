@@ -1,0 +1,315 @@
+package ProcIns;
+
+use Exporter ();
+@ISA = qw( Exporter );
+
+
+# **********************************************************************
+# this module is for ProcIns objects, which are essentially
+# hashes of references to subroutines and the parameters they take;
+# to be used as input to the ProcessPIs subroutine in PageHandling.pm
+# and by specific filtering routines.
+#
+# It is a way of storing code and parameters for filtering <?...> in
+# html templates in a generic way. PageHandling::ProcessPIs takes a ref
+# to the html template and a ProcIns object (with proper routines attached)
+# and calls subroutines to do the filtering based on the instructions
+# found in the <?...> PI text.
+#
+# The structure of this object is:
+# ProcIns Object->
+#    {'instruction'}        (processing instruction text 
+#                   {'sub'} (reference to subroutine to run
+#                   {'subclass'} (reference to array of parameters to pass to sub)
+#
+# **********************************************************************
+
+
+# ----------------------------------------------------------------------
+# NAME      : new
+# PURPOSE   : create new ProcIns object
+#             
+# CALLED BY : main
+# CALLS     : ProcIns->_initialize
+# INPUT     : NONE
+# RETURNS   : NONE
+# NOTES     : 
+# ----------------------------------------------------------------------
+
+sub new 
+{
+    my $class = shift;
+    my $self = {};
+    bless $self, $class;
+#    $self->_initialize(@_);
+    return $self;
+}
+
+
+# ----------------------------------------------------------------------
+# NAME         : AddPI
+# PURPOSE      : Add a Processing Instruction and its subroutine information
+# CALLED BY    : 
+# CALLS        : 
+# INPUT        : string, ref to sub, ref to array of parameters
+# RETURNS      : NONE
+# GLOBALS      : 
+# SIDE-EFFECTS : 
+# NOTES        : 
+# ----------------------------------------------------------------------
+
+sub AddPI
+{
+    my $self = shift;
+    my ( $ins, $subRef, $parmListRef ) = @_;
+
+    $self->{$ins}{'sub'}   = $subRef;
+    $self->{$ins}{'parms'} = $parmListRef;
+}    
+
+# ----------------------------------------------------------------------
+# NAME         : ProcessPIs
+# PURPOSE      : run through a string of HTML and farm out the handling of
+#                any processing instructions it encounters
+# CALLED BY    : 
+# CALLS        : subroutines based on instructions
+# INPUT        : ref to html template text,  ProcIns object
+# RETURNS      : ref to string of html text, now with any processable
+#                PIs processed
+# GLOBALS      : 
+# SIDE-EFFECTS : 
+# NOTES        : First, we make a working copy of the input string, and a new string.
+#                Then, running through the string matching for PIs, we grab
+#                $` (the text before the match) and concat it to the new string.
+#                Then, we process the PI if we have a subroutine to handle it, and
+#                concat that to the new string. Then we make the working string
+#                equal to the post match string and repeat.
+# ----------------------------------------------------------------------
+
+sub ProcessPIs
+{
+    my $self = shift;
+    
+    my $sRef = shift;
+    
+    # regular expression to be  used to match any processing instruction
+    # within an html page template, of the form:
+    #    <?Instruction> or <?Instruction parm1=this parm2=that>
+    my $PIRegExp = '<\?([^\s>]+\s*)(([^\s>]+\s*)*)>';
+
+    # make working copy of input html text
+    my $s    = $$sRef;
+    # make new string to gather up processed text
+    my $newS = '';
+    
+    while ( $s =~ m,$PIRegExp,gs )
+    {
+        my $pre = $`;
+        my $pi = $&;
+        my $instruction = $1;
+        my $piParams = $2;
+        my $post = $';
+
+        # remove trailing spaces, if any
+        $instruction =~ s,\s*$,,;
+
+        # this splits up the p1=val1 p2=val2 into a hash, properly indexed by p's
+        my %piParams = split ( /=|\s+/, $piParams );
+
+        # remove quotes from values and downcase all keys and values
+        # so that PI atribute names (not values) can be case insensitive
+        my %lcParams = ();
+        
+        foreach my $p ( keys ( %piParams ) )
+        {
+            my $tempParam = $piParams{$p};
+            $tempParam =~ s,\",,g;    
+
+            my $lcP = lc ( $p );
+            $lcParams{$lcP} = $tempParam;
+        }
+
+        # grab routine to run for this instruction
+        my $sub   = $self->GetSub( $instruction );
+        my $parms = $self->GetParms( $instruction );
+        
+        # add pre-match text to output string
+        $newS .= $pre;
+        
+        # if there is no subroutine defined, return Processing Instruction
+        # to the text
+        if ( ! ( defined ( $sub ) ) )
+        {
+            $newS .= $pi;
+        }
+        
+        # if there is a subroutine defined, run it and tack on
+        # results to the new string
+        else
+        {
+            $newS .= &$sub( @$parms, \%lcParams );
+        }
+        
+        # finally, replace $s so that match starts from here on
+        $s = $post;
+    }
+    # grab last part of incoming text, after the last match.
+    $newS .= $s;
+    
+    $$sRef = $newS;
+    
+}
+
+# ----------------------------------------------------------------------
+# NAME         : GetSub
+# PURPOSE      : return reference to particular subroutine in this object
+# CALLED BY    : 
+# CALLS        : 
+# INPUT        : instruction string
+# RETURNS      : reference to a subroutine
+# GLOBALS      : 
+# SIDE-EFFECTS : 
+# NOTES        : 
+# ----------------------------------------------------------------------
+
+sub GetSub
+{
+    my $self = shift;
+    my $ins  = shift;
+
+    if ( exists ( ${ $self}{$ins} ) )
+    {
+        if ( defined ( $self->{$ins}{'sub'} ) )
+        {
+            return ( $self->{$ins}{'sub'} );
+        }
+        else 
+        {
+            return \&SimpleSubstitution;   # reference to anon. subroutine
+        }
+    }
+    else
+    {
+        return undef;
+    }
+    
+}
+
+
+# ----------------------------------------------------------------------
+# NAME         : SimpleSubstitution
+# PURPOSE      : 
+# CALLED BY    : 
+# CALLS        : 
+# INPUT        : 
+# RETURNS      : 
+# GLOBALS      : 
+# SIDE-EFFECTS : 
+# NOTES        : 
+# ----------------------------------------------------------------------
+
+sub SimpleSubstitution
+{
+    my $s = shift;
+    return $s;
+}
+
+# ----------------------------------------------------------------------
+# NAME         : GetParms
+# PURPOSE      : return reference to particular list of parameters in this object
+# CALLED BY    : 
+# CALLS        : 
+# INPUT        : instruction string
+# RETURNS      : reference to an array
+# GLOBALS      : 
+# SIDE-EFFECTS : 
+# NOTES        : 
+# ----------------------------------------------------------------------
+
+sub GetParms
+{
+    my $self = shift;
+    my $ins  = shift;
+
+    if ( ( exists ( $ {$self}{$ins} ) ) &&
+         ( defined ( $self->{$ins}{'parms'} ) ) )
+    {
+        return ( $self->{$ins}{'parms'} );
+    }
+    
+    else
+    {
+        return undef;
+    }
+}
+
+# ----------------------------------------------------------------------
+# NAME         : StripPIPairContents
+# PURPOSE      : remove a Proc Instruction open and close tag pair
+#                and everything between
+# CALLED BY    : 
+# CALLS        : 
+# INPUT        : 
+# RETURNS      : 
+# GLOBALS      : 
+# SIDE-EFFECTS : 
+# NOTES        : 
+# ----------------------------------------------------------------------
+
+sub StripPIPairContents
+{
+    my $self = shift;
+    
+    my ( $sRef, $instruction ) = @_;
+
+    my $insTagRegExp = $instruction . '\s*(([^\s>]+\s*)*)';
+    
+    $$sRef =~ s,<\?$insTagRegExp>.*<\?/$insTagRegExp>,,gs;
+}
+
+
+# ----------------------------------------------------------------------
+# NAME         : StripPIPairTags
+# PURPOSE      : remove a Proc Instruction open and close tag pair
+#                but leave everything between
+# CALLED BY    : 
+# CALLS        : 
+# INPUT        : 
+# RETURNS      : 
+# GLOBALS      : 
+# SIDE-EFFECTS : 
+# NOTES        : 
+# ----------------------------------------------------------------------
+
+sub StripPIPairTags
+{
+    my $self = shift;
+    
+    my ( $sRef, $instruction ) = @_;
+
+    my $insTagRegExp = $instruction . '\s*(([^\s>]+\s*)*)';
+    
+    $$sRef =~ s,<\?/?$insTagRegExp>,,gs;
+}
+
+# ----------------------------------------------------------------------
+# NAME         : 
+# PURPOSE      : 
+#                
+# CALLED BY    : 
+# CALLS        : 
+# INPUT        : 
+# RETURNS      : 
+# GLOBALS      : 
+# SIDE-EFFECTS : 
+# NOTES        : 
+# ----------------------------------------------------------------------
+
+#sub SimpleSubstitutePI
+#{
+#    my $sRef = shift;
+#};
+
+## ----------------------------------------------------------------------
+1;
+

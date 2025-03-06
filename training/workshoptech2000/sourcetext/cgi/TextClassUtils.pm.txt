@@ -1,0 +1,1788 @@
+
+package TextClassUtils;
+
+use strict;
+
+##################################################
+## This module is not Object Oriented
+## It merely contains subroutines used for 
+## serving html template pages
+
+use CGI qw( :standard :html3 escape unescape escapeHTML ); # for access to the html output methods
+use CollsInfo;     # for access to various CollsInfo members
+#use Bookbag;       # for access to various Bookbag members
+use ProcIns;       # for handling processing instructions in general filtering
+use XPatResultSet; # for getting at result set stats info
+use DlpsUtils qw( :DEFAULT );
+use DevUtils;
+use DlpsSession;
+
+## --------------------------------------------------
+## configurable data
+
+my ( $userpath, $userpart ) = &GetDevUsernameFromScript;
+
+
+use vars qw(
+            $gTextClassCgi
+            $gWwCgi
+            $gPageviewerCgi
+            $gAuthSystem
+            $gWebImagesDir
+            $gHelpLink
+            $gAddBookbagItemButton
+            $gRemoveBookbagItemButton
+            $gGoToTOCButton
+            $gGoToTOCButtonHeight
+            $gGoToTOCButtonWidth
+            $gAddBookbagItemButtonHeight
+            $gAddBookbagItemButtonWidth
+           );
+
+$gTextClassCgi  = 'http://' . &DlpsUtils::FindHostName . '/cgi/t/text' . $userpath . '/text-idx' . $userpart;
+$gWwCgi         = 'http://' . &DlpsUtils::FindHostName . '/cgi/t/text' . $userpath . '/ww2-idx' . $userpart;
+$gPageviewerCgi = 'http://' . &DlpsUtils::FindHostName . '/cgi/t/text' . $userpath . '/pageviewer-idx' . $userpart;
+
+
+## need to build link to reauthorize
+$gAuthSystem                 = 'https://login.umdl.umich.edu/enter-password?' ;
+
+
+$gWebImagesDir               = '/t/text' . $userpath . '/images/';
+$gHelpLink                   = '/t/text' . $userpath . '/help.html';
+
+$gAddBookbagItemButton       = 'bbag_add.gif';
+$gRemoveBookbagItemButton    = 'bbag_rem.gif';
+
+$gGoToTOCButton              = 'toc.gif';
+$gGoToTOCButtonHeight        = '21';
+$gGoToTOCButtonWidth         = '83';
+$gAddBookbagItemButtonHeight = '21';
+$gAddBookbagItemButtonWidth  = '83';
+
+#my $gNextArrow               = $gWebImagesDir . 'next_arrow.gif';
+#my $gPrevArrow               = $gWebImagesDir . 'prev_arrow.gif';
+
+
+## --------------------------------------------------
+
+# ----------------------------------------------------------------------
+# NAME         : HandleGeneralProcIns
+# PURPOSE      : use ProcessPIs to substitute Processing Instructions (variables)
+#                in an html template
+# CALLED BY    : 
+# CALLS        : 
+# INPUT        : ProcIns object, reference to string of text, CGI, 
+#                CIO object, $htmlDocRoot, and DlpsSession object
+# RETURNS      : 
+# GLOBALS      : 
+# SIDE-EFFECTS : 
+# ----------------------------------------------------------------------
+
+sub HandleGeneralProcIns
+{
+    my ( $htmlRef, $cgi, $cio, $htmlDocRoot, $dso ) = @_;
+
+    my $pio = new ProcIns;              # create a ProcIns object for use in filtering
+
+    # general substitutions
+    $pio->AddPI( 'TITLE', \&_BuildTitleString, [ $cio ] );
+
+    # eventual subroutine work commented out here; 
+    # for now by using undef and '' it should simply substitute the PI in the template with ''
+    # However, since there is other code in the templates, best is to simply comment out in template
+#    $pio->AddPI( 'BOOKBAG_ITEMS', \&BuildBookBagItemsString, [ $dso ] );
+#    $pio->AddPI( 'BOOKBAG_ITEMS', undef, [ '' ] );
+#    $pio->AddPI( 'BOOKBAG_SEARCH_LINK', \&ChangeNavLink, [ $cgi, $gTextClassCgi, 'page', 'bookbag' ] );
+#    $pio->AddPI( 'BOOKBAG_SEARCH_LINK', undef, [ '' ] );
+
+
+    $pio->AddPI( 'SCRIPT_NAME', undef, [ $ENV{'SCRIPT_NAME'} ] );
+    $pio->AddPI( 'DOC_ROOT', undef, [ $htmlDocRoot ] );
+    
+    
+    # substitutions for Nav links
+    # --------------------------------------------------
+    $pio->AddPI( 'SIMPLE_SEARCH_LINK', \&ChangeNavLink, [ $cgi, $gTextClassCgi, 'page', 'simple' ] );
+    $pio->AddPI( 'PROXIMITY_SEARCH_LINK', \&ChangeNavLink, [ $cgi, $gTextClassCgi, 'page', 'proximity' ] );
+    $pio->AddPI( 'BOOLEAN_SEARCH_LINK', \&ChangeNavLink, [ $cgi, $gTextClassCgi, 'page', 'boolean' ] );
+    $pio->AddPI( 'REFINE_SEARCH_LINK', \&ChangeNavLink, [ $cgi, $gTextClassCgi, 'page', 'boolean', 'subtype', 'refine' ] );
+    $pio->AddPI( 'BIB_SEARCH_LINK', \&ChangeNavLink, [ $cgi, $gTextClassCgi, 'page', 'boolean', 'subtype', 'bib' ] );
+    $pio->AddPI( 'SEARCH_HISTORY_LINK', \&ChangeNavLink, [ $cgi, $gTextClassCgi, 'page', 'history' ] );
+    $pio->AddPI( 'HELP_LINK', undef, [ $gHelpLink ] );
+
+    # --------------------------------------------------
+
+    $pio->AddPI( 'RETURN_TO_RESULTS', \&_BuildReturnToResultsLink, [ $dso ] );
+
+    # --------------------------------------------------
+    $pio->AddPI( 'HIDDEN_REQUESTED_COLLECTIONS', \&BuildHiddenReqColls, [ $cgi, $cio ] );
+    $pio->AddPI( 'HIDDEN_SID', \&BuildHiddenSid, [ $cgi ] );
+    $pio->AddPI( 'NUMBER_OF_COLLECTIONS', undef, [ scalar( $cio->GetReqCollsCount( ) ) ] );
+    $pio->AddPI( 'NUMBER_OF_TEXTS', undef, [ scalar( $cio->GetReqTextsNumber( ) ) ] );
+
+    $pio->AddPI( 'EXT_SIMPLE_SEARCH_FORM_LINK', \&ChangeNavLink, [ $cgi, $gTextClassCgi, 'page', 'simpleext' ] );
+    $pio->AddPI( 'EXT_BOOLEAN_SEARCH_FORM_LINK', \&ChangeNavLink, [ $cgi, $gTextClassCgi, 'page', 'booleanext' ] );
+    $pio->AddPI( 'EXT_PROXIMITY_SEARCH_FORM_LINK', \&ChangeNavLink, [ $cgi, $gTextClassCgi, 'page', 'proximityext' ] );
+
+    # ----------------------------------------------------------------------
+    $pio->AddPI( 'COLLECTION_LIST', \&_BuildCollAndTextList, [ $cgi, $cio ] );
+
+    # --------------------------------------------------
+    $pio->AddPI( 'GENRE_LIST',    \&BuildCategoryList, [ $cio, 'genres' ] );
+    $pio->AddPI( 'GENDER_LIST',   \&BuildCategoryList, [ $cio, 'genders' ] );
+    $pio->AddPI( 'PERIOD_LIST',   \&BuildCategoryList, [ $cio, 'periods' ] );
+    $pio->AddPI( 'LANGUAGE_LIST', \&BuildCategoryList, [ $cio, 'languages' ] );
+
+
+    $pio->AddPI( 'WORDWHEEL_SEARCH_LINK',  \&ChangeNavLink, [ $cgi, $gWwCgi, 'page', 'wwstart' ] );
+
+
+    # send off the pio and text, by ref, to get processed
+    $htmlRef = $pio->ProcessPIs ( $htmlRef ); 
+}
+
+# ----------------------------------------------------------------------
+# NAME         : 
+# PURPOSE      : 
+#                
+# CALLED BY    : 
+# CALLS        : 
+# INPUT        : 
+# RETURNS      : 
+# GLOBALS      : 
+# SIDE-EFFECTS : 
+# NOTES        : 
+# ----------------------------------------------------------------------
+
+sub HandleReAuthLink
+{
+    my ( $htmlRef, $cgi ) = @_;
+
+    my $pio = new ProcIns;              # create a ProcIns object for use in filtering
+
+    # for now 'Re-Authorize' but could be an image....
+    $pio->AddPI( 'RE_AUTH_LINK', \&ReAuthorizeLink, [ $cgi, 'Re-Authorize' ] );
+
+    # send off the pio and text, by ref, to get processed
+    $htmlRef = $pio->ProcessPIs ( $htmlRef ); 
+}
+
+# ----------------------------------------------------------------------
+# NAME         : HandleExtendedPage
+# PURPOSE      : use ProcessPIs to substitute Processing Instructions (variables)
+#                in an html template
+# CALLED BY    : 
+# CALLS        : 
+# INPUT        : ProcIns object, reference to string of text, CGI, CIO objects, arrays
+# RETURNS      : 
+# GLOBALS      : 
+# SIDE-EFFECTS : 
+# ----------------------------------------------------------------------
+
+sub HandleExtendedPage
+{
+     my ( $sRef, $cgi, $cio, 
+          $allGenresRef, $allPeriodsRef, $allLanguagesRef, $allGendersRef ) = @_;
+
+     # for each of these, if there were values coming in on URL, use them for
+     # the <select> defaults, otherwise, use the first of the full array
+     # (did have 
+     #       @gendersRequested =   $cgi->param('genre') ||  ( $$allGenresRef[0] );
+     # but for some reason only the first value of the $cgi->param call for an array was retrieved;
+     # hence the .... if ( ! defined....)
+     my @genresRequested    = $cgi->param('genre');
+     my @gendersRequested   = $cgi->param('gender'); 
+     my @periodsRequested   = $cgi->param('period');
+     my @languagesRequested = $cgi->param('language');
+
+     @genresRequested    = ( $$allGenresRef[0] )           if ( ! defined ( @genresRequested ) );
+     @gendersRequested   = ( $$allGendersRef[0] )          if ( ! defined ( @gendersRequested ) );
+     @periodsRequested   = ( $$allPeriodsRef[0] )          if ( ! defined ( @periodsRequested ) );
+     @languagesRequested = ( $$allLanguagesRef[0] )        if ( ! defined ( @languagesRequested ) );
+          
+
+     my ( @genresDefault, @gendersDefault, @periodsDefault, @languagesDefault );
+
+     # change which are the requested colls based on choices of genres, etc.
+     if ( $cgi->param('updatecolls') )
+     {
+         &RestrictCollsByCategories(
+                                    $cgi, $cio, 
+                                    \@genresRequested, \@gendersRequested, 
+                                    \@periodsRequested, \@languagesRequested,
+                                   );
+
+         if ( grep ( /all/, @genresRequested ) )
+         {         @genresDefault = ( 'all' );      }
+         else
+         {       @genresDefault = @genresRequested;    }
+         if ( grep ( /all/, @gendersRequested ) )
+         {         @gendersDefault = ( 'all' );      }
+         else
+         {       @gendersDefault = @gendersRequested;    }
+         if ( grep ( /all/, @periodsRequested ) )
+         {         @periodsDefault = ( 'all' );      }
+         else
+         {       @periodsDefault = @periodsRequested;    }
+         if ( grep ( /all/, @languagesRequested ) )
+         {         @languagesDefault = ( 'all' );      }
+         else
+         {       @languagesDefault = @languagesRequested;    }
+
+     }
+
+
+     # create a ProcIns object for use in filtering
+     my $pio = new ProcIns;
+     
+      
+     $pio->AddPI( 'GENRE_SELECT', 
+                  \&BuildSelect, 
+                  [ $cgi, 'genre', $allGenresRef, \@genresDefault, 3, 'multiple' ] );
+     $pio->AddPI( 'PERIOD_SELECT', 
+                  \&BuildSelect, 
+                  [ $cgi, 'period', $allPeriodsRef, \@periodsDefault, 3, 'multiple' ] );
+     $pio->AddPI( 'LANGUAGE_SELECT', 
+                  \&BuildSelect, 
+                  [ $cgi, 'language', $allLanguagesRef, \@languagesDefault, 3, 'multiple' ] );
+
+     $pio->AddPI( 'GENDER_SELECT', 
+                  \&BuildSelect, 
+                  [ $cgi, 'gender', $allGendersRef, \@gendersDefault, 3, undef ] );
+
+     $pio->AddPI( 'COLL_LIST_WITH_CHECKBOXES', 
+                  \&BuildCollsListWithCheckboxes, 
+                  [ $cgi, $cio ] );
+     
+     # send off the pio and text, by ref, to get processed
+     $pio->ProcessPIs ( $sRef );
+    
+ }
+
+
+# ----------------------------------------------------------------------
+# NAME         : HandleAdvancedSearchPage
+# PURPOSE      : use ProcessPIs to substitute Processing Instructions (variables)
+#                in an html template
+# CALLED BY    : 
+# CALLS        : 
+# INPUT        : ProcIns object, reference to string of text, CGI, CIO objects
+# RETURNS      : 
+# GLOBALS      : 
+# NOTES        : get list of common regions from CollsInfo object to use to
+#                make pulldowns
+# SIDE-EFFECTS : 
+# ----------------------------------------------------------------------
+
+# 
+#    my $rgn1Pulldown  = &BuildRgnPullDown( $cgi, '1' );    
+#    $$sRef =~ s,\$RGN1_PULLDOWN,$rgn1Pulldown,g;
+
+sub HandleAdvancedSearchPage
+{
+     my ( $sRef, $cgi, $cio ) = @_;
+
+     my @regionList = &GetSearchRegionList ( $cgi, $cio );
+     if ( ! defined ( @regionList ) ||
+        scalar ( @regionList ) <= 0 )  
+     {  @regionList = ( 'full text' );   }
+
+      my $pio = new ProcIns;              # create a ProcIns object for use in filtering
+    
+      $pio->AddPI( 'REGION_SEARCH_SELECT', 
+                   \&BuildSelect, 
+                   [ $cgi, 'rgn', \@regionList, $regionList[0], 1, undef ] );
+ 
+      $pio->AddPI( 'Q1_INPUT', 
+                   \&BuildTextInput, 
+                   [ $cgi, 'q1' ] );
+ 
+      $pio->AddPI( 'Q2_INPUT', 
+                   \&BuildTextInput, 
+                   [ $cgi, 'q2' ] );
+ 
+      $pio->AddPI( 'Q3_INPUT', 
+                   \&BuildTextInput, 
+                   [ $cgi, 'q3' ] );
+ 
+     
+     # send off the pio and text, by ref, to get processed
+     $pio->ProcessPIs ( $sRef );
+    
+ }
+
+# ----------------------------------------------------------------------
+# NAME         : HandleSimplePage
+# PURPOSE      : use ProcessPIs to substitute Processing Instructions (variables)
+#                in an html template
+# CALLED BY    : 
+# CALLS        : 
+# INPUT        : ProcIns object, reference to string of text, CGI, CIO objects
+# RETURNS      : 
+# GLOBALS      : 
+# NOTES        : 
+# SIDE-EFFECTS : 
+# ----------------------------------------------------------------------
+
+sub HandleSimplePage
+{
+    my ( $sRef, $cgi, $cio ) = @_;
+    
+    my $pio = new ProcIns;              # create a ProcIns object for use in filtering
+    
+    $pio->AddPI( 'Q1_INPUT', 
+                 \&BuildTextInput, 
+                 [ $cgi, 'q1' ] );
+    
+    # send off the pio and text, by ref, to get processed
+    $pio->ProcessPIs ( $sRef );
+}
+
+# ----------------------------------------------------------------------
+# NAME         : HandleSearchHistoryPage
+# PURPOSE      : substitute ProcIns with results from routine that builds
+#                a table of search history found in Session
+# CALLED BY    : 
+# CALLS        : 
+# INPUT        : 
+# RETURNS      : 
+# GLOBALS      : 
+# SIDE-EFFECTS : 
+# NOTES        : 
+# ----------------------------------------------------------------------
+
+sub HandleSearchHistoryPage
+{
+    my ( $sRef, $dso, $cgi ) = @_;
+    
+    my $pio = new ProcIns;              # create a ProcIns object for use in filtering
+    
+    $pio->AddPI( 'SEARCH_HISTORY_TABLE', 
+                 \&BuildSearchHistoryTable,
+                 [ $dso, $cgi ] );
+    
+    # send off the pio and text, by ref, to get processed
+    $pio->ProcessPIs ( $sRef );
+}
+
+
+# ----------------------------------------------------------------------
+# NAME         : BuildCollsListWithCheckboxes
+# PURPOSE      : 
+#                
+# CALLED BY    : FilterCollPickPage, 
+# CALLS        : 
+# INPUT        : CGI object, CollsInfo Object
+# RETURNS      : html text
+# GLOBALS      : $gCio
+# SIDE-EFFECTS : 
+# NOTES        : 
+# ----------------------------------------------------------------------
+
+sub BuildCollsListWithCheckboxes
+{
+    my ( $cgi, $cio ) = @_;
+    my $s = '';
+    
+    # first row
+    $s .= $cgi->Tr( {-align => 'left', -bgcolor => '#ffffff'},
+                    [
+                     $cgi->th( [ 
+                                qq{<span class="smallheader">Collection</span>},
+                                qq{<span class="smallheader">Number of Texts</span>}
+                               ] )
+                    ]
+                  );
+    
+    # get all collections, and check the requested ones
+    foreach my $collid ( $cio->GetCollIds( ) )
+      {
+        # get TextClass object for this collection
+        my $tco = $cio->GetTextClassObjByCollId ( $collid );
+        my $collname = $tco->GetValueByKey( 'collname' ) ;
+        
+        my $checked = 0;
+        if ( $cio->CheckRequestedStatus( $collid ) )
+          {   $checked = 1;     }        
+        
+        # turn off escaping so that the already HTML label shows up properly
+        $cgi->autoEscape( undef );
+        $s .= $cgi->Tr( {-bgcolor => '#ffffff'},
+                        [
+                         $cgi->td( 
+                                  [
+                                   qq{<span class="smalltext">} .
+                                   $cgi->checkbox(
+                                                  -name    => 'c',
+                                                  -checked => $checked,
+                                                  -value   => $collid,
+                                                  -label   => $collname,
+                                                  -force   => 'force',
+                                                 ) .
+#      this link, we'll put back in when we have "stand alone" templates and behavior
+#                                   ' [ ' .
+#                                   $cgi->a( 
+#                                           {-href => &BuildLinkToStandAlone( $cgi, $collid ) },
+#                                           'search this collection'
+#                                          ) .
+#                                   ' ]' .
+                                   qq{</span>},
+                                   
+                                   # then the number of texts for this collection
+                                   $tco->GetValueByKey( 'qtytexts' ),
+                                  ]
+                                 )
+                        ]
+                      );
+        $cgi->autoEscape( 1 ); 
+      }
+    
+    return $s;
+}
+
+
+# ----------------------------------------------------------------------
+# these several routines are set up as anonymous routines so that
+# they can be passed to a ProcIns object, which will use them 
+# in DlpsUtils::ProcessPIs
+# ----------------------------------------------------------------------
+
+
+# ----------------------------------------------------------------------
+# NAME         : BuildHiddenReqColls
+# PURPOSE      : create html for hidden vars of c=xyz for each requested coll
+# CALLED BY    : FilterSimplePage, 
+# CALLS        : CGI->hidden
+# INPUT        : CGI and CollsInfo objects
+# RETURNS      : html text
+# GLOBALS      : 
+# SIDE-EFFECTS : 
+# NOTES        : 
+# ----------------------------------------------------------------------
+
+sub BuildHiddenReqColls
+{
+    my ( $cgi, $cio ) = @_;
+    my @reqColls = $cio->GetRequestedCollIds( );
+
+    my $s = $cgi->hidden( -name=>'c',
+                       -default=> \@reqColls
+                      );
+    return $s;
+};
+
+
+# ----------------------------------------------------------------------
+# NAME         : 
+# PURPOSE      : 
+#                
+# CALLED BY    : 
+# CALLS        : 
+# INPUT        : 
+# RETURNS      : 
+# GLOBALS      : 
+# SIDE-EFFECTS : 
+# NOTES        : 
+# ----------------------------------------------------------------------
+
+sub BuildSearchHistoryTable
+{
+    my ( $dso ) = @_;
+
+    my $sho = $dso->GetSearchHistory( ) ;
+    my $s = '';
+
+    if ( ( ! defined ( $sho ) ) ||
+         ( $sho->GetSearchCount( ) <= 0 ) )
+    {
+        $s = qq{<tr>\n<td colspan="4">\nYou have no search history.</td>\n</tr>\n};
+    }
+    else
+    {
+        $sho->InitIterator();
+        my ( $cgi, $english, $colls, $results ) = ( '', '', '', '' );
+
+        my $count = $sho->GetSearchCount( );
+        
+        while ( $sho->NextSearchRecord )
+        {
+            ( $cgi, $english, $colls, $results )  = $sho->GetNextSearchRecord( );
+            
+            $s .= qq{<tr>\n};
+            $s .= qq{<td align="center" valign="top"><font size="-1" face="Arial,sanserif" class="smalltext">$count</font></td>\n};
+            $s .= qq{<td valign="top"><font size="-1" face="Arial,sanserif" class="smalltext">};
+            $s .= $cgi->a(
+                        { href => $cgi->self_url },
+                          $english 
+                         );
+            $s .= qq{</font></td>\n};
+            $s .= qq{<td><font size="-1" face="Arial,sanserif" class="smalltext">$colls</font></td>\n};
+            $s .= qq{<td align="center" valign="top"><font size="-1" face="Arial,sanserif" class="smalltext">$results</font></td>\n};
+            $s .= qq{</tr>\n};
+            
+            $count--;
+        }
+    }
+    
+    
+    return $s;
+};
+
+# ----------------------------------------------------------------------
+# NAME         : BuildHiddenSid
+# PURPOSE      : create html for hidden var with Session ID
+# CALLED BY    : FilterSimplePage, 
+# CALLS        : CGI->hidden
+# INPUT        : CGI object
+# RETURNS      : html text
+# GLOBALS      : 
+# SIDE-EFFECTS : 
+# NOTES        : 
+# ----------------------------------------------------------------------
+
+sub BuildHiddenSid
+{
+    my $cgi = shift;
+    my @a   = ( $cgi->param( 'sid' ) );
+    
+    my $s   = $cgi->hidden( -name=>'sid',
+                            -default=> \@a
+                          );
+    return $s;
+};
+
+# ----------------------------------------------------------------------
+# NAME         : _BuildCollAndTextList
+# PURPOSE      : use CGI create html <tr>...</tr>'s for all colls in the XColl
+#                search pages
+# CALLED BY    : FilterSimplePage, 
+# CALLS        : 
+# INPUT        : CollsInfo Object
+# RETURNS      : html text
+# GLOBALS      : $gCio
+# SIDE-EFFECTS : 
+# NOTES        : 
+# ----------------------------------------------------------------------
+
+sub _BuildCollAndTextList
+{
+    my ( $cgi, $cio ) = @_;
+    my $s = '';
+    
+    $s .= $cgi->Tr( {-align => 'left', -bgcolor => '#ffffff'},
+                    [
+                     $cgi->th( [ qq{<span class="smallheader">Collection</span>},
+                                 qq{<span class="smallheader">Number of Texts</span>}
+                               ] )
+                    ]
+                  );
+
+    # get all requested collections
+    foreach my $collid ( $cio->GetRequestedCollIds( ) )
+    {
+        # get TextClass object for this collection
+        my $tco = $cio->GetTextClassObjByCollId ( $collid );
+        my $collname = $tco->GetValueByKey( 'collname' ) ;
+
+        $s .= $cgi->Tr( {-bgcolor => '#ffffff'},
+                       [
+                        $cgi->td( 
+                                 [
+                                  qq{<span class="smalltext">} .
+                                  $collname .
+                                  
+#      this link, we'll put back in when we have "stand alone" templates and behavior
+#                                  ' [ ' .
+#                                  $cgi->a( 
+#                                        {-href => &BuildLinkToStandAlone( $cgi, $collid ) },
+#                                          'search this collection'
+#                                         ) .
+#                                  ' ]' .
+                                  qq{</span>},
+
+                                  # number of texts for this collection
+                                  $tco->GetValueByKey( 'qtytexts' ),
+                                 ]
+                                )
+                       ]
+                      );
+    }
+    
+    return $s;
+}
+
+# ----------------------------------------------------------------------
+# NAME         : BuildCategoryList
+# PURPOSE      : use CGI create html <tr>...</tr>'s a plain list of a particular category
+#                (e.g., genres, genders, etc.) common to all requested selections
+# CALLED BY    : HandleGeneralProcIns
+# CALLS        : 
+# INPUT        : CollsInfo Object
+# RETURNS      : html text
+# GLOBALS      : 
+# SIDE-EFFECTS : 
+# NOTES        : 
+# ----------------------------------------------------------------------
+
+sub BuildCategoryList
+{
+    my ( $cio, $category ) = @_;
+    my $s = '';
+
+    my @categories = ();
+    
+    if ( $category eq 'genres' )
+    {  
+        @categories =  $cio->GetReqCollsCommonGenres ( );    }
+    elsif ( $category eq 'genders' )
+    {   @categories =  $cio->GetReqCollsCommonGenders ( );    }
+    elsif ( $category eq 'periods' )
+    {   @categories =  $cio->GetReqCollsCommonPeriods ( );    }
+    elsif ( $category eq 'languages' )
+    {   @categories =  $cio->GetReqCollsCommonLanguages ( );    }
+
+    if ( scalar (@categories) < 1 )
+    {    
+        $s = qq{no $category in common across collections};
+    }
+    else
+    {
+        $s = qq{<span class="smalltext">} . 
+          join ( ', ',  @categories ) .
+            qq{</span>} ;
+    }
+    
+    return $s;
+}
+
+# ----------------------------------------------------------------------
+# NAME         : 
+# PURPOSE      : 
+#                
+# CALLED BY    : 
+# CALLS        : 
+# INPUT        : 
+# RETURNS      : 
+# GLOBALS      : 
+# SIDE-EFFECTS : 
+# NOTES        : 
+# ----------------------------------------------------------------------
+
+sub _BuildTitleString
+{
+    my $cio = shift;
+
+    # get all requested collections
+    my @reqColls = $cio->GetRequestedCollIds( ) ;
+    my $title = 'Cross-Collection Search';
+
+    # commented out for now so that title always refers to the generic, pan-collection search
+    
+#    if ( scalar ( @reqColls ) == 1 )
+#    {
+#        my $tco   = $cio->GetTextClassObjByCollId ( $reqColls[0] );        
+#        $title = $tco->GetValueByKey( 'collname' );
+#    }
+    return $title;
+};
+
+# **********************************************************************
+# NAME      : BuildBookBagItemsString
+# PURPOSE   : grab number of bookbag items from session and create an
+#             html string for display
+# CALLED BY : 
+# CALLS     : 
+# INPUT     : DlpsSession info
+# RETURNS   : an html string
+# NOTES     : RIGHT NOW HARD-CODED, needs to access Session
+# **********************************************************************
+
+sub BuildBookBagItemsString
+{
+    my $dso = shift;
+
+    my $bbo;
+    $bbo = $dso->GetBookbag( ) || die;
+    
+    my $s = '';
+
+    my $items = $bbo->GetTotalItems( );
+
+    $s .= qq{your bookbag has };
+    $s .= qq{<strong>$items</strong> };
+    $s .= ( $items == 1 ) ? 
+      'item' :
+        'items';
+    
+    return $s;
+};
+
+
+# ----------------------------------------------------------------------
+# NAME         : ChangeNavLink
+# PURPOSE      : create a query string with new page and other parameters for
+#                use in the nav bar in html templates
+# CALLED BY    : HandleProcessingInstructions
+# CALLS        : CGI->new ( to clone a CGI object )
+# INPUT        : CGI object and an array of parameter, value, parameter, value ...
+# RETURNS      : revised query string for use in URL
+# GLOBALS      : 
+# SIDE-EFFECTS : 
+# NOTES        : 
+# ----------------------------------------------------------------------
+sub ChangeNavLink
+{
+    my $cgi = shift;
+    my $scriptName = shift;
+
+    my @parmArray = @_;
+
+    ## clone the cgi object
+    my $tempCgi = new CGI( $cgi );
+    
+    ## remove params that will be replaced or null
+    ## (browse is being used to trigger stats gathering, but the nav bar
+    ## links should always take you to the "start" of each type of search,
+    ## and those should not be counted for stats purposes)
+    $tempCgi->delete( 'type' );
+    $tempCgi->delete( 'subtype' );
+    $tempCgi->delete( 'page' );
+    $tempCgi->delete( 'browse' );
+    $tempCgi->delete( 'view' );
+    $tempCgi->delete( 'idno' );
+    $tempCgi->delete( 'node' );   
+    $tempCgi->delete( 'size' );
+    $tempCgi->delete( 'start' );
+
+    ## now alter query string and replace
+    my ( $parm, $value ) = ( '', '' );
+    while ( @parmArray )
+    {
+        $parm  = shift ( @parmArray );
+        $value = shift ( @parmArray );
+        $tempCgi->param( $parm, $value );
+    }
+
+    return ( $scriptName . '?' . $tempCgi->query_string );
+
+};
+
+# ----------------------------------------------------------------------
+# NAME         : FilterGuideFrame
+# PURPOSE      : substitute info for Proc Instructions in the "guide frame"
+#                of a results page
+# CALLED BY    : AddPI
+# CALLS        : 
+# INPUT        : ref to array of requested colls
+# RETURNS      : 
+# GLOBALS      : 
+# SIDE-EFFECTS : 
+# NOTES        : 
+# ----------------------------------------------------------------------
+sub FilterGuideFrame 
+{
+    my ( $htmlPageRef, $reqCollsRef, $cio, $cgi, $view ) = @_;
+    
+    # set up ProcIns object
+    my $pio = new ProcIns;
+
+    my @reqColls = $cio->GetRequestedCollIds;
+    if ( scalar ( @reqColls ) == 1 )
+    {
+        $pio->StripPIPairContents ( $htmlPageRef, 'GUIDE_FRAME' );
+    }
+    else
+    {
+        $pio->StripPIPairTags ( $htmlPageRef, 'GUIDE_FRAME' );
+        
+        $pio->AddPI( 'SEARCH_IN_NATURAL_LANGUAGE',
+                     \&FilterNatLangSearch,
+                     [ $reqCollsRef, $cio ] );
+        $pio->AddPI( 'XCOLL_TOTALS',
+                     \&BuildTotalResultsString,
+                     [ $cio ] );
+        $pio->AddPI( 'GUIDE_RESULTS_LINKS',
+                     \&BuildGuideResultsLinks,
+                     [ $reqCollsRef, $cio, $cgi, $view ] );
+        
+        $pio->ProcessPIs( $htmlPageRef );
+    }
+}
+
+
+# ----------------------------------------------------------------------
+# NAME         : BuildTotalResultsString
+# PURPOSE      : create a "X matches in Y records" for the Guide Frame
+#                
+# CALLED BY    : 
+# CALLS        : 
+# INPUT        : 
+# RETURNS      : 
+# GLOBALS      : 
+# SIDE-EFFECTS : 
+# NOTES        : 
+# ----------------------------------------------------------------------
+
+sub BuildTotalResultsString
+{
+    my $cio = shift;
+    
+    my $totalHits    = $cio->GetTotalHits( );
+    my $totalRecords = $cio->GetTotalRecords( );
+    
+    my $s = '';
+    
+    $s .= $totalHits . ' ';
+    $s .= $totalHits == 1 ? 'match' : 'matches';
+    $s .= qq{<br>\n};
+    $s .= $totalRecords . ' ';
+    $s .= $totalRecords == 1 ? 'record' : 'records';
+
+    return $s;
+};
+
+# ----------------------------------------------------------------------
+# NAME         : FilterNatLangSearch
+# PURPOSE      : create a string of English representing the query to substitute
+#                in for the Proc Instruction in the html template
+# CALLED BY    : FilterGuideFrame
+# CALLS        : QueryFactory->NaturalLanguageBaseQuery
+# INPUT        : ref to requested colls, CollsInfo obj
+# RETURNS      : 
+# GLOBALS      : 
+# SIDE-EFFECTS : 
+# NOTES        : 
+# ----------------------------------------------------------------------
+
+sub FilterNatLangSearch
+{
+    my ( $reqCollsRef, $cio ) = @_;
+
+    # if there is at least one collection in the requested collections
+    if ( scalar( @$reqCollsRef ) >= 1 )
+    {
+        # grab only the first collection
+        my $collid = $$reqCollsRef[0];
+        
+        my $tco = $cio->GetTextClassObjByCollId( $collid );
+        
+        my $qf = $tco->GetQueryFactory( $collid );
+        
+        return ( $qf->NaturalLanguageBaseQuery( ) );
+    }
+    else
+    {
+        return '';
+    }
+};
+
+
+
+# ----------------------------------------------------------------------
+# NAME         : BuildGuideResultsString
+# PURPOSE      : create html for a listing of hits in all collections
+#                
+# CALLED BY    : 
+# CALLS        : 
+# INPUT        : 
+# RETURNS      : 
+# GLOBALS      : 
+# SIDE-EFFECTS : 
+# NOTES        : $view used as default named rset name
+# ----------------------------------------------------------------------
+
+sub BuildGuideResultsLinks
+{
+    my ( $reqCollsRef, $cio, $cgi, $view ) = @_;
+
+    my $s = '';
+
+    my $sid = $cgi->param( 'sid' );
+    
+
+    # first the text for the total
+    if ( scalar ( @$reqCollsRef ) > 1)
+    {
+        my $totalRecords = $cio->GetTotalRecords( );
+        
+        # no link here
+        $s .= qq{<p class="smallheader">All Selected Collections</p>\n<dir>\n<li>};
+        $s .= $totalRecords . ' ';
+        $s .= $totalRecords == 1 ? 'record' : 'records';
+        $s .= qq{</li>\n</dir>\n};
+    }
+    
+    # now numbers and a link for each collection
+    # link is the same as what got us here, but with only the one collection
+    foreach my $collid (  @$reqCollsRef )
+    {
+        my $tco      = $cio->GetTextClassObjByCollId( $collid );    
+        my $collName = $tco->GetValueByKey ( 'collname' );
+
+        my $rset     = $tco->GetXPatResultSet( $view );
+        my $records  = $rset->GetMainSubsetResult( $sid );
+        
+        if ( $records )
+        {
+            my $link = $ENV{'SCRIPT_NAME'} . 
+              '?' .
+                &ModifyLinkToOneColl ( $cgi, $collid );
+            
+            $s .= qq{<p class="smallheader">$collName</p>\n<dir>\n<li>};
+            $s .= qq{<a href="$link">$records };
+            $s .= $records == 1 ? 'record' : 'records';
+            $s .= qq{</a></li>\n</dir>\n};
+        }
+        else
+        {
+            $s .= qq{<p class="smallheader">$collName</p>\n<dir>\n<li>};
+            $s .= qq{0 records};
+            $s .= qq{</li>\n</dir>\n};
+        }
+    }
+
+    return $s;
+}
+
+
+# ----------------------------------------------------------------------
+# NAME         : 
+# PURPOSE      : 
+#                
+# CALLED BY    : 
+# CALLS        : 
+# INPUT        : 
+# RETURNS      : 
+# GLOBALS      : 
+# SIDE-EFFECTS : 
+# NOTES        : By setting the cc URL param, this particular collid is
+#                brought into focus for the results frame
+# ----------------------------------------------------------------------
+
+sub ModifyLinkToOneColl
+{
+    my ( $cgi, $collid ) = @_;
+    ## clone the cgi object
+    my $tempCgi = new CGI( $cgi );
+
+    $tempCgi->param( 'start', 1 );
+
+    $tempCgi->delete( 'cc' );
+    $tempCgi->param( 'cc', $collid );
+
+    return $tempCgi->query_string;
+}
+
+# ----------------------------------------------------------------------
+# NAME         : 
+# PURPOSE      : 
+#                
+# CALLED BY    : 
+# CALLS        : 
+# INPUT        : 
+# RETURNS      : 
+# GLOBALS      : 
+# SIDE-EFFECTS : 
+# NOTES        : By setting the cc URL param, this particular collid is
+#                brought into focus for the results frame
+# ----------------------------------------------------------------------
+
+sub BuildLinkToStandAlone
+{
+    my ( $cgi, $collid ) = @_;
+    ## clone the cgi object
+    my $tempCgi = new CGI( $cgi );
+
+    $tempCgi->param( 'start', 1 );
+
+    $tempCgi->delete( 'c' );
+    $tempCgi->param( 'c', $collid );
+
+    $tempCgi->delete( 'cc' );
+    $tempCgi->param( 'cc', $collid );
+
+    if ( $tempCgi->param( 'page' ) =~ m,(.*)ext$, )
+    {
+        $tempCgi->param( 'page', $1 );
+    }
+
+    return $tempCgi->self_url;
+}
+
+
+# ----------------------------------------------------------------------
+# NAME         : RestrictCollsByCategories
+# PURPOSE      : Re-restrict collections based on the genres, genders, etc.
+#                categories that are passed in
+# CALLED BY    : 
+# CALLS        : 
+# INPUT        : 
+# RETURNS      : 
+# GLOBALS      : 
+# SIDE-EFFECTS : Changes CollsInfo object's list of requested objects
+# NOTES        : 
+# ----------------------------------------------------------------------
+
+sub RestrictCollsByCategories
+{
+    my ( $cgi, $cio,
+         $genresRequestedRef, $gendersRequestedRef, $periodsRequestedRef, $languagesRequestedRef,
+       ) = @_;
+
+    # these will hold collids for colls that fit each of these restrictions
+    my @genreCollections    = ();
+    my @periodCollections   = ();
+    my @languageCollections = ();
+    my @genderCollections   = ();
+    
+    # temporarily hold a list of values from a particular coll's category
+    my @temp = ();
+    
+    foreach my $collid ( $cio->GetCollIds( ) )
+    {
+        # get TextClass object for this collection
+        my $tco = $cio->GetTextClassObjByCollId ( $collid );
+
+        # add collid to list of collections that match the genre restriction
+        @temp = $cio->GetCollKeyInfo( $collid, 'genres' );
+        # if 'all' is in there, use all collections (i.e., tack this collection on)
+        if ( grep ( /all/, @$genresRequestedRef ) )
+        {    push ( @genreCollections, $collid );    }
+        # if not 'all', only tack on collection if we have intersection
+        elsif ( &GetIntersection ( $genresRequestedRef, \@temp ) )
+        {    push ( @genreCollections, $collid );    }
+             
+        # add collid to list of collections that match the period restriction
+        @temp =  $cio->GetCollKeyInfo( $collid, 'periods' );
+        if ( grep ( /all/, @$periodsRequestedRef ) )
+        {    push ( @periodCollections, $collid );    }
+        elsif ( &GetIntersection ( $periodsRequestedRef, \@temp ) )
+        {    push ( @periodCollections, $collid );    }
+             
+        # add collid to list of collections that match the language restriction
+        @temp = $cio->GetCollKeyInfo( $collid, 'languages' );
+        if ( grep ( /all/, @$languagesRequestedRef ) )
+        {    push ( @languageCollections, $collid );    }
+        elsif ( &GetIntersection ( $languagesRequestedRef, \@temp ) )
+        {    push ( @languageCollections, $collid );    }
+             
+        # add collid to list of collections that match the genderrestriction
+        @temp = $cio->GetCollKeyInfo( $collid, 'genders' );
+        if ( grep ( /all/, @$gendersRequestedRef ) )
+        {    push ( @genderCollections, $collid );    }
+        elsif ( &GetIntersection ( $gendersRequestedRef, \@temp ) )
+        {    push ( @genderCollections, $collid );    }
+    }
+    
+    # now merge all the matched collections so we have genre-restriction &&
+    # period-restriction && ...
+    my @restrictedColls = GetNWayIntersection ( [
+                                                 \@genreCollections, \@periodCollections,
+                                                 \@languageCollections, \@genderCollections 
+                                                ]
+                                              );
+
+    # set CGI URL so that new restricted colls are the requested ones
+    $cgi->param( 'c', @restrictedColls );
+
+    # re-tag collections in the CollsInfo object to reflect new list
+    # of requested collections
+    foreach my $collid ( $cio->GetCollIds( ) )
+    {
+        $cio->SetRequestedStatus( $collid, 0 );
+        if ( grep ( /$collid/ , @restrictedColls ) )
+        {     $cio->SetRequestedStatus( $collid, 1 );     }
+    }        
+
+}
+
+# ----------------------------------------------------------------------
+# NAME         : GetSearchRegionList
+# PURPOSE      : get the intersection of regions of all requested collections
+#                for the purpose building a <select> for a boolean search
+# CALLED BY    : TextClassUtils::HandleBooleanPage
+# CALLS        : 
+# INPUT        : CGI and CollsInfo objects
+# RETURNS      : a list of region names
+# GLOBALS      : 
+# SIDE-EFFECTS : 
+# NOTES        : 
+# ----------------------------------------------------------------------
+
+sub GetSearchRegionList
+{
+    my ( $cgi, $cio ) = @_;
+    my @listOfArrays = ( );
+    
+    foreach my $collid ( $cio->GetRequestedCollIds( ) )
+    {
+        my @a = $cio->GetCollKeyInfo ( $collid, 'regionsearch' );
+        push ( @listOfArrays, \@a );
+    }
+    
+    my @regionList = &GetNWayIntersection ( \@listOfArrays );
+
+    return @regionList;
+}
+
+
+# ----------------------------------------------------------------------
+# NAME         : BookbagAddRemoveItemButton
+# PURPOSE      : Take in an id, return a scalar that contains
+#                text and links for searches restricted to that text 
+# CALLED BY    : 
+# CALLS        : 
+# INPUT        : 
+# RETURNS      : 
+# GLOBALS      : 
+# SIDE-EFFECTS : 
+# NOTES        :  Was part of __thisTextToolbar in gums-idx.dev
+# ----------------------------------------------------------------------
+########################################################################
+
+sub BookbagAddRemoveItemButton
+{
+    my ( $cgi, $idno, $collid, $bbo ) = @_;
+
+    # create a  cgi object, copied from original so we carry 
+    #along what we need to carry; e.g., session id, etc.
+    my $tempCgi = new CGI ( $cgi );
+    
+    $tempCgi->param( 'bbidno', $idno );
+    $tempCgi->param( 'bbc', $collid );
+
+    my $itemInBookbag = $bbo->IsItemInBookbag( $collid, $idno ) ;
+    
+    my ( $button, $bbAction );
+    if ( $itemInBookbag )
+    {
+        $button = $gRemoveBookbagItemButton;
+        $tempCgi->param( 'bbaction', 'remove' );
+    }
+    else
+    {
+        $button =  $gAddBookbagItemButton;
+        $tempCgi->param( 'bbaction', 'add' );
+    }
+    
+
+    my $link = '';
+    $link .= qq{<a href=\"} . $tempCgi->self_url . qq{\">};
+    $link .= qq{<img src=\"$gWebImagesDir} .
+      qq{$button} .
+        qq{\" height="$gAddBookbagItemButtonHeight" width="$gAddBookbagItemButtonWidth" border="0" vspace="0"></a>};
+    
+    return ( $link );
+}
+
+# ----------------------------------------------------------------------
+# NAME         : BuildGoToTOCButton
+# PURPOSE      : Take in an id, return a scalar that contains
+#                text and links for searches restricted to that text 
+# CALLED BY    : 
+# CALLS        : 
+# INPUT        : 
+# RETURNS      : 
+# GLOBALS      : 
+# SIDE-EFFECTS : 
+# NOTES        :  Was part of __thisTextToolbar in gums-idx.dev
+# ----------------------------------------------------------------------
+########################################################################
+
+sub  BuildGoToTOCButton
+{
+    my ( $cgi, $idno, $collid ) = @_;
+
+    # copy and clean up cgi object
+    # so as to carry along things like qNs ( we will need to count or highlight them later)
+    my $tempCgi = new CGI ( $cgi );
+
+    $tempCgi->delete( 'start' );
+    $tempCgi->delete( 'size' );
+
+    # need for creating proper search to get pages with matches when doing view=header
+    # changing to new param name so that type does not confuse the main script
+    # or our statistics gathering system
+    my $pageSearchType = $tempCgi->param( 'type' );
+    $tempCgi->param( 'pagesearch', $pageSearchType );
+    $tempCgi->delete( 'type' );
+
+    $tempCgi->param( 'view', 'header' );
+    $tempCgi->param( 'idno', $idno );
+    $tempCgi->param( 'c', $collid );
+    $tempCgi->param( 'cc', $collid );
+
+    # carry along original session id
+    $tempCgi->param( 'sid', $cgi->param( 'sid' ) );
+    
+    
+    my $link = '';
+    $link .= qq{<a href=\"} . $tempCgi->self_url . qq{\">};
+    
+    $link .= qq{<img src=\"$gWebImagesDir} .
+      qq{$gGoToTOCButton} .
+        qq{\" height="$gGoToTOCButtonHeight" width="$gGoToTOCButtonWidth" border="0" vspace="0">};
+    $link .= qq{</a>};
+    
+    return ( $link );
+}
+
+# ----------------------------------------------------------------------
+# NAME         : 
+# PURPOSE      : 
+#                
+# CALLED BY    : 
+# CALLS        : 
+# INPUT        : 
+# RETURNS      : 
+# GLOBALS      : 
+# SIDE-EFFECTS : 
+# NOTES        : 
+# ----------------------------------------------------------------------
+
+sub FilterPBs
+{
+    my ( $sRef, $collid, $idno, $cgi ) = @_;
+    
+    # if we are coming from a cross-collection/generic textclass search,
+    # the xc parameter on the URL should be set. If so, use it
+    my $xcoll = $cgi->param( 'xc' );
+    
+
+    ## --------------------------------------------------
+    ## Handling of PB tags and possible links to page images
+    ## PB tags have a REF if there is a corresponding page image
+    ## They are of the form:
+    ## <PB REF="00000550.tif" SEQ="0550" RES="600dpi" FMT="TIFF5.0" FTR="UNSPEC" N="183">
+
+    # build links for those PBs that have REFs
+    $$sRef =~ s,<PB REF=\"([^\"]*)\" SEQ=\"([^\"]*)\" RES=\"([^\"]*)\" FMT=\"([^\"]*)\" FTR=\"([^\"]*)\" N=\"([^\"]*)\">,</p><hr width="10%"><center>Page $6<a href="$gPageviewerCgi\?c=$collid\&idno=$idno\&seq=$2\&xc=$xcoll"> <span class="smalltext">view page image</span></a></center><p>,gs;
+
+    # now PBs that don't have REFs
+    $$sRef =~ s,<PB[^>]*N=\"([^\"]+)\"[^>]*>,</p><hr width="10%"><center>Page $1</center><p>,gs;
+    
+
+}
+
+# ----------------------------------------------------------------------
+# NAME         : 
+# PURPOSE      : 
+#                
+# CALLED BY    : 
+# CALLS        : 
+# INPUT        : 
+# RETURNS      : 
+# GLOBALS      : 
+# SIDE-EFFECTS : 
+# NOTES        : 
+# ----------------------------------------------------------------------
+
+sub BuildFisheyeString
+{
+    my ( $cgi, $rset ) = @_;
+
+    my $sliceSize = $cgi->param( 'size' );
+    my $start     = $cgi->param('start');
+  
+    my $totalMatches   = $rset->GetTotalMatches ( );
+
+    my $s = '';
+
+    #change logic in routine to use start not slice
+    $s .= &_BuildMatchesString( $start, $sliceSize, $totalMatches );
+    $s .= &_BuildFisheyeLinks( $start, $totalMatches, $sliceSize, $cgi );
+    
+    return $s;
+}
+
+# ----------------------------------------------------------------------
+# NAME         : Filter_NOTEn_NotesForText
+# PURPOSE      : Replace <NOTE1|2|3...> tags with a text anchor and an <a> tag
+# CALLED BY    : Collection sub-class method ::TextFilter for those collections
+#                that have this type of note
+# CALLS        : 
+# INPUT        : 
+# RETURNS      : 
+# GLOBALS      : 
+# SIDE-EFFECTS : 
+# NOTES        : 
+# ----------------------------------------------------------------------
+
+sub Filter_NOTEn_NotesForText
+{
+}
+
+# ----------------------------------------------------------------------
+# NAME         : Filter_PTR_NotesForText
+# PURPOSE      : Replace <PTR> tags with a text anchor and an <a> tag
+# CALLED BY    : Collection sub-class method ::TextFilter for those collections
+#                that have this type of note
+# CALLS        : 
+# INPUT        : 
+# RETURNS      : 
+# GLOBALS      : 
+# SIDE-EFFECTS : 
+# NOTES        : 
+# ----------------------------------------------------------------------
+
+sub Filter_PTR_NotesForText
+{
+    my ( $coll, $sRef ) = @_;
+
+    # All <PTR> tags have TARGET and N attributes.  They point to in general
+    # to <P ID=blah>, e.g.  
+    # <PTR TARGET="T01010-1" ID="SRCT01010-1" N="1" TYPE="vn">
+    # <P N="1" TARGET="SRCT01010-1" ID="T01010-1" TYPE="vn">
+    # ID and TYPE may not always appear
+
+    while ( $$sRef =~ s,<PTR TARGET=\"([^\"]*?)\"( ID=\"[^\"]*?\")? N=\"([^\"]*?)\"( TYPE=\"[^\"]*?\")?>,<sp0t>,s ) 
+    {
+        my $target = $1;
+        my $ptrN   = $3;
+        
+	my $href = qq{href="$ENV{'SCRIPT_NAME'}\?id=$target\&view=trgt\&c=$coll\&target=\"notes\""};
+	my $name = qq{name="ref.$target"};
+	
+        $$sRef =~ s,<sp0t>, <sup><a $name $href>$ptrN</a></sup> ,;
+    }
+}
+
+# ----------------------------------------------------------------------
+# NAME         : 
+# PURPOSE      : 
+#                
+# CALLED BY    : 
+# CALLS        : 
+# INPUT        : 
+# RETURNS      : 
+# GLOBALS      : 
+# SIDE-EFFECTS : 
+# NOTES        : 
+# ----------------------------------------------------------------------
+
+sub _BuildFisheyeLinks
+{
+    my ( $focus, $hits, $interval, $cgi ) = @_;
+
+    my $factor = 2;
+
+    my $firstStartPoint = 1;
+    
+    my ( $x, $y );
+    $x = $focus;
+    $y = 0;
+
+    my @a;
+
+    my $rightDistance = $hits - $focus;
+    my $leftDistance = $focus - $firstStartPoint;
+        
+    if ( $rightDistance == 0 )
+    {    $rightDistance = 1;   }
+        
+    
+    if ( $leftDistance == 0 )
+    {    $leftDistance = 1;   }
+        
+    
+    # definitely include next "slice"
+    push ( @a, $interval );
+    
+    my $basePercent = $interval / $rightDistance;
+    for ( $x = $basePercent; $y < $hits; $x = $x * $factor )
+    {
+        $y = $y + ( $x * $rightDistance );
+        $y = int ( $y );
+        push ( @a, $y );  
+    }
+    
+    # now do left side
+    $x = $focus;
+    $y = 0;
+    $basePercent = $interval / $leftDistance;
+    for ( $x = $basePercent; $y > $firstStartPoint; $x = $x * $factor )
+    {
+        $y += $y - ( $x * $leftDistance );
+        $y = int ( $y );
+        push ( @a, $y );  
+    }
+
+    # duplicate the numbers but negative to get a mirror image 
+    # of the parabolic curve away from the starting number
+    my @b = map { 0 - $_ } @a ;  
+    push ( @a , @b );
+    
+    # add 0, so that when $focus is added to all, there exists in the
+    # list a number for the current slice
+    push ( @a, 0 );
+
+    # get actual numbers by adding focus to all numbers
+    @a = map { $_ + $focus  }  @a;
+    
+    my ( @linkNumbersArray, $linkNumber );
+
+    foreach $linkNumber ( @a )
+    {
+        if ( $linkNumber >= $firstStartPoint  &&
+             $linkNumber <= $hits )
+        {
+            push ( @linkNumbersArray, $linkNumber );
+        }
+    }
+    
+    # build up ends of slices
+    # always include the focus
+    push ( @linkNumbersArray, $focus);
+    
+    # always include the first "slice"
+    push ( @linkNumbersArray, $firstStartPoint);  
+    
+    # sort
+    &DlpsUtils::SortUniquifyList ( \@linkNumbersArray, 'numeric' );
+    
+    my $s = '';
+    my ( @linksArray, $link );
+    
+    # make links for each number in the array
+    foreach $linkNumber ( @linkNumbersArray )
+    {
+        if ( $linkNumber == $focus )
+        {  $link = qq{<span class="hilite">$linkNumber</span>};   }
+        
+        else
+        {
+            my $tempCgi = new CGI( $cgi );
+            $tempCgi->param( 'start', $linkNumber );
+#            $tempCgi->delete( 'slice' );
+            
+            $link = $tempCgi->a( 
+                              {-href => $tempCgi->self_url },
+                                $linkNumber
+                               );
+        }
+        
+        push ( @linksArray, $link );
+    }
+    
+    $s = join(
+              '&nbsp;|&nbsp;',
+               @linksArray
+             );
+
+    return $s
+}
+
+
+# ----------------------------------------------------------------------
+# NAME         : 
+# PURPOSE      : 
+#                
+# CALLED BY    : 
+# CALLS        : 
+# INPUT        : 
+# RETURNS      : 
+# GLOBALS      : 
+# SIDE-EFFECTS : 
+# NOTES        : 
+# ----------------------------------------------------------------------
+
+sub _BuildMatchesString
+{
+    my ( $start, $sliceSize, $totalMatches ) = @_;
+    my $s = '';
+    
+    my $end = $start + $sliceSize - 1;
+    
+    if ( $end > $totalMatches )
+    {
+        $end = $totalMatches;
+    }
+    
+    my $term;
+    if ( $totalMatches == 1 )
+    {    $term = q{match};    }
+    else 
+    {    $term = q{matches};   }
+    
+
+    if ( $start != $end )
+    {
+        $s .= qq{$start to $end of $totalMatches $term};
+    }
+    else
+    {   $s = qq{$start of $totalMatches $term};   }
+    # --------------------------------------------------
+    
+    $s .= "<br>\n";
+    return $s;
+}
+
+
+# ----------------------------------------------------------------------
+# NAME         : 
+# PURPOSE      : 
+#                
+# CALLED BY    : 
+# CALLS        : 
+# INPUT        : 
+# RETURNS      : 
+# GLOBALS      : 
+# SIDE-EFFECTS : 
+# NOTES        : 
+# ----------------------------------------------------------------------
+
+sub BuildPrevNextHitsLink
+{
+    my ( $cgi, $totalMatches, $direction ) = @_;
+    
+    my $interval  = $cgi->param( 'size' );
+    my $start     = $cgi->param('start');
+
+    my $s = '';
+    my $image = '';
+
+    my $tempCgi = new CGI( $cgi );
+    
+    if ( $direction eq 'prev' )
+    {
+        my $prevStart = $start - $interval;
+        
+        if ( ( $prevStart ) >= 1 )
+        {  
+            $tempCgi->param( 'start', $prevStart );    
+#            $image = $gPrevArrow;
+            $s .= $cgi->a( 
+                        {-href => $tempCgi->self_url },
+#                         qq{<img src=\"$image\" border="0">}
+                          'Prev'
+                         );
+        }
+    }
+    
+    elsif ( $direction eq 'next' )
+    {
+        my $nextStart =  $start + $interval;
+        if ( $totalMatches > $nextStart  )    
+        {
+            $tempCgi->param( 'start', $nextStart );   
+#            $image = $gNextArrow;
+            $s = $cgi->a( 
+                       {-href => $tempCgi->self_url },
+#                         qq{<img src=\"$image\" border="0">}
+                         'Next'
+                        );
+        }
+    }
+    
+    return $s;
+}
+
+# ----------------------------------------------------------------------
+# NAME         : 
+# PURPOSE      : 
+#                
+# CALLED BY    : 
+# CALLS        : 
+# INPUT        : 
+# RETURNS      : 
+# GLOBALS      : 
+# SIDE-EFFECTS : 
+# NOTES        : 
+# ----------------------------------------------------------------------
+
+sub BuildEnglishListOfCollTitles
+{
+    my ( $reqCollsRef, $cio ) = @_;
+    my @collNames;
+    
+    foreach my $collid (  @$reqCollsRef )
+    {
+        my $tco      = $cio->GetTextClassObjByCollId( $collid );    
+        my $collName = $tco->GetValueByKey ( 'collname' );
+
+        push ( @collNames, $collName );
+    }
+    return join ( q{, } , @collNames );
+}
+
+
+# ----------------------------------------------------------------------
+# NAME         : 
+# PURPOSE      : 
+#                
+# CALLED BY    : 
+# CALLS        : 
+# INPUT        : 
+# RETURNS      : 
+# GLOBALS      : 
+# SIDE-EFFECTS : 
+# NOTES        : copied from gums-idx.dev
+# ----------------------------------------------------------------------
+
+sub StripAllRSetCruft 
+{
+    my($sRef) = shift;
+    $$sRef =~ s,<(Start|End|Size)>\d+</(Start|End|Size)>,,g;
+    $$sRef =~ s,</?(RSet|Raw)>,,g;
+}
+
+
+# ----------------------------------------------------------------------
+# NAME         : 
+# PURPOSE      : 
+#                
+# CALLED BY    : 
+# CALLS        : 
+# INPUT        : 
+# RETURNS      : 
+# GLOBALS      : 
+# SIDE-EFFECTS : 
+# NOTES        : 
+# ----------------------------------------------------------------------
+
+sub MakeButtonLinkFromDivT
+{
+    my ( $divResult, $direction, $coll ) = @_;
+
+    my $linkText;
+
+    if     ( $direction eq 'prev') 
+    {    $linkText = qq{Previous Section} ;    }
+    elsif ( $direction eq 'next') 
+    {    $linkText = qq{Next Section};    }
+    
+    my $link = '';
+    
+    $divResult =~ m,<DIV(\d+) NODE=\"([^\"]*?)\",;
+    my $div = 'div' . $1;
+    my $node = $2 ;
+
+    my $tempCgi = new CGI( "" );
+    $tempCgi->param( 'rgn', $div );
+    $tempCgi->param( 'node', $node );
+    $tempCgi->param( 'view', 'text' );
+    $tempCgi->param( 'c', $coll );
+    
+    $link = qq{<span class="smalltext">} .
+      qq{<a href=\"} . 
+        $ENV{'SCRIPT_NAME'} . '?' . $tempCgi->query_string .
+          qq{\">$linkText</a>} .
+            qq{</span>};
+
+    return $link;
+    
+}
+
+# ----------------------------------------------------------------------
+# NAME         : ReAuthorizeLink
+# PURPOSE      : Build a (possibly empty) re-authorization link
+#                
+# CALLED BY    : PIO mechanism
+# CALLS        : 
+# INPUT        : $cgi, Text of link
+# RETURNS      : <a href=...>
+# GLOBALS      : None
+# SIDE-EFFECTS : NONE
+# NOTES        : if the user has been to the auth system page, then there
+#                will be value for ENV var "USERID", otherwise not
+# ----------------------------------------------------------------------
+
+sub ReAuthorizeLink
+{ 
+    my ( $cgi, $text ) = @_;
+    my $s;
+    
+    # If USERID has a value, user has been through the authentication page
+    if ( defined $ENV{ 'USERID' } ) 
+    {
+        $s = '&nbsp;' ;
+    }
+    else
+    {
+        $s = qq{<a href=\"} . $gAuthSystem . $cgi->self_url . qq{\">} . $text . qq{</a>};
+    }
+    
+    if ( $ENV{'DEBUG'} && ( $ENV{'DEBUG'} eq 'all' || $ENV{'DEBUG'} eq 'reauth' ))
+    {
+	print( qq{<p>ReAuthorize Link = $s</p>\n} );
+	print( qq{<p>USERID = <$ENV{ 'USERID' }></p>\n} );
+    }
+    
+    return $s;
+}
+
+
+# ----------------------------------------------------------------------
+# NAME         : 
+# PURPOSE      : 
+#                
+# CALLED BY    : 
+# CALLS        : 
+# INPUT        : 
+# RETURNS      : 
+# GLOBALS      : 
+# SIDE-EFFECTS : 
+# NOTES        : 
+# ----------------------------------------------------------------------
+
+sub SetUpDefaultStartSizeParams
+{
+    my ( $cgi, $defaultStart, $defaultSliceSize ) = @_;
+    
+    if ( !( $cgi->param( 'start' ) ) )
+    {   $cgi->param ( 'start', $defaultStart );    }
+    
+    if ( !( $cgi->param( 'size' ) ) )
+    {   $cgi->param ( 'size', $defaultSliceSize );    }
+    
+}
+
+# ----------------------------------------------------------------------
+# NAME         : 
+# PURPOSE      : 
+#                
+# CALLED BY    : 
+# CALLS        : 
+# INPUT        : 
+# RETURNS      : 
+# GLOBALS      : 
+# SIDE-EFFECTS : 
+# NOTES        : 
+# ----------------------------------------------------------------------
+
+sub _BuildReturnToResultsLink
+{
+    my $dso = shift;
+    my @parmArray = @_;
+    
+    my $link = '';
+    
+    my $sho = $dso->GetSearchHistory( );
+    
+    my $url = $sho->GetLastSliceUrl( );
+    
+    if ( $url )
+    {
+        ## use any other PI params passed in for <A> tag
+        my $attribList = '';
+        foreach my $parmHashRef ( @parmArray )
+        {
+            foreach my $parm ( keys ( %$parmHashRef ) )
+            {
+                $attribList .= qq{ $parm\=}. $$parmHashRef{ $parm };
+            }
+        }
+        
+        $link = qq{<span class="smalltext">} .
+          qq{<a href="$url"$attribList>Return to search results</a>} .
+            qq{</span><br>\n};
+    }
+    return $link;
+}
+
+
+# **********************************************************************
+# **********************************************************************
+
+1;

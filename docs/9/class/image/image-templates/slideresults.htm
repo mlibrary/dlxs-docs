@@ -1,0 +1,66 @@
+<HTML>
+<HEAD>
+   <TITLE>Results: <?INSERT "nav:collname"></TITLE>
+</HEAD>
+<BODY BGCOLOR="#ffffff" ALINK="#000000" VLINK="#0000ff">
+
+
+<P><font="-1">Note: this page is an example only.</font><BR><BR><BR>
+
+
+<CENTER><FONT FACE="Helvetica">&nbsp;&nbsp;&nbsp;</FONT><TABLE BORDER=1 BGCOLOR="#FFFFFF" CELLSPACING=5 CELLPADDING=5>
+   <TR>
+      <TD VALIGN=bottom>
+         <CENTER><A HREF="<?INSERT "nav:prev">"><FONT SIZE="-1" FACE="Helvetica"><STRONG>PREVIOUS</STRONG></FONT></A>&nbsp;|&nbsp;
+         <A HREF="<?INSERT "nav:next">"><FONT SIZE="-1" FACE="Helvetica"><STRONG>NEXT</STRONG></FONT></A><BR>
+         </CENTER>
+      </TD>
+	</TR>	
+         <?BEGIN "repeatingresultsformat">
+         <TR>
+            <TD>
+               <CENTER>  
+               <STRONG>&nbsp;</STRONG><A HREF="<?INSERT "nav:details.html">"><IMG SRC="<?INSERT "media:quality=small:format=sid">" ALIGN=bottom></A><BR>
+               <A HREF="<?INSERT "nav:details.html">"><?INSERT "categ:name=COL.TI"></A><BR>
+               <FONT SIZE="-1"><?INSERT "categ:name=COL.CR"></FONT>
+	       <BR><FONT SIZE=-3><?INSERT "categ:name=COL.CL"></FONT>
+               </CENTER>
+            </TD>
+        </TR>
+        <?END "repeatingresultsformat">
+   <TR>
+      <TD VALIGN=bottom BGCOLOR="#FFFFFF">
+         <CENTER><FONT SIZE="-1" FACE="Helvetica"><STRONG><?INSERT "nav:slicestart"></STRONG></FONT>
+         <FONT SIZE="-1" FACE="Helvetica"> of </FONT><STRONG>
+         </STRONG><FONT SIZE="-1" FACE="Helvetica"><STRONG><?INSERT "nav:totalhits"></STRONG></FONT>
+         |&nbsp; <A HREF="<?INSERT "nav:text">"><FONT SIZE="-1" FACE="Helvetica">TEXT LIST</FONT></A>&nbsp;|&nbsp;<A HREF="<?INSERT "nav:thumbnail">"><FONT SIZE="-1" FACE="Helvetica">THUMBNAILS</FONT></A>&nbsp;|&nbsp;<A HREF="<?INSERT "nav:newsearch">"><FONT SIZE="-1" FACE="Helvetica">NEW SEARCH</FONT></A>
+         
+         <HR>
+         
+         <FONT SIZE="-1" FACE="Helvetica">JUMP TO <?INSERT "nav:fisheye"></FONT></CENTER>
+      </TD>
+   </TR>
+</TABLE>
+
+
+<TABLE BORDER=0 CELLPADDING=5 CELLSPACING=5>
+   <TR>
+      <TD>
+         <CENTER><h3>New Collection</h3></CENTER>
+      </TD>
+   </TR>
+</TABLE>
+
+
+
+</CENTER>
+<br>
+<br>
+<br>
+<br>
+<P><align="center"><font size="4" face="Helvetica">To return to <a href="../image-templates.htm">Template Documentation</a>.</font></center>
+
+
+</BODY>
+</HTML>
+

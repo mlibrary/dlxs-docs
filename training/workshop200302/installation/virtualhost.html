@@ -1,0 +1,50 @@
+  <HTML>
+    <HEAD>
+      <TITLE>Virtual Host</TITLE>
+      <LINK REL="stylesheet" HREF="../styles.css" TYPE="text/css"></LINK>
+    </HEAD>
+    <BODY CLASS="mainpalette" LEFTMARGIN="10" TOPMARGIN="10" MARGINWIDTH="10" MARGINHEIGHT="10">
+      <H1>Example Apache virtual host configuration</H1>
+        <BLOCKQUOTE>
+          <PRE>
+&lt;VirtualHost 141.211.175.38:80>
+  ServerName user01.ws.umdl.umich.edu
+
+  DocumentRoot          /l1/workshop/user01/dlxs/web
+  ScriptAlias   /cgi/   /l1/workshop/user01/dlxs/cgi/
+
+  SetEnv DLXSROOT       /l1/workshop/user01/dlxs
+  SetEnv REMOTE_USER    user01
+  SetEnv USERID         user01
+  UnsetEnv DLPS_DEV
+
+  &lt;Directory /l1/workshop/user01/dlxs/cgi/b/bib>
+    SetEnv AUTHZD_COLL  :amverse-bib:samplebc:
+    SetEnv PUBLIC_COLL  :
+  &lt;/Directory>
+
+  &lt;Directory /l1/workshop/user01/dlxs/cgi/i/image>
+    SetEnv AUTHZD_COLL  :
+    SetEnv PUBLIC_COLL  :sampleic:workshopic:
+  &lt;/Directory>
+
+  &lt;Directory /l1/workshop/user01/dlxs/cgi/t/text>
+    SetEnv AUTHZD_COLL  :moajrnl:moa:sampletc:workshoptc:
+    SetEnv PUBLIC_COLL  :
+  &lt;/Directory>
+
+  &lt;Directory "/l1/workshop/user01/dlxs/cgi/c/collmgr">
+    AuthName "DLXS collection management"
+    AuthType Basic
+
+    AuthUserFile conf/htpasswd.dlxs
+
+    Require user dlxsadm
+  &lt;/Directory>
+&lt;/VirtualHost>
+          </PRE>
+        </BLOCKQUOTE>
+
+    </BODY>
+  </HTML>
+  

@@ -1,0 +1,58 @@
+<?xml version="1.0"?>
+
+<!-- SPO Editorial Services                  -->
+<!-- automatically-generated XML header file -->
+
+<?xml-stylesheet href="../../pre11-dlxsdocs.xsl" type="text/xsl"?>
+<!DOCTYPE DLPSDOC PUBLIC "-//UM-DLPS//DTD DLPS Publications//EN" "http://docs.umdl.umich.edu/dlps/docs/dlpsdocs.dtd">
+<DLPSDOC>
+<TITLE>About the DLXS Directory  Structure</TITLE>
+<HEADER>
+<JOURNAL>DLXS Documentation</JOURNAL>
+<PUBDATE>2002-06-25 16:27:55 EDT</PUBDATE>
+<AUTH1>Pagliere, Alan</AUTH1>
+<AUTH2></AUTH2>
+<DOCTITLE>About the DLXS Directory  Structure</DOCTITLE>
+<VOL>intro</VOL>
+<ISS></ISS>
+<FILE>dlxsdocs-dlxs-dirstruct</FILE>
+</HEADER>
+<BODY>
+<BHEAD>DLXS Directory Structure</BHEAD>
+<DIV1>
+<H1>Overview</H1>
+<P>This document describes the recommended directory structure for all DLXS files. If you want to get up and running quickly, follow the recommended directory structures described here. This structure will be used by default when you install DLXS software. [NB: examples that follow use <B>bold</B> to designate portions that reflect potential choices in your local implementation.]</P>
+<P>If you want to use a different structure, please read <B>all</B> the documentation here so that your decision is an informed one. Much more detail is given in the <A HREF="http://docs.umdl.umich.edu/arch/general/directory-conventions.xml">DLPS Directory Conventions</A> page.</P>
+ <P>XPAT and other software used by DLXS should be installed by the sysadmin wherever s/he decides is best.</P>
+<DL>
+<DT><B>DLXSROOT<A NAME="dlxsrootenv"></A></B></DT>
+<DD>All middleware files are to be installed under one main directory on your server that can be anywhere you wish. The environment variable DLXSROOT should be set to the full directory path, should be configured in your web server configuration, and should be set in the UNIX shell environments of anyone who will be working with DLXS. DLXS isntallation will provide an example Apache web server configuration that sets the DLXSROOT variable properly. Consult with your system administrator to set the variable in users' UNIX environments.<BR/>
+In this document, we will assume the value of the DLXSROOT environment variable is <TT>/dlxs</TT>.</DD>
+<DT><B>DLXSDATAROOT Environment Variable<A NAME="dlxsdatarootenv"></A></B></DT>
+<DD>If you decide to keep your data (SGML/XML) in a directory outside the $DLXSROOT directory, you can create and set the $DLXSDATAROOT environment variable to point to that directory. The middleware will check the DLXSDATAROOT first, and if it is not set, it will fallback to use the $DLXSROOT directory to find the data in its <TT>obj</TT> subdirectory.</DD>
+<DT><B>The CGI Directory</B></DT>
+<DD><TT>/<B>dlxs</B>/cgi/<B>c/class</B>/</TT><BR/>
+In our example, this would be <TT>/dlxs/cgi/t/text</TT>. This directory holds all the class-specific middleware programs, their configuration files (if any), and some Text Class specific Perl class modules.</DD>
+<DT><B>The lib (library) directory</B></DT>
+<DD><TT>/<B>dlxs</B>/lib/</TT><BR/> This directory holds all the Perl <A HREF="../program/dlxs-libmodules.xml">library modules</A> that are DLXS specific.</DD>
+<DT><B>The <I>class</I> web directory</B></DT>
+<DD><TT>/<B>dlxs</B>/web/<B>c/class</B>/</TT><BR/>In our example (and for Text Class), this would be <TT>/dlxs/web/t/text</TT>.  This directory holds all the HTML templates (*.tpl) used by the middleware to create HTML pages for delivery for the given class. These templates are used for the class-level, cross collection interface and, for those collections that do not have their own specific templates, these are used as well. (There may also be other files in certain collection specific web directories for those collections that need a different look and feel or extra functionality. See <A HREF="../ui/dlxs-templates.xml">Templates</A>). Another point to note is that the class-level css file (in this case <TT>textclass.css</TT>) in this directory is linked to by all templates. Templates in the collection specific directories, if any, may also link to their own collection-specific css files.</DD>
+<DT><B>The <I>Collection</I> web directory</B></DT>
+<DD><TT>/<B>dlxs</B>/web/c/collid</TT><BR/>
+In our example, for the collection ID "voltaire," this would be <TT>/dlxs/web/v/voltaire</TT>. Since the <TT>voltaire</TT> collection requires a different look for some of its HTML pages, this directory holds all the HTML templates (*.tpl) used by the middleware to create HTML pages for delivery for this collection. A collection-specific directory would likely contain a home page and a css file that can give the specific collection a specific and different look. </DD>
+<DT><B>The Data Directory</B></DT>
+<DD><TT>/<B>dlxs</B>/obj/<B>c/collid</B></TT> or <TT>/<B>dlxs</B>/obj/<B>i/d/e/identifier</B></TT><BR/>
+In our example (for "voltaire" or for the item/document id "aas3691") this would be <TT>/dlxs/obj/v/voltaire</TT> or <TT>/dlxs/obj/a/a/s/aas3691</TT>. This directory holds the actual encoded data and associated images for an entire collection (e.g., "voltaire") or a volume in a collection ("aas3691"). </DD>
+<DT><B>The indexes directory</B></DT>
+<DD><TT>/<B>dlxs</B>/idx/c/collid</TT><BR/>
+In our "voltaire" example, this would be <TT>/dlxs/idx/v/voltaire</TT>. This directory holds the XPAT indexes of the encoded text data.</DD>
+<DT><B>The CSV database</B></DT>
+<DD><TT>/<B>dlxs</B>/misc/db</TT><BR/>This directory contains the CSV version, if you are using CSV, of the collection and groups database. If you are using another database store (e.g., Oracle or MySQL), then this directory is not used. See <A HREF="../collmeta/dlxs-colldatabases.xml">Collection and Group Information Databases</A></DD>
+<DT><B>The map files</B></DT>
+<DD><TT>/<B>dlxs</B>/misc/<B>c/class</B>/maps</TT><BR/>This directory contains the map files needed by the class in question. See <A HREF="../collmeta/dlxs-maps.xml">Maps</A></DD>
+<DT><B>The inline images for text collections</B></DT>
+<DD><TT>/<B>dlxs</B>/img/<B>c/collid</B></TT><BR/>This directory contains any inline images in the collection in question.  The web directory /<B>dlxs</B>/web/<B>c/collid</B>/ will have a subdirectory named "images" that is symlink-ed to this directory.</DD>
+</DL>
+</DIV1>
+</BODY>
+</DLPSDOC>

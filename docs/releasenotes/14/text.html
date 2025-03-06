@@ -1,0 +1,608 @@
+
+==========================================================
+<H4>web/t/text</H4>
+
+<UL>
+<LI> accesspolicy.html
+<UL>
+ <LI>Put in draft policy developed by kshawkin,
+                makleinm, mbonn, and pwillett.</LI>
+ <LI>Changed wording to match policy as
+                approved by LDG.</LI>
+ <LI>Made other change from LDG.</LI>
+ <LI>Changed fair use link to copyright.umich.edu,
+                as requested by LDG.</LI></UL></LI>
+</UL>
+<UL>
+<LI> browse.xml
+<UL>
+ <LI>added browseextra.xsl inc</LI>
+ <LI>added browseextra.xsl to wrong xml</LI></UL></LI>
+</UL>
+<UL>
+<LI> clipviewer.xml
+<UL>
+ <LI>added some xsl incl</LI></UL></LI>
+</UL>
+<UL>
+<LI> header.xsl
+<UL>
+ <LI>added code to allow for print on demand
+                links to amazon.com from podPermittedItems</LI></UL></LI>
+</UL>
+<UL>
+<LI> htmlhead.xsl
+<UL>
+ <LI>emit full path to main XML template
+                for &lt;TemplateName> element</LI>
+ <LI>changed TemplateName to TemplatePath</LI>
+ <LI>If we're viewing a single item, put
+                its title in the HTML head.</LI>
+ <LI>Same as above, but also for view=trgt
+                and page=root.</LI></UL></LI>
+</UL>
+<UL>
+<LI> langmap.en.xml
+<UL>
+ <LI>add feature PRF (Preface) to langmaps</LI></UL></LI>
+</UL>
+<UL>
+<LI> langmap.fr.xml
+<UL>
+ <LI>add feature PRF (Preface) to langmaps</LI></UL></LI>
+</UL>
+<UL>
+<LI> pageviewerheader.xsl
+<UL>
+ <LI>Stub template for ProcessSerialarticle.</LI></UL></LI>
+</UL>
+<UL>
+<LI> results.xsl
+<UL>
+ <LI>No more STATUS="hidden".</LI></UL></LI>
+</UL>
+<UL>
+<LI> resultsheader.xsl
+<UL>
+ <LI>BIBLSCOPE filtering: made like tocheader.xsl
+                (no comma before issuetitle).</LI>
+ <LI>&lt;xsl:value-of select="$pubinfo"/> -->
+                &lt;xsl:copy-of select="$pubinfo"/> to write child nodes
+                (e.g. &lt;div>) to the HTML.</LI>
+ <LI>No comma after &lt;div>[issuetitle]</div>
+                for serialissue.</LI>
+ <LI>minor change to fix missing name search
+                bug</LI></UL></LI>
+</UL>
+<UL>
+<LI> scopedivs.xsl
+<UL>
+ <LI>TYPE="hidden" allows selective non-display
+                of DIVn (and all descendents) in TOC. (Note distinction
+                from mis-named STATUS="hidden".)</LI>
+ <LI>STATUS="hidden" now actually hides
+                the DIV. No more TYPE="hidden".</LI></UL></LI>
+</UL>
+<UL>
+<LI> text.components.xsl
+<UL>
+ <LI>FilterNumberedNotesWithParams: wrap
+                paragraphs after the first in &lt;p>.</LI>
+ <LI>LG template calls template name="addRend".</LI>
+ <LI>In &lt;xsl:template match="P">, don't
+                normalize value of @ID.</LI>
+ <LI>More robust filtering for filterNoteWithParas.</LI>
+ <LI>Handle CELL/@ROWSPAN.</LI>
+ <LI>In &lt;xsl:template match="REF">, removed
+                special case for PARENT::ITEM which appeared to be
+                abandoned code.</LI>
+ <LI>For PBs, Wrap the DIV in an OBJECT
+                so that we still have valid XHTML in the event that
+                we're currently inside a P.</LI>
+ <LI>OBJECT wrapper around PB text breaks
+                in Safari; better to use span with display: block.</LI>
+ <LI>Add anchors to ITEMs which have IDs.</LI>
+ <LI>Create anchors for ID'd Ps in filterNumberedNoteWithParas.</LI>
+ <LI>In filterNumberedNoteWithParas, check
+                whether we're in NOTE2 (in addition to NOTE1).</LI>
+ <LI>Typo.</LI>
+ <LI>XML table elements (TABLE, ROW, CELL)
+                get a class applied to them, obscuring any REND styles
+                in the markup. I've changed code to apply the value
+                of @REND to the class value, e.g. &lt;td class="xmltd-rend-center">.</LI>
+ <LI>L: pass forward all @RENDs, nit just
+                ones that start with "line".</LI></UL></LI>
+</UL>
+<UL>
+<LI> textclass.css
+<UL>
+ <LI>Added rend-plain.</LI>
+ <LI>Added rend-isub.</LI>
+ <LI>Added .rend-rightjustify.</LI>
+ <LI>rend-code.</LI>
+ <LI>Changed .pbtext.</LI>
+ <LI>List style .nomarker.</LI>
+ <LI>Add margin-bottom to div.lg and the
+                like.</LI>
+ <LI>rend-aligntop.</LI></UL></LI>
+</UL>
+<UL>
+<LI> tocheader.xsl
+<UL>
+ <LI>BIBLSCOPE filtering.</LI></UL></LI>
+</UL>
+<UL>
+<LI> viewer.utils.xsl
+<UL>
+ <LI>minor change to fix missing name search
+                bug</LI></UL></LI>
+</UL>
+<UL>
+<LI> viewtextnote.xsl
+<UL>
+ <LI>remove crash your browser</LI>
+ <LI>OCR quality</LI></UL></LI>
+</UL>
+==========================================================
+<H4>bin/t/text</H4>
+
+<UL>
+<LI> CER.pm
+<UL>
+ <LI>added dagger2 &amp;#x2021; labr &#x3008;
+                long &amp;#xAF; rabr &#x3009; short &#x2D8;</LI></UL></LI>
+</UL>
+<UL>
+<LI> cvstag.text
+<UL>
+ <LI>added alajournals</LI>
+ <LI>new collection</LI>
+ <LI>Add CvstagHelper</LI>
+ <LI>removed sampletc obsolete (now just
+                sampletc_utf8)</LI>
+ <LI>Kadd exit status</LI></UL></LI>
+</UL>
+<UL>
+<LI> dtdalyzer.pl
+<UL>
+ <LI>Added ROWSPAN attribute.</LI>
+ <LI>Added DOC attr.</LI></UL></LI>
+</UL>
+<UL>
+<LI> newsdtd2mysql.pl
+<UL>
+ <LI>minor changes for mdaily</LI></UL></LI>
+</UL>
+<UL>
+<LI> rdist.class
+<UL>
+ <LI>storage server merge. all ridsts go
+                to NASDCMR = ( nas-dcmr.umdl.umich.edu ) NASHATCHER
+                = ( nas-hatcher.umdl.umich.edu ) HOSTS = ( ${NASDCMR}
+                ${NASHATCHER} )</LI>
+ <LI>Remove busadwhp and umtri</LI></UL></LI>
+</UL>
+<UL>
+<LI> rdist.web
+<UL>
+ <LI>storage server merge. all ridsts go
+                to NASDCMR = ( nas-dcmr.umdl.umich.edu ) NASHATCHER
+                = ( nas-hatcher.umdl.umich.edu ) HOSTS = ( ${NASDCMR}
+                ${NASHATCHER} )</LI>
+ <LI>Remove busadwhp and umtri</LI></UL></LI>
+</UL>
+<UL>
+<LI> splinter
+<UL>
+ <LI>Initial</LI>
+ <LI>convert to utf8 frm ncrs</LI>
+ <LI>convert to utf8 frm ncrs</LI></UL></LI>
+</UL>
+<UL>
+<LI> utf8chars
+<UL>
+ <LI>fix error checking and display data</LI></UL></LI>
+</UL>
+==========================================================
+<H4>bin/WW</H4>
+
+<UL>
+<LI> rdist.WW
+<UL>
+ <LI>storage server merge. all ridsts go
+                to NASDCMR = ( nas-dcmr.umdl.umich.edu ) NASHATCHER
+                = ( nas-hatcher.umdl.umich.edu ) HOSTS = ( ${NASDCMR}
+                ${NASHATCHER} )</LI></UL></LI>
+</UL>
+==========================================================
+<H4>cgi/t/text</H4>
+
+<UL>
+<LI> CVApp.pm
+<UL>
+ <LI>added pgseq to cache filename and change
+                default view to pdf</LI></UL></LI>
+</UL>
+<UL>
+<LI> DlpsLocalUtils.pm
+<UL>
+ <LI>Refactored LocalIdResolver(), moving
+                substantial code into CreatePicklist().</LI>
+ <LI>remove assertion</LI>
+ <LI>CreatePicklist: delete unwanted params
+                from tempCgi that may be hanging around (possibly
+                due to URL hacking) and that we don't want passed
+                forward in picklist links.</LI></UL></LI>
+</UL>
+<UL>
+<LI> PageView.pm
+<UL>
+ <LI>debugging stmts</LI></UL></LI>
+</UL>
+<UL>
+<LI> TextAppXsltPIFiller.pm
+<UL>
+ <LI>print on demand links to amazon.com
+                added</LI></UL></LI>
+</UL>
+<UL>
+<LI> TextClass.pm
+<UL>
+ <LI>Add RemoveXMLPi for Kwic processing</LI>
+ <LI>Filter_REFsForText: treat &lt;REF TYPE="txt">
+                same as &lt;REF TYPE="ptr">.</LI>
+ <LI>GetDateParsePattern: optional hyphens
+                between year-month-day parts of a sortdate.</LI>
+ <LI>Output FirstPageHref for layer2 serialissue
+                results.</LI>
+ <LI>minor change to fix missing name search
+                bug - close div at end of div1headbib</LI>
+ <LI>another change to fix missing NODE
+                param in search error</LI></UL></LI>
+</UL>
+<UL>
+<LI> textclass.cfg
+<UL>
+ <LI>syntax error</LI>
+ <LI>change www.hti to quod.lib for production
+                host array</LI>
+ <LI>added config to allow POD db lookups</LI></UL></LI>
+</UL>
+<UL>
+<LI> ClipView/mdailyCV.pm
+<UL>
+ <LI>new</LI>
+ <LI>added use Symbol</LI></UL></LI>
+</UL>
+<UL>
+<LI> PVApp/AclssuppPVApp.pm
+<UL>
+ <LI>Larger page sized from JP2 page images.</LI>
+ <LI>Moved to AclssuppPV.pm.</LI></UL></LI>
+</UL>
+<UL>
+<LI> PageView/AclssuppPV.pm
+<UL>
+ <LI>Larger page images from JP2 files.</LI></UL></LI>
+</UL>
+<UL>
+<LI> PageView/EccoPV.pm
+<UL>
+ <LI>url to access ecco image changed.</LI>
+ <LI>new url to access images.</LI>
+ <LI>debug statement</LI>
+ <LI>make sure requesting recordID and that
+                you always get the tiff file.</LI>
+ <LI>removed the recordId change to recordID</LI></UL></LI>
+</UL>
+<UL>
+<LI> PageView/LlmcPV.pm
+<UL>
+ <LI>Switch endseq and startseq if startseq
+                > endseq.</LI>
+ <LI>Typo.</LI></UL></LI>
+</UL>
+<UL>
+<LI> TextApp/AclsTCApp.pm
+<UL>
+ <LI>Series search.</LI>
+ <LI>JHL.</LI>
+ <LI>Added CAA to collection search selection.</LI>
+ <LI>Added CAA Monographs to series list;
+                removed extraneous 'ACLS' from list.</LI>
+ <LI>Typo in series title.</LI></UL></LI>
+</UL>
+<UL>
+<LI> TextApp/ArkTCApp.pm
+<UL>
+ <LI>Initial.</LI>
+ <LI>Redefine global varibale TCGlobals::gProximityAmounts
+                for proximity search choices.</LI></UL></LI>
+</UL>
+<UL>
+<LI> TextApp/PhimpTCApp.pm
+<UL>
+ <LI>Initial. For serialarticle pageview.</LI></UL></LI>
+</UL>
+<UL>
+<LI> TextAppXsltPIFiller/AclsTextAppXsltPIFiller.pm
+<UL>
+ <LI>Series search.</LI>
+ <LI>Typo.</LI>
+ <LI>Corrected logic error that built related
+                links with no idno value.</LI></UL></LI>
+</UL>
+<UL>
+<LI> TextAppXsltPIFiller/LlmcTextAppXsltPIFiller.pm
+<UL>
+ <LI>Ouput XML for citation search.</LI></UL></LI>
+</UL>
+<UL>
+<LI> TextAppXsltPIFiller/NewspaperTextAppXsltPIFiller.pm
+<UL>
+ <LI>subclass BuildViewArticleLink_XML</LI></UL></LI>
+</UL>
+<UL>
+<LI> TextAppXsltPIFiller/SpoCommonTextAppXsltPIFiller.pm
+<UL>
+ <LI>Force lowercase for handle URLs.</LI></UL></LI>
+</UL>
+<UL>
+<LI> TextAppXsltPIFiller/TmrTextAppXsltPIFiller.pm
+<UL>
+ <LI>ISA SpoCommonTextAppXsltPIFiller (principally
+                for handle URLs).</LI></UL></LI>
+</UL>
+<UL>
+<LI> TextClass/AclsTC.pm
+<UL>
+ <LI>Display "results detail" link in series
+                search reslist.</LI>
+ <LI>ACLS_GetTargetDiv: sort xpat results
+                so ID="in_1" comes before ID="in_10".</LI>
+ <LI>In BuiltPrevNextSectionHrefs, issue
+                xpat query for node suffix list with {SortOrder AsIs}.
+                (Otherwise, sometimes it would come back sorted alpha.)</LI>
+ <LI>ACLS_GetTargetDiv: add 'nt_' => NOTE1
+                to link to notes in other parent divs.</LI>
+ <LI>ACLS_GetTargetDiv: query for target
+                ID is now like this: (region "$region" incl "$targetAttrName=$target""").
+                This includes the closing attr quote in the target
+                string, so when searching for id_1 the search doesn't
+                also return id_10.</LI></UL></LI>
+</UL>
+<UL>
+<LI> TextClass/AmverseLocalUtils.pm
+<UL>
+ <LI>Remove support for old ID like "DickyPoem3"</LI></UL></LI>
+</UL>
+<UL>
+<LI> TextClass/AmverseTC.pm
+<UL>
+ <LI>Remove support for old ID like "DickyPoem3"</LI></UL></LI>
+</UL>
+<UL>
+<LI> TextClass/BotTC.pm
+<UL>
+ <LI>BotTC moved to group-level DcultureTC.pm.</LI></UL></LI>
+</UL>
+<UL>
+<LI> TextClass/BulletinfrontTC.pm
+<UL>
+ <LI>Enabled thumbs and links to imageclass
+                images; changed default idresolver id format.</LI>
+ <LI>ExternalFigFullImage: check for TYPE="ext|ic".</LI></UL></LI>
+</UL>
+<UL>
+<LI> TextClass/CjsTC.pm
+<UL>
+ <LI>Added methods for thumbnail links.</LI>
+ <LI>Removed code that's already in base
+                class.</LI></UL></LI>
+</UL>
+<UL>
+<LI> TextClass/DcultureTC.pm
+<UL>
+ <LI>BotTC moved to group-level DcultureTC.pm.</LI>
+ <LI>@ISA = qw( SpoCommonTC );.</LI>
+ <LI>GenerateFilesysPathElement: look for
+                *-lg.jpg if figtype='INLINE' (linked from thumbnail).</LI></UL></LI>
+</UL>
+<UL>
+<LI> TextClass/DidTC.pm
+<UL>
+ <LI>ISA SpoCommonTC.</LI>
+ <LI>Fixed bug in FilterREFs.</LI></UL></LI>
+</UL>
+<UL>
+<LI> TextClass/JepTC.pm
+<UL>
+ <LI>ISA SpoCommonTC.</LI></UL></LI>
+</UL>
+<UL>
+<LI> TextClass/MachynTC.pm
+<UL>
+ <LI>Handling libmark-glyph; ISA SpoCommonTC.</LI></UL></LI>
+</UL>
+<UL>
+<LI> TextClass/MdiaTC.pm
+<UL>
+ <LI>Initial. For xcoll search result links
+                to work correctly (with cc param).</LI></UL></LI>
+</UL>
+<UL>
+<LI> TextClass/MqrTC.pm
+<UL>
+ <LI>Check for FIGURE type="ic", otherwise
+                assume on disk.</LI>
+ <LI>Make child of SpoCommonTC.</LI></UL></LI>
+</UL>
+<UL>
+<LI> TextClass/PostidTC.pm
+<UL>
+ <LI>ExternalFigFullImage: check for TYPE="ic|ext".</LI></UL></LI>
+</UL>
+<UL>
+<LI> TextClass/SpoCommonTC.pm
+<UL>
+ <LI>Filter glyph ents. (Adapted from acls.)</LI>
+ <LI>Handling libmark-glyph.</LI>
+ <LI>Handle REFs which target NOTEs.</LI>
+ <LI>Added ParseDatePattern.</LI>
+ <LI>&lt;REF TYPE="txt|ptr" TARGET="idno_foo">
+                now links to another item in same collection.</LI>
+ <LI>GetDateParsePattern is now modified
+                in base class.</LI>
+ <LI>Enable link to ITEM.</LI>
+ <LI>Fixed bug re: jumpTarget in BuildTxtTargetLink.</LI>
+ <LI>Added sub ApplyXRefFilter (for links
+                to other items in same collection).</LI>
+ <LI>Removed code for handling &lt;REF TYPE="txt"
+                TARGET="idno_1234567.0001.001"> -- replaced by handling
+                &lt;XREF DOC="idno_1234567.0001.001">.</LI>
+ <LI>Apply Filter for XRefs after call to
+                main TextFilter, so REFs that are processed XREfs
+                don't get processed again.</LI>
+ <LI>Reverted BuildTxtTargetLink -- parsing
+                target (from XREF) to see whether target is idno for
+                another article should be here.</LI>
+ <LI>Cleaned up algorithm in filtering XREFs.</LI></UL></LI>
+</UL>
+<UL>
+<LI> TextClass/SpobooksTC.pm
+<UL>
+ <LI>ISA SpoCommonTC.</LI></UL></LI>
+</UL>
+==========================================================
+Log for directory  ( text since 6apr2007 )
+
+==========================================================
+<H4>misc/t/text/maps</H4>
+
+<UL>
+<LI> acls.map
+<UL>
+ <LI>Series search.</LI></UL></LI>
+</UL>
+<UL>
+<LI> aclssupp.map
+<UL>
+ <LI>Initial.</LI></UL></LI>
+</UL>
+<UL>
+<LI> ark.map
+<UL>
+ <LI>Initial (copied from jar).</LI>
+ <LI>Added region keyword.</LI>
+ <LI>Remap value options for proximity search.</LI>
+ <LI>'citation' -> 'all metadata'.</LI></UL></LI>
+</UL>
+<UL>
+<LI> basp.map
+<UL>
+ <LI>Fixed for correct search results.</LI></UL></LI>
+</UL>
+<UL>
+<LI> bot.map
+<UL>
+ <LI>Collections point to group mapfile
+                dculture.map.</LI></UL></LI>
+</UL>
+<UL>
+<LI> bulletinback.map
+<UL>
+ <LI>Initial.</LI>
+ <LI>Copied from mdiaarchive for serialissue
+                behavior.</LI></UL></LI>
+</UL>
+<UL>
+<LI> bulletinfront.map
+<UL>
+ <LI>Initial.</LI></UL></LI>
+</UL>
+<UL>
+<LI> dcbooks.map
+<UL>
+ <LI>Initial (copied from bot).</LI>
+ <LI>Collections point to group mapfile
+                dculture.map.</LI></UL></LI>
+</UL>
+<UL>
+<LI> dculture.map
+<UL>
+ <LI>DIV3, DIV4.</LI></UL></LI>
+</UL>
+<UL>
+<LI> dencos.map
+<UL>
+ <LI>custom for new dencos markup</LI></UL></LI>
+</UL>
+<UL>
+<LI> eebodemo.map
+<UL>
+ <LI>div5</LI></UL></LI>
+</UL>
+<UL>
+<LI> fia.map
+<UL>
+ <LI>Initial.</LI></UL></LI>
+</UL>
+<UL>
+<LI> jahc.map
+<UL>
+ <LI>Initial (default serialarticle).</LI></UL></LI>
+</UL>
+<UL>
+<LI> jsas.map
+<UL>
+ <LI>Initial.</LI></UL></LI>
+</UL>
+<UL>
+<LI> mdaily.map
+<UL>
+ <LI>new</LI>
+ <LI>removing bl stuff</LI></UL></LI>
+</UL>
+<UL>
+<LI> mdiaarchive.map
+<UL>
+ <LI>Fixed for correct search results.</LI></UL></LI>
+</UL>
+<UL>
+<LI> mjcsl.map
+<UL>
+ <LI>Initial.</LI></UL></LI>
+</UL>
+<UL>
+<LI> moajrnl.map
+<UL>
+ <LI>citation focused properly</LI>
+ <LI>more citation focus</LI></UL></LI>
+</UL>
+<UL>
+<LI> nmw.map
+<UL>
+ <LI>Initial (copied from bot).</LI>
+ <LI>Collections point to group mapfile
+                dculture.map.</LI></UL></LI>
+</UL>
+<UL>
+<LI> phimp.map
+<UL>
+ <LI>Added keyword and abstract mappings.</LI></UL></LI>
+</UL>
+<UL>
+<LI> plagbooks.map
+<UL>
+ <LI>Initial (copied from bot).</LI></UL></LI>
+</UL>
+<UL>
+<LI> sampletc_utf8.map
+<UL>
+ <LI>IDNO/id</LI></UL></LI>
+</UL>
+<UL>
+<LI> spobooks.map
+<UL>
+ <LI>Mappings for page images.</LI></UL></LI>
+</UL>

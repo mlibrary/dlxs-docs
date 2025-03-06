@@ -1,0 +1,2931 @@
+<html>
+<head>
+<title>User Interface</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<link rel="stylesheet" href="../styles.css" type="text/css">
+</head>
+<body bgcolor="#FFFFFF" leftmargin="10" topmargin="10" marginwidth="10" marginheight="10" class="mainpalette">
+<h1> User Interface</h1>
+<ul>
+  <li> <a href="#overview">HTML delivery via templates: an overview</a> 
+    <ul>
+      <li><a href="#templates">HTML templates</a></li>
+      <li><a href="#procins">Processing instructions</a></li>
+      <li><a href="#fallback">Collection templates and class fallback</a> </li>
+    </ul>
+  </li>
+  <li><a href="#textclass">TextClass</a> 
+    <ul>
+      <li><a href="#tcGenPgLayout">General Page Layout</a></li>
+      <li><a href="#tcIndCollChars">Specifying Individual Collection Characteristics</a> 
+        <ul>
+          <li><a href="#css">CSS files</a> </li>
+          <li><a href="#graphics">Graphics</a> </li>
+          <li><a href="#hdr">Header characteristics</a> 
+            <ul>
+              <li><a href="#background">Background colors and graphics</a> </li>
+              <li><a href="#hdrcollname">Title name or graphic</a> </li>
+              <li><a href="#hdrtabs">Navigation tabs and fonts</a> </li>
+              <li><a href="#submenus">Navigation sub menus</a></li>
+            </ul>
+          </li>
+        </ul>
+      </li>
+      <li><a href="#tcTemplates">Templates</a></li>
+      <li><a href="#tcPis">Processing Instructions</a></li>
+    </ul>
+  </li>
+  <li><a href="#imageclass">ImageClass</a> 
+    <ul>
+      <li><a href="#icIndCollChars">Specifying Individual Collection Characteristics</a> 
+        <ul>
+          <li><a href="#iccss">CSS files</a> </li>
+          <li><a href="#icgraphics">Graphics</a> </li>
+          <li><a href="#ichdr">Header characteristics</a> 
+            <ul>
+              <li><a href="#icbackground">Background colors and graphics</a> </li>
+              <li><a href="#ichdrcollname">Title name or graphic</a> </li>
+              <li><a href="#ichdrtabs">Navigation tabs and fonts</a> </li>
+            </ul>
+          </li>
+        </ul>
+      </li>
+      <li><a href="#ictemplates">Templates</a></li>
+      <li><a href="#icprocins">Processing Instructions</a></li>
+    </ul>
+  </li>
+</ul>
+<p><a name="main"> </a> </p>
+<hr size="1" width="90%">
+
+<p>&nbsp;</p><h2><a name="overview"></a>HTML delivery via templates: an overview </h2>
+<div class="level1"></div>
+<p>The user interface in the DLXS middleware is manifested by a combination of
+  interrelated techniques:</p>
+<ul>
+  <li>HTML Templates 
+  <li>Processing Instructions 
+  <li>ProcIns Module 
+</ul>
+<div class="level1"> 
+  <p>The first two techniques are of primary importance for specifying the various 
+    components of HTML delivery that make up the &quot;look and feel&quot; of 
+    the interface. </p>
+  <p>&nbsp;</p>
+</div>
+<div class="level2"></div>
+<h3><a name="templates"> </a> </h3>
+<h3>HTML Templates</h3>
+<p>HTML templates are used to deliver dynamic content from the CGI within a prescribed
+   HTML structure. In general, there are as many templates per class as there
+  are 
+  distinct page types in the overall functional architecture of the class. A
+  collection  implemented with the TextClass middleware, for example, can include
+  up to 33 
+  template files for delivering, among other pages, multiple search forms, results
+   displays, bibliographic headers and tables of contents, search histories and
+  
+  full text displays. Each HTML template is a combination of static HTML code
+   for areas of content that are unchanging from page to page, and processing
+  instructions 
+  that are either replaced by content provided by the CGI or used to remove content
+   or code from the template before delivery. Processing instructions can deliver
+  
+  simple strings, or large combinations of text and HTML code, depending on the
+   circumstance, but the practice has been to minimize the amount of HTML code
+  
+  replaced via a PI because this allows for easier maintenance of graphical interface
+   at the template level. Otherwise, the only rule governing template planning
+  
+  is that, when parsed, it should deliver valid or acceptable HTML to the browser.</p>
+<div class="level2"></div>
+<h4><a name="procins"> </a> </h4>
+<h3>Processing Instructions</h3>
+<p>HTML templates are combined with processing instruction tags that are parsed 
+  and replaced by the middleware. Processing instruction tags are of the form</p>
+<blockquote> 
+  <p><font size="4">&lt;?PI_IDENTIFIER_NAME [modifiername=&quot;value&quot;]*&gt;</font></p>
+</blockquote>
+<p>where all identifier names are preceded by a question mark and are represented 
+  in all capital letters with underscore characters. Zero or more modifier name/value 
+  pairs can be included to provide additional parameters. Here are two example 
+  PI tags:</p>
+<blockquote> 
+  <table border="1" cellpadding="5" cellspacing="0" style="border-width: 1px; border-style: solid; border-color: #CCCCCC" width="85%">
+    <tr> 
+      <td style="border-width: 1px; border-style: solid; border-color: #CCCCCC" valign="top"><code>&lt;?TITLE&gt;</code></td>
+      <td style="border-width: 1px; border-style: solid; border-color: #CCCCCC">Appears 
+        witin <code>&lt;TITLE&gt;&lt;/TITLE&gt;</code> tags and supplies a collection 
+        title string.</td>
+    </tr>
+    <tr> 
+      <td style="border-width: 1px; border-style: solid; border-color: #CCCCCC" valign="top"><code>&lt;?DOC_ROOT 
+        mode=&quot;single&quot;&gt;</code></td>
+      <td style="border-width: 1px; border-style: solid; border-color: #CCCCCC">Can 
+        appear within the <code>href</code> or <code>src</code> attribute values 
+        in individual collection templates to return the appropriate local root 
+        path of that collection.</td>
+    </tr>
+  </table>
+</blockquote>
+<p>Processing instruction tags are not, in all cases, a standardized API mechanism 
+  to collection information, though they share some of those characteristics. 
+  In general, the PIs are more likened to a customized API to the middleware itself. 
+  In this regard, PIs perform two general types of functionality:</p>
+<p><b>PIs may act as simple variable names</b>: As in <code>&lt;?TITLE&gt;</code> 
+  above, replaced by simple strings or even large blocks of HTML code and text; 
+</p>
+<p><b>PIs may act as include/exclude instructions</b>: A pair of PI tags may instruct 
+  the middleware to include or exclude code contained in the template, depending 
+  on specific context. </p>
+<blockquote> 
+  <p><code> &lt;?INCLUDE_COLL_SPECIFIC_CONTENT id=&quot;navbarbrowselink&quot;&gt;<br>
+    <br>
+&lt;td id=&quot;browsetab&quot; width=&quot;90&quot; height=&quot;23&quot; align=&quot;center&quot; nowrap&gt;<br> 
+&nbsp;&nbsp;&lt;span
+class=&quot;navlinks&quot;&gt;<br>
+&nbsp;&nbsp;&nbsp;&lt;a id=&quot;browselink&quot; &nbsp;&nbsp;&nbsp;&nbsp;href=&quot;&lt;?COLL_SPECIFIC_CONTENT&nbsp;id=&quot;navbarbrowselink&quot;&nbsp;cginame=&quot;text-idx&quot;&gt;&quot; &nbsp;&nbsp;&nbsp;&nbsp;class=&quot;nav&quot; onMouseOver=&quot;P7_autoLayers(0)&quot;&gt;Browse&lt;/a&gt;<br>
+  </code><code>&nbsp;&nbsp;&lt;/span&gt;<br>
+&lt;/td&gt;<br>
+&lt;td id=&quot;sep3&quot; width=&quot;1&quot;&gt;<br>
+&nbsp;&lt;img src=&quot;/t/text/graphics/plug.gif&quot; width=&quot;1&quot; height=&quot;1&quot; border=&quot;0&quot; alt=&quot;design
+  &nbsp;&nbsp;graphic&quot;&gt;<br>&lt;/td&gt;<br>
+  <br>
+&lt;?INCLUDE_COLL_SPECIFIC_CONTENT id=&quot;navbarbrowselink&quot;&gt;</code></p>
+</blockquote>
+<p>The code example above is from the table that contains cells navigation bar 
+  tabs and tab divisions. The HTML wrapped within the <code>&lt;?INCLUDE_COLL_SPECIFIC_CONTENT&gt;</code> 
+  PI tags is for a browse feature that is not supported by all collections. The 
+  PIs are used to remove the code in the case of collections that do not need 
+  this HTML, and to provide the appropriate url for the browse feature for collections 
+  that do have browse features. 
+<h3><a name="fallback"> </a> </h3>
+<h3>Collection templates and class fallback</h3>
+<p>Each of the class-specific sections below describes the techniques that are
+   applied within the class architecture to effect changes to overall class look
+  
+  and feel as it is expressed through the templates. It is important to note,
+   however, that the class middleware supports the implementation of customized,
+  
+  collection-specific templates and associated stylesheets. That is, when attempting
+  to render a particular page utilizing a specific template, the middleware will
+  first
+  look
+  for the
+  required 
+  template in the collection-specific path, using a customized template if it
+   exists. If there is no such customized version of the required template in
+  the 
+  collection path, the middleware will utilize the default class template. The
+   sections below, thus, apply to the techniques that can be applied to any templates,
+  
+  class defaults as well as optional individual versions.</p>
+<p>&nbsp;</p>
+<p><a name="textclass"></a> 
+<h2>TextClass</h2>
+<a name="tcGenPgLayout"> </a> 
+<h3 align="left">General Page Layout and Color</h3>
+<div class="level1"></div>
+<p>Default page delivery in Text Class is done via class-level templates that 
+  are shared by all instances of the class, though the middleware also supports 
+  collection-specific templates for any or all page-based behavior within the 
+  class. All default Text Class page templates are based on the same layout approach, 
+  which relies on tables (along with transparent spacer gifs) for all positioning 
+  and general color or graphic appearance. General layout is shown in <b>Figure 
+  1</b>, which shows top-level tables with borders showing, and using the color 
+  scheme for the Voltaire &eacute;lectronique collection. All table cells for 
+  header and navigation bar content at this level have default values for the 
+  <code>bgcolor</code> attribute for browsers that are not CSS-capable. Each header 
+  and navigation cell also has a default CSS class value and default background 
+  image specified in the <code>background</code> attribute. The background colors 
+  created by class and gif allow for flexibility to change appearances for different 
+  collections based on the same template. For more on specifiying individual collection 
+  appearance, see <a href="#tcIndCollChars">Specifying individual collection characteristics</a>.</p>
+<table border="0" cellpadding="0" cellspacing="2">
+  <tr> 
+    <td><img height="368" src="graphics/gen-layout.gif" width="450"></td>
+  </tr>
+  <tr> 
+    <td><b>Figure 1</b>: top-level table structure of a typical page.</td>
+  </tr>
+</table>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p><br>
+</p>
+<p><b> Figure 2</b> shows the simple search page for The American Verse collection
+  as it appears normally. Navigation bar labels, page text header markup (not
+  header text content, e.g., &quot;Basic Search&quot;), instruction text and footer text
+  are hard coded, and thus identical
+  across
+  all collections.
+  All other content is specified per collection by
+   processing 
+  instructions. </p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<table border="0" cellpadding="0" cellspacing="2">
+  <tr> 
+    <td><img src="graphics/amverse-basic.gif" border="1"></td>
+  </tr>
+  <tr> 
+    <td><b>Figure 2</b>: Basic search page for American Verse.</td>
+  </tr>
+</table>
+<p>&nbsp;</p>
+<p><a name="tcIndCollChars"></a></p>
+<h3>Specifying Individual Collection Characteristics</h3>
+<div class="level2"></div>
+<a name="css"> </a> 
+<h4>CSS files</h4>
+<p>Text class templates utilize two CSS files for controlling most font and color 
+  characteristics: textclass.css and textclass-specific.css. textclass.css is 
+  stored in at the <code>&lt;root&gt;/t/text/</code> path and contains all the 
+  default style declarations. textclass-specific.css is created for each individual 
+  collection and stored at the <code>&lt;root&gt;/c/coll/</code> path. References 
+  to both stylesheets are as follows:</p>
+<blockquote> 
+  <p> &lt;link rel=&quot;stylesheet&quot; href=&quot;&lt;?DOC_ROOT&gt;textclass.css&quot; 
+    type=&quot;text/css&quot;&gt;<br>
+    &lt;link rel=&quot;stylesheet&quot; href=&quot;&lt;?DOC_ROOT mode=&quot;single&quot;&gt;textclass-specific.css&quot; 
+    type=&quot;text/css&quot;&gt; </p>
+</blockquote>
+<p>The &lt;?DOC_ROOT&gt; processing instruction resolves to the relevant path 
+  for each stylesheet. Because textclass-specific.css is referenced after textclass.css, 
+  any style declarations that appear in textclass-specific.css will effectively 
+  overwrite matching declarations in textclass.css. This is how fonts and background 
+  colors are varied for each collection. (<a href="tc-textclass-css.html">full 
+  text of textclass.css</a>)</p>
+<p>See a <a href="css-compare.html" target="_blank">comparison</a> of textclass.css and a collection specific CSS file.</p>
+<br>
+<div class="level2"></div>
+<h4><a name="graphics"> </a> </h4>
+<h4>Graphics</h4>
+<p>Default text class templates employ a variety of relatively generic graphics 
+  that can be referenced by all collection instances. A <a href="tc-graphics.html">table 
+  of shared files</a> shows those files that are stored in the <code>&lt;root&gt;/t/text/graphics/</code> 
+  directory. Any alternative graphics by identical names may be stored in individual 
+  collection <code>graphics</code> directories to replace the default class graphics 
+  for that particular collection. Any files not stored in collection graphics 
+  directories, but referenced in the templates, will be referenced from the class 
+  graphics directory as a fallback mechanism. Graphics files that are likely to 
+  be unique to each collections are discussed in the section on <a href="#background">header 
+  background colors and graphics</a>. </p>
+<br>
+<div class="level2"></div>
+<a name="hdr"> </a> 
+<h4>Header characteristics</h4>
+<p>The header of each page template includes that area in the top 75 pixels of 
+  the page containing those elements associated with unique collection identity: 
+  main collection title, global links, if any, and the main navigation bar. The 
+  templates accomodate inclusion of background colors or graphics to provide some 
+  flexibility in creating unique appearances for different collections. </p>
+<div class="level3"></div>
+<p><a name="background"> </a> </p>
+<p><i>Background color and graphics</i> </p>
+<p>Main background color for template headers is provided at three different
+  levels:  default background colors for table cells specified in the<code> bgcolor</code> 
+  attribute, style declarations in the textclass-specific.css stylesheet, and
+   table cell background graphics referenced by the <code>background</code> attribute. 
+  <b>Figure 3</b> illustrates how these characteristics are specified in<code> 
+  td</code> opening tags in the Voltaire &eacute;lectronique collection.</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<table border="0" cellpadding="0" cellspacing="2">
+  <tr> 
+    <td><img border="1" height="91" src="graphics/text-hdr-layout.gif" width="633"></td>
+  </tr>
+  <tr> 
+    <td><b>Figure 3</b>: Header cell color and graphics.</td>
+  </tr>
+</table>
+<p>The two top cells each have CSS class associations and background graphic references 
+  to files in the local collection graphics directory. The <code>hdrcolor</code> 
+  style is set locally in the textclass-specific.css style sheet as</p>
+<blockquote> 
+  <p><code>.hdrcolor { background-color: #FFFFF1 } </code></p>
+</blockquote>
+<p>The background graphics files, hdr-bg1.gif and hdr-bg2.gif, are, in fact, laying 
+  &quot;over&quot; the background color specified by the CSS style--the order 
+  of precedence for CSS capable browsers is<code> background</code>, <code>class</code>, 
+  <code>bgcolor</code>--but you see the CSS style colors because the gifs are 
+  transparent. The lower cell has a <code>bgcolor</code> value and a CSS style, 
+  <code>navcolor</code>, set again in the local textclass-specific.css as</p>
+<blockquote> 
+  <p><code>.navcolor { background-color: #F3E098 } </code></p>
+</blockquote>
+<br>
+<p><b>Figure 4</b> illustrates the appearance of another header based on the
+  same  template using non-transparent background gifs that integrate with the
+  collection 
+  title gif and the CSS style for <code>navcolor.</code></p>
+<table border="0" cellpadding="0" cellspacing="2" width="75%">
+  <tr> 
+    <td><img border="1" height="78" src="graphics/umr-hdr.gif" width="625"></td>
+  </tr>
+  <tr> 
+    <td> 
+      <table border="0" cellpadding="10" cellspacing="0" width="100%">
+        <tr> 
+          <td valign="top"> 
+            <p><img border="1" height="51" src="graphics/umtr-combined.gif" width="333"></p>
+            <p>collection title gif</p>
+          </td>
+          <td class="stuff"><img border="1" height="91" src="graphics/bgmat.gif" style="left-margin: 5px; right-margin: 5px" width="100">hdr-bg1.gif 
+            and hdr-bg2.gif provide background.</td>
+        </tr>
+      </table>
+    </td>
+  </tr>
+  <tr> 
+    <td><b>Figure 4:</b> component files for a header portion of UM Technical
+       Reports templates.</td>
+  </tr>
+</table>
+<br>
+<br>
+<div class="level3"></div>
+<p><a name="hdrcollname"> </a> </p>
+<p><i>Title name or graphic</i> </p>
+<p>Collection title name is provided in the templates via the<code> &lt;?TITLE 
+  mode=&quot;complex&quot;&gt;</code> processing instruction. The PI will resolve 
+  to a text string or a graphic file as specified in the<code> colldb.</code> 
+  When rendered as text, titles are wrapped in H3 tags with CSS style <code>topheadlink</code> 
+  so that collection title font can be specified.</p>
+<br>
+<div class="level3"></div>
+<p><a name="hdrtabs"> </a> </p>
+<p><i>Navigation fonts and tabs</i> </p>
+<p>Color for navitation tabs is controlled by CSS styles, as are the border colors 
+  that surround and underline the tabs. Tab color is, in the &quot;backgrounded&quot; 
+  state, set by the <code>navcolor</code> style. The tab &quot;foreground&quot; 
+  state color is specified with the <code>navhicolor</code> style. Border and 
+  underline colors are set with<code> navdivision</code> and <code>navhrcolor</code> 
+  styles respectively. </p>
+<p>Font settings for tabs are also CSS controlled. Relative style declarations 
+  for fonts are as below:</p>
+<blockquote> 
+  <p><code>/* nav bar fonts */<br>
+    .navlinks { font-family: Arial, Helvetica, sans-serif; <br>
+    font-size: 12px; <br>
+    font-weight: bold; <br>
+    color: #666666; <br>
+    text-decoration: none<br>
+  }</code></p>
+  <p><code>/* nav link characteristics */<br>
+    A:hover { text-decoration: underline }<br>
+    A.nav { color: #FFFFFF; <br>
+    text-decoration: none <br>
+    }<br>
+    <br>
+    A.nav:hover { color : #FFCC33; <br>
+    text-decoration: underline <br>
+    }</code></p>
+</blockquote>
+<p>These styles set the default, &quot;closed&quot; tab state for all navigation fonts.
+  In previous releases of the class, each navigation state (e.g., basic search,
+  proximity search, browse, etc) has been represented by a separate template
+  file containing specific HTML markup: in that scheme,  styles for the &quot;open&quot;
+  state characteristics were declared in the style sheet and simply applied to
+different HTML elements as required.</p>
+<p>In release 10, the navigation menu is contained in a single, separate template
+  file, navheader.chnk, that is inserted into all templates. Instead of changing
+  the various CSS class associations for relevant HTML elements to effect state,
+  the HTML elements in navheader have permanent ID associations, and the template
+  file referencing the nav header markup inserts necessary CSS declarations to
+  effect the preferred state. <strong>Figure 5</strong> shows a &quot;close-up&quot; of
+  the navigation bar HTML, with table borders showing, and illustrates the placement
+  of ID values on table cells
+that will serve as CSS selectors.</p>
+<p>&nbsp;</p>
+<table width="565" border="0" cellpadding="0" cellspacing="2">
+  <tr>
+    <td><img src="graphics/nav-tabs-layout.gif" width="565" height="226" border="1"></td>
+  </tr>
+  <tr>
+    <td><b>Figure 5</b>: &quot;Close-up&quot; of the navigation bar with &quot;ID=&quot; values indicated.
+      Additionally, the text of the &quot;Search&quot; and &quot;Browse&quot; tabs also have ID values
+      (&quot;searchlink&quot; and &quot;browselink,&quot; respectively).</td>
+  </tr>
+</table>
+<p>When navheader.chnk is inserted into search.tpl, requiring that the search
+  tab be shown in an &quot;up&quot; state, the cgi also inserts the contents
+  of searchtabstyles.css
+into the page (shown below).</p>
+<blockquote>
+  <p><code>#searchtab { background-color: #ffffff } /* background color of the search
+      tab proper */<br>
+    #sttopborder { background-color: #333333 } /* search tab top border background
+      color */<br>
+    #sep1 { background-color: #333333 } /* separator 1 background color */<br>
+    #sep2 { background-color: #333333 } /* separator 2 background color */<br>
+    #stbotborder { background-color: #ffffff } /* search tab bottom border background
+      color */<br>
+    #searchlink { color: #000000 } /* search link color - attaches to the immediate
+      anchor element */</code><br>
+  </p>
+</blockquote>
+
+<p>The result is as is shown in <strong>Figure 2</strong> above.</p>
+<p>&nbsp;</p>
+<p><a name="submenus" id="submenus"> </a>
+</p>
+<p><i>Navigation sub menus</i> <br>
+</p>
+<p>In a previous release of the DLXS Text Class  design, multiple
+  search options were grouped under a single &quot;Search&quot; tab as a static sub-menu.
+  Figure 6 illustrates this design as implemented by the ACLS History E-book
+  collection.</p>
+<table width="389" border="0" cellpadding="0" cellspacing="2">
+  <tr>
+    <td><img src="graphics/acls-nav.gif" width="389" height="155" border="1"></td>
+  </tr>
+  <tr>
+    <td><b>Figure 6</b>: The ACLS navigation bar showing static search sub-menu.</td>
+  </tr>
+</table>
+<p>In an effort to conserve vertical space, release 10 will implement, by default,
+  a &quot;pull-down&quot; menu that triggers by Javascript <code>onmouseover</code> events.
+  This menu is shown in <strong>Figure 7</strong>.</p>
+<table width="455" border="0" cellpadding="0" cellspacing="2">
+  <tr>
+    <td><img src="graphics/amverse-nav.gif" width="455" height="121" border="1"></td>
+  </tr>
+  <tr>
+    <td><b>Figure 7</b>: The American Verse navigation bar showing the &quot;pull-down&quot;
+    menu.</td>
+  </tr>
+</table>
+<p>The pull-down technique an implementation of the <a href="http://projectseven.com/" target="_blank">Project
+    Seven</a> positioned dropped down menus design, utilizing Project Seven extensions
+    to <a href="http://www.macromedia.com/software/dreamweaver/" target="_blank">Macromedia Dreamweaver</a>.
+    The Project Seven implementation is very reliable, working effectively for
+    Netscape 4.7 and up, and for Internet Explorer 5 and up (and most other browsers)
+    for the PC and Mac platforms. Even so, the search page design offers static
+    link alternatives for all menu options. </p>
+<p>(<strong>Note:</strong> The implementation of the pull-down
+    menu, however, is not tied to the cgi since the cgi only provides the<code> HREF</code> values
+    for the various links in the menu. Alternative markup for the earlier design
+    is available, and will be supplied in the distribution.)</p>
+<p>Modifying the appearance of the pull-down menu background colors and font
+  characteristics is accessible through CSS class declarations, shown below.</p>
+<blockquote>
+  <p><code>A.menunav { color: #000000; text-decoration: none }<br>
+    A.menunav:hover { color : #FF6633; text-decoration: underline }<br>
+    <br>
+    /* the color of popup menu cells in the up state - #BABCEA */<br>
+    .mencellup { background-color: #E5E5E5; }<br>
+    <br>
+    /* the color of the bground table cell for the menu nav i.e., the border color
+    for nav cells */<br>
+    .menucellground { background-color: #666666; }</code></p>
+</blockquote>
+<p>The font style of the menu labels themselves is controlled by the <code>smallformfont</code>  class.</p>
+<p>Modifying the dimensions and/or behavior of the menu is best accomplished
+  by opening the navheader.chnk template file in Dreamweaver, with the accompanying
+  extensions installed, and editing it in that environment. The extensions are
+  available for free from the <a href="http://dynamic.macromedia.com/bin/MM/exchange/main.jsp?product=dreamweaver" target="_blank">Macromedia
+  Exchange</a> site (select the &quot;DHTML Layers&quot; category), and the <a href="http://projectseven.com/tutorials/menuing/mcloser/index.htm" target="_blank">tutorial</a>  at
+  Project Seven (which also provides <a href="http://projectseven.com/extensions/index.htm" target="_blank">access</a> to
+  the necessary extensions) gives a clear, step by step instruction of how the
+  menu is assembled.</p>
+<p>Alternatively, view this <a href="tutorial1.html">brief tutorial</a>, which
+  illustrates editing the DLXS search pages in Dreamweaver.</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p><a name="tcTemplates"></a> 
+<h3 align="left">Text Class Templates</h3>
+<div class="level1"></div>
+<p>The table below gives a brief description of all templates included in the 
+  Text Class distribution. As a companion, you may also want to view the list 
+  of processing instructions also supported in text class.</p>
+<table border="1" cellpadding="5" cellspacing="0" frame="border" rules="all" style="border-width: 1px; border-color: #CCCCCC" width="100%">
+  <tr>
+    <td valign="top" width="10%"><a name="accesspolicy"> </a><span>accesspolicy.tpl</span></td>
+    <td valign="top" width="90%">Informational page included in the UMDL Texts
+      portal site.</td>
+  </tr>
+  <tr>
+    <td valign="top" width="10%"><a name="bbagbooleansearchform"> </a><span>bbagbooleansearchform.chnk</span></td>
+    <td valign="top" width="90%">Supplies the form HTML for boolean searching
+      within contents of book bag. Works with bbagsearch.tpl; together replacing
+      booleanbbag.tpl</td>
+  </tr>
+  <tr>
+    <td valign="top" width="10%"><a name="bbagemail"> </a><span>bbagemail.tpl</span></td>
+    <td valign="top" width="90%">Displays a form for emailing the contents of
+      the book bag. The form contains only one input box for an email address.</td>
+  </tr>
+  <tr>
+    <td valign="top" width="10%"><a name="bbaglist"> </a><span>bbaglist.tpl</span></td>
+    <td valign="top" width="90%">Displays current contents of the book bag. </td>
+  </tr>
+  <tr>
+    <td valign="top" width="10%"><a name="bbagproximitysearchform"> </a><span>bbagproximitysearchform.chnk</span></td>
+    <td valign="top" width="90%">Supplies the form HTML for proximity searching
+      within contents of book bag. Works with bbagsearch.tpl; together replacing
+      proximitybbag.tpl</td>
+  </tr>
+  <tr>
+    <td valign="top" width="10%"><a name="bbagsearch"> </a><span>bbagsearch.tpl</span></td>
+    <td valign="top" width="90%">Container HTML for all forms providing searches
+      within book bag.</td>
+  </tr>
+  <tr>
+    <td valign="top" width="10%"><a name="bbagsimplesearchform"> </a><span>bbagsimplesearchform.chnk</span></td>
+    <td valign="top" width="90%">Supplies the form HTML for basic searching within
+      contents of book bag. Works with bbagsearch.tpl; together replacing simplebbag.tpl</td>
+  </tr>
+  <tr>
+    <td valign="top" width="10%"><a name="bibsearchform"> </a><span>bibsearchform.chnk</span></td>
+    <td valign="top" width="90%">Supplies the form HTML for bibliographic searching
+      within [a] specified collection[s]. Works with search.tpl; together replacing
+      bib.tpl and bibext.tpl</td>
+  </tr>
+  <tr>
+    <td valign="top" width="10%"><a name="booleansearchform"> </a><span>booleansearchform.chnk</span></td>
+    <td valign="top" width="90%">Supplies the form HTML for Boolean searching
+      within [a] specified collection[s]. Works with search.tpl; together replacing
+      boolean.tpl and booleanext.tpl</td>
+  </tr>
+  <tr>
+    <td valign="top" width="10%"><a name="browsetemplate"> </a><span>browse_template.tpl</span></td>
+    <td valign="top" width="90%">Generic browse template.</td>
+  </tr>
+  <tr>
+    <td valign="top" width="10%"><a name="browsecolls"> </a><span>browsecolls.tpl</span></td>
+    <td valign="top" width="90%">Used to display lists of collections, grouped
+      by collection groups.</td>
+  </tr>
+  <tr>
+    <td valign="top" width="10%"><a name="header"> </a><span>header.tpl</span></td>
+    <td valign="top" width="90%">Displays bibliographic header and table of contents.</td>
+  </tr>
+  <tr>
+    <td valign="top" width="10%"><a name="home"> </a><span>home.tpl</span></td>
+    <td valign="top" width="90%">Home page template for links to home after sessions
+      have been established.</td>
+  </tr>
+  <tr>
+    <td valign="top" width="10%"><a name="jsheader"> </a><span>jsheader.chnk</span></td>
+    <td valign="top" width="90%">Container for all Javascript code required for
+      navigation menus.</td>
+  </tr>
+  <tr>
+    <td valign="top" width="10%"><a name="navheader"> </a><span>navheader.chnk</span></td>
+    <td valign="top" width="90%">Container for all navigation/header HTML, inserted
+      in all template pages.</td>
+  </tr>
+  <tr>
+    <td valign="top" width="10%"><a name="newmaterial"> </a><span>newmaterial.tpl</span></td>
+    <td valign="top" width="90%">Informational page included in the UMDL Texts
+      portal site.</td>
+  </tr>
+  <tr>
+    <td valign="top" width="10%"><a name="note"> </a><span>note.tpl</span></td>
+    <td valign="top" width="90%">Displays contents of a note within a designated
+      target window.</td>
+  </tr>
+  <tr>
+    <td valign="top" width="10%"><a name="pageviewerframeset"> </a><span>pageviewer.frameset.tpl</span></td>
+    <td valign="top" width="90%">Draws the frameset for displaying documents
+      as page-facsimile-images.</td>
+  </tr>
+  <tr>
+    <td valign="top" width="10%"><a name="pageviewermain"> </a><span>pageviewer.main.tpl</span></td>
+    <td valign="top" width="90%">Main frame of pageviewer.frameset containing
+      the current page image.</td>
+  </tr>
+  <tr>
+    <td valign="top" width="10%"><a name="pageviewernav"> </a><span>pageviewer.nav.tpl</span></td>
+    <td valign="top" width="90%">Top frame of pageviewer.frameset containing
+      site header cells</td>
+  </tr>
+  <tr>
+    <td valign="top" width="10%"><a name="pageviewer"> </a><span>pageviewer.pagenav.tpl</span></td>
+    <td valign="top" width="90%">Middle frame of pageviewer.frameset, containing
+      navigation bar and document navigation elements.</td>
+  </tr>
+  <tr>
+    <td valign="top" width="10%"><a name="picklist"> </a><span>picklist.tpl</span></td>
+    <td valign="top" width="90%">For incidences where an id reference to a document
+      may be incomplete, producing a list of documents with ids that contain
+      the id reference. The template generates a list of possible documents as
+      a linked list. Replaces both pageviewer.picklist.tpl and text.picklist.tpl</td>
+  </tr>
+  <tr>
+    <td valign="top" width="10%"><a name="proximitysearchform"> </a><span>proximitysearchform.chnk</span></td>
+    <td valign="top" width="90%">Supplies the form HTML for proximity searching
+      within [a] specified collection[s]. Works with search.tpl; together replacing
+      proximity.tpl and proximityext.tpl</td>
+  </tr>
+  <tr>
+    <td valign="top" width="10%"><a name="reslist"> </a><span>reslist.tpl</span></td>
+    <td valign="top" width="90%">Displays results for searches against one or
+      more collections.</td>
+  </tr>
+  <tr>
+    <td valign="top" width="10%"><a name="search"> </a><span>search.tpl</span></td>
+    <td valign="top" width="90%">Container HTML for all forms providing searches
+      for collection[s].</td>
+  </tr>
+  <tr>
+    <td valign="top" width="10%"><a name="searchhistory"> </a><span>searchhistory.tpl</span></td>
+    <td valign="top" width="90%">Displays a search history for the current session
+      as a table, containing, in one table, the successfully submitted queries
+      as links for resubmission.</td>
+  </tr>
+  <tr>
+    <td valign="top" width="10%"><a name="simplesearchform"> </a><span>simplesearchform.chnk</span></td>
+    <td valign="top" width="90%">Supplies the form HTML for basic searching within
+      [a] specified collection[s]. Works with search.tpl; together replacing
+      simple.tpl and simpleext.tpl</td>
+  </tr>
+  <tr>
+    <td valign="top" width="10%"><a name="text"> </a><span>text.tpl</span></td>
+    <td valign="top" width="90%">Displays any requested portion of a fully encoded
+      text. </td>
+  </tr>
+  <tr>
+    <td valign="top" width="10%"><a name="viewtextnote"> </a><span>viewtextnote.tpl</span></td>
+    <td valign="top" width="90%">Displays a warning note when the &quot;view
+      entire text&quot; link is selected from a bibliographic header page.</td>
+  </tr>
+  <tr>
+    <td valign="top" width="10%"><a name="wwfull"> </a><span>ww-full.tpl</span></td>
+    <td valign="top" width="90%">Container HTML for the word index form after
+      a word index has been started. References components <span>ww-fullnewsearchform.chnk</span> and <span>ww-fullscrollform.chnk</span></td>
+  </tr>
+  <tr>
+    <td valign="top" width="10%"><a name="wwfullnewsearchform"> </a><span>ww-fullnewsearchform.chnk</span></td>
+    <td valign="top" width="90%">Provides the form HTML for a new word wheel
+      search option in a current word wheel form. Referenced from ww-full.tpl</td>
+  </tr>
+  <tr>
+    <td valign="top" width="10%"><a name="wwfullscrollform"> </a><span>ww-fullscrollform.chnk</span></td>
+    <td valign="top" width="90%">Provides the HTML content for the full word
+      wheel scroll list to ww-full.tpl</td>
+  </tr>
+  <tr>
+    <td valign="top" width="10%"><a name="wwstart"> </a><span>ww-start.tpl</span></td>
+    <td valign="top" width="90%">Word index initial form. displays an input box
+      or linked index for entering a word index.</td>
+  </tr>
+</table>
+<p>&nbsp; 
+<p><a name="tcPis"></a> 
+<h3 align="left">Text Class Processing Instructions</h3>
+<div class="level1"></div>
+<p>The following table includes descriptions of all the processing instructions 
+  that appear in TextClass templates, as well as links to descriptions of the 
+  relevant template files in which they appear. </p>
+<table border="1" cellpadding="5" cellspacing="0" frame="border" rules="all" style="border-width: 1px; border-color: #cccccc" width="100%">
+  <thead>
+    <tr>
+      <th align="left" width="25%">PI tag</th>
+      <th valign="top" width="12%">Optional parameters</th>
+      <th valign="top" width="13%">Associated templates</th>
+      <th valign="top" width="50%">Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td valign="top" width="25%">&lt;?BBAG_BOOLEAN_SEARCH_LINK&gt;</td>
+      <td valign="top" width="12%">&nbsp;</td>
+      <td valign="top" width="13%"><a href="#bbagemail">bbagemail.tpl</a><br />
+          <a href="#bbaglist">bbaglist.tpl</a><br />
+          <a href="#bbagproximitysearchform">bbagproximitysearchform.chnk</a><br />
+          <a href="#bbagsimplesearchform">bbagsimplesearchform.chnk</a><br>
+      </td>
+      <td valign="top" width="50%">Provides the <code>HREF</code> URL for the &quot;Boolean&quot; search
+        within book bag link.</td>
+    </tr>
+    <tr>
+      <td valign="top" width="25%">&lt;?BBAG_PROXIMITY_SEARCH_LINK&gt;</td>
+      <td valign="top" width="12%">&nbsp;</td>
+      <td valign="top" width="13%"><a href="#bbagemail">bbagemail.tpl</a><br>
+          <a href="#bbaglist">bbaglist.tpl</a><br>
+          <a href="#bbagbooleansearchform">bbagbooleansearchform.chnk</a><br />
+          <a href="#bbagsimplesearchform">bbagsimplesearchform.chnk</a><br />
+      </td>
+      <td valign="top" width="50%">Provides the <code>HREF</code> URL for the &quot;proximity&quot; search
+        within book bag link.</td>
+    </tr>
+    <tr>
+      <td valign="top" width="25%">&lt;?BBAG_SIMPLE_SEARCH_LINK&gt;</td>
+      <td valign="top" width="12%">&nbsp;</td>
+      <td valign="top" width="13%"><a href="#bbagemail">bbagemail.tpl</a><br>
+          <a href="#bbaglist">bbaglist.tpl</a><br>
+          <a href="#bbagbooleansearchform">bbagbooleansearchform.chnk</a><br />
+          <a href="#bbagsimplesearchform">bbagsimplesearchform.chnk</a><br />
+      </td>
+      <td valign="top" width="50%">Provides the <code>HREF</code> URL for the &quot;simple&quot; search
+        within book bag link.</td>
+    </tr>
+    <tr>
+      <td valign="top" width="25%">&lt;?BIB_SEARCH_LINK&gt;</td>
+      <td valign="top" width="12%">&nbsp;</td>
+      <td valign="top" width="13%"><a href="#bbaglist">bbaglist.tpl</a><br>
+          <a href="#pageviewerpagenav">pageviewer.pagenav.tpl</a><br>
+          <a href="#navheader">navheader.chnk</a><br />
+      </td>
+      <td valign="top" width="50%">Provides the <code>HREF</code> URL for the &quot;citation&quot; search
+        form link in the main or footer navigation bar.</td>
+    </tr>
+    <tr>
+      <td valign="top">&lt;?BOOKBAG_ADD_REMOVE_ITEM&gt;</td>
+      <td valign="top">&nbsp;</td>
+      <td valign="top"><a href="#header">header.tpl</a></td>
+      <td valign="top">Used to insert a full link from a bibliographic header
+        page for adding the current item to the book bag. </td>
+    </tr>
+    <tr>
+      <td valign="top" width="25%">&lt;?BOOKBAG_DOWNLOAD&gt;</td>
+      <td valign="top" width="12%">&nbsp;</td>
+      <td valign="top" width="13%"><a href="#bbagemail">bbagemail.tpl</a><br>
+          <a href="#bbaglist">bbaglist.tpl</a><br>
+      </td>
+      <td valign="top" width="50%">Used to insert a button to download book bag
+        contents.</td>
+    </tr>
+    <tr>
+      <td valign="top" width="25%">&lt;?BOOKBAG_EMAIL&gt;</td>
+      <td valign="top" width="12%">&nbsp;</td>
+      <td valign="top" width="13%"><a href="#bbaglist">bbaglist.tpl</a><br>
+      </td>
+      <td valign="top" width="50%">Used to insert a button to email book bag
+        contents.</td>
+    </tr>
+    <tr>
+      <td valign="top" width="25%">&lt;?BOOKBAG_EMPTY&gt;</td>
+      <td valign="top" width="12%">&nbsp;</td>
+      <td valign="top" width="13%"><a href="#bbagemail">bbagemail.tpl</a><br>
+          <a href="#bbaglist">bbaglist.tpl</a><br>
+      </td>
+      <td valign="top" width="50%">Used to insert a button for removing all book
+        bag contents.</td>
+    </tr>
+    <tr>
+      <td valign="top" width="25%">&lt;?BOOKBAG_ITEMS&gt;</td>
+      <td valign="top" width="12%">&nbsp;</td>
+      <td valign="top" width="13%"><a href="#bbagemail">bbagemail.tpl</a><br>
+          <a href="#bbaglist">bbaglist.tpl</a><br>
+          <a href="#browsetemplate">browse_template.tpl</a><br>
+          <a href="#pageviewernav">pageviewer.nav.tpl</a><br>
+        <a href="#navheader">navheader.chnk</a></td>
+      <td valign="top" width="50%">Used to insert the book bag items count in
+        the current page.</td>
+    </tr>
+    <tr>
+      <td valign="top" width="25%">&lt;?BOOKBAG_LINK&gt;</td>
+      <td valign="top" width="12%">&nbsp;</td>
+      <td valign="top" width="13%"><a href="#browsetemplate">browse_template.tpl</a><br>
+          <a href="#pageviewernav">pageviewer.nav.tpl</a><br>
+          <a href="#navheader">navheader.chnk</a><br />
+      </td>
+      <td valign="top" width="50%">Provides the <code>HREF</code> URL for the &quot;view
+        bookbag&quot; link in a page.</td>
+    </tr>
+    <tr>
+      <td valign="top" width="25%">&lt;?BOOKBAG_RESULTS&gt;</td>
+      <td valign="top" width="12%">&nbsp;</td>
+      <td valign="top" width="13%"><a href="#bbaglist">bbaglist.tpl</a><br>
+      </td>
+      <td valign="top" width="50%">Used to insert all current book bag items
+        within table <code>&lt;TR&gt;</code> and <code>&lt;TD&gt;</code> tags.</td>
+    </tr>
+    <tr>
+      <td valign="top" width="25%">&lt;?BOOLEAN_SEARCH_LINK&gt;</td>
+      <td valign="top" width="12%">&nbsp;</td>
+      <td valign="top" width="13%"><a href="#bbaglist">bbaglist.tpl</a><br>
+          <a href="#pageviewerpagenav">pageviewer.pagenav.tpl</a><br>
+          <a href="#bibsearchform">bibsearchform.chnk</a><br />
+          <a href="#navheader">navheader.chnk</a><br />
+      </td>
+      <td valign="top" width="50%">Provides the <code>HREF</code> URL for the &quot;boolean&quot; search
+        form link in the main or footer navigation bar.</td>
+    </tr>
+    <tr>
+      <td valign="top" width="25%">&lt;?BOOLEAN_SEARCH_WITHIN_LINK&gt;</td>
+      <td valign="top" width="12%">&nbsp;</td>
+      <td valign="top" width="13%"><a href="#header">header.tpl</a><br>
+      </td>
+      <td valign="top" width="50%">Provides the <code>HREF</code> attribute value
+        for the &quot;boolean&quot; search within this item link.</td>
+    </tr>
+    <tr>
+      <td valign="top" width="25%">&lt;?BROWSE_GROUPS_LINK&gt;</td>
+      <td valign="top" width="12%">&nbsp;</td>
+      <td valign="top" width="13%"><a href="#search">search.tpl</a><br>
+      </td>
+      <td valign="top" width="50%">Provides the <code>HREF</code> value for a
+        link back to the browse groups page from the <a href="#search">search.tpl</a> page.</td>
+    </tr>
+    <tr>
+      <td valign="top" width="25%">&lt;?CHUNK&gt;</td>
+      <td valign="top" width="12%"> filename="[value]"</td>
+      <td valign="top" width="13%"><a href="#bbagsearch">bbagsearch.tpl</a><br>
+          <a href="#browsecolls">browsecolls.tpl</a><br>
+          <a href="#header">header.tpl</a><br>
+          <a href="#pageviewerpagenav">pageviewer.pagenav.tpl</a><br>
+          <a href="#picklist">picklist.tpl</a><br>
+          <a href="#reslist">reslist.tpl</a><br>
+          <a href="#search">search.tpl</a><br>
+          <a href="#searchhistory">searchhistory.tpl</a><br>
+          <a href="#text">text.tpl</a><br>
+          <a href="#wwfull">ww-full.tpl</a><br>
+          <a href="#wwstart">ww-start.tpl</a><br>
+          <a href="#bbagsearch">bbagsearch.tpl</a><br>
+          <a href="#browsecolls">browsecolls.tpl</a><br>
+          <a href="#header">header.tpl</a><br>
+          <a href="#picklist">picklist.tpl</a><br>
+          <a href="#reslist">reslist.tpl</a><br>
+          <a href="#search">search.tpl</a><br>
+          <a href="#searchhistory">searchhistory.tpl</a><br>
+          <a href="#text">text.tpl</a><br>
+          <a href="#wwfull">ww-full.tpl</a><br>
+          <a href="#wwstart">ww-start.tpl</a><br>
+          <a href="#wwfull">ww-full.tpl</a><br>
+          <a href="#bbagsearch">bbagsearch.tpl</a><br>
+          <a href="#search">search.tpl</a><br>
+      </td>
+      <td valign="top" width="50%">Resolves to a chunk file specified in the <code>filename</code> attribute</td>
+    </tr>
+    <tr>
+      <td valign="top" width="25%">&lt;?COLL_LIST_WITH_CHECKBOXES&gt;</td>
+      <td valign="top" width="12%">&nbsp;</td>
+      <td valign="top" width="13%"><a href="#search">search.tpl</a><br>
+      </td>
+      <td valign="top" width="50%">On multiple collection search forms, used
+        to insert the table of available collections with check boxes for selecting
+        or deselecting.</td>
+    </tr>
+    <tr>
+      <td valign="top" width="25%">&lt;?COLL_SPECIFIC_CONTENT &gt;</td>
+      <td valign="top" width="12%">id="navbarbrowselink" <br />
+        cginame="[value]"</td>
+      <td valign="top" width="13%"><a href="#pageviewerpagenav">pageviewer.pagenav.tpl</a><br>
+          <a href="#bbagsearch">bbagsearch.tpl</a><br>
+      </td>
+      <td valign="top" width="50%"> Provides the <code>HREF</code> URL for a
+        collection specific (e.g., browse) navigation link in main nav bar or
+        footer nav bar. </td>
+    </tr>
+    <tr>
+      <td valign="top" width="25%">&lt;?CONTACT&gt;</td>
+      <td valign="top" width="12%"> type="[ link | text ]"</td>
+      <td valign="top" width="13%"><a href="#bbagsearch">bbagsearch.tpl</a><br>
+          <a href="#browsecolls">browsecolls.tpl</a><br>
+          <a href="#header">header.tpl</a><br>
+          <a href="#reslist">reslist.tpl</a><br>
+          <a href="#search">search.tpl</a><br>
+          <a href="#searchhistory">searchhistory.tpl</a><br>
+          <a href="#text">text.tpl</a><br>
+          <a href="#wwfull">ww-full.tpl</a><br>
+          <a href="#wwstart">ww-start.tpl</a><br>
+      </td>
+      <td valign="top" width="50%">If <code>type=&quot;text&quot;</code> returns
+        the text contact of the contact link. If <code>type=&quot;link&quot;</code> provides
+        the HREF value for the link</td>
+    </tr>
+    <tr>
+      <td valign="top" width="25%">&lt;?DOC_ROOT&gt;</td>
+      <td valign="top" width="12%">&nbsp;</td>
+      <td valign="top" width="13%"><a href="#accesspolicy">accesspolicy.tpl</a><br>
+          <a href="#bbagemail">bbagemail.tpl</a><br>
+          <a href="#bbaglist">bbaglist.tpl</a><br>
+          <a href="#bbagsearch">bbagsearch.tpl</a><br>
+          <a href="#browsetemplate">browse_template.tpl</a><br>
+          <a href="#browsecolls">browsecolls.tpl</a><br>
+          <a href="#header">header.tpl</a><br>
+          <a href="#home">home.tpl</a><br>
+          <a href="#newmaterial">newmaterial.tpl</a><br>
+          <a href="#note">note.tpl</a><br>
+          <a href="#pageviewermain">pageviewer.main.tpl</a><br>
+          <a href="#pageviewernav">pageviewer.nav.tpl</a><br>
+          <a href="#pageviewerpagenav">pageviewer.pagenav.tpl</a><br>
+          <a href="#picklist">picklist.tpl</a><br>
+          <a href="#reslist">reslist.tpl</a><br>
+          <a href="#search">search.tpl</a><br>
+          <a href="#searchhistory">searchhistory.tpl</a><br>
+          <a href="#text">text.tpl</a><br>
+          <a href="#viewtextnote">viewtextnote.tpl</a><br>
+          <a href="#wwfull">ww-full.tpl</a><br>
+          <a href="#wwstart">ww-start.tpl</a><br>
+          <br>
+      </td>
+      <td valign="top" width="50%">Used to insert the appropriate root path for
+        the collection accessing the template for relative file reference.</td>
+    </tr>
+    <tr>
+      <td valign="top" width="25%">&lt;?FIGURES&gt;</td>
+      <td valign="top" width="12%">&nbsp;</td>
+      <td valign="top" width="13%"><a href="#pageviewermain">pageviewer.main.tpl</a><br>
+      </td>
+      <td valign="top" width="50%">Returns HTML containing thumbnails with links
+        to continuous tone images associated with bi-tonal page facsimile page
+        images.</td>
+    </tr>
+    <tr>
+      <td valign="top" width="25%">&lt;?GO_TO_XCOLL&gt;</td>
+      <td valign="top" width="12%">&nbsp;</td>
+      <td valign="top" width="13%"><a href="#browsetemplate">browse_template.tpl</a><br>
+          <a href="#pageviewernav">pageviewer.nav.tpl</a><br>
+          <a href="#navheader">navheader.chnk</a><br />
+      </td>
+      <td valign="top" width="50%">Provides the <code>HREF</code> URL for the &quot;multiple
+        collection search&quot; link in a page.</td>
+    </tr>
+    <tr>
+      <td valign="top" width="25%">&lt;?GOTO_GIF&gt;</td>
+      <td valign="top" width="12%">&nbsp;</td>
+      <td valign="top" width="13%"><a href="#pageviewerpagenav">pageviewer.pagenav.tpl</a><br>
+      </td>
+      <td valign="top" width="50%">Returns HTML for referenceing the bitmapped
+        text label in <a href="#pageviewerpagenav">pageviewer.pagenav.tpl</a></td>
+    </tr>
+    <tr>
+      <td valign="top" width="25%">&lt;?GRAPHICS_PATH&gt;</td>
+      <td valign="top" width="12%"> filename="[value]"</td>
+      <td valign="top" width="13%"><a href="#accesspolicy">accesspolicy.tpl</a><br />
+          <a href="#browsetemplate">browse_template.tpl</a><br>
+          <a href="#home">home.tpl</a><br>
+          <a href="#newmaterial">newmaterial.tpl</a><br>
+          <a href="#browsecolls">browsecolls.tpl</a><br>
+          <a href="#header">header.tpl</a><br>
+          <a href="#reslist">reslist.tpl</a><br>
+          <a href="#searchhistory">searchhistory.tpl</a><br>
+          <a href="#text">text.tpl</a><br>
+          <a href="#pageviewerpagenav">pageviewer.pagenav.tpl</a><br>
+      </td>
+      <td valign="top" width="50%">Used to insert the appropriate path and filename
+        for a graphics file. </td>
+    </tr>
+    <tr>
+      <td valign="top" width="25%">&lt;?GROUP_IN_FOCUS_NAME&gt;</td>
+      <td valign="top" width="12%">&nbsp;</td>
+      <td valign="top" width="13%"><a href="#search">search.tpl</a><br>
+      </td>
+      <td valign="top" width="50%">Returns the name of the currently selected
+        group that is being searched for the <a href="#search">search.tpl</a> page.</td>
+    </tr>
+    <tr>
+      <td valign="top" width="25%">&lt;?GROUPS_COLLS_LIST&gt;</td>
+      <td valign="top" width="12%">&nbsp;</td>
+      <td valign="top" width="13%"><a href="#browsecolls">browsecolls.tpl</a><br>
+      </td>
+      <td valign="top" width="50%">Returns the list of available group names
+        as links with associated collection names on the browse collections page.</td>
+    </tr>
+    <tr>
+      <td valign="top" width="25%">&lt;?GROUPS_SELECTION_NAV&gt;</td>
+      <td valign="top" width="12%">&nbsp;</td>
+      <td valign="top" width="13%"><a href="#search">search.tpl</a><br>
+      </td>
+      <td valign="top" width="50%">Used to filter in/out HTML for the groups
+        selection menu in the <a href="#search">search.tpl</a> page.</td>
+    </tr>
+    <tr>
+      <td valign="top" width="25%">&lt;?GUIDE_FRAME&gt;</td>
+      <td valign="top" width="12%">&nbsp;</td>
+      <td valign="top" width="13%"><a href="#reslist">reslist.tpl</a><br>
+      </td>
+      <td valign="top" width="50%">Used to filter out HTML markup for the per-collection
+        results summary from the results page when only one collection has been
+        searched.</td>
+    </tr>
+    <tr>
+      <td valign="top" width="25%">&lt;?GUIDE_RESULTS_LINKS&gt;</td>
+      <td valign="top" width="12%">&nbsp;</td>
+      <td valign="top" width="13%"><a href="#reslist">reslist.tpl</a><br>
+      </td>
+      <td valign="top" width="50%">That portion of the per-collection results
+        summary code that inserts links for viewing results detail for each collection.</td>
+    </tr>
+    <tr>
+      <td valign="top" width="25%">&lt;?HEADER&gt;</td>
+      <td valign="top" width="12%">&nbsp;</td>
+      <td valign="top" width="13%"><a href="#header">header.tpl</a><br>
+      </td>
+      <td valign="top" width="50%">Used to insert bibliographic information on
+        a particular book within table &lt;TR&gt; and &lt;TD&gt; tags.</td>
+    </tr>
+    <tr>
+      <td valign="top" width="25%">&lt;?HEADER_TOC&gt;</td>
+      <td valign="top" width="12%">&nbsp;</td>
+      <td valign="top" width="13%"><a href="#header">header.tpl</a><br>
+      </td>
+      <td valign="top" width="50%">Used to insert a linked table of contents
+        from a book header display to the text display.</td>
+    </tr>
+    <tr>
+      <td valign="top" width="25%">&lt;?HEADER_TOC_LABEL&gt;</td>
+      <td valign="top" width="12%">&nbsp;</td>
+      <td valign="top" width="13%"><a href="#header">header.tpl</a><br>
+      </td>
+      <td valign="top" width="50%">&nbsp;</td>
+    </tr>
+    <tr>
+      <td valign="top" width="25%">&lt;?HELP_LINK&gt;</td>
+      <td valign="top" width="12%">&nbsp;</td>
+      <td valign="top" width="13%"><a href="#bbaglist">bbaglist.tpl</a><br>
+          <a href="#browsetemplate">browse_template.tpl</a><br>
+          <a href="#pageviewerpagenav">pageviewer.pagenav.tpl</a><br>
+          <a href="#navheader">navheader.chnk</a><br />
+          <a href="#simplesearchform">simplesearchform.chnk</a><br />
+      </td>
+      <td valign="top" width="50%">Provides the <code>HREF</code> URL for the &quot;help&quot; link
+        in the main or footer navigation bar.</td>
+    </tr>
+    <tr>
+      <td valign="top" width="25%">&lt;?HIDDEN_BOOKBAG&gt;</td>
+      <td valign="top" width="12%">&nbsp;</td>
+      <td valign="top" width="13%"><a href="#search">search.tpl</a><br>
+          <a href="#wwfull">ww-full.tpl</a><br>
+          <a href="#wwstart">ww-start.tpl</a><br>
+          <a href="#bbagbooleansearchform">bbagbooleansearchform.chnk</a><br />
+          <a href="#bbagproximitysearchform">bbagproximitysearchform.chnk</a><br />
+          <a href="#bbagsimplesearchform">bbagsimplesearchform.chnk</a><br />
+      </td>
+      <td valign="top" width="50%">&nbsp;</td>
+    </tr>
+    <tr>
+      <td valign="top">&lt;?HIDDEN_CHECKED_ITEMS&gt;</td>
+      <td valign="top">&nbsp;</td>
+      <td valign="top"><a href="#fullscrollform">fullscrollform.chnk</a></td>
+      <td valign="top">Used to insert one or more hidden INPUT elements into
+        a word index form to retain values checked in the index in previous pages. </td>
+    </tr>
+    <tr>
+      <td valign="top" width="25%">&lt;?HIDDEN_DEBUG&gt;</td>
+      <td valign="top" width="12%">&nbsp;</td>
+      <td valign="top" width="13%"><a href="#search">search.tpl</a><br>
+          <a href="#wwfull">ww-full.tpl</a><br>
+          <a href="#wwstart">ww-start.tpl</a><br>
+      </td>
+      <td valign="top" width="50%">&nbsp;</td>
+    </tr>
+    <tr>
+      <td valign="top" width="25%">&lt;?HIDDEN_G&gt;</td>
+      <td valign="top" width="12%">&nbsp;</td>
+      <td valign="top" width="13%"><a href="#pageviewerpagenav">pageviewer.pagenav.tpl</a><br>
+          <a href="#search">search.tpl</a><br>
+          <a href="#wwfull">ww-full.tpl</a><br>
+          <a href="#wwstart">ww-start.tpl</a><br>
+          <a href="#bbagbooleansearchform">bbagbooleansearchform.chnk</a><br />
+          <a href="#bbagproximitysearchform">bbagproximitysearchform.chnk</a><br />
+          <a href="#bbagsimplesearchform">bbagsimplesearchform.chnk</a><br />
+          <a href="#fullnewsearchform">fullnewsearchform.chnk</a><br />
+          <a href="#fullscrollform">fullscrollform.chnk</a><br />
+      </td>
+      <td valign="top" width="50%">Returns a hidden form variable indicating
+        the current group.</td>
+    </tr>
+    <tr>
+      <td valign="top" width="25%">&lt;?HIDDEN_IDNO&gt;</td>
+      <td valign="top" width="12%">&nbsp;</td>
+      <td valign="top" width="13%"><a href="#pageviewerpagenav">pageviewer.pagenav.tpl</a><br>
+          <a href="#search">search.tpl</a><br>
+          <a href="#wwfull">ww-full.tpl</a><br>
+          <a href="#wwstart">ww-start.tpl</a><br>
+      </td>
+      <td valign="top" width="50%">Returns a hidden form variable indicating
+        current item id number.</td>
+    </tr>
+    <tr>
+      <td valign="top">&lt;?HIDDEN_REQUESTED_CHARTYPE&gt;</td>
+      <td valign="top">&nbsp;</td>
+      <td valign="top"><a href="#fullnewsearchform">fullnewsearchform.chnk</a><br />
+          <a href="#fullscrollform">fullscrollform.chnk</a><br />
+      </td>
+      <td valign="top">&nbsp;</td>
+    </tr>
+    <tr>
+      <td valign="top" width="25%">&lt;?HIDDEN_REQUESTED_COLLECTIONS&gt;</td>
+      <td valign="top" width="12%">&nbsp;</td>
+      <td valign="top" width="13%"><a href="#pageviewerpagenav">pageviewer.pagenav.tpl</a><br>
+          <a href="#search">search.tpl</a><br>
+          <a href="#wwfull">ww-full.tpl</a><br>
+          <a href="#wwstart">ww-start.tpl</a><br>
+          <a href="#bbagbooleansearchform">bbagbooleansearchform.chnk</a><br />
+          <a href="#bbagproximitysearchform">bbagproximitysearchform.chnk</a><br />
+          <a href="#bbagsimplesearchform">bbagsimplesearchform.chnk</a><br />
+      </td>
+      <td valign="top" width="50%">Used to insert a hidden INPUT element into
+        a search form storing the currently selected collection[s].</td>
+    </tr>
+    <tr>
+      <td valign="top">&lt;?HIDDEN_REQUESTED_REALM&gt;</td>
+      <td valign="top">&nbsp;</td>
+      <td valign="top"><a href="#fullnewsearchform">fullnewsearchform.chnk</a><br />
+          <a href="#fullscrollform">fullscrollform.chnk</a><br />
+      </td>
+      <td valign="top">Used to insert a hidden INPUT element in a word index
+        form to indicate the search region for the index terms.</td>
+    </tr>
+    <tr>
+      <td valign="top">&lt;?HIDDEN_REQUESTED_TOPBOTTOM&gt;</td>
+      <td valign="top">&nbsp;</td>
+      <td valign="top"><a href="#fullscrollform">fullscrollform.chnk</a><br />
+      </td>
+      <td valign="top">Used to insert hidden INPUT elements in a word index form
+        to indicate the top and bottom terms in the current slice of the word
+        index.</td>
+    </tr>
+    <tr>
+      <td valign="top" width="25%">&lt;?HIDDEN_SID&gt;</td>
+      <td valign="top" width="12%">&nbsp;</td>
+      <td valign="top" width="13%"><a href="#pageviewerpagenav">pageviewer.pagenav.tpl</a><br>
+          <a href="#search">search.tpl</a><br>
+          <a href="#wwfull">ww-full.tpl</a><br>
+          <a href="#wwstart">ww-start.tpl</a><br>
+          <a href="#bbagbooleansearchform">bbagbooleansearchform.chnk</a><br />
+          <a href="#bbagproximitysearchform">bbagproximitysearchform.chnk</a><br />
+          <a href="#bbagsimplesearchform">bbagsimplesearchform.chnk</a><br />
+          <a href="#fullnewsearchform">fullnewsearchform.chnk</a><br />
+          <a href="#fullscrollform">fullscrollform.chnk</a><br />
+      </td>
+      <td valign="top" width="50%">Used to insert hidden INPUT form elements
+        indicating the current session id.</td>
+    </tr>
+    <tr>
+      <td valign="top" width="25%">&lt;?HIDDEN_SORT_VARS&gt;</td>
+      <td valign="top" width="12%">&nbsp;</td>
+      <td valign="top" width="13%"><a href="#reslist">reslist.tpl</a><br>
+      </td>
+      <td valign="top" width="50%">&nbsp;</td>
+    </tr>
+    <tr>
+      <td valign="top" width="25%">&lt;?HIDDEN_VARS&gt;</td>
+      <td valign="top" width="12%">&nbsp;</td>
+      <td valign="top" width="13%"><a href="#bbagemail">bbagemail.tpl</a><br>
+      </td>
+      <td valign="top" width="50%">&nbsp;</td>
+    </tr>
+    <tr>
+      <td valign="top" width="25%">&lt;?HIDDEN_XC&gt;</td>
+      <td valign="top" width="12%">&nbsp;</td>
+      <td valign="top" width="13%"><a href="#pageviewerpagenav">pageviewer.pagenav.tpl</a><br>
+          <a href="#search">search.tpl</a><br>
+          <a href="#wwfull">ww-full.tpl</a><br>
+          <a href="#wwstart">ww-start.tpl</a><br>
+          <a href="#bbagbooleansearchform">bbagbooleansearchform.chnk</a><br />
+          <a href="#bbagproximitysearchform">bbagproximitysearchform.chnk</a><br />
+          <a href="#bbagsimplesearchform">bbagsimplesearchform.chnk</a><br />
+          <a href="#fullnewsearchform">fullnewsearchform.chnk</a><br />
+          <a href="#fullscrollform">fullscrollform.chnk</a><br />
+      </td>
+      <td valign="top" width="50%">&nbsp;</td>
+    </tr>
+    <tr>
+      <td valign="top" width="25%">&lt;?HIDDEN_XG&gt;</td>
+      <td valign="top" width="12%">&nbsp;</td>
+      <td valign="top" width="13%"><a href="#search">search.tpl</a><br>
+          <a href="#wwfull">ww-full.tpl</a><br>
+          <a href="#wwstart">ww-start.tpl</a><br>
+          <a href="#bbagbooleansearchform">bbagbooleansearchform.chnk</a><br />
+          <a href="#bbagproximitysearchform">bbagproximitysearchform.chnk</a><br />
+          <a href="#bbagsimplesearchform">bbagsimplesearchform.chnk</a><br />
+      </td>
+      <td valign="top" width="50%">&nbsp;</td>
+    </tr>
+    <tr>
+      <td valign="top" width="25%">&lt;?HOME_LINK&gt;</td>
+      <td valign="top" width="12%">&nbsp;</td>
+      <td valign="top" width="13%"><a href="#accesspolicy">accesspolicy.tpl</a><br>
+          <a href="#browsetemplate">browse_template.tpl</a><br>
+          <a href="#newmaterial">newmaterial.tpl</a><br>
+          <a href="#pageviewernav">pageviewer.nav.tpl</a><br>
+          <a href="#pageviewerpagenav">pageviewer.pagenav.tpl</a><br>
+        <a href="#navheader">navheader.chnk</a></td>
+      <td valign="top" width="50%">Returns the <code>HREF</code> value for a
+        link going to the collection/group home.</td>
+    </tr>
+    <tr>
+      <td valign="top" width="25%">&lt;?INCLUDE_BOOKBAG_SEARCH_LINKS&gt;</td>
+      <td valign="top" width="12%">&nbsp;</td>
+      <td valign="top" width="13%"><a href="#bbagemail">bbagemail.tpl</a><br>
+          <a href="#bbaglist">bbaglist.tpl</a><br>
+      </td>
+      <td valign="top" width="50%">Used to insert or exclude HTML markup for
+        optional search links on book bag contents and/or email forms.</td>
+    </tr>
+    <tr>
+      <td valign="top" width="25%">&lt;?INCLUDE_COLL_LIST_WITH_CHECKBOXES&gt;</td>
+      <td valign="top" width="12%">&nbsp;</td>
+      <td valign="top" width="13%"><a href="#search">search.tpl</a><br>
+          <a href="#wwfull">ww-full.tpl</a><br>
+          <a href="#wwstart">ww-start.tpl</a><br>
+      </td>
+      <td valign="top" width="50%">Used in <a href="#search">search.tpl</a> to
+        filter in/out HTML markup containing the current colletions for the selected
+        group.</td>
+    </tr>
+    <tr>
+      <td valign="top" width="25%">&lt;?INCLUDE_COLL_SPECIFIC_CONTENT&gt;</td>
+      <td valign="top" width="12%">id="[value]"</td>
+      <td valign="top" width="13%"><a href="#bbagsearch">bbagsearch.tpl</a><br>
+          <a href="#pageviewerpagenav">pageviewer.pagenav.tpl</a><br>
+      </td>
+      <td valign="top" width="50%">Used to include or exclude navigation link
+        code for features that are available only for certain collections.</td>
+    </tr>
+    <tr>
+      <td valign="top" width="25%">&lt;?INCLUDE_DETAIL_DISPLAY_ITEMS&gt;</td>
+      <td valign="top" width="12%">&nbsp;</td>
+      <td valign="top" width="13%"><a href="#reslist">reslist.tpl</a><br>
+      </td>
+      <td valign="top" width="50%">&nbsp;</td>
+    </tr>
+    <tr>
+      <td valign="top" width="25%">&lt;?INCLUDE_GO_TO_XCOLL&gt;</td>
+      <td valign="top" width="12%">&nbsp;</td>
+      <td valign="top" width="13%"><a href="#browsetemplate">browse_template.tpl</a><br>
+          <a href="#pageviewernav">pageviewer.nav.tpl</a><br>
+        <a href="#navheader">navheader.chnk</a></td>
+      <td valign="top" width="50%">&nbsp;</td>
+    </tr>
+    <tr>
+      <td valign="top" width="25%">&lt;?INCLUDE_GROUPS_SELECTION_NAV&gt;</td>
+      <td valign="top" width="12%">&nbsp;</td>
+      <td valign="top" width="13%"><a href="#search">search.tpl</a><br>
+          <a href="#wwfull">ww-full.tpl</a><br>
+          <a href="#wwstart">ww-start.tpl</a><br>
+      </td>
+      <td valign="top" width="50%">&nbsp;</td>
+    </tr>
+    <tr>
+      <td valign="top">&lt;?INCLUDE_NON_RESTRICTED_SEARCH_LINKS&gt;</td>
+      <td valign="top">&nbsp;</td>
+      <td valign="top"><a href="#booleansearchform">booleansearchform.chnk</a><br />
+          <a href="#proximitysearchform">proximitysearchform.chnk</a><br />
+          <a href="#simplesearchform">simplesearchform.chnk</a><br />
+      </td>
+      <td valign="top">&nbsp;</td>
+    </tr>
+    <tr>
+      <td valign="top" width="25%">&lt;?INCLUDE_RETURN_TO_RESULTS&gt;</td>
+      <td valign="top" width="12%">&nbsp;</td>
+      <td valign="top" width="13%"><a href="#header">header.tpl</a><br>
+          <a href="#pageviewerpagenav">pageviewer.pagenav.tpl</a><br>
+          <a href="#reslist">reslist.tpl</a><br>
+          <a href="#text">text.tpl</a><br>
+      </td>
+      <td valign="top" width="50%">Returns a link to the current results list
+        from a header, text, or pageviewer display.</td>
+    </tr>
+    <tr>
+      <td valign="top" width="25%">&lt;?INCLUDE_SEARCH_TAB&gt;</td>
+      <td valign="top" width="12%">&nbsp;</td>
+      <td valign="top" width="13%"><a href="#pageviewerpagenav">pageviewer.pagenav.tpl</a><br>
+          <a href="#navheader">navheader.chnk</a><br />
+      </td>
+      <td valign="top" width="50%">Used to filter in/out HTML markup for the &quot;Search&quot; navigation
+        tab.</td>
+    </tr>
+    <tr>
+      <td valign="top" width="25%">&lt;?INCLUDE_SHORT_DISPLAY_ITEMS&gt;</td>
+      <td valign="top" width="12%">&nbsp;</td>
+      <td valign="top" width="13%"><a href="#reslist">reslist.tpl</a><br>
+      </td>
+      <td valign="top" width="50%">&nbsp;</td>
+    </tr>
+    <tr>
+      <td valign="top" width="25%">&lt;?INCLUDE_SIZE_SELECT&gt;</td>
+      <td valign="top" width="12%">&nbsp;</td>
+      <td valign="top" width="13%"><a href="#pageviewerpagenav">pageviewer.pagenav.tpl</a><br>
+      </td>
+      <td valign="top" width="50%">Used to include or exclude HTML code for a
+        page size menu in pageviewer.</td>
+    </tr>
+    <tr>
+      <td valign="top" width="25%">&lt;?JS_PATH&gt;</td>
+      <td valign="top" width="12%"> filename="[value]"</td>
+      <td valign="top" width="13%"><a href="#pageviewermain">pageviewer.main.tpl</a><br>
+          <a href="#bbagsearch">bbagsearch.tpl</a><br>
+          <a href="#browsetemplate">browse_template.tpl</a><br>
+          <a href="#browsecolls">browsecolls.tpl</a><br>
+          <a href="#header">header.tpl</a><br>
+          <a href="#search">search.tpl</a><br>
+          <a href="#searchhistory">searchhistory.tpl</a><br>
+          <a href="#wwfull">ww-full.tpl</a><br>
+          <a href="#wwstart">ww-start.tpl</a><br>
+          <a href="#note">note.tpl</a><br>
+          <a href="#picklist">picklist.tpl</a><br>
+          <a href="#text">text.tpl</a><br>
+      </td>
+      <td valign="top" width="50%">Returns the correct path to collection specific
+        or class default javascript file.</td>
+    </tr>
+    <tr>
+      <td valign="top" width="25%">&lt;?JS_REGION_ARRAYS&gt;</td>
+      <td valign="top" width="12%">&nbsp;</td>
+      <td valign="top" width="13%"><a href="#search">search.tpl</a><br>
+      </td>
+      <td valign="top" width="50%">Used in multiple search forms to provide Javascript
+        code for implementing the collection selecting functionality.</td>
+    </tr>
+    <tr>
+      <td valign="top" width="25%">&lt;?JUMP_TO_RESULTS_LABEL&gt;</td>
+      <td valign="top" width="12%">&nbsp;</td>
+      <td valign="top" width="13%"><a href="#header">header.tpl</a><br>
+      </td>
+      <td valign="top" width="50%">&nbsp;</td>
+    </tr>
+    <tr>
+      <td valign="top" width="25%">&lt;?MAIN_FRAME_SRC&gt;</td>
+      <td valign="top" width="12%">&nbsp;</td>
+      <td valign="top" width="13%"><a href="#pageviewerframeset">pageviewer.frameset.tpl</a><br>
+      </td>
+      <td valign="top" width="50%">Provides the <code>SRC</code> URL for the
+        page content frame in the pageviewer frameset.</td>
+    </tr>
+    <tr>
+      <td valign="top" width="25%">&lt;?NAV_FRAME_SRC&gt;</td>
+      <td valign="top" width="12%">&nbsp;</td>
+      <td valign="top" width="13%"><a href="#pageviewerframeset">pageviewer.frameset.tpl</a><br>
+      </td>
+      <td valign="top" width="50%">Provides the <code>SRC</code> URL for the
+        navigation frame in the pageviewer frameset.</td>
+    </tr>
+    <tr>
+      <td valign="top" width="25%">&lt;?NAV_TAB_STYLE_OVERRIDES&gt;</td>
+      <td valign="top" width="12%">&nbsp;</td>
+      <td valign="top" width="13%"><a href="#bbagsearch">bbagsearch.tpl</a><br>
+          <a href="#browsecolls">browsecolls.tpl</a><br>
+          <a href="#pageviewernav">pageviewer.nav.tpl</a><br>
+          <a href="#picklist">picklist.tpl</a><br>
+          <a href="#reslist">reslist.tpl</a><br>
+          <a href="#search">search.tpl</a><br>
+          <a href="#searchhistory">searchhistory.tpl</a><br>
+          <a href="#text">text.tpl</a><br>
+          <a href="#wwfull">ww-full.tpl</a><br>
+          <a href="#wwstart">ww-start.tpl</a><br>
+      </td>
+      <td valign="top" width="50%">Returns a <code>&lt;LINK&gt;</code> element
+        with path to a stylesheet containing appropriate style declarations for
+        the current navigation context (i.e., which tab is highlighted?).</td>
+    </tr>
+    <tr>
+      <td valign="top" width="25%">&lt;?NUMBER_OF_COLLECTIONS&gt;</td>
+      <td valign="top" width="12%">&nbsp;</td>
+      <td valign="top" width="13%"><a href="#home">home.tpl</a><br>
+      </td>
+      <td valign="top" width="50%">Previously used in search forms to indicate
+        the number of collections currently being searched.</td>
+    </tr>
+    <tr>
+      <td valign="top" width="25%">&lt;?ORG_INFO&gt;</td>
+      <td valign="top" width="12%"> type="[value]"</td>
+      <td valign="top" width="13%"><a href="#bbagsearch">bbagsearch.tpl</a><br>
+      </td>
+      <td valign="top" width="50%">&nbsp;</td>
+    </tr>
+    <tr>
+      <td valign="top" width="25%">&lt;?PAGE_IMAGE_OR_TEXT&gt;</td>
+      <td valign="top" width="12%">&nbsp;</td>
+      <td valign="top" width="13%"><a href="#pageviewermain">pageviewer.main.tpl</a><br>
+      </td>
+      <td valign="top" width="50%">Returns source for the content of the current
+        page in pageviewer, whether it be raw text or a facsimile page image.</td>
+    </tr>
+    <tr>
+      <td valign="top" width="25%">&lt;?PAGE_NAV_FRAME_SRC&gt;</td>
+      <td valign="top" width="12%">&nbsp;</td>
+      <td valign="top" width="13%"><a href="#pageviewerframeset">pageviewer.frameset.tpl</a><br>
+      </td>
+      <td valign="top" width="50%">Provides the <code>SRC</code> URL for the
+        document navigation frame in the pageviewer frameset.</td>
+    </tr>
+    <tr>
+      <td valign="top" width="25%">&lt;?PAGE_SELECT&gt;</td>
+      <td valign="top" width="12%"> onchange="[value]"</td>
+      <td valign="top" width="13%"><a href="#pageviewerpagenav">pageviewer.pagenav.tpl</a><br>
+      </td>
+      <td valign="top" width="50%">Used to insert the select menu for jumping
+        to a page in the current book in pageviewer.</td>
+    </tr>
+    <tr>
+      <td valign="top" width="25%">&lt;?PAGETYPE&gt;</td>
+      <td valign="top" width="12%">&nbsp;</td>
+      <td valign="top" width="13%"><a href="#search">search.tpl</a><br>
+      </td>
+      <td valign="top" width="50%">Returns text indicating the current search
+        type.</td>
+    </tr>
+    <tr>
+      <td valign="top" width="25%">&lt;?PICKLIST&gt;</td>
+      <td valign="top" width="12%">&nbsp;</td>
+      <td valign="top" width="13%"><a href="#picklist">picklist.tpl</a><br>
+      </td>
+      <td valign="top" width="50%">Used to insert a linked list of possible titles
+        to select for viewing in pageviewer or text display. </td>
+    </tr>
+    <tr>
+      <td valign="top" width="25%">&lt;?PREV_NEXT_ITEM_LINKS&gt;</td>
+      <td valign="top" width="12%">&nbsp;</td>
+      <td valign="top" width="13%"><a href="#reslist">reslist.tpl</a><br>
+      </td>
+      <td valign="top" width="50%">Used to insert <code>HREF</code> URL code
+        for the previous and next item when displaying results details for a
+        particular item.</td>
+    </tr>
+    <tr>
+      <td valign="top" width="25%">&lt;?PROXIMITY_SEARCH_LINK&gt;</td>
+      <td valign="top" width="12%">&nbsp;</td>
+      <td valign="top" width="13%"><a href="#bbaglist">bbaglist.tpl</a><br>
+          <a href="#pageviewerpagenav">pageviewer.pagenav.tpl</a><br>
+          <a href="#bibsearchform">bibsearchform.chnk</a><br />
+          <a href="#navheader">navheader.chnk</a><br />
+      </td>
+      <td valign="top" width="50%">Returns the <code>HREF</code> value for a
+        link to the proximity search form</td>
+    </tr>
+    <tr>
+      <td valign="top" width="25%">&lt;?PROXIMITY_SEARCH_WITHIN_LINK&gt;</td>
+      <td valign="top" width="12%">&nbsp;</td>
+      <td valign="top" width="13%"><a href="#header">header.tpl</a><br>
+      </td>
+      <td valign="top" width="50%">Provides the <code>HREF</code> attribute value
+        for the &quot;proximity&quot; search within this item link.</td>
+    </tr>
+    <tr>
+      <td valign="top" width="25%">&lt;?Q1_INPUT&gt;</td>
+      <td valign="top" width="12%"> size="[value]" <br />
+        class="[value]"</td>
+      <td valign="top" width="13%"><a href="#bbagbooleansearchform">bbagbooleansearchform.chnk</a><br />
+          <a href="#bbagbooleansearchform">bbagbooleansearchform.chnk</a><br />
+          <a href="#bbagproximitysearchform">bbagproximitysearchform.chnk</a><br />
+          <a href="#bbagsimplesearchform">bbagsimplesearchform.chnk</a><br />
+          <a href="#bibsearchform">bibsearchform.chnk</a><br />
+          <a href="#booleansearchform">booleansearchform.chnk</a><br />
+          <a href="#proximitysearchform">proximitysearchform.chnk</a><br />
+          <a href="#simplesearchform">simplesearchform.chnk</a><br />
+          <a href="#wwfullform">ww-fullform.chnk</a><br />
+          <a href="#wwfullnewsearchform">ww-fullnewsearchform.chnk</a><br />
+        <a href="#wwstart">ww-start.tpl</a> </td>
+      <td valign="top" width="50%">Used to insert an INPUT box into a search
+        form for the first query term.</td>
+    </tr>
+    <tr>
+      <td valign="top" width="25%">&lt;?RE_AUTH_LINK&gt;</td>
+      <td valign="top" width="12%">&nbsp;</td>
+      <td valign="top" width="13%"><a href="#browsetemplate">browse_template.tpl</a><br>
+          <a href="#home">home.tpl</a><br>
+          <a href="#pageviewernav">pageviewer.nav.tpl</a><br>
+          <a href="#navheader">navheader.chnk</a><br />
+      </td>
+      <td valign="top" width="50%">Provides the <code>HREF</code> URL for the &quot;Authorized
+        user login&quot; link from any page.</td>
+    </tr>
+    <tr>
+      <td valign="top" width="25%">&lt;?REFINE_SEARCH_LINK&gt;</td>
+      <td valign="top" width="12%">&nbsp;</td>
+      <td valign="top" width="13%"><a href="#reslist">reslist.tpl</a><br>
+      </td>
+      <td valign="top" width="50%">Returns a link to a results display to return
+        to a search form to refine the search.</td>
+    </tr>
+    <tr>
+      <td valign="top" width="25%">&lt;?RESULTS&gt;</td>
+      <td valign="top" width="12%">&nbsp;</td>
+      <td valign="top" width="13%"><a href="#reslist">reslist.tpl</a><br>
+      </td>
+      <td valign="top" width="50%">Inserts detailed results listings within table<code> &lt;TR&gt;</code> and <code>&lt;TD&gt;</code> tags</td>
+    </tr>
+    <tr>
+      <td valign="top" width="25%">&lt;?RETURN_TO_RESULTS&gt;</td>
+      <td valign="top" width="12%">&nbsp;</td>
+      <td valign="top" width="13%"><a href="#pageviewernav">pageviewer.nav.tpl</a> <br />
+          <a href="#reslist">reslist.tpl</a><br>
+      </td>
+      <td valign="top" width="50%">Used to insert an HTML link back to results
+        listings from the pageviewer.</td>
+    </tr>
+    <tr>
+      <td valign="top" width="25%">&lt;?SCOPEDNOTE&gt;</td>
+      <td valign="top" width="12%">&nbsp;</td>
+      <td valign="top" width="13%"><a href="#note">note.tpl</a><br>
+      </td>
+      <td valign="top" width="50%">Used to insert the content of a linked note
+        in a target window. </td>
+    </tr>
+    <tr>
+      <td valign="top" width="25%">&lt;?SCOPEDNOTE_EXTRA_CONTENT&gt;</td>
+      <td valign="top" width="12%">&nbsp;</td>
+      <td valign="top" width="13%"><a href="#note">note.tpl</a><br>
+      </td>
+      <td valign="top" width="50%">?</td>
+    </tr>
+    <tr>
+      <td valign="top" width="25%">&lt;?SCRIPT_NAME&gt;</td>
+      <td valign="top" width="12%"> cginame="[value]"</td>
+      <td valign="top" width="13%"><a href="#pageviewerpagenav">pageviewer.pagenav.tpl</a><br>
+          <a href="#accesspolicy">accesspolicy.tpl</a><br>
+          <a href="#bbagemail">bbagemail.tpl</a><br>
+          <a href="#bbaglist">bbaglist.tpl</a><br>
+          <a href="#home">home.tpl</a><br>
+          <a href="#newmaterial">newmaterial.tpl</a><br>
+          <a href="#reslist">reslist.tpl</a><br>
+          <a href="#search">search.tpl</a><br>
+          <a href="#wwstart">ww-start.tpl</a><br>
+      </td>
+      <td valign="top" width="50%">Used to insert a relevant script name into
+        a collection-specific URL path.</td>
+    </tr>
+    <tr>
+      <td valign="top" width="25%">&lt;?SEARCH_HISTORY_LINK&gt;</td>
+      <td valign="top" width="12%">&nbsp;</td>
+      <td valign="top" width="13%"><a href="#bbaglist">bbaglist.tpl</a><br>
+          <a href="#pageviewerpagenav">pageviewer.pagenav.tpl</a><br>
+          <a href="#bibsearchform">bibsearchform.chnk</a><br />
+          <a href="#booleansearchform">booleansearchform.chnk</a><br />
+          <a href="#navheader">navheader.chnk</a><br />
+          <a href="#proximitysearchform">proximitysearchform.chnk</a><br />
+          <a href="#simplesearchform">simplesearchform.chnk</a><br />
+      </td>
+      <td valign="top" width="50%">&nbsp;</td>
+    </tr>
+    <tr>
+      <td valign="top" width="25%">&lt;?SEARCH_HISTORY_TABLE&gt;</td>
+      <td valign="top" width="12%">&nbsp;</td>
+      <td valign="top" width="13%"><a href="#searchhistory">searchhistory.tpl</a><br>
+      </td>
+      <td valign="top" width="50%">Provides the <code>HREF</code> URL for the &quot;history&quot; page
+        link in the main or footer navigation bar.</td>
+    </tr>
+    <tr>
+      <td valign="top" width="25%">&lt;?SEARCH_QUALIFIER&gt;</td>
+      <td valign="top" width="12%">&nbsp;</td>
+      <td valign="top" width="13%"><a href="#reslist">reslist.tpl</a><br>
+      </td>
+      <td valign="top" width="50%">&nbsp;</td>
+    </tr>
+    <tr>
+      <td valign="top" width="25%">&lt;?SEARCH_RESTRICTION&gt;</td>
+      <td valign="top" width="12%">&nbsp;</td>
+      <td valign="top" width="13%"><a href="#wwfull">ww-full.tpl</a><br>
+          <a href="#wwstart">ww-start.tpl</a><br>
+      </td>
+      <td valign="top" width="50%">Returns HTML markup containing the bibliographic
+        info of an item currently being searched.</td>
+    </tr>
+    <tr>
+      <td valign="top" width="25%">&lt;?SEARCH_TYPE&gt;</td>
+      <td valign="top" width="12%">&nbsp;</td>
+      <td valign="top" width="13%"><a href="#search">search.tpl</a><br>
+          <a href="#wwfull">ww-full.tpl</a><br>
+          <a href="#wwstart">ww-start.tpl</a><br>
+      </td>
+      <td valign="top" width="50%">&nbsp;</td>
+    </tr>
+    <tr>
+      <td valign="top" width="25%">&lt;?SEARCH_TYPE_TEXT&gt;</td>
+      <td valign="top" width="12%">&nbsp;</td>
+      <td valign="top" width="13%"><a href="#bbagsearch">bbagsearch.tpl</a><br>
+          <a href="#search">search.tpl</a><br>
+          <a href="#searchhistory">searchhistory.tpl</a><br>
+          <a href="#wwfull">ww-full.tpl</a><br>
+          <a href="#wwstart">ww-start.tpl</a><br>
+      </td>
+      <td valign="top" width="50%">Returns the current search type value for
+        the search page header.</td>
+    </tr>
+    <tr>
+      <td valign="top">&lt;?SEARCHES_RESTRICT_TEXT&gt;</td>
+      <td valign="top">&nbsp;</td>
+      <td valign="top"><a href="#booleansearchform">booleansearchform.chnk</a><br />
+          <a href="#proximitysearchform">proximitysearchform.chnk</a><br />
+          <a href="#simplesearchform">simplesearchform.chnk</a><br />
+      </td>
+      <td valign="top">????</td>
+    </tr>
+    <tr>
+      <td valign="top" width="25%">&lt;?SGML_RESULTS&gt;</td>
+      <td valign="top" width="12%">&nbsp;</td>
+      <td valign="top" width="13%"><a href="#text">text.tpl</a><br>
+      </td>
+      <td valign="top" width="50%">Returns the item text in HTML markup in text
+        view.</td>
+    </tr>
+    <tr>
+      <td valign="top" width="25%">&lt;?SIMPLE_SEARCH_LINK&gt;</td>
+      <td valign="top" width="12%">&nbsp;</td>
+      <td valign="top" width="13%"><a href="#accesspolicy">accesspolicy.tpl</a><br>
+          <a href="#bbaglist">bbaglist.tpl</a><br>
+          <a href="#browsetemplate">browse_template.tpl</a><br>
+          <a href="#newmaterial">newmaterial.tpl</a><br>
+          <a href="#pageviewerpagenav">pageviewer.pagenav.tpl</a><br>
+          <a href="#bibsearchform">bibsearchform.chnk</a><br />
+          <a href="#navheader">navheader.chnk</a><br />
+      </td>
+      <td valign="top" width="50%">Provides the <code>HREF</code> attribute value
+        for the &quot;basic&quot; search .</td>
+    </tr>
+    <tr>
+      <td valign="top" width="25%">&lt;?SIMPLE_SEARCH_WITHIN_LINK&gt;</td>
+      <td valign="top" width="12%">&nbsp;</td>
+      <td valign="top" width="13%"><a href="#header">header.tpl</a><br>
+      </td>
+      <td valign="top" width="50%">Provides the <code>HREF</code> attribute value
+        for the &quot;basic&quot; search within this item link.</td>
+    </tr>
+    <tr>
+      <td valign="top">&lt;?SINGLE_GENDER&gt;</td>
+      <td valign="top">&nbsp;</td>
+      <td valign="top"><a href="#bbagbooleansearchform">bbagbooleansearchform.chnk</a><br />
+          <a href="#bbagproximitysearchform">bbagproximitysearchform.chnk</a><br />
+          <a href="#bbagsimplesearchform">bbagsimplesearchform.chnk</a><br />
+          <a href="#booleansearchform">booleansearchform.chnk</a><br />
+          <a href="#proximitysearchform">proximitysearchform.chnk</a><br />
+          <a href="#simplesearchform">simplesearchform.chnk</a><br />
+      </td>
+      <td valign="top">Used to filter in/out HTML markup to add form elements
+        for restricting searches based on gender information.</td>
+    </tr>
+    <tr>
+      <td valign="top">&lt;?SINGLE_GENRE&gt;</td>
+      <td valign="top">&nbsp;</td>
+      <td valign="top"><a href="#bbagbooleansearchform">bbagbooleansearchform.chnk</a><br />
+          <a href="#bbagproximitysearchform">bbagproximitysearchform.chnk</a><br />
+          <a href="#bbagsimplesearchform">bbagsimplesearchform.chnk</a><br />
+          <a href="#booleansearchform">booleansearchform.chnk</a><br />
+          <a href="#proximitysearchform">proximitysearchform.chnk</a><br />
+          <a href="#simplesearchform">simplesearchform.chnk</a><br />
+      </td>
+      <td valign="top">Used to filter in/out HTML markup to add form elements
+        for restricting searches based on genre information.</td>
+    </tr>
+    <tr>
+      <td valign="top">&lt;?SINGLE_PERIOD&gt;</td>
+      <td valign="top">&nbsp;</td>
+      <td valign="top"><a href="#bbagbooleansearchform">bbagbooleansearchform.chnk</a><br />
+          <a href="#bbagproximitysearchform">bbagproximitysearchform.chnk</a><br />
+          <a href="#bbagsimplesearchform">bbagsimplesearchform.chnk</a><br />
+          <a href="#booleansearchform">booleansearchform.chnk</a><br />
+          <a href="#proximitysearchform">proximitysearchform.chnk</a><br />
+          <a href="#simplesearchform">simplesearchform.chnk</a><br />
+      </td>
+      <td valign="top">Used to filter in/out HTML markup to add form elements
+        for restricting searches based on historical period information.</td>
+    </tr>
+    <tr>
+      <td valign="top">&lt;?SINGLE_PUB_BETWEEN&gt;</td>
+      <td valign="top">&nbsp;</td>
+      <td valign="top"><a href="#bbagbooleansearchform">bbagbooleansearchform.chnk</a><br />
+          <a href="#bbagproximitysearchform">bbagproximitysearchform.chnk</a><br />
+          <a href="#bbagsimplesearchform">bbagsimplesearchform.chnk</a><br />
+          <a href="#booleansearchform">booleansearchform.chnk</a><br />
+          <a href="#proximitysearchform">proximitysearchform.chnk</a><br />
+          <a href="#simplesearchform">simplesearchform.chnk</a><br />
+      </td>
+      <td valign="top">Used to filter in/out HTML markup to add form elements
+        for restricting searches by beginning and ending publication dates. </td>
+    </tr>
+    <tr>
+      <td valign="top" width="25%">&lt;?SIZE_SELECT&gt;</td>
+      <td valign="top" width="12%"> onchange="[value]"</td>
+      <td valign="top" width="13%"><a href="#pageviewerpagenav">pageviewer.pagenav.tpl</a><br>
+      </td>
+      <td valign="top" width="50%">Used to insert a select menu for changing
+        the size of a page image in pageviewer.</td>
+    </tr>
+    <tr>
+      <td valign="top" width="25%">&lt;?SLICE_NAVIGATION_LINKS&gt;</td>
+      <td valign="top" width="12%"> occ="[value]"</td>
+      <td valign="top" width="13%"><a href="#reslist">reslist.tpl</a><br>
+      </td>
+      <td valign="top" width="50%">Used to insert the links navigating between
+        the current page of search results and other pages of results.</td>
+    </tr>
+    <tr>
+      <td valign="top" width="25%">&lt;?SORT_SELECT&gt;</td>
+      <td valign="top" width="12%"> onchange="[value]"</td>
+      <td valign="top" width="13%"><a href="#reslist">reslist.tpl</a><br>
+      </td>
+      <td valign="top" width="50%">Inserts a form select element providing options
+        for sorting results.</td>
+    </tr>
+    <tr>
+      <td valign="top" width="25%">&lt;?TITLE&gt;</td>
+      <td valign="top" width="12%">mode=&quot;[value]&quot;</td>
+      <td valign="top" width="13%"><a href="#bbagemail">bbagemail.tpl</a><br>
+          <a href="#bbaglist">bbaglist.tpl</a><br>
+          <a href="#bbagsearch">bbagsearch.tpl</a><br>
+          <a href="#browsetemplate">browse_template.tpl</a><br>
+          <a href="#browsecolls">browsecolls.tpl</a><br>
+          <a href="#header">header.tpl</a><br>
+          <a href="#note">note.tpl</a><br>
+          <a href="#pageviewermain">pageviewer.main.tpl</a><br>
+          <a href="#pageviewernav">pageviewer.nav.tpl</a><br>
+          <a href="#picklist">picklist.tpl</a><br>
+          <a href="#reslist">reslist.tpl</a><br>
+          <a href="#search">search.tpl</a><br>
+          <a href="#searchhistory">searchhistory.tpl</a><br>
+          <a href="#text">text.tpl</a><br>
+          <a href="#viewtextnote">viewtextnote.tpl</a><br>
+          <a href="#wwfull">ww-full.tpl</a><br>
+          <a href="#wwstart">ww-start.tpl</a><br>
+          <br>
+      </td>
+      <td valign="top" width="50%">Used to insert the collection title logo as
+        an HTML graphic or text string within <code>&lt;A&gt;</code> tags linking
+        to the collection home page. </td>
+    </tr>
+    <tr>
+      <td valign="top" width="25%">&lt;?VIEW_ENTIRE_TEXT_LINK&gt;</td>
+      <td valign="top" width="12%">&nbsp;</td>
+      <td valign="top" width="13%"><a href="#header">header.tpl</a><br>
+      </td>
+      <td valign="top" width="50%">Returns a link to view the entire text in
+        the browser window. The link goes first to an obligatory warning message
+        to the user.</td>
+    </tr>
+    <tr>
+      <td valign="top" width="25%">&lt;?VIEW_SELECT&gt;</td>
+      <td valign="top" width="12%"> onchange="[value]"</td>
+      <td valign="top" width="13%"><a href="#pageviewerpagenav">pageviewer.pagenav.tpl</a><br>
+      </td>
+      <td valign="top" width="50%">Used to insert a form SELECT menu into pageviewer
+        navigation frame for selecting &quot;view page as&quot; options.</td>
+    </tr>
+    <tr>
+      <td valign="top" width="25%">&lt;?VIEW_TEXT_LINK&gt;</td>
+      <td valign="top" width="12%">&nbsp;</td>
+      <td valign="top" width="13%"><a href="#viewtextnote">viewtextnote.tpl</a><br>
+      </td>
+      <td valign="top" width="50%">&nbsp;</td>
+    </tr>
+    <tr>
+      <td valign="top" width="25%">&lt;?VIEWFORM_HIDDEN_VARS&gt;</td>
+      <td valign="top" width="12%"> exclude="[value]"</td>
+      <td valign="top" width="13%"><a href="#pageviewerpagenav">pageviewer.pagenav.tpl</a><br>
+      </td>
+      <td valign="top" width="50%">&nbsp;</td>
+    </tr>
+    <tr>
+      <td valign="top">&lt;?WORDWHEEL_COMBINED_TABLE_ROWS&gt;</td>
+      <td valign="top">&nbsp;</td>
+      <td valign="top"><a href="#fullform">fullform.chnk</a><br />
+          <a href="#fullscrollform">fullscrollform.chnk</a><br />
+      </td>
+      <td valign="top">Used to insert the list of terms and occurence numbers
+        (within table <code>&lt;TR&gt;</code> and <code>&lt;TD&gt;</code> tags)
+        for each slice of a word index.</td>
+    </tr>
+    <tr>
+      <td valign="top" width="25%">&lt;?WORDWHEEL_QUICK_LINK&gt;</td>
+      <td valign="top" width="12%"> class="[value]"</td>
+      <td valign="top" width="13%"><a href="#wwfull">ww-full.tpl</a><br>
+          <a href="#wwstart">ww-start.tpl</a><br>
+      </td>
+      <td valign="top" width="50%">Used to insert alphabetical and/or numeric
+        indexes into a word index as HTML links.</td>
+    </tr>
+    <tr>
+      <td valign="top" width="25%">&lt;?WORDWHEEL_RADIO_GROUP&gt;</td>
+      <td valign="top" width="12%"> name="realm" <br />
+        columns="[value]"</td>
+      <td valign="top" width="13%"><a href="#wwstart">ww-start.tpl</a><br>
+      </td>
+      <td valign="top" width="50%">Used to insert <code>RADIO</code> buttons
+        into word index forms for selecting realms (i.e., text regions) to retrieve
+        word indexes from.</td>
+    </tr>
+    <tr>
+      <td valign="top" width="25%">&lt;?WORDWHEEL_SEARCH_LINK&gt;</td>
+      <td valign="top" width="12%">&nbsp;</td>
+      <td valign="top" width="13%"><a href="#bbaglist">bbaglist.tpl</a><br>
+          <a href="#pageviewerpagenav">pageviewer.pagenav.tpl</a><br>
+          <a href="#bibsearchform">bibsearchform.chnk</a><br />
+          <a href="#booleansearchform">booleansearchform.chnk</a><br />
+          <a href="#navheader">navheader.chnk</a><br />
+          <a href="#proximitysearchform">proximitysearchform.chnk</a><br />
+          <a href="#simplesearchform">simplesearchform.chnk</a><br />
+      </td>
+      <td valign="top" width="50%">Returns the <code>HREF</code> value for a
+        link to the word wheel search form</td>
+    </tr>
+    <tr>
+      <td valign="top">&lt;?WORDWHEEL_UP_BUTTON&gt;</td>
+      <td valign="top">&nbsp;</td>
+      <td valign="top"><a href="#fullscrollform">fullscrollform.chnk</a></td>
+      <td valign="top">Used to insert HTML markup for the &quot;scroll-up&quot; button
+        in the word index.</td>
+    </tr>
+    <tr>
+      <td valign="top" width="25%">&lt;?WW_NAV&gt;</td>
+      <td valign="top" width="12%">&nbsp;</td>
+      <td valign="top" width="13%"><a href="#pageviewerpagenav">pageviewer.pagenav.tpl</a><br>
+          <a href="#bibsearchform">bibsearchform.chnk</a><br />
+          <a href="#booleansearchform">booleansearchform.chnk</a><br />
+          <a href="#navheader">navheader.chnk</a><br />
+          <a href="#proximitysearchform">proximitysearchform.chnk</a><br />
+          <a href="#simplesearchform">simplesearchform.chnk</a><br />
+      </td>
+      <td valign="top" width="50%">Used to insert or exclude an HTML link to
+        a word index search form.</td>
+    </tr>
+</table>
+<p>&nbsp; 
+<p>&nbsp; <a name="imageclass"></a> 
+<h2>ImageClass</h2>
+<a name="icIndCollChars"></a> 
+<h3>Specifying Individual Collection Characteristics<br>
+  <a name="iccss"> </a> </h3>
+<h4>CSS files</h4>
+<p>ImageClass templates, much like TextClass templates, utilize two CSS files 
+  for controlling most font and color characteristics. ImageClass templates differ, 
+  however, in that they do not include a default reference to a collection-specific 
+  CSS file, but only build a reference to a collections CSS file if one exists. 
+  This obviates the need to include a collection CSS file for every new collection. 
+</p>
+<p>The reference to the class CSS file is also different form the TextClass templates 
+  in the &lt;LINK&gt; element pointing to the file is written dynamically using 
+  Javascript code. This allows the template to refer to one of any number of separate 
+  CSS files to best suite the specific characteristics of a particular combination 
+  of browser and platform. A portion of the code, creating the &lt;LINK&gt; reference 
+  is shown below:</p>
+<blockquote> 
+  <p>if (ie) <br>
+    { <br>
+    &nbsp;&nbsp;document.writeln('<br>
+    &lt;link rel=&quot;stylesheet&quot; type=&quot;text/css&quot;<br>
+    href=&quot;&lt;?PATH type=&quot;web&quot;&gt;css/imageclass-ie-&nbsp;'+platform+'.css\&quot;&gt;\n'); 
+    <br>
+    &lt;?CSSURL type=&quot;ie&quot;&gt; <br>
+    <br>
+    } <br>
+    else <br>
+    { <br>
+    <br>
+    document.writeln('<br>
+    &lt;link rel=&quot;stylesheet&quot; type=&quot;text/css&quot; <br>
+    href=&quot;&lt;?PATH type=&quot;web&quot;&gt;css/imageclass-ns-'+platform+'.css\&quot;&gt;\n'); 
+    <br>
+    &lt;?CSSURL type=&quot;ns&quot;&gt; <br>
+  </p>
+</blockquote>
+<p>The &lt;?PATH type=&quot;web&quot;&gt; processing instruction resolves to the 
+  relevant path for each stylesheet. The &lt;?CSSURL&gt; processing instruction 
+  will create a link to a collection-specific CSS file if it exists. Because the 
+  collection-specific CSS is referenced after the class CSS, any style declarations 
+  that appear in latter file will effectively overwrite matching declarations 
+  in the former. This is how fonts and background colors are varied for each collection. 
+</p>
+<p>&nbsp;</p>
+<h4><a name="icgraphics"> </a> </h4>
+<h4>Graphics</h4>
+<p>Default ImageClass templates employ a variety of relatively generic graphics 
+  that can be referenced by all collection instances. A <a href="ic-graphics.html">table 
+  of shared files</a> shows those files that are stored in the <code>&lt;root&gt;/i/image/graphics/</code> 
+  directory. Any alternative graphics by identical names may be stored in individual 
+  collection <code>graphics</code> directories to replace the default class graphics 
+  for that particular collection. Any files not stored in collection graphics 
+  directories, but referenced in the templates, will be referenced from the class 
+  graphics directory as a fallback mechanism. </p>
+<p>&nbsp;</p>
+<p><a name="ichdr"> </a> </p>
+<h4>Header characteristics</h4>
+<p>The header of each page template includes that area at the top of the page 
+  containing those elements associated with unique collection identity: main collection 
+  or group title global links, if any, and the main navigation bar. ImageClass 
+  templates work very similaryly to TextClass templates to accomodate inclusion 
+  of background colors to provide some flexibility in creating unique appearances 
+  for different collections. </p>
+<div class="level3"></div>
+<p><a name="icbackground"> </a> </p>
+<p><i>Background color and graphics</i> </p>
+<p>Main background color for template headers is provided by style declarations
+   in the class CSS styleshee. <b>Figure 8</b> illustrates how these characteristics
+    are specified in<code> td</code> opening tags in the class template.</p>
+<table border="0" cellpadding="0" cellspacing="2">
+  <tr> 
+    <td><img src="graphics/image-hdr-layout.gif" width="699" height="84"></td>
+  </tr>
+  <tr> 
+    <td><b>Figure 8</b>: Header cell color and graphics.</td>
+  </tr>
+</table>
+<p>The three top cells each have CSS class associations inherited from the hdr1 
+  style attached to the parent table row. Likewise, the two bottom cells inherit 
+  styles from their parent table row.. The <code>hdr1</code> and <code>hdr2</code> 
+  styles are set locally in the class CSS style sheet as</p>
+<blockquote> 
+  <p><code>tr.hdr1 {background: black;} <br>
+    tr.hdr2 {background: #E7E5D6;} </code><br>
+  </p>
+</blockquote>
+<p>Any of the table cells involved can also include values for the <code>bgcolor</code> 
+  attribute as a backup to the style declarations. The order of precedence for 
+  CSS capable browsers is to render style first over<code> bgcolor</code> attribute 
+  value.</p>
+<br>
+<br>
+<br>
+<div class="level3"></div>
+<p><a name="ichdrcollname"> </a> </p>
+<p><i>Title name or graphic</i> </p>
+<p>Collection title name is provided in the templates via the<code> &lt;?BANNER&gt;</code> 
+  processing instruction. The PI will, in the case of an individual collection, 
+  resolve to a text string or a graphic file as specified in the<code> colldb.</code> 
+  In cross-collection made, the content is specified in the <code>imageclass.cfg</code> 
+  file. When rendered as text, titles are wrapped in H3 tags with CSS style <code>topheadlink</code> 
+  so that collection title font can be specified.</p>
+<br>
+<div class="level3"></div>
+<p><a name="ichdrtabs"> </a> </p>
+<p><i>Navigation fonts and tabs</i> </p>
+<p>Navigation tabs in ImageClass are implemented as an imagemap with a series 
+  of graphics files. The tabs graphics files represent the entire tab set in a 
+  particular state, showing all the relevant tabs in their relative state, and 
+  all against a background color that matches that of the table row containing 
+  the imagemap. Thus, in the header layout shown above, the navigation tabs are 
+  contained within the table row class attribute set as <code>class=&quot;hdr2&quot;</code> 
+  where hdr2 is defined as the background color <code>#E7E5D6</code>. The tab 
+  set uses an identical background color so that it blends in cleanly in the display 
+  ...</p>
+<p>&nbsp;</p>
+<table width="80%" border="0" cellspacing="0" cellpadding="0">
+  <tr> 
+    <td> 
+      <table width="100%" border="0" cellspacing="0" cellpadding="5">
+        <tr class="hdr1"> 
+          <td valign="middle" nowrap height="35" width="42%" bgcolor="#000000"> 
+            <p>&nbsp;</p>
+          </td>
+          <td align="left" nowrap width="31%" bgcolor="#000000"> 
+            <p>&nbsp;</p>
+          </td>
+          <td align="right" nowrap width="27%" bgcolor="#000000"> 
+            <p>&nbsp;</p>
+          </td>
+        </tr>
+      </table>
+    </td>
+  </tr>
+  <tr> 
+    <td bgcolor="fffffff" align="left" valign="bottom" nowrap height="1" colspan="2"><img src="file:///zombywoof/Users/mstoef/Documents/work/DLXS-proj-development/imageclass/work/graphics/inDevelopmentIMG/plug.gif" height="1" width="1"></td>
+  </tr>
+  <tr class="hdr2"> 
+    <td> 
+      <table width="100%" border="0" cellspacing="0" cellpadding="0">
+        <tr> 
+          <td align="left" nowrap height="35" bgcolor="E7E5D6"><img src="graphics/display-tabs-WC.gif" width="348" height="35"></td>
+          <td align="right" bgcolor="E7E5D6">&nbsp;</td>
+        </tr>
+      </table>
+    </td>
+  </tr>
+</table>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<a name="ictemplates"></a> 
+<h3>ImageClass Templates</h3>
+<p>The table bellow gives a brief description of all templates included in the 
+  Image Class distribution. </p>
+<table width="100%" border="1" cellpadding="5" cellspacing="0">
+  <tr>
+    <th nowrap="nowrap" valign="top">Template name</th>
+    <th width="90%">Description</th>
+  </tr>
+  <tr>
+    <td nowrap="nowrap" valign="top"><a name="icbbdel" id="icbbdel"></a>bbdel.tpl</td>
+    <td width="90%">Delete portfolio dialog display.</td>
+  </tr>
+  <tr>
+    <td nowrap="nowrap" valign="top"><a name="icbbentry" id="icbbentry"></a>bbentry.tpl</td>
+    <td width="90%">Displays an image viewer window for a record when invoked
+      from a portfolio window.</td>
+  </tr>
+  <tr>
+    <td nowrap="nowrap" valign="top"><a name="icbbname" id="icbbname"></a>bbname.tpl</td>
+    <td width="90%">Displays in a popup dialog window a form for naming a new
+      portfolio, or for selecting an existing portfolio, to add selected images
+      to.</td>
+  </tr>
+  <tr>
+    <td nowrap="nowrap" valign="top"><a name="icbbopen" id="icbbopen"></a>bbopen.tpl</td>
+    <td width="90%">Displays in a popup dialog window a form for selecting a
+      portfolio to open.</td>
+  </tr>
+  <tr>
+    <td nowrap="nowrap" valign="top"><a name="icbbreslist" id="icbbreslist"></a>bbreslist.tpl</td>
+    <td width="90%">Displays portfolio contents as a list of image captions linking
+      to full record displays. </td>
+  </tr>
+  <tr>
+    <td nowrap="nowrap" valign="top"><a name="icbbslideentry" id="icbbslideentry"></a>bbslideentry.tpl</td>
+    <td width="90%">Displays an image viewer window for a record when invoked
+      from a portfolio window. </td>
+  </tr>
+  <tr>
+    <td nowrap="nowrap" valign="top"><a name="icbbthumbfull" id="icbbthumbfull"></a>bbthumbfull.tpl</td>
+    <td width="90%">Displays portfolio contents as a table of image thumbnails
+      with short captions and a sidebar that displays full record information
+      for any thumbnail when an &quot;info&quot; link for that thumbnail is clicked.
+      Thumbnails also link to full record displays </td>
+  </tr>
+  <tr>
+    <td nowrap="nowrap" valign="top"><a name="icbbthumbnail" id="icbbthumbnail"></a>bbthumbnail.tpl</td>
+    <td width="90%">Displays portfolio contents as a table of image thumbnails
+      with short captions, where thumbnails link to full record displays. </td>
+  </tr>
+  <tr>
+    <td nowrap="nowrap" valign="top"><a name="iccollinfo" id="iccollinfo"></a>collinfo.tpl</td>
+    <td width="90%">Displays brief collection information.</td>
+  </tr>
+  <tr>
+    <td nowrap="nowrap" valign="top"><a name="icentry" id="icentry"></a>entry.tpl</td>
+    <td width="90%">Displays an image viewer window for a record when invoked
+      from a normal results window. </td>
+  </tr>
+  <tr>
+    <td nowrap="nowrap" valign="top"><a name="icgroups" id="icgroups"></a>groups.tpl</td>
+    <td width="90%">Displays a page for selecting among multiple collection groups.</td>
+  </tr>
+  <tr>
+    <td nowrap="nowrap" valign="top"><a name="icsearchgroup" id="icsearchgroup"></a>searchgroup.tpl</td>
+    <td width="90%">Form for searching image collection groups.</td>
+  </tr>
+  <tr>
+    <td nowrap="nowrap" valign="top"><a name="icindex" id="icindex"></a>index.tpl</td>
+    <td width="90%">A collection home page.</td>
+  </tr>
+  <tr>
+    <td nowrap="nowrap" valign="top"><a name="icnoresults" id="icnoresults"></a>noresults.tpl</td>
+    <td width="90%">No results display.</td>
+  </tr>
+  <tr>
+    <td nowrap="nowrap" valign="top"><a name="icreslist" id="icreslist"></a>reslist.tpl</td>
+    <td width="90%">Displays search results as a list of image captions linking
+      to full record displays.</td>
+  </tr>
+  <tr>
+    <td nowrap="nowrap" valign="top"><a name="icsearch" id="icsearch"></a>search.tpl</td>
+    <td width="90%">Form for searching image collection databases.</td>
+  </tr>
+  <tr>
+    <td nowrap="nowrap" valign="top"><a name="icthumbfull" id="icthumbfull"></a>thumbfull.tpl</td>
+    <td width="90%">Displays search results as a table of image thumbnails with
+      short captions and a sidebar that displays full record information for
+      any thumbnail when an &quot;info&quot; link for that thumbnail is clicked.
+      Thumbnails also link to full record displays </td>
+  </tr>
+  <tr>
+    <td nowrap="nowrap" valign="top"><a name="icthumbnail" id="icthumbnail"></a>thumbnail.tpl</td>
+    <td width="90%">Displays search results as a table of image thumbnails with
+      short captions, where thumbnails link to full record displays. </td>
+  </tr>
+  <tr>
+    <td nowrap="nowrap" valign="top"><a name="ictips" id="ictips"></a>tips.tpl</td>
+    <td width="90%">Displays in a popup window tips for conducting effective
+      searches. </td>
+  </tr>
+</table>
+<p><br>
+</p>
+<p> 
+<h3><a name="icprocins"></a>ImageClass Processing Instructions</h3>
+<p>The following table includes descriptions of all the processing instructions 
+  that appear in ImageClass templates, as well as links to descriptions of the 
+  relevant template files in which they appear. </p>
+<table border="1" bordercolor="#CCCCCC" cellpadding="5" cellspacing="0" width="100%">
+  <tr>
+    <th align="left" width="25%">PI tag</th>
+    <th valign="top" width="12%">Optional parameters</th>
+    <th valign="top" width="13%">Associated templates</th>
+    <th valign="top" width="50%">Description</th>
+  </tr>
+  <tr>
+    <td valign="top" width="25%"> &lt;?BANNER&gt; </td>
+    <td valign="top" width="12%">none</td>
+    <td valign="top" width="13%"> <a href="#icentry">entry.tpl</a><BR>
+        <a href="#icgroups">groups.tpl</a><BR>
+        <a href="#icindex">index.tpl</a><BR>
+        <a href="#icreslist">reslist.tpl</a><BR>
+        <a href="#icsearch">search.tpl</a><BR>
+        <a href="#icthumbfull">thumbfull.tpl</a><BR>
+        <a href="#icthumbnail">thumbnail.tpl</a><BR>
+    </td>
+    <td valign="top" width="25%">inserts the name of the collection or the cross
+      collection banner (e.g., UM Image Source) in cross collection mode. banner
+      text is configurable in the &quot;banner&quot; colldb field. Cross collection
+      banner specified in imageclass.cfg. May be text or graphic.</td>
+  </tr>
+  <tr>
+    <td valign="top" width="25%"> &lt;?ALLPUROSE&gt; </td>
+    <td valign="top" width="12%">any </td>
+    <td valign="top" width="13%">all </td>
+    <td valign="top" width="25%">this PI does nothing by default, but may be
+      programmed to do almost anything. The allpurpose routine is in $DLXSROOT/cgi/i/image/ICLocalUtils.pm.</td>
+  </tr>
+  <tr>
+    <td valign="top" width="25%"> &lt;?BBACTIONFORM&gt; </td>
+    <td valign="top" width="12%">action</td>
+    <td valign="top" width="13%"> <a href="#icbbentry">bbentry.tpl</a><BR>
+        <a href="#icbbreslist">bbreslist.tpl</a><BR>
+        <a href="#icbbthumbfull">bbthumbfull.tpl</a><BR>
+        <a href="#icbbthumbnail">bbthumbnail.tpl</a><BR>
+        <a href="#icentry">entry.tpl</a><BR>
+        <a href="#icreslist">reslist.tpl</a><BR>
+        <a href="#icthumbfull">thumbfull.tpl</a><BR>
+        <a href="#icthumbnail">thumbnail.tpl</a><BR>
+    </td>
+    <td valign="top" width="25%">
+      <p>inserts form for activating the various portfolio actions, such as adding
+        an item to a portfolio.</p>
+      <p><b>action</b> param may be set to: add or remove</p>
+    </td>
+  </tr>
+  <tr>
+    <td valign="top" width="25%"> &lt;?BBAGINFO&gt; </td>
+    <td valign="top" width="12%">colname</td>
+    <td valign="top" width="13%"> <a href="#icbbentry">bbentry.tpl</a><BR>
+        <a href="#icbbreslist">bbreslist.tpl</a><BR>
+        <a href="#icbbslideentry">bbslideentry.tpl</a><BR>
+        <a href="#icbbthumbfull">bbthumbfull.tpl</a><BR>
+        <a href="#icbbthumbnail">bbthumbnail.tpl</a><BR>
+    </td>
+    <td valign="top" width="25%">
+      <p>inserts information about the portfolio, such as the title of the portfolio.
+        any field of the bookbagdb can be displayed(?).</p>
+      <p>Most often, colname=&quot;bbagname&quot;, which displays the name of
+        the portfolio.</p>
+    </td>
+  </tr>
+  <tr>
+    <td valign="top" width="25%"> &lt;?BBAGNAMEFORM&gt; </td>
+    <td valign="top" width="12%">none</td>
+    <td valign="top" width="13%"> <a href="#icbbname">bbname.tpl</a><BR>
+    </td>
+    <td valign="top" width="25%">inserts form for creating/naming a new portfolio</td>
+  </tr>
+  <tr>
+    <td valign="top" width="25%"> &lt;?BBAGPICKLIST&gt; </td>
+    <td valign="top" width="12%">action<BR>
+      type </td>
+    <td valign="top" width="13%"> <a href="#icbbdel">bbdel.tpl</a><BR>
+        <a href="#icbbname">bbname.tpl</a><BR>
+        <a href="#icbbopen">bbopen.tpl</a><BR>
+    </td>
+    <td valign="top" width="25%">
+      <p>insert list of existing portfolios for opening a portfolio or adding
+        to a portfolio.</p>
+      <p><b>action</b> can be &quot;open&quot; or &quot;add&quot;</p>
+      <p><b>type</b> can be &quot;public&quot; or &quot;private&quot;. <b>type</b> is
+        only specifice when <b>action</b> is &quot;open&quot;.</p>
+    </td>
+  </tr>
+  <tr>
+    <td valign="top" width="25%"> &lt;?COLLNAME&gt; </td>
+    <td valign="top" width="12%">none </td>
+    <td valign="top" width="13%"> <a href="#icbbentry">bbentry.tpl</a><BR>
+        <a href="#icbbslideentry">bbslideentry.tpl</a><BR>
+        <a href="#icentry">entry.tpl</a><BR>
+        <a href="#icreslist">reslist.tpl</a><BR>
+        <a href="#icthumbfull">thumbfull.tpl</a><BR>
+        <a href="#icthumbnail">thumbnail.tpl</a><BR>
+    </td>
+    <td valign="top" width="25%">inserts the collection name as specified in &quot;collname&quot; field
+      of colldb or &quot;Multiple Collections&quot; in cross collection mode.</td>
+  </tr>
+  <tr>
+    <td valign="top" width="25%"> &lt;?COLLPICK&gt; </td>
+    <td valign="top" width="12%">none</td>
+    <td valign="top" width="13%"> <a href="#icindex">index.tpl</a><BR>
+        <a href="#icsearch">search.tpl</a><BR>
+    </td>
+    <td valign="top" width="25%">inserts a list of collections for selection
+      by the user</td>
+  </tr>
+  <tr>
+    <td valign="top" width="25%"> &lt;?COLLPICKARRAYS&gt; </td>
+    <td valign="top" width="12%">none</td>
+    <td valign="top" width="13%"> <a href="#icsearch">search.tpl</a><BR>
+    </td>
+    <td valign="top" width="25%">inserts javascript arrays that are needed by
+      collpicker. the arrays hold field lists per coll.</td>
+  </tr>
+  <tr>
+    <td valign="top" width="25%"> &lt;?COLLPICKBUTTON&gt; </td>
+    <td valign="top" width="12%">none</td>
+    <td valign="top" width="13%"> <a href="#icsearch">search.tpl</a><BR>
+    </td>
+    <td valign="top" width="25%">inserts a button (but why?)</td>
+  </tr>
+  <tr>
+    <td valign="top" width="25%"> &lt;?CSSURL&gt; </td>
+    <td valign="top" width="12%">type</td>
+    <td valign="top" width="13%"> <a href="#icbbentry">bbentry.tpl</a><BR>
+        <a href="#icbbname">bbname.tpl</a><BR>
+        <a href="#icbbopen">bbopen.tpl</a><BR>
+        <a href="#icbbreslist">bbreslist.tpl</a><BR>
+        <a href="#icbbslideentry">bbslideentry.tpl</a><BR>
+        <a href="#icbbthumbfull">bbthumbfull.tpl</a><BR>
+        <a href="#icbbthumbnail">bbthumbnail.tpl</a><BR>
+        <a href="#icentry">entry.tpl</a><BR>
+        <a href="#icgroups">groups.tpl</a><BR>
+        <a href="#icindex">index.tpl</a><BR>
+        <a href="#icreslist">reslist.tpl</a><BR>
+        <a href="#icsearch">search.tpl</a><BR>
+        <a href="#icthumbfull">thumbfull.tpl</a><BR>
+        <a href="#icthumbnail">thumbnail.tpl</a><BR>
+    </td>
+    <td valign="top" width="25%">
+      <p>inserts the necessary CSS (cascading style sheet) link depending on
+        the situation.</p>
+      <p><b>type</b> can be &quot;ie&quot; or &quot;ns&quot; (Internet Explorer
+        or Netscape)</p>
+    </td>
+  </tr>
+  <tr>
+    <td valign="top" width="25%"> &lt;?DELETEPORTFOLIO&gt; </td>
+    <td valign="top" width="12%">none</td>
+    <td valign="top" width="13%"> <a href="#icbbreslist">bbreslist.tpl</a><BR>
+        <a href="#icbbthumbfull">bbthumbfull.tpl</a><BR>
+        <a href="#icbbthumbnail">bbthumbnail.tpl</a><BR>
+    </td>
+    <td valign="top" width="25%">inserts button to initiate deletion of entire
+      portfolio </td>
+  </tr>
+  <tr>
+    <td valign="top" width="25%"> &lt;?DIVBUTTONS&gt; </td>
+    <td valign="top" width="12%">none</td>
+    <td valign="top" width="13%"> <a href="#icbbentry">bbentry.tpl</a><BR>
+        <a href="#icentry">entry.tpl</a><BR>
+    </td>
+    <td valign="top" width="25%">inserts the radio buttons used for switching
+      between &quot;full image&quot;, &quot;description&quot; and &quot;other
+      views&quot; entry views</td>
+  </tr>
+  <tr>
+    <td valign="top" width="25%"> &lt;?ENTRYID&gt; </td>
+    <td valign="top" width="12%">none</td>
+    <td valign="top" width="13%"> <a href="#icbbentry">bbentry.tpl</a><BR>
+        <a href="#icbbslideentry">bbslideentry.tpl</a><BR>
+        <a href="#icentry">entry.tpl</a><BR>
+    </td>
+    <td valign="top" width="25%">inserts the entry (record) id.</td>
+  </tr>
+  <tr>
+    <td valign="top" width="25%"> &lt;?FISHEYE&gt; </td>
+    <td valign="top" width="12%">none </td>
+    <td valign="top" width="13%"> <a href="#icreslist">reslist.tpl</a><BR>
+        <a href="#icthumbfull">thumbfull.tpl</a><BR>
+        <a href="#icthumbnail">thumbnail.tpl</a><BR>
+    </td>
+    <td valign="top" width="25%">inserts the &quot;fisheye&quot; tool into a
+      results view. the fisheye tool allows quick jumping among the full range
+      of results. </td>
+  </tr>
+  <tr>
+    <td valign="top" width="25%"> &lt;?GROUPNAME&gt; </td>
+    <td valign="top" width="12%">none</td>
+    <td valign="top" width="13%"> <a href="#icindex">index.tpl</a><BR>
+        <a href="#icsearch">search.tpl</a><BR>
+    </td>
+    <td valign="top" width="25%">inserts the name of the group being searched
+      if in cross collection mode. groups are defined in the &quot;groups&quot; table. </td>
+  </tr>
+  <tr>
+    <td valign="top" width="25%"> &lt;?GROUPSLINK&gt; </td>
+    <td valign="top" width="12%">none </td>
+    <td valign="top" width="13%"> <a href="#icindex">index.tpl</a><BR>
+        <a href="#icsearch">search.tpl</a><BR>
+    </td>
+    <td valign="top" width="25%">inserts a link to the group selection page</td>
+  </tr>
+  <tr>
+    <td valign="top" width="25%"> &lt;?GROUPSPICK&gt; </td>
+    <td valign="top" width="12%">groups</td>
+    <td valign="top" width="13%"> <a href="#icgroups">groups.tpl</a><BR>
+    </td>
+    <td valign="top" width="25%">inserts a list of groups for selecting a group
+      to search. the optional &quot;groups&quot; parameter is for specifying
+      a list of groups (as group ids separated by vertical bars/pipes) to include.
+      without a value for the &quot;groups&quot; parameter, all groups are listed
+      by default.</td>
+  </tr>
+  <tr>
+    <td valign="top" width="25%"> &lt;?CONTACT&gt; </td>
+    <td valign="top" width="12%">type </td>
+    <td valign="top" width="13%"> <a href="#icentry">entry.tpl</a><BR>
+        <a href="#icreslist">reslist.tpl</a><BR>
+        <a href="#icthumbfull">thumbfull.tpl</a><BR>
+        <a href="#icthumbnail">thumbnail.tpl</a><BR>
+    </td>
+    <td valign="top" width="25%">
+      <p>type=&quot;link&quot; inserts value from colldb &quot;contactlink&quot; field</p>
+      <p>type=&quot;text&quot; inserts value from colldb &quot;contacttext&quot; field</p>
+      <p>if multiple collection mode, default contact info from imageclass.cfg
+        is used.</p>
+    </td>
+  </tr>
+  <tr>
+    <td valign="top" width="25%"> &lt;?HIDDENSID&gt; </td>
+    <td valign="top" width="12%">none </td>
+    <td valign="top" width="13%">
+      <p><a href="#icsearchgroup">searchgroup.tpl</a><BR>
+          <a href="#icsearch">search.tpl</a><BR>
+      </p>
+    </td>
+    <td valign="top" width="25%">inserts session id in search form</td>
+  </tr>
+  <tr>
+    <td valign="top" width="25%"> &lt;?IMAGE&gt; </td>
+    <td valign="top" width="12%">quality<BR>
+      override </td>
+    <td valign="top" width="13%"> <a href="#icbbentry">bbentry.tpl</a><BR>
+        <a href="#icbbslideentry">bbslideentry.tpl</a><BR>
+        <a href="#icentry">entry.tpl</a><BR>
+    </td>
+    <td valign="top" width="25%">
+      <p>inserts an image without a form. this means that the image is not interactive
+        (you can't click on it to zoom). it is just an image.</p>
+      <p><b>quality</b> = the default size for image display. there are several
+        ways to specify the <b>quality</b>. </p>
+      <p>examples:</p>
+      <ul>
+        <li>h600 -- height no larger than 600 pixels
+        <li>w600 -- width no larger than 600 pixels
+        <li>m800 -- max dimension of image no larger than 800 pixels
+        <li>min -- smallest available
+        <li>max -- largest available
+        <li>mid -- mid-size among available
+        <li>preview -- defined in imageclass.cfg ($gDefaultPreviewImageSize)
+        <li>screen -- defined in imageclass.cfg ($gDefaultScreenImageSize)
+        <li>integer value -- MrSID res value
+      </ul>
+      <p>Image Class version 1 quality terms are approximately converted to the
+        above quality terms. </p>
+      <p><b>override</b> should be set to &quot;on&quot; to allow the template
+        to be overriden by the value of the quality cgi parameter, if present.
+        See existing templates for examples.</p>
+    </td>
+  </tr>
+  <tr>
+    <td valign="top" width="25%"> &lt;?IMAGEPANTOOL&gt; </td>
+    <td valign="top" width="12%">quality<BR>
+      override </td>
+    <td valign="top" width="13%"> <a href="#icbbentry">bbentry.tpl</a><BR>
+        <a href="#icentry">entry.tpl</a><BR>
+    </td>
+    <td valign="top" width="25%">
+      <p>inserts the interface tool for panning a MrSID image.</p>
+      <p>See &lt;?IMAGE&gt; for description of quality and override values.</p>
+    </td>
+  </tr>
+  <tr>
+    <td valign="top" width="25%"> &lt;?IMAGESIZETOOL&gt; </td>
+    <td valign="top" width="12%">quality</td>
+    <td valign="top" width="13%"> <a href="#icbbentry">bbentry.tpl</a><BR>
+        <a href="#icentry">entry.tpl</a><BR>
+    </td>
+    <td valign="top" width="25%">
+      <p>inserts the interface tool for choosing from the range of full-size
+        images that are available.</p>
+      <p>See &lt;?IMAGE&gt; for description of quality values.</p>
+    </td>
+  </tr>
+  <tr>
+    <td valign="top" width="25%"> &lt;?IMAGEWITHFORM&gt; </td>
+    <td valign="top" width="12%">quality<br>
+      override </td>
+    <td valign="top" width="13%"> <a href="#icbbentry">bbentry.tpl</a><BR>
+        <a href="#icentry">entry.tpl</a><BR>
+    </td>
+    <td valign="top" width="25%">
+      <p>inserts an image with a form. this means that the image is interactive
+        and can be clicked on for zooming.</p>
+      <p>See &lt;?IMAGE&gt; for description of quality and override values.</p>
+    </td>
+  </tr>
+  <tr>
+    <td valign="top" width="25%"> &lt;?IMAGEZOOMTOOL&gt; </td>
+    <td valign="top" width="12%">
+      <p>quality<BR>
+        override </p>
+    </td>
+    <td valign="top" width="13%"> <a href="#icbbentry">bbentry.tpl</a><BR>
+        <a href="#icentry">entry.tpl</a><BR>
+    </td>
+    <td valign="top" width="25%">
+      <p>inserts the interface tool for zooming.</p>
+      <p>See &lt;?IMAGE&gt; for description of quality and override values.</p>
+    </td>
+  </tr>
+  <tr>
+    <td valign="top" width="25%"> &lt;?INFOTEXT&gt; </td>
+    <td valign="top" width="12%">none </td>
+    <td valign="top" width="13%"> <a href="#icindex">index.tpl</a><BR>
+        <a href="#iccollinfo">collinfo.tpl</a> <BR>
+    </td>
+    <td valign="top" width="25%">inserts the info.txt file if the file is found
+      in the collections web directory. this allows a collection specific description
+      to be included for each collection without necessarily creating a collection
+      specific <a href="#icindex">index.tpl</a> and <a href="#iccollinfo">collinfo.tpl</a> template.
+      the info.txt file may include HTML tags, but it should not be a complete
+      HTML document. </td>
+  </tr>
+  <tr>
+    <td valign="top" width="25%"> &lt;?JAVASCRIPTURL&gt; </td>
+    <td valign="top" width="12%">none</td>
+    <td valign="top" width="13%"> <a href="#icbbentry">bbentry.tpl</a><BR>
+        <a href="#icbbreslist">bbreslist.tpl</a><BR>
+        <a href="#icbbslideentry">bbslideentry.tpl</a><BR>
+        <a href="#icbbthumbfull">bbthumbfull.tpl</a><BR>
+        <a href="#icbbthumbnail">bbthumbnail.tpl</a><BR>
+        <a href="#icentry">entry.tpl</a><BR>
+        <a href="#icgroups">groups.tpl</a><BR>
+        <a href="#icindex">index.tpl</a><BR>
+        <a href="#icreslist">reslist.tpl</a><BR>
+        <a href="#icsearch">search.tpl</a><BR>
+        <a href="#icthumbfull">thumbfull.tpl</a><BR>
+        <a href="#icthumbnail">thumbnail.tpl</a><BR>
+    </td>
+    <td valign="top" width="25%">inserts link that loads Image Class JavaScript. </td>
+  </tr>
+  <tr>
+    <td valign="top" width="25%"> &lt;?LOGINLINK&gt; </td>
+    <td valign="top" width="12%">type<BR>
+      on </td>
+    <td valign="top" width="13%"> <a href="#icbbentry">bbentry.tpl</a><BR>
+        <a href="#icbbreslist">bbreslist.tpl</a><BR>
+        <a href="#icbbslideentry">bbslideentry.tpl</a><BR>
+        <a href="#icbbthumbfull">bbthumbfull.tpl</a><BR>
+        <a href="#icbbthumbnail">bbthumbnail.tpl</a><BR>
+        <a href="#icentry">entry.tpl</a><BR>
+        <a href="#icgroups">groups.tpl</a><BR>
+        <a href="#icindex">index.tpl</a><BR>
+        <a href="#icreslist">reslist.tpl</a><BR>
+        <a href="#icsearch">search.tpl</a><BR>
+        <a href="#icthumbfull">thumbfull.tpl</a><BR>
+        <a href="#icthumbnail">thumbnail.tpl</a><BR>
+    </td>
+    <td valign="top" width="25%">
+      <p>inserts login button. if login is turned off in imageclass.cfg, button
+        is not displayed. </p>
+      <p><b>type</b> can be set to &quot;bbag&quot;, in which case a message
+        precedes the button encouraging the user to login to use bbag functions. </p>
+      <p><b>on</b> can be set to &quot;white&quot;, which causes the login button
+        designed to sit on a white background to be loaded (login-white.gif).
+        usually, login-black.gif is loaded. <b>on</b> can be set to any color,
+        and the file login-color.gif will be loaded, however only login-white.gif
+        and login-black.gif are provided.</p>
+    </td>
+  </tr>
+  <tr>
+    <td valign="top" width="25%"> &lt;?MEDIAONLYBUTTON&gt; </td>
+    <td valign="top" width="12%">none </td>
+    <td valign="top" width="13%"> <a href="#icsearch">search.tpl</a><BR>
+        <a href="#icsearchgroup">searchgroup.tpl</a> <BR>
+    </td>
+    <td valign="top" width="25%">inserts media restriction in search form (i.e.,
+      search for images only)</td>
+  </tr>
+  <tr>
+    <td valign="top" width="25%"> &lt;?NEXT&gt; </td>
+    <td valign="top" width="12%">none </td>
+    <td valign="top" width="13%"> <a href="#icreslist">reslist.tpl</a><BR>
+        <a href="#icthumbfull">thumbfull.tpl</a><BR>
+        <a href="#icthumbnail">thumbnail.tpl</a><BR>
+    </td>
+    <td valign="top" width="25%">inserts link to next page of results.</td>
+  </tr>
+  <tr>
+    <td valign="top" width="25%"> &lt;?NEXTENTRY&gt; </td>
+    <td valign="top" width="12%">none </td>
+    <td valign="top" width="13%"> <a href="#icbbentry">bbentry.tpl</a><BR>
+        <a href="#icbbslideentry">bbslideentry.tpl</a><BR>
+        <a href="#icentry">entry.tpl</a><BR>
+    </td>
+    <td valign="top" width="25%">inserts link to next result in entry/record
+      view.</td>
+  </tr>
+  <tr>
+    <td valign="top" width="25%"> &lt;?NORESULTSMESSAGE&gt; </td>
+    <td valign="top" width="12%">none</td>
+    <td valign="top" width="13%"> <a href="#icnoresults">noresults.tpl</a><BR>
+    </td>
+    <td valign="top" width="25%">inserts message to user about the fact they
+      got zero results.</td>
+  </tr>
+  <tr>
+    <td valign="top" width="25%"> &lt;?OPENPORTFOLIO&gt; </td>
+    <td valign="top" width="12%">none </td>
+    <td valign="top" width="13%"> <a href="#icbbentry">bbentry.tpl</a><BR>
+        <a href="#icbbreslist">bbreslist.tpl</a><BR>
+        <a href="#icbbslideentry">bbslideentry.tpl</a><BR>
+        <a href="#icbbthumbfull">bbthumbfull.tpl</a><BR>
+        <a href="#icbbthumbnail">bbthumbnail.tpl</a><BR>
+        <a href="#icentry">entry.tpl</a><BR>
+        <a href="#icgroups">groups.tpl</a><BR>
+        <a href="#icindex">index.tpl</a><BR>
+        <a href="#icreslist">reslist.tpl</a><BR>
+        <a href="#icsearch">search.tpl</a><BR>
+        <a href="#icthumbfull">thumbfull.tpl</a><BR>
+        <a href="#icthumbnail">thumbnail.tpl</a><BR>
+    </td>
+    <td valign="top" width="25%">inserts button and link for opening a portfolio</td>
+  </tr>
+  <tr>
+    <td valign="top" width="25%"> &lt;?PATH&gt; </td>
+    <td valign="top" width="12%">type </td>
+    <td valign="top" width="13%"> <a href="#icbbdel">bbdel.tpl</a><BR>
+        <a href="#icbbentry">bbentry.tpl</a><BR>
+        <a href="#icbbname">bbname.tpl</a><BR>
+        <a href="#icbbopen">bbopen.tpl</a><BR>
+        <a href="#icbbslideentry">bbslideentry.tpl</a><BR>
+        <a href="#icentry">entry.tpl</a><BR>
+        <a href="#icgroups">groups.tpl</a><BR>
+        <a href="#icsearch">search.tpl</a><BR>
+        <a href="#ictips">tips.tpl</a><BR>
+    </td>
+    <td valign="top" width="25%">inserts a path of a certain type, most commonly &quot;web&quot;,
+      which creates a relative URL path to the current web directory.</td>
+  </tr>
+  <tr>
+    <td valign="top" width="25%"> &lt;?PREV&gt; </td>
+    <td valign="top" width="12%">none </td>
+    <td valign="top" width="13%"> <a href="#icbbentry">bbentry.tpl</a><BR>
+        <a href="#icbbslideentry">bbslideentry.tpl</a><BR>
+        <a href="#icentry">entry.tpl</a><BR>
+        <a href="#icreslist">reslist.tpl</a><BR>
+        <a href="#icthumbfull">thumbfull.tpl</a><BR>
+        <a href="#icthumbnail">thumbnail.tpl</a><BR>
+    </td>
+    <td valign="top" width="25%">inserts link to previous page of results. </td>
+  </tr>
+  <tr>
+    <td valign="top" width="25%"> &lt;?PREVENTRY&gt; </td>
+    <td valign="top" width="12%">none </td>
+    <td valign="top" width="13%"> <a href="#icbbentry">bbentry.tpl</a><BR>
+        <a href="#icbbslideentry">bbslideentry.tpl</a><BR>
+        <a href="#icentry">entry.tpl</a><BR>
+    </td>
+    <td valign="top" width="25%">inserts link to previous result in entry/record
+      view. </td>
+  </tr>
+  <tr>
+    <td valign="top" width="25%"> &lt;?RECORDTABLE&gt; </td>
+    <td valign="top" width="12%">
+      <p>fields<BR>
+        table <BR>
+        thumb </p>
+    </td>
+    <td valign="top" width="13%"> <a href="#icbbentry">bbentry.tpl</a><BR>
+        <a href="#icbbslideentry">bbslideentry.tpl</a><BR>
+        <a href="#icentry">entry.tpl</a><BR>
+    </td>
+    <td valign="top" width="25%">
+      <p>Displays a record in entry (full record) views. Fields and field order
+        are specified in the colldb field &quot;dfltentryflds,&quot; or may be
+        overridden by a <b>fields</b> parameter. Whether specified in colldb
+        or by <b>fields </b>parameter, the rules about how to specify the fields
+        to display are as follows. </p>
+      <p>Fields must be listed as abbreviations in the order desired and delimited
+        by pipes ( &quot;|&quot; ). e.g., MUSART.TI|MUSART.CR|musart.DA</p>
+      <p>Values are not case sensitive. </p>
+      <p>There are several options that may be turned on and off to enhance the
+        display of records. The options are specified inline with the field abbreviations.
+        When the status of an option is changed, the change is persistent for
+        all subsequent fields, until the status is changed again. The exceptions
+        to this are the &quot;sectionlabel&quot; and &quot;urltext&quot;, which
+        are specified as often as needed.</p>
+      <p>The &quot;url&quot; option, for example, causes fields that contain
+        a URL (and nothing but a URL), to be turned into a hyperlink. It can
+        be used in conjunction with the &quot;urltext&quot; option, which makes
+        allows the link text to be specified. Normally the URL itself is used
+        for the link text. e.g., <BR>
+        MUSART.TI|url:on|urltext:View_Copyright_Statement|MUSART.cp|url:off|MUSART.DA</p>
+      <p>The &quot;hilite&quot; option causes search terms to be hilited. This
+        option is &quot;on&quot; by default, but if you wanted to turn hiliting
+        off for several consecutive fields, you could. e.g., MUSART.TI|hilite:off|MUSART.DA|MUSART.PG|MUSART.LI|hilite:on|MUSART.TY</p>
+      <p>The complete list of field options are as follows: </p>
+      <table border="1" cellpadding="1" cellspacing="1" width="100%">
+        <tr>
+          <th width="14%">option</th>
+          <th width="31%">values</th>
+          <th width="7%">default</th>
+          <th width="48%">description</th>
+        </tr>
+        <tr>
+          <td width="14%">label</td>
+          <td width="31%">on/off</td>
+          <td width="7%">on</td>
+          <td width="48%">display name of field before field value</td>
+        </tr>
+        <tr>
+          <td height="37" width="14%">sectionlabel</td>
+          <td height="37" width="31%">text string*<br>
+          </td>
+          <td height="37" width="7%">empty</td>
+          <td height="37" width="48%">display a section label before a series
+            of fields. allows a record to split into sections.</td>
+        </tr>
+        <tr>
+          <td width="14%">url</td>
+          <td width="31%">on/off</td>
+          <td width="7%">off</td>
+          <td width="48%">turn the entire contents of the field in to a link.
+            assumes the field contains a single URL.</td>
+        </tr>
+        <tr>
+          <td width="14%">urltext</td>
+          <td width="31%">text string*</td>
+          <td width="7%">empty</td>
+          <td width="48%">display the provided string as the text of the &quot;url&quot; option
+            link. if &quot;urltext&quot; is not specified, the URL value is used
+            as the text of the link.</td>
+        </tr>
+        <tr>
+          <td width="14%">idres</td>
+          <td width="31%">on/off</td>
+          <td width="7%">off</td>
+          <td width="48%">look the value of the field up in the id resolver and
+            display the value. use with &quot;url&quot; and/or &quot;urltext&quot; to
+            turn the value in to a link.</td>
+        </tr>
+        <tr>
+          <td width="14%">dateconv</td>
+          <td width="31%">on/off</td>
+          <td width="7%">off</td>
+          <td width="48%">
+            <p>displays some ISO format dates in a more human readable form.</p>
+            <p>supports YYYYMMDD, YYYYMMDD/YYYYMMDD and maintains any data that
+              might follow the date in the field e.g, (ca.)</p>
+          </td>
+        </tr>
+        <tr>
+          <td width="14%">hilite</td>
+          <td width="31%">on/off</td>
+          <td width="7%">on</td>
+          <td width="48%">
+            <p>hilites search terms in the field. </p>
+            <p>DLXS hiliting supports 3 search fields only (q1 - q3). </p>
+          </td>
+        </tr>
+        <tr>
+          <td width="14%">keylinks</td>
+          <td width="31%">on/off</td>
+          <td width="7%">off</td>
+          <td width="48%">
+            <p>turns the field value into a url that will search the collection
+              for that value. by default, each word of the field is made into
+              a separate link. the delimiter used to split the field can be specified
+              by the &quot;delim&quot; option.</p>
+          </td>
+        </tr>
+        <tr>
+          <td width="14%">delim</td>
+          <td width="31%">1 or more characters</td>
+          <td width="7%">SPACE</td>
+          <td width="48%">
+            <p>used in conjunction with the keylinks option to split the value
+              of a field into smaller parts by the value delim specifies. for
+              example, if a field holds a list of keywords delimited by &quot;; &quot; delim
+              can be set to &quot;;_&quot; to tell the keylinks option how to
+              split the field. (note: use an underscore for SPACE.) e.g., delim:;_</p>
+          </td>
+        </tr>
+      </table>
+      <p>* use underscores for spaces. special characters may not work.</p>
+      <p><b>table</b> parameter may be set to &quot;on&quot; or &quot;off&quot; to
+        specify whether record is wrapped in a table, or simple text with line
+        breaks. Default is&quot;on&quot;.</p>
+      <p><b>thumb</b> parameter may be set to &quot;on&quot; or &quot;off&quot; to
+        specify whether a thumbnail image should be included with the record.
+        Default is &quot;on&quot;.</p>
+      <p>Cross collection fields are configured in imageclass.cfg.</p>
+    </td>
+  </tr>
+  <tr>
+    <td valign="top" width="25%"> &lt;?RELATEDVIEWS&gt; </td>
+    <td valign="top" width="12%">none </td>
+    <td valign="top" width="13%"> <a href="#icbbentry">bbentry.tpl</a><BR>
+        <a href="#icentry">entry.tpl</a><BR>
+    </td>
+    <td valign="top" width="25%">inserts table of related views for a record
+      (all of the images associated with a single record). See also documentation
+      on &quot;Image Structures&quot;.</td>
+  </tr>
+  <tr>
+    <td valign="top" width="25%"> &lt;?RELATEDVIEWSMENU&gt; </td>
+    <td valign="top" width="12%">none </td>
+    <td valign="top" width="13%"> <a href="#icbbentry">bbentry.tpl</a><BR>
+        <a href="#icentry">entry.tpl</a><BR>
+    </td>
+    <td valign="top" width="25%">
+      <p>inserts a menu for entry type templates that is a menu of all related
+        views (aka &quot;other views&quot;). If a record has more than one image
+        associated with it, then it has related views. the related views menu
+        is intended for use with colls that need a &quot;pageflipping&quot; function. <BR>
+        e.g., &quot;Students on Site&quot;, &quot;Harpers Weekly&quot;.<BR>
+      </p>
+      <p>uses the colldb for configuration.<BR>
+        colldb fields used:<BR>
+        relviewmenu -- on/off switch for the menu<BR>
+        relviewmenuvals -- specifies which istruct attribute value to use for
+        menu *display*<BR>
+        options. default is &quot;CAPTIONS&quot;<BR>
+        relviewmenuinstruct -- instruction text, if any to put in front of form<BR>
+        relviewmenuprefx -- prefix string to put in front of each and every displayed
+        menu <BR>
+        option</p>
+      <p>if a particular record has only one view/image, a related views menu
+        is not built/displayed, even if the option is turned on.</p>
+    </td>
+  </tr>
+  <tr>
+    <td valign="top" width="25%"> &lt;?RESULTSTABLE&gt; </td>
+    <td valign="top" width="12%">x</td>
+    <td valign="top" width="13%"> <a href="#icbbreslist">bbreslist.tpl</a><BR>
+        <a href="#icbbthumbfull">bbthumbfull.tpl</a><BR>
+        <a href="#icbbthumbnail">bbthumbnail.tpl</a><BR>
+        <a href="#icreslist">reslist.tpl</a><BR>
+        <a href="#icthumbfull">thumbfull.tpl</a><BR>
+        <a href="#icthumbnail">thumbnail.tpl</a><BR>
+    </td>
+    <td valign="top" width="25%">
+      <p>Inserts a table of results. Layout varies automatically depending on
+        the view. </p>
+      <p><b>x</b> parameter is for specifying the number of columns in a table
+        of thumbnail results. The default is 5.</p>
+      <p>the fields displayed for each results are configurable in the colldb
+        field called &quot;dfltresflds&quot;. </p>
+      <p>term hiliting happens by default, and without an option to turn it off.</p>
+      <p>optionally, field values may be trimmed to a specific character length
+        to conserve space in thumbnail views. configure this option in the colldb
+        field called &quot;resfldtrim&quot;.</p>
+    </td>
+  </tr>
+  <tr>
+    <td valign="top" width="25%"> &lt;?SEARCHFORM&gt; </td>
+    <td valign="top" width="12%">none </td>
+    <td valign="top" width="13%"> <a href="#icsearch">search.tpl</a><BR>
+        <a href="#icsearchgroup">searchgroup.tpl</a><BR>
+    </td>
+    <td valign="top" width="25%">inserts a search form. </td>
+  </tr>
+  <tr>
+    <td valign="top" width="25%"> &lt;?SEARCHLINK&gt; </td>
+    <td valign="top" width="12%">none </td>
+    <td valign="top" width="13%">
+      <p><a href="#icreslist">reslist.tpl</a><BR>
+          <a href="#icthumbfull">thumbfull.tpl</a><BR>
+          <a href="#icthumbnail">thumbnail.tpl</a><BR>
+          <a href="#icindex">index.tpl</a><BR>
+          <a href="#icnoresults">noresults.tpl</a><BR>
+          <BR>
+      </p>
+    </td>
+    <td valign="top" width="25%">inserts link to search form page</td>
+  </tr>
+  <tr>
+    <td valign="top" width="25%"> &lt;?SLICESUMMARY&gt; </td>
+    <td valign="top" width="12%">none </td>
+    <td valign="top" width="13%"> <a href="#icreslist">reslist.tpl</a><BR>
+        <a href="#icthumbfull">thumbfull.tpl</a><BR>
+        <a href="#icthumbnail">thumbnail.tpl</a><BR>
+    </td>
+    <td valign="top" width="25%">inserts a summary of search results. </td>
+  </tr>
+  <tr>
+    <td valign="top" width="25%"> &lt;?SORTMENU&gt; </td>
+    <td valign="top" width="12%">none</td>
+    <td valign="top" width="13%"> <a href="#icbbreslist">bbreslist.tpl</a><BR>
+        <a href="#icbbthumbfull">bbthumbfull.tpl</a><BR>
+        <a href="#icbbthumbnail">bbthumbnail.tpl</a><BR>
+        <a href="#icreslist">reslist.tpl</a><BR>
+        <a href="#icthumbfull">thumbfull.tpl</a><BR>
+        <a href="#icthumbnail">thumbnail.tpl</a><BR>
+    </td>
+    <td valign="top" width="25%">inserts sort menu</td>
+  </tr>
+  <tr>
+    <td valign="top" width="25%"> &lt;?SWITCHENTRYVIEW&gt; </td>
+    <td valign="top" width="12%">view</td>
+    <td valign="top" width="13%"> <a href="#icbbentry">bbentry.tpl</a><BR>
+        <a href="#icbbslideentry">bbslideentry.tpl</a><BR>
+    </td>
+    <td valign="top" width="25%">
+      <p>inserts a URL link for switching between portfolio entry view and portfolio
+        slideshow view. Likely values are...</p>
+      <p>bbentry</p>
+      <p>bbslideentry </p>
+    </td>
+  </tr>
+  <tr>
+    <td valign="top" width="25%"> &lt;?THUMBFULLDIVS&gt; </td>
+    <td valign="top" width="12%">none</td>
+    <td valign="top" width="13%"> <a href="#icbbthumbfull">bbthumbfull.tpl</a><BR>
+        <a href="#icthumbfull">thumbfull.tpl</a><BR>
+    </td>
+    <td valign="top" width="25%">inserts the set of HTML DIVs, one for every
+      record included in the page of results, that is used for displaying full
+      records on the results page (thumb with full record view).</td>
+  </tr>
+  <tr>
+    <td valign="top" width="25%"> &lt;?THUMBFULLJSARRAYS&gt; </td>
+    <td valign="top" width="12%">none </td>
+    <td valign="top" width="13%"> <a href="#icbbthumbfull">bbthumbfull.tpl</a><BR>
+        <a href="#icthumbfull">thumbfull.tpl</a><BR>
+    </td>
+    <td valign="top" width="25%">inserts JavaScript arrays used for dynamically
+      displaying a full record on the results page when requested.</td>
+  </tr>
+  <tr>
+    <td valign="top" width="25%"> &lt;?THUMBFULLSTYLE&gt; </td>
+    <td valign="top" width="12%">none </td>
+    <td valign="top" width="13%"> <a href="#icbbthumbfull">bbthumbfull.tpl</a><BR>
+        <a href="#icthumbfull">thumbfull.tpl</a><BR>
+    </td>
+    <td valign="top" width="25%">inserts style definitions for positioning of
+      the full record divs.</td>
+  </tr>
+  <tr>
+    <td valign="top" width="25%"> &lt;?THUMBNAIL&gt; </td>
+    <td valign="top" width="12%">none </td>
+    <td valign="top" width="13%"><a href="#icentry">entry.tpl</a><BR>
+        <a href="#icbbentry">bbentry.tpl</a><BR>
+      <a href="#icslideentry">slideentry.tpl</a> </td>
+    <td valign="top" width="25%">inserts a thumbnail image. (does this really
+      work???) </td>
+  </tr>
+  <tr>
+    <td valign="top" width="25%"> &lt;?VIEWINSTRUCT&gt; </td>
+    <td valign="top" width="12%">none </td>
+    <td valign="top" width="13%"> <a href="#icbbreslist">bbreslist.tpl</a><BR>
+        <a href="#icbbthumbfull">bbthumbfull.tpl</a><BR>
+        <a href="#icbbthumbnail">bbthumbnail.tpl</a><BR>
+        <a href="#icreslist">reslist.tpl</a><BR>
+        <a href="#icthumbfull">thumbfull.tpl</a><BR>
+        <a href="#icthumbnail">thumbnail.tpl</a><BR>
+    </td>
+    <td valign="top" width="25%">inserts instructions for the user, depending
+      on the situation.</td>
+  </tr>
+  <tr>
+    <td valign="top" width="25%"> &lt;?VIEWTABS&gt; </td>
+    <td valign="top" width="12%">form</td>
+    <td valign="top" width="13%"> <a href="#icbbreslist">bbreslist.tpl</a><BR>
+        <a href="#icbbthumbfull">bbthumbfull.tpl</a><BR>
+        <a href="#icbbthumbnail">bbthumbnail.tpl</a><BR>
+        <a href="#icreslist">reslist.tpl</a><BR>
+        <a href="#icthumbfull">thumbfull.tpl</a><BR>
+        <a href="#icthumbnail">thumbnail.tpl</a><BR>
+    </td>
+    <td valign="top" width="25%">inserts the view tabs that are used for switching
+      among the results views. by default, the viewtabs are graphical. Optionally
+      the &quot;form&quot; PI parameter can be used to specify that the viewtabs
+      be displayed as &quot;text&quot;. This simply provides a quick and dirty
+      way to change the background color of the header row without creating a
+      new graphic that is dithered to the new background color.<BR>
+            <BR>
+            graphic (default)<BR>
+            <BR>
+            text</td>
+  </tr>
+  <tr>
+    <td valign="top" width="25%"> &lt;?VISIBILITY&gt; </td>
+    <td valign="top" width="12%">div</td>
+    <td valign="top" width="13%"> <a href="#icbbentry">bbentry.tpl</a><BR>
+        <a href="#icbbslideentry">bbslideentry.tpl</a><BR>
+        <a href="#icentry">entry.tpl</a><BR>
+    </td>
+    <td valign="top" width="25%">
+      <p>inserts styles that control the visibility of DIVs in the entry/record
+        display. the default divs are listed below, but there are ways to add
+        or change DIVs if that is of interest. Contact dlps-help[at]umich.edufor
+        guidance.</p>
+      <p>full-image</p>
+      <p>description</p>
+      <p>other-views </p>
+    </td>
+  </tr>
+  <tr>
+    <td valign="top" width="25%"> &lt;?ZOOMTHUMB&gt; </td>
+    <td valign="top" width="12%">none </td>
+    <td valign="top" width="13%"> <a href="#icentry">entry.tpl</a><BR>
+    </td>
+    <td valign="top" width="25%">this is not ready for primetime, but it is a
+      feature for displaying a thumbnail that has a red box drawn on it indicating
+      the portion of the full image that is currently being viewed. It is a navigational
+      tool. </td>
+  </tr>
+  <tr>
+    <td valign="top" width="25%"> &lt;?RESTRICTSTATUS&gt; </td>
+    <td valign="top" width="12%">none</td>
+    <td valign="top" width="13%"><a href="#icindex">index.tpl</a><BR>
+      <a href="#iccollinfo">collinfo.tpl</a> </td>
+    <td valign="top" width="25%">inserts authority of the user relative to the
+      collection</td>
+  </tr>
+</table>
+</body>
+</html>

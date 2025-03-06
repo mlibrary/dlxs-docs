@@ -1,0 +1,141 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+
+<html>
+
+<head>
+
+   <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+
+   <meta name="GENERATOR" content="Mozilla/4.72 [en] (WinNT; I) [Netscape]">
+
+   <title>DLXS Programmers &amp; Technical Workshop</title>
+
+<link rel="stylesheet" href="styles.css">
+
+</head>
+
+<body class="mainpalette">
+
+
+
+<h3>
+
+XPat Overview</h3>
+
+
+
+<h4>
+
+History</h4>
+
+Until 1998, most DLPS middleware was built using the OpenText search engine, version 
+5.0, aka <b>pat50</b>. The indexes <b>pat50</b> builds is based on a structure 
+called a <b>Patricia Tree</b> which analyzes substrings of the entire text which 
+are known as <b>semi-infinite strings</b> or <b>sisstrings</b>. For more information 
+on these check: 
+<blockquote><b><i>Information Retrieval: Data Structures and Algorithms</i></b>
+
+<br>W. B. Frakes and R. S. Baeza-Yates
+
+<br>1992.
+
+<br><i></i>&nbsp;</blockquote>
+
+<i>Sistrings</i> as you'll see them in the literature, have some interesting
+
+properties:
+
+<blockquote>
+
+<li>
+
+They start at some offset in the entire string of the database</li>
+
+
+
+<li>
+
+They stretch off to at least the end of the database (implying that they
+
+<i>always</i>
+
+overlap with each other...)</li>
+
+
+
+<li>
+
+One can change (with the <b>IndexPts</b> section of the pat50 <b>.dd</b>
+
+file) where they start</li>
+
+</blockquote>
+
+
+
+<p><br>One of the most important features of <b>pat50/XPat</b> is its ability
+
+to index not only full text, but also to index SGML regions. This gives
+
+the ability to create complex searches that reach into regions of text
+
+based on the markup elements.
+
+<p>In 1998 and 1999 we began to use the next generation of OpenText search
+
+engine, <b>ot60</b>, which builds indexes on tokens rather than sistrings.
+
+However, we much prefered the Pat tree structure and some of its features.
+
+<p>Happily, DLPS was able, in 1999, to acquire the source code to <b>pat50</b>
+
+(see <a href="http://www.hti.umich.edu/misc/ssp/reorg-letter.html" target="external">pat50/DLPS
+
+recent developments</a>), which OpenText was no longer supporting. We can
+
+now offer a license to use our version of the original engine, now being
+
+called <b>XPat</b>. We have already begun to make changes to it and will
+
+continue to do so. These enhancements include:
+
+<ul>
+
+<li>
+
+update region indexing to use nsgmls, rather than the older sgmls</li>
+
+
+
+<li>
+
+allow indexing of XML</li>
+
+
+
+<li>
+
+allow for the use of Unicode in marked up text</li>
+
+
+
+<li>
+
+build in knowledge of SGML/XML element ancestry; perhaps use the DOM</li>
+
+
+
+<li>
+
+allow for ability to be aware and ignore, as needed, markup which may intervene
+
+in strings of text being searched</li>
+
+</ul>
+
+
+
+</body>
+
+</html>
+

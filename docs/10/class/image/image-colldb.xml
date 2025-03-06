@@ -1,0 +1,514 @@
+<?xml version="1.0"?>
+
+<!-- SPO Editorial Services                  -->
+<!-- automatically-generated XML header file -->
+
+<?xml-stylesheet href="../../../pre11-dlxsdocs.xsl" type="text/xsl"?>
+<!DOCTYPE DLPSDOC PUBLIC "-//UM-DLPS//DTD DLPS Publications//EN" "http://docs.umdl.umich.edu/dlps/docs/dlpsdocs.dtd">
+<DLPSDOC>
+<TITLE>Image Class COLLDB (Collection Database)</TITLE>
+<HEADER>
+<JOURNAL>DLXS Documentation</JOURNAL>
+<PUBDATE>2003-02-12 12:50:13 EST</PUBDATE>
+<AUTH1>Weise, John</AUTH1>
+<AUTH2></AUTH2>
+<DOCTITLE>Image Class COLLDB (Collection Database)</DOCTITLE>
+<VOL>class</VOL>
+<ISS>image</ISS>
+<FILE>dlxsdocs-image-colldb</FILE>
+</HEADER>
+<BODY> <BHEAD>Image Class COLLDB (Collection Database) Configuration</BHEAD> 
+<DIV1 ID="main">
+<P><A HREF="mailto:dlxs-help@umich.edu">dlxs-help@umich.edu</A> </P>
+  <DIV2 ID="table">
+  
+<P>The COLLDB (collection database) is for configuration of individual collections. 
+  Many aspects of how a collection is presented in the interface are controlled 
+  by elements in the COLLDB. It is very powerful in that sense, and allows extensive 
+  customization to be done without creation of HTML templates. It is still possible 
+  to create templates and modify style sheets, etc. if that is necessary. Please 
+  see <A href="image-templates.xml">Image Class User Interface Configuration and 
+  Customization</A> for an overview.</P>
+<P>Some of the COLLDB elements may have corresponding Processing Instructions. Under 
+  certain situations, the Processing Instruction may override the COLLDB. This 
+  generally happens in a logical fashion. Just be aware of this possibility.</P>
+<H2>Table of COLLDB Field Definitions</H2>
+<table border="1" cellpadding="5" cellspacing="1" width="95%">
+  <TBODY> 
+  <tr> 
+    <th width="*"> Field Name </th>
+    <th width="*"> Description </th>
+    <th width="*">Example</th>
+  </tr>
+  <tr> 
+    <td width="*">collid</td>
+    <td width="*">the id for the collection.</td>
+    <td width="*"> 
+      <div align="left">bhl</div>
+    </td>
+  </tr>
+  <tr> 
+    <td width="*">collname</td>
+    <td width="*">the long name of the collection. commonly displayed in collection 
+      selection lists, etc. see also &quot;banner&quot; field.</td>
+    <td width="*"> 
+      <div align="left">BHL Image Bank, Bentley Historical Library</div>
+    </td>
+  </tr>
+  <tr> 
+    <td width="*">host</td>
+    <td width="*">the host machine of the XPAT index. "localhost" works as long as long as the XPat index is on the same machine as the middleware. Alternatively an XPat index can be on a different machine and accessed remotely via the DLXS daemon.</td>
+    <td width="*"> 
+      <div align="left">localhost</div>
+    </td>
+  </tr>
+  <tr> 
+    <td width="*">webdir</td>
+    <td width="*">the collection specific portion of the path to the directory 
+      that holds the collection specific templates; the middleware resolves this 
+      to $DLXSROOT/web/c/collid.</td>
+    <td width="*"> 
+      <div align="left">/b/bhl</div>
+    </td>
+  </tr>
+  <tr> 
+    <td width="*">contactlink</td>
+    <td width="*">a URL the user should follow to get help in using the collection.</td>
+    <td width="*"><div align="left">mailto:icbhl-umdl-help@umich.edu</div></td>
+  </tr>
+  <tr> 
+    <td width="*">contacttext</td>
+    <td width="*">text used for the contactlink link. </td>
+    <td width="*"> 
+      <div align="left">icbhl-umdl-help@umich.edu</div>
+    </td>
+  </tr>
+  <tr> 
+    <td width="*">imgqual</td>
+    <td width="*"> 
+      <p>the default size for image display; there are several ways to specify 
+        the quality. </p>
+      <p>examples:</p>
+      <ul>
+        <li>h600 -- height no larger than 600 pixels</li>
+        <li>w600 -- width no larger than 600 pixels</li>
+        <li>m800 -- max dimension of image no larger than 800 pixels</li>
+        <li>min -- smallest available</li>
+        <li>max -- largest available</li>
+        <li>mid -- mid-size among available</li>
+        <li>preview -- defined in imageclass.cfg ($gDefaultPreviewImageSize)</li>
+        <li>screen -- defined in imageclass.cfg ($gDefaultScreenImageSize)</li>
+        <li>integer value -- MrSID res value</li>
+      </ul>
+      <p>Image Class version 1 quality terms are approximately converted to the 
+        above quality terms. </p>
+    </td>
+    <td width="*"> 
+      <div align="left">m600</div>
+    </td>
+  </tr>
+  <tr> 
+    <td width="*">imgsizemax</td>
+    <td width="*">allows a restriction to be put on the maximum full size image 
+      displayed; definable in terms similar to imgqual above; leave field blank 
+      for no restriction.</td>
+    <td width="*"> 
+      <div align="left">m600</div>
+    </td>
+  </tr>
+  <tr> 
+    <td width="*">imgsizemin</td>
+    <td width="*">allows a restriction to be put on the minimum full size image 
+      displayed. definable in terms similar to imgqual above.leave field blank 
+      for no restriction.</td>
+    <td width="*"><div align="left">m200</div></td>
+  </tr>
+  <tr> 
+    <td width="*">briefcollname</td>
+    <td width="*">a brief version of the collection name; used for display beneath 
+      thumbnail images in results view.</td>
+    <td width="*"> 
+      <div align="left">BHL Image Bank</div>
+    </td>
+  </tr>
+  <tr> 
+    <td width="*">banner</td>
+    <td width="*">often the same as collname, but used in the header of pages; 
+      may be specified as text, or as a graphic (e.g., image:bhlbanner.gif); graphic 
+      file must be in $DLXSROOT/web/c/collid/graphics. the banner for cross collection 
+      display is configured in imageclass.cfg (in cgi dir).</td>
+    <td width="*"> 
+      <div align="left">text: Bentley Image Bank</div>
+    </td>
+  </tr>
+  <tr> 
+    <td width="*">thumbnailresflds</td>
+    <td width="*">the list of fields (as abbreviations) to display in &quot;thumbnail 
+      with captions&quot; results view; to display all fields enter the value 
+      &quot;default&quot;. </td>
+    <td width="*"> 
+      <div align="left">BHL.ITNO<BR/>BHL.IT<BR/>BHL.CA</div>
+    </td>
+  </tr>
+  <tr> 
+    <td width="*">thumbfullresflds</td>
+    <td width="*">the list of fields (as abbreviations) to display in &quot;thumbnail 
+      with full record&quot; results view; to display all fields enter the value 
+      &quot;default&quot;.</td>
+    <td width="*"> 
+      <div align="left">BHL.ITNO<BR/>BHL.IT<BR/>BHL.CA</div>
+    </td>
+  </tr>
+  <tr> 
+    <td width="*">reslistresflds</td>
+    <td width="*">the list of fields (as abbreviations) to display in &quot;captions 
+      only &quot; results view. to display all fields, enter the value &quot;default&quot;.</td>
+    <td width="*"> 
+      <div align="left">BHL.ITNO<BR/>BHL.IT<BR/>BHL.CA</div>
+    </td>
+  </tr>
+  <tr> 
+    <td width="*">resfldtrim</td>
+    <td width="*">maximum character string length for each field in dfltresflds. 
+      this is used for trimming long fields down to the specified number of characters 
+      when being displayed under thumbnail images.</td>
+    <td align="right" width="*"> 
+      <div align="left">50</div>
+    </td>
+  </tr>
+  <tr> 
+    <td width="*">dfltentryflds</td>
+    <td width="*">the list of fields (as abbreviations) to display in entry (full 
+      record) views. to display all fields, enter the value &quot;default&quot;.</td>
+    <td width="*"> 
+      <div align="left">
+        <p>BHL.IT<BR/>BHL.TIS<BR/>dateconv:on<BR/>BHL.DA<BR/>dateconv:off<BR/>BHL.CR<BR/>BHL.WC<BR/>BHL.CA<BR/>BHL.NO<BR/>BHL.SU<BR/>BHL.G<BR/>BHL.CT<BR/>
+          BHL.CC<BR/>BHL.LO<BR/>BHL.ITNO<BR/>BHL.NE<BR/>BHL.SS<BR/>url:on<BR/>idres:on<BR/>BHL.EL<BR/>url:off<BR/>idres:off<BR/>BHL.RI<BR/>BHL.RE</p>
+        <p>In colldb, values must be listed 1 per line. However within a processing instruction, values must be delimited 
+          by pipes ( &quot;|&quot; ). e.g., MUSART.TI|MUSART.CR|musart.DA</p>
+        <p>Values are not case sensitive. </p>
+        <p>There are several options that may be turned on and off to enhance 
+          the display of records. The options are specified as another value among 
+          abbreviations. When the status of an option is changed, the change is 
+          persistent for all subsequent fields, until the status is changed again. 
+          The exceptions to this are &quot;sectionlabel&quot; and &quot;urltext&quot;, 
+          which are specified as often as needed.</p>
+        <p>The &quot;url&quot; option, for example, causes fields that contain 
+          a URL (and nothing but a URL), to be turned into a hyperlink. It can 
+          be used in conjunction with the &quot;urltext&quot; option, which 
+          allows the link text to be specified. By default the URL itself is used 
+          for the link text. e.g., <br/>
+          MUSART.TI<BR/>url:on<BR/>urltext:View_Copyright_Statement<BR/>MUSART.cp<BR/>url:off<BR/>MUSART.DA</p>
+        <p>The &quot;hilite&quot; option causes search terms to be hilited. This 
+          option is &quot;on&quot; by default, but if you wanted to turn hiliting 
+          off for several consecutive fields, you could. e.g., MUSART.TI<BR/>hilite:off<BR/>MUSART.DA<BR/>MUSART.PG<BR/>MUSART.LI<BR/>hilite:on<BR/>MUSART.TY</p>
+        <p>The complete list of field options are as follows: </p>
+        <table width="100%" border="1" cellspacing="1" cellpadding="1">
+          <tr> 
+            <th width="14%">option</th>
+            <th width="31%">values</th>
+            <th width="7%">default</th>
+            <th width="48%">description</th>
+          </tr>
+          <tr> 
+            <td width="14%">label</td>
+            <td width="31%">on/off</td>
+            <td width="7%">on</td>
+            <td width="48%">display name of field before field value</td>
+          </tr>
+          <tr> 
+            <td width="14%" height="37">sectionlabel</td>
+            <td width="31%" height="37">text string*<br/>
+            </td>
+            <td width="7%" height="37">empty</td>
+            <td width="48%" height="37">display a section label before a series 
+              of fields. allows a record to split into sections.</td>
+          </tr>
+          <tr> 
+            <td width="14%">url</td>
+            <td width="31%">on/off</td>
+            <td width="7%">off</td>
+            <td width="48%">turn the entire contents of the field in to a link. 
+              assumes the field contains a single URL.</td>
+          </tr>
+          <tr> 
+            <td width="14%">urltext</td>
+            <td width="31%">text string*</td>
+            <td width="7%">empty</td>
+            <td width="48%">display the provided string as the text of the &quot;url&quot; 
+              option link. if &quot;urltext&quot; is not specified, the URL value 
+              is used as the text of the link.</td>
+          </tr>
+          <tr> 
+            <td width="14%">idres</td>
+            <td width="31%">on/off</td>
+            <td width="7%">off</td>
+            <td width="48%">look the value of the field up in the id resolver 
+              and display the value. use with &quot;url&quot; and/or &quot;urltext&quot; 
+              to turn the value in to a link.</td>
+          </tr>
+          <tr> 
+            <td width="14%">dateconv</td>
+            <td width="31%">on/off</td>
+            <td width="7%">off</td>
+            <td width="48%"> 
+              <p>displays some ISO format dates in a more human readable form.</p>
+              <p>supports YYYYMMDD, YYYYMMDD/YYYYMMDD and maintains any data that 
+                might follow the date in the field e.g, (ca.)</p>
+            </td>
+          </tr>
+          <tr> 
+            <td width="14%">hilite</td>
+            <td width="31%">on/off</td>
+            <td width="7%">on</td>
+            <td width="48%"> 
+              <p>hilites search terms in the field. </p>
+              <p>DLXS hiliting supports 3 search fields only (q1 - q3). </p>
+            </td>
+          </tr>
+          <tr> 
+            <td width="14%">keylinks</td>
+            <td width="31%">on/off</td>
+            <td width="7%">off</td>
+            <td width="48%"> 
+              <p>turns the field value into a url that will search the collection for that value. by default, each word of the field is made into a separate link. the delimiter used to split the field can be specified by the "delim" option.</p>
+            </td>
+          </tr>
+
+          <tr> 
+            <td width="14%">delim</td>
+            <td width="31%">1 or more characters</td>
+            <td width="7%">SPACE</td>
+            <td width="48%"> 
+              <p>used in conjunction with the keylinks option to split the value of a field into smaller parts by the value delim specifies. for example, if a field holds a list of keywords delimited by "; " delim can be set to ";_" to tell the keylinks option how to split the field. (note: use an underscore for SPACE.)  e.g., delim:;_</p>
+            </td>
+          </tr>
+
+
+        </table>
+        <p>* use underscores for spaces. special characters may not work.</p>
+        <p>The Processing Instruction &quot;RECORDTABLE&quot; has similar functionality.</p>
+      </div>
+    </td>
+  </tr>
+  <tr> 
+    <td width="*">dfltresentryflds</td>
+    <td width="*">the list of fields (as abbreviations) to display in the results 
+      view that includes the full record (i.e., thumbfull view). to display all 
+      fields, enter the value &quot;default&quot;.</td>
+    <td width="*"> 
+      <div align="left">
+        <p>BHL.IT<BR/>BHL.TIS<BR/>dateconv:on<BR/>BHL.DA<BR/>dateconv:off<BR/>BHL.CR<BR/>BHL.WC<BR/>BHL.CA<BR/>BHL.NO<BR/>BHL.SU<BR/>BHL.G<BR/>BHL.CT<BR/>
+          BHL.CC<BR/>BHL.LO<BR/>BHL.ITNO<BR/>BHL.NE<BR/>BHL.SS<BR/>url:on<BR/>idres:on<BR/>BHL.EL<BR/>url:off<BR/>idres:off<BR/>BHL.RI<BR/>BHL.RE</p>
+        <p>See <b>dfltentryflds</b> above for record and field display options.</p>
+      </div>
+    </td>
+  </tr>
+  <tr> 
+    <td width="*">dfltsrchflds</td>
+    <td width="*">the list of fields (as abbreviations) that may be searched. 
+      these are the fields that show up in the search form. to display all fields, 
+      enter the value &quot;default&quot;.</td>
+    <td width="*"> 
+      <div align="left">bhl.it<BR/>bhl.da<BR/>bhl.tis<BR/>bhl.cr<BR/>bhl.ca<BR/>bhl.no<BR/>bhl.su<BR/>bhl.g<BR/>bhl.ct<BR/>bhl.cc<BR/>bhl.lo<BR/>bhl.fn<BR/>bhl.ne</div>
+    </td>
+  </tr>
+  <tr> 
+    <td width="*">numqs</td>
+    <td width="*">the number of text fields to display in search form.</td>
+    <td align="right" width="*"> 
+      <div align="left">2</div>
+    </td>
+  </tr>
+  <tr> 
+    <td width="*">resultsviews</td>
+    <td width="*"> 
+      <p>the list of results views to be made available to users. </p>
+      <p>legal values are any combination of: thumbnail, thumbfull, reslist</p>
+      <p>order is not important.</p>
+    </td>
+    <td width="*"> 
+      <div align="left">thumbnail<BR/>thumbfull<BR/>reslist</div>
+    </td>
+  </tr>
+  <tr> 
+    <td width="*">resultsviewsdefault</td>
+    <td width="*"> 
+      <p>the default result view. </p>
+      <p>legal values (choose one): thumbnail, thumbfull, reslist</p>
+    </td>
+    <td width="*"> 
+      <div align="left">thumbnail</div>
+    </td>
+  </tr>
+  <tr> 
+    <td width="*">relviewmenu</td>
+    <td width="*">related view menu. set to &quot;on&quot; to display a pop-up 
+      menu in the entry/record view that allows navigation to any of the images 
+      associated with the entry/record (the record must have multiple images). 
+      Useful as a page-flipping mechanism.</td>
+    <td width="*"> 
+      <div align="left">off</div>
+    </td>
+  </tr>
+  <tr> 
+    <td width="*">relviewmenuinstruct</td>
+    <td width="*">string of instruction text to precede the related view menu 
+      (relviewmenu)</td>
+    <td width="*"> 
+      <div align="left">default</div>
+    </td>
+  </tr>
+  <tr> 
+    <td width="*">relviewmenuprefx</td>
+    <td width="*">string of text to precede each item in the related view menu 
+      (relviewmenu) </td>
+    <td width="*"> 
+      <div align="left">default</div>
+    </td>
+  </tr>
+  <tr> 
+    <td width="*">relviewmenuvals</td>
+    <td width="*">the SGML ISTRUCT attribute to use for display values in the 
+      related view menu (relviewmenu)</td>
+    <td width="*"> 
+      <div align="left"><P>default (same as CAPTIONS, which uses the ISTRUCT element value, a.k.a. "caption")</P>
+      <P>In addition to "CAPTIONS", any of the ISTRUCT attribute names are valid (e.g., "FACE")</P></div>
+    </td>
+  </tr>
+  <tr> 
+    <td width="*">mediaonly</td>
+    <td width="*"> 
+      <p>controls the presence and default status of the &quot;media only&quot; 
+        restriction in the search form. There are several possible values.</p>
+      <p>&quot;on&quot; = form element is displayed and option is selected by 
+        default -- (useful when it is most likely that users will want only records 
+        with digital images, and you want to give them the option to turn off 
+        the restriction)</p>
+      <p>&quot;off&quot; = form element is displayed and option is not selected 
+        by default --(useful when it is most likely that users will want all records, 
+        with or without digital images, and you want to give them the option to 
+        turn on the restriction)</p>
+      <p>&quot;on hidden&quot; = form element is hidden and selected -- (useful 
+        when all records have digital images)</p>
+      <p>&quot;off hidden&quot; = form element is hidden and not selected (actually, 
+        it is probably omitted altogether which has the same effect) -- (useful 
+        when the collection has no digital images)</p>
+    </td>
+    <td width="*"> 
+      <div align="left">on</div>
+    </td>
+  </tr>
+  <tr> 
+    <td width="*">entrydivs</td>
+    <td width="*">the entry/record display uses HTML DIVs to provide two different 
+      display modes (i.e., &quot;full image&quot;, &quot;other views&quot; and &quot;description&quot;). 
+      The user can flip back and forth between the two display modes. If a collection 
+      has records with images and descriptions, you will want to include both, 
+      as shown in the example to the right. For a collection that has descriptions 
+      but no images, you probably want to only include &quot;description&quot;</td>
+    <td width="*"> 
+      <div align="left">full image<BR/>description<BR/>other views</div>
+    </td>
+  </tr>
+  <tr> 
+    <td width="*">entrydivsdefault</td>
+    <td width="*">the default display mode for the entry/record display. when 
+      the record is first displayed, should the &quot;full image&quot; view be 
+      shown first, or the &quot;description&quot; view? &quot;other views&quot; is also an option.</td>
+    <td width="*"> 
+      <div align="left">full image</div>
+    </td>
+  </tr>
+  <tr> 
+    <td width="*">sortflds</td>
+    <td width="*">the list of field abbreviations that should be provided as options 
+      for sorting. sort fields for multiple collections are configured in the groups 
+      db. <b>&quot;none&quot; must always be the first value.</b></td>
+    <td width="*"> 
+      <div align="left">none<BR/>bhl.it<BR/>bhl.cr<BR/>bhl.da<BR/>bhl.itno</div>
+    </td>
+  </tr>
+  <tr> 
+    <td width="*">dddir</td>
+    <td width="*">the directory under $DLXSROOT/idx that the collection's XPAT 
+      index resides in.</td>
+    <td width="*"> 
+      <div align="left">/b/bhl</div>
+    </td>
+  </tr>
+  <tr> 
+    <td width="*">dd</td>
+    <td width="*">the name of the XPAT dd file.</td>
+    <td width="*"> 
+      <div align="left">image.dd</div>
+    </td>
+  </tr>
+  <tr> 
+    <td width="*">map</td>
+    <td width="*">leave it set to &quot;default&quot; 
+      and everything should be OK.</td>
+    <td width="*"> 
+      <div align="left">default</div>
+    </td>
+  </tr>
+  <tr> 
+    <td width="*">xpatexec</td>
+    <td width="*">where XPAT resides on the local machine. </td>
+    <td width="*"> 
+      <div align="left">/l/local/xpat/bin/xpat</div>
+    </td>
+  </tr>
+  <tr> 
+    <td width="*">port</td>
+    <td width="*">the port for remote XPAT interactions (XPAT and index are on 
+      a remote machine relative to the middleware). Most likely the value will 
+      be &quot;620&quot;. Assumes the use of the DLXSd deamon.</td>
+    <td align="right" width="*"> 
+      <div align="left">620</div>
+    </td>
+  </tr>
+  <tr> 
+    <td width="*">brwsimg</td>
+    <td width="*"> 
+      <p>with this field, the collection index page can be configured to display 
+        a &quot;browse images&quot; link. There are three values that can be used 
+        in this field: </p>
+      <p>&quot;default&quot; = the link will say &quot;browse all images&quot; 
+        and when followed will retrieve all the images of the collection as a 
+        result set.</p>
+      <p>&quot;&quot; (blank) = omit the link completely</p>
+      <p>any single word search term = the link will say &quot;browse sample images&quot; 
+        and the link will retrieve results for a search on the search term. This 
+        is useful when a collection is very large but you want to let users get 
+        a feel for the collection by browsing a subset of the images. </p>
+      <p>to be clear, DLXS still plans to create a more dynamic browsing feature.</p>
+    </td>
+    <td align="left" width="*">default</td>
+  </tr>
+  <tr> 
+    <td width="*">brwsrec</td>
+    <td width="*"> 
+      <p>with this field, the collection index page can be configured to display 
+        a &quot;browse records&quot; link. There are three values that can be 
+        used in this field: </p>
+      <p>&quot;default&quot; = the link will say &quot;browse all records&quot; 
+        and when followed will retrieve all the records of the collection as a 
+        result set.</p>
+      <p>&quot;&quot; (blank) = omit the link completely</p>
+      <p>any single word search term = the link will say &quot;browse sample records&quot; 
+        and the link will retrieve results for a search on the search term. This 
+        is useful when a collection is very large but you want to let users get 
+        a feel for the collection by browsing a subset of the records. </p>
+      <p>to be clear, DLXS still plans to create a more dynamic browsing feature.</p>
+    </td>
+    <td align="left" width="*">default</td>
+  </tr>
+  </TBODY> 
+</table>
+</DIV2>
+</DIV1>
+
+</BODY>
+
+</DLPSDOC>

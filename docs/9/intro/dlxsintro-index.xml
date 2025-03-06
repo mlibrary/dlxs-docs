@@ -1,0 +1,35 @@
+<?xml version="1.0"?>
+
+<!-- SPO Editorial Services                  -->
+<!-- automatically-generated XML header file -->
+
+<?xml-stylesheet href="../../pre11-dlxsdocs.xsl" type="text/xsl"?>
+<!DOCTYPE DLPSDOC PUBLIC "-//UM-DLPS//DTD DLPS Publications//EN" "http://docs.umdl.umich.edu/dlps/docs/dlpsdocs.dtd">
+<DLPSDOC>
+<TITLE>DLXS--Getting Started</TITLE>
+<HEADER>
+<JOURNAL>DLXS Documentation</JOURNAL>
+<PUBDATE>2002-06-25 15:39:38 EDT</PUBDATE>
+<AUTH1>Pagliere, Alan</AUTH1>
+<AUTH2></AUTH2>
+<DOCTITLE>DLXS--Getting Started</DOCTITLE>
+<VOL>intro</VOL>
+<ISS></ISS>
+<FILE>dlxsdocs-dlxsintro-index</FILE>
+</HEADER>
+
+
+<BODY>
+<BHEAD>DLXS, Getting Started</BHEAD>
+<DIV1>
+<P>Several systems work together to allow DLXS Middleware to do its job. These  include the following, given here to get you started with DLXS.</P>
+<UL>
+<LI><A HREF="dlxs-arch.xml">Architecture Overview</A></LI>
+<LI><A HREF="dlxs-sysreq.xml">System Requirements</A></LI>
+<LI><A HREF="dlxs-dirstruct.xml">The DLXS Directory Structure</A></LI>
+<LI><A HREF="dlxs-install.xml">Installation</A> and <A HREF="dlxs-stepbystep.xml">Step-by-Step Installation instructions</A></LI>
+<LI><A HREF="dlxs-auth.xml">Authentication and Authorization</A></LI>
+</UL>
+</DIV1>
+</BODY>
+</DLPSDOC>

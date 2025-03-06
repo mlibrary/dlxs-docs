@@ -1,0 +1,1562 @@
+##################################################
+## This module is not Object Oriented
+## It merely contains general utility subroutines used
+## in DLPS middleware
+
+package DlpsUtils;
+
+use Exporter ( );
+@ISA = qw( Exporter );
+
+@EXPORT = qw( SortUniquifyList      
+              PrintStringToFile
+              TrimSpaces
+              errorBail             
+	      GetParallelHash
+	      Min
+	      Max
+
+              GetHtmlTemplateText
+              OutputHtmlPage        
+              OutputMimeTypedPage
+              StartHtmlPage         
+              FinishPage            
+              SetupHtmlDebugging    
+              CollectionResolution  
+
+	      Flatten8bitChars
+              SimpleHtmlFilter
+              CleanResidualTags
+              FilterCharEnts_All
+
+              GetIntersection       
+              GetNWayIntersection
+
+              CleanCgiParameters
+              FindHostName
+
+              StartSession
+
+              BuildPullDown
+              BuildSelect
+              BuildTextInput
+            );
+
+use CGI;
+use DlpsSession;
+
+# ----------------------------------------------------------------------
+# NAME         : Flatten8bitChars
+# PURPOSE      : obvious
+# CALLED BY    : ANY
+# CALLS        : NONE
+# INPUT        : scalar
+# RETURNS      : scalar flattened
+# GLOBALS      : NONE
+# SIDE-EFFECTS : NONE
+# NOTES        : 
+# ----------------------------------------------------------------------
+sub Flatten8bitChars
+{
+    my $w = shift;
+    
+    $w =~ tr/ÀÁÂÃÄÅÇÈÉÊËÌÍÎÏÑÒÓÔÕÖØÙÚÛÜÝßàáâãäåçèéêëìíîïñòóôõöøùúûüý&gt;/aaaaaaceeeeiiiinoooooouuuuysaaaaaaceeeeiiiinoooooouuuuyy/;
+
+    return $w;
+}
+
+# ----------------------------------------------------------------------
+# NAME         : Max
+# PURPOSE      : obvious
+# CALLED BY    : ANY
+# CALLS        : NONE
+# INPUT        : 2 scalar values which can be compared numerically
+# RETURNS      : the Max of the two values
+# GLOBALS      : NONE
+# SIDE-EFFECTS : NONE
+# NOTES        : 
+# ----------------------------------------------------------------------
+sub Max
+{
+    my ( $a, $b ) = @_;
+    
+    return $b if ( $b > $a );
+    return $a;
+}
+
+
+# ----------------------------------------------------------------------
+# NAME         : Min
+# PURPOSE      : obvious
+# CALLED BY    : ANY
+# CALLS        : NONE
+# INPUT        : 2 scalar values which can be compared numerically
+# RETURNS      : the Min of the two values
+# GLOBALS      : NONE
+# SIDE-EFFECTS : NONE
+# NOTES        : 
+# ----------------------------------------------------------------------
+sub Min
+{
+    my ( $a, $b ) = @_;
+    
+    return $b if ( $b < $a );
+    return $a;
+}
+
+
+# ----------------------------------------------------------------------
+# NAME         : GetAuthListFromENV
+# PURPOSE      : concat the restricted and public envvars, strip '-dev'
+#                and split into a list
+# CALLED BY    : ANY
+# CALLS        : NONE
+# INPUT        : NONE
+# RETURNS      : list of authorized collections
+# GLOBALS      : $ENV
+# SIDE-EFFECTS : NONE
+# NOTES        : -dev is for development
+# ----------------------------------------------------------------------
+
+sub GetAuthListFromENV
+{
+    my $env = $ENV{'AUTHZD_COLL'} . $ENV{'PUBLIC_COLL'};
+    
+    $env =~ s,-dev,,g;
+    $env =~ s,^[\s:],,;
+    $env =~ s,[\s:]$,,;
+    
+    return split( /:/, $env );
+}
+
+# ----------------------------------------------------------------------
+# NAME         : SortUniquifyList
+# PURPOSE      : sort and uniq any list (alphabetically by default,
+#                numerically if any second param with any value at all is passed in)
+# CALLED BY    : ANY
+# CALLS        : NONE
+# INPUT        : reference to an array
+# RETURNS      : NONE
+# GLOBALS      : 
+# SIDE-EFFECTS : changes array via reference
+# NOTES        : 
+# ----------------------------------------------------------------------
+
+sub SortUniquifyList
+{
+    my ( $aRef, $numeric ) = @_;
+    my %hash;
+    
+    foreach my $item ( @$aRef )
+    {      $hash{$item}++;     }
+    
+    if ( defined ( $numeric ) )
+    {
+        @$aRef = sort { $a <=> $b } ( keys %hash );
+    }
+    else
+    {
+        @$aRef = sort ( keys %hash );
+    }
+}
+
+# ----------------------------------------------------------------------
+# NAME         : OutputHtmlPage
+# PURPOSE      : 
+#                
+# CALLED BY    : 
+# CALLS        : 
+# INPUT        : ref to string of entire html to print
+# RETURNS      : NONE
+# GLOBALS      : 
+# SIDE-EFFECTS : prints to STDOUT
+# NOTES        : 
+# ----------------------------------------------------------------------
+
+sub OutputHtmlPage
+{
+    my $sRef = shift ;
+
+    # print out html header
+    print &CGI::header( 
+                       -type => 'text/html'
+                      );
+
+    # mod_perl version of same ( not sure this will be ever be needed )
+    #    $gReq->content_type( 'text/html' );
+    #    $gReq->send_http_header;
+    #   return "OK" if $gReq->header_only;
+
+    print $$sRef;
+}
+
+# ----------------------------------------------------------------------
+# NAME         : OutputMimeTypedPage
+# PURPOSE      : 
+#                
+# CALLED BY    : 
+# CALLS        : 
+# INPUT        : ref to string of entire content to print, mime type,
+#                and value for "expires" (usually 'now')
+# RETURNS      : NONE
+# GLOBALS      : 
+# SIDE-EFFECTS : prints to STDOUT
+# NOTES        : 
+# ----------------------------------------------------------------------
+
+sub OutputMimeTypedPage
+{
+    my ( $sRef, $mimeType ) = @_;
+
+    # print out header
+    print &CGI::header( 
+                       -type    => $mimeType,
+                       -expires => 'now'
+                      );
+    # print page
+    print $$sRef;
+}
+
+
+# ----------------------------------------------------------------------
+# NAME      : DumpEnvVars
+# PURPOSE   : print HTML dump of all environment variables
+# CALLED BY : debugging routines
+# CALLS     : 
+# INPUT     : 
+# RETURNS   : NONE
+# NOTES     : 
+# ----------------------------------------------------------------------
+
+sub DumpEnvVars
+{
+    my $s = '';
+    
+    $s .= q{<font color="red">} .                      
+      &CGI::h2(qq{ENVIRONMENT VARIABLES})
+        . q{</font>};
+        
+    foreach my $key (sort keys %ENV)
+    {
+        $s .= qq{<b>$key</b>&nbsp;&nbsp;} . qq{$ENV{$key}<br>\n};
+    }
+
+    return ( $s );
+}
+
+# ----------------------------------------------------------------------
+# NAME      : errorBail
+# PURPOSE   : an enhanced bail function
+# CALLED BY : various
+# CALLS     : 
+# INPUT     : zero or more strings to be printed as error messages to
+#             the web browser
+# RETURNS   : NONE
+# NOTES     : 
+# ----------------------------------------------------------------------
+
+sub errorBail
+{
+    my( @errors ) = @_;
+    my $s = '';
+    
+    $s .= &StartHtmlPage ( 'DLPS Error Page', '#FFFFFF' );
+    
+    $s .= join( "\n", @errors );
+
+    $s .= &FinishPage;
+    
+    &OutputHtmlPage ( \$s );
+    
+    exit;
+}
+
+# ----------------------------------------------------------------------
+# NAME      : StartHtmlPage
+# PURPOSE   : print HTML title and header
+# CALLED BY : main
+# CALLS     : Apache::Request->print
+# INPUT     : request object
+# RETURNS   : NONE
+# NOTES     : 
+# ----------------------------------------------------------------------
+
+sub StartHtmlPage
+{
+    my ( $title, $color ) = @_;
+    
+    my $s = '';
+    
+    $s .= &CGI::start_html( -title => $title,
+                            -bgcolor => $color
+                          );
+    return $s;
+}
+ 
+
+# ----------------------------------------------------------------------
+# NAME      : FinishPage
+# PURPOSE   : print HTML to close body and html
+# CALLED BY : main
+# CALLS     : CGI::end_html
+# INPUT     : NONE
+# RETURNS   : NONE
+# NOTES     : 
+# ----------------------------------------------------------------------
+
+sub FinishPage
+{
+    return ( &CGI::end_html );
+}
+
+# ----------------------------------------------------------------------
+# NAME         : 
+# PURPOSE      : 
+#                
+# CALLED BY    : 
+# CALLS        : 
+# INPUT        : 
+# RETURNS      : 
+# GLOBALS      : 
+# SIDE-EFFECTS : 
+# NOTES        : 
+# ----------------------------------------------------------------------
+
+sub SetupHtmlDebugging
+{
+    my $debugVal = shift;
+    
+    $ENV{'DEBUG'} = $debugVal;   
+    print &CGI::header( 
+                       -type => 'text/html'
+                      );
+    print &DlpsUtils::StartHtmlPage ( 'DEBUG', '#FFFFFF' );
+}
+
+
+# ----------------------------------------------------------------------
+# NAME         : CollectionResolution
+# PURPOSE      : set up authorized and requested collection arrays
+# CALLED BY    : main
+# CALLS        : NONE
+# INPUT        : NONE
+# RETURNS      : 
+# GLOBALS      : eventually uses Environment variable set by Auth System
+# SIDE-EFFECTS : sets globals @gRequestedColls, @gAuthzdColls ( sorted and
+#                and uniq-ed from here on out
+# NOTES        : currently hard coded authzd collections
+# ----------------------------------------------------------------------
+
+sub CollectionResolution
+{
+    my ( $cgi, $authzdCollsRef ) = @_; 
+
+    my @RequestedColls = $cgi->param( 'c' );
+
+    if ( !defined( @RequestedColls ) ||
+         scalar ( @RequestedColls ) == 0 )
+    {   @RequestedColls = @$authzdCollsRef;    }
+
+    # uniquify lists
+    &SortUniquifyList ( $authzdCollsRef );
+    &SortUniquifyList ( \@RequestedColls );
+
+    # set requested colls to only those they requested that are also authorized
+    @RequestedColls = &GetIntersection ( $authzdCollsRef, \@RequestedColls );
+    
+    # overwrite the query string's collections with the updated list of requested ones
+    $cgi->param( 'c', @RequestedColls );
+
+    return ( @RequestedColls  );
+}
+
+# ----------------------------------------------------------------------
+# NAME         : GetParallelHash
+# PURPOSE      : buils a hash from two parallel arrays using the first
+#                array to key the second array
+# CALLED BY    : clients
+# CALLS        : NONE
+# INPUT        : references to two lists
+# RETURNS      : hash
+# GLOBALS      : NONE
+# SIDE-EFFECTS : NONE
+# NOTES        : 
+# ----------------------------------------------------------------------
+
+sub GetParallelHash
+{
+    my ( $aRef1, $aRef2 ) = @_;
+    
+    my ( %hash, $i );
+    foreach my $item ( @$aRef1 )
+    {
+	$hash{$item} = @$aRef2[$i++];
+    }
+
+    return %hash;
+}
+
+# ----------------------------------------------------------------------
+# NAME         : GetIntersection
+# PURPOSE      : get the intersection of two uniqued lists
+# CALLED BY    : CollectionResolution
+# CALLS        : NONE
+# INPUT        : references to two lists
+# RETURNS      : list of intersection of the two lists
+# GLOBALS      : NONE
+# SIDE-EFFECTS : NONE
+# NOTES        : 
+# ----------------------------------------------------------------------
+
+sub GetIntersection
+{
+    my ( $aRef1, $aRef2 ) = @_;
+    
+    my @a = @$aRef1;
+    my @b = @$aRef2;
+
+    my @toReturn = ( );
+    
+    foreach my $item ( @a )
+    {
+        push ( @toReturn, grep ( /^$item$/, @b ) );
+    }
+    return ( @toReturn );
+}
+
+# ----------------------------------------------------------------------
+# NAME         : GetNWayIntersection
+# PURPOSE      : get the intersection of N uniqued lists
+# CALLED BY    : clients
+# CALLS        : GetIntersection
+# INPUT        : reference to list of references to N lists
+# RETURNS      : list of common elements across N lists
+# GLOBALS      : NONE
+# SIDE-EFFECTS : NONE
+# NOTES        : 
+# ----------------------------------------------------------------------
+
+sub GetNWayIntersection
+{
+    my $setOfSetRefsRef = shift;
+ 
+    my @nWayIntersection = @{ pop( @$setOfSetRefsRef ) };
+
+  SETLOOP:
+    while ( @$setOfSetRefsRef )
+    {
+	@nWayIntersection = 
+	  &GetIntersection( pop( @$setOfSetRefsRef ), \@nWayIntersection );
+	
+	if ( scalar( @nWayIntersection ) == 0 )
+	{
+	    last SETLOOP;
+	}
+    }
+
+    # now uniquify list
+    &SortUniquifyList ( \@nWayIntersection );
+    
+    return ( @nWayIntersection );
+}
+
+# ----------------------------------------------------------------------
+# NAME         : CleanCgiParameters
+# PURPOSE      : remove all empty URL parameters
+# CALLED BY    : 
+# CALLS        : CGI->param, CGI->delete
+# INPUT        : CGI object
+# RETURNS      : NONE
+# GLOBALS      : 
+# SIDE-EFFECTS : changes CGI object
+# NOTES        : 
+# ----------------------------------------------------------------------
+
+sub CleanCgiParameters 
+{
+    my $cgi = shift;
+    
+    foreach my $p ( $cgi->param ) 
+    {
+	if ( !$cgi->param( $p )) 
+        {    $cgi->delete( $p );   }
+    }
+}
+
+
+# ----------------------------------------------------------------------
+# NAME         : BuildText
+# PURPOSE      : use CGI to create a text input box
+# CALLED BY    : 
+# CALLS        : 
+# INPUT        : 
+# RETURNS      : 
+# GLOBALS      : 
+# SIDE-EFFECTS : 
+# NOTES        : 
+# ----------------------------------------------------------------------
+
+sub BuildTextInput
+{
+    my ( $cgi, $name, $piParamsRef ) = @_;
+    
+    my $s = '';
+    my ( $size, $class, $default, $override );
+    
+    if ( exists ( $$piParamsRef{'size'} ) )
+    {   $size = $$piParamsRef{'size'} ;   }
+
+    if ( exists ( $$piParamsRef{'class'} ) )
+    {   $class = $$piParamsRef{'class'} ;  }
+           
+
+    if ( exists ( $$piParamsRef{'default'} ) )
+    {
+        $default  = $$piParamsRef{'default'} ;  
+        $override = 1 ;  
+    }
+           
+#    $s .= qq{<div class="$class">\n}      if ( $class  );
+             
+    $s .= $cgi->textfield (
+                           -name => $name,
+                           -size  => $size,
+                           -class => $class,
+                           -default => $default,
+                           -override => $override,
+                          );
+
+#    $s .= qq{</div>\n}      if ( $class  );
+
+    return $s;
+    
+}
+
+
+# ----------------------------------------------------------------------
+# NAME         : BuildSelect
+# PURPOSE      : use CGI to create a "popup menu"
+# CALLED BY    : FilterCollPickPage
+# CALLS        : CGI->popup_menu
+# INPUT        : CGI obj, select's name, ref to list of values, default value
+# RETURNS      : html text for select
+# GLOBALS      : 
+# SIDE-EFFECTS : 
+# NOTES        : 
+# ----------------------------------------------------------------------
+
+sub BuildSelect
+{
+    my ( $cgi, $name, $listRef, $default, $size, $multiple ) = @_;
+    
+    my $s;
+    if ( $size == 1 )
+    {
+        $s = $cgi->popup_menu( 
+                              -name => $name,
+                              -values => $listRef,
+                              -default => $default,
+                             );
+    }
+        
+    elsif ( ! defined ($multiple)  )
+    {
+        $s = $cgi->scrolling_list( 
+                                  -name => $name,
+                                  -values => $listRef,
+                                  -default => $default,
+                                  -size => $size,
+                                 );
+    }
+    else
+    {
+        $s = $cgi->scrolling_list( 
+                                  -name => $name,
+                                  -values => $listRef,
+                                  -default => $default,
+                                  -size => $size,
+                                  -multiple => $multiple
+                                 );
+    }
+    
+    return $s;
+};
+
+
+# ----------------------------------------------------------------------
+# NAME         : BuildPullDown
+# PURPOSE      : use CGI to create a "popup menu"
+# CALLED BY    : FilterCollPickPage
+# CALLS        : CGI->popup_menu
+# INPUT        : CGI obj, select's name, ref to list of values, default value
+# RETURNS      : html text for select
+# GLOBALS      : 
+# SIDE-EFFECTS : 
+# NOTES        : This routine ALWAYS expects a labels hash
+# ----------------------------------------------------------------------
+
+sub BuildPullDown
+{
+    my ( $cgi, $name, $listRef, $default, $labelsHashRef, $otherParamsHashRef ) = @_;
+    my $s = '';
+
+    if ( defined ( $otherParamsHashRef )  )
+    {
+        $s = $cgi->popup_menu( 
+                              -name => $name,
+                              -values => $listRef,
+                              -default => $default,
+                              -labels => $labelsHashRef,
+                              %$otherParamsHashRef,
+                             );
+    }
+    else
+    {
+     $s = $cgi->popup_menu( 
+                              -name => $name,
+                              -values => $listRef,
+                              -default => $default,
+                              -labels => $labelsHashRef,
+                             );
+    }
+    
+    return $s;
+}
+
+
+
+# **********************************************************************
+# NAME      : GetHtmlTemplateText
+# PURPOSE   : read into scalar full text of an html template page
+#             also fill in some values for some general variables
+# CALLED BY : ServePage
+# CALLS     : NONE
+# INPUT     : filename of html template
+# RETURNS   : scalar of template's text
+# NOTES     : 
+# **********************************************************************
+
+sub GetHtmlTemplateText
+{
+    my $pageName = shift;
+    
+    open( PAGE, "<$pageName" ) ||
+        &errorBail( $gERRORS{'PAGE_NOT_FOUND'}, $pageName );
+
+    my $text = join( '', <page> );
+
+    close ( PAGE );
+    
+    return $text;
+}
+
+
+
+# ----------------------------------------------------------------------
+# NAME         : FindHostName
+# PURPOSE      : find the name of the host that is running this program, or
+#                set it to something in case we are running on the command line
+# CALLED BY    : main
+# CALLS        : NONE
+# INPUT        : NONE
+# RETURNS      : string
+# GLOBALS      : $ENV vars
+# SIDE-EFFECTS : NONE
+# NOTES        : 
+# ----------------------------------------------------------------------
+
+sub FindHostName
+{
+    my $host = '';
+
+     if ( $ENV{'HTTP_HOST'} )
+     {
+         $host = $ENV{'HTTP_HOST'};
+     }
+     ## if run on the command line
+     else
+     {
+ 	$host = $ENV{'HOST'};
+     }
+     return $host;
+}
+
+# ----------------------------------------------------------------------
+# NAME         : SimpleHtmlFilter
+# PURPOSE      : replace <, >, and & with entity references; nothing more
+#                
+# CALLED BY    : 
+# CALLS        : 
+# INPUT        : ref to string
+# RETURNS      : NONE
+# GLOBALS      : 
+# SIDE-EFFECTS : changes string via reference
+# NOTES        : 
+# ----------------------------------------------------------------------
+
+sub SimpleHtmlFilter
+{
+    my $sRef = shift;
+    
+    $$sRef =~ s,\&,\&amp\;,gs;
+    $$sRef =~ s,\<,\&lt\;,gs;
+    $$sRef =~ s,\>,\&gt\;,gs;
+}
+
+# ----------------------------------------------------------------------
+# NAME         : CleanResidualTags
+# PURPOSE      : 
+#                
+# CALLED BY    : 
+# CALLS        : 
+# INPUT        : 
+# RETURNS      : 
+# GLOBALS      : 
+# SIDE-EFFECTS : 
+# NOTES        : 
+# ----------------------------------------------------------------------
+
+sub CleanResidualTags
+{
+    my $sRef = shift;
+    
+    $$sRef =~ s,</?TITLE[^>]*>,<br> ,g;
+    $$sRef =~ s,</HEAD[^>]*>,: ,g;
+    $$sRef =~ s,^[^<>]*>, ,;
+    $$sRef =~ s,<[^<>]*$, ,;
+    $$sRef =~ s,, / ,g;
+
+    $$sRef =~ s,<p>, ,g;
+    $$sRef =~ s,</p>, / ,g;
+
+    $$sRef =~ s,</?[A-Z0-9][^<>]+>, ,g;
+}
+
+
+# ----------------------------------------------------------------------
+# NAME         : 
+# PURPOSE      : 
+#                
+# CALLED BY    : 
+# CALLS        : 
+# INPUT        : 
+# RETURNS      : 
+# GLOBALS      : 
+# SIDE-EFFECTS : 
+# NOTES        : This copied from gums-idx.dev
+# -----------------------------------------------------------------------
+
+my $icons = '/icons';
+my $greek = $icons . '/greek'; # no trailing slash here
+my $grol =  $icons . '/grol';  # no trailing slash here
+my $misc =  $icons . '/misc';  # no trailing slash here
+
+my %charEntHash_CH_Greek;  # Chadwick-Healey
+my %charEntHash_Misc;
+my %charEntHash_ISO_Greek;
+
+sub InitCharEntHash_CH_Greek 
+{
+    %charEntHash_CH_Greek = 
+      ('initzzz' =>   "1",
+       
+       'grdot'   =>   ".",
+       
+       'GRAa'    =>   "<img src=../%5C%22$greek/Agr.gif%5C%22 alt=\"[Agr]\"><img src=../%5C%22$greek/acugr.gif%5C%22 alt=\"[acugr]\">",
+       'GRAc'    =>   "<img src=../%5C%22$greek/Agr.gif%5C%22 alt=\"[Agr]\"><img src=../%5C%22$greek/cirgr.gif%5C%22 alt=\"[cirgr]\">",
+       'GRAd'    =>   "<img src=../%5C%22$greek/Agr.gif%5C%22 alt=\"[Agr]\"><img src=../%5C%22$greek/diagr.gif%5C%22 alt=\"[diagr]\">",
+       'GRAg'    =>   "<img src=../%5C%22$greek/Agr.gif%5C%22 alt=\"[Agr]\"><img src=../%5C%22$greek/gragr.gif%5C%22 alt=\"[gragr]\">",
+       'GRAr'    =>   "<img src=../%5C%22$greek/Agr.gif%5C%22 alt=\"[Agr]\"><img src=../%5C%22$greek/rougr.gif%5C%22 alt=\"[rougr]\">",
+       'GRAra'   =>   "<img src=../%5C%22$greek/Agr.gif%5C%22 alt=\"[Agr]\"><img src=../%5C%22$greek/ragr.gif%5C%22 alt=\"[ragr]\">",
+       'GRArg'   =>   "<img src=../%5C%22$greek/Agr.gif%5C%22 alt=\"[Agr]\"><img src=../%5C%22$greek/rggr.gif%5C%22 alt=\"[rggr]\">",
+       'GRAs'    =>   "<img src=../%5C%22$greek/Agr.gif%5C%22 alt=\"[Agr]\"><img src=../%5C%22$greek/smogr.gif%5C%22 alt=\"[smogr]\">",
+       'GRAsa'   =>   "<img src=../%5C%22$greek/Agr.gif%5C%22 alt=\"[Agr]\"><img src=../%5C%22$greek/sagr.gif%5C%22 alt=\"[sagr]\">",
+       'GRAsc'   =>   "<img src=../%5C%22$greek/Agr.gif%5C%22 alt=\"[Agr]\"><img src=../%5C%22$greek/scgr.gif%5C%22 alt=\"[scgr]\">",
+       'GRAsg'   =>   "<img src=../%5C%22$greek/Agr.gif%5C%22 alt=\"[Agr]\"><img src=../%5C%22$greek/sggr.gif%5C%22 alt=\"[sggr]\">",
+       'GREa'    =>   "<img src=../%5C%22$greek/Egr.gif%5C%22 alt=\"[Egr]\"><img src=../%5C%22$greek/acugr.gif%5C%22 alt=\"[acugr]\">",
+       'GREd'    =>   "<img src=../%5C%22$greek/Egr.gif%5C%22 alt=\"[Egr]\"><img src=../%5C%22$greek/diagr.gif%5C%22 alt=\"[diagr]\">",
+       'GREr'    =>   "<img src=../%5C%22$greek/Egr.gif%5C%22 alt=\"[Egr]\"><img src=../%5C%22$greek/rougr.gif%5C%22 alt=\"[rougr]\">",
+       'GREra'   =>   "<img src=../%5C%22$greek/Egr.gif%5C%22 alt=\"[Egr]\"><img src=../%5C%22$greek/ragr.gif%5C%22 alt=\"[ragr]\">",
+       'GREs'    =>   "<img src=../%5C%22$greek/Egr.gif%5C%22 alt=\"[Egr]\"><img src=../%5C%22$greek/smogr.gif%5C%22 alt=\"[smogr]\">",
+       'GREsa'   =>   "<img src=../%5C%22$greek/Egr.gif%5C%22 alt=\"[Egr]\"><img src=../%5C%22$greek/sagr.gif%5C%22 alt=\"[sagr]\">",
+       'GREsc'   =>   "<img src=../%5C%22$greek/Egr.gif%5C%22 alt=\"[Egr]\"><img src=../%5C%22$greek/scgr.gif%5C%22 alt=\"[scgr]\">",
+       'GRHc'    =>   "<img src=../%5C%22$greek/EEgr.gif%5C%22 alt=\"[EEgr]\"><img src=../%5C%22$greek/cirgr.gif%5C%22 alt=\"[cirgr]\">",
+       'GRHg'    =>   "<img src=../%5C%22$greek/EEgr.gif%5C%22 alt=\"[EEgr]\"><img src=../%5C%22$greek/gragr.gif%5C%22 alt=\"[gragr]\">",
+       'GRHr'    =>   "<img src=../%5C%22$greek/EEgr.gif%5C%22 alt=\"[EEgr]\"><img src=../%5C%22$greek/rougr.gif%5C%22 alt=\"[rougr]\">",
+       'GRHra'   =>   "<img src=../%5C%22$greek/EEgr.gif%5C%22 alt=\"[EEgr]\"><img src=../%5C%22$greek/ragr.gif%5C%22 alt=\"[ragr]\">",
+       'GRHrc'   =>   "<img src=../%5C%22$greek/EEgr.gif%5C%22 alt=\"[EEgr]\"><img src=../%5C%22$greek/rcgr.gif%5C%22 alt=\"[rcgr]\">",
+       'GRHrg'   =>   "<img src=../%5C%22$greek/EEgr.gif%5C%22 alt=\"[EEgr]\"><img src=../%5C%22$greek/rggr.gif%5C%22 alt=\"[rggr]\">",
+       'GRHs'    =>   "<img src=../%5C%22$greek/EEgr.gif%5C%22 alt=\"[EEgr]\"><img src=../%5C%22$greek/smogr.gif%5C%22 alt=\"[smogr]\">",
+       'GRHsa'   =>   "<img src=../%5C%22$greek/EEgr.gif%5C%22 alt=\"[EEgr]\"><img src=../%5C%22$greek/sagr.gif%5C%22 alt=\"[sagr]\">",
+       'GRHsc'   =>   "<img src=../%5C%22$greek/EEgr.gif%5C%22 alt=\"[EEgr]\"><img src=../%5C%22$greek/scgr.gif%5C%22 alt=\"[scgr]\">",
+       'GRHsg'   =>   "<img src=../%5C%22$greek/EEgr.gif%5C%22 alt=\"[EEgr]\"><img src=../%5C%22$greek/sggr.gif%5C%22 alt=\"[sggr]\">",
+       'GRIa'    =>   "<img src=../%5C%22$greek/Igr.gif%5C%22 alt=\"[Igr]\"><img src=../%5C%22$greek/acugr.gif%5C%22 alt=\"[acugr]\">",
+       'GRIc'    =>   "<img src=../%5C%22$greek/Igr.gif%5C%22 alt=\"[Igr]\"><img src=../%5C%22$greek/cirgr.gif%5C%22 alt=\"[cirgr]\">",
+       'GRIg'    =>   "<img src=../%5C%22$greek/Igr.gif%5C%22 alt=\"[Igr]\"><img src=../%5C%22$greek/gragr.gif%5C%22 alt=\"[gragr]\">",
+       'GRIr'    =>   "<img src=../%5C%22$greek/Igr.gif%5C%22 alt=\"[Igr]\"><img src=../%5C%22$greek/rougr.gif%5C%22 alt=\"[rougr]\">",
+       'GRIra'   =>   "<img src=../%5C%22$greek/Igr.gif%5C%22 alt=\"[Igr]\"><img src=../%5C%22$greek/ragr.gif%5C%22 alt=\"[ragr]\">",
+       'GRIrg'   =>   "<img src=../%5C%22$greek/Igr.gif%5C%22 alt=\"[Igr]\"><img src=../%5C%22$greek/rggr.gif%5C%22 alt=\"[rggr]\">",
+       'GRIs'    =>   "<img src=../%5C%22$greek/Igr.gif%5C%22 alt=\"[Igr]\"><img src=../%5C%22$greek/smogr.gif%5C%22 alt=\"[smogr]\">",
+       'GRIsa'   =>   "<img src=../%5C%22$greek/Igr.gif%5C%22 alt=\"[Igr]\"><img src=../%5C%22$greek/sagr.gif%5C%22 alt=\"[sagr]\">",
+       'GRIsc'   =>   "<img src=../%5C%22$greek/Igr.gif%5C%22 alt=\"[Igr]\"><img src=../%5C%22$greek/scgr.gif%5C%22 alt=\"[scgr]\">",
+       'GROa'    =>   "<img src=../%5C%22$greek/Ogr.gif%5C%22 alt=\"[Ogr]\"><img src=../%5C%22$greek/acugr.gif%5C%22 alt=\"[acugr]\">",
+       'GROar'   =>   "<img src=../%5C%22$greek/Ogr.gif%5C%22 alt=\"[Ogr]\"><img src=../%5C%22$greek/ragr.gif%5C%22 alt=\"[ragr]\">",
+       'GROdc'   =>   "<img src=../%5C%22$greek/Ocirgr.gif%5C%22 alt=\"[Ocirgr]\"><img src=../%5C%22$greek/diagr.gif%5C%22 alt=\"[diagr]\">",
+       'GROg'    =>   "<img src=../%5C%22$greek/Ogr.gif%5C%22 alt=\"[Ogr]\"><img src=../%5C%22$greek/gragr.gif%5C%22 alt=\"[gragr]\">",
+       'GROr'    =>   "<img src=../%5C%22$greek/Ogr.gif%5C%22 alt=\"[Ogr]\"><img src=../%5C%22$greek/rougr.gif%5C%22 alt=\"[rougr]\">",
+       'GROra'   =>   "<img src=../%5C%22$greek/Ogr.gif%5C%22 alt=\"[Ogr]\"><img src=../%5C%22$greek/ragr.gif%5C%22 alt=\"[ragr]\">",
+       'GROrg'   =>   "<img src=../%5C%22$greek/Ogr.gif%5C%22 alt=\"[Ogr]\"><img src=../%5C%22$greek/rggr.gif%5C%22 alt=\"[rggr]\">",
+       'GROs'    =>   "<img src=../%5C%22$greek/Ogr.gif%5C%22 alt=\"[Ogr]\"><img src=../%5C%22$greek/smogr.gif%5C%22 alt=\"[smogr]\">",
+       'GROsa'   =>   "<img src=../%5C%22$greek/Ogr.gif%5C%22 alt=\"[Ogr]\"><img src=../%5C%22$greek/sagr.gif%5C%22 alt=\"[sagr]\">",
+       'GROsc'   =>   "<img src=../%5C%22$greek/Ogr.gif%5C%22 alt=\"[Ogr]\"><img src=../%5C%22$greek/scgr.gif%5C%22 alt=\"[scgr]\">",
+       'GRRr'    =>   "<img src=../%5C%22$greek/Rgr.gif%5C%22 alt=\"[Rgr]\"><img src=../%5C%22$greek/rougr.gif%5C%22 alt=\"[rougr]\">",
+       'GRRs'    =>   "<img src=../%5C%22$greek/Rgr.gif%5C%22 alt=\"[Rgr]\"><img src=../%5C%22$greek/smogr.gif%5C%22 alt=\"[smogr]\">",
+       'GRST'    =>   "<img src=../%5C%22$greek/Sgr.gif%5C%22 alt=\"[Sgr]\">",
+       'GRUa'    =>   "<img src=../%5C%22$greek/Ugr.gif%5C%22 alt=\"[Ugr]\"><img src=../%5C%22$greek/acugr.gif%5C%22 alt=\"[acugr]\">",
+       'GRUr'    =>   "<img src=../%5C%22$greek/Ugr.gif%5C%22 alt=\"[Ugr]\"><img src=../%5C%22$greek/rougr.gif%5C%22 alt=\"[rougr]\">",
+       'GRUra'   =>   "<img src=../%5C%22$greek/Ugr.gif%5C%22 alt=\"[Ugr]\"><img src=../%5C%22$greek/ragr.gif%5C%22 alt=\"[ragr]\">",
+       'GRUs'    =>   "<img src=../%5C%22$greek/Ugr.gif%5C%22 alt=\"[Ugr]\"><img src=../%5C%22$greek/smogr.gif%5C%22 alt=\"[smogr]\">",
+       'GRWc'    =>   "<img src=../%5C%22$greek/OHgr.gif%5C%22 alt=\"[OHgr]\"><img src=../%5C%22$greek/cirgr.gif%5C%22 alt=\"[cirgr]\">",
+       'GRWcs'   =>   "<img src=../%5C%22$greek/OHgr.gif%5C%22 alt=\"[OHgr]\"><img src=../%5C%22$greek/scgr.gif%5C%22 alt=\"[scgr]\">",
+       'GRWd'    =>   "<img src=../%5C%22$greek/OHgr.gif%5C%22 alt=\"[OHgr]\"><img src=../%5C%22$greek/diagr.gif%5C%22 alt=\"[diagr]\">",
+       'GRWia'   =>   "<img src=../%5C%22$greek/OHacugr.gif%5C%22 alt=\"[OHacugr]\"><img src=../%5C%22$greek/iotgr.gif%5C%22 alt=\"[iotgr]\">",
+       'GRWr'    =>   "<img src=../%5C%22$greek/OHgr.gif%5C%22 alt=\"[OHgr]\"><img src=../%5C%22$greek/rougr.gif%5C%22 alt=\"[rougr]\">",
+       'GRWra'   =>   "<img src=../%5C%22$greek/OHgr.gif%5C%22 alt=\"[OHgr]\"><img src=../%5C%22$greek/ragr.gif%5C%22 alt=\"[ragr]\">",
+       'GRWrc'   =>   "<img src=../%5C%22$greek/OHgr.gif%5C%22 alt=\"[OHgr]\"><img src=../%5C%22$greek/rcgr.gif%5C%22 alt=\"[rcgr]\">",
+       'GRWrg'   =>   "<img src=../%5C%22$greek/OHgr.gif%5C%22 alt=\"[OHgr]\"><img src=../%5C%22$greek/rggr.gif%5C%22 alt=\"[rggr]\">",
+       'GRWs'    =>   "<img src=../%5C%22$greek/OHgr.gif%5C%22 alt=\"[OHgr]\"><img src=../%5C%22$greek/smogr.gif%5C%22 alt=\"[smogr]\">",
+       'GRWsa'   =>   "<img src=../%5C%22$greek/OHgr.gif%5C%22 alt=\"[OHgr]\"><img src=../%5C%22$greek/sagr.gif%5C%22 alt=\"[sagr]\">",
+       'GRWsc'   =>   "<img src=../%5C%22$greek/OHgr.gif%5C%22 alt=\"[OHgr]\"><img src=../%5C%22$greek/scgr.gif%5C%22 alt=\"[scgr]\">",
+       'grA'     =>   "<img src=../%5C%22$greek/Agr.gif%5C%22 alt=\"[Agr]\">",
+       'grAs'    =>   "<img src=../%5C%22$greek/Agr.gif%5C%22 alt=\"[Agr]\"><img src=../%5C%22$greek/smogr.gif%5C%22 alt=\"[smogr]\">",
+       'grB'     =>   "<img src=../%5C%22$greek/Bgr.gif%5C%22 alt=\"[Bgr]\">",
+       'grC'     =>   "<img src=../%5C%22$greek/Xgr.gif%5C%22 alt=\"[Xgr]\">",
+       'grD'     =>   "<img src=../%5C%22$greek/Dgr.gif%5C%22 alt=\"[Dgr]\">",
+       'grE'     =>   "<img src=../%5C%22$greek/Egr.gif%5C%22 alt=\"[Egr]\">",
+       'grF'     =>   "<img src=../%5C%22$greek/PHgr.gif%5C%22 alt=\"[PHgr]\">",
+       'grG'     =>   "<img src=../%5C%22$greek/Ggr.gif%5C%22 alt=\"[Ggr]\">",
+       'grH'     =>   "<img src=../%5C%22$greek/EEgr.gif%5C%22 alt=\"[EEgr]\">",
+       'grI'     =>   "<img src=../%5C%22$greek/Igr.gif%5C%22 alt=\"[Igr]\">",
+       'grK'     =>   "<img src=../%5C%22$greek/Kgr.gif%5C%22 alt=\"[Kgr]\">",
+       'grL'     =>   "<img src=../%5C%22$greek/Lgr.gif%5C%22 alt=\"[Lgr]\">",
+       'grM'     =>   "<img src=../%5C%22$greek/Mgr.gif%5C%22 alt=\"[Mgr]\">",
+       'grN'     =>   "<img src=../%5C%22$greek/Ngr.gif%5C%22 alt=\"[Ngr]\">",
+       'grO'     =>   "<img src=../%5C%22$greek/Ogr.gif%5C%22 alt=\"[Ogr]\">",
+       'grP'     =>   "<img src=../%5C%22$greek/Pgr.gif%5C%22 alt=\"[Pgr]\">",
+       'grQ'     =>   "<img src=../%5C%22$greek/THgr.gif%5C%22 alt=\"[THgr]\">",
+       'grR'     =>   "<img src=../%5C%22$greek/Rgr.gif%5C%22 alt=\"[Rgr]\">",
+       'grS'     =>   "<img src=../%5C%22$greek/Sgr.gif%5C%22 alt=\"[Sgr]\">",
+       'grST'    =>   "<img src=../%5C%22$greek/Sgr.gif%5C%22 alt=\"[Sgr]\">",
+       'grT'     =>   "<img src=../%5C%22$greek/Tgr.gif%5C%22 alt=\"[Tgr]\">",
+       'grU'     =>   "<img src=../%5C%22$greek/Ugr.gif%5C%22 alt=\"[Ugr]\">",
+       'grV'     =>   "<img src=../%5C%22$greek/DIGgr.gif%5C%22 alt=\"[DIGgr]\">",
+       'grW'     =>   "<img src=../%5C%22$greek/OHgr.gif%5C%22 alt=\"[OHgr]\">",
+       'grX'     =>   "<img src=../%5C%22$greek/KHgr.gif%5C%22 alt=\"[KHgr]\">",
+       'grY'     =>   "<img src=../%5C%22$greek/PSgr.gif%5C%22 alt=\"[PSgr]\">",
+       'grZ'     =>   "<img src=../%5C%22$greek/Zgr.gif%5C%22 alt=\"[Zgr]\">",
+       'gra'     =>   "<img src=../%5C%22$greek/agr.gif%5C%22 alt=\"[agr]\">",
+       'graa'    =>   "<img src=../%5C%22$greek/aacugr.gif%5C%22 alt=\"[aacugr]\">",
+       'graad'   =>   "<img src=../%5C%22$greek/aacugr.gif%5C%22 alt=\"[aacugr]\"><img src=../%5C%22$greek/diagr.gif%5C%22 alt=\"[diagr]\">",
+       'grac'    =>   "<img src=../%5C%22$greek/acirgr.gif%5C%22 alt=\"[acirgr]\">",
+       'gracd'   =>   "<img src=../%5C%22$greek/acirgr.gif%5C%22 alt=\"[acirgr]\"><img src=../%5C%22$greek/diagr.gif%5C%22 alt=\"[diagr]\">",
+       'graci'   =>   "<img src=../%5C%22$greek/acigr.gif%5C%22 alt=\"[acigr]\">",
+       'gracs'   =>   "<img src=../%5C%22$greek/ascgr.gif%5C%22 alt=\"[ascgr]\">",
+       'grad'    =>   "<img src=../%5C%22$greek/agr.gif%5C%22 alt=\"[agr]\"><img src=../%5C%22$greek/diagr.gif%5C%22 alt=\"[diagr]\">",
+       'gradc'   =>   "<img src=../%5C%22$greek/acirgr.gif%5C%22 alt=\"[acirgr]\"><img src=../%5C%22$greek/diagr.gif%5C%22 alt=\"[diagr]\">",
+       'grag'    =>   "<img src=../%5C%22$greek/agragr.gif%5C%22 alt=\"[agragr]\">",
+       'grai'    =>   "<img src=../%5C%22$greek/aiotgr.gif%5C%22 alt=\"[aiotgr]\">",
+       'graia'   =>   "<img src=../%5C%22$greek/aaigr.gif%5C%22 alt=\"[aaigr]\">",
+       'graic'   =>   "<img src=../%5C%22$greek/acigr.gif%5C%22 alt=\"[acigr]\">",
+       'grais'   =>   "<img src=../%5C%22$greek/asigr.gif%5C%22 alt=\"[asigr]\">",
+       'graisa'  =>   "<img src=../%5C%22$greek/asaigr.gif%5C%22 alt=\"[asaigr]\">",
+       'grap'    =>   "<img src=../%5C%22$greek/apos.gif%5C%22 alt=\"[apos]\">",
+       'grar'    =>   "<img src=../%5C%22$greek/arougr.gif%5C%22 alt=\"[arougr]\">",
+       'grara'   =>   "<img src=../%5C%22$greek/aragr.gif%5C%22 alt=\"[aragr]\">",
+       'grarg'   =>   "<img src=../%5C%22$greek/arggr.gif%5C%22 alt=\"[arggr]\">",
+       'gras'    =>   "<img src=../%5C%22$greek/asmogr.gif%5C%22 alt=\"[asmogr]\">",
+       'grasa'   =>   "<img src=../%5C%22$greek/asagr.gif%5C%22 alt=\"[asagr]\">",
+       'grasad'  =>   "<img src=../%5C%22$greek/asagr.gif%5C%22 alt=\"[asagr]\"><img src=../%5C%22$greek/diagr.gif%5C%22 alt=\"[diagr]\">",
+       'grasc'   =>   "<img src=../%5C%22$greek/ascgr.gif%5C%22 alt=\"[ascgr]\">",
+       'grasci'  =>   "<img src=../%5C%22$greek/ascigr.gif%5C%22 alt=\"[ascigr]\">",
+       'grasd'   =>   "<img src=../%5C%22$greek/asmogr.gif%5C%22 alt=\"[asmogr]\"><img src=../%5C%22$greek/diagr.gif%5C%22 alt=\"[diagr]\">",
+       'grasg'   =>   "<img src=../%5C%22$greek/asggr.gif%5C%22 alt=\"[asggr]\">",
+       'grasi'   =>   "<img src=../%5C%22$greek/asigr.gif%5C%22 alt=\"[asigr]\">",
+       'grasia'  =>   "<img src=../%5C%22$greek/asaigr.gif%5C%22 alt=\"[asaigr]\">",
+       'grb'     =>   "<img src=../%5C%22$greek/bgr.gif%5C%22 alt=\"[bgr]\">",
+       'grc'     =>   "<img src=../%5C%22$greek/xgr.gif%5C%22 alt=\"[xgr]\">",
+       'grcolon' =>   "<img src=../%5C%22$greek/cogr.gif%5C%22 alt=\"[cogr]\">",
+       'grd'     =>   "<img src=../%5C%22$greek/dgr.gif%5C%22 alt=\"[dgr]\">",
+       'gre'     =>   "<img src=../%5C%22$greek/egr.gif%5C%22 alt=\"[egr]\">",
+       'grea'    =>   "<img src=../%5C%22$greek/eacugr.gif%5C%22 alt=\"[eacugr]\">",
+       'gread'   =>   "<img src=../%5C%22$greek/eacugr.gif%5C%22 alt=\"[eacugr]\"><img src=../%5C%22$greek/diagr.gif%5C%22 alt=\"[diagr]\">",
+       'grec'    =>   "<img src=../%5C%22$greek/egr.gif%5C%22 alt=\"[egr]\"><img src=../%5C%22$greek/cirgr.gif%5C%22 alt=\"[cirgr]\">",
+       'grecs'   =>   "<img src=../%5C%22$greek/esmogr.gif%5C%22 alt=\"[esmogr]\"><img src=../%5C%22$greek/cirgr.gif%5C%22 alt=\"[cirgr]\">",
+       'gred'    =>   "<img src=../%5C%22$greek/egr.gif%5C%22 alt=\"[egr]\"><img src=../%5C%22$greek/diagr.gif%5C%22 alt=\"[diagr]\">",
+       'greda'   =>   "<img src=../%5C%22$greek/eacugr.gif%5C%22 alt=\"[eacugr]\"><img src=../%5C%22$greek/diagr.gif%5C%22 alt=\"[diagr]\">",
+       'gredg'   =>   "<img src=../%5C%22$greek/egragr.gif%5C%22 alt=\"[egragr]\"><img src=../%5C%22$greek/diagr.gif%5C%22 alt=\"[diagr]\">",
+       'greg'    =>   "<img src=../%5C%22$greek/egragr.gif%5C%22 alt=\"[egragr]\">",
+       'grei'    =>   "<img src=../%5C%22$greek/egr.gif%5C%22 alt=\"[egr]\"><img src=../%5C%22$greek/iotgr.gif%5C%22 alt=\"[iotgr]\">",
+       'grer'    =>   "<img src=../%5C%22$greek/erougr.gif%5C%22 alt=\"[erougr]\">",
+       'grera'   =>   "<img src=../%5C%22$greek/eragr.gif%5C%22 alt=\"[eragr]\">",
+       'grerg'   =>   "<img src=../%5C%22$greek/erggr.gif%5C%22 alt=\"[erggr]\">",
+       'gres'    =>   "<img src=../%5C%22$greek/esmogr.gif%5C%22 alt=\"[esmogr]\">",
+       'gresa'   =>   "<img src=../%5C%22$greek/esagr.gif%5C%22 alt=\"[esagr]\">",
+       'gresad'  =>   "<img src=../%5C%22$greek/esagr.gif%5C%22 alt=\"[esagr]\"><img src=../%5C%22$greek/diagr.gif%5C%22 alt=\"[diagr]\">",
+       'gresc'   =>   "<img src=../%5C%22$greek/esmogr.gif%5C%22 alt=\"[esmogr]\"><img src=../%5C%22$greek/cirgr.gif%5C%22 alt=\"[cirgr]\">",
+       'gresg'   =>   "<img src=../%5C%22$greek/esggr.gif%5C%22 alt=\"[esggr]\">",
+       'grf'     =>   "<img src=../%5C%22$greek/phgr.gif%5C%22 alt=\"[phgr]\">",
+       'grg'     =>   "<img src=../%5C%22$greek/ggr.gif%5C%22 alt=\"[ggr]\">",
+       'grh'     =>   "<img src=../%5C%22$greek/eegr.gif%5C%22 alt=\"[eegr]\">",
+       'grha'    =>   "<img src=../%5C%22$greek/eeacugr.gif%5C%22 alt=\"[eeacugr]\">",
+       'grhai'   =>   "<img src=../%5C%22$greek/eeaigr.gif%5C%22 alt=\"[eeaigr]\">",
+       'grhc'    =>   "<img src=../%5C%22$greek/eecirgr.gif%5C%22 alt=\"[eecirgr]\">",
+       'grhcd'   =>   "<img src=../%5C%22$greek/eecirgr.gif%5C%22 alt=\"[eecirgr]\"><img src=../%5C%22$greek/diagr.gif%5C%22 alt=\"[diagr]\">",
+       'grhci'   =>   "<img src=../%5C%22$greek/eecigr.gif%5C%22 alt=\"[eecigr]\">",
+       'grhcr'   =>   "<img src=../%5C%22$greek/eercgr.gif%5C%22 alt=\"[eercgr]\">",
+       'grhcri'  =>   "<img src=../%5C%22$greek/eercigr.gif%5C%22 alt=\"[eercigr]\">",
+       'grhcs'   =>   "<img src=../%5C%22$greek/eescgr.gif%5C%22 alt=\"[eescgr]\">",
+       'grhd'    =>   "<img src=../%5C%22$greek/eegr.gif%5C%22 alt=\"[eegr]\"><img src=../%5C%22$greek/diagr.gif%5C%22 alt=\"[diagr]\">",
+       'grhg'    =>   "<img src=../%5C%22$greek/eegragr.gif%5C%22 alt=\"[eegragr]\">",
+       'grhgd'   =>   "<img src=../%5C%22$greek/eegragr.gif%5C%22 alt=\"[eegragr]\"><img src=../%5C%22$greek/diagr.gif%5C%22 alt=\"[diagr]\">",
+       'grhi'    =>   "<img src=../%5C%22$greek/eeigr.gif%5C%22 alt=\"[eeigr]\">",
+       'grhia'   =>   "<img src=../%5C%22$greek/eeaigr.gif%5C%22 alt=\"[eeaigr]\">",
+       'grhic'   =>   "<img src=../%5C%22$greek/eecigr.gif%5C%22 alt=\"[eecigr]\">",
+       'grhicr'  =>   "<img src=../%5C%22$greek/eercigr.gif%5C%22 alt=\"[eercigr]\">",
+       'grhid'   =>   "<img src=../%5C%22$greek/eeigr.gif%5C%22 alt=\"[eeigr]\"><img src=../%5C%22$greek/diagr.gif%5C%22 alt=\"[diagr]\">",
+       'grhig'   =>   "<img src=../%5C%22$greek/eegigr.gif%5C%22 alt=\"[eegigr]\">",
+       'grhisc'  =>   "<img src=../%5C%22$greek/eescigr.gif%5C%22 alt=\"[eescigr]\">",
+       'grhr'    =>   "<img src=../%5C%22$greek/eerougr.gif%5C%22 alt=\"[eerougr]\">",
+       'grhra'   =>   "<img src=../%5C%22$greek/eeragr.gif%5C%22 alt=\"[eeragr]\">",
+       'grhrc'   =>   "<img src=../%5C%22$greek/eercgr.gif%5C%22 alt=\"[eercgr]\">",
+       'grhrci'  =>   "<img src=../%5C%22$greek/eercigr.gif%5C%22 alt=\"[eercigr]\">",
+       'grhrd'   =>   "<img src=../%5C%22$greek/eerougr.gif%5C%22 alt=\"[eerougr]\"><img src=../%5C%22$greek/diagr.gif%5C%22 alt=\"[diagr]\">",
+       'grhrg'   =>   "<img src=../%5C%22$greek/eerggr.gif%5C%22 alt=\"[eerggr]\">",
+       'grhric'  =>   "<img src=../%5C%22$greek/eercigr.gif%5C%22 alt=\"[eercigr]\">",
+       'grhs'    =>   "<img src=../%5C%22$greek/eesmogr.gif%5C%22 alt=\"[eesmogr]\">",
+       'grhsa'   =>   "<img src=../%5C%22$greek/eesagr.gif%5C%22 alt=\"[eesagr]\">",
+       'grhsai'  =>   "<img src=../%5C%22$greek/eesaigr.gif%5C%22 alt=\"[eesaigr]\">",
+       'grhsc'   =>   "<img src=../%5C%22$greek/eescgr.gif%5C%22 alt=\"[eescgr]\">",
+       'grhsci'  =>   "<img src=../%5C%22$greek/eescigr.gif%5C%22 alt=\"[eescigr]\">",
+       'grhsg'   =>   "<img src=../%5C%22$greek/eesggr.gif%5C%22 alt=\"[eesggr]\">",
+       'grhsi'   =>   "<img src=../%5C%22$greek/eesigr.gif%5C%22 alt=\"[eesigr]\">",
+       'gri'     =>   "<img src=../%5C%22$greek/igr.gif%5C%22 alt=\"[igr]\">",
+       'gria'    =>   "<img src=../%5C%22$greek/iacugr.gif%5C%22 alt=\"[iacugr]\">",
+       'griad'   =>   "<img src=../%5C%22$greek/iadgr.gif%5C%22 alt=\"[iadgr]\">",
+       'gric'    =>   "<img src=../%5C%22$greek/icirgr.gif%5C%22 alt=\"[icirgr]\">",
+       'gricr'   =>   "<img src=../%5C%22$greek/ircgr.gif%5C%22 alt=\"[ircgr]\">",
+       'grics'   =>   "<img src=../%5C%22$greek/iscgr.gif%5C%22 alt=\"[iscgr]\">",
+       'grid'    =>   "<img src=../%5C%22$greek/idiagr.gif%5C%22 alt=\"[idiagr]\">",
+       'grida'   =>   "<img src=../%5C%22$greek/iadgr.gif%5C%22 alt=\"[iadgr]\">",
+       'gridg'   =>   "<img src=../%5C%22$greek/igdgr.gif%5C%22 alt=\"[igdgr]\">",
+       'grig'    =>   "<img src=../%5C%22$greek/igragr.gif%5C%22 alt=\"[igragr]\">",
+       'grir'    =>   "<img src=../%5C%22$greek/irougr.gif%5C%22 alt=\"[irougr]\">",
+       'grira'   =>   "<img src=../%5C%22$greek/iragr.gif%5C%22 alt=\"[iragr]\">",
+       'grirc'   =>   "<img src=../%5C%22$greek/ircgr.gif%5C%22 alt=\"[ircgr]\">",
+       'grirg'   =>   "<img src=../%5C%22$greek/irggr.gif%5C%22 alt=\"[irggr]\">",
+       'gris'    =>   "<img src=../%5C%22$greek/ismogr.gif%5C%22 alt=\"[ismogr]\">",
+       'grisa'   =>   "<img src=../%5C%22$greek/isagr.gif%5C%22 alt=\"[isagr]\">",
+       'grisc'   =>   "<img src=../%5C%22$greek/iscgr.gif%5C%22 alt=\"[iscgr]\">",
+       'grisd'   =>   "<img src=../%5C%22$greek/ismogr.gif%5C%22 alt=\"[ismogr]\"><img src=../%5C%22$greek/diagr.gif%5C%22 alt=\"[diagr]\">",
+       'grisg'   =>   "<img src=../%5C%22$greek/isggr.gif%5C%22 alt=\"[isggr]\">",
+       'grk'     =>   "<img src=../%5C%22$greek/kgr.gif%5C%22 alt=\"[kgr]\">",
+       'grl'     =>   "<img src=../%5C%22$greek/lgr.gif%5C%22 alt=\"[lgr]\">",
+       'grm'     =>   "<img src=../%5C%22$greek/mgr.gif%5C%22 alt=\"[mgr]\">",
+       'grn'     =>   "<img src=../%5C%22$greek/ngr.gif%5C%22 alt=\"[ngr]\">",
+       'gro'     =>   "<img src=../%5C%22$greek/ogr.gif%5C%22 alt=\"[ogr]\">",
+       'groa'    =>   "<img src=../%5C%22$greek/oacugr.gif%5C%22 alt=\"[oacugr]\">",
+       'groad'   =>   "<img src=../%5C%22$greek/oacugr.gif%5C%22 alt=\"[oacugr]\"><img src=../%5C%22$greek/diagr.gif%5C%22 alt=\"[diagr]\">",
+       'groc'    =>   "<img src=../%5C%22$greek/ogr.gif%5C%22 alt=\"[ogr]\"><img src=../%5C%22$greek/cirgr.gif%5C%22 alt=\"[cirgr]\">",
+       'grod'    =>   "<img src=../%5C%22$greek/ogr.gif%5C%22 alt=\"[ogr]\"><img src=../%5C%22$greek/diagr.gif%5C%22 alt=\"[diagr]\">",
+       'grog'    =>   "<img src=../%5C%22$greek/ogragr.gif%5C%22 alt=\"[ogragr]\">",
+       'grogd'   =>   "<img src=../%5C%22$greek/ogragr.gif%5C%22 alt=\"[ogragr]\"><img src=../%5C%22$greek/diagr.gif%5C%22 alt=\"[diagr]\">",
+       'groi'    =>   "<img src=../%5C%22$greek/ogr.gif%5C%22 alt=\"[ogr]\"><img src=../%5C%22$greek/iotgr.gif%5C%22 alt=\"[iotgr]\">",
+       'gror'    =>   "<img src=../%5C%22$greek/orougr.gif%5C%22 alt=\"[orougr]\">",
+       'grora'   =>   "<img src=../%5C%22$greek/oragr.gif%5C%22 alt=\"[oragr]\">",
+       'grorc'   =>   "<img src=../%5C%22$greek/orougr.gif%5C%22 alt=\"[orougr]\"><img src=../%5C%22$greek/cirgr.gif%5C%22 alt=\"[cirgr]\">",
+       'grorg'   =>   "<img src=../%5C%22$greek/orggr.gif%5C%22 alt=\"[orggr]\">",
+       'gros'    =>   "<img src=../%5C%22$greek/osmogr.gif%5C%22 alt=\"[osmogr]\">",
+       'grosa'   =>   "<img src=../%5C%22$greek/osagr.gif%5C%22 alt=\"[osagr]\">",
+       'grosc'   =>   "<img src=../%5C%22$greek/osmogr.gif%5C%22 alt=\"[osmogr]\"><img src=../%5C%22$greek/cirgr.gif%5C%22 alt=\"[cirgr]\">",
+       'grosdc'  =>   "<img src=../%5C%22$greek/osmogr.gif%5C%22 alt=\"[osmogr]\"><img src=../%5C%22$greek/cirgr.gif%5C%22 alt=\"[cirgr]\"><img src=../%5C%22$greek/diagr.gif%5C%22 alt=\"[diagr]\">",
+       'grosg'   =>   "<img src=../%5C%22$greek/osggr.gif%5C%22 alt=\"[osggr]\">",
+       'grp'     =>   "<img src=../%5C%22$greek/pgr.gif%5C%22 alt=\"[pgr]\">",
+       'grq'     =>   "<img src=../%5C%22$greek/thgr.gif%5C%22 alt=\"[thgr]\">",
+       'grr'     =>   "<img src=../%5C%22$greek/rgr.gif%5C%22 alt=\"[rgr]\">",
+       'grra'    =>   "<img src=../%5C%22$greek/rgr.gif%5C%22 alt=\"[rgr]\"><img src=../%5C%22$greek/acugr.gif%5C%22 alt=\"[acugr]\">",
+       'grrg'    =>   "<img src=../%5C%22$greek/rgr.gif%5C%22 alt=\"[rgr]\"><img src=../%5C%22$greek/gragr.gif%5C%22 alt=\"[gragr]\">",
+       'grrr'    =>   "<img src=../%5C%22$greek/rrougr.gif%5C%22 alt=\"[rrougr]\">",
+       'grrra'   =>   "<img src=../%5C%22$greek/rrougr.gif%5C%22 alt=\"[rrougr]\"><img src=../%5C%22$greek/acugr.gif%5C%22 alt=\"[acugr]\">",
+       'grrrg'   =>   "<img src=../%5C%22$greek/rrougr.gif%5C%22 alt=\"[rrougr]\"><img src=../%5C%22$greek/gragr.gif%5C%22 alt=\"[gragr]\">",
+       'grrs'    =>   "<img src=../%5C%22$greek/rsmogr.gif%5C%22 alt=\"[rsmogr]\">",
+       'grs'     =>   "<img src=../%5C%22$greek/sgr.gif%5C%22 alt=\"[sgr]\">",
+       'grst'    =>   "<img src=../%5C%22$greek/sfgr.gif%5C%22 alt=\"[sfgr]\">",
+       'grt'     =>   "<img src=../%5C%22$greek/tgr.gif%5C%22 alt=\"[tgr]\">",
+       'gru'     =>   "<img src=../%5C%22$greek/ugr.gif%5C%22 alt=\"[ugr]\">",
+       'grua'    =>   "<img src=../%5C%22$greek/uacugr.gif%5C%22 alt=\"[uacugr]\">",
+       'gruad'   =>   "<img src=../%5C%22$greek/uadgr.gif%5C%22 alt=\"[uadgr]\">",
+       'gruc'    =>   "<img src=../%5C%22$greek/ucirgr.gif%5C%22 alt=\"[ucirgr]\">",
+       'grucr'   =>   "<img src=../%5C%22$greek/urcgr.gif%5C%22 alt=\"[urcgr]\">",
+       'grucs'   =>   "<img src=../%5C%22$greek/uscgr.gif%5C%22 alt=\"[uscgr]\">",
+       'grud'    =>   "<img src=../%5C%22$greek/udiagr.gif%5C%22 alt=\"[udiagr]\">",
+       'gruda'   =>   "<img src=../%5C%22$greek/uadgr.gif%5C%22 alt=\"[uadgr]\">",
+       'grug'    =>   "<img src=../%5C%22$greek/ugragr.gif%5C%22 alt=\"[ugragr]\">",
+       'grui'    =>   "<img src=../%5C%22$greek/ugr.gif%5C%22 alt=\"[ugr]\"><img src=../%5C%22$greek/iotgr.gif%5C%22 alt=\"[iotgr]\">",
+       'grur'    =>   "<img src=../%5C%22$greek/urougr.gif%5C%22 alt=\"[urougr]\">",
+       'grura'   =>   "<img src=../%5C%22$greek/uragr.gif%5C%22 alt=\"[uragr]\">",
+       'grurc'   =>   "<img src=../%5C%22$greek/urcgr.gif%5C%22 alt=\"[urcgr]\">",
+       'grurdc'  =>   "<img src=../%5C%22$greek/urcgr.gif%5C%22 alt=\"[urcgr]\"><img src=../%5C%22$greek/diagr.gif%5C%22 alt=\"[diagr]\">",
+       'grurg'   =>   "<img src=../%5C%22$greek/urggr.gif%5C%22 alt=\"[urggr]\">",
+       'grus'    =>   "<img src=../%5C%22$greek/usmogr.gif%5C%22 alt=\"[usmogr]\">",
+       'grusa'   =>   "<img src=../%5C%22$greek/usagr.gif%5C%22 alt=\"[usagr]\">",
+       'grusc'   =>   "<img src=../%5C%22$greek/uscgr.gif%5C%22 alt=\"[uscgr]\">",
+       'grusg'   =>   "<img src=../%5C%22$greek/usggr.gif%5C%22 alt=\"[usggr]\">",
+       'grv'     =>   "<img src=../%5C%22$greek/diggr.gif%5C%22 alt=\"[diggr]\">",
+       'grw'     =>   "<img src=../%5C%22$greek/ohgr.gif%5C%22 alt=\"[ohgr]\">",
+       'grwa'    =>   "<img src=../%5C%22$greek/ohacugr.gif%5C%22 alt=\"[ohacugr]\">",
+       'grwac'   =>   "<img src=../%5C%22$greek/ohacugr.gif%5C%22 alt=\"[ohacugr]\"><img src=../%5C%22$greek/cirgr.gif%5C%22 alt=\"[cirgr]\">",
+       'grwad'   =>   "<img src=../%5C%22$greek/ohacugr.gif%5C%22 alt=\"[ohacugr]\"><img src=../%5C%22$greek/diagr.gif%5C%22 alt=\"[diagr]\">",
+       'grwai'   =>   "<img src=../%5C%22$greek/ohaigr.gif%5C%22 alt=\"[ohaigr]\">",
+       'grwc'    =>   "<img src=../%5C%22$greek/ohcirgr.gif%5C%22 alt=\"[ohcirgr]\">",
+       'grwcd'   =>   "<img src=../%5C%22$greek/ohcirgr.gif%5C%22 alt=\"[ohcirgr]\"><img src=../%5C%22$greek/diagr.gif%5C%22 alt=\"[diagr]\">",
+       'grwci'   =>   "<img src=../%5C%22$greek/ohcigr.gif%5C%22 alt=\"[ohcigr]\">",
+       'grwcs'   =>   "<img src=../%5C%22$greek/ohscgr.gif%5C%22 alt=\"[ohscgr]\">",
+       'grwd'    =>   "<img src=../%5C%22$greek/ohgr.gif%5C%22 alt=\"[ohgr]\"><img src=../%5C%22$greek/diagr.gif%5C%22 alt=\"[diagr]\">",
+       'grwdc'   =>   "<img src=../%5C%22$greek/ohcirgr.gif%5C%22 alt=\"[ohcirgr]\"><img src=../%5C%22$greek/diagr.gif%5C%22 alt=\"[diagr]\">",
+       'grwdg'   =>   "<img src=../%5C%22$greek/ohgragr.gif%5C%22 alt=\"[ohgragr]\"><img src=../%5C%22$greek/diagr.gif%5C%22 alt=\"[diagr]\">",
+       'grwg'    =>   "<img src=../%5C%22$greek/ohgragr.gif%5C%22 alt=\"[ohgragr]\">",
+       'grwgi'   =>   "<img src=../%5C%22$greek/ohgigr.gif%5C%22 alt=\"[ohgigr]\">",
+       'grwi'    =>   "<img src=../%5C%22$greek/ohiotgr.gif%5C%22 alt=\"[ohiotgr]\">",
+       'grwia'   =>   "<img src=../%5C%22$greek/ohaigr.gif%5C%22 alt=\"[ohaigr]\">",
+       'grwic'   =>   "<img src=../%5C%22$greek/ohcigr.gif%5C%22 alt=\"[ohcigr]\">",
+       'grwirc'  =>   "<img src=../%5C%22$greek/ohrcigr.gif%5C%22 alt=\"[ohrcigr]\">",
+       'grwis'   =>   "<img src=../%5C%22$greek/ohsigr.gif%5C%22 alt=\"[ohsigr]\">",
+       'grwr'    =>   "<img src=../%5C%22$greek/ohrougr.gif%5C%22 alt=\"[ohrougr]\">",
+       'grwra'   =>   "<img src=../%5C%22$greek/ohragr.gif%5C%22 alt=\"[ohragr]\">",
+       'grwrc'   =>   "<img src=../%5C%22$greek/ohrcgr.gif%5C%22 alt=\"[ohrcgr]\">",
+       'grwrd'   =>   "<img src=../%5C%22$greek/ohrougr.gif%5C%22 alt=\"[ohrougr]\"><img src=../%5C%22$greek/diagr.gif%5C%22 alt=\"[diagr]\">",
+       'grwrg'   =>   "<img src=../%5C%22$greek/ohrggr.gif%5C%22 alt=\"[ohrggr]\">",
+       'grws'    =>   "<img src=../%5C%22$greek/ohsmogr.gif%5C%22 alt=\"[ohsmogr]\">",
+       'grwsa'   =>   "<img src=../%5C%22$greek/ohsagr.gif%5C%22 alt=\"[ohsagr]\">",
+       'grwsai'  =>   "<img src=../%5C%22$greek/ohsaigr.gif%5C%22 alt=\"[ohsaigr]\">",
+       'grwsc'   =>   "<img src=../%5C%22$greek/ohscgr.gif%5C%22 alt=\"[ohscgr]\">",
+       'grwsg'   =>   "<img src=../%5C%22$greek/ohsggr.gif%5C%22 alt=\"[ohsggr]\">",
+       'grx'     =>   "<img src=../%5C%22$greek/khgr.gif%5C%22 alt=\"[khgr]\">",
+       'gry'     =>   "<img src=../%5C%22$greek/psgr.gif%5C%22 alt=\"[psgr]\">",
+       'grz'     =>   "<img src=../%5C%22$greek/zgr.gif%5C%22 alt=\"[zgr]\">",
+      );
+    
+}
+
+sub InitCharEntHash_Misc
+{
+    %charEntHash_Misc = 
+      ('initzzz' =>   "1",
+       
+       '#38'     =>   "&",
+       '#60'     =>   "&gt;",
+       '#62'     =>   "&lt;",
+       'emsp'    =>   " ",
+       'ensp'    =>   " ",
+       'Prime'   =>   "<img src=../%5C%22$icons/prime.gif%5C%22 alt=\"[']\">",
+       'prime'   =>   "<img src=../%5C%22$icons/prime.gif%5C%22 alt=\"[']\">",
+       'plus'    =>   "+",
+       'nldr'    =>   "..",
+       'mldr'    =>   "...",
+       'hellip'  =>   "...",
+       'tilde'   =>   "~",
+       'le'      =>   "<=",       
+       'ndash'   =>   "-",
+       'hyphen'  =>   "-",
+       'pound'  =>    "#",
+       'mdash'   =>   "--",
+       'yog'     =>   "<img src=../%5C%22$icons/yogh.gif%5C%22 alt=\"[yogh]\">",
+       'Yog'     =>   "<img src=../%5C%22$icons/yogh.cap.gif%5C%22 alt=\"[Yogh]\">",
+
+       'darr'     =>   "<img src=../%5C%22$icons/darr.gif%5C%22 alt=\"[darr]\">",
+       'uarr'     =>   "<img src=../%5C%22$icons/uarr.gif%5C%22 alt=\"[uarr]\">",
+       'larr'     =>   "<img src=../%5C%22$icons/larr.gif%5C%22 alt=\"[larr]\">",
+       'rarr'     =>   "<img src=../%5C%22$icons/rarr.gif%5C%22 alt=\"[rarr]\">",
+
+       'OEli'    =>   "OE",
+       'oeli'    =>   "<img src=../%5C%22$grol/oelig.gif%5C%22 alt=\"[oe]\">",
+       'esse'    =>   "\&szlig;",
+       'ldqu'    =>   '"',
+       'rdqu'    =>   '"',
+       'rdquo'   =>   '"',
+       'grdquo'  =>   '"',
+       'lsqu'    =>   "`",
+       'lsquo'   =>   "`",
+       'rsqu'    =>   "'",
+       'rsquo'   =>   "'",
+       'grsqu'   =>   '"',
+       'lcub'    =>   "{",
+       'lsquor'  =>   "`",
+       'rcub'    =>   "}",
+       
+       'frac12'  =>   "<sup>1</sup>/<sub>2</sub>",
+       'frac14'  =>   "<sup>1</sup>/<sub>4</sub>",
+       'frac34'  =>   "<sup>3</sup>/<sub>4</sub>",
+       'frac13'  =>   "<sup>1</sup>/<sub>3</sub>",
+       'frac15'  =>   "<sup>1</sup>/<sub>5</sub>",
+       'frac16'  =>   "<sup>1</sup>/<sub>6</sub>",
+       'frac18'  =>   "<sup>1</sup>/<sub>8</sub>",
+       'frac23'  =>   "<sup>2</sup>/<sub>3</sub>",
+       'frac25'  =>   "<sup>2</sup>/<sub>5</sub>",
+       'frac35'  =>   "<sup>3</sup>/<sub>5</sub>",
+       'frac38'  =>   "<sup>3</sup>/<sub>8</sub>",
+       'frac58'  =>   "<sup>5</sup>/<sub>8</sub>",
+       
+       'Acaron'  =>   "[A]",
+       'Cacute'  =>   "[C]",
+       'Ccaron'  =>   "[C]",
+       'Dcaron'  =>   "[D]",
+       'Ecaron'  =>   "[E]",
+       'Icaron'  =>   "[I]",
+       'Nacute'  =>   "[N]",
+       'Ncaron'  =>   "[N]",
+       'Ocaron'  =>   "[O]",
+       'Rcaron'  =>   "[R]",
+       'Ruml'    =>   "[R]",
+       'Scaron'  =>   "[S]",
+       'Ucaron'  =>   "[U]",
+       'ucaron'  =>   "[u]",        
+       'Zcaron'  =>   "[Z]",
+       'Zdot'    =>   "[Z]",
+       'acedil'  =>   "[a]",
+       'bacute'  =>   "[b]",
+       'cacute'  =>   "[c]",
+       'ccaron'  =>   "[c]",
+       'cgrave'  =>   "[c]",
+       'dcaron'  =>   "[d]",
+       'gacute'  =>   "[g]",
+       'hacute'  =>   "[h]",
+       'iogon'   =>   "[i]",
+       'ltilde'  =>   "[l]",
+       'ncaron'  =>   "[n]",
+       'ngrave'  =>   "[n]",
+       'rcaron'  =>   "[r]",
+       'rgrave'  =>   "[r]",
+       'sacute'  =>   "[s]",
+       'scaron'  =>   "[s]",
+       'sgrave'  =>   "[s]",
+       'stilde'  =>   "[s]",
+       'uring'   =>   "[u]",
+       'utilde'  =>   "[u]",
+       'wacute'  =>   "[w]",
+       'ycirc'   =>   "[y]",
+       'zcaron'  =>   "[z]",
+       'zdot'    =>   "[z]",
+       
+       'breve'   =>   "<img src=../%5C%22$icons/breve.gif%5C%22 alt=\"[breve]\">",
+       'caron'   =>   "<img src=../%5C%22$icons/caron.gif%5C%22 alt=\"[caron]\">",
+       'cir'     =>   "<img src=../%5C%22$icons/circbl.gif%5C%22 alt=\"[circular bullet]\">",
+       'Dagger'  =>   "<img src=../%5C%22$icons/dagger.gif%5C%22 alt=\"[dagger]\">",
+       'dagger'  =>   "<img src=../%5C%22$icons/dagger.gif%5C%22 alt=\"[dagger]\">",
+       'angst'   =>   "<img src=../%5C%22$icons/deg.gif%5C%22 alt=\"[degree]\">",
+       'dot'     =>   "<img src=../%5C%22$icons/dot.gif%5C%22 alt=\"[dot]\">",
+       'bull'    =>   "<img src=../%5C%22$icons/dotbl.gif%5C%22 alt=\"[dot bullet]\">",
+       'grave'   =>   "<img src=../%5C%22$icons/grave.gif%5C%22 alt=\"[grave]\">",
+       
+       'lacute'  =>   "<img src=../%5C%22$grol/lacute.gif%5C%22 alt=\"[l]\">",
+       'macute'  =>   "<img src=../%5C%22$grol/macute.gif%5C%22 alt=\"[m]\">",
+       'nacute'  =>   "<img src=../%5C%22$grol/nacute.gif%5C%22 alt=\"[n]\">",
+       'racute'  =>   "<img src=../%5C%22$grol/racute.gif%5C%22 alt=\"[r]\">",
+       'zacute'  =>   "<img src=../%5C%22$grol/zacute.gif%5C%22 alt=\"[z]\">",
+       'acaron'  =>   "<img src=../%5C%22$grol/acaron.gif%5C%22 alt=\"[a]\">",
+       'ecaron'  =>   "<img src=../%5C%22$grol/ecaron.gif%5C%22 alt=\"[e]\">",
+       'icaron'  =>   "<img src=../%5C%22$grol/icaron.gif%5C%22 alt=\"[i]\">",
+       'ocaron'  =>   "<img src=../%5C%22$grol/ocaron.gif%5C%22 alt=\"[o]\">",
+       'edot'    =>   "<img src=../%5C%22$grol/edot.gif%5C%22 alt=\"[e]\">",
+       'imacr'   =>   "<img src=../%5C%22$grol/imacr.gif%5C%22 alt=\"[i]\">",
+       'etilde'  =>   "<img src=../%5C%22$grol/etilde.gif%5C%22 alt=\"[e]\">",
+       'itilde'  =>   "<img src=../%5C%22$grol/itilde.gif%5C%22 alt=\"[i]\">",
+       
+       'check'   =>   "<img src=../%5C%22$misc/checkmark.gif%5C%22 alt=\"[check mark]\">",
+      );
+    
+}
+
+sub InitCharEntHash_ISO_Greek 
+{
+    %charEntHash_ISO_Greek= 
+      ('initzzz' =>   "1",
+       
+       'Agr'     => "<img src=../%5C%22$greek/Agr.gif%5C%22 alt=\"[Agr]\">",
+       'agr'     => "<img src=../%5C%22$greek/agr.gif%5C%22 alt=\"[agr]\">",
+       'aacgr'   => "<img src=../%5C%22$greek/aacugr.gif%5C%22 alt=\"[aacugr]\">",
+       'aacugr'  => "<img src=../%5C%22$greek/aacugr.gif%5C%22 alt=\"[aacugr]\">",
+       'aaigr'   => "<img src=../%5C%22$greek/aaigr.gif%5C%22 alt=\"[aaigr]\">",
+       'acigr'   => "<img src=../%5C%22$greek/acigr.gif%5C%22 alt=\"[acigr]\">",
+       'acirgr'  => "<img src=../%5C%22$greek/acirgr.gif%5C%22 alt=\"[acirgr]\">",
+       'agigr'   => "<img src=../%5C%22$greek/agigr.gif%5C%22 alt=\"[agigr]\">",
+       'agragr'  => "<img src=../%5C%22$greek/agragr.gif%5C%22 alt=\"[agragr]\">",
+       'agvgr'   => "<img src=../%5C%22$greek/agragr.gif%5C%22 alt=\"[agragr]\">",
+       'aiotgr'  => "<img src=../%5C%22$greek/aiotgr.gif%5C%22 alt=\"[aiotgr]\">",
+       'aragr'   => "<img src=../%5C%22$greek/aragr.gif%5C%22 alt=\"[aragr]\">",
+       'araigr'  => "<img src=../%5C%22$greek/araigr.gif%5C%22 alt=\"[araigr]\">",
+       'arcgr'   => "<img src=../%5C%22$greek/arcgr.gif%5C%22 alt=\"[arcgr]\">",
+       'arcigr'  => "<img src=../%5C%22$greek/arcigr.gif%5C%22 alt=\"[arcigr]\">",
+       'arggr'   => "<img src=../%5C%22$greek/arggr.gif%5C%22 alt=\"[arggr]\">",
+       'argigr'  => "<img src=../%5C%22$greek/argigr.gif%5C%22 alt=\"[argigr]\">",
+       'arigr'   => "<img src=../%5C%22$greek/arigr.gif%5C%22 alt=\"[arigr]\">",
+       'arougr'  => "<img src=../%5C%22$greek/arougr.gif%5C%22 alt=\"[arougr]\">",
+       'asagr'   => "<img src=../%5C%22$greek/asagr.gif%5C%22 alt=\"[asagr]\">",
+       'asaigr'  => "<img src=../%5C%22$greek/asaigr.gif%5C%22 alt=\"[asaigr]\">",
+       'ascgr'   => "<img src=../%5C%22$greek/ascgr.gif%5C%22 alt=\"[ascgr]\">",
+       'ascigr'  => "<img src=../%5C%22$greek/ascigr.gif%5C%22 alt=\"[ascigr]\">",
+       'asggr'   => "<img src=../%5C%22$greek/asggr.gif%5C%22 alt=\"[asggr]\">",
+       'asgigr'  => "<img src=../%5C%22$greek/asgigr.gif%5C%22 alt=\"[asgigr]\">",
+       'asigr'   => "<img src=../%5C%22$greek/asigr.gif%5C%22 alt=\"[asigr]\">",
+       'asmogr'  => "<img src=../%5C%22$greek/asmogr.gif%5C%22 alt=\"[asmogr]\">",
+       'Bgr'     => "<img src=../%5C%22$greek/Bgr.gif%5C%22 alt=\"[Bgr]\">",
+       'bgr'     => "<img src=../%5C%22$greek/bgr.gif%5C%22 alt=\"[bgr]\">",
+       'Ggr'     => "<img src=../%5C%22$greek/Ggr.gif%5C%22 alt=\"[Ggr]\">",
+       'ggr'     => "<img src=../%5C%22$greek/ggr.gif%5C%22 alt=\"[ggr]\">",
+       'Dgr'     => "<img src=../%5C%22$greek/Dgr.gif%5C%22 alt=\"[Dgr]\">",
+       'dgr'     => "<img src=../%5C%22$greek/dgr.gif%5C%22 alt=\"[dgr]\">",
+       'Egr'     => "<img src=../%5C%22$greek/Egr.gif%5C%22 alt=\"[Egr]\">",
+       'egr'     => "<img src=../%5C%22$greek/egr.gif%5C%22 alt=\"[egr]\">",
+       'eacgr'   => "<img src=../%5C%22$greek/eacugr.gif%5C%22 alt=\"[eacugr]\">",
+       'eacugr'  => "<img src=../%5C%22$greek/eacugr.gif%5C%22 alt=\"[eacugr]\">",
+       'egvgr'   => "<img src=../%5C%22$greek/egragr.gif%5C%22 alt=\"[egragr]\">",
+       'egragr'  => "<img src=../%5C%22$greek/egragr.gif%5C%22 alt=\"[egragr]\">",
+       'eragr'   => "<img src=../%5C%22$greek/eragr.gif%5C%22 alt=\"[eragr]\">",
+       'erggr'   => "<img src=../%5C%22$greek/erggr.gif%5C%22 alt=\"[erggr]\">",
+       'erougr'  => "<img src=../%5C%22$greek/erougr.gif%5C%22 alt=\"[erougr]\">",
+       'esagr'   => "<img src=../%5C%22$greek/esagr.gif%5C%22 alt=\"[esagr]\">",
+       'esggr'   => "<img src=../%5C%22$greek/esggr.gif%5C%22 alt=\"[esggr]\">",
+       'esmogr'  => "<img src=../%5C%22$greek/esmogr.gif%5C%22 alt=\"[esmogr]\">",
+       'Zgr'     => "<img src=../%5C%22$greek/Zgr.gif%5C%22 alt=\"[Zgr]\">",
+       'zgr'     => "<img src=../%5C%22$greek/zgr.gif%5C%22 alt=\"[zgr]\">",
+       'EEgr'    => "<img src=../%5C%22$greek/EEgr.gif%5C%22 alt=\"[EEgr]\">",
+       'eegr'    => "<img src=../%5C%22$greek/eegr.gif%5C%22 alt=\"[eegr]\">",
+       'eeacgr'  => "<img src=../%5C%22$greek/eeacugr.gif%5C%22 alt=\"[eeacugr]\">",
+       'eeacugr' => "<img src=../%5C%22$greek/eeacugr.gif%5C%22 alt=\"[eeacugr]\">",
+       'eeaigr'  => "<img src=../%5C%22$greek/eeaigr.gif%5C%22 alt=\"[eeaigr]\">",
+       'eecigr'  => "<img src=../%5C%22$greek/eecigr.gif%5C%22 alt=\"[eecigr]\">",
+       'eecirgr' => "<img src=../%5C%22$greek/eecirgr.gif%5C%22 alt=\"[eecirgr]\">",
+       'eegigr'  => "<img src=../%5C%22$greek/eegigr.gif%5C%22 alt=\"[eegigr]\">",
+       'eegvgr'  => "<img src=../%5C%22$greek/eegragr.gif%5C%22 alt=\"[eegragr]\">",
+       'eegragr' => "<img src=../%5C%22$greek/eegragr.gif%5C%22 alt=\"[eegragr]\">",
+       'eeigr'   => "<img src=../%5C%22$greek/eeigr.gif%5C%22 alt=\"[eeigr]\">",
+       'eeragr'  => "<img src=../%5C%22$greek/eeragr.gif%5C%22 alt=\"[eeragr]\">",
+       'eeraigr' => "<img src=../%5C%22$greek/eeraigr.gif%5C%22 alt=\"[eeraigr]\">",
+       'eercgr'  => "<img src=../%5C%22$greek/eercgr.gif%5C%22 alt=\"[eercgr]\">",
+       'eercigr' => "<img src=../%5C%22$greek/eercigr.gif%5C%22 alt=\"[eercigr]\">",
+       'eerggr'  => "<img src=../%5C%22$greek/eerggr.gif%5C%22 alt=\"[eerggr]\">",
+       'eergigr' => "<img src=../%5C%22$greek/eergigr.gif%5C%22 alt=\"[eergigr]\">",
+       'eerigr'  => "<img src=../%5C%22$greek/eerigr.gif%5C%22 alt=\"[eerigr]\">",
+       'eerougr' => "<img src=../%5C%22$greek/eerougr.gif%5C%22 alt=\"[eerougr]\">",
+       'eesagr'  => "<img src=../%5C%22$greek/eesagr.gif%5C%22 alt=\"[eesagr]\">",
+       'eesaigr' => "<img src=../%5C%22$greek/eesaigr.gif%5C%22 alt=\"[eesaigr]\">",
+       'eescgr'  => "<img src=../%5C%22$greek/eescgr.gif%5C%22 alt=\"[eescgr]\">",
+       'eescigr' => "<img src=../%5C%22$greek/eescigr.gif%5C%22 alt=\"[eescigr]\">",
+       'eesggr'  => "<img src=../%5C%22$greek/eesggr.gif%5C%22 alt=\"[eesggr]\">",
+       'eesgigr' => "<img src=../%5C%22$greek/eesgigr.gif%5C%22 alt=\"[eesgigr]\">",
+       'eesigr'  => "<img src=../%5C%22$greek/eesigr.gif%5C%22 alt=\"[eesigr]\">",
+       'eesmogr' => "<img src=../%5C%22$greek/eesmogr.gif%5C%22 alt=\"[eesmogr]\">",
+       'THgr'    => "<img src=../%5C%22$greek/THgr.gif%5C%22 alt=\"[THgr]\">",
+       'thgr'    => "<img src=../%5C%22$greek/thgr.gif%5C%22 alt=\"[thgr]\">",
+       'Igr'     => "<img src=../%5C%22$greek/Igr.gif%5C%22 alt=\"[Igr]\">",
+       'igr'     => "<img src=../%5C%22$greek/igr.gif%5C%22 alt=\"[igr]\">",
+       'iacgr'   => "<img src=../%5C%22$greek/iacugr.gif%5C%22 alt=\"[iacugr]\">",
+       'iacugr'  => "<img src=../%5C%22$greek/iacugr.gif%5C%22 alt=\"[iacugr]\">",
+       'iadgr'   => "<img src=../%5C%22$greek/iadgr.gif%5C%22 alt=\"[iadgr]\">",
+       'icirgr'  => "<img src=../%5C%22$greek/icirgr.gif%5C%22 alt=\"[icirgr]\">",
+       'idiagr'  => "<img src=../%5C%22$greek/idiagr.gif%5C%22 alt=\"[idiagr]\">",
+       'igdgr'   => "<img src=../%5C%22$greek/igdgr.gif%5C%22 alt=\"[igdgr]\">",
+       'igvgr'   => "<img src=../%5C%22$greek/igragr.gif%5C%22 alt=\"[igragr]\">",
+       'igragr'  => "<img src=../%5C%22$greek/igragr.gif%5C%22 alt=\"[igragr]\">",
+       'iragr'   => "<img src=../%5C%22$greek/iragr.gif%5C%22 alt=\"[iragr]\">",
+       'ircgr'   => "<img src=../%5C%22$greek/ircgr.gif%5C%22 alt=\"[ircgr]\">",
+       'irggr'   => "<img src=../%5C%22$greek/irggr.gif%5C%22 alt=\"[irggr]\">",
+       'irougr'  => "<img src=../%5C%22$greek/irougr.gif%5C%22 alt=\"[irougr]\">",
+       'isagr'   => "<img src=../%5C%22$greek/isagr.gif%5C%22 alt=\"[isagr]\">",
+       'iscgr'   => "<img src=../%5C%22$greek/iscgr.gif%5C%22 alt=\"[iscgr]\">",
+       'isggr'   => "<img src=../%5C%22$greek/isggr.gif%5C%22 alt=\"[isggr]\">",
+       'ismogr'  => "<img src=../%5C%22$greek/ismogr.gif%5C%22 alt=\"[ismogr]\">",
+       'Kgr'     => "<img src=../%5C%22$greek/Kgr.gif%5C%22 alt=\"[Kgr]\">",
+       'kgr'     => "<img src=../%5C%22$greek/kgr.gif%5C%22 alt=\"[kgr]\">",
+       'Lgr'     => "<img src=../%5C%22$greek/Lgr.gif%5C%22 alt=\"[Lgr]\">",
+       'lgr'     => "<img src=../%5C%22$greek/lgr.gif%5C%22 alt=\"[lgr]\">",
+       'Mgr'     => "<img src=../%5C%22$greek/Mgr.gif%5C%22 alt=\"[Mgr]\">",
+       'mgr'     => "<img src=../%5C%22$greek/mgr.gif%5C%22 alt=\"[mgr]\">",
+       'Ngr'     => "<img src=../%5C%22$greek/Ngr.gif%5C%22 alt=\"[Ngr]\">",
+       'ngr'     => "<img src=../%5C%22$greek/ngr.gif%5C%22 alt=\"[ngr]\">",
+       'Xgr'     => "<img src=../%5C%22$greek/Xgr.gif%5C%22 alt=\"[Xgr]\">",
+       'xgr'     => "<img src=../%5C%22$greek/xgr.gif%5C%22 alt=\"[xgr]\">",
+       'Ogr'     => "<img src=../%5C%22$greek/Ogr.gif%5C%22 alt=\"[Ogr]\">",
+       'ogr'     => "<img src=../%5C%22$greek/ogr.gif%5C%22 alt=\"[ogr]\">",
+       'oacgr'   => "<img src=../%5C%22$greek/oacugr.gif%5C%22 alt=\"[oacugr]\">",
+       'oacugr'  => "<img src=../%5C%22$greek/oacugr.gif%5C%22 alt=\"[oacugr]\">",
+       'ogvgr'   => "<img src=../%5C%22$greek/ogragr.gif%5C%22 alt=\"[ogragr]\">",
+       'ogragr'  => "<img src=../%5C%22$greek/ogragr.gif%5C%22 alt=\"[ogragr]\">",
+       'oragr'   => "<img src=../%5C%22$greek/oragr.gif%5C%22 alt=\"[oragr]\">",
+       'orggr'   => "<img src=../%5C%22$greek/orggr.gif%5C%22 alt=\"[orggr]\">",
+       'orougr'  => "<img src=../%5C%22$greek/orougr.gif%5C%22 alt=\"[orougr]\">",
+       'osagr'   => "<img src=../%5C%22$greek/osagr.gif%5C%22 alt=\"[osagr]\">",
+       'osggr'   => "<img src=../%5C%22$greek/osggr.gif%5C%22 alt=\"[osggr]\">",
+       'osmogr'  => "<img src=../%5C%22$greek/osmogr.gif%5C%22 alt=\"[osmogr]\">",
+       'Pgr'     => "<img src=../%5C%22$greek/Pgr.gif%5C%22 alt=\"[Pgr]\">",
+       'pgr'     => "<img src=../%5C%22$greek/pgr.gif%5C%22 alt=\"[pgr]\">",
+       'Rgr'     => "<img src=../%5C%22$greek/Rgr.gif%5C%22 alt=\"[Rgr]\">",
+       'rgr'     => "<img src=../%5C%22$greek/rgr.gif%5C%22 alt=\"[rgr]\">",
+       'rrougr'  => "<img src=../%5C%22$greek/rrougr.gif%5C%22 alt=\"[rrougr]\">",
+       'rsmogr'  => "<img src=../%5C%22$greek/rsmogr.gif%5C%22 alt=\"[rsmogr]\">",
+       'Sgr'     => "<img src=../%5C%22$greek/Sgr.gif%5C%22 alt=\"[Sgr]\">",
+       'sgr'     => "<img src=../%5C%22$greek/sgr.gif%5C%22 alt=\"[sgr]\">",
+       'sfgr'    => "<img src=../%5C%22$greek/sfgr.gif%5C%22 alt=\"[sfgr]\">",
+       'Tgr'     => "<img src=../%5C%22$greek/Tgr.gif%5C%22 alt=\"[Tgr]\">",
+       'tgr'     => "<img src=../%5C%22$greek/tgr.gif%5C%22 alt=\"[tgr]\">",
+       'Ugr'     => "<img src=../%5C%22$greek/Ugr.gif%5C%22 alt=\"[Ugr]\">",
+       'ugr'     => "<img src=../%5C%22$greek/ugr.gif%5C%22 alt=\"[ugr]\">",
+       'uacugr'  => "<img src=../%5C%22$greek/uacugr.gif%5C%22 alt=\"[uacugr]\">",
+       'uadgr'   => "<img src=../%5C%22$greek/uadgr.gif%5C%22 alt=\"[uadgr]\">",
+       'ucirgr'  => "<img src=../%5C%22$greek/ucirgr.gif%5C%22 alt=\"[ucirgr]\">",
+       'udiagr'  => "<img src=../%5C%22$greek/udiagr.gif%5C%22 alt=\"[udiagr]\">",
+       'ugdgr'   => "<img src=../%5C%22$greek/ugdgr.gif%5C%22 alt=\"[ugdgr]\">",
+       'ugvgr'   => "<img src=../%5C%22$greek/ugragr.gif%5C%22 alt=\"[ugragr]\">",
+       'ugragr'  => "<img src=../%5C%22$greek/ugragr.gif%5C%22 alt=\"[ugragr]\">",
+       'uragr'   => "<img src=../%5C%22$greek/uragr.gif%5C%22 alt=\"[uragr]\">",
+       'urcgr'   => "<img src=../%5C%22$greek/urcgr.gif%5C%22 alt=\"[urcgr]\">",
+       'urggr'   => "<img src=../%5C%22$greek/urggr.gif%5C%22 alt=\"[urggr]\">",
+       'urougr'  => "<img src=../%5C%22$greek/urougr.gif%5C%22 alt=\"[urougr]\">",
+       'usagr'   => "<img src=../%5C%22$greek/usagr.gif%5C%22 alt=\"[usagr]\">",
+       'uscgr'   => "<img src=../%5C%22$greek/uscgr.gif%5C%22 alt=\"[uscgr]\">",
+       'usggr'   => "<img src=../%5C%22$greek/usggr.gif%5C%22 alt=\"[usggr]\">",
+       'usmogr'  => "<img src=../%5C%22$greek/usmogr.gif%5C%22 alt=\"[usmogr]\">",
+       'PHgr'    => "<img src=../%5C%22$greek/PHgr.gif%5C%22 alt=\"[PHgr]\">",
+       'phgr'    => "<img src=../%5C%22$greek/phgr.gif%5C%22 alt=\"[phgr]\">",
+       'KHgr'    => "<img src=../%5C%22$greek/KHgr.gif%5C%22 alt=\"[KHgr]\">",
+       'khgr'    => "<img src=../%5C%22$greek/khgr.gif%5C%22 alt=\"[khgr]\">",
+       'PSgr'    => "<img src=../%5C%22$greek/PSgr.gif%5C%22 alt=\"[PSgr]\">",
+       'psgr'    => "<img src=../%5C%22$greek/psgr.gif%5C%22 alt=\"[psgr]\">",
+       'OHgr'    => "<img src=../%5C%22$greek/OHgr.gif%5C%22 alt=\"[OHgr]\">",
+       'ohgr'    => "<img src=../%5C%22$greek/ohgr.gif%5C%22 alt=\"[ohgr]\">",
+       'ohacgr'  => "<img src=../%5C%22$greek/ohacugr.gif%5C%22 alt=\"[ohacugr]\">",
+       'ohacugr' => "<img src=../%5C%22$greek/ohacugr.gif%5C%22 alt=\"[ohacugr]\">",
+       'ohaigr'  => "<img src=../%5C%22$greek/ohaigr.gif%5C%22 alt=\"[ohaigr]\">",
+       'ohcigr'  => "<img src=../%5C%22$greek/ohcigr.gif%5C%22 alt=\"[ohcigr]\">",
+       'ohcirgr' => "<img src=../%5C%22$greek/ohcirgr.gif%5C%22 alt=\"[ohcirgr]\">",
+       'ohgigr'  => "<img src=../%5C%22$greek/ohgigr.gif%5C%22 alt=\"[ohgigr]\">",
+       'ohgragr' => "<img src=../%5C%22$greek/ohgragr.gif%5C%22 alt=\"[ohgragr]\">",
+       'ohiotgr' => "<img src=../%5C%22$greek/ohiotgr.gif%5C%22 alt=\"[ohiotgr]\">",
+       'ohragr'  => "<img src=../%5C%22$greek/ohragr.gif%5C%22 alt=\"[ohragr]\">",
+       'ohraigr' => "<img src=../%5C%22$greek/ohraigr.gif%5C%22 alt=\"[ohraigr]\">",
+       'ohrcgr'  => "<img src=../%5C%22$greek/ohrcgr.gif%5C%22 alt=\"[ohrcgr]\">",
+       'ohrcigr' => "<img src=../%5C%22$greek/ohrcigr.gif%5C%22 alt=\"[ohrcigr]\">",
+       'ohrggr'  => "<img src=../%5C%22$greek/ohrggr.gif%5C%22 alt=\"[ohrggr]\">",
+       'ohrgigr' => "<img src=../%5C%22$greek/ohrgigr.gif%5C%22 alt=\"[ohrgigr]\">",
+       'ohrigr'  => "<img src=../%5C%22$greek/ohrigr.gif%5C%22 alt=\"[ohrigr]\">",
+       'ohrougr' => "<img src=../%5C%22$greek/ohrougr.gif%5C%22 alt=\"[ohrougr]\">",
+       'ohsagr'  => "<img src=../%5C%22$greek/ohsagr.gif%5C%22 alt=\"[ohsagr]\">",
+       'ohsaigr' => "<img src=../%5C%22$greek/ohsaigr.gif%5C%22 alt=\"[ohsaigr]\">",
+       'ohscgr'  => "<img src=../%5C%22$greek/ohscgr.gif%5C%22 alt=\"[ohscgr]\">",
+       'ohscigr' => "<img src=../%5C%22$greek/ohscigr.gif%5C%22 alt=\"[ohscigr]\">",
+       'ohsggr'  => "<img src=../%5C%22$greek/ohsggr.gif%5C%22 alt=\"[ohsggr]\">",
+       'ohsgigr' => "<img src=../%5C%22$greek/ohsgigr.gif%5C%22 alt=\"[ohsgigr]\">",
+       'ohsigr'  => "<img src=../%5C%22$greek/ohsigr.gif%5C%22 alt=\"[ohsigr]\">",
+       'ohsmogr' => "<img src=../%5C%22$greek/ohsmogr.gif%5C%22 alt=\"[ohsmogr]\">",
+       'DIGgr'   => "<img src=../%5C%22$greek/DIGgr.gif%5C%22 alt=\"[DIGgr]\">",
+       'diggr'   => "<img src=../%5C%22$greek/diggr.gif%5C%22 alt=\"[diggr]\">",
+       'KOgr'    => "<img src=../%5C%22$greek/KOgr.gif%5C%22 alt=\"[KOgr]\">",
+       'kogr'    => "<img src=../%5C%22$greek/kogr.gif%5C%22 alt=\"[kogr]\">",
+       'samgr'   => "<img src=../%5C%22$greek/samgr.gif%5C%22 alt=\"[samgr]\">",
+       'SLgr'    => "<img src=../%5C%22$greek/SLgr.gif%5C%22 alt=\"[SLgr]\">",
+       'slgr'    => "<img src=../%5C%22$greek/slgr.gif%5C%22 alt=\"[slgr]\">",
+       'acugr'   => "<img src=../%5C%22$greek/acugr.gif%5C%22 alt=\"[acugr]\">",
+       'apos'    => "<img src=../%5C%22$greek/apos.gif%5C%22 alt=\"[apos]\">",
+       'cirgr'   => "<img src=../%5C%22$greek/cirgr.gif%5C%22 alt=\"[cirgr]\">",
+       'cogr'    => "<img src=../%5C%22$greek/cogr.gif%5C%22 alt=\"[cogr]\">",
+       'colon'   => "<img src=../%5C%22$greek/colon.gif%5C%22 alt=\"[colon]\">",
+       'comma'   => "<img src=../%5C%22$greek/comma.gif%5C%22 alt=\"[comma]\">",
+       'diagr'   => "<img src=../%5C%22$greek/diagr.gif%5C%22 alt=\"[diagr]\">",
+       'gdgr'    => "<img src=../%5C%22$greek/gdgr.gif%5C%22 alt=\"[gdgr]\">",
+       'gragr'   => "<img src=../%5C%22$greek/gragr.gif%5C%22 alt=\"[gragr]\">",
+       'hyphen'  => "<img src=../%5C%22$greek/hyphen.gif%5C%22 alt=\"[hyphen]\">",
+       'iotgr'   => "<img src=../%5C%22$greek/iotgr.gif%5C%22 alt=\"[iotgr]\">",
+       'laquo'   => "<img src=../%5C%22$greek/laquo.gif%5C%22 alt=\"[laquo]\">",
+       'lpar'    => "<img src=../%5C%22$greek/lpar.gif%5C%22 alt=\"[lpar]\">",
+       'lsqb'    => "<img src=../%5C%22$greek/lsqb.gif%5C%22 alt=\"[lsqb]\">",
+       'period'  => "<img src=../%5C%22$greek/period.gif%5C%22 alt=\"[period]\">",
+       'qmgr'    => "<img src=../%5C%22$greek/qmgr.gif%5C%22 alt=\"[qmgr]\">",
+       'ragr'    => "<img src=../%5C%22$greek/ragr.gif%5C%22 alt=\"[ragr]\">",
+       'raquo'   => "<img src=../%5C%22$greek/raquo.gif%5C%22 alt=\"[raquo]\">",
+       'rcgr'    => "<img src=../%5C%22$greek/rcgr.gif%5C%22 alt=\"[rcgr]\">",
+       'rggr'    => "<img src=../%5C%22$greek/rggr.gif%5C%22 alt=\"[rggr]\">",
+       'rougr'   => "<img src=../%5C%22$greek/rougr.gif%5C%22 alt=\"[rougr]\">",
+       'rpar'    => "<img src=../%5C%22$greek/rpar.gif%5C%22 alt=\"[rpar]\">",
+       'rsqb'    => "<img src=../%5C%22$greek/rsqb.gif%5C%22 alt=\"[rsqb]\">",
+       'sagr'    => "<img src=../%5C%22$greek/sagr.gif%5C%22 alt=\"[sagr]\">",
+       'scgr'    => "<img src=../%5C%22$greek/scgr.gif%5C%22 alt=\"[scgr]\">",
+       'sdgr'    => "<img src=../%5C%22$greek/sdgr.gif%5C%22 alt=\"[sdgr]\">",
+       'sggr'    => "<img src=../%5C%22$greek/sggr.gif%5C%22 alt=\"[sggr]\">",
+       'smogr'   => "<img src=../%5C%22$greek/smogr.gif%5C%22 alt=\"[smogr]\">",
+      );    
+}
+
+sub FilterCharEnts_CH_Greek
+{
+    my $sRef = shift;
+    
+    if (! $charEntHash_CH_Greek{'initzzz'})
+    {
+	&InitCharEntHash_CH_Greek;
+    };
+    
+    $$sRef =~ s,(\&([^ \;]+?)\;),$charEntHash_CH_Greek{$2} ? $charEntHash_CH_Greek{$2} : $1,eg;
+    
+    if ( $ENV{'DEBUG'} && $ENV{'charents'} )
+    {
+	if ( $1 )
+	{
+	    print "[|$1| -> |$2| -> |$charEntHash_CH_Greek{$2}|]"
+	}
+    }
+}
+
+sub FilterCharEnts_ISO_Greek
+{
+    my $sRef = shift;
+    
+    if (! $charEntHash_ISO_Greek{'initzzz'})
+    {
+	&InitCharEntHash_ISO_Greek;
+    };
+    
+    $$sRef =~ s,(\&([^ \;]+?)\;),$charEntHash_ISO_Greek{$2} ? $charEntHash_ISO_Greek{$2} : $1,eg;
+    
+    if ( $ENV{'DEBUG'} && $ENV{'charents'} )
+    {
+	if ( $1 )
+	{
+	    print "[|$1| -> |$2| -> |$charEntHash_ISO_Greek{$2}|]"
+	}
+    }
+}
+
+sub FilterCharEnts_Misc
+{
+    my $sRef = shift;
+    
+    if (! $charEntHash_Misc{'initzzz'})
+    {
+	&InitCharEntHash_Misc;
+    };
+    
+    # A few complex regexps
+    $$sRef =~ s|\&super([^\;]+)\;|<sup>$1</sup>|g;
+
+    # All the rest
+    $$sRef =~ s,(\&([^ \;]+?)\;),$charEntHash_Misc{$2} ? $charEntHash_Misc{$2} : $1,eg;
+    
+    if ( $ENV{'DEBUG'} && $ENV{'charents'} )
+    {
+	if ( $1 )
+	{
+	    print "[|$1| -> |$2| -> |$charEntHash_Misc{$2}|]"
+	}
+    }
+}
+
+sub FilterCharEnts_All
+{
+    my $sRef = shift;
+
+    FilterCharEnts_Misc( $sRef );
+    FilterCharEnts_ISO_Greek( $sRef );
+    FilterCharEnts_CH_Greek( $sRef );
+}
+
+
+# ----------------------------------------------------------------------
+# NAME      : StartSession
+# PURPOSE   : set the global $gSessionId and creates a DlpsSession object
+#             (which wraps an Apache::Session::DBI object)
+# CALLED BY : main
+# CALLS     : DlpsSession->new
+# INPUT     : 
+# RETURNS   : 
+# GLOBALS   : 
+# NOTES     : 
+# ----------------------------------------------------------------------
+
+sub StartSession
+{
+    my $cgi = shift;
+    
+    # get session id if there is one passed in
+    my $sid = $cgi->param('sid');     
+    
+    my $dso;
+    eval
+    {
+	$dso = new DlpsSession( $sid );
+    };
+    if ( $@ )
+    {
+	&errorBail( $@  );
+    }
+    
+    $sid = $dso->GetSessionId( );     # update global session id variable
+    $cgi->param( 'sid', $sid );       # update cgi obj with session id param
+    
+    
+    if ( ( $ENV{'DEBUG'} eq 'session' ) ||
+         ( $ENV{'DEBUG'} eq 'all' ) )
+    {
+        print( &CGI::p("Debugging $0"), &CGI::br(), &CGI::hr() );
+        print( &CGI::p(qq{Session ID is: }, $sid), &CGI::br(), &CGI::hr() );
+    }
+    
+    return $dso;
+}
+
+
+# ----------------------------------------------------------------------
+# NAME         : PrintStringToFile
+# PURPOSE      : 
+# CALLED BY    : 
+# CALLS        : 
+# INPUT        : string, filename of file to print it to
+# RETURNS      : NONE
+# GLOBALS      : 
+# SIDE-EFFECTS : 
+# NOTES        : 
+# ----------------------------------------------------------------------
+
+sub PrintStringToFile
+{
+    my ( $s, $file ) = @_;
+    open ( TEMPFILE, ">$file" ) || die;
+    print TEMPFILE $s;
+    close ( TEMPFILE );
+}
+
+# ----------------------------------------------------------------------
+# NAME         : TrimSpaces
+# PURPOSE      : remove leading and trailing white space from a string
+# CALLED BY    : 
+# CALLS        : 
+# INPUT        : reference a string
+# RETURNS      : 
+# GLOBALS      : 
+# SIDE-EFFECTS : changes string by reference
+# NOTES        : 
+# ----------------------------------------------------------------------
+
+sub TrimSpaces
+{
+    my $sRef = shift;
+    
+    $$sRef =~ s,^\s*,,;
+    $$sRef =~ s,\s*$,,;
+}
+
+
+
+# **********************************************************************
+# **********************************************************************
+1;
+
+

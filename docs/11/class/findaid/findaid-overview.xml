@@ -1,0 +1,187 @@
+<?xml version="1.0"?>
+      <!-- SPO Editorial Services                  -->
+      <!-- automatically-generated XML header file -->
+      
+      <?xml-stylesheet href="../../../pre11-dlxsdocs.xsl" type="text/xsl"?>
+      <!DOCTYPE DLPSDOC PUBLIC "-//UM-DLPS//DTD DLPS Publications//EN" "http://docs.umdl.umich.edu/dlps/docs/dlpsdocs.dtd">
+      <DLPSDOC>
+         <TITLE>
+            Findaid Class Overview
+         </TITLE>
+         <HEADER>
+            <JOURNAL>
+               DLXS Documentation
+            </JOURNAL>
+            <PUBDATE>
+               2003-11-03 14:48:43 EST
+            </PUBDATE>
+            <AUTH1>
+               Pagliere, Alan
+            </AUTH1>
+            <EMAIL1></EMAIL1>
+            <AUTH2></AUTH2>
+            <DOCTITLE>
+               Findaid Class Overview
+            </DOCTITLE>
+            <VOL></VOL>
+            <ISS></ISS>
+            <FILE>
+               dlxsdocs-findaid-overview
+            </FILE>
+         </HEADER>
+         <BODY> 
+            <BHEAD> 
+               Overview of Findaid Class 
+            </BHEAD> 
+            <DIV1> 
+               <H1> 
+                  Abstract 
+               </H1> 
+               <P> 
+                  <A NAME="Description"/> 
+                  The Findaid Class consists of EAD2002-encoded Finding Aids.
+                  You can learn more about the ead2002 dtd and ead2002 in general
+                  at the
+                  <A HREF="http://www.loc.gov/ead/" TARGET="external"> 
+                     Library of Congress ead2002 site 
+                  </A> 
+                  . 
+               </P> 
+            </DIV1> 
+            <DIV1> 
+               <H1> 
+                  Description 
+               </H1> 
+               <DIV2> 
+                  <H2> 
+                     Basic Characteristics 
+                  </H2> 
+                  <P> 
+                     The Finding Aids Class is in many ways similar in behavior
+                     to
+                     <A HREF="../text/tc-index.xml"> 
+                        Text Class 
+                     </A> 
+                     . Access minimally includes full text searching across collections
+                     or within a particular collection of Finding Aids, viewing
+                     Finding Aids in a variety of display formats, and creation
+                     of personal collections ("bookbag") of Finding Aids.
+                  </P> 
+               </DIV2> 
+               <DIV2> 
+                  <H2> 
+                     General Characteristics 
+                  </H2> 
+                  <UL> 
+                     <LI> 
+                        Allows search and retrieval of ead2002-endcoded Finding
+                        Aids and portions thereof
+                     </LI> 
+                     <LI> 
+                        Allows searching across multiple collections of Finding
+                        Aids simultaneously
+                     </LI> 
+                     <LI> 
+                        Allows searching of each collection independently
+                     </LI> 
+                     <LI> 
+                        Allows bookmarking of individual Finding Aids
+                     </LI> 
+                     <LI> 
+                        Requires minimal administrative data
+                     </LI> 
+                     <LI> 
+                        Uses a single data model and shared middleware for all
+                        collections in the system
+                     </LI> 
+                     <LI> 
+                        Permits access restrictions at the collection level 
+                     </LI> 
+                  </UL> 
+                  <P> 
+                     At the University of Michigan, the Findaid Class access
+                     system is administered by the Digital Library Production
+                     Service. XML is received on a periodic basis from a variety
+                     of organizations on campus, and DLPS handles the process
+                     of putting the data online in a production-level environment.
+                  </P> 
+                  <P> 
+                     The Finding Aids Class provides no functionality for creating
+                     and managing electronic texts in SGML.
+                  </P> 
+				  <DIV3>
+<H3>Typical Sources of Data</H3>
+<P>The following sources of data have influenced the process defining the Findaid Class. Other sources are possible. </P>
+<UL>
+<LI>Archival and Special Collections Libraries: finding aids converted to the ead2002 DTD, especially the <A HREF="http://www.umich.edu/~bhl">Bentley Historical Library</A> at the University of Michigan which has well-established encoding practices</LI>
+</UL>
+</DIV3>
+<DIV3>
+<H3>Typical Applications of the Class</H3>
+<UL>
+<LI>Campus access </LI>
+<LI>Public access </LI>
+</UL>
+</DIV3>
+
+                  <DIV3> 
+                     <H3> 
+                        Behaviors of the Findaid Class 
+                     </H3> 
+                     <UL> 
+                        <LI> 
+                           Cross-collection searching in any combination of collections
+                        </LI> 
+                        <LI> 
+                           Selection of collections 
+                        </LI> 
+                        <LI> 
+                           Collection-specific searching
+                        </LI> 
+                        <LI> 
+                           Simple and Boolean searching
+                        </LI> 
+                        <LI> 
+                           Searching within a user-selected Finding Aid
+                        </LI> 
+                        <LI> 
+                           Ability to review and revise previous searches
+                        </LI> 
+                        <LI> 
+                           Viewing of sections of a Finding Aid or the full text
+                           in HTML, and display in context of search terms found
+                        </LI> 
+						 <LI> 
+                           Ability to select particular Finding Aids for saving in a session-based personal collection, or bookbag, and to download or email these
+                        </LI> 
+                     </UL> 
+                  </DIV3> 
+               </DIV2> 
+               <DIV2> 
+                  <H2> 
+                     Formal Data Definition 
+                  </H2> 
+                  <P> 
+                     <A NAME="Descriptive_Metadata__text_"/> 
+                     The Findaid Class relies on a single XML Document Type Definition
+                     (DTD) to deliver all collections in the class which is essentially ead2002 DTD (see the
+                     <A HREF="http://www.loc.gov/ead/" TARGET="external"> 
+                        Library of Congress ead2002 site</A>), with one extra wrapping element. 
+						The XML is then indexed with XPAT and made searchable
+                     on the Web by the Findaid Class middleware.
+                  </P> 
+               </DIV2> 
+               <DIV2> 
+                  <H2> 
+                     Representative Resource(s) 
+                  </H2> 
+                  <P> 
+                     <A HREF="http://www.hti.umich.edu/cgi/f/findaid/findaid-idx?c=bhlead">Bentley Historical Library Finding Aids</A>
+                  </P> 
+                  <P> 
+	                     <A HREF="http://www.hti.umich.edu/cgi/f/findaid/findaid-idx?c=sclead">University of Michigan Special Collections Finding Aids</A> 
+                  </P> 
+               </DIV2> 
+            </DIV1> 
+         </BODY>
+      </DLPSDOC>

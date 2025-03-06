@@ -1,0 +1,48 @@
+<HTML>
+<HEAD>
+<TITLE>RegionTextSearches</TITLE>
+<META http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+</HEAD>
+
+<BODY bgcolor="#FFFFFF" text="#000000">
+<PRE>sub RegionTextSearches 
+{ 
+    my $self = shift; 
+    my ( $sid, $cgi, $ssetName ) = @_; 
+ 
+    my $searchRegion = $cgi->param( 'rgn' ); 
+ 
+    # get ready to search, get SearchSet object and TermMapper object 
+    my $sset = $self->GetSearchSet( $ssetName ); 
+    my $tm   = $self->GetTermMapper( ); 
+ 
+    # Set up searches for view=text based on the rgn 
+    if ( $searchRegion eq 'main' ) 
+    { 
+        # There must be an idno if this is a full ITEM. We use 
+        # idno element to find it 
+        my $idno = $cgi->param( 'idno' ); 
+ 
+        my $idnorgn; 
+        ASSERT( $idnorgn = <B>$tm->map('IDNO', 'synthetic', 'native') )</B>; 
+        my $fullRegionSearchName = $sset->SetNamedSearchName( 'fullregion', $sid ); 
+ 
+        $sset->AddQuery( $fullRegionSearchName,   #'fullregion' . $sid, 
+                         qq{pr.region.main (region main incl ( $idnorgn incl "$idno" ) );} ); 
+    } 
+    elsif ( $searchRegion eq 'page' ) 
+    { 
+        # There must be a seq (page no.) 
+        my $seq = $cgi->param( 'seq' ); 
+        my $idno = $cgi->param( 'idno' ); 
+ 
+        my $idnorgn; 
+        ASSERT( $idnorgn = <B>$tm->map('IDNO', 'synthetic', 'native') );</B> 
+        my $pageRgn; 
+        ASSERT( $pageRgn = <B>$tm->map('PAGE', 'synthetic', 'native') ); </B>
+
+	...
+
+</PRE>
+</BODY>
+</HTML>

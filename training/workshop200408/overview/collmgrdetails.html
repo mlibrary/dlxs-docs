@@ -1,0 +1,47 @@
+<HTML>
+<HEAD>
+<TITLE>Collection Manager Details</TITLE>
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+<LINK REL="stylesheet" HREF="../styles.css" TYPE="text/css">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF" CLASS="mainpalette">
+<H3> Collection Manager (collmgr) Details<BR>
+            </H3>
+            <UL>
+              <LI><B>REMOTE_USER</B> environment variable (likely to be set by 
+                &quot;Basic Auth&quot; in the virtual host); if set to dlxsadm, 
+                <I>release rows</I> are visible, editable and moveable to <I>production</I></LI>
+              <LI><B>Let's look at a few examples</B> of how collmgr is used to 
+                manage collection data 
+                <UL>
+                  <LI>fields<BR>
+                    <UL>
+                      <LI>collection id, unchangeable</LI>
+                      <LI> host: where the data resides</LI>
+                      <LI>webdir: for finding html templates</LI>
+                      <LI>subclassmodule: possible collection specific Perl subclass 
+                        ofthe TextClass base class</LI>
+                      <LI>pdfchunk: number of pages to package up into one pdf 
+                        file for delivery in pageviewer</LI>
+                      <LI>qtytext: number of documents in this collection</LI>
+                      <LI>dd: one or more XPAT indexes for the collection</LI>
+                      <LI>termsearch: fields to display in simple search pulldown</LI>
+                    </UL>
+                  </LI>
+                  <LI>moving rows from release to production; later</LI>
+                </UL>
+              </LI>
+            </UL>
+            <HR WIDTH="50%">
+            <P>For a full list of the tables in the collection and group database, 
+              see the <A HREF="http://docs.dlxs.org/collmeta/dlxs-colldatabases.xml" TARGET="external">DLXS 
+              documentation on the metadata database schema</A>.</P>
+            <P> For information on how the user name and DLPS_DEV environment 
+              variable affect the data values retrieved from the database (how 
+              to control testing vs. production vs. individual developers' environments), 
+              see the <A HREF="http://docs.dlxs.org/collmeta/dlxs-colldatabases.xml#interaction" TARGET="external">DLXS 
+              Documentation on the Interaction between database rows, users, DLXS 
+              Middleware and collmgr</A> </P>
+          
+</BODY>
+</HTML>

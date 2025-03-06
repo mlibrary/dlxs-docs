@@ -1,0 +1,31 @@
+<?xml version="1.0"?>
+
+<!-- SPO Editorial Services                  -->
+<!-- automatically-generated XML header file -->
+
+<?xml-stylesheet href="../../../pre11-dlxsdocs.xsl" type="text/xsl"?>
+<!DOCTYPE DLPSDOC PUBLIC "-//UM-DLPS//DTD DLPS Publications//EN" "http://docs.umdl.umich.edu/dlps/docs/dlpsdocs.dtd">
+<DLPSDOC>
+<TITLE>Preparation for Index Building (Finding Aids)</TITLE>
+<HEADER>
+<JOURNAL>DLXS Documentation</JOURNAL>
+<PUBDATE>2002-06-20 17:24:16 EDT</PUBDATE>
+<AUTH1>Powell, Chris</AUTH1>
+<AUTH2></AUTH2>
+<DOCTITLE>Preparation for Index Building (Finding Aids)</DOCTITLE>
+<VOL>class</VOL>
+<ISS>findaid</ISS>
+<FILE>dlxsdocs-findaid-prep</FILE>
+</HEADER>
+<BODY><BHEAD>Preparation for Index Building (Finding Aids)</BHEAD><DIV1><H1>Setting up directories</H1><P>You will need to identify directories where you plan to store your SGML or XML source file, your index file (approximately 75% of the
+   size of your finding aids), your "region" files and other information such as data dictionaries, and files you use to prepare your data. We recommend you use the following
+   structure:</P><UL><LI>Store specialized scripts for your collection and its Makefile in <TT>$DLXSROOT/bin/{c}/{coll}/</TT>where <TT>
+$DLXSROOT</TT> is the "tree" where you install all DLXS components, <TT>{c}</TT> is the first letter of the name of the collection you are indexing, and <TT>{coll}</TT> is the collection ID of the collection you are indexing.  For example, if your collection ID is "bhl" and your DLXSROOT is "/l1", you will place the
+ Makefile in <TT>/l1/bin/b/bhl/</TT>, e.g., <TT>/l1/bin/b/bhl/Makefile</TT>.  See <A HREF="http://docs.umdl.umich.edu/arch/general/directory-conventions.xml">directory conventions</A> for more information.</LI><LI>Store your source finding aids and any DTDs, doctype, and files for preparing your data in <TT>$DLXSROOT/prep/{c}/{coll}/</TT>.  Unlike the contents of other directories, everything in prep should be expendable when actually running the indexes.</LI><LI>Store the finalized, concatenated SGML file for your finding aids collection in <TT>$DLXSROOT/obj/{c}/{coll}/</TT> , e.g., <TT>/l1/obj/b/bhl/bhl.sgm</TT>.</LI><LI>Store index, region, data dictionary, and init files in <TT>$DLXSROOT/idx/{c}/{coll}/</TT>, e.g., <TT>/l1/idx/b/bhl/bhl.idx.</TT> See the <A HREF="../../xpat/xpat-index.xml">XPAT documentation</A> for more on these types of files. </LI></UL><P>The files that are located in <TT>$DLXSROOT/bin/s/samplefa</TT>  and <TT>$DLXSROOT/prep/s/samplefa</TT>   can be used in preparing your finding aids and creating your indexes.  The following files may need to have the #! adjusted for your location of perl:</P><UL><LI>$DLXSROOT/bin/f/findaid/isolat128bit.pl</LI><LI>$DLXSROOT/bin/f/findaid/output.dd.frag.pl
+</LI><LI>$DLXSROOT/bin/f/findaid/inc.extra.dd.pl
+</LI><LI>$DLXSROOT/bin/f/findaid/cleanfiles.pl</LI><LI>$DLXSROOT/bin/f/findaid/catsourcefiles.pl</LI></UL><P>The following files will need to be edited to reflect your collection names and paths:</P><UL><LI>$DLXSROOT/bin/s/samplefa/Makefile</LI><LI>$DLXSROOT/prep/s/samplefa/samplefa.blank.dd</LI><LI>$DLXSROOT/prep/s/samplefa/samplefa.extra.srch</LI><LI>
+$DLXSROOT/prep/s/samplefa/samplefa.inp</LI></UL><P>The following file will need to be edited to reflect the location of your entity reference files:</P><UL><LI>$DLXSROOT/prep/s/samplefa/ead1.dtd</LI></UL></DIV1><DIV1><H1>Preparing your data</H1><P>In your prep directory, create a <TT>data</TT> subdirectory for your collection and copy the finding aids for your collection into it.  In our example collection for the Bentley Historical Library, this would be <TT>$DLXSROOT/prep/b/bhl/data/</TT>. Ensure that each has a unique value in the EADID element, as mentioned in the<A HREF="./findaid-encoding.xml"> finding aids encoding document</A>.  Also create a directory called <TT>new</TT> for the output of processes you will run on your files to normalize them, etc.  This way, if you have regrets about the results of the processes, you can step back to your source files.  </P><UL><LI>Clean out DOCTYPE declarations using the  <TT>make cleansgml</TT>    command in the Makefile stored at $DLXSROOT/bin/{c}/{coll}/Makefile.</LI><LI>Normalize the SGML files, which, if necessary, adjusts the
+SGML tagging so that it is consistent in terms of case and order of element attributes.  You may run this in a batch in the $DLXSROOT/prep/{c}/{coll}/new/ directory in using the following tcsh shell comand (different syntax may be appropriate in different shells):<BR/> <TT>foreach file (*.sgm)</TT><BR/> <TT>sgmlnorm ../tinydoctype $file &gt; $file.norm</TT><BR/> <TT>end</TT></LI><LI>Concatenate separate normalized files into one collection file using the <TT>make catsgml</TT> command in the Makefile stored at $DLXSROOT/bin/{c}/{coll}/Makefile.</LI><LI>You need to decide whether you wish to keep character entities (for example, &amp;eacute;) in your text files or replace them with their 8-bit ISO
+Latin 1 equivalent (for example, &#x00E9;). If you choose to replace them, you will be able to search for blessed, for example, and retrieve both "bless&#x00E9;d" and
+"blessed," because the indexing process maps both of these characters to just e. Otherwise, you would have to search for bless&amp;eacute;d to
+retrieve the word with the diacritic. If you want to convert your entities  to ISO Latin 1 characters (and this process is valid only for SGML!), use the <TT>make convert </TT> command in the Makefile stored at $DLXSROOT/bin/{c}/{coll}/Makefile.</LI></UL></DIV1></BODY></DLPSDOC>

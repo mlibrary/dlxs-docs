@@ -1,0 +1,43 @@
+<?xml version="1.0"?>
+
+<!-- SPO Editorial Services                  -->
+<!-- automatically-generated XML header file -->
+
+<?xml-stylesheet href="../../pre11-dlxsdocs.xsl" type="text/xsl"?>
+<!DOCTYPE DLPSDOC PUBLIC "-//UM-DLPS//DTD DLPS Publications//EN" "http://docs.umdl.umich.edu/dlps/docs/dlpsdocs.dtd">
+<DLPSDOC>
+<TITLE>Preparation of Data for DLXS Indexing and Online Presentation</TITLE>
+<HEADER>
+<JOURNAL>DLXS Documentation</JOURNAL>
+<PUBDATE>2002-07-08 12:14:40 EDT</PUBDATE>
+<AUTH1>Powell, Chris</AUTH1>
+<AUTH2></AUTH2>
+<DOCTITLE>Preparation of Data for DLXS Indexing and Online Presentation</DOCTITLE>
+<VOL>data</VOL>
+<ISS></ISS>
+<FILE>dlxsdocs-dlxs-dataprep</FILE>
+</HEADER>
+<BODY>
+<BHEAD>Preparing Data for DLXS Indexing and Online Presentation</BHEAD>
+<DIV1>
+<P>This document describes in general some of the issues involved in data preparation  for all classes. This document does not address XPAT indexing, a description  of which can be found in <A HREF="dlxs-indexing.xml">Indexing</A>.</P>
+<P>For specific information on data preparation for individual classes, check the following links:</P>
+<UL>
+<LI><A HREF="../class/text/tc-prep.xml">Text Class</A></LI>
+<LI><A HREF="../class/image/image-guidelines-data.xml">Image Class</A></LI>
+<LI><A HREF="../class/bib/bib-transforming.xml">Bib Class</A></LI><LI><A HREF="../class/findaid/findaid-prep.xml">Finding Aids Class</A></LI>
+</UL>
+<P><B>General Information</B> </P>
+<UL>
+<LI> <B>Data preparation environment</B>: You may or may not have a machine, separate from your production machine (server), on which to prepare data.  It is best to prepare data separate from any version of the collection that is in production and available to users. Unlike files in other directories in the DLXS file system (bin, obj, idx), everything in prep should be ultimately expendable in the production environment.</LI>
+<LI><B>Directories used in data preparation</B>: We suggest a directory structure such as the following.  <B>Note</B>: <I>$DLXSROOT</I> here refers to whatever path you have set up as the $DLXSROOT (see the <A HREF="../intro/dlxs-dirstruct.xml#dlxsrootenv">$DLXSROOT environment variable</A>). 
+<UL>
+<LI>$DLXSROOT/prep/c/collid/ to contain 
+the data itself in its various versions as it is transformed from its original source structure into the structure needed for XPAT indexing and final delivery.</LI>
+<LI>$DLXSROOT/bin/c/collid/ to contain scripts and other files needed for processing the data (e.g., Perl scripts, Makefiles, XSLT stylesheets, etc.).</LI>
+</UL>
+</LI>
+</UL>
+<P>See <A HREF="http://docs.umdl.umich.edu/arch/general/directory-conventions.xml">documentation on directory conventions</A> for more information on the overall DLXS directory structure.</P></DIV1>
+</BODY>
+</DLPSDOC>

@@ -1,0 +1,46 @@
+<?xml version="1.0"?>
+
+<!-- SPO Editorial Services                  -->
+<!-- automatically-generated XML header file -->
+
+<?xml-stylesheet href="../../pre11-dlxsdocs.xsl" type="text/xsl"?>
+<!DOCTYPE DLPSDOC PUBLIC "-//UM-DLPS//DTD DLPS Publications//EN" "http://docs.umdl.umich.edu/dlps/docs/dlpsdocs.dtd">
+<DLPSDOC>
+<TITLE>XPAT Indexing Scenarios</TITLE>
+<HEADER>
+<JOURNAL>DLXS Documentation</JOURNAL>
+<PUBDATE>2002-05-17 21:52:49 EDT</PUBDATE>
+<AUTH1>Wilkin, John Price</AUTH1>
+<AUTH2></AUTH2>
+<DOCTITLE>XPAT Indexing Scenarios</DOCTITLE>
+<VOL>xpat</VOL>
+<ISS></ISS>
+<FILE>dlxsdocs-xpat-indexing-scenarios</FILE>
+</HEADER>
+<BODY>
+<BHEAD>4	 XPAT INDEXING SCENARIOS</BHEAD>
+<DIV1 ID="sec4.1"><H1>4.1	 A "Scenario" for Indexing MFS-based SGML and XML</H1>
+<TABLE BORDER="1"><TBODY><TR><TD><B>Editor's note:  This section is a "stub" suggesting a general outline for content that will come later.  Please write to <A HREF="mailto:dlxs-help@umich.edu">dlxs-help@umich.edu</A> if a particular section would be valuable to you before the completed document goes online, or if you have suggestions for the organization or content of the document.</B></TD></TR></TBODY></TABLE>
+<DIV2 ID="sec4.1.1"><H2>4.1.1	 Introduction</H2>
+<P>This scenario outlines the index-building steps for a fully compliant SGML MFS database, which consists of multiple tagged SGML files of one document type. This chapter first shows the individual index-building steps that comprise building a complete DLXS index such as that used in Text Class. These individual steps are discussed in a functional sense only. For full details of each index-builder, consult Chapter 3, Detailed Index Building.</P>
+</DIV2>
+<DIV2 ID="sec4.1.2"><H2>4.1.2	 Individual Index Building Steps</H2>
+<P>Several indices actually comprise a complete DLXS index. Each index is created by a specific index-building utility. The XPAT database manager controls the sequence of the individual index-builders, applying them with user-selected parameters from the command line when necessary.</P>
+<P>mfsbld -D patents6.dd -o tempfile.mfs</P>
+<P>mfsmeta -o sgmltest.str -D patents6.dd</P>
+<P>multirgn -o sgmltest -D patents6.dd -t ottmp.tag -meta sgmltesc.str</P>
+<P>sgmlrgn -m region -o sgmltest -M sgmltest.str -G patents -D patents6.dd patents6.inp patents6.dd</P>
+<P>xpatbld -m 5m -D patents6.dd</P>
+<P>patffw -m 5m -o sgmltest -D patents6.dd</P>
+<P>patffi -m 5m -o sgmltest -D patents6.dd</P>
+<P>The following table explains the command lines above.</P>
+</DIV2>
+</DIV1>
+<DIV1 ID="sec4.2"><H1>4.2	 A "Scenario" for Indexing Consolidated SGML</H1>
+</DIV1>
+<DIV1 ID="sec4.3"><H1>4.3	 A "Scenario" for Indexing Consolidated, Valid XML</H1>
+</DIV1>
+<DIV1 ID="sec4.4"><H1>4.4	 A "Scenario" for Indexing Well-formed XML (using multirgn)</H1>
+</DIV1>
+</BODY>
+</DLPSDOC>

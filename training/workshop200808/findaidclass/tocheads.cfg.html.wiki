@@ -1,0 +1,27 @@
+=== Section of $DLXSROOT/cgi/f/findaid/findaidclass.cfg ===
+
+ <nowiki>
+ 
+ 
+ # **********************************************************************
+ # Hash of section heads that XPAT should search for.  A reference to
+ # this hash is added as member data keyed by 'tocheads' to the
+ # FindaidClass object at initialization time. Comment out those that
+ # are missing in your finding aids.
+ # **********************************************************************
+ %gSectHeadsHash = (
+                    'bioghist-t'      =&gt;  {
+                                           'collection' =&gt; qq{Biography},
+                                           'recordgrp' =&gt; qq{History},
+                                          },
+                    'controlaccess-t' =&gt; qq{Subject Terms},
+                    'frontmatter-t'   =&gt; qq{Title Page},
+                    'arrangement-t'   =&gt; qq{Arrangement},
+                    'scopecontent-t'  =&gt; qq{Collection Scope and Content Note},
+                    'summaryinfo-t'   =&gt; qq{Summary Information},
+                    'contentslist-t'  =&gt; qq{Contents List},
+                    'admininfo-t'     =&gt; qq{Access and Use},
+                    'add-t'           =&gt; qq{Additional Descriptive Data},
+                   );
+ 
+ </nowiki>

@@ -1,0 +1,78 @@
+<HTML>
+<head>
+<TITLE>Image Class Media Table</TITLE>
+
+
+
+
+
+ <LINK HREF="../../dlxsdocs.css" REL="stylesheet" TYPE="text/css"></head>         <BODY>
+<table class="updateTable" CELLSPACING="3" CELLPADDING="3" BORDER="1">
+<TR>
+<td>Last updated</td>
+<td>2003-12-01 11:20:19 EST</td>
+</TR>
+<TR>
+<td>Doc Title</td>
+<td>Image Class and MySQL Media Table</td>
+</TR>
+<TR>
+<td>Author 1</td>
+<td>Weise, John</td>
+</TR>
+<TR>
+<td>CVS Revision</td>
+<td>$Revision: 1.6 $</td>
+</TR>
+</table>
+
+<DIV CLASS="pageTitle">Image Class MySQL Media Table</DIV>
+       
+       
+         
+          <H2> 
+            <A NAME="Introduction"></A>
+            Introduction</H2>
+          <P>This document defines the fixed set of fields that comprise a collection's Media Table in Image Class.
+		  Some collections, perhaps most, do not need a media table. See <A HREF="image-mysql.html">Image Class and MySQL</A>
+		  for determining factors.</P><P>The Media Table serves two basic purposes.</P>
+		  <OL>
+		  	<LI>Aid the process of linking media filenames to actual media files.</LI>
+		  	<LI>Document the relationship among potentially numerous media files associated with a single record.</LI>
+		</OL>
+       
+		  
+		  
+		 <H2> 
+            <A NAME="MediaTableDefinition"></A>
+            Media Table Definition</H2>
+		 
+		 <table BORDER="1"><TBODY>
+		 <TR><TH>Field</TH><TH>Definition</TH><TH>Legal Values</TH></TR>	
+		 <TR><td>istruct_caption</td><td>Any text.</td><td>String.</td></TR>
+		 <TR><td>istruct_isentryid</td><td>Entry ID. The Entry ID is an identifier for the image unique across all Image Class collections. Therefore, it should include the collid, Data Table record id, and media filename, indluding extension.</td><td>String in the form<BR />S-COLLID-X-DataTableRecordID]filename.ext<BR />(this format is required, including the square-bracket)</td></TR>
+		 <TR><td>istruct_isentryidv</td><td>Essentially, an older style, deprecated, Entry ID that combines collid, record id, and a serial number for identification within the record. Included in the media_table for backward compatability.</td><td>String in the form<BR />S-COLLID-X-DataTableRecordID-Integer <BR />(hyphen delimited all the way through)</td></TR>
+		 <TR><td>istruct_m</td><td>Media filename.</td><td>Any legal filename, without the path and extension.</td></TR>
+		 <TR><td>istruct_me</td><td>The extension of the media filename, representing the online format.</td><td>Any legal filename extension. Dot omitted.</td></TR>
+		 <TR><td>istruct_mo</td><td>The extension of the media filename, representing the master image file format.</td><td>Any legal filename extension. Dot omitted.</td></TR>
+		 <TR><td>istruct_ms</td><td>Tells the status of the media file. Is it present in the system, or not. It is not uncommon for a record to include a filename for an image that is not to be accessible online.</td><td>P | N  (P = present | N = not present)</td></TR>
+		 <TR><td>istruct_mt</td><td>Media type.</td><td>String. Most common values are IMAGE:::DYNAMIC (MrSID file) and <BR />IMAGE:::FIXED (several sizes of JPEG). <BR />See <A HREF="image-imageloading.html">image loading documentation</A> for full range of possibitlities.</td></TR>
+		 <TR><td>istruct_stid</td><td>Serial identifier of the structure. See <A HREF="image-imagestructures.html">Mapping Image Structures</A> to learn about structures.</td><td>Any integer value. In most cases, "1".</td></TR>
+		 <TR><td>istruct_stty</td><td>Type of structure. Determines whether media is treated as "summary" or "detail".</td><td>summ | det</td></TR>
+		 <TR><td>istruct_face</td><td>A structure sub-component. Often the presenation represented in the media. Front, Back, Top, Bottom, Inside, etc.</td><td>String. </td></TR>
+		 <TR><td>istruct_x</td><td>The x coordinate of the media within the structure.</td><td>Integer</td></TR>
+		 <TR><td>istruct_y</td><td>The y coordinate of the media within the structure.</td><td>Integer</td></TR>
+		 <TR><td>m_caption</td><td>Image Caption. Redundant with istruct_caption.</td><td>Deprecated. Can be omitted.</td></TR>
+		 <TR><td>m_entryauth</td><td>Used to decide whether the media file is restricted to authorized users, or completely unrestricted. Allows metadata and thumbnail to be world viewable, and full media file to be restricted.</td><td>WORLD | COLLID ( world = unrestricted | collid = restricted to users specifically authorized to use the collection.</td></TR>
+		 <TR><td>m_fn</td><td>Media filename. Redundant with istruct_m.</td><td>Deprecated. Can be omitted.</td></TR>
+		 <TR><td>m_id</td><td>The corresponding record ID from the Data Table.</td><td>String.</td></TR>
+		 <TR><td>m_iid</td><td>The record ID within the Media Table. The media filename, whenever possible.</td><td>String. Must be unique within the Media Table.</td></TR>
+		 <TR><td>m_searchable</td><td>Determines whether this item should be searchable and retrievable in a result set. Primarily applicable to records with multiple media files. Allows "summary" images to appear in a result set, and "detail" images to be omitted, or vice versa. </td><td>1 | 0</td></TR>
+		 </TBODY></table>
+
+		  
+		
+      
+    </BODY>
+  
+</HTML>

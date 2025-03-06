@@ -1,0 +1,281 @@
+<?xml version="1.0"?>
+      <!-- SPO Editorial Services                  -->
+      <!-- automatically-generated XML header file -->
+      
+      <?xml-stylesheet href="../pre11-dlxsdocs.xsl" type="text/xsl"?>
+      <!DOCTYPE DLPSDOC PUBLIC "-//UM-DLPS//DTD DLPS Publications//EN" "http://docs.umdl.umich.edu/dlps/docs/dlpsdocs.dtd">
+      <DLPSDOC>
+         <TITLE>
+            DLXS Documentation
+         </TITLE>
+         <HEADER>
+            <JOURNAL>
+               DLXS Documentation
+            </JOURNAL>
+            <PUBDATE>
+               2003-03-06 13:36:48 EST
+            </PUBDATE>
+            <AUTH1>
+               Wilkin, John Price
+            </AUTH1>
+            <EMAIL1>
+               jpwilkin@umich.edu
+            </EMAIL1>
+            <AUTH2></AUTH2>
+            <DOCTITLE>
+               DLXS Documentation
+            </DOCTITLE>
+            <VOL></VOL>
+            <ISS></ISS>
+            <FILE>
+               dlxsdocs-dlxs-index
+            </FILE>
+         </HEADER>
+         <BODY> 
+            <BHEAD> 
+               DLXS Documentation
+            </BHEAD> 
+            <DIV1 ID="bar"> 
+               <P> 
+                  <B> 
+                     <A HREF="search.html">Search DLXS Release 11 Documentation </A> 
+                  </B> 
+               </P> 
+               <UL> 
+                  <LI> 
+                     <A HREF="intro/dlxsintro-index.xml"> 
+                        Getting Started
+                     </A> 
+                     <UL> 
+                        <LI> 
+                           <A HREF="intro/dlxs-arch.xml"> 
+                              Architecture Overview
+                           </A> 
+                        </LI> 
+                        <LI> 
+                           <A HREF="intro/dlxs-sysreq.xml"> 
+                              System Requirements
+                           </A> 
+                        </LI> 
+                        <LI> 
+                           <A HREF="intro/dlxs-dirstruct.xml"> 
+                              About the DLXS Directory Structure
+                           </A> 
+                        </LI> 
+                        <LI> 
+                           <A HREF="intro/dlxs-install.xml"> 
+                              Installation
+                           </A> 
+                           and
+                           <A HREF="intro/dlxs-stepbystep.xml"> 
+                              Step-by-step installation instructions
+                           </A> 
+                        </LI> 
+                        <LI> 
+                           <A HREF="intro/dlxs-auth.xml"> 
+                              Authentication and Authorization
+                           </A> 
+                        </LI> 
+                     </UL> 
+                  </LI> 
+                  <LI> 
+                     <A HREF="class/class-index.xml"> 
+                        Classes
+                     </A> 
+                     <UL> 
+                        <LI> 
+                           <A HREF="class/findaid/findaid-index.xml"> 
+                              Finding Aids
+                           </A> 
+                        </LI> 
+                        <LI> 
+                           <A HREF="class/bib/bib-index.xml"> 
+                              Bibliographic
+                           </A> 
+                        </LI> 
+                        <LI> 
+                           <A HREF="class/image/image-index.xml"> 
+                              Image
+                           </A> 
+                        </LI> 
+                        <LI> 
+                           <A HREF="class/text/tc-index.xml"> 
+                              Text
+                           </A> 
+                        </LI> 
+                     </UL> 
+                  </LI> 
+                  <LI> 
+                     <A HREF="xpat/xpat-index.xml"> 
+                        XPAT Search Engine
+                     </A> 
+                     <UL> 
+                        <LI> 
+                           <A HREF="xpat/xpat-manual.xml"> 
+                              XPAT Manual
+                           </A> 
+                        </LI> 
+                        <LI> 
+                           <A HREF="xpat/xpat-commands.xml"> 
+                              XPAT command, syntax, and concept guide
+                           </A> 
+                        </LI> 
+                        <LI> 
+                           <A HREF="xpat/xpat-faq.xml"> 
+                              XPAT FAQ
+                           </A> 
+                        </LI> 
+                     </UL> 
+                  </LI> 
+                  <LI> 
+                     <A HREF="data/dlxs-data-index.xml"> 
+                        Data Issues
+                     </A> 
+                     <UL> 
+                        <LI> 
+                           <A HREF="data/dlxs-dataconvert.xml"> 
+                              Converting Data for DLXS Implementations
+                           </A> 
+                        </LI> 
+                        <LI> 
+                           <A HREF="data/dlxs-dataprep.xml"> 
+                              Preparation of Data for DLXS Indexing and Online
+                              Presentation
+                           </A> 
+                        </LI> 
+                        <LI> 
+                           <A HREF="data/dlxs-indexing.xml"> 
+                              Indexing Data for DLXS Implementations
+                           </A> 
+                        </LI> 
+                        <LI> 
+                           <A HREF="data/dlxs-pageview.xml"> 
+                              Copying Page-level Metadata from pageview.dat files
+                              to a Database Store
+                           </A> 
+                        </LI> 
+                     </UL> 
+                  </LI> 
+                  <LI> 
+                     <A HREF="collmeta/dlxs-collmetadata-index.xml"> 
+                        Collection Metadata
+                     </A> 
+                     <UL> 
+                        <LI> 
+                           <A HREF="collmeta/dlxs-collmgr-fields.xml"> 
+                              Collection Manager (collmgr) Field Descriptions
+                           </A> 
+                        </LI> 
+                        <LI> 
+                           <A HREF="collmeta/dlxs-maps.xml"> 
+                              Map Files
+                           </A> 
+                        </LI> 
+                        <LI> 
+                           <A HREF="collmeta/dlxs-colldatabases.xml"> 
+                              Collection and Group Information databases
+                           </A> 
+                        </LI> 
+                        <LI> 
+                           <A HREF="collmeta/dlxs-collmgr.xml"> 
+" 
+                              collmgr
+" 
+                              (A collection metadata management application)
+                           </A> 
+                        </LI> 
+                        <LI> 
+                           <A HREF="collmeta/dlxs-broker.xml"> 
+" 
+                              broker
+" 
+                              (An OAI-compliant metadata server)
+                           </A> 
+                        </LI> 
+                     </UL> 
+                  </LI> 
+                  <LI> 
+                     <A HREF="ui/ui-index.xml"> 
+                        User Interface
+                     </A> 
+                     <UL> 
+                        <LI> 
+                           <A HREF="ui/dlxs-functionality.xml"> 
+                              Functionality Overview
+                           </A> 
+                        </LI> 
+                        <LI> 
+                           <A HREF="ui/dlxs-templates.xml"> 
+                              HTML Templates and Processing Instructions
+                           </A> 
+                        </LI> 
+                     </UL> 
+                  </LI> 
+                  <LI> 
+                     <A HREF="program/dlxs-programming-index.xml"> 
+                        Programming Issues
+                     </A> 
+                     <UL> 
+                        <LI> 
+                           <A HREF="program/dlxs-releasenotes.xml"> 
+                              Release Notes
+                           </A> 
+                        </LI> 
+                        <LI> 
+                           <A HREF="program/dlxs-cgi-param.xml"> 
+                              CGI Parameter Standards 
+                           </A> 
+                        </LI> 
+                        <LI> 
+                           <A HREF="program/dlxs-libmodules.xml"> 
+                              DLXS Middleware Library Modules 
+                           </A> 
+                        </LI> 
+                        <LI> 
+                           <A HREF="program/dlxs-object-hierarchy.xml"> 
+                              DLXS Object Class Hierarchy 
+                           </A> 
+                        </LI> 
+                        <LI> 
+                           <A HREF="program/dlxs-name-conventions.xml"> 
+                              Naming Conventions 
+                           </A> 
+                        </LI> 
+                        <LI> 
+                           <A HREF="program/dlxs-subclassing.xml"> 
+                              Subclassing DLXS Class Modules 
+                           </A> 
+                        </LI> 
+                        <LI> 
+                           <A HREF="program/dlxs-debug.xml"> 
+                              Debugging DLXS Perl Code 
+                           </A> 
+                        </LI> 
+                        <LI> 
+                           <A HREF="program/dlps-dlxs-devenvironment.xml"> 
+                              DLPS's Development Environment for DLXS Software 
+                           </A> 
+                        </LI> 
+                     </UL> 
+                  </LI> 
+                  <LI> 
+                     <A HREF="ancil/dlxs-ancil-index.xml"> 
+                        Ancillary resources for DLXS
+                     </A> 
+                     <UL> 
+                        <LI> 
+                           <A HREF="ancil/dlxs-ancil-index.xml"></A> 
+                           <A HREF="ancil/dlxs-auth-system.xml"> 
+                              DLXS Authentication and Authorization System
+                           </A> 
+                        </LI> 
+                     </UL> 
+                  </LI> 
+               </UL> 
+               <BR /> 
+               <BR /> 
+               <BR /> 
+               <BR /> 
+            </DIV1> 
+         </BODY>
+      </DLPSDOC>

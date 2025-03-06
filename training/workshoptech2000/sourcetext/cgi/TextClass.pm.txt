@@ -1,0 +1,3283 @@
+package TextClass;
+
+#use strict;
+use vars qw( @ISA @EXPORT );
+
+use Exporter ();
+@ISA = qw( Exporter );
+
+use CGI qw( :standard :html3 escape unescape escapeHTML );    
+require 5.004;
+use POSIX qw(locale_h);
+use locale;
+
+
+use TerminologyMapper;
+use QueryFactory;       # needed just to new queryfactory
+use SearchSet;          # new, AddQuery methods
+use XPat;
+use XPatResultSet;
+use ProcIns;
+use TextClassUtils;
+
+use DlpsUtils qw( :DEFAULT );
+
+
+# **********************************************************************
+# this module is for TextClass objects, which can be subclassed
+# for different search and filtering behavior
+#
+# The structure of this object is:
+# TextClass Object->
+#    {'collid'}          # these from coll info database
+#    {'collname'}
+#    {'subclass'}
+#    {'subclassModule'}
+#    {'qtytexts'}
+#    {'homesite'}
+#    {'host'}
+#    {'dd'}
+#    {'map'}
+#    {'patexec'}
+#    {'port'}
+#    {'lel'}
+#    {'termsearch'}
+#    {'regionsearch'}
+#    {'termmapper'}      # TerminologyMapper object made from {'map'}
+#    {'shouldmap'}
+#    {'queryfactory'}
+#
+# Other things get added along the way: SearchSet and XPatResultSet objects
+#
+# **********************************************************************
+
+# some package globals used in filtering
+my %HIstarts = (
+                'italic' => ' <i>',
+                'italics' => ' <i>',
+                'italics, underlined' => ' <i><u>',
+                'italics?' => ' <i>',
+                'smcap' => ' <font size="-1"><b>',
+                'underlined' => ' <u>',
+                'gothic' => ' ',
+                'underlined 2x' => ' <u>',
+                'underlined 3x' => ' <u>',
+                'indented' => '<br>&nbsp;&nbsp;&nbsp;&nbsp;',
+               );
+my %HIends = (
+              'italic' => '</u></u></u></b></font></i><font size="-1"><b><u><u><u> ',
+              'italics' => '</u></u></u></b></font></u></i><u><font size="-1"><b><u><u><u> ',
+              'italics, underlined' => '</u></u></u></b></font></u></i><u><font size="-1"><b><u><u> ',
+              'italics?' => '</u></u></b></font></u></i><u><font size="-1"><b><u><u> ',
+              'smcap' => '</u></u></b></font><u><u> ',
+              'underlined' => '</u> ',
+              'gothic' => ' ',
+              'underlined 2x' => ' </u>',
+              'underlined 3x' => ' </u>',
+              'indented' => '',
+             );
+
+
+
+# ----------------------------------------------------------------------
+# NAME      : new
+# PURPOSE   : create new TextClass object
+#             
+# CALLED BY : main
+# CALLS     : TextClass->_initialize
+# INPUT     : $collid, $collname, $subclass, $subclassModule, 
+#             $qtytexts, $homesite, $host, $dd, $map, $patexec,
+#             $port, $lel, $termsearch, $regionsearch
+# RETURNS   : NONE
+# NOTES     : 
+# ----------------------------------------------------------------------
+
+sub new 
+{
+    my $class = shift;
+    my $self = {};
+    bless $self, $class;
+    $self->_initialize(@_);
+    return $self;
+}
+
+# ----------------------------------------------------------------------
+# NAME      : _initialize
+# PURPOSE   : create structure for TextClass object
+# CALLED BY : new
+# CALLS     : 
+# INPUT     : see new
+# RETURNS   : 
+# NOTES     : 
+# ----------------------------------------------------------------------
+
+sub _initialize 
+{
+    my $self = shift;
+
+    my (
+        $collid, $collname, $subclass, $subclassModule, 
+        $qtytexts, $homesite, $host, $webdir, $objdir,
+        $dd, $wwdd, $map, $patexec,
+        $port, $lel, $termsearch, $regionsearch,
+        $wwrealms, $wwrealmsenglish,
+        $genres, $genders, $periods, $languages,
+        $locale,
+        ) = @_;
+
+    $self->{'collid'}          = $collid;
+    $self->{'collname'}        = $collname;
+    $self->{'subclass'}        = $subclass;
+    $self->{'subclassModule'}  = $subclassModule;
+    $self->{'qtytexts'}        = $qtytexts;
+    $self->{'homesite'}        = $homesite;
+    $self->{'host'}            = $host;
+    $self->{'webdir'}          = $webdir;
+    $self->{'objdir'}          = $objdir;
+    $self->{'dd'}              = $dd;
+    $self->{'wwdd'}            = $wwdd;
+    $self->{'map'}             = $map;
+    $self->{'patexec'}         = $patexec;
+    $self->{'port'}            = $port;
+    $self->{'lel'}             = $lel;
+    $self->{'termsearch'}      = $termsearch;
+    $self->{'regionsearch'}    = $regionsearch;
+    $self->{'wwrealms'}        = $wwrealms;
+    $self->{'wwrealmsenglish'} = $wwrealmsenglish;
+    $self->{'genres'}          = $genres;
+    $self->{'genders'}         = $genders;
+    $self->{'periods'}         = $periods;
+    $self->{'languages'}       = $languages;
+    $self->{'locale'}          = $locale;
+    
+
+    ## create TerminologyMapper object for this collection
+    $self->{'termmapper'} = 
+        new TerminologyMapper (
+                               $self->{'map'},
+                               { 'label' => 1 },
+                              );
+    $self->{'shouldmap'} =
+        [ 'rgn\d*', 'op\d+', 'amt\d+', ];
+
+    $self->{'pio'} = new ProcIns;
+
+
+    $self->{'printpsetstring'} = qq{pr.200 shift.-100 };
+
+    $self->SetCurrentIndentDepth ( 0 );
+    $self->SetLastIndentLabel ( '' );
+
+    # ************************************************************
+    # 
+    # configuration info ( very possibly overridden in subclasses )
+    # 
+    # ************************************************************
+    $self->{'divheadrange'} = [ 1, 2, 3, 4 ];
+
+    $self->{'fisheyethreshold'} = 50;
+    $self->{'headdepths'} = {
+                             'mainheader' => 0,
+                             'div1head' => 1,    
+                             'div2head' => 2,
+                             'div3head' => 3,
+                             'div4head' => 4,
+                             'div5head' => 5,
+                             'div6head' => 6,
+                             'div7head' => 7,
+                             'div8head' => 8,
+                             'div9head' => 9,
+                            };  
+
+    $self->{'maxdepthitems'} = [
+                                'kwic',
+                                'LG',
+                                'ACT',    
+                                'SCENE',
+                                'SPEECH',
+                                'PARAGRAPH',
+                                'POEM',
+                               ];
+}
+
+
+
+# ----------------------------------------------------------------------
+# NAME         : AddQueryFactory
+# PURPOSE      : Initialize a QueryFactory object in this TextClass object
+# CALLED BY    : main::HandleSearch
+# CALLS        : 
+# INPUT        : CGI object
+# RETURNS      : 
+# GLOBALS      : 
+# SIDE-EFFECTS : 
+# NOTES        : "type" param is for a user requested search
+#                "pagesearch" param is for a temp queryfactory to be used
+#                in doing searches for matching pages in a header view
+#                If there is neither, we can assume we won't need a qf to
+#                do any searches.
+# ----------------------------------------------------------------------
+
+sub AddQueryFactory
+{
+    my $self = shift;
+    my $cgi = shift;
+
+    my $qf;
+
+    my $type       = $cgi->param( 'type' );
+    my $pagesearch = $cgi->param( 'pagesearch' );
+    
+    # check if both type and pagesearch params exist; yes, error and quit
+    if ( $type && $pagesearch )
+    {
+        &errorBail( qq{Cannot have both a "type" and a "pagesearch" parameter on a URL} );
+    }
+    
+    # check if there is a pagesearch; if yes, turn it into a type so that the qf is happy
+    elsif ( $pagesearch )
+    {
+        $cgi->param( 'type', $cgi->param( 'pagesearch' ) );
+        $type = $cgi->param( 'type' );
+        $cgi->delete( 'pagesearch' );
+    }
+
+
+    # if there is no type, then don't bother building a qf
+    if ( ! $type ) 
+    {
+        $qf = undef;
+        $self->{'queryfactory'} = $qf;
+    }
+    # there is a type, create QueryFactory object for this colleciton
+    else 
+    {
+        $qf =
+          QueryFactory->new (
+                             $cgi,
+                             $self->GetTermMapper( ),
+                             $self->{'shouldmap'}, 
+                             'label'
+                            );
+        
+        $self->{'queryfactory'} = $qf;
+        
+        if ( $ENV{'DEBUG'} )
+        {
+            print qq{<h1><font color="green">Just created queryfactory $qf for TC obj: } . $self->GetValueByKey('collname') . qq{</font></h1>\n};
+        }
+    }
+}    
+
+# ----------------------------------------------------------------------
+# NAME         : AddNeededSets
+# PURPOSE      : Initialize a SearchSet object and an XPatResultSet object
+#                in this TextClass object
+# CALLED BY    : main::HandleSearch
+# CALLS        : 
+# INPUT        : 
+# RETURNS      : 
+# GLOBALS      : 
+# SIDE-EFFECTS : 
+# NOTES        : 
+# ----------------------------------------------------------------------
+
+sub AddNeededSets
+{
+    my $self = shift;
+    my $name = shift;
+
+    # attach a new SearchSet object
+    $self->AddSearchSet( $name );
+    # attach a new XPatResultSet object
+    $self->AddResultSet( $name );
+
+    # if a header search, we'll also need a search and result
+    # set for Table of Contents info
+    if ( $name eq 'header' )
+    {
+        $self->AddSearchSet( 'toc' );
+        $self->AddResultSet( 'toc' );
+    }
+    
+}
+
+
+# add a SearchSet if it doesn't exist already
+sub AddSearchSet 
+{
+    my $self = shift;
+    my $name = shift;
+
+    if ( ! $self->{'searchsets'}{$name} )
+    {
+        $self->{'searchsets'}{$name} = SearchSet->new( );
+    }
+    
+}
+
+# add a ResultSet if it doesn't exist already
+sub AddResultSet 
+{
+    my $self = shift;
+    my $name = shift;
+
+    if ( ! $self->{'resultsets'}{$name} )
+    {
+        $self->{'resultsets'}{$name} = XPatResultSet->new( );
+    }
+}
+
+# ----------------------------------------------------------------------
+# NAME         : SimpleResultsFrameSearches
+# PURPOSE      : adds the set of searches necessary for a generic simple seart
+#                to this TextClass object's SearchSet object
+# CALLED BY    : main
+# CALLS        : SearchSet->AddQuery
+# INPUT        : session id, view, CGI object
+# RETURNS      : NONE
+# SIDE-EFFECTS : adds to SearchSet object
+# NOTES        : 
+# ----------------------------------------------------------------------
+
+sub SimpleResultsFrameSearches
+{
+    my $self  = shift;
+    my ( $cgi, $sid, $ssetName, $lel ) = @_;
+
+    # grab SearchSet, QueryFactory and TermMapper objects for this TextClass obj
+    my $sset = $self->GetSearchSet( $ssetName );
+    my $qf   = $self->GetQueryFactory( );
+    my $tm   = $self->GetTermMapper( );
+
+    # get search set searches previously created for the guide frame...
+    my $sliceSearchName = $sset->GetNamedSearchName( 'slicesearch' ) ;
+    my $mainSliceName   = $sset->GetNamedSearchName( 'mainslicesearch' ) ;
+
+    my $mainHeaderName  = $sset->SetNamedSearchName( 'mainheader', $sid ) ;
+    my $kwicName        = $sset->SetNamedSearchName( 'kwic', $sid ) ;
+
+    $sset->AddQuery( $mainHeaderName,    # . $sid,
+                     qq{pr.region.mainheader (region mainheader within \*$mainSliceName );}
+                   );      
+    
+    if ( $lel >= 3 )
+    {
+        # query for headers of DIVs of different levels
+        $self->AddScopedHeads ( $ssetName, $sliceSearchName, $sid );
+        # query for kwic results
+        $sset->AddQuery( $kwicName,
+                         $self->{'printpsetstring'} . '*' . $sliceSearchName . ';'  );
+    }
+    
+}
+
+# ----------------------------------------------------------------------
+# NAME         : BooleanResultsFrameSearches
+# PURPOSE      : adds the set of searches necessary for a generic boolean search
+#                to this TextClass object's SearchSet object
+# CALLED BY    : main
+# CALLS        : SearchSet->AddQuery
+# INPUT        : session id, view, CGI object
+# RETURNS      : NONE
+# SIDE-EFFECTS : adds to SearchSet object
+# NOTES        : 
+# ----------------------------------------------------------------------
+
+sub BooleanResultsFrameSearches
+{
+    my $self  = shift;
+    my ( $cgi, $sid, $ssetName ) = @_;
+    
+    # grab SearchSet, QueryFactory and TermMapper objects for this TextClass obj
+    my $sset = $self->GetSearchSet( $ssetName );
+    my $qf   = $self->GetQueryFactory( );
+    my $tm   = $self->GetTermMapper( );
+
+    my $mainSliceName   = $sset->GetNamedSearchName( 'mainslicesearch' ) ;
+
+    my $mainHeaderName  = $sset->SetNamedSearchName( 'mainheader', $sid ) ;
+
+    $sset->AddQuery( $mainHeaderName, #   . $sid,
+                     qq{pr.region.mainheader (region mainheader within \*$mainSliceName );}
+                   );
+
+}
+
+# ----------------------------------------------------------------------
+# NAME         : GuideFrameSearches
+# PURPOSE      : adds the set of searches necessary for the guide frame
+#                to this TextClass object's SearchSet object
+# CALLED BY    : main
+# CALLS        : SearchSet->AddQuery
+# INPUT        : session id, view, CGI object
+# RETURNS      : NONE
+# SIDE-EFFECTS : adds to SearchSet object
+# NOTES        : These searches need to be done whether or not the guide
+#                frame eventually is put in the html or not, since it does
+#                searches and slices, etc. that are needed later
+# ----------------------------------------------------------------------
+
+sub GuideFrameSearches
+{
+    my $self  = shift;
+    my ( $sid, $cgi, $ssetName ) = @_;
+    
+    # grab SearchSet, QueryFactory and TermMapper objects for this TextClass obj
+    my $sset = $self->GetSearchSet( $ssetName );
+    my $qf   = $self->GetQueryFactory( );
+    my $tm   = $self->GetTermMapper( );
+
+    $self->SetUpSliceSize( $cgi );
+    
+    ## create basic query
+    my $query  = $qf->baseQuery( );
+
+    # mainsearch: formerly flug
+    my $firstSearchName = $sset->SetNamedSearchName( 'firstsearch', $sid );
+    # slice of mainsearch: formerly blog
+    my $sliceSearchName = $sset->SetNamedSearchName( 'slicesearch', $sid );
+    # region main including slice of slicesearch
+    my $mainSliceName = $sset->SetNamedSearchName( 'mainslicesearch', $sid );
+    
+
+    # add these queries to the search set
+    $sset->AddQuery( $firstSearchName,
+                     qq{$firstSearchName = $query; },
+                   );    
+
+    my $startPoint =  $cgi->param( 'start' );
+    
+    my $sliceQuery = qq{$sliceSearchName = subset\.} . 
+      $startPoint . '.' . $cgi->param( 'size' ) . 
+        qq{ \*} . $firstSearchName . ';' ;
+    
+    $sset->AddQuery( $sliceSearchName,
+                     $sliceQuery,
+                   );     
+
+    $sset->AddQuery( $mainSliceName,
+                     qq{$mainSliceName = (region main incl *$sliceSearchName );},
+                   );     
+
+}
+
+# ----------------------------------------------------------------------
+# NAME         : 
+# PURPOSE      : 
+#                
+# CALLED BY    : 
+# CALLS        : 
+# INPUT        : 
+# RETURNS      : 
+# GLOBALS      : 
+# SIDE-EFFECTS : 
+# NOTES        : 
+# ----------------------------------------------------------------------
+
+sub AddScopedHeads 
+{
+    my $self = shift;
+    my ( $ssetName , $searchName,  $sid ) = @_;
+       
+    my $sset = $self->GetSearchSet( $ssetName );
+
+    foreach my $divheadNumber ( $self->GetDivHeadRange() ) 
+    {
+	my $divRgn = qq{DIV} . $divheadNumber;
+	my $fabRgn = qq{div} . $divheadNumber . qq{head};
+
+        my $fabRgnName = $sset->SetNamedSearchName( $fabRgn, $sid ) ;
+	$sset->AddQuery(
+                        $fabRgnName,
+                        qq{pr.region.$fabRgn (region $fabRgn within (region $divRgn incl \*$searchName)); }
+                       );
+    }
+}
+
+
+# ----------------------------------------------------------------------
+# NAME         : SubmitSearchSet
+# PURPOSE      : send a SearchSet object's queries one by one to an XPat
+#                process, gathering up results in an XPatRequestSet object
+# CALLED BY    : main::HandleSearch
+# CALLS        : XPat->GetResultsFromQuery; XPatResultSet->AddResults
+# INPUT        : SearchSet obj, XPatResultSet obj
+# RETURNS      : NONE
+# GLOBALS      : 
+# SIDE-EFFECTS : affects XPatResultSet obj by adding results to it
+# NOTES        : 
+# ----------------------------------------------------------------------
+
+sub SubmitSearchSet
+{
+    my $self = shift;
+    my ( $name, $cgi ) = @_;
+    
+    my $sset = $self->GetSearchSet( $name );
+    my $rset = $self->GetXPatResultSet( $name );
+
+    # get XPatResultSet object
+    my $xpat = $self->GetXPatObject( );
+
+
+    # run through all the searches in this search set
+  SUBMITSEARCHES:
+    foreach my $label ( $sset->GetSearchLabels() )
+    {
+    
+        my $query = $sset->GetQueryByLabel($label);
+
+        # type is SSize, PSet or RSet
+        # result is sgml result from XPat
+        # $label is same label as was sent by AddSearchSet
+        my ( $type, $results, $resultLabel ) =
+          $xpat->GetResultsFromQuery( $label, $query );
+
+        if ( ( $ENV{'DEBUG'} eq 'search' ) ||
+             ( $ENV{'DEBUG'} eq 'all' ) )
+        {
+            print "label:$label\n";
+            print "query:$query\n";
+            print "type:$type\n";
+            
+        }
+        
+
+#        print "<h3>results: $results</h3>";
+        
+        if ( $type =~ m,error,i )
+        {
+            $self->SetStatus ( 'XPAT_SEARCH_ERROR' ); 
+            last SUBMITSEARCHES;   
+        }
+
+        $rset->AddResults( $type, $results, $resultLabel, $cgi );
+    }
+}
+
+
+# ----------------------------------------------------------------------
+# NAME         : FilterRawResults
+# PURPOSE      : plain vanilla filter of SGML to HTML (essentially nothing
+#                more than < and > filtering)
+# CALLED BY    : main::OutputResults
+# CALLS        : 
+# INPUT        : NONE
+# RETURNS      : string of html
+# GLOBALS      : NONE
+# SIDE-EFFECTS : 
+# NOTES        : 
+# ----------------------------------------------------------------------
+
+sub FilterRawResults
+{
+    my $self = shift;
+    my $htmlPageRef = shift;
+    my $name = shift;
+    
+    
+    my $rset = $self->GetXPatResultSet( $name );
+    my $results = '';
+
+    $rset->InitIterator();
+    
+    my ( $label, $textRef ) ;
+  RESULTLOOP:
+    while ( ( $label, $textRef ) = $rset->GetNextResult()) 
+    {
+        # stop if were sent back undef
+        if ( defined ( $label ) )
+        {
+            $$textRef =~ s,<,&lt;,g;
+            $$textRef =~ s,>,&gt;,g;
+        
+            # DlpsUtils routine to do entity filtering
+            FilterCharEnts_All( $textRef );
+            
+
+            if ( $ENV{'DEBUG'} >=3 )
+            {
+                $results .= qq{<h3>Results</h3>\n};
+                $results .= qq{<br>$label ::::::: $$textRef\n};
+
+            }
+        }
+        else
+        {
+            last RESULTLOOP;
+        }
+        
+    }
+    return \$results;
+}
+
+
+# ----------------------------------------------------------------------
+# NAME         : FilterResultsForHighLelHeader
+# PURPOSE      : 
+#                
+# CALLED BY    : 
+# CALLS        : 
+# INPUT        : 
+# RETURNS      : 
+# GLOBALS      : 
+# SIDE-EFFECTS : 
+# NOTES        : 
+# ----------------------------------------------------------------------
+
+sub FilterResultsForHighLelHeader
+{
+    my $self = shift;
+
+    my ( $htmlPageRef, $cgi, $name, $bbo ) = @_;
+
+    my $idno   = $cgi->param( 'idno' );
+    my $collid = $cgi->param( 'c' );
+
+    # set up ProcIns object
+    my $pio = $self->{'pio'};
+
+    # this is removed from HeaderFilter so that all we have to do is send HeaderFilter
+    # a ref to a string (this allows it to be called from several places
+    my $rset = $self->GetXPatResultSet( $name );
+    $rset->InitIterator();
+    my $headRef = $rset->GetNextLabeledResult( 'mainheader' );
+
+    $pio->AddPI( 'HEADER', \&_HeaderFilter, [ $headRef ] );
+    $pio->AddPI( 'SEARCH_WITHIN_LINKS', \&_SearchWithinLinks, [ $self, $cgi ] );
+#    $pio->AddPI( 'BOOKBAG_ADD_REMOVE_ITEM', 
+#                 \&TextClassUtils::BookbagAddRemoveItemButton, [ $cgi, $idno, $collid, $bbo ] );
+    $pio->AddPI( 'HEADER_TOC', \&_ScopedResultsFilter, [ $self, $cgi, $name, 1, $bbo, $idno ] );
+
+    # call generic PageHandling::ProcessPIs to do the work    
+    $pio->ProcessPIs( $htmlPageRef );
+}
+
+# ----------------------------------------------------------------------
+# NAME         : FilterResultsForLowLelHeader
+# PURPOSE      : 
+#                
+# CALLED BY    : 
+# CALLS        : 
+# INPUT        : 
+# RETURNS      : 
+# GLOBALS      : 
+# SIDE-EFFECTS : 
+# NOTES        : 
+# ----------------------------------------------------------------------
+
+sub FilterResultsForLowLelHeader
+{
+    my $self = shift;
+
+    my ( $htmlPageRef, $cgi, $name, $bbo ) = @_;
+
+    my $idno   = $cgi->param( 'idno' );
+    my $collid = $cgi->param( 'c' );
+
+    # set up ProcIns object
+    my $pio = $self->{'pio'};
+
+    my $rset = $self->GetXPatResultSet( $name );
+    $rset->InitIterator();
+    my $headRef = $rset->GetNextLabeledResult( 'mainheader' );
+
+    $pio->AddPI( 'HEADER', \&_HeaderFilter, [ $headRef ] );
+    $pio->AddPI( 'SEARCH_WITHIN_LINKS', \&_SearchWithinLinks, [ $self, $cgi ] );
+#    $pio->AddPI( 'BOOKBAG_ADD_REMOVE_ITEM', 
+#                 \&TextClassUtils::BookbagAddRemoveItemButton, [ $cgi, $idno, $collid, $bbo ] );
+    $pio->AddPI( 'HEADER_TOC', \&_PagesWithHitsFilter, [ $self, $cgi, $name ] );
+
+    # call generic PageHandling::ProcessPIs to do the work    
+    $pio->ProcessPIs( $htmlPageRef );
+}
+
+
+# ----------------------------------------------------------------------
+# NAME         : 
+# PURPOSE      : 
+#                
+# CALLED BY    : 
+# CALLS        : 
+# INPUT        : 
+# RETURNS      : 
+# GLOBALS      : 
+# SIDE-EFFECTS : 
+# NOTES        : 
+# ----------------------------------------------------------------------
+
+sub _PagesWithHitsFilter
+{
+    my $self = shift;
+    my ( $cgi, $name ) = @_;
+    my $s = '';
+    
+    # using $name, get $sset so we can find PB that include the hits we want
+    my $sset                 = $self->GetSearchSet( $name );
+    my $mainHeaderRegionName = $sset->GetNamedSearchName( 'mainheaderregion' ) ;
+
+    my $qf        = $self->GetQueryFactory( );
+    my $baseQuery = $qf->baseQuery( );
+
+    my $tm        = $self->GetTermMapper( );
+    my $rgn       = $tm->map('ITEM', 'synthetic', 'native');
+
+    # get PBs of pages that contain the hits we need
+    my $search = qq{pr.region."PB-T" ( region "PB-T" within ( ( region page incl ( $baseQuery ) ) within ( $rgn incl \*$mainHeaderRegionName ) ) );};
+    
+    my $xpat               = $self->GetXPatObject( );
+    my ( $error, $pbTagResults ) = $xpat->GetSimpleResultsFromQuery( $search );
+
+    # --------------------------------------------------
+    # get cgi params for building links
+    my $c    = $cgi->param( 'c' );
+    my $cc   = $cgi->param( 'cc' );
+    my $xc   = $cgi->param( 'xc' );
+    my $idno = $cgi->param( 'idno' );
+    my $sid  = $cgi->param( 'sid' );
+    
+    &TextClassUtils::StripAllRSetCruft( \$pbTagResults );
+
+    ## Handling of PB tags and possible links to page images
+    ## PB tags have a REF if there is a corresponding page image
+    ## They are of the form:
+    ## <pb ref="00000550.tif" seq="0550" res="600dpi" fmt="TIFF5.0" ftr="UNSPEC" n="183">
+    
+    # build links for those PBs that have REFs
+    my @pages = split ( />/, $pbTagResults );
+    foreach my $pageTag ( @pages )
+    {
+        $pageTag =~ m,<pb ref=\"([^\"]*)\" seq=\"([^\"]*)\" res=\"([^\"]*)\" fmt=\"([^\"]*)\" ftr=\"([^\"]*)\" cnf=\"([^\"]*)\" n=\"([^\"]*)\",;
+        my $ref = $1; $origseq = $2; $page = $7 || 'NA';
+        # remove leading zeros $seq = $origSeq; s,^0*,,; here, get number of hits in the page $search = qq{$baseQuery within (region incl ( "PB-T region "A-SEQ "$origSeq $rgn \*$mainHeaderRegionName ) );}; $error, $pageHits>GetSimpleResultsFromQuery( $search );
+        $pageHits =~ s,</?SSize>,,gs;
+        if ( $pageHits == 1 )
+        {     $pageHits .= ' match';       }
+        else
+        {     $pageHits .= ' matches';       }
+
+        my $link = qq{$TextClassUtils::gPageviewerCgi\?} .
+          qq{c=$c\&cc=$cc\&idno=$idno\&seq=$seq\&xc=$xc\&sid=$sid};
+        
+        $s .= qq{<span class="smalltext"><a href="../$link">Page $page</a> $pageHits<br></span>\n}; 
+    }
+    
+    return qq{<b>Pages with matches</b><br><br>\n$s\n};
+}
+
+# # ----------------------------------------------------------------------
+# # NAME         : 
+# # PURPOSE      : 
+# #                
+# # CALLED BY    : 
+# # CALLS        : 
+# # INPUT        : 
+# # RETURNS      : 
+# # GLOBALS      : 
+# # SIDE-EFFECTS : 
+# # NOTES        : 
+# # ----------------------------------------------------------------------
+
+# sub BuildLinksForPBsWithHits
+# {
+#     my ( $sRef, $cgi ) = @_;
+       
+#     my $newS = '';
+#     my $c  = $cgi->param( 'c' );
+#     my $cc = $cgi->param( 'cc' );
+#     my $xc = $cgi->param( 'xc' );
+#     my $idno = $cgi->param( 'idno' );
+    
+    
+#     &TextClassUtils::StripAllRSetCruft( $sRef );
+
+#     ## Handling of PB tags and possible links to page images
+#     ## PB tags have a REF if there is a corresponding page image
+#     ## They are of the form:
+#     ## <pb ref="00000550.tif" seq="0550" res="600dpi" fmt="TIFF5.0" ftr="UNSPEC" n="183">
+
+#     # build links for those PBs that have REFs
+#     my @pages = split ( />/, $$sRef );
+#     foreach my $pageTag ( @pages )
+#     {
+#         $pageTag =~ m,<pb ref=\"([^\"]*)\" seq=\"([^\"]*)\" res=\"([^\"]*)\" fmt=\"([^\"]*)\" ftr=\"([^\"]*)\" cnf=\"([^\"]*)\" n=\"([^\"]*)\",;
+#         my $seq = $2; $page = $7 || 'NA remove leading zeros s,^0*,,;         $newS .= qq{><a href="../$gPageviewerCgi%5C?c=$c%5C&amp;idno=$idno%5C&amp;seq=$seq%5C&amp;xc=$xc"> <span class="smalltext">Page $page</span></a><span class="smalltext"><br>\n}; 
+#     }
+
+#     $$sRef = qq{<br>\n} . $newS;
+# }
+
+# ----------------------------------------------------------------------
+# NAME         : FilterResultsForText
+# PURPOSE      : 
+#                
+# CALLED BY    : 
+# CALLS        : 
+# INPUT        : 
+# RETURNS      : 
+# GLOBALS      : 
+# SIDE-EFFECTS : 
+# NOTES        : 
+# ----------------------------------------------------------------------
+
+sub FilterResultsForText
+{
+    my $self = shift;
+    my ( $htmlPageRef, $cgi, $view, $bbo ) = @_;
+    
+    # grab idno info from node
+    my $idno = $cgi->param( 'node' );
+    $idno =~ s,(^[^:]+).*,$1,;
+    
+    
+    # set up ProcIns object
+    my $pio = $self->{'pio'};
+
+    $pio->AddPI( 'SCOPED_HEADS', \&_ScopedResultsFilter, [ $self, $cgi, $view, 0, $bbo, $idno ] );
+
+#    $pio->AddPI( 'TEXT', \&FilterTextForTextView, [ $self, $cgi, $view ] );
+
+    # call generic PageHandling::ProcessPIs to do the work    
+    $pio->ProcessPIs( $htmlPageRef );
+}
+
+
+# ----------------------------------------------------------------------
+# NAME         : FilterResultsForNotes
+# PURPOSE      : 
+#                
+# CALLED BY    : 
+# CALLS        : 
+# INPUT        : 
+# RETURNS      : 
+# GLOBALS      : 
+# SIDE-EFFECTS : 
+# NOTES        : 
+# ----------------------------------------------------------------------
+
+sub FilterResultsForNotes
+{
+    my $self = shift;
+    my ( $htmlPageRef, $cgi, $view, $bbo ) = @_;
+    
+    # set up ProcIns object
+    my $pio = $self->{'pio'};
+
+    $pio->AddPI( 'SCOPEDNOTE', \&NotesResultsFilter, [ $self, $cgi, $view, $bbo ] );
+
+    # call generic PageHandling::ProcessPIs to do the work    
+    $pio->ProcessPIs( $htmlPageRef );
+}
+
+
+# ----------------------------------------------------------------------
+# NAME         : FilterResultsForReslist
+# PURPOSE      : filter results for a reslist view
+# CALLED BY    : main::OutputResults
+# CALLS        : 
+# INPUT        : 
+# RETURNS      : string of html
+# GLOBALS      : NONE
+# SIDE-EFFECTS : 
+# NOTES        : 
+# ----------------------------------------------------------------------
+
+sub FilterResultsForReslist
+{
+    my $self = shift;
+    my ( $htmlPageRef, $cgi, $view, $lel, $bbo ) = @_;
+
+    my $idno  = $cgi->param( 'idno' );
+    my $sid   = $cgi->param( 'sid' );
+
+    # set up ProcIns object
+    my $pio = $self->{'pio'};
+    $pio->AddPI( 'RESULTS_FRAME_HEADER', \&_ResultsFrameHeaderFilter, [ $self, $cgi, $view ] );
+
+    # for fisheye and prev and next slice links
+    $pio->AddPI( 'SLICE_NAVIGATION_LINKS', \&_BuildSliceNavigationLinks, [ $self, $cgi, $view ] );
+
+    if ( $lel >= 3 )
+    {
+        $pio->AddPI( 'RESULTS', \&_ScopedResultsFilter, [ $self, $cgi, $view, 1, $bbo, $idno ] );
+    }
+    else
+    {
+        $pio->AddPI( 'RESULTS', \&LowLelResultsFilter, [ $self, $cgi, $view, $lel, $bbo ] );
+    }
+    
+
+    # call generic PageHandling::ProcessPIs to do the work    
+    $pio->ProcessPIs( $htmlPageRef );
+    
+}
+
+# ----------------------------------------------------------------------
+# NAME         : GetQueryFactory
+# PURPOSE      : retrieve reference to QueryFactory object for one collection
+#                
+# CALLED BY    : $self->AddQuery
+# CALLS        : 
+# INPUT        : collection id
+# RETURNS      : reference to QF object
+# GLOBALS      : 
+# SIDE-EFFECTS : 
+# NOTES        : 
+# ----------------------------------------------------------------------
+
+sub GetQueryFactory
+{
+    my $self = shift;
+    my $collid = shift;
+      
+    return ( $self->{'queryfactory'} );
+}
+
+# ----------------------------------------------------------------------
+# NAME         : GetQueries
+# PURPOSE      : return an array of [label, query] arrays
+# CALLED BY    : $self->HtmlDumpSearchSet
+# CALLS        : 
+# INPUT        : 
+# RETURNS      : return an array of [label, query] arrays
+# GLOBALS      : 
+# SIDE-EFFECTS : 
+# NOTES        : 
+# ----------------------------------------------------------------------
+
+sub GetQueries
+{
+    my $self = shift;
+    my $collid = shift;
+    my @returnArray = ();
+
+    push ( @returnArray, $self->{'queries'}{'mainsearch'} );
+    ## need to add second search here too
+           
+    foreach my $label ( sort ( keys %{$self->{'queries'}} ) )
+    {
+        my $query = $self->{'queries'}{$label} ;
+        push ( @returnArray, [ $label, $query ] );
+    }
+    return ( @returnArray );
+}
+
+# ----------------------------------------------------------------------
+# NAME         : GetValueByKey
+# PURPOSE      : retrieve a value for a particular key, in this object
+# CALLED BY    : HtmlDumpCollsInfo
+# CALLS        : NONE
+# INPUT        : key string
+# RETURNS      : value for that key (usually string)
+# GLOBALS      : NONE
+# SIDE-EFFECTS : NONE
+# NOTES        : 
+# ----------------------------------------------------------------------
+
+sub GetValueByKey
+{
+    my $self = shift;
+    my $key  = shift;
+    
+    return $self->{$key};
+}
+
+# ----------------------------------------------------------------------
+# NAME         : StartXPatProcess
+# PURPOSE      : start an XPat Process with this object's dd file, patexec
+#                on this object's host and attach it to this object
+# CALLED BY    : main::HandleSearch
+# CALLS        : 
+# INPUT        : 
+# RETURNS      : 
+# GLOBALS      : 
+# SIDE-EFFECTS : 
+# NOTES        : 
+# ----------------------------------------------------------------------
+
+sub StartXPatProcess
+{
+    my $self = shift;
+    my $requestingHost = shift;
+    
+    $self->{'xpat'} = new XPat (
+                                $requestingHost,
+                                $self->{'host'},
+                                $self->{'dd'},
+                                $self->{'patexec'},
+                                $self->{'port'},
+                               );
+
+    # if XPat had an error starting up, its status should be 'ERROR'.
+    # if so, set this TextClass's status to False
+    my $xpat = $self->GetXPatObject( );
+    
+    $self->SetStatus( 'OK' );
+    
+    my $xpatStatus =  $xpat->GetStatus();
+    
+    if ( $xpatStatus ne 'OK' )
+    { 
+        $self->SetStatus ( 'XPAT_START_ERROR' );    
+        die  'XPAT_START_ERROR' ;
+    }
+    
+}
+
+# ----------------------------------------------------------------------
+# NAME         : 
+# PURPOSE      : 
+#                
+# CALLED BY    : 
+# CALLS        : 
+# INPUT        : 
+# RETURNS      : 
+# GLOBALS      : 
+# SIDE-EFFECTS : 
+# NOTES        : 
+# ----------------------------------------------------------------------
+
+sub KillXPat
+{
+    my $self = shift;
+    my $xpat = $self->GetXPatObject( );
+
+    if ( defined ( $xpat ) )
+    {
+        $xpat->SendCommand( 'stop' );
+    }
+    
+}
+
+
+# ----------------------------------------------------------------------
+# NAME         : 
+# PURPOSE      : 
+#                
+# CALLED BY    : 
+# CALLS        : 
+# INPUT        : 
+# RETURNS      : 
+# GLOBALS      : 
+# SIDE-EFFECTS : 
+# NOTES        : 
+# ----------------------------------------------------------------------
+
+sub SetStatus
+{
+    my $self = shift;
+    my $status = shift;
+    
+    $self->{'status'} = $status;
+}
+
+# ----------------------------------------------------------------------
+# NAME         : GetStatus
+# PURPOSE      : retrieve status of this object
+# CALLED BY    : 
+# CALLS        : 
+# INPUT        : NONE
+# RETURNS      : boolean
+# GLOBALS      : 
+# SIDE-EFFECTS : 
+# NOTES        : 
+# ----------------------------------------------------------------------
+
+sub GetStatus
+{
+    my $self = shift;
+
+    return $self->{'status'};
+}
+
+# ----------------------------------------------------------------------
+# NAME         : LowLelResultsFilter
+# PURPOSE      : 
+#                
+# CALLED BY    : 
+# CALLS        : 
+# INPUT        : 
+# RETURNS      : 
+# GLOBALS      : 
+# SIDE-EFFECTS : 
+# NOTES        : 
+# ----------------------------------------------------------------------
+
+sub LowLelResultsFilter
+{ 
+    my $self = shift;
+    my ( $cgi, $name, $lel, $bbo ) = @_;
+    
+    my $collid = $self->GetValueByKey( 'collid' );
+    my $rset   = $self->GetXPatResultSet( $name );
+    $rset->InitIterator();
+
+    my $results = '';
+    my ( $label, $textRef, $byte ) ;
+
+    my $sid = $cgi->param( 'sid' );
+    
+    while ( $label = $rset->SniffNextResult( ) )
+    {
+        ( $label, $textRef, $byte ) = $rset->GetNextResult( ); 
+        
+        # need to match beginnings of labels, not eq the entire label, because
+        # the labels likely end with session ids
+        if ( $label =~ m,^mainheader, )
+        { 
+            my ( $mainHeaderResults, $idno ) =
+              $self->FilterMainHeader ( $textRef, $byte, $name, $cgi, $bbo ) ;   
+            $results .= $mainHeaderResults;
+        }
+
+    }
+    return $results;
+}
+
+# ----------------------------------------------------------------------
+# NAME         : NotesResultsFilter
+# PURPOSE      : create a reslist view type filtering for results from
+#                a simple type search
+# CALLED BY    : 
+# CALLS        : 
+# INPUT        : name of result set, boolean for indenting or not
+# RETURNS      : 
+# GLOBALS      : 
+# SIDE-EFFECTS : 
+# NOTES        : The two following helper functions are abstract methods
+#              : which are over-ridden by the subclass via $self->
+# ----------------------------------------------------------------------
+
+sub FilterNoteContentParentForPopup {}
+sub FilterNoteContentForPopup {}
+
+sub NotesResultsFilter
+{
+    my $self = shift;
+    my ( $cgi, $name, $bbo ) = @_;
+    
+    my $collid = $self->GetValueByKey( 'collid' );
+    my $rset   = $self->GetXPatResultSet( $name );
+
+    $rset->InitIterator();
+    
+    my $results = '';
+    my ( $label, $textRef, $byte ) ;
+
+    my $sid = $cgi->param( 'sid' );
+    
+    while ( $label = $rset->SniffNextResult( ) )
+    {
+        ( $label, $textRef, $byte ) = $rset->GetNextResult( ); 
+        
+        # need to match beginnings of labels, not eq the entire label, because
+        # the labels end with session ids
+        if ( $label =~ m,^notecontentparentrgn, )
+        { 
+	    my $noteParentContent = $self->FilterNoteContentParentForPopup( $textRef );
+
+	    $results = "\n<span class=\"trgtdiv2head\">\n" . $self->TextFilter( \$noteParentContent, $collid, undef, $cgi ) . "\n</span>\n";
+        }
+        elsif ( $label =~ m,^notecontent, )
+        { 
+	    my $noteContent = $self->FilterNoteContentForPopup( $textRef );
+	    
+	    my $tmpResult = "\n<span class=\"text_div2head\">\n" . $self->TextFilter( \$noteContent, $collid, undef, $cgi ) . "\n</span>\n";
+	    $results .= $tmpResult;
+        }
+        else
+        {  
+            die "Bad search label: $label";
+        }
+    }
+    return $results;
+}
+
+# ----------------------------------------------------------------------
+# NAME         : _ScopedResultsFilter
+# PURPOSE      : create a reslist view type filtering for results from
+#                a simple type search
+# CALLED BY    : 
+# CALLS        : 
+# INPUT        : name of result set, boolean for indenting or not
+# RETURNS      : 
+# GLOBALS      : 
+# SIDE-EFFECTS : 
+# NOTES        : 
+# ----------------------------------------------------------------------
+
+sub _ScopedResultsFilter
+{
+    my $self = shift;
+    my ( $cgi, $name, $indent, $bbo, $idno ) = @_;
+    
+    my $collid = $self->GetValueByKey( 'collid' );
+    my $rset   = $self->GetXPatResultSet( $name );
+
+    $rset->InitIterator();
+    
+    my $results = '';
+    my ( $label, $textRef, $byte ) ;
+
+    my $sid = $cgi->param( 'sid' );
+    
+    while ( $label = $rset->SniffNextResult( ) )
+    {
+        if ( $indent )
+        {     $results .= $self->HtmlForIndentLevel ( $label, $sid );     }
+        else
+        {     $results .= "<br>\n";       }
+        
+        
+        ( $label, $textRef, $byte ) = $rset->GetNextResult( ); 
+        
+        # need to match beginnings of labels, not eq the entire label, because
+        # the labels end with session ids
+        if ( $label =~ m,^mainheader, )
+        { 
+            my ( $mainHeaderResults, $idno ) =
+              $self->FilterMainHeader ( $textRef, $byte, $name, $cgi, $bbo ) ;   
+            $results .= $mainHeaderResults;
+        }
+        
+        elsif ( $label =~ m,^div(\d+)head, )
+        { 
+            my $level = $1;
+            my $headName = 'div' . $level . 'head';
+            my $rgnName = 'div' . $level;
+            my $requestedDiv = $cgi->param( 'rgn' );
+            
+            
+            $results .= $self->FilterDivhead( $textRef,
+                                              $level,
+                                              $headName,
+                                              $collid,
+                                              $rgnName,
+                                              $requestedDiv,
+                                              $cgi,
+                                            ) ;
+        }
+        
+        elsif ( $label =~ m,^kwic, )
+        {    $results .= $self->FilterKwic ( $textRef, $cgi, $name );     }
+
+        elsif ( $label =~ m,^fullregion, )
+          # should have $idno by now, so send it along with $collid
+          # for building pageviewer links
+        {    $results .= $self->TextFilter ( $textRef, $collid, $idno, $cgi );     }
+        else
+        {  
+            $results .= $self->HtmlForIndentLevel ( 'FINISH', $sid );
+        }
+    }
+    $results .= $self->HtmlForIndentLevel ( 'FINISH', $sid );
+
+    return $results;
+}
+
+# ----------------------------------------------------------------------
+# NAME         : _ResultsFrameHeaderFilter
+# PURPOSE      : create the html at the beginning of the results frame
+# CALLED BY    : 
+# CALLS        : 
+# INPUT        : XPatResultSet object, cgi object
+# RETURNS      : 
+# GLOBALS      : 
+# SIDE-EFFECTS : 
+# NOTES        : 
+# ----------------------------------------------------------------------
+
+sub _ResultsFrameHeaderFilter
+{
+    my $self = shift;
+    my ( $cgi, $name ) = @_;
+    
+    my $collName = $self->GetValueByKey( 'collname' );
+    my $rset = $self->GetXPatResultSet( $name );
+
+    # --------------------------------------------------
+    # this section creates the "your search resulted in X in Y records" string
+
+    my $matches = $rset->GetTotalMatches();
+    my $records = $rset->GetTotalRecords( );
+
+    my $matchString  = $matches . ( ( $matches == 1 ) ? qq{ match} : qq{ matches} );
+    my $recordString = $records . ( ( $records == 1 ) ? qq{ record} : qq{ records} );
+    
+    my $s = '';
+    $s .= qq{<font class="smallheader"><b>Search results for $collName</b></font>\n<br><br>\n};
+    $s .= qq{<hr>\n};
+    
+    # if boolean
+    if ( $cgi->param( 'type' ) eq 'boolean' )
+    {   $s .= qq{<font class="resultsheader">Your search in $collName resulted in $matchString</font>\n<br>\n};  }
+    # if simple or proximity
+    else
+    {   $s .= qq{<font class="resultsheader">Your search in $collName resulted in $matchString in $recordString</font>\n<br>\n};    }
+    # --------------------------------------------------
+
+    # --------------------------------------------------
+    # refine search link
+    my $link = &TextClassUtils::ChangeNavLink ( $cgi, $ENV{'SCRIPT_NAME'}, 'page', 'boolean' );
+    $s .= qq{<br><font class="resultsheader"><a href="../$link">Refine this search</a></font>};
+    $s .= qq{<hr>\n};
+
+    return $s;
+}
+
+# ----------------------------------------------------------------------
+# NAME         : 
+# PURPOSE      : 
+#                
+# CALLED BY    : 
+# CALLS        : 
+# INPUT        : 
+# RETURNS      : 
+# GLOBALS      : 
+# SIDE-EFFECTS : 
+# NOTES        : 
+# ----------------------------------------------------------------------
+
+sub _BuildSliceNavigationLinks
+{
+    my $self = shift;
+    my ( $cgi, $name ) = @_;
+    
+    my $collName = $self->GetValueByKey( 'collname' );
+    my $rset = $self->GetXPatResultSet( $name );
+    
+    my $s = '';
+    
+    # --------------------------------------------------
+
+    my $fisheyeString = &TextClassUtils::BuildFisheyeString ( $cgi, 
+                                                              $rset,
+                                                            );
+    
+    my $nextHitsLink  = &TextClassUtils::BuildPrevNextHitsLink ( $cgi, $matches, 'next' );
+    my $prevHitsLink  = &TextClassUtils::BuildPrevNextHitsLink ( $cgi, $matches, 'prev' );
+    
+    # fisheye and slice info
+    $s .= qq{<table cellpadding="2" width="100%">\n<tr>\n};
+    $s .= qq{<td align="left"><font class="resultsheader">$fisheyeString</font></td>\n};
+    $s .= qq{<td width="20%">&nbsp;</td>\n};
+    $s .= qq{<td align="right">} .
+      qq{<font class="resultsheader">$prevHitsLink} . '&nbsp;&nbsp;' . qq{$nextHitsLink</font></td>\n};
+    $s .= qq{</tr>\n</table>\n};
+
+    $s .= qq{<hr>\n};
+
+    return $s;
+}
+
+
+# ----------------------------------------------------------------------
+# NAME         : BuildRefineLink
+# PURPOSE      : 
+#                
+# CALLED BY    : 
+# CALLS        : 
+# INPUT        : 
+# RETURNS      : 
+# GLOBALS      : 
+# SIDE-EFFECTS : 
+# NOTES        : 
+# ----------------------------------------------------------------------
+
+sub BuildRefineLink
+{
+    my $cgi = shift;
+    my $scriptName = shift;
+    
+    my @parmArray = @_;
+
+    ## clone the cgi object
+    my $tempCgi = new CGI( $cgi );
+    
+    ## remove params that will be replaced or null
+    ## (browse is being used to trigger stats gathering, but the nav bar
+    ## links should always take you to the "start" of each type of search,
+    ## and those should not be counted for stats purposes)
+    $tempCgi->delete( 'type' );
+    $tempCgi->delete( 'subtype' );
+    $tempCgi->delete( 'page' );
+    $tempCgi->delete( 'browse' );
+    $tempCgi->delete( 'view' );
+    $tempCgi->delete( 'idno' );
+    $tempCgi->delete( 'node' );
+
+    ## now alter query string and replace
+    my ( $parm, $value ) = ( '', '' );
+    while ( @parmArray )
+    {
+        $parm  = shift ( @parmArray );
+        $value = shift ( @parmArray );
+        $tempCgi->param( $parm, $value );
+    }
+    return ( $scriptName . '?' . $tempCgi->query_string );
+};
+
+
+# ----------------------------------------------------------------------
+# NAME         : HtmlForIndentLevel
+# PURPOSE      : generate the needed html bits (uls and lis) for getting
+#                to the right level of indentation when filtering results
+# CALLED BY    : 
+# CALLS        : 
+# INPUT        : label, session id
+# RETURNS      : 
+# GLOBALS      : 
+# SIDE-EFFECTS : 
+# NOTES        : 
+# ----------------------------------------------------------------------
+
+sub HtmlForIndentLevel
+{
+    my $self  = shift;
+    my ( $label, $sid ) = @_;
+
+    # remove session id from end of label so we can compare the bare label
+    # with the hash of depths
+    $label =~ s,$sid$,,; 
+    
+    my $results      = '';
+    my $currentDepth = $self->GetCurrentIndentDepth( ) || 0 ;
+    my $lastLabel    = $self->GetLastIndentLabel( );
+ 
+    # find level to indent to based on incoming label
+    my %headDepths = $self->GetHeadDepths( );
+    my $targetDepth = $headDepths{$label};
+    
+
+    # if we get two similar items in a row, no need to indent
+    # or outdent or change last label;
+    # just close last item and start new one
+    if ( $lastLabel eq $label )
+    {
+#        $results = "\n<li>"  ;   
+        $results = "\n"  ;   
+    }
+
+    # otherwise, we are changing levels
+
+    # if this is a low level label (those that occur as deepest results items), 
+    # and not the same the last one, we have to indent just one level
+    elsif ( grep ( /$label/, $self->GetMaxDepthItems( ) ) )
+    {
+        $results = "<ul>\n<li>";
+        $self->SetCurrentIndentDepth ( 1 + $currentDepth );
+    }
+
+    # indenting
+    elsif ( $targetDepth > $currentDepth )
+    {
+        my $delta = $targetDepth - $currentDepth;
+        $self->SetCurrentIndentDepth ( $currentDepth + $delta );
+        while ( $delta-- )
+        {
+#            $results .= "<ul>\n<li>";
+            $results .= "<ul>\n";
+        }
+    }
+    
+    # outdenting
+    elsif (
+           $targetDepth < $currentDepth ||
+           $label eq 'FINISH' 
+          )
+    {
+        my $delta =  $currentDepth - $targetDepth;
+        $self->SetCurrentIndentDepth ( $currentDepth - $delta );
+        while ( $delta-- )
+        {
+            $results .= "</li>\n</ul>\n";
+#            $results .= "\n</ul>\n";
+        }
+    }
+
+    # save the current label for future reference
+    if ( $label ne 'FINISH' ) 
+    {     $self->SetLastIndentLabel( $label );    }
+   
+    
+    return $results;
+}
+
+
+
+# ----------------------------------------------------------------------
+# NAME         : 
+# PURPOSE      : 
+#                
+# CALLED BY    : 
+# CALLS        : 
+# INPUT        : 
+# RETURNS      : 
+# GLOBALS      : 
+# SIDE-EFFECTS : 
+# NOTES        : 
+# ----------------------------------------------------------------------
+
+sub FilterDivhead
+{ 
+    my $self = shift;
+    my ( $textRef, $level, $headName, $collid, $rgnName, $requestedDiv, $cgi   ) = @_;
+    my $results = '';
+
+    $$textRef =~ s,<PB[^>]*>,,g;
+    $$textRef =~ s,<NOTE[^>]*>.*</NOTE[^>]*>,,g;
+    $$textRef =~ s,<DIVINFO[^>]*>.*?,,g;
+    my($id);
+    if ($$textRef =~ m,NODE=\"([^\"]+)\",) 
+    {
+#        $id = &CGI::escape($1);
+        $id = $1;
+    }
+
+    # make prev and next section buttons if needed
+    my $buttons = '';
+    if ( $rgnName eq $requestedDiv )
+    {
+        $buttons = $self->MakePrevNextSectionButtons( $textRef, $level );
+    }
+
+#    $collid = $self->GetValueByKey( 'collid' );
+ 
+    # for making a link
+    my $tempCgi = new CGI( $cgi );
+    $tempCgi->delete( 'size' );
+    $tempCgi->delete( 'start' );
+    $tempCgi->delete( 'type' );
+
+#    $tempCgi->param( 'c', $collid );
+    $tempCgi->param( 'view', 'text' );
+    $tempCgi->param( 'rgn', $rgnName );
+    $tempCgi->param( 'node', $id );
+
+    my $link = $tempCgi->self_url;
+
+    $$textRef =~ s,<DIV$level[^>]*><HEAD[^>]*>(.*),<span class="$headName"><a name="$id" href=../%5C%22$link%5C%22>$1</a></span>$buttons<br>\n,s;
+    
+    $$textRef =~ s,<DIV$level[^>]*TYPE=\"(PDIV|DIV)\"[^>]*>.*,qq{<span class="$headName"><a name="$id" href=../%5C%22$link%5C%22>Section</a></span>$buttons<br>\n},es;
+
+    $$textRef =~ s,<DIV$level[^>]*TYPE=\"([^\"]*)\"[^>]*>.*,qq{<span class="$headName"><a name="$id" href=../%5C%22$link%5C%22>} . ucfirst(lc($1)) . qq{</a></span>$buttons<br>\n},es;
+
+    $$textRef =~ s,<DIV$level[^>]*>.*,<span class="$headName"><a name="$id" href=../%5C%22$link%5C%22>Section</a></span>$buttons<br>\n,s;
+
+
+    
+    $$textRef =~ s,,,g; # this will happen in ot60...
+
+    # DlpsUtils routine to do entity filtering
+    FilterCharEnts_All( $textRef );
+
+    $results .= $$textRef;
+        
+    return $results;
+}
+
+# ----------------------------------------------------------------------
+# NAME         : MakePrevNextSectionButtons
+# PURPOSE      : 
+#                
+# CALLED BY    : 
+# CALLS        : 
+# INPUT        : 
+# RETURNS      : 
+# GLOBALS      : 
+# SIDE-EFFECTS : 
+# NOTES        : 
+# ----------------------------------------------------------------------
+
+sub MakePrevNextSectionButtons
+{
+    my $self = shift;
+    my ( $textRef , $level ) = @_;
+
+    # find node info and get div hierarchy info from it
+    $$textRef =~ m,NODE=\"([^\"]*?)\",;
+    my $node = $1;
+    $node =~ m,([^:]*?):(.+),;
+    my $idno = $1;
+    my $divTree = $2;
+
+    my $divRegion = "DIV" . $level;
+
+    # get all the period separated numbers in the NODE value
+    my @divs = split ( /\./, $divTree );
+
+    # find the sequence number of the current DIV at this level (index
+    # of array is one less than the divlevel)
+    my $currentDiv = $divs[ $level - 1 ];
+    my $prevDiv = $currentDiv - 1;
+    my $nextDiv = $currentDiv + 1;
+
+    # create string with the first part of the NODE string up to
+    # the div level above where we currently are
+    my $newDivTree = '';
+    if ( ( $level - 1 ) > 0 )
+    {   
+        $newDivTree = join ( ".", @divs[0..($level-1) ] . '.' );   
+    }
+
+    # get ready to search for immediate sibling divs
+    my $xpat = $self->GetXPatObject( );
+
+    # only if there is a previous div, make a button
+    my ( $prevButton, $nextButton ) = ( '', '' );
+    my ( $prevError, $prevResult, $nextError, $nextResult);
+    
+    my $coll = $self->GetValueByKey( 'collid' );
+    
+    if ( $prevDiv >= 1 )
+    {
+        my $prevQuery = 
+          qq{pr.region."$divRegion-T" \(region "$divRegion-T" incl \"NODE=} .
+            $idno . ':' . $newDivTree . $prevDiv . qq{ \"\);};
+        ( $prevError, $prevResult) = $xpat->GetSimpleResultsFromQuery( $prevQuery );
+        
+        # no error handling at the moment
+        if ( ! $prevError &&
+             $prevResult )
+        {    $prevButton = &TextClassUtils::MakeButtonLinkFromDivT( $prevResult, 'prev', $coll );   }   
+    }
+    
+    # next button
+    my $nextQuery = qq{pr.region."$divRegion-T" \(region "$divRegion-T" incl \"NODE=} .
+      $idno . ':' . $newDivTree . $nextDiv . qq{ \"\);};
+    ( $nextError, $nextResult) = $xpat->GetSimpleResultsFromQuery( $nextQuery );
+
+    # no error handling at the moment
+    if ( ! $nextError &&  $nextResult )
+    {    $nextButton = &TextClassUtils::MakeButtonLinkFromDivT( $nextResult, 'next', $coll );   }
+    
+    return  qq{&nbsp;&nbsp;} . $prevButton . qq{&nbsp;&nbsp;} . $nextButton;
+    
+}
+
+
+
+# ----------------------------------------------------------------------
+# NAME         : 
+# PURPOSE      : 
+#                
+# CALLED BY    : 
+# CALLS        : 
+# INPUT        : 
+# RETURNS      : 
+# GLOBALS      : 
+# SIDE-EFFECTS : 
+# NOTES        : 
+# ----------------------------------------------------------------------
+sub FilterKwic
+{
+    my $self = shift;
+    my $textRef = shift;
+    my $cgi = shift;
+    my $name = shift;
+    
+
+    my $rset = $self->GetXPatResultSet( $name );
+    my $results = '';
+    my $locale = $self->GetLocale();
+    
+
+    &CleanResidualTags ( $textRef ); 
+    &SimpleHtmlFilter ( $textRef );
+    &HighlightHit ( $textRef, $cgi, $locale );      # carry hit along in $self????
+
+    # DlpsUtils routine to do entity filtering
+    FilterCharEnts_All( \$results );
+
+    $results .= $$textRef;
+            
+    return $results;
+}
+
+# ----------------------------------------------------------------------
+# NAME         : 
+# PURPOSE      : 
+#                
+# CALLED BY    : 
+# CALLS        : 
+# INPUT        : 
+# RETURNS      : 
+# GLOBALS      : 
+# SIDE-EFFECTS : 
+# NOTES        : 
+# ----------------------------------------------------------------------
+
+# sub ProcessMainHeader
+# {
+#     my $self = shift;
+#     my $rset = $self->GetXPatResultSet();
+#     my $results = '';
+    
+#     # start html list
+#     $results .= qq{<ul>\n};
+
+#     my $label;
+#   SNIFFMAINLOOP:
+#     while ( $label = $rset->SniffNextResult( ) )
+#     {
+#         if ( $label eq 'mainheader' )
+#         {
+#             my  ( $label, $textRef ) = $rset->GetNextResult() ;    
+#             $results .= qq{<li>\n} . 
+#               &FilterMainHeader ( $textRef ) .
+#                 qq{</li>\n};
+#         }
+#         elsif  ( $label eq 'div1head' )
+#         {    $results .= &ProcessDiv1head ( $self );       }
+
+#         elsif  ( $label eq 'div2head' )
+#         {    $results .= &ProcessDiv2head ( $self );       }
+
+#         elsif  ( $label eq 'div3head' )
+#         {    $results .= &ProcessDiv3head ( $self );       }
+
+#         elsif  ( $label eq 'div4head' )
+#         {    $results .= &ProcessDiv4head ( $self );       }
+#         else
+#         {      last SNIFFMAINLOOP;       }
+        
+#     }
+    
+#     # finish html list
+#     $results .= qq{</ul>\n};
+
+#     return $results;
+# }
+
+       
+# ----------------------------------------------------------------------
+# NAME         : 
+# PURPOSE      : 
+#                
+# CALLED BY    : 
+# CALLS        : 
+# INPUT        : 
+# RETURNS      : 
+# GLOBALS      : 
+# SIDE-EFFECTS : 
+# NOTES        : 
+# ----------------------------------------------------------------------
+
+sub FilterMainHeader
+{ 
+    my $self    = shift;
+    my ( $textRef, $byte, $name, $cgi, $bbo ) = @_;
+    
+    my $results = '';
+
+    my($idno, $title, $author, @rest) = $self->StripMainHeader($textRef);
+    $idno = &CGI::escape($idno);
+   
+    my $collid = $self->GetValueByKey( 'collid' );
+ 
+    if ( $name eq 'reslist' ||
+         $name eq 'text' )
+    {
+        # remove the bit about the "electronic version"
+        $title =~ s,\[an electronic version\],,;
+        $title =~ s,: un trasunto,,;
+
+        $results .= qq{<span class="mainheader">$title</span>};
+
+        if ( $self->GetValueByKey( 'lel' ) < 3 )
+        {
+            $results .= $self->HitsInWork( $cgi, $name, $byte );
+        }
+        
+
+        $results .= &TextClassUtils::BuildGoToTOCButton( $cgi, $idno, $collid );
+#        $results .= &TextClassUtils::BookbagAddRemoveItemButton( $cgi, $idno, $collid, $bbo );
+    }
+    # if building something other than reslist (say, a table of contents,
+    # build link around text and do not put in a bookbag related button
+    else
+    {
+        my $link = &TextClassUtils::ChangeNavLink( $cgi, $ENV{'SCRIPT_NAME'}, 
+                                                   'view', 'header',
+                                                   'idno', $idno,
+                                                   'c', $collid 
+                                                 );
+        $results .= qq{<span class="mainheader">} .
+          
+          qq{<a name="$idno" href="../$link">} .
+            qq{$title</a></span>};
+    }
+    
+
+    # DlpsUtils routine to do entity filtering
+    FilterCharEnts_All( \$results );
+
+    $results .= qq{<br>\n};    
+
+    return ( $results, $idno );
+}   
+
+# ----------------------------------------------------------------------
+# NAME         : 
+# PURPOSE      : 
+#                
+# CALLED BY    : 
+# CALLS        : 
+# INPUT        : 
+# RETURNS      : 
+# GLOBALS      : 
+# SIDE-EFFECTS : 
+# NOTES        : 
+# ----------------------------------------------------------------------
+
+sub HitsInWork
+{
+    my $self = shift;
+    my ( $cgi, $ssetName, $byte ) = @_;
+
+    my $densityString = '';
+    
+
+    my $type =  $cgi->param( 'type' );
+    
+    # get search set to work with previously "named" searches
+    my $sset = $self->GetSearchSet( $ssetName );
+    my $firstSearchName = $sset->GetNamedSearchName( 'firstsearch' );
+
+    my $xpat = $self->GetXPatObject( );
+    
+    # get page region to search from mapper (we assume that this low LEL collection
+    # has the region mapped)
+    my $tm   = $self->GetTermMapper( );
+    my $pageRegion  = $tm->map('page', 'label', 'native');
+
+    # would this be better in the mapper?
+    my $mainRegion  = 'region DLPSTEXTCLASS';
+
+    if ( $type eq 'simple' ||
+         $type eq 'proximity' )
+    {
+        my $search  = join( '',
+                            qq{thismain = $mainRegion incl [$byte];},
+                            qq{hit = *$firstSearchName within *thismain;},
+                            qq{$pageRegion incl *hit;},
+                            qq{$pageRegion within *thismain;},
+                          );
+        my ( $error, $result ) = $xpat->GetSimpleResultsFromQuery( $search );
+        if ( $result =~ m,<ssize>(\d+)</ssize><ssize>(\d+)</ssize><ssize>(\d+)</ssize><ssize>(\d+)</ssize>, ) 
+        {
+	    my $hits = $2; my $pages = $3; my $ttlpages = $4;
+            $densityString = (qq{$hits match} . ($hits > 1 ? 'es' : '') .
+                              qq{ in $pages of $ttlpages page} .
+                              ($ttlpages > 1 ? 's' : ''));
+	}
+        else
+        {    $densityString = qq{<!-- bad density result... $result -->};        } 
+    }
+    elsif ($type eq 'boolean') 
+    {
+        if ( $tm->map($cgi->param('rgn'), 'label', 'synthetic') eq 'PAGE' )
+        {
+	    my $search = join('',
+                              qq{thismain = $mainRegion incl [$byte];},
+                              qq{hit = *$firstSearchName within *thismain;},
+                              qq{$pageRegion within *thismain;}
+                             );
+	    my ( $error, $result ) = $xpat->GetSimpleResultsFromQuery( $search );
+
+	    if ($result =~ m,<ssize>(\d+)</ssize><ssize>(\d+)</ssize><ssize>(\d+)</ssize>,) {
+		my $hits = $2; my $ttlpages = $3;
+		$densityString = (qq{$hits matching page} . 
+                                  ($hits > 1 ? 's' : '') .
+                                  qq{ in $ttlpages total page} .
+                                  ($ttlpages > 1 ? 's' : ''));
+	    }
+            else 
+            {	$densityString = qq{<!-- bad density result... $result -->};	    }
+	}
+        else
+        {    $densityString = qq{<!-- no density for non-page rgn boolean... -->};	}
+    }
+
+    # return string of hits....
+    return $densityString;
+    
+}
+
+
+# ----------------------------------------------------------------------
+# NAME         : StripMainHeader
+# PURPOSE      : 
+#                
+# CALLED BY    : 
+# CALLS        : 
+# INPUT        : 
+# RETURNS      : 
+# GLOBALS      : 
+# SIDE-EFFECTS : 
+# NOTES        : take in a main header (be it a TEIHEADER or an article BIBL) and
+#                return all the pieces parts from the two sub functions.
+# ----------------------------------------------------------------------
+
+sub StripMainHeader 
+{
+    my $self = shift;
+    my($sRef) = shift;
+
+    my($id, $title, $author, @rest); # in this order so far.
+
+
+    # DlpsUtils routine to do entity filtering
+    FilterCharEnts_All( $sRef );
+
+#    FilterPartialCharEnts( $sRef );
+    
+#    &DlpsUtils::FilterCharEnts_Misc( $sRef );
+#    &DlpsUtils::FilterCharEnts_ISO_Greek( $sRef );
+
+    if ( ( $ENV{'DEBUG'} eq 'filter' ) ||
+         ( $ENV{'DEBUG'} eq 'filter' )  )
+    {
+	my($copy) = $$sRef;
+        &SimpleHtmlFilter ( \$copy );
+        
+	print(qq{<p>header:<blockquote><tt>$copy</tt></blockquote><p></p>\n\n});
+    }
+
+    if ($$sRef =~ m,<FILEDESC[^>]*>.*?<TITLESTMT[^>]*>.*?<TITLE[^>]*>(.*?),s) {
+	$title = $1;
+    }
+
+    if ($$sRef =~ m,<FILEDESC[^>]*>.*?<TITLESTMT[^>]*>.*?<AUTHOR[^>]*>(.*?),s) {
+	$author = $1;
+    } elsif ($$sRef =~ m,<FILEDESC[^>]*>.*?<TITLESTMT[^>]*>.*?<EDITOR[^>]*>(.*?),s) {
+	$author = $1;
+    }
+
+    if ($$sRef =~ m,<IDNO[^>]*>(.*?),s) {
+	$id = $1;
+    } elsif ($$sRef =~ m,<ACC.NO[^>]*>(.*?),s) {
+	$id = $1;
+    }
+
+    return($id, $title, $author, @rest);
+}
+
+
+# ----------------------------------------------------------------------
+# NAME         : FilterPartialCharEnts
+# PURPOSE      : 
+#                
+# CALLED BY    : 
+# CALLS        : 
+# INPUT        : 
+# RETURNS      : 
+# GLOBALS      : 
+# SIDE-EFFECTS : 
+# NOTES        : This copied from gums-idx.config.pl. Remove character
+#                entity refs which have been split by .shift-300 e.g.
+# ----------------------------------------------------------------------
+
+#sub FilterPartialCharEnts
+#{
+#    my($i) = shift;#
+#
+#    $$i =~ s,(\&[a-z0-9A-Z]+)$,,gs;
+#}
+
+# ----------------------------------------------------------------------
+# NAME         : GetXPatResultSet
+# PURPOSE      : 
+#                
+# CALLED BY    : 
+# CALLS        : 
+# INPUT        : 
+# RETURNS      : 
+# GLOBALS      : 
+# SIDE-EFFECTS : 
+# NOTES        : 
+# ----------------------------------------------------------------------
+
+sub GetXPatResultSet
+{
+    my $self = shift;
+    my $name = shift;
+    
+    return $self->{'resultsets'}{$name};
+}
+
+# ----------------------------------------------------------------------
+# NAME         : GetSearchSet
+# PURPOSE      : 
+#                
+# CALLED BY    : 
+# CALLS        : 
+# INPUT        : 
+# RETURNS      : 
+# GLOBALS      : 
+# SIDE-EFFECTS : 
+# NOTES        : If a search set by this name does not exist, news one
+#                up and returns it.
+# ----------------------------------------------------------------------
+
+sub GetSearchSet
+{
+    my $self = shift;
+    my $name = shift;
+    
+    return $self->{'searchsets'}{$name};
+}
+
+# ----------------------------------------------------------------------
+# NAME         : GetTermMapper
+# PURPOSE      : 
+#                
+# CALLED BY    : 
+# CALLS        : 
+# INPUT        : 
+# RETURNS      : 
+# GLOBALS      : 
+# SIDE-EFFECTS : 
+# NOTES        : 
+# ----------------------------------------------------------------------
+
+sub GetTermMapper
+{
+    my $self = shift;
+    
+    return $self->{'termmapper'};
+}
+
+# ----------------------------------------------------------------------
+# NAME         : SetUpSliceSize
+# PURPOSE      : 
+#                
+# CALLED BY    : 
+# CALLS        : 
+# INPUT        : 
+# RETURNS      : 
+# GLOBALS      : 
+# SIDE-EFFECTS : 
+# NOTES        : 
+# ----------------------------------------------------------------------
+
+sub SetUpSliceSize
+{
+    my $self = shift;
+    my $cgi = shift;
+    
+    if (!$cgi->param( 'start' )) 
+    {	$cgi->param( 'start', '1' );    }
+
+    if (!$cgi->param( 'size' )) 
+    {	$cgi->param( 'size', $self->GetDefaultSliceSize() );    }
+}
+
+# ----------------------------------------------------------------------
+# NAME         : SetCurrentIndentDepth
+# PURPOSE      : 
+#                
+# CALLED BY    : 
+# CALLS        : 
+# INPUT        : 
+# RETURNS      : 
+# GLOBALS      : 
+# SIDE-EFFECTS : 
+# NOTES        : 
+# ----------------------------------------------------------------------
+
+sub SetCurrentIndentDepth
+{
+    my $self = shift;
+    my $depth = shift;
+    
+    $self->{'currdepth'} = $depth;
+}
+
+# ----------------------------------------------------------------------
+# NAME         : GetCurrentIndentDepth
+# PURPOSE      : 
+#                
+# CALLED BY    : 
+# CALLS        : 
+# INPUT        : 
+# RETURNS      : 
+# GLOBALS      : 
+# SIDE-EFFECTS : 
+# NOTES        : 
+# ----------------------------------------------------------------------
+
+sub GetCurrentIndentDepth
+{
+    my $self = shift;
+    
+    return $self->{'currdepth'};
+}
+
+# ----------------------------------------------------------------------
+# NAME         : SetLastIndentLabel
+# PURPOSE      : 
+#                
+# CALLED BY    : 
+# CALLS        : 
+# INPUT        : 
+# RETURNS      : 
+# GLOBALS      : 
+# SIDE-EFFECTS : 
+# NOTES        : 
+# ----------------------------------------------------------------------
+
+sub SetLastIndentLabel
+{
+    my $self = shift;
+    my $label = shift;
+    
+    $self->{'lastlabel'} = $label;
+}
+
+
+# ----------------------------------------------------------------------
+# NAME         : GetCurrentIndentLabel
+# PURPOSE      : 
+#                
+# CALLED BY    : 
+# CALLS        : 
+# INPUT        : 
+# RETURNS      : 
+# GLOBALS      : 
+# SIDE-EFFECTS : 
+# NOTES        : 
+# ----------------------------------------------------------------------
+
+sub GetLastIndentLabel
+{
+    my $self = shift;
+    
+    return $self->{'lastlabel'};
+}
+
+
+# ----------------------------------------------------------------------
+# NAME         : 
+# PURPOSE      : 
+#                
+# CALLED BY    : 
+# CALLS        : 
+# INPUT        : 
+# RETURNS      : 
+# GLOBALS      : 
+# SIDE-EFFECTS : 
+# NOTES        : Sort all words to highlight in descending order by length
+#                otherwise, "atom" may be highlighted even within "atome"
+#                because once the html tag surrounds the hit, it won't be matched....
+# ----------------------------------------------------------------------
+
+sub HighlightHit
+{
+    my ( $sRef, $cgi, $collLocale ) = @_;
+ 
+    # save locale from before the call to this routine
+    my $prevLocale =  setlocale(LC_CTYPE, $collLocale);
+
+    # get all words searched for into one array
+    my @a = ();
+    foreach my $p ( 'q1', 'q2', 'q3' )
+    {
+        if ( $cgi->param ( $p ) )
+        {    push ( @a,  $cgi->param( $p ) );     }
+    } 
+     
+    # sort array in descending order by length of word
+    @a = sort { length( $b ) <=> length( $a ); } @a;
+    
+    foreach my $hit ( @a )
+    {
+        # highlight all regular and flattened matches of the words
+        my $flattenedHit = &Flatten8bitChars( $hit );
+        $$sRef =~ s,\b($hit),<span class="hilite">$1</span>,gis;
+        $$sRef =~ s,\b($flattenedHit),<span class="hilite">$1</span>,gis;
+
+#        $$sRef =~ s,([ \!\@\#\$\%\&\*\{\}\[\]\-\+\=\;\:\'\"\<\>\?\/])($hit),$1<span class="hilite">$2</span>,gis;
+     }
+
+    # return the locale to what it was before this routine
+    setlocale(LC_CTYPE, $prevLocale);
+}
+
+
+
+# ----------------------------------------------------------------------
+# NAME         : RegionNotesSearches
+# PURPOSE      : 
+#                
+# CALLED BY    : 
+# CALLS        : 
+# INPUT        : 
+# RETURNS      : 
+# GLOBALS      : 
+# SIDE-EFFECTS : 
+# NOTES        : 
+# ----------------------------------------------------------------------
+
+sub RegionNotesSearches
+{
+    my $self = shift;
+    my ( $sid, $cgi, $ssetName ) = @_;
+
+    my $id = $cgi->param( 'id' );
+
+    # get ready to search, get SearchSet object and TermMapper object
+    my $sset = $self->GetSearchSet( $ssetName );
+    my $tm   = $self->GetTermMapper( );
+
+    # Basically we want the note content and the closest enclosing DIV of either the
+    # anchor (for PTR-type notes) or the note itself (for inline NOTE-type notes)
+    my $noteEnclosingRgn = $tm->map('TARGETPARENT', 'synthetic', 'native');
+    my $noteContentRgn   = $tm->map('TARGET', 'synthetic', 'native');
+
+    my $noteEnclosingRgnName = $tm->map('TARGETPARENT', 'synthetic', 'nativeregionname');
+    my $noteContentRgnName   = $tm->map('TARGET', 'synthetic', 'nativeregionname');
+
+    my $noteEnclosingRgnLabel  = $sset->SetNamedSearchName( 'notecontentparentrgn', $sid );        
+    my $noteContentRgnLabel = $sset->SetNamedSearchName( 'notecontent', $sid );
+
+    # Note Parent or Target Parent
+    $sset->AddQuery( $noteEnclosingRgnLabel,
+		     qq{pr.region.$noteEnclosingRgnName ($noteEnclosingRgn incl ($noteContentRgn incl "ID=$id"));}
+		   );      
+    # Note or Target Itself
+    $sset->AddQuery( $noteContentRgnLabel,
+		     qq{pr.region.$noteContentRgnName ($noteContentRgn incl "ID=$id");}
+		   );      
+}
+
+# ----------------------------------------------------------------------
+# NAME         : RegionTextSearches
+# PURPOSE      : 
+#                
+# CALLED BY    : 
+# CALLS        : 
+# INPUT        : 
+# RETURNS      : 
+# GLOBALS      : 
+# SIDE-EFFECTS : 
+# NOTES        : 
+# ----------------------------------------------------------------------
+
+sub RegionTextSearches
+{
+    my $self = shift;
+    my ( $sid, $cgi, $ssetName ) = @_;
+
+    my $idno = $cgi->param( 'idno' );
+    my $node = $cgi->param( 'node' );
+    
+
+    # get ready to search, get SearchSet object and TermMapper object
+    my $sset = $self->GetSearchSet( $ssetName );
+    my $tm   = $self->GetTermMapper( );
+
+    # if this is a DIV, we use node attribute to find it
+    if ( $node )
+    {
+        my $searchRegion =  $cgi->param( 'rgn' );
+
+        my $rgn      = $tm->map( $searchRegion, 'label', 'native');
+        my $rgnname  = $tm->map( $searchRegion, 'label', 'nativeregionname');
+        my $nodergn  = $tm->map( 'node', 'label', 'native');
+
+        # mainsearch: formerly flug
+        my $firstSearchName      = $sset->SetNamedSearchName( 'firstsearch', $sid );        
+        my $fullRegionSearchName = $sset->SetNamedSearchName( 'fullregion', $sid );        
+        my $mainHeaderName       = $sset->SetNamedSearchName( 'mainheader', $sid ) ;
+
+#        $sset->AddQuery( $firstSearchName,
+#                         qq{$firstSearchName = ( $rgn incl ( $nodergn incl "$node" ) );} );
+
+        $sset->AddQuery( $firstSearchName,
+                         qq{$firstSearchName = ( $rgn incl ( $nodergn incl "$node " ) );} );
+
+        $sset->AddQuery( $mainHeaderName, # . $sid,
+                         qq{pr.region.mainheader (region mainheader within (region main incl \*$firstSearchName ) );}
+                       );      
+    
+        # this will add searches named by div1head, div2head, etc.
+        $self->AddScopedHeads ( $ssetName, $firstSearchName, $sid );        
+
+        # this will be the sgml of the entire region requested
+        $sset->AddQuery( $fullRegionSearchName,
+                         qq{pr.region.$rgnname} .
+                         qq{ \*$firstSearchName;}
+                       );
+    }
+
+    # if this is a full ITEM, we use idno element to find it
+    elsif ( $idno )
+    {
+        my $idnorgn = $tm->map('IDNO', 'synthetic', 'native');
+        my $fullRegionSearchName = $sset->SetNamedSearchName( 'fullregion', $sid );        
+
+        $sset->AddQuery( $fullRegionSearchName,   #'fullregion' . $sid,
+                         qq{pr.region.main (region main incl ( $idnorgn incl "$idno" ) );} );
+
+
+    }
+}
+
+# ----------------------------------------------------------------------
+# NAME         : HeaderSearchesForHighLel
+# PURPOSE      : 
+#                
+# CALLED BY    : 
+# CALLS        : 
+# INPUT        : 
+# RETURNS      : 
+# GLOBALS      : 
+# SIDE-EFFECTS : 
+# NOTES        : 
+# ----------------------------------------------------------------------
+
+sub HeaderSearchesForHighLel
+{
+    my $self = shift;
+    my ( $sid, $cgi, $ssetName ) = @_;
+    
+    my $idno = $cgi->param('idno');
+
+    my $tm        = $self->GetTermMapper( );
+    my $rgn       = $tm->map('ITEM', 'synthetic', 'native');
+    my $idnorgn   = $tm->map('IDNO', 'synthetic', 'native');
+
+    my $sset = $self->GetSearchSet( $ssetName );
+
+    my $mainHeaderSearchName = $sset->SetNamedSearchName( 'mainheader', $sid );        
+
+    $sset->AddQuery( $mainHeaderSearchName,     #  'mainheader' . $sid,
+                     qq{pr.region.mainheader (region mainheader within ( $rgn  incl ( $idnorgn incl "$idno" ) ) );} );
+    
+    foreach my $divheadNumber ( $self->GetDivHeadRange ) 
+    {
+        my $divRgn = qq{DIV} . $divheadNumber;
+        my $fabRgn = qq{div} . $divheadNumber . qq{head};
+        my $fabRgnSearchName = $sset->SetNamedSearchName( $fabRgn, $sid );        
+
+        $sset->AddQuery(
+                        $fabRgnSearchName, 
+                        qq{pr.region.$fabRgn (region $fabRgn within (region $divRgn within ( $rgn  incl ( $idnorgn incl "$idno" ) ) ) );}
+                       );
+    }
+}
+
+# ----------------------------------------------------------------------
+# NAME         : HeaderSearchesForLowLel
+# PURPOSE      : 
+#                
+# CALLED BY    : 
+# CALLS        : 
+# INPUT        : 
+# RETURNS      : 
+# GLOBALS      : 
+# SIDE-EFFECTS : 
+# NOTES        : 
+# ----------------------------------------------------------------------
+
+sub HeaderSearchesForLowLel
+{
+    my $self = shift;
+    my ( $sid, $cgi, $ssetName ) = @_;
+    
+    my $idno = $cgi->param('idno');
+
+    my $tm        = $self->GetTermMapper( );
+    my $rgn       = $tm->map('ITEM', 'synthetic', 'native');
+    my $idnorgn   = $tm->map('IDNO', 'synthetic', 'native');
+
+    my $sset = $self->GetSearchSet( $ssetName );
+
+    # mainheader search
+    my $mainHeaderRegionName = $sset->SetNamedSearchName( 'mainheaderregion', $sid );        
+    my $mainHeaderTextName   = $sset->SetNamedSearchName( 'mainheadertext', $sid );        
+
+    $sset->AddQuery( $mainHeaderRegionName,
+                     qq{ $mainHeaderRegionName = (region mainheader within ( $rgn  incl ( $idnorgn incl "$idno" ) ) );} );
+
+    # actual sgml text of mainheader
+    $sset->AddQuery( $mainHeaderTextName, 
+                     qq{pr.region.mainheader \*$mainHeaderRegionName;} );
+    
+#                     qq{pr.region.mainheader (\*$mainHeaderRegionName );} );
+}
+
+# ----------------------------------------------------------------------
+# NAME         : 
+# PURPOSE      : 
+#                
+# CALLED BY    : 
+# CALLS        : 
+# INPUT        : 
+# RETURNS      : 
+# GLOBALS      : 
+# SIDE-EFFECTS : 
+# NOTES        : 
+# ----------------------------------------------------------------------
+sub GetItemEncodingLevel
+{
+    my $self = shift;
+    my $cgi  = shift;
+    
+    my $idno    = $cgi->param('idno');
+    my $tm      = $self->GetTermMapper( );
+    my $rgn     = $tm->map('ITEM', 'synthetic', 'native');
+    my $idnorgn = $tm->map('IDNO', 'synthetic', 'native');
+
+    my $xpat = $self->GetXPatObject( );
+    my $query = 
+          qq{pr.region."A-N" (region "A-N" within (region "EDITORIALDECL-T" within ( region mainheader within ( $rgn  incl ( $idnorgn incl "$idno" ) ) ) ) );};
+    my ( $error, $result) = $xpat->GetSimpleResultsFromQuery( $query );
+    
+    &TextClassUtils::StripAllRSetCruft( \$result );
+    
+    return $result;
+}
+
+
+
+
+# ----------------------------------------------------------------------
+# NAME         : HeaderTOCSearches
+# PURPOSE      : create all searches needed for the table of contents in 
+#                a header view
+# CALLED BY    : 
+# CALLS        : 
+# INPUT        : 
+# RETURNS      : 
+# GLOBALS      : 
+# SIDE-EFFECTS : 
+# NOTES        : 
+# ----------------------------------------------------------------------
+
+sub HeaderTOCSearches
+{
+    my $self = shift;
+    my ( $cgi, $name ) = @_;
+    
+    my $sid  = $cgi->param('sid');
+    my $idno = $cgi->param('idno');
+
+    # new up a SearchSet and a ResultSet
+    $self->AddSearchSet ( $name );
+    $self->AddResultSet ( $name );
+    my $sset = $self->GetSearchSet( $name );
+    
+
+    # get region names for searching
+    my $tm   = $self->GetTermMapper( );
+    my $rgn = $tm->map('ITEM', 'synthetic', 'native');
+    my $idnorgn = $tm->map('IDNO', 'synthetic', 'native');
+
+    my $mainHeaderSearchName = $sset->SetNamedSearchName( 'mainheader', $sid );        
+
+    # get the header for item regardless of LEL
+    $sset->AddQuery( $mainHeaderSearchName,     #  'mainheader' . $sid,
+                     qq{pr.region.mainheader (region mainheader within ( $rgn  incl ( $idnorgn incl "$idno" ) ) );} );
+    
+        foreach my $divheadNumber ( $self->GetDivHeadRange ) 
+        {
+            my $divRgn = qq{DIV} . $divheadNumber;
+            my $fabRgn = qq{div} . $divheadNumber . qq{head};
+
+            my $fabRgnSearchName = $sset->SetNamedSearchName( $fabRgn, $sid );        
+
+            $sset->AddQuery(
+                            $fabRgnSearchName,   #  . $sid,
+                            qq{pr.region.$fabRgn (region $fabRgn within (region $divRgn within ( $rgn  incl ( $idnorgn incl "$idno" ) ) ) );}
+                           );
+        }
+}
+
+
+# ----------------------------------------------------------------------
+# NAME         : _HeaderFilter
+# PURPOSE      : 
+#                
+# CALLED BY    : 
+# CALLS        : 
+# INPUT        : 
+# RETURNS      : 
+# GLOBALS      : 
+# SIDE-EFFECTS : 
+# NOTES        : 
+# ----------------------------------------------------------------------
+
+sub _HeaderFilter
+{
+    my $headRef = shift;
+
+    # this filter code mostly copied and pasted from original gums-idx....
+    $$headRef =~ s,<HEADER[^>]*>,<table width="100%" align="center">,s;
+    $$headRef =~ s,,</table>,s;
+    
+    $$headRef =~ s,(<PUBLICATIONSTMT[^>]*>.*?)<IDNO[^ISBN]*>(.*?),<tr valign="top"><td align="right"><strong>Text ID:</strong></td><td>$2</td></tr>$1,gs;
+    $$headRef =~ s,(<PUBLICATIONSTMT[^>]*>.*?)<ACC.NO[^>]*>(.*?),<tr valign="top"><td align="right"><strong>Chadwyck-Healey<br>Text ID:</strong></td><td>$2</td></tr>$1,gs;
+
+    ## filedesc/titlestmt/title|author|editor
+    if ($$headRef =~ s,(<FILEDESC[^>]*>)\s*(<TITLESTMT[^>]*>(.*?)),$1<sp0t>,s) {
+	my($titlstmt) = $3;
+	$titlstmt =~ s,<TITLE[^>]*>(.*?),<tr valign="top"><td align="right"><strong>Title:</strong></td><td>$1</td></tr>,gs;
+	$titlstmt =~ s,<AUTHOR[^>]*>(.*?),<tr valign="top"><td align="right"><strong>Author:</strong></td><td>$1</td></tr>,gs;
+	$titlstmt =~ s,<EDITOR[^>]*>(.*?),<tr valign="top"><td align="right"><strong>Editor:</strong></td><td>$1</td></tr>,gs;
+
+	## respstmt
+	if ($titlstmt =~ s,<RESPSTMT[^>]*>(.*?),<tr valign="top"><td align="right"><strong>Responsibility:</strong></td><td><table><sp0t></table></td></tr>,s) {
+	    my($resp) = $1;
+	    $resp =~ s,<(RESP|NAME)[^>]*>([^<>]*?)</\1><<(RESP|NAME)[^>]*>([^<>]*?)</$3>,<tr valign="top"><td>$2</td><td>$4</td></tr>,gs;
+	    $resp =~ s,<(RESP|NAME)[^>]*>([^<>]*?)</\1>,<tr valign="top"><td>$2</td></tr>,gs;
+	    $titlstmt =~ s,<sp0t>,$resp,;
+	}
+
+	$$headRef =~ s,<sp0t>,$titlstmt,;
+    }
+
+    $$headRef =~ s,<SERIESSTMT[^>]*>\s*<TITLE[^>]*>(.*?)\s*,<tr valign="top"><td align="right"><strong>Series:</strong></td><td>$1</td></tr>,gs;
+
+    if ($$headRef =~ s,<SOURCEDESC[^>]*>(.*?),<sp0t>,s) {
+	my($src) = $1;
+
+	$src =~ s,</?(TITLESTMT|BIBL|BIBLFULL|PUBLICATIONSTMT)[^>]*>,,gs;
+	$src =~ s,<TITLE[^>]*>,<i>,gs;
+	$src =~ s,</TITLE[^>]*>,</i><br>,gs;
+	$src =~ s,<AUTHOR[^>]*>,,gs;
+	$src =~ s,</AUTHOR[^>]*>,<br>,gs;
+	$src =~ s,<EDITOR[^>]*>,,gs;
+	$src =~ s|</EDITOR[^>]*>|\, ed.<br>|gs;
+	$src =~ s,<EXTENT[^>]*>,,gs;
+	$src =~ s,</EXTENT[^>]*>,<br>,gs;
+	$src =~ s|<DATES[^>]*>(.*?)| \($1\)|gs;
+	$src =~ s|<EDITION[^>]*>(.*?)| $1\:&nbsp;|gs;
+	$src =~ s|<biblscope>| pages |gs;
+	$src =~ s|</biblscope>|\.|gs;
+	$src =~ s|<PUBLISHER[^>]*>(.*?)\s*<PUBPLACE[^>]*>(.*?)\s*<idno type="ISBN">(.*?)</idno>\s*<DATE[^>]*>(.*?)|$2: $1, $4<br>ISBN: $3|gs;
+	$src =~ s,<PUBLISHER[^>]*>,,gs;
+	$src =~ s,,<br>,gs;
+	$src =~ s,<PUBPLACE[^>]*>,,gs;
+	$src =~ s,,<br>,gs;
+	$src =~ s|<DATE[^>]*>(.*?)| $1<br>|gs;
+	$src =~ s|<BIBLSCOPE\sTYPE="vol">(.*?)| <br>Volume $1 |gs;
+
+
+	$$headRef =~ s,<sp0t>,<tr valign="top"><td align="right"><strong>Source Description:</strong></td><td>$src</td></tr>,;
+    }
+
+
+    ## publicationstmt
+    while ($$headRef =~ s,<PUBLICATIONSTMT[^>]*>(.*?),<tr valign="top"><td align="right"><strong>Publication Information:</strong></td><td><sp0t></td></tr>,s) {
+	my($publ) = $1;
+	$publ =~ s,<PUBLISHER[^>]*>,,gs;
+	$publ =~ s,,<br>,gs;
+
+	$publ =~ s,<PUBPLACE[^>]*>,,gs;
+	$publ =~ s,,<br>,gs;
+
+	$publ =~ s,<ADDRESS[^>]*>,,gs;
+	$publ =~ s,,<br>,gs;
+
+	$publ =~ s,<AVAILABILITY[^>]*>,,gs;
+	$publ =~ s,,<br>,gs;
+
+	$publ =~ s,<AUTHORITY[^>]*>,,gs;
+	$publ =~ s,,<br>,gs;
+
+	$publ =~ s,<DISTRIBUTOR[^>]*>,,gs;
+	$publ =~ s,,<br>,gs;
+
+	$publ =~ s,<SERIES[^>]*>,,gs;
+	$publ =~ s,,<br>,gs;
+
+	$publ =~ s,<DATE[^>]*>,,gs;
+	$publ =~ s,,<br>,gs;
+
+	$publ =~ s,</?P>,<br>,gs;
+	$publ =~ s,<br>\s*<br>,<br>,gs;
+	
+	$$headRef =~ s,<sp0t>,$publ,;
+    }
+  
+    ## encodingdesc
+    if ($$headRef =~ s,<ENCODINGDESC[^>]*>(.*?),<tr valign="top"><td align="right"><strong>Encoding Description:</strong></td><td><sp0t></td></tr>,s) {
+	my($encd) = $1;
+
+	$encd =~ s,<PROJECTDESC[^>]*>(.*?),<table><tr valign="top"><td>Project Description:</td><td>$1</td></tr></table>,gs;
+
+	$encd =~ s,<EDITORIALDECL[^>]*>(.*?),<table><tr valign="top"><td>Editorial Declaration:</td><td>$1</td></tr></table>,gs;
+
+	$$headRef =~ s,<sp0t>,$encd,;
+    }
+
+    $$headRef =~ s,<ALIAS[^>]*>(.*?), \(a.k.a. $1\),gs;
+
+    $$headRef =~ s,<HI(\d+)[^>]*REND=\"([Ss][Mm][Cc][Aa][Pp])\"[^>]*>(.*?)</HI\1>,$HIstarts{lc($2)} . uc($3) . $HIends{lc($2)},gse;
+    $$headRef =~ s,<HI(\d+)[^>]*REND=\"([^\"]+)\"[^>]*>(.*?)</HI\1>,$HIstarts{lc($2)} . $3 . $HIends{lc($2)},gse;
+    $$headRef =~ s,<HI(\d+)[^>]*>(.*?)</HI\1>,<em>$2</em>,gs;
+    $$headRef =~ s,</?DESCRIP>, ,gs;
+
+    $$headRef =~ s,<LIST[^>]*>,<ul>,gs;
+    $$headRef =~ s,,</ul>,gs;
+    $$headRef =~ s,<ITEM[^>]*>,<li>,gs;
+    $$headRef =~ s,,</li>,gs;
+    
+    $$headRef =~ s,<EXTENT[^>]*>(.*?),<tr valign="top"><td align="right"><strong>Extent:</strong></td><td>$1</td></tr>,gs;
+    
+    $$headRef =~ s,<EDITION[^>]*>,,gs;
+    $$headRef =~ s,,,gs;
+    $$headRef =~ s,<EDITION[^>]*>(.*?),$1,gs;
+    
+    $$headRef =~ s,<EDITIONSTMT[^>]*>,,gs;
+    $$headRef =~ s,,,gs;
+    $$headRef =~ s,<EDITIONSTMT[^>]*>(.*?),$1,gs;
+    
+    $$headRef =~ s,<ENCODINGDESC[^>]*>,,gs;
+    $$headRef =~ s,,,gs;
+    $$headRef =~ s,<ENCODINGDESC[^>]*>(.*?),$1,gs;
+    
+    $$headRef =~ s,</?FILEDESC[^>]*>,,gs;
+
+    $$headRef =~ s,<KEYWORDS[^>]*>,,gs;
+    $$headRef =~ s,,,gs;
+    $$headRef =~ s,<KEYWORDS[^>]*>(.*?),$1,gs;
+
+    $$headRef =~ s,<LANGUAGE[^>]*>,,gs;
+    $$headRef =~ s,,,gs;
+    $$headRef =~ s,<LANGUAGE[^>]*>(.*?),$1,gs;
+
+    $$headRef =~ s,<LANGUSAGE[^>]*>,,gs;
+    $$headRef =~ s,,,gs;
+    $$headRef =~ s,<LANGUSAGE[^>]*>(.*?),$1,gs;
+
+    if ($$headRef =~ s,<NOTESSTMT[^>]*>(.*?),<sp0t>,s) {
+	my($tmp) = $1;
+	$tmp =~ s,<NOTE[^>]*>(.*?),<tr valign="top"><td align="right"><strong>Note:</strong></td><td>$1</td></tr>,gs;
+	$$headRef =~ s,<sp0t>,$tmp,;
+    }
+
+    if ($$headRef =~ s,<PROFILEDESC[^>]*>(.*?),<sp0t>,s) {
+	my($profile) = $1;
+	$profile =~ s,</?TEXTCLASS[^>]*>,,gs;
+	$profile =~ s,</?LANGUSAGE[^>]*>,,gs;
+	$profile =~ s,<KEYWORDS[^>]*>(.*?),<tr valign="top"><td align="right"><strong>Keywords:</strong></td><td>$1</td></tr>,gs;
+
+	$profile =~ s,<TERM[^>]*TYPE="[Pp][Uu][Bb][Ll]"[^>]*>(.*?),$1<br>,gs;
+	$profile =~ s,<TERM[^>]*TYPE="[Pp][Ee][Rr][Ff]"[^>]*>(.*?),$1<br>,gs;
+	$profile =~ s,<TERM[^>]*TYPE="edition"[^>]*>(.*?),$1 edition<br>,gs;
+	$profile =~ s,<TERM[^>]*TYPE="[Gg][Ee][Nn][Rr][Ee]"[^>]*>(.*?),Genre: $1<br>,gs;
+	$profile =~ s,<TERM[^>]*TYPE="[Pp][Ee][Rr][Ii][Oo][Dd]"[^>]*>(.*?),$1<br>,gs;
+
+	$$headRef =~ s,<sp0t>,$profile,;
+    }
+
+    $$headRef =~ s,<TERM[^>]*>,,gs;
+    $$headRef =~ s,,,gs;
+    $$headRef =~ s,<TERM[^>]*>(.*?),$1,gs;
+    
+    $$headRef =~ s,<TITLE[^>]*>,,gs;
+    $$headRef =~ s,,,gs;
+    $$headRef =~ s,<TITLE[^>]*>(.*?),$1,gs;
+    
+    $$headRef =~ s,<TITLESTMT[^>]*>,,gs;
+    $$headRef =~ s,,,gs;
+    $$headRef =~ s,<TITLESTMT[^>]*>(.*?),$1,gs;
+
+    # DlpsUtils routine to do entity filtering
+    FilterCharEnts_All( $headRef );
+
+    return $$headRef;
+}
+
+
+# ----------------------------------------------------------------------
+# NAME         : _SearchWithinLinks
+# PURPOSE      : Take in an id, return a scalar that contains
+#                text and links for searches restricted to that text 
+# CALLED BY    : 
+# CALLS        : 
+# INPUT        : 
+# RETURNS      : 
+# GLOBALS      : 
+# SIDE-EFFECTS : 
+# NOTES        : Was part of __thisTextToolbar in gums-idx.dev
+#                Needs work. Just stubbed in right now.
+# ----------------------------------------------------------------------
+
+
+sub _SearchWithinLinks
+{
+    my $self = shift;
+    my $cgi = shift;
+
+    my $idno = $cgi->param( 'idno' );
+
+    my $tm = $self->GetTermMapper( );
+    my $xpat = $self->GetXPatObject( );
+    my $coll = $self->GetValueByKey( 'collid' );
+
+    my ( $searchLinks );
+
+
+    $searchLinks = 
+      join ( "\n", 
+             qq{<a href="../$ENV%7B%27SCRIPT_NAME%27%7D?cc=$coll%5C&amp;c=$coll%5C&amp;page=simple%5C&amp;idno=$idno">simple search</a>}, ',',
+             qq{<a href="../$ENV%7B%27SCRIPT_NAME%27%7D?cc=$coll%5C&amp;c=$coll%5C&amp;page=proximity%5C&amp;idno=$idno">proximity search</a>}, 'or',
+             qq{<a href="../$ENV%7B%27SCRIPT_NAME%27%7D?cc=$coll%5C&amp;c=$coll%5C&amp;page=boolean%5C&amp;idno=$idno">boolean search</a>}
+          );
+    
+
+    # do pat search for main region
+    my($idRgn) = $tm->map('IDNO', 'synthetic', 'native');
+    
+    my ( $error, $startEnd ) = $xpat->GetSimpleResultsFromQuery(qq{pr.region.main (region main incl ($idRgn incl "$idno")); });
+
+    if ( $ENV{'DEBUG'} ) 
+    {	print(qq{<h2><blink>pr.region.main (region main incl ($idRgn incl "$idno"));<br>$startEnd</blink></h2>});    }
+
+    my ( $htmlLink, $htmlSize );
+    
+    if ( $error )
+    {
+        $htmlLink = qq{<b>Error returned from XPat search: $error</b>\n};
+    }
+    elsif ( $startEnd =~ m,<start>(\d+)</start><end>(\d+)</end>, )
+    {
+        $htmlSize = $2 - $1;
+	if (($htmlSize / (1024 * 1024)) > 1) 
+        {    $htmlSize = ' (~' . ((int(10 * ($htmlSize / (1024 * 1024)))) / 10) . ' megabytes)';  }
+        elsif (($htmlSize / 1024) > 1)
+        {    $htmlSize = ' (~' . ((int(10 * ($htmlSize / 1024))) / 10) . ' kilobytes)';  }
+        else 
+        {    $htmlSize = " ($htmlSize bytes)";   }
+        
+        $htmlLink = qq{<br><br><a href="../$ENV%7B%27SCRIPT_NAME%27%7D?cc=$coll%5C&amp;c=$coll%5C&amp;view=text%5C&amp;idno=$idno%5C&amp;rgn=main">View the entire text</a>$htmlSize.\n};
+    }
+    else
+    {
+        $htmlLink = qq{<b>Nothing found with id number $idno in collection $coll</b>\n};
+    }
+
+    return($searchLinks . $htmlLink);
+
+}
+
+
+# ----------------------------------------------------------------------
+# NAME         : TextFilter
+# PURPOSE      : 
+#                
+# CALLED BY    : 
+# CALLS        : 
+# INPUT        : 
+# RETURNS      : 
+# GLOBALS      : 
+# SIDE-EFFECTS : 
+# NOTES        : was separate gumsfilt.pl file
+# ----------------------------------------------------------------------
+
+sub TextFilter
+{
+    my $self = shift;
+    my ( $sRef, $collid, $idno, $cgi ) = @_;
+
+    my $results = '';
+    
+    ## GUMS SGML filter. expects command line options for certain optional
+    ## text-processing variables, and then text from STDIN, to be returned
+    ## on STDOUT.  tries to do some intelligent chunking of input so that
+    ## things dont block.
+
+    ## will process a HEADER in a no-frills way if present, otherwise
+    ## just concentrates on the TEXT.  this processes text such that it
+    ## will be placed in an HTML BODY element, there are some things that
+    ## the caller is responsible for (things in the HTML HEAD element,
+    ## say)
+
+    ## this filter might need to know:
+    
+    ## -O <file to require>		# optional requires for special
+                                        # routines (how to make EMBEDs or
+                                        # special hyperlinks)
+    
+    ## at the top of each loop through input line(s) there is a check to
+    ## see if optional requires were made, and if so then
+    ## &main::gumsFiltOptionals(\$i) is called (so the required file must
+    ## define this, it must accept a reference to a scalar as the first
+    ## and only argument).
+    
+    ## -F <fragment>		# url fragments for external entities
+                                # like images or other auxiliary files
+    
+    ## -A <system path>         # a path that is the system path represented
+				# by the -F argument, so this script can
+				# check to see whats there that fits
+				# the entity.
+
+    ## this value, if present, gets used in the generic graphic/image
+    ## filtering, assuming the value of the given entity attributes means
+    ## a filename of some kind.
+    
+    my    @EntityExtensionsToCheck = (
+                                      '.gif',
+                                      '.jpeg',
+                                      '.jpg',
+                                      '.tif',
+                                      '.tiff',
+                                      '.mov',
+                                      '.GIF',
+                                      '.JPEG',
+                                      '.JPG',
+                                      '.TIF',
+                                      '.TIFF',
+                                      '.MOV',
+                                     );
+    
+    my %HIstarts = (
+                    'italic' => ' <i>',
+                    'ital' => ' <i>',
+                    'italics' => ' <i>',
+                    'italics, underlined' => ' <i><u>',
+                    'italics?' => ' <i>',
+                    'smcap' => ' <font size="-1"><b>',
+                    'sc' => ' <font size="-1"><b>',
+                    'scital' => ' <font size="-1"><b><i>',
+                    'underlined' => ' <u>',
+                    'und' => ' <u>',
+                    'gothic' => ' ',
+                    'underlined 2x' => ' <u>',
+                    'underlined 3x' => ' <u>',
+                    'indented' => '<br>&nbsp;&nbsp;&nbsp;&nbsp;',
+                   );
+    my %HIends = (
+                  'italic' => '</u></u></u></u></i><u><u><u><u> ',
+                  'ital' => '</u></u></u></u></b></font></b></font></b></font></i><font size="-1"><b><font size="-1"><b><font size="-1"><b><u><u><u><u> ',
+                  'italics' => '</u></u></u></u></b></font></b></font></b></font></u></i><u><font size="-1"><b><font size="-1"><b><font size="-1"><b><u><u><u><u> ',
+                  'italics, underlined' => '</u></u></u></u></b></font></b></font></b></font></u></i><u><font size="-1"><b><font size="-1"><b><font size="-1"><b><u><u><u> ',
+                  'italics?' => '</u></u></u></b></font></b></font></b></font></u></i><u><font size="-1"><b><font size="-1"><b><font size="-1"><b><u><u><u> ',
+                  'smcap' => '</u></u></u></b></font><u><u><u> ',
+                  'sc' => '</u></u></u></b></font><u><u><u> ',
+                  'scital' => '</u></u></u></b></font></u></i><u><u><u><u> ',
+                  'underlined' => '</u> ',
+                  'und' => '</u> ',
+                  'gothic' => ' ',
+                  'underlined 2x' => ' </u>',
+                  'underlined 3x' => ' </u>',
+                  'indented' => '',
+                 );
+    
+    if ($$sRef =~ s,(<HEADER[^>]*>.*?),<sp0t>,s) 
+    {
+        my $header = $1;
+        $header = &_HeaderFilter( \$header );
+        $$sRef =~ s,<sp0t>,<div class="header">$header</div><hr>,;
+    }
+
+    ## body below
+    
+    ## DIVs
+    while ($$sRef =~ s,<DIV(\d+)[^>]*>(.*?)</DIV\1>,<p>$2</p>,gs) { }
+    while ($$sRef =~ s,<DIV(\d+)[^>]*>,\n,gs) { }
+    
+    ## DIV-ish things that are not named DIV\d+
+    $$sRef =~ s,<(ARGUMENT|CLOSER|DEDICAT|EPIGRAPH|PREFACE|SIGNED|TRAILER)[^>]*>,<blockquote>,gs;
+    $$sRef =~ s,</(ARGUMENT|CLOSER|DEDICAT|EPIGRAPH|PREFACE|SIGNED|TRAILER)>,</blockquote>,gs;
+    
+    ## ueber containers
+    
+    $$sRef =~ s,<TEXT[^>]*>,,gs;
+    $$sRef =~ s,,,gs;
+    
+    $$sRef =~ s,<FRONT[^>]*>,,gs;
+    $$sRef =~ s,,,gs;
+    
+    $$sRef =~ s,<BACK[^>]*>,,gs;
+    $$sRef =~ s,,,gs;
+    
+    $$sRef =~ s,<BODY[^>]*>,,gs;
+    $$sRef =~ s,,,gs;
+    
+    $$sRef =~ s,<GUMS[^>]*>,,gs;
+    $$sRef =~ s,,,gs;
+    
+    $$sRef =~ s,<POETGRP[^>]*>,,gs;
+    $$sRef =~ s,,,gs;
+    
+    ## appearance of text
+    $$sRef =~ s,<HI(\d+)[^>]*REND=\"([Ss][Mm][Cc][Aa][Pp])\"[^>]*>(.*?)</HI\1>,$HIstarts{lc($2)} . uc($3) . $HIends{lc($2)},gse;
+    
+    $$sRef =~ s,<HI(\d+)[^>]*REND="sub"[^>]*>(.*?)</HI\1>,<sub>$2</sub>,gs;
+    $$sRef =~ s,<HI(\d+)[^>]*REND="sup"[^>]*>(.*?)</HI\1>,<sup>$2</sup>,gs;
+    $$sRef =~ s,<HI(\d+)[^>]*REND="u"[^>]*>(.*?)</HI\1>,<u>$2</u>,gs;
+    $$sRef =~ s,<HI(\d+)[^>]*REND="ITALIC"[^>]*>(.*?)</HI\1>,<i>$2</i>,gs;
+    $$sRef =~ s,<HI(\d+)[^>]*REND="italic"[^>]*>(.*?)</HI\1>,<i>$2</i>,gs;
+    $$sRef =~ s,<HI(\d+)[^>]*REND="BOLD"[^>]*>(.*?)</HI\1>,<b>$2</b>,gs;
+    $$sRef =~ s,<HI(\d+)[^>]*REND="bold"[^>]*>(.*?)</HI\1>,<b>$2</b>,gs;
+    
+    ## why isn't this working properly?  I understand what Nigel was trying to do
+    ## but it just isn't happening.
+    
+    #$$sRef =~ s,<HI(\d+)[^>]*REND=\"([^\"]+)\"[^>]*>(.*?)</HI\1>,$HIstarts{lc($2)} . $3 . $HIends{lc($2)},gse;
+    
+    ## and here we punt
+    $$sRef =~ s,<HI(\d+)[^>]*>(.*?)</HI\1>,<em>$2</em>,gs;
+    
+    $$sRef =~ s,<FOREIGN[^>]*>,<em>,gs;
+    $$sRef =~ s,,</em>,gs;
+    
+    ## lines, line groups, line breaks
+    $$sRef =~ s,<l [^>]*>,,gs;
+    $$sRef =~ s,<l>,,gs;
+    $$sRef =~ s,</l>,<br>\n,gs;
+    $$sRef =~ s,<l [^>]*>(.*?)</l>,$1,gs;
+    $$sRef =~ s,<l>(.*?)</l>,$1,gs;
+    $$sRef =~ s,<Q1[^>]*>,<p>,gs;
+    $$sRef =~ s,,</p>,gs;
+    $$sRef =~ s,<LB[^>]*>,<br>,gs;
+    
+    $$sRef =~ s,<LG[^>]*>(.*?),<p class="lg">$1</p>,gs;
+    
+    $$sRef =~ s,<BIBL[^>]*>(.*?),$1,gs;
+    $$sRef =~ s,<BIBLFULL[^>]*>(.*?),$1,gs;
+    
+    $$sRef =~ s,<CAESURA[^>]*>,<p class="ceasura">(ceasura)</p>,gs;
+    $$sRef =~ s,<GAP[^>]*>,<p class="gap">(gap)</p>,gs;
+    
+    ## random junk
+    $$sRef =~ s,<ALIAS[^>]*>(.*?), \(a.k.a. $1\),gs;
+    
+    
+    $$sRef =~ s,<CAPTION[^>]*>(.*?),$1,gs;
+    
+    $$sRef =~ s,<COLL[^>]*>(.*?),$1,gs;
+    
+    $$sRef =~ s,<DESCRIP[^>]*>,,gs;
+    $$sRef =~ s,,,gs;
+    s,<DESCRIP[^>]*>(.*?),$1,gs;
+    $$sRef =~ s,<OPENER[^>]*>,,gs;
+    $$sRef =~ s,,<br>,gs;
+    
+    # this is a nasty non-gumsian hack to get around a need to show the 
+    # genre and publication info for Yeats, which is not in the header.
+    # it's the best I can do with my feeble skills. sooty 10-25-99
+    
+    $$sRef =~ s|<divinfo><author>(.*?)</author><keywords><term type=\"genre\">(.*?)</term><term date=\"([0-9]+)\" type=\"publ\">([0-9]+)</term><term type=\"gender\">(.*?)</term></keywords></divinfo>|<table border="1" cellspacing="0" cellpadding="4"><tbody><tr><td align="left" valign="middle" bgcolor="cccccc" width="135"><b><font color="000000">About this work:</font></b></td><td>Author: $1</td><td>Gender: $5</td><td>Genre: $2</td><td>First published: $4</td></tr></tbody></table>|gs;
+    
+    # if I were a better programmer, I wouldn't have to do this for ones without genre. sooty 01-14-00
+    
+    $$sRef =~ s|<divinfo><author>(.*?)</author><keywords><term date=\"([0-9]+)\" type=\"publ\">([0-9]+)</term><term type=\"gender\">(.*?)</term></keywords></divinfo>|<table border="1" cellspacing="0" cellpadding="4"><tbody><tr><td align="left" valign="middle" bgcolor="cccccc" width="135"><b><font color="000000">About this work:</font></b></td><td>Author: $1</td><td>Gender: $4</td><td>This edition published: $2</td></tr></tbody></table>|gs;
+    
+    $$sRef =~ s,<divinfo rhymed=[^>]*>(.*?)</divinfo>,<!-- divinfo was here -->,gs;
+    
+    ## Hack for Pound page images
+    
+    while ($$sRef =~ s,<FIGURE[^>]*ID=\"([^\"]+)\"[^>]*>(.*?),<div class="figure"><sp0t>$2</div>,s) {
+        my($entity) = $1;
+        if ($opt_A) {
+            my($realPath);
+            my($found) = 0;
+          ENTLOOP:
+            foreach my $ent ($entity, lc($entity), uc($entity)) {
+                foreach my $ext (@EntityExtensionsToCheck) {
+                    if (-e "$opt_A/$ent$ext") {
+                        $realPath = "$opt_F/$ent$ext";
+                        $found = 1;  # truth for test below
+                        last ENTLOOP;
+                    }
+                }
+            }
+            if ($found)
+            {
+                $$sRef =~ s,<sp0t>,<a href="../$realPath">see page image</a>,;
+            }
+            else
+            {
+                $$sRef =~ s,<sp0t>,<!-- missing $entity? -->,;
+            }
+        } else {
+            my $ext = ".gif";
+            if (-e "$opt_F/$entity$ext")
+            {
+                $$sRef =~ s,<sp0t>,<img src="../$opt_F$entity$ext">,;
+            }
+            else
+            {
+                $$sRef =~ s,<sp0t>,<!-- missing $entity? -->,;
+            }
+        }
+    }
+    
+    while ($$sRef =~ s,<FIGURE[^>]*ENTITY=\"([^\"]+)\"[^>]*>(.*?),<div class="figure"><sp0t>$2</div>,s) {
+        my($entity) = $1;
+        if ($opt_A) {
+            my($realPath);
+            my($found) = 0;
+          ENTLOOP:
+            foreach my $ent ($entity, lc($entity), uc($entity)) {
+                foreach my $ext (@EntityExtensionsToCheck) {
+                    if (-e "$opt_A/$ent$ext") {
+		    $realPath = "$opt_F/$ent$ext";
+		    $found = 1;  # truth for test below
+		    last ENTLOOP;
+		}
+                }
+            }
+            if ($found)
+            {
+                $$sRef =~ s,<sp0t>,<img src="../$realPath">,;
+            }
+            else
+            {
+                $$sRef =~ s,<sp0t>,<!-- missing $entity? -->,;
+            }
+        } else {
+            my $ext = ".gif";
+            if (-e "$opt_F/$entity$ext")
+            {
+                $$sRef =~ s,<sp0t>,<img src="../$opt_F$entity$ext">,;
+            }
+            else
+            {
+                $$sRef =~ s,<sp0t>,<!-- missing $entity? -->,;
+            }
+        }
+    }
+    
+    $$sRef =~ s,<FIRSTL[^>]*>(.*?),<br><strong>$1</strong>,gs;
+    ## poetry line numbers, only those ending in zero show
+    $$sRef =~ s,<milestone unit=\"line number\" N=\"([^\"]+0)\">(.*?)<br>,$2&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font size="-1">[$1]</font><br>,gs;
+    $$sRef =~ s,<milestone unit=\"line number\" N=\"([^\"]+[^0])\">(.*?)<br>,$2<br>,gs;
+    $$sRef =~ s,<milestone unit=\"line number\" N=\"1\">,,gs;
+    $$sRef =~ s,<milestone unit=\"line number\" N=\"2\">,,gs;
+    $$sRef =~ s,<milestone unit=\"line number\" N=\"3\">,,gs;
+    $$sRef =~ s,<milestone unit=\"line number\" N=\"4\">,,gs;
+    $$sRef =~ s,<milestone unit=\"line number\" N=\"5\">,,gs;
+    $$sRef =~ s,<milestone unit=\"line number\" N=\"6\">,,gs;
+    $$sRef =~ s,<milestone unit=\"line number\" N=\"7\">,,gs;
+    $$sRef =~ s,<milestone unit=\"line number\" N=\"8\">,,gs;
+    $$sRef =~ s,<milestone unit=\"line number\" N=\"9\">,,gs;
+    ## ripping out prose line numbers
+    $$sRef =~ s,<milestone unit=\"line number\" N=\"([^\"]+[^0])\">,,gs;
+    $$sRef =~ s,<milestone unit=\"line number\" N=\"([^\"]+0)\">,,gs;
+    
+    $$sRef =~ s,<milestone unit=\"typographic\" n=\"([^\"]+)\">,<br>$1<br>,gs;
+    $$sRef =~ s,<HEAD[^>]*>(.*?),<h4>$1</h4>,gs;
+    
+    $$sRef =~ s,<LIST[^>]*>,<ul>,gs;
+    $$sRef =~ s,,</ul>,gs;
+    $$sRef =~ s,<ITEM[^>]*>,<li>,gs;
+    $$sRef =~ s,,</li>,gs;
+    $$sRef =~ s,<label>(.*?)</label>\s*<li>,<li>$1 ,g;
+    
+    $$sRef =~ s,<APP[^>]*>,<ul>,gs;
+    $$sRef =~ s,,</ul>,gs;
+    $$sRef =~ s,<WIT[^>]*>,<li>,gs;
+    $$sRef =~ s,,:&nbsp;&nbsp;,gs;
+    $$sRef =~ s,<RDG[^>]*>,,gs;
+    $$sRef =~ s,,</li>,gs;
+    
+    
+    $$sRef =~ s,<NAME[^>]*>, ,gs;
+    $$sRef =~ s,, ,gs;
+    
+    $$sRef =~ s,<ORIGINAL[^>]*>,,gs;
+    $$sRef =~ s,,,gs;
+    $$sRef =~ s,<ORIGINAL[^>]*>(.*?),$1,gs;
+    
+    ## --------------------------------------------------
+    ## Handling of PB tags and possible links to page images
+    TextClassUtils::FilterPBs( $sRef, $collid, $idno, $cgi );
+    
+
+#    $$sRef =~ s,<pb ref=\"hti.bosnia.([^\.]+).0000.([^\.]+).[^\"]*\"[^>]*ID=\"[^\"]+\"[^>]*N=\"([^\"]+)\"[^>]*>,<hr width="10%"><center>Page $3<br><a href=../%5C%22/bin/pageviewer/smplpageviewer%5C?coll=bosnia%C2isid=$1&amp;file=0000$2.tif%5C%22 target=\"pages\">view page image</a></center>,gs;
+#    $$sRef =~ s,<PB[^>]*ID=\"([^\"]+)\"[^>]*N=\"([^\"]+)\"[^>]*>,<hr width="10%"><center>Page $2; ID:  $1</center>,gs;
+#    $$sRef =~ s,<PB[^>]*N=\"([^\"]+)\"[^>]*>,<p></p><hr width="10%"><center>Page $1</center><p>,gs;
+#    $$sRef =~ s,<PB[^>]*>,<hr width="10%">,gs;
+    
+    $$sRef =~ s,<SPEAKER[^>]*>(.*?),<br><span class="speaker"><strong>$1</strong>:</span><br>,gs;
+    
+    $$sRef =~ s,<STAGE[^>]*>(.*?),<p class="stage"><em>[$1]</em></p>,gs;
+    
+    $$sRef =~ s,<NUM[^>]*>(.*?), $1 ,gs;
+    
+    $$sRef =~ s,<(/?)CELL[^>]*>,<$1td>,gs;
+    $$sRef =~ s,<(/?)ROW[^>]*>,<$1tr>,gs;
+    $$sRef =~ s,<p></p>,<p></p>  ,gs;
+    
+#     ##
+#     ## notes handling
+#     ##
+#     
+#     my @notes;
+#     my $noteRefNum = 1;
+#     while ($$sRef =~ s,<NOTE(\d+)[^>]*ID=\"([^\"]+)\"[^>]*>(.*?)</NOTE\1>,<sp0t>,s) {
+#         my($noteId) = $2;
+#         my($noteContent) = $3;
+#         $$sRef =~ s,<sp0t>, <sup><a name="ref.$noteRefNum.$noteId" href="../%5C#$noteRefNum.$noteId">$noteId</a></sup><br> ,;
+#         ( $noteRefNum, @notes ) = &recurseNotes($noteContent, $noteId, $noteRefNum);
+#     }
+#     
+#     while ($$sRef =~ s,<NOTE(\d+)[^>]*N=\"([^\"]+)\"[^>]*>(.*?)</NOTE\1>,<sp0t>,s) {
+#         my($noteId) = $2;
+#         my($noteContent) = $3;
+#         $$sRef =~ s,<sp0t>, <sup><a name="ref.$noteRefNum.$noteId" href="../%5C#$noteRefNum.$noteId">$noteId</a></sup> ,;
+#         ( $noteRefNum, @notes ) = &recurseNotes($noteContent, $noteId, $noteRefNum);
+#     }
+#     
+#     while ($$sRef =~ s,<NOTE(\d+)[^>]*>(.*?)</NOTE\1>,<sp0t>,s) 
+#     {
+#         my($noteId) = $noteRefNum;
+#         my($noteContent) = $2;
+#         $$sRef =~ s,<sp0t>, <sup><a name="ref.$noteRefNum.$noteId" href="../%5C#$noteRefNum.$noteId">$noteId</a></sup> ,;
+#         ( $noteRefNum, @notes ) = &recurseNotes($noteContent, $noteId, $noteRefNum);
+#     }
+#     
+#     
+#     $results .= $$sRef;
+#     if (@notes) 
+#     {
+#         $results .= qq{<hr><h4>Notes</h4><ul>\n<li>}, join("</li>\n<li>", @notes), qq{</li>\n</ul>};
+#     }
+#   
+    
+    # DlpsUtils routine to do entity filtering
+    FilterCharEnts_All( $sRef );
+
+    return $$sRef;    
+}
+    
+# ----------------------------------------------------------------------
+# NAME         : GetDivHeadRange
+# PURPOSE      : find the array that is the list of div levels we care
+#                about for this TextClass collection
+# CALLED BY    : 
+# CALLS        : 
+# INPUT        : this TextClass object
+# RETURNS      : array
+# GLOBALS      : 
+# SIDE-EFFECTS : 
+# NOTES        : likely overridden in subclasses
+# ----------------------------------------------------------------------
+sub GetDivHeadRange
+{ 
+    my $self = shift;
+    my $arrayRef = $self->{'divheadrange'};
+    return @{$arrayRef};
+}
+
+# ----------------------------------------------------------------------
+# NAME         : GetDefaultSliceSize
+# PURPOSE      : get the number of hits for a results list slice
+# CALLED BY    : 
+# CALLS        : 
+# INPUT        : this TextClass object
+# RETURNS      : number
+# GLOBALS      : 
+# SIDE-EFFECTS : 
+# NOTES        : possibly overridden in subclasses
+# ----------------------------------------------------------------------
+
+sub GetDefaultSliceSize
+{ 
+    my $self = shift;
+    return $self->{'defaultslicesize'};
+}
+
+
+#sub GetFisheyeThreshold
+#{ 
+#    my $self = shift;
+#    return $self->{'fisheyethreshold'};
+#}
+
+
+# ----------------------------------------------------------------------
+# NAME         : GetHeadDepths
+# PURPOSE      : find the hash that is the list of divhead levels we care
+#                about for this TextClass collection
+# CALLED BY    : 
+# CALLS        : 
+# INPUT        : this TextClass object
+# RETURNS      : array
+# GLOBALS      : 
+# SIDE-EFFECTS : 
+# NOTES        : likely overridden in subclasses
+# ----------------------------------------------------------------------
+
+sub GetHeadDepths
+{ 
+    my $self = shift;
+    my $hashRef = $self->{'headdepths'};
+    return %{$hashRef};
+}
+
+
+
+# ----------------------------------------------------------------------
+# NAME         : GetMaxDepthItems
+# PURPOSE      : find the array that is the list of bottommost result items to
+#                return in a list of results for this TextClass collection
+# CALLED BY    : 
+# CALLS        : 
+# INPUT        : this TextClass object
+# RETURNS      : array
+# GLOBALS      : 
+# SIDE-EFFECTS : 
+# NOTES        : likely overridden in subclasses
+# ----------------------------------------------------------------------
+
+sub GetMaxDepthItems
+{ 
+    my $self = shift;
+    my $arrayRef = $self->{'maxdepthitems'};
+    return @{$arrayRef};
+}
+
+# ----------------------------------------------------------------------
+# NAME         : 
+# PURPOSE      : 
+#                
+# CALLED BY    : 
+# CALLS        : 
+# INPUT        : 
+# RETURNS      : 
+# GLOBALS      : 
+# SIDE-EFFECTS : 
+# NOTES        : 
+# ----------------------------------------------------------------------
+sub GetXPatObject
+{
+    my $self = shift;
+    return $self->{'xpat'};
+}
+
+# ----------------------------------------------------------------------
+# NAME         : 
+# PURPOSE      : 
+#                
+# CALLED BY    : 
+# CALLS        : 
+# INPUT        : 
+# RETURNS      : 
+# GLOBALS      : 
+# SIDE-EFFECTS : 
+# NOTES        : 
+# ----------------------------------------------------------------------
+
+sub GetLocale
+{
+    my $self = shift; 
+    return $self->{'locale'};
+    
+}
+
+
+## ----------------------------------------------------------------------
+1;
+    
+    
+</span></body>

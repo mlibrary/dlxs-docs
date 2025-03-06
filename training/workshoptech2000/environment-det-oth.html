@@ -1,0 +1,197 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+
+<html>
+
+<head>
+
+   <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1"><title>environment-det-oth</title>
+
+<link rel="stylesheet" href="styles.css">
+
+
+</head>
+
+<body class="mainpalette">
+
+&nbsp;
+
+<h2>
+
+DLPS Programming Tools and Environment</h2>
+
+
+
+<h3>
+
+<a href="http://www.xemacs.org/" target="external">XEmacs</a> v.21 and
+
+Emacs v.19 (<a href="emacs-det.html">details</a>)</h3>
+
+
+
+<ul>
+
+<li>
+
+&nbsp;TAGS - ease of source navigation, global searching</li>
+
+
+
+<li>
+
+&nbsp;HTML/SGML Modes - easier viewing of source</li>
+
+
+
+<li>
+
+&nbsp;Font Lock Mode ("Fontification")&nbsp; -&nbsp; program text is displayed
+
+in various fonts and colors (cperl-mode)</li>
+
+
+
+<li>
+
+&nbsp;Perl debugging Mode</li>
+
+
+
+<ul>
+
+<li>
+
+Interactive perl debugging with debugger in one window and the source in
+
+another.</li>
+
+
+
+<li>
+
+Next line to execute is pointed to.</li>
+
+
+
+<li>
+
+Examine and Set perl variables.</li>
+
+
+
+<li>
+
+Set breakpoints and conditional watchpoints.</li>
+
+
+
+<li>
+
+Syntax checking (compilation without execution).</li>
+
+
+
+<li>
+
+Useful to test perl fragments in isolation e.g regular expressions</li>
+
+</ul>
+
+
+
+<li>
+
+Comint Mode - allows us to run Pat in an XEmacs window.</li>
+
+
+
+<li>
+
+More useful than shell for command recall and searching through results.</li>
+
+</ul>
+
+
+
+<h3>
+
+<a href="http://www.cl.cam.ac.uk/texinfodoc/cvs_toc.html" target="external">CVS</a>
+
+and Work Directory Structure (<a href="cvs-det.html">details</a>)</h3>
+
+
+
+<ul>
+
+<li>
+
+CVS is used for source control.</li>
+
+
+
+<li>
+
+GNU tool Built on top of RCS.</li>
+
+
+
+<li>
+
+Allows parallel development.</li>
+
+
+
+<li>
+
+Automatic source merging.</li>
+
+
+
+<li>
+
+Versioning.</li>
+
+
+
+<li>
+
+Tagging for reproducible release construction independent of development
+
+stream.</li>
+
+</ul>
+
+Each programmer has a work directory below a given release directory.
+
+<p>For example:
+
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b> /l1/cgi/t/text/p/pfarber</b>
+
+<p>The TextClass CGI programs are coded to support this work directory
+
+structure.&nbsp; In each work directory, we make a symlink to the CGI with
+
+our userid in the name:&nbsp; <b><i>text-idx-pfarber -> text-idx</i>.</b>&nbsp;
+
+Then when we send the server a URL such as <b>http://dev.umdl.umich.edu/cgi/t/text/p/pfarber/text-idx-pfarber?...,</b>
+
+the CGI strips off "-pfarber", turns it into "p/pfarber" and builds a path
+
+to that developer's work directory under /l1/lib and is added to the perl
+
+@INC.
+
+<p>Similarly, the path to the developer's work directory is included in
+
+all HTML links built by the CGI.&nbsp; So each developer is isolated from
+
+outside changes to the source until he updates his work directory with
+
+the changes that have been committed to the CVS repository.
+
+<br>&nbsp;
+
+</body>
+
+</html>
+

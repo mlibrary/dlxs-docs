@@ -1,0 +1,1489 @@
+<?xml version="1.0"?>
+
+<!-- SPO Editorial Services                  -->
+<!-- automatically-generated XML header file -->
+
+<?xml-stylesheet href="../../../pre11-dlxsdocs.xsl" type="text/xsl"?>
+<!DOCTYPE DLPSDOC PUBLIC "-//UM-DLPS//DTD DLPS Publications//EN" "http://docs.umdl.umich.edu/dlps/docs/dlpsdocs.dtd">
+<DLPSDOC>
+<TITLE>Text Class Processing Instructions</TITLE>
+<HEADER>
+<JOURNAL>DLXS Documentation</JOURNAL>
+<PUBDATE>2002-07-08 11:49:16 EDT</PUBDATE>
+<AUTH1>Stoeffler, Matt</AUTH1>
+<AUTH2></AUTH2>
+<DOCTITLE>Text Class Processing Instructions</DOCTITLE>
+<VOL>class</VOL>
+<ISS>text</ISS>
+<FILE>dlxsdocs-tc-pis</FILE>
+</HEADER>
+<BODY>
+    <BHEAD>Text Class Processing Instructions (PIs)</BHEAD>
+    <DIV1 ID="main"> 
+      <P>The following table includes descriptions of all the processing instructions (PIs) 
+    that appear in TextClass templates and that are supported by the CGI (see <A HREF="../../ui/dlxs-templates.xml"> HTML Templates / Interfaces</A> for more on PIs), as well as links to descriptions of the relevant template files in which they may appear. Note that PIs are not interchangeable with templates; they must be supported in the CGI to be rendered properly.   </P>
+  <TABLE BORDER="1">
+<TBODY>
+    <TR> 
+      <TH WIDTH="25%" ALIGN="LEFT">PI tag</TH>
+      <TH WIDTH="12%" VALIGN="TOP">Optional parameters</TH>
+      <TH WIDTH="13%" VALIGN="TOP">Associated templates</TH>
+      <TH WIDTH="50%" VALIGN="TOP">Description</TH>
+    </TR>
+    <TR> 
+      <TD WIDTH="25%" VALIGN="TOP">&lt;?BBAG_BOOLEAN_SEARCH_LINK&gt;</TD>
+      <TD WIDTH="12%" VALIGN="TOP">&#x00a0;</TD>
+      
+    <TD WIDTH="13%" VALIGN="TOP"><A HREF="tc-templates.xml#bbagemail">bbagemail.tpl</A><BR/>
+      <A HREF="tc-templates.xml#bbaglist">bbaglist.tpl</A><BR/>
+      <A HREF="tc-templates.xml#proximitybbag">proximitybbag.tpl</A><BR/>
+      <A HREF="tc-templates.xml#reslist">reslist.tpl</A><BR/>
+      <A HREF="tc-templates.xml#simplebbag">simplebbag.tpl</A><BR/>
+      <A HREF="tc-templates.xml#textpicklist">text.picklist.tpl</A></TD>
+      <TD WIDTH="50%" VALIGN="TOP">Provides the <CODE>HREF</CODE
+	  > 
+        URL for the &quot;Boolean&quot; search within book bag link.</TD>
+    </TR>
+    <TR> 
+      <TD WIDTH="25%" VALIGN="TOP">&lt;?BBAG_PROXIMITY_SEARCH_LINK&gt;</TD>
+      <TD WIDTH="12%" VALIGN="TOP">&#x00a0;</TD>
+      
+    <TD WIDTH="13%" VALIGN="TOP"><A HREF="tc-templates.xml#bbagemail">bbagemail.tpl</A><BR/>
+      <A HREF="tc-templates.xml#bbaglist">bbaglist.tpl</A><BR/>
+      <A HREF="tc-templates.xml#proximitybbag">proximitybbag.tpl</A><BR/>
+      <A HREF="tc-templates.xml#reslist">reslist.tpl</A><BR/>
+      <A HREF="tc-templates.xml#simplebbag">simplebbag.tpl</A><BR/>
+      <A HREF="tc-templates.xml#textpicklist">text.picklist.tpl</A></TD>
+      <TD WIDTH="50%" VALIGN="TOP">Provides the <CODE>HREF</CODE> 
+        URL for the &quot;proximity&quot; search within book bag link.</TD>
+    </TR>
+    <TR> 
+      <TD WIDTH="25%" VALIGN="TOP">&lt;?BBAG_SIMPLE_SEARCH_LINK&gt;</TD>
+      <TD WIDTH="12%" VALIGN="TOP">&#x00a0;</TD>
+      
+    <TD WIDTH="13%" VALIGN="TOP"><A HREF="tc-templates.xml#bbagemail">bbagemail.tpl</A><BR/>
+      <A HREF="tc-templates.xml#bbaglist">bbaglist.tpl</A><BR/>
+      <A HREF="tc-templates.xml#proximitybbag">proximitybbag.tpl</A><BR/>
+      <A HREF="tc-templates.xml#reslist">reslist.tpl</A><BR/>
+      <A HREF="tc-templates.xml#simplebbag">simplebbag.tpl</A><BR/>
+      <A HREF="tc-templates.xml#textpicklist">text.picklist.tpl</A></TD>
+      <TD WIDTH="50%" VALIGN="TOP">Provides the <CODE>HREF</CODE> 
+        URL for the &quot;simple&quot; search within book bag link.</TD>
+    </TR>
+    <TR> 
+      <TD WIDTH="25%" VALIGN="TOP">&lt;?BIB_SEARCH_LINK&gt;</TD>
+      <TD WIDTH="12%" VALIGN="TOP">&#x00a0;</TD>
+      
+    <TD WIDTH="13%" VALIGN="TOP"><A HREF="tc-templates.xml#bbaglist">bbaglist.tpl</A><BR/>
+      <A HREF="tc-templates.xml#boolean">boolean.tpl</A><BR/>
+      <A HREF="tc-templates.xml#booleanext">booleanext.tpl</A><BR/>
+      <A HREF="tc-templates.xml#proximity">proximity.tpl</A><BR/>
+      <A HREF="tc-templates.xml#proximityext">proximityext.tpl</A><BR/>
+      <A HREF="tc-templates.xml#wwfull">ww-full.tpl</A><BR/>
+      <A HREF="tc-templates.xml#wwstart">ww-start.tpl</A></TD>
+      <TD WIDTH="50%" VALIGN="TOP">Provides the <CODE>HREF</CODE> 
+        URL for the &quot;citation&quot; search form link in the main or footer 
+        navigation bar.</TD>
+    </TR>
+    <TR> 
+      <TD WIDTH="25%" VALIGN="TOP">&lt;?BOOKBAG_ADD_REMOVE_ITEM&gt;</TD>
+      <TD WIDTH="12%" VALIGN="TOP">&#x00a0;</TD>
+      
+    <TD WIDTH="13%" VALIGN="TOP"><A HREF="tc-templates.xml#header">header.tpl</A></TD>
+      <TD WIDTH="50%" VALIGN="TOP">Used to insert a full link from a bibliographic 
+        header page for adding the current item to the book bag. </TD>
+    </TR>
+    <TR> 
+      <TD WIDTH="25%" VALIGN="TOP">&lt;?BOOKBAG_DISPLAY&gt;</TD>
+      <TD WIDTH="12%" VALIGN="TOP">&#x00a0;</TD>
+      
+    <TD WIDTH="13%" VALIGN="TOP"><A HREF="tc-templates.xml#bbagemail">bbagemail.tpl</A><BR/>
+      <A HREF="tc-templates.xml#bbaglist">bbaglist.tpl</A></TD>
+      <TD WIDTH="50%" VALIGN="TOP">Used to insert a button to toggle book bag 
+        contents in long or short format.</TD>
+    </TR>
+    <TR> 
+      <TD WIDTH="25%" VALIGN="TOP">&lt;?BOOKBAG_DOWNLOAD&gt;</TD>
+      <TD WIDTH="12%" VALIGN="TOP">&#x00a0;</TD>
+      
+    <TD WIDTH="13%" VALIGN="TOP"><A HREF="tc-templates.xml#bbagemail">bbagemail.tpl</A><BR/>
+      <A HREF="tc-templates.xml#bbaglist">bbaglist.tpl</A></TD>
+      <TD WIDTH="50%" VALIGN="TOP">Used to insert a button to download book bag 
+        contents.</TD>
+    </TR>
+    <TR> 
+      <TD WIDTH="25%" VALIGN="TOP">&lt;?BOOKBAG_EMAIL&gt;</TD>
+      <TD WIDTH="12%" VALIGN="TOP">&#x00a0;</TD>
+      
+    <TD WIDTH="13%" VALIGN="TOP"><A HREF="tc-templates.xml#bbaglist">bbaglist.tpl</A></TD>
+      <TD WIDTH="50%" VALIGN="TOP">Used to insert a button to email book bag contents.</TD>
+    </TR>
+    <TR> 
+      <TD WIDTH="25%" VALIGN="TOP">&lt;?BOOKBAG_EMPTY&gt;</TD>
+      <TD WIDTH="12%" VALIGN="TOP">&#x00a0;</TD>
+      
+    <TD WIDTH="13%" VALIGN="TOP"><A HREF="tc-templates.xml#bbagemail">bbagemail.tpl</A><BR/>
+      <A HREF="tc-templates.xml#bbaglist">bbaglist.tpl</A></TD>
+      <TD WIDTH="50%" VALIGN="TOP">Used to insert a button for removing all book 
+        bag contents.</TD>
+    </TR>
+    <TR> 
+      <TD WIDTH="25%" VALIGN="TOP">&lt;?BOOKBAG_ITEMS&gt;</TD>
+      <TD WIDTH="12%" VALIGN="TOP">&#x00a0;</TD>
+      
+    <TD WIDTH="13%" VALIGN="TOP"><A HREF="tc-templates.xml#bbagemail">bbagemail.tpl</A><BR/>
+      <A HREF="tc-templates.xml#bbaglist">bbaglist.tpl</A><BR/>
+      <A HREF="tc-templates.xml#bib">bib.tpl</A><BR/>
+      <A HREF="tc-templates.xml#bibext">bibext.tpl</A><BR/>
+      <A HREF="tc-templates.xml#boolean">boolean.tpl</A><BR/>
+      <A HREF="tc-templates.xml#booleanext">booleanext.tpl</A><BR/>
+      <A HREF="tc-templates.xml#header">header.tpl</A><BR/>
+      <A HREF="tc-templates.xml#pageviewernav">pageviewer.nav.tpl</A><BR/>
+      <A HREF="tc-templates.xml#proximity">proximity.tpl</A><BR/>
+      <A HREF="tc-templates.xml#proximityext">proximityext.tpl</A><BR/>
+      <A HREF="tc-templates.xml#searchhistory">searchhistory.tpl</A><BR/>
+      <A HREF="tc-templates.xml#simple">simple.tpl</A><BR/>
+      <A HREF="tc-templates.xml#simpleext">simpleext.tpl</A><BR/>
+      <A HREF="tc-templates.xml#splash">splash.tpl</A><BR/>
+      <A HREF="tc-templates.xml#text">text.tpl</A><BR/>
+      <A HREF="tc-templates.xml#wwfull">ww-full.tpl</A><BR/>
+      <A HREF="tc-templates.xml#wwstart">ww-start.tpl</A></TD>
+      <TD WIDTH="50%" VALIGN="TOP">Used to insert the book bag items count in 
+        the current page.</TD>
+    </TR>
+    <TR> 
+      <TD WIDTH="25%" VALIGN="TOP">&lt;?BOOKBAG_LINK&gt;</TD>
+      <TD WIDTH="12%" VALIGN="TOP">&#x00a0;</TD>
+      
+    <TD WIDTH="13%" VALIGN="TOP"><A HREF="tc-templates.xml#bib">bib.tpl</A><BR/>
+      <A HREF="tc-templates.xml#bibext">bibext.tpl</A><BR/>
+      <A HREF="tc-templates.xml#boolean">boolean.tpl</A><BR/>
+      <A HREF="tc-templates.xml#booleanbbag">booleanbbag.tpl</A><BR/>
+      <A HREF="tc-templates.xml#booleanext">booleanext.tpl</A><BR/>
+      <A HREF="tc-templates.xml#header">header.tpl</A><BR/>
+      <A HREF="tc-templates.xml#pageviewernav">pageviewer.nav.tpl</A><BR/>
+      <A HREF="tc-templates.xml#proximity">proximity.tpl</A><BR/>
+      <A HREF="tc-templates.xml#proximitybbag">proximitybbag.tpl</A><BR/>
+      <A HREF="tc-templates.xml#proximityext">proximityext.tpl</A><BR/>
+      <A HREF="tc-templates.xml#reslist">reslist.tpl</A><BR/>
+      <A HREF="tc-templates.xml#searchhistory">searchhistory.tpl</A><BR/>
+      <A HREF="tc-templates.xml#simple">simple.tpl</A><BR/>
+      <A HREF="tc-templates.xml#simplebbag">simplebbag.tpl</A><BR/>
+      <A HREF="tc-templates.xml#simpleext">simpleext.tpl</A><BR/>
+      <A HREF="tc-templates.xml#splash">splash.tpl</A><BR/>
+      <A HREF="tc-templates.xml#textpicklist">text.picklist.tpl</A><BR/>
+      <A HREF="tc-templates.xml#text">text.tpl</A><BR/>
+      <A HREF="tc-templates.xml#wwfull">ww-full.tpl</A><BR/>
+      <A HREF="tc-templates.xml#wwstart">ww-start.tpl</A></TD>
+      <TD WIDTH="50%" VALIGN="TOP">Provides the <CODE>HREF</CODE> 
+        URL for the &quot;view bookbag&quot; link in a page.</TD>
+    </TR>
+    <TR> 
+      <TD WIDTH="25%" VALIGN="TOP">&lt;?BOOKBAG_RESULTS&gt;</TD>
+      <TD WIDTH="12%" VALIGN="TOP">&#x00a0;</TD>
+      
+    <TD WIDTH="13%" VALIGN="TOP"><A HREF="tc-templates.xml#bbaglist">bbaglist.tpl</A></TD>
+      <TD WIDTH="50%" VALIGN="TOP">Used to insert all current book bag items within 
+        table <CODE>&lt;TR&gt;</CODE> and <CODE>&lt;TD&gt;</CODE> 
+        tags.</TD>
+    </TR>
+    <TR> 
+      <TD WIDTH="25%" VALIGN="TOP">&lt;?BOOLEAN_SEARCH_LINK&gt;</TD>
+      <TD WIDTH="12%" VALIGN="TOP">&#x00a0;</TD>
+      
+    <TD WIDTH="13%" VALIGN="TOP"><A HREF="tc-templates.xml#bbaglist">bbaglist.tpl</A><BR/>
+      <A HREF="tc-templates.xml#bib">bib.tpl</A><BR/>
+      <A HREF="tc-templates.xml#bibext">bibext.tpl</A><BR/>
+      <A HREF="tc-templates.xml#booleanbbag">booleanbbag.tpl</A><BR/>
+      <A HREF="tc-templates.xml#header">header.tpl</A><BR/>
+      <A HREF="tc-templates.xml#pageviewernav">pageviewer.nav.tpl</A><BR/>
+      <A HREF="tc-templates.xml#proximity">proximity.tpl</A><BR/>
+      <A HREF="tc-templates.xml#proximitybbag">proximitybbag.tpl</A><BR/>
+      <A HREF="tc-templates.xml#proximityext">proximityext.tpl</A><BR/>
+      <A HREF="tc-templates.xml#reslist">reslist.tpl</A><BR/>
+      <A HREF="tc-templates.xml#searchhistory">searchhistory.tpl</A><BR/>
+      <A HREF="tc-templates.xml#simple">simple.tpl</A><BR/>
+      <A HREF="tc-templates.xml#simplebbag">simplebbag.tpl</A><BR/>
+      <A HREF="tc-templates.xml#simpleext">simpleext.tpl</A><BR/>
+      <A HREF="tc-templates.xml#splash">splash.tpl</A><BR/>
+      <A HREF="tc-templates.xml#textpicklist">text.picklist.tpl</A><BR/>
+      <A HREF="tc-templates.xml#text">text.tpl</A><BR/>
+      <A HREF="tc-templates.xml#wwfull">ww-full.tpl</A><BR/>
+      <A HREF="tc-templates.xml#wwstart">ww-start.tpl</A></TD>
+      <TD WIDTH="50%" VALIGN="TOP">Provides the <CODE>HREF</CODE> 
+        URL for the &quot;boolean&quot; search form link in the main or footer 
+        navigation bar.</TD>
+    </TR>
+    <TR> 
+      <TD WIDTH="25%" VALIGN="TOP">&lt;?COLLECTION_LIST&gt;</TD>
+      <TD WIDTH="12%" VALIGN="TOP">&#x00a0;</TD>
+      
+    <TD WIDTH="13%" VALIGN="TOP"><A HREF="tc-templates.xml#bib">bib.tpl</A><BR/>
+      <A HREF="tc-templates.xml#boolean">boolean.tpl</A><BR/>
+      <A HREF="tc-templates.xml#proximity">proximity.tpl</A><BR/>
+      <A HREF="tc-templates.xml#simple">simple.tpl</A><BR/>
+      <A HREF="tc-templates.xml#splash">splash.tpl</A></TD>
+      <TD WIDTH="50%" VALIGN="TOP">Previously used with search forms to display 
+        a table for collections currently being searched</TD>
+    </TR>
+    <TR> 
+      <TD WIDTH="25%" VALIGN="TOP">&lt;?COLL_LIST_WITH_CHECKBOXES&gt;</TD>
+      <TD WIDTH="12%" VALIGN="TOP">&#x00a0;</TD>
+      
+    <TD WIDTH="13%" VALIGN="TOP"><A HREF="tc-templates.xml#bibext">bibext.tpl</A><BR/>
+      <A HREF="tc-templates.xml#booleanext">booleanext.tpl</A><BR/>
+      <A HREF="tc-templates.xml#proximityext">proximityext.tpl</A><BR/>
+      <A HREF="tc-templates.xml#simpleext">simpleext.tpl</A></TD>
+      <TD WIDTH="50%" VALIGN="TOP">On multiple collection search forms, used to 
+        insert the table of available collections with check boxes for selecting 
+        or deselecting.</TD>
+    </TR>
+    <TR> 
+      <TD WIDTH="25%" VALIGN="TOP">&lt;?COLL_SPECIFIC_CONTENT id=&quot;cs001&quot; 
+        cginame=&quot;text-idx&quot;&gt;</TD>
+      <TD WIDTH="12%" VALIGN="TOP">&#x00a0;</TD>
+      
+    <TD WIDTH="13%" VALIGN="TOP"><A HREF="tc-templates.xml#bib">bib.tpl</A><BR/>
+      <A HREF="tc-templates.xml#boolean">boolean.tpl</A><BR/>
+      <A HREF="tc-templates.xml#booleanbbag">booleanbbag.tpl</A><BR/>
+      <A HREF="tc-templates.xml#header">header.tpl</A><BR/>
+      <A HREF="tc-templates.xml#proximity">proximity.tpl</A><BR/>
+      <A HREF="tc-templates.xml#proximitybbag">proximitybbag.tpl</A><BR/>
+      <A HREF="tc-templates.xml#reslist">reslist.tpl</A><BR/>
+      <A HREF="tc-templates.xml#searchhistory">searchhistory.tpl</A><BR/>
+      <A HREF="tc-templates.xml#simple">simple.tpl</A><BR/>
+      <A HREF="tc-templates.xml#simplebbag">simplebbag.tpl</A><BR/>
+      <A HREF="tc-templates.xml#textpicklist">text.picklist.tpl</A><BR/>
+      <A HREF="tc-templates.xml#text">text.tpl</A><BR/>
+      <A HREF="tc-templates.xml#wwfull">ww-full.tpl</A><BR/>
+      <A HREF="tc-templates.xml#wwstart">ww-start.tpl</A></TD>
+      <TD WIDTH="50%" VALIGN="TOP"> 
+        Provides the <CODE>HREF</CODE> URL 
+          for a collection specific (e.g., browse) navigation link in main nav 
+          bar or footer nav bar.
+        </TD>
+    </TR>
+    <TR> 
+      <TD WIDTH="25%" VALIGN="TOP">&lt;?DOC_ROOT&gt;</TD>
+      <TD WIDTH="12%" VALIGN="TOP">&#x00a0;</TD>
+      
+    <TD WIDTH="13%" VALIGN="TOP"><A HREF="tc-templates.xml#bbagemail">bbagemail.tpl</A><BR/>
+      <A HREF="tc-templates.xml#bbaglist">bbaglist.tpl</A><BR/>
+      <A HREF="tc-templates.xml#bib">bib.tpl</A><BR/>
+      <A HREF="tc-templates.xml#bibext">bibext.tpl</A><BR/>
+      <A HREF="tc-templates.xml#boolean">boolean.tpl</A><BR/>
+      <A HREF="tc-templates.xml#booleanbbag">booleanbbag.tpl</A><BR/>
+      <A HREF="tc-templates.xml#booleanext">booleanext.tpl</A><BR/>
+      <A HREF="tc-templates.xml#header">header.tpl</A><BR/>
+      <A HREF="tc-templates.xml#home">home.tpl</A><BR/>
+      <A HREF="tc-templates.xml#note">note.tpl</A><BR/>
+      <A HREF="tc-templates.xml#pageviewermain">pageviewer.main.tpl</A><BR/>
+      <A HREF="tc-templates.xml#pageviewernav">pageviewer.nav.tpl</A><BR/>
+      <A HREF="tc-templates.xml#pageviewerpicklist">pageviewer.picklist.tpl</A><BR/>
+      <A HREF="tc-templates.xml#proximity">proximity.tpl</A><BR/>
+      <A HREF="tc-templates.xml#proximitybbag">proximitybbag.tpl</A><BR/>
+      <A HREF="tc-templates.xml#proximityext">proximityext.tpl</A><BR/>
+      <A HREF="tc-templates.xml#reslist">reslist.tpl</A><BR/>
+      <A HREF="tc-templates.xml#searchhistory">searchhistory.tpl</A><BR/>
+      <A HREF="tc-templates.xml#simple">simple.tpl</A><BR/>
+      <A HREF="tc-templates.xml#simplebbag">simplebbag.tpl</A><BR/>
+      <A HREF="tc-templates.xml#simpleext">simpleext.tpl</A><BR/>
+      <A HREF="tc-templates.xml#splash">splash.tpl</A><BR/>
+      <A HREF="tc-templates.xml#textpicklist">text.picklist.tpl</A><BR/>
+      <A HREF="tc-templates.xml#text">text.tpl</A><BR/>
+      <A HREF="tc-templates.xml#viewtextnote">viewtextnote.tpl</A><BR/>
+      <A HREF="tc-templates.xml#wwfull">ww-full.tpl</A><BR/>
+      <A HREF="tc-templates.xml#wwstart">ww-start.tpl</A></TD>
+      <TD WIDTH="50%" VALIGN="TOP">Used to insert the appropriate root path for 
+        the collection accessing the template for relative file reference.</TD>
+    </TR>
+    <TR> 
+      <TD WIDTH="25%" VALIGN="TOP">&lt;?EXT_BIB_SEARCH_FORM_LINK&gt;</TD>
+      <TD WIDTH="12%" VALIGN="TOP">&#x00a0;</TD>
+      
+    <TD WIDTH="13%" VALIGN="TOP"><A HREF="tc-templates.xml#bib">bib.tpl</A></TD>
+      <TD WIDTH="50%" VALIGN="TOP">Previously used to insert a navigation link 
+        from the current citation search form to an extended version of the form.</TD>
+    </TR>
+    <TR> 
+      <TD WIDTH="25%" VALIGN="TOP">&lt;?EXT_BOOLEAN_SEARCH_FORM_LINK&gt;</TD>
+      <TD WIDTH="12%" VALIGN="TOP">&#x00a0;</TD>
+      
+    <TD WIDTH="13%" VALIGN="TOP"><A HREF="tc-templates.xml#boolean">boolean.tpl</A></TD>
+      <TD WIDTH="50%" VALIGN="TOP">Previously used to insert a navigation link 
+        from the current boolean search form to an extended version of the form.</TD>
+    </TR>
+    <TR> 
+      <TD WIDTH="25%" VALIGN="TOP">&lt;?EXT_PROXIMITY_SEARCH_FORM_LINK&gt;</TD>
+      <TD WIDTH="12%" VALIGN="TOP">&#x00a0;</TD>
+      
+    <TD WIDTH="13%" VALIGN="TOP"><A HREF="tc-templates.xml#proximity">proximity.tpl</A></TD>
+      <TD WIDTH="50%" VALIGN="TOP">Previously used to insert a navigation link 
+        from the current proximity search form to an extended version of the form.</TD>
+    </TR>
+    <TR> 
+      <TD WIDTH="25%" VALIGN="TOP">&lt;?EXT_SIMPLE_SEARCH_FORM_LINK&gt;</TD>
+      <TD WIDTH="12%" VALIGN="TOP">&#x00a0;</TD>
+      
+    <TD WIDTH="13%" VALIGN="TOP"><A HREF="tc-templates.xml#simple">simple.tpl</A></TD>
+      <TD WIDTH="50%" VALIGN="TOP">Previously used to insert a navigation link 
+        from the current citation search form to an extended version of the form.</TD>
+    </TR>
+    <TR> 
+      <TD WIDTH="25%" VALIGN="TOP">&lt;?GENDER_LIST&gt;</TD>
+      <TD WIDTH="12%" VALIGN="TOP">&#x00a0;</TD>
+      
+    <TD WIDTH="13%" VALIGN="TOP"><A HREF="tc-templates.xml#bib">bib.tpl</A><BR/>
+      <A HREF="tc-templates.xml#boolean">boolean.tpl</A><BR/>
+      <A HREF="tc-templates.xml#proximity">proximity.tpl</A><BR/>
+      <A HREF="tc-templates.xml#simple">simple.tpl</A></TD>
+      <TD WIDTH="50%" VALIGN="TOP">Previously used in search forms to indicate 
+        the currently selected collection filter values for gender.</TD>
+    </TR>
+    <TR> 
+      <TD WIDTH="25%" VALIGN="TOP">&lt;?GENDER_SEARCH_SELECT&gt;</TD>
+      <TD WIDTH="12%" VALIGN="TOP">&#x00a0;</TD>
+      
+    <TD WIDTH="13%" VALIGN="TOP"><A HREF="tc-templates.xml#boolean">boolean.tpl</A><BR/>
+      <A HREF="tc-templates.xml#booleanbbag">booleanbbag.tpl</A><BR/>
+      <A HREF="tc-templates.xml#proximity">proximity.tpl</A><BR/>
+      <A HREF="tc-templates.xml#proximitybbag">proximitybbag.tpl</A><BR/>
+      <A HREF="tc-templates.xml#simple">simple.tpl</A><BR/>
+      <A HREF="tc-templates.xml#simplebbag">simplebbag.tpl</A></TD>
+      <TD WIDTH="50%" VALIGN="TOP">Used to insert an optional select menu for 
+        gender restrictions in a search form.</TD>
+    </TR>
+    <TR> 
+      <TD WIDTH="25%" VALIGN="TOP">&lt;?GENDER_SELECT&gt;</TD>
+      <TD WIDTH="12%" VALIGN="TOP">&#x00a0;</TD>
+      
+    <TD WIDTH="13%" VALIGN="TOP"><A HREF="tc-templates.xml#bibext">bibext.tpl</A><BR/>
+      <A HREF="tc-templates.xml#booleanext">booleanext.tpl</A><BR/>
+      <A HREF="tc-templates.xml#proximityext">proximityext.tpl</A><BR/>
+      <A HREF="tc-templates.xml#simpleext">simpleext.tpl</A></TD>
+      <TD WIDTH="50%" VALIGN="TOP">Used to insert a select menu in a multiple 
+        collection search form for filtering collections by gender.</TD>
+    </TR>
+    <TR> 
+      <TD WIDTH="25%" VALIGN="TOP">&lt;?GENRE_LIST&gt;</TD>
+      <TD WIDTH="12%" VALIGN="TOP">&#x00a0;</TD>
+      
+    <TD WIDTH="13%" VALIGN="TOP"><A HREF="tc-templates.xml#bib">bib.tpl</A><BR/>
+      <A HREF="tc-templates.xml#boolean">boolean.tpl</A><BR/>
+      <A HREF="tc-templates.xml#proximity">proximity.tpl</A><BR/>
+      <A HREF="tc-templates.xml#simple">simple.tpl</A></TD>
+      <TD WIDTH="50%" VALIGN="TOP">Previously used in search forms to indicate 
+        the currently selected collection filter values for genre.</TD>
+    </TR>
+    <TR> 
+      <TD WIDTH="25%" VALIGN="TOP">&lt;?GENRE_SEARCH_SELECT&gt;</TD>
+      <TD WIDTH="12%" VALIGN="TOP">&#x00a0;</TD>
+      
+    <TD WIDTH="13%" VALIGN="TOP"><A HREF="tc-templates.xml#boolean">boolean.tpl</A><BR/>
+      <A HREF="tc-templates.xml#booleanbbag">booleanbbag.tpl</A><BR/>
+      <A HREF="tc-templates.xml#proximity">proximity.tpl</A><BR/>
+      <A HREF="tc-templates.xml#proximitybbag">proximitybbag.tpl</A><BR/>
+      <A HREF="tc-templates.xml#simple">simple.tpl</A><BR/>
+      <A HREF="tc-templates.xml#simplebbag">simplebbag.tpl</A></TD>
+      <TD WIDTH="50%" VALIGN="TOP">Used to insert an optional select menu for 
+        genre restrictions in a search form.</TD>
+    </TR>
+    <TR> 
+      <TD WIDTH="25%" VALIGN="TOP">&lt;?GENRE_SELECT&gt;</TD>
+      <TD WIDTH="12%" VALIGN="TOP">&#x00a0;</TD>
+      
+    <TD WIDTH="13%" VALIGN="TOP"><A HREF="tc-templates.xml#bibext">bibext.tpl</A><BR/>
+      <A HREF="tc-templates.xml#booleanext">booleanext.tpl</A><BR/>
+      <A HREF="tc-templates.xml#collpick">collpick.tpl</A><BR/>
+      <A HREF="tc-templates.xml#proximityext">proximityext.tpl</A><BR/>
+      <A HREF="tc-templates.xml#simpleext">simpleext.tpl</A></TD>
+      <TD WIDTH="50%" VALIGN="TOP">Used to insert a select menu in a mulitple 
+        collection search form for filtering collections by genre.</TD>
+    </TR>
+    <TR> 
+      <TD WIDTH="25%" VALIGN="TOP">&lt;?GO_TO_XCOLL&gt;</TD>
+      <TD WIDTH="12%" VALIGN="TOP">&#x00a0;</TD>
+      
+    <TD WIDTH="13%" VALIGN="TOP"><A HREF="tc-templates.xml#bib">bib.tpl</A><BR/>
+      <A HREF="tc-templates.xml#bibext">bibext.tpl</A><BR/>
+      <A HREF="tc-templates.xml#boolean">boolean.tpl</A><BR/>
+      <A HREF="tc-templates.xml#booleanbbag">booleanbbag.tpl</A><BR/>
+      <A HREF="tc-templates.xml#booleanext">booleanext.tpl</A><BR/>
+      <A HREF="tc-templates.xml#header">header.tpl</A><BR/>
+      <A HREF="tc-templates.xml#pageviewernav">pageviewer.nav.tpl</A><BR/>
+      <A HREF="tc-templates.xml#proximity">proximity.tpl</A><BR/>
+      <A HREF="tc-templates.xml#proximitybbag">proximitybbag.tpl</A><BR/>
+      <A HREF="tc-templates.xml#proximityext">proximityext.tpl</A><BR/>
+      <A HREF="tc-templates.xml#reslist">reslist.tpl</A><BR/>
+      <A HREF="tc-templates.xml#searchhistory">searchhistory.tpl</A><BR/>
+      <A HREF="tc-templates.xml#simple">simple.tpl</A><BR/>
+      <A HREF="tc-templates.xml#simplebbag">simplebbag.tpl</A><BR/>
+      <A HREF="tc-templates.xml#simpleext">simpleext.tpl</A><BR/>
+      <A HREF="tc-templates.xml#textpicklist">text.picklist.tpl</A><BR/>
+      <A HREF="tc-templates.xml#text">text.tpl</A><BR/>
+      <A HREF="tc-templates.xml#wwfull">ww-full.tpl</A><BR/>
+      <A HREF="tc-templates.xml#wwstart">ww-start.tpl</A></TD>
+      <TD WIDTH="50%" VALIGN="TOP">Provides the <CODE>HREF</CODE> 
+        URL for the &quot;multiple collection search&quot; link in a page.</TD>
+    </TR>
+	<TR> 
+      
+    <TD WIDTH="25%" VALIGN="TOP">&lt;?GRAPHICS_PATH&gt;</TD>
+      
+    <TD WIDTH="12%" VALIGN="TOP">filename</TD>
+      
+    <TD WIDTH="13%" VALIGN="TOP"><A HREF="tc-templates.xml#bbagemail">bbagemail.tpl</A><BR/>
+      <A HREF="tc-templates.xml#bbaglist">bbaglist.tpl</A><BR/>
+      <A HREF="tc-templates.xml#bib">bib.tpl</A><BR/>
+      <A HREF="tc-templates.xml#bibext">bibext.tpl</A><BR/>
+      <A HREF="tc-templates.xml#boolean">boolean.tpl</A><BR/>
+      <A HREF="tc-templates.xml#booleanbbag">booleanbbag.tpl</A><BR/>
+      <A HREF="tc-templates.xml#booleanext">booleanext.tpl</A><BR/>
+      <A HREF="tc-templates.xml#header">header.tpl</A><BR/>
+      <A HREF="tc-templates.xml#home">home.tpl</A><BR/>
+      <A HREF="tc-templates.xml#note">note.tpl</A><BR/>
+      <A HREF="tc-templates.xml#pageviewermain">pageviewer.main.tpl</A><BR/>
+      <A HREF="tc-templates.xml#pageviewernav">pageviewer.nav.tpl</A><BR/>
+      <A HREF="tc-templates.xml#pageviewerpicklist">pageviewer.picklist.tpl</A><BR/>
+      <A HREF="tc-templates.xml#proximity">proximity.tpl</A><BR/>
+      <A HREF="tc-templates.xml#proximitybbag">proximitybbag.tpl</A><BR/>
+      <A HREF="tc-templates.xml#proximityext">proximityext.tpl</A><BR/>
+      <A HREF="tc-templates.xml#reslist">reslist.tpl</A><BR/>
+      <A HREF="tc-templates.xml#searchhistory">searchhistory.tpl</A><BR/>
+      <A HREF="tc-templates.xml#simple">simple.tpl</A><BR/>
+      <A HREF="tc-templates.xml#simplebbag">simplebbag.tpl</A><BR/>
+      <A HREF="tc-templates.xml#simpleext">simpleext.tpl</A><BR/>
+      <A HREF="tc-templates.xml#splash">splash.tpl</A><BR/>
+      <A HREF="tc-templates.xml#textpicklist">text.picklist.tpl</A><BR/>
+      <A HREF="tc-templates.xml#text">text.tpl</A><BR/>
+      <A HREF="tc-templates.xml#viewtextnote">viewtextnote.tpl</A><BR/>
+      <A HREF="tc-templates.xml#wwfull">ww-full.tpl</A><BR/>
+      <A HREF="tc-templates.xml#wwstart">ww-start.tpl</A></TD>
+      
+    <TD WIDTH="50%" VALIGN="TOP">Used to insert the appropriate path and filename 
+      for a graphics file. </TD>
+    </TR>
+    <TR> 
+      <TD WIDTH="25%" VALIGN="TOP">&lt;?GUIDE_FRAME&gt;</TD>
+      <TD WIDTH="12%" VALIGN="TOP">&#x00a0;</TD>
+      
+    <TD WIDTH="13%" VALIGN="TOP"><A HREF="tc-templates.xml#reslist">reslist.tpl</A></TD>
+      <TD WIDTH="50%" VALIGN="TOP">Used to filter out HTML code for the per-collection 
+        results summary from the results page when only one collection has been 
+        searched.</TD>
+    </TR>
+    <TR> 
+      <TD WIDTH="25%" VALIGN="TOP">&lt;?GUIDE_RESULTS_LINKS&gt;</TD>
+      <TD WIDTH="12%" VALIGN="TOP">&#x00a0;</TD>
+      
+    <TD WIDTH="13%" VALIGN="TOP"><A HREF="tc-templates.xml#reslist">reslist.tpl</A></TD>
+      <TD WIDTH="50%" VALIGN="TOP">That portion of the per-collection results 
+        summary code that inserts links for viewing results detail for each collection.</TD>
+    </TR>
+    <TR> 
+      <TD WIDTH="25%" VALIGN="TOP">&lt;?HEADER&gt;</TD>
+      <TD WIDTH="12%" VALIGN="TOP">&#x00a0;</TD>
+      
+    <TD WIDTH="13%" VALIGN="TOP"><A HREF="tc-templates.xml#header">header.tpl</A></TD>
+      <TD WIDTH="50%" VALIGN="TOP">Used to insert bibliographic information on 
+        a particular book within table &lt;TR&gt; and &lt;TD&gt; tags.</TD>
+    </TR>
+    <TR> 
+      <TD WIDTH="25%" VALIGN="TOP">&lt;?HEADER_TOC&gt;</TD>
+      <TD WIDTH="12%" VALIGN="TOP">&#x00a0;</TD>
+      
+    <TD WIDTH="13%" VALIGN="TOP"><A HREF="tc-templates.xml#header">header.tpl</A></TD>
+      <TD WIDTH="50%" VALIGN="TOP">Used to insert a linked table of contents from 
+        a book header display to the text display.</TD>
+    </TR>
+    <TR> 
+      <TD WIDTH="25%" VALIGN="TOP">&lt;?HEADER_TOC_LABEL&gt;</TD>
+      <TD WIDTH="12%" VALIGN="TOP">&#x00a0;</TD>
+      
+    <TD WIDTH="13%" VALIGN="TOP"><A HREF="tc-templates.xml#header">header.tpl</A></TD>
+      <TD WIDTH="50%" VALIGN="TOP">Used to text label atop a linked label of contents from a book header display.</TD>
+    </TR>
+    <TR> 
+      <TD WIDTH="25%" VALIGN="TOP">&lt;?HEADER_TOC_LINK&gt;</TD>
+      <TD WIDTH="12%" VALIGN="TOP">&#x00a0;</TD>
+      
+    <TD WIDTH="13%" VALIGN="TOP"><A HREF="tc-templates.xml#header">header.tpl</A></TD>
+      <TD WIDTH="50%" VALIGN="TOP">Used to insert a hyperlink to a named anchor on the book header display that allows a user to quickly link to a linked table of contents from the top of a header display.</TD>
+    </TR>
+    <TR> 
+      <TD WIDTH="25%" VALIGN="TOP">&lt;?HELP_LINK&gt;</TD>
+      <TD WIDTH="12%" VALIGN="TOP">&#x00a0;</TD>
+      
+    <TD WIDTH="13%" VALIGN="TOP"><A HREF="tc-templates.xml#bbaglist">bbaglist.tpl</A><BR/>
+      <A HREF="tc-templates.xml#bib">bib.tpl</A><BR/>
+      <A HREF="tc-templates.xml#bibext">bibext.tpl</A><BR/>
+      <A HREF="tc-templates.xml#boolean">boolean.tpl</A><BR/>
+      <A HREF="tc-templates.xml#booleanbbag">booleanbbag.tpl</A><BR/>
+      <A HREF="tc-templates.xml#booleanext">booleanext.tpl</A><BR/>
+      <A HREF="tc-templates.xml#header">header.tpl</A><BR/>
+      <A HREF="tc-templates.xml#pageviewernav">pageviewer.nav.tpl</A><BR/>
+      <A HREF="tc-templates.xml#proximity">proximity.tpl</A><BR/>
+      <A HREF="tc-templates.xml#proximitybbag">proximitybbag.tpl</A><BR/>
+      <A HREF="tc-templates.xml#proximityext">proximityext.tpl</A><BR/>
+      <A HREF="tc-templates.xml#reslist">reslist.tpl</A><BR/>
+      <A HREF="tc-templates.xml#searchhistory">searchhistory.tpl</A><BR/>
+      <A HREF="tc-templates.xml#simple">simple.tpl</A><BR/>
+      <A HREF="tc-templates.xml#simplebbag">simplebbag.tpl</A><BR/>
+      <A HREF="tc-templates.xml#simpleext">simpleext.tpl</A><BR/>
+      <A HREF="tc-templates.xml#splash">splash.tpl</A><BR/>
+      <A HREF="tc-templates.xml#textpicklist">text.picklist.tpl</A><BR/>
+      <A HREF="tc-templates.xml#text">text.tpl</A><BR/>
+      <A HREF="tc-templates.xml#wwfull">ww-full.tpl</A><BR/>
+      <A HREF="tc-templates.xml#wwstart">ww-start.tpl</A></TD>
+      <TD WIDTH="50%" VALIGN="TOP">Provides the <CODE>HREF</CODE> 
+        URL for the &quot;help&quot; link in the main or footer navigation bar.</TD>
+    </TR>
+    <TR> 
+      <TD WIDTH="25%" VALIGN="TOP">&lt;?HIDDEN_BOOKBAG&gt;</TD>
+      <TD WIDTH="12%" VALIGN="TOP">&#x00a0;</TD>
+      
+    <TD WIDTH="13%" VALIGN="TOP"><A HREF="tc-templates.xml#boolean">boolean.tpl</A><BR/>
+      <A HREF="tc-templates.xml#booleanbbag">booleanbbag.tpl</A><BR/>
+      <A HREF="tc-templates.xml#proximity">proximity.tpl</A><BR/>
+      <A HREF="tc-templates.xml#proximitybbag">proximitybbag.tpl</A><BR/>
+      <A HREF="tc-templates.xml#simple">simple.tpl</A><BR/>
+      <A HREF="tc-templates.xml#simplebbag">simplebbag.tpl</A></TD>
+      <TD WIDTH="50%" VALIGN="TOP">Used to insert a hidden INPUT element 
+        into a form indicating a user has contributed items to a bookbag.  If a book bag is present, this PI renders as <CODE>&lt;INPUT TYPE="hidden" name="bookbag" value="1"&gt;</CODE>, otherwise no element is created.</TD>
+    </TR>
+    <TR> 
+      <TD WIDTH="25%" VALIGN="TOP">&lt;?HIDDEN_CHECKED_ITEMS&gt;</TD>
+      <TD WIDTH="12%" VALIGN="TOP">&#x00a0;</TD>
+      
+    <TD WIDTH="13%" VALIGN="TOP"><A HREF="tc-templates.xml#wwfull">ww-full.tpl</A></TD>
+      <TD WIDTH="50%" VALIGN="TOP">Used to insert one or more hidden INPUT elements 
+        into a word index form to retain values checked in the index in previous 
+        pages. </TD>
+    </TR>
+     <TR> 
+      <TD WIDTH="25%" VALIGN="TOP">&lt;?HIDDEN_G&gt;</TD>
+      <TD WIDTH="12%" VALIGN="TOP">&#x00a0;</TD>
+      
+    <TD WIDTH="13%" VALIGN="TOP"><A HREF="tc-templates.xml#bib">bib.tpl</A><BR/>
+ <A HREF="tc-templates.xml#bibext">bibext.tpl</A><BR/>
+ <A HREF="tc-templates.xml#bibext">bibext.tpl</A><BR/>
+ <A HREF="tc-templates.xml#boolean">boolean.tpl</A><BR/>
+ <A HREF="tc-templates.xml#booleanbbag">booleanbbag.tpl</A><BR/>
+ <A HREF="tc-templates.xml#booleanext">booleanext.tpl</A><BR/>
+ <A HREF="tc-templates.xml#pageviewer.pagenav">pageviewer.pagenav.tpl</A><BR/>
+ <A HREF="tc-templates.xml#proximity">proximity.tpl</A><BR/>
+ <A HREF="tc-templates.xml#proximitybbag">proximitybbag.tpl</A><BR/>
+ <A HREF="tc-templates.xml#proximityext">proximityext.tpl</A><BR/>
+ <A HREF="tc-templates.xml#simple">simple.tpl</A><BR/>
+ <A HREF="tc-templates.xml#simplebbag">simplebbag.tpl</A><BR/>
+ <A HREF="tc-templates.xml#simpleext">simpleext.tpl</A><BR/>
+ <A HREF="tc-templates.xml#full">ww-full.tpl</A><BR/>
+ <A HREF="tc-templates.xml#start">ww-start.tpl</A><BR/></TD>
+      <TD WIDTH="50%" VALIGN="TOP">Used to insert a hidden INPUT element 
+        into a form indicating whether the user is within a specific group search environment.  The element value is the specific group name.</TD>
+    </TR>
+   <TR> 
+      <TD WIDTH="25%" VALIGN="TOP">&lt;?HIDDEN_IDNO&gt;</TD>
+      <TD WIDTH="12%" VALIGN="TOP">&#x00a0;</TD>
+      
+    <TD WIDTH="13%" VALIGN="TOP"><A HREF="tc-templates.xml#bib">bib.tpl</A><BR/>
+      <A HREF="tc-templates.xml#bibext">bibext.tpl</A><BR/>
+      <A HREF="tc-templates.xml#boolean">boolean.tpl</A><BR/>
+      <A HREF="tc-templates.xml#booleanbbag">booleanbbag.tpl</A><BR/>
+      <A HREF="tc-templates.xml#booleanext">booleanext.tpl</A><BR/>
+      <A HREF="tc-templates.xml#pageviewernav">pageviewer.nav.tpl</A><BR/>
+      <A HREF="tc-templates.xml#proximity">proximity.tpl</A><BR/>
+      <A HREF="tc-templates.xml#proximitybbag">proximitybbag.tpl</A><BR/>
+      <A HREF="tc-templates.xml#proximityext">proximityext.tpl</A><BR/>
+      <A HREF="tc-templates.xml#simple">simple.tpl</A><BR/>
+      <A HREF="tc-templates.xml#simplebbag">simplebbag.tpl</A><BR/>
+      <A HREF="tc-templates.xml#simpleext">simpleext.tpl</A></TD>
+      <TD WIDTH="50%" VALIGN="TOP">Used to insert a hidden INPUT element 
+        into a form within a pageviewer or text-idx rendering of a text indicating the unique id number of that text.</TD>
+    </TR>
+    <TR> 
+      <TD WIDTH="25%" VALIGN="TOP">&lt;?HIDDEN_REQUESTED_CHARTYPE&gt;</TD>
+      <TD WIDTH="12%" VALIGN="TOP">&#x00a0;</TD>
+      
+    <TD WIDTH="13%" VALIGN="TOP"><A HREF="tc-templates.xml#wwfull">ww-full.tpl</A></TD>
+      <TD WIDTH="50%" VALIGN="TOP">Used to insert a hidden INPUT element 
+        into a word index form indicating which character type the index is comprised of.  Available values are "alpha," "num," and "misc."</TD>
+    </TR>
+    <TR> 
+      <TD WIDTH="25%" VALIGN="TOP">&lt;?HIDDEN_REQUESTED_COLLECTIONS&gt;</TD>
+      <TD WIDTH="12%" VALIGN="TOP">&#x00a0;</TD>
+      
+    <TD WIDTH="13%" VALIGN="TOP"><A HREF="tc-templates.xml#bib">bib.tpl</A><BR/>
+      <A HREF="tc-templates.xml#boolean">boolean.tpl</A><BR/>
+      <A HREF="tc-templates.xml#booleanbbag">booleanbbag.tpl</A><BR/>
+      <A HREF="tc-templates.xml#pageviewernav">pageviewer.nav.tpl</A><BR/>
+      <A HREF="tc-templates.xml#proximity">proximity.tpl</A><BR/>
+      <A HREF="tc-templates.xml#proximitybbag">proximitybbag.tpl</A><BR/>
+      <A HREF="tc-templates.xml#simple">simple.tpl</A><BR/>
+      <A HREF="tc-templates.xml#simplebbag">simplebbag.tpl</A><BR/>
+      <A HREF="tc-templates.xml#wwfull">ww-full.tpl</A><BR/>
+      <A HREF="tc-templates.xml#wwstart">ww-start.tpl</A></TD>
+      <TD WIDTH="50%" VALIGN="TOP">Used to insert a hidden INPUT element into 
+        a search form storing the currently selected collection[s].</TD>
+    </TR>
+<TR>
+      <TD WIDTH="25%" VALIGN="TOP">&lt;?HIDDEN_REQUESTED_REALM&gt;</TD>
+      <TD WIDTH="12%" VALIGN="TOP">&#x00a0;</TD>
+      
+    <TD WIDTH="13%" VALIGN="TOP"><A HREF="tc-templates.xml#wwfull">ww-full.tpl</A></TD>
+      <TD WIDTH="50%" VALIGN="TOP">Used to insert a hidden INPUT element in a 
+        word index form to indicate the search region for the index terms.</TD>
+    </TR>
+    <TR> 
+      <TD WIDTH="25%" VALIGN="TOP">&lt;?HIDDEN_REQUESTED_TOPBOTTOM&gt;</TD>
+      <TD WIDTH="12%" VALIGN="TOP">&#x00a0;</TD>
+      
+    <TD WIDTH="13%" VALIGN="TOP"><A HREF="tc-templates.xml#wwfull">ww-full.tpl</A></TD>
+      <TD WIDTH="50%" VALIGN="TOP">Used to insert hidden INPUT elements in a word 
+        index form to indicate the top and bottom terms in the current slice of 
+        the word index.</TD>
+    </TR>
+    <TR> 
+      <TD WIDTH="25%" VALIGN="TOP">&lt;?HIDDEN_SID&gt;</TD>
+      <TD WIDTH="12%" VALIGN="TOP">&#x00a0;</TD>
+      
+    <TD WIDTH="13%" VALIGN="TOP"><A HREF="tc-templates.xml#bib">bib.tpl</A><BR/>
+      <A HREF="tc-templates.xml#bibext">bibext.tpl</A><BR/>
+      <A HREF="tc-templates.xml#boolean">boolean.tpl</A><BR/>
+      <A HREF="tc-templates.xml#booleanbbag">booleanbbag.tpl</A><BR/>
+      <A HREF="tc-templates.xml#booleanext">booleanext.tpl</A><BR/>
+      <A HREF="tc-templates.xml#pageviewernav">pageviewer.nav.tpl</A><BR/>
+      <A HREF="tc-templates.xml#proximity">proximity.tpl</A><BR/>
+      <A HREF="tc-templates.xml#proximitybbag">proximitybbag.tpl</A><BR/>
+      <A HREF="tc-templates.xml#proximityext">proximityext.tpl</A><BR/>
+      <A HREF="tc-templates.xml#simple">simple.tpl</A><BR/>
+      <A HREF="tc-templates.xml#simplebbag">simplebbag.tpl</A><BR/>
+      <A HREF="tc-templates.xml#simpleext">simpleext.tpl</A><BR/>
+      <A HREF="tc-templates.xml#wwfull">ww-full.tpl</A><BR/>
+      <A HREF="tc-templates.xml#wwstart">ww-start.tpl</A></TD>
+      <TD WIDTH="50%" VALIGN="TOP">Used to insert hidden INPUT form elements indicating 
+        the current session id.</TD>
+    </TR>
+    <TR> 
+      <TD WIDTH="25%" VALIGN="TOP">&lt;?HIDDEN_XC&gt;</TD>
+      <TD WIDTH="12%" VALIGN="TOP">&#x00a0;</TD>
+      
+    <TD WIDTH="13%" VALIGN="TOP"><A HREF="tc-templates.xml#bib">bib.tpl</A><BR/>
+      <A HREF="tc-templates.xml#bibext">bibext.tpl</A><BR/>
+      <A HREF="tc-templates.xml#boolean">boolean.tpl</A><BR/>
+      <A HREF="tc-templates.xml#booleanbbag">booleanbbag.tpl</A><BR/>
+      <A HREF="tc-templates.xml#booleanext">booleanext.tpl</A><BR/>
+      <A HREF="tc-templates.xml#pageviewernav">pageviewer.nav.tpl</A><BR/>
+      <A HREF="tc-templates.xml#proximity">proximity.tpl</A><BR/>
+      <A HREF="tc-templates.xml#proximitybbag">proximitybbag.tpl</A><BR/>
+      <A HREF="tc-templates.xml#proximityext">proximityext.tpl</A><BR/>
+      <A HREF="tc-templates.xml#simple">simple.tpl</A><BR/>
+      <A HREF="tc-templates.xml#simplebbag">simplebbag.tpl</A><BR/>
+      <A HREF="tc-templates.xml#simpleext">simpleext.tpl</A><BR/>
+      <A HREF="tc-templates.xml#wwfull">ww-full.tpl</A><BR/>
+      <A HREF="tc-templates.xml#wwstart">ww-start.tpl</A></TD>
+      <TD WIDTH="50%" VALIGN="TOP">Used to insert a hidden INPUT element 
+        into a form indicating that the current search environment is a cross-collection one.  If the current environment is a cross-collection one, this PI renders as <CODE>&lt;INPUT TYPE="hidden" name="xc" value="1"&gt;</CODE>, otherwise no element is created.</TD>
+    </TR>
+    <TR> 
+      <TD WIDTH="25%" VALIGN="TOP">&lt;?INCLUDE_BOOKBAG_NAV_LINKS&gt;</TD>
+      <TD WIDTH="12%" VALIGN="TOP">&#x00a0;</TD>
+      
+    <TD WIDTH="13%" VALIGN="TOP"><A HREF="tc-templates.xml#reslist">reslist.tpl</A><BR/>
+      <A HREF="tc-templates.xml#textpicklist">text.picklist.tpl</A></TD>
+      <TD WIDTH="50%" VALIGN="TOP">Used to insert or exclude HTML code for a secondary 
+        navigation bar for within book bag search options.</TD>
+    </TR>
+    <TR> 
+      <TD WIDTH="25%" VALIGN="TOP">&lt;?INCLUDE_BOOKBAG_SEARCH_LINKS&gt;</TD>
+      <TD WIDTH="12%" VALIGN="TOP">&#x00a0;</TD>
+      
+    <TD WIDTH="13%" VALIGN="TOP"><A HREF="tc-templates.xml#bbagemail">bbagemail.tpl</A><BR/>
+      <A HREF="tc-templates.xml#bbaglist">bbaglist.tpl</A></TD>
+      <TD WIDTH="50%" VALIGN="TOP">Used to insert or exclude HTML code for optional 
+        search links on book bag contents and/or email forms.</TD>
+    </TR>
+    <TR> 
+      <TD WIDTH="25%" VALIGN="TOP">&lt;?INCLUDE_COLL_SPECIFIC_CONTENT id=&quot;cs001&quot;&gt;</TD>
+      <TD WIDTH="12%" VALIGN="TOP">&#x00a0;</TD>
+      
+    <TD WIDTH="13%" VALIGN="TOP"><A HREF="tc-templates.xml#bib">bib.tpl</A><BR/>
+      <A HREF="tc-templates.xml#boolean">boolean.tpl</A><BR/>
+      <A HREF="tc-templates.xml#booleanbbag">booleanbbag.tpl</A><BR/>
+      <A HREF="tc-templates.xml#booleanext">booleanext.tpl</A><BR/>
+      <A HREF="tc-templates.xml#header">header.tpl</A><BR/>
+      <A HREF="tc-templates.xml#pageviewernav">pageviewer.nav.tpl</A><BR/>
+      <A HREF="tc-templates.xml#proximity">proximity.tpl</A><BR/>
+      <A HREF="tc-templates.xml#proximitybbag">proximitybbag.tpl</A><BR/>
+      <A HREF="tc-templates.xml#reslist">reslist.tpl</A><BR/>
+      <A HREF="tc-templates.xml#searchhistory">searchhistory.tpl</A><BR/>
+      <A HREF="tc-templates.xml#simple">simple.tpl</A><BR/>
+      <A HREF="tc-templates.xml#simplebbag">simplebbag.tpl</A><BR/>
+      <A HREF="tc-templates.xml#textpicklist">text.picklist.tpl</A><BR/>
+      <A HREF="tc-templates.xml#text">text.tpl</A><BR/>
+      <A HREF="tc-templates.xml#wwfull">ww-full.tpl</A><BR/>
+      <A HREF="tc-templates.xml#wwstart">ww-start.tpl</A></TD>
+      <TD WIDTH="50%" VALIGN="TOP">Used to include or exclude navigation link 
+        code for features that are available only for certain collections.</TD>
+    </TR>
+    <TR> 
+      <TD WIDTH="25%" VALIGN="TOP">&lt;?INCLUDE_GO_TO_XCOLL&gt;</TD>
+      <TD WIDTH="12%" VALIGN="TOP">&#x00a0;</TD>
+      
+    <TD WIDTH="13%" VALIGN="TOP"><A HREF="tc-templates.xml#bib">bib.tpl</A><BR/>
+      <A HREF="tc-templates.xml#bibext">bibext.tpl</A><BR/>
+      <A HREF="tc-templates.xml#boolean">boolean.tpl</A><BR/>
+      <A HREF="tc-templates.xml#booleanbbag">booleanbbag.tpl</A><BR/>
+      <A HREF="tc-templates.xml#booleanext">booleanext.tpl</A><BR/>
+      <A HREF="tc-templates.xml#header">header.tpl</A><BR/>
+      <A HREF="tc-templates.xml#pageviewernav">pageviewer.nav.tpl</A><BR/>
+      <A HREF="tc-templates.xml#proximity">proximity.tpl</A><BR/>
+      <A HREF="tc-templates.xml#proximitybbag">proximitybbag.tpl</A><BR/>
+      <A HREF="tc-templates.xml#proximityext">proximityext.tpl</A><BR/>
+      <A HREF="tc-templates.xml#reslist">reslist.tpl</A><BR/>
+      <A HREF="tc-templates.xml#searchhistory">searchhistory.tpl</A><BR/>
+      <A HREF="tc-templates.xml#simple">simple.tpl</A><BR/>
+      <A HREF="tc-templates.xml#simplebbag">simplebbag.tpl</A><BR/>
+      <A HREF="tc-templates.xml#simpleext">simpleext.tpl</A><BR/>
+      <A HREF="tc-templates.xml#textpicklist">text.picklist.tpl</A><BR/>
+      <A HREF="tc-templates.xml#text">text.tpl</A><BR/>
+      <A HREF="tc-templates.xml#wwfull">ww-full.tpl</A><BR/>
+      <A HREF="tc-templates.xml#wwstart">ww-start.tpl</A></TD>
+      <TD WIDTH="50%" VALIGN="TOP">Used to insert or exclude HTML code for a link 
+        to multiple collection interface.</TD>
+    </TR>
+    <TR> 
+      <TD WIDTH="25%" VALIGN="TOP">&lt;?INCLUDE_HEADER_TOC&gt;</TD>
+      <TD WIDTH="12%" VALIGN="TOP">&#x00a0;</TD>
+      
+    <TD WIDTH="13%" VALIGN="TOP"><A HREF="tc-templates.xml#header">header.tpl</A></TD>
+      <TD WIDTH="50%" VALIGN="TOP">Used to include or exclude a linked table of 
+        contents to a bibliographic header display.</TD>
+    </TR>
+    <TR> 
+      <TD WIDTH="25%" VALIGN="TOP">&lt;?INCLUDE_RETURN_TO_RESULTS&gt;</TD>
+      <TD WIDTH="12%" VALIGN="TOP">&#x00a0;</TD>
+      
+    <TD WIDTH="13%" VALIGN="TOP"><A HREF="tc-templates.xml#header">header.tpl</A><BR/>
+      <A HREF="tc-templates.xml#pageviewernav">pageviewer.nav.tpl</A><BR/>
+      <A HREF="tc-templates.xml#text">text.tpl</A></TD>
+      <TD WIDTH="50%" VALIGN="TOP">Used to include an HTML link back to most current 
+        results listing from a text display or header display.</TD>
+    </TR>
+    <TR> 
+      <TD WIDTH="25%" VALIGN="TOP">&lt;?INCLUDE_SIZE_SELECT&gt;</TD>
+      <TD WIDTH="12%" VALIGN="TOP">&#x00a0;</TD>
+      
+    <TD WIDTH="13%" VALIGN="TOP"><A HREF="tc-templates.xml#pageviewernav">pageviewer.nav.tpl</A></TD>
+      <TD WIDTH="50%" VALIGN="TOP">Used to include or exclude HTML code for a 
+        page size menu in pageviewer.</TD>
+    </TR>
+    <TR> 
+      <TD WIDTH="25%" VALIGN="TOP">&lt;?JS_REGION_ARRAYS&gt;</TD>
+      <TD WIDTH="12%" VALIGN="TOP">&#x00a0;</TD>
+      
+    <TD WIDTH="13%" VALIGN="TOP"><A HREF="tc-templates.xml#bibext">bibext.tpl</A><BR/>
+      <A HREF="tc-templates.xml#booleanext">booleanext.tpl</A><BR/>
+      <A HREF="tc-templates.xml#proximityext">proximityext.tpl</A><BR/>
+      <A HREF="tc-templates.xml#simpleext">simpleext.tpl</A></TD>
+      <TD WIDTH="50%" VALIGN="TOP">Used in multiple search forms to provide Javascript 
+        code for implementing the collection selecting functionality.</TD>
+    </TR> 
+    <TR> 
+      <TD WIDTH="25%" VALIGN="TOP">&lt;?JS_PATHS&gt;</TD>
+      <TD WIDTH="12%" VALIGN="TOP">filename</TD>
+      
+    <TD WIDTH="13%" VALIGN="TOP"> <A HREF="tc-templates.xml#bib">bib.tpl</A><BR/>
+ <A HREF="tc-templates.xml#bibext">bibext.tpl</A><BR/>
+ <A HREF="tc-templates.xml#boolean">boolean.tpl</A><BR/>
+ <A HREF="tc-templates.xml#booleanbbag">booleanbbag.tpl</A><BR/>
+ <A HREF="tc-templates.xml#booleanext">booleanext.tpl</A><BR/>
+ <A HREF="tc-templates.xml#header">header.tpl</A><BR/>
+ <A HREF="tc-templates.xml#note">note.tpl</A><BR/>
+ <A HREF="tc-templates.xml#pageviewer.nav">pageviewer.nav.tpl</A><BR/>
+ <A HREF="tc-templates.xml#proximity">proximity.tpl</A><BR/>
+ <A HREF="tc-templates.xml#proximitybbag">proximitybbag.tpl</A><BR/>
+ <A HREF="tc-templates.xml#proximityext">proximityext.tpl</A><BR/>
+ <A HREF="tc-templates.xml#reslist">reslist.tpl</A><BR/>
+ <A HREF="tc-templates.xml#searchhistory">searchhistory.tpl</A><BR/>
+ <A HREF="tc-templates.xml#simple">simple.tpl</A><BR/>
+ <A HREF="tc-templates.xml#simplebbag">simplebbag.tpl</A><BR/>
+ <A HREF="tc-templates.xml#simpleext">simpleext.tpl</A><BR/>
+ <A HREF="tc-templates.xml#text.picklist">text.picklist.tpl</A><BR/>
+ <A HREF="tc-templates.xml#text">text.tpl</A><BR/>
+ <A HREF="tc-templates.xml#full">ww-full.tpl</A><BR/>
+ <A HREF="tc-templates.xml#start">ww-start.tpl</A><BR/>
+</TD>
+      <TD WIDTH="50%" VALIGN="TOP">Used to supply a relevant source path to the <CODE>SRC</CODE> attribute of the <CODE>&lt;SCRIPT&gt;</CODE> element.  The order of priority for path is from collection specific directory to class directory.</TD>
+    </TR>
+    <TR> 
+      <TD WIDTH="25%" VALIGN="TOP">&lt;?LANGUAGE_LIST&gt;</TD>
+      <TD WIDTH="12%" VALIGN="TOP">&#x00a0;</TD>
+      
+    <TD WIDTH="13%" VALIGN="TOP"><A HREF="tc-templates.xml#bib">bib.tpl</A><BR/>
+      <A HREF="tc-templates.xml#boolean">boolean.tpl</A><BR/>
+      <A HREF="tc-templates.xml#proximity">proximity.tpl</A><BR/>
+      <A HREF="tc-templates.xml#simple">simple.tpl</A></TD>
+      <TD WIDTH="50%" VALIGN="TOP">Previously used in search forms to indicate 
+        the currently selected collection filter values for language.</TD>
+    </TR>
+    <TR> 
+      <TD WIDTH="25%" VALIGN="TOP">&lt;?LANGUAGE_SELECT&gt;</TD>
+      <TD WIDTH="12%" VALIGN="TOP">&#x00a0;</TD>
+      
+    <TD WIDTH="13%" VALIGN="TOP"><A HREF="tc-templates.xml#bibext">bibext.tpl</A><BR/>
+      <A HREF="tc-templates.xml#booleanext">booleanext.tpl</A><BR/>
+      <A HREF="tc-templates.xml#proximityext">proximityext.tpl</A><BR/>
+      <A HREF="tc-templates.xml#simpleext">simpleext.tpl</A></TD>
+      <TD WIDTH="50%" VALIGN="TOP">Used to insert a select menu in a multiple 
+        collection search form for filtering collections by language.</TD>
+    </TR>
+    <TR> 
+      <TD WIDTH="25%" VALIGN="TOP">&lt;?MAIN_FRAME_SRC&gt;</TD>
+      <TD WIDTH="12%" VALIGN="TOP">&#x00a0;</TD>
+      
+    <TD WIDTH="13%" VALIGN="TOP"><A HREF="tc-templates.xml#pageviewerframeset">pageviewer.frameset.tpl</A></TD>
+      <TD WIDTH="50%" VALIGN="TOP">Provides the <CODE>SRC</CODE> 
+        URL for the page content frame in the pageviewer frameset.</TD>
+    </TR>
+    <TR> 
+      <TD WIDTH="25%" VALIGN="TOP">&lt;?NAV_FRAME_SRC&gt;</TD>
+      <TD WIDTH="12%" VALIGN="TOP">&#x00a0;</TD>
+      
+    <TD WIDTH="13%" VALIGN="TOP"><A HREF="tc-templates.xml#pageviewerframeset">pageviewer.frameset.tpl</A></TD>
+      <TD WIDTH="50%" VALIGN="TOP">Provides the <CODE>SRC</CODE> 
+        URL for the navigation frame in the pageviewer frameset.</TD>
+    </TR>
+    <TR> 
+      <TD WIDTH="25%" VALIGN="TOP">&lt;?PAGE_NAV_FRAME_SRC&gt;</TD>
+      <TD WIDTH="12%" VALIGN="TOP">&#x00a0;</TD>
+      
+    <TD WIDTH="13%" VALIGN="TOP"><A HREF="tc-templates.xml#pageviewerframeset">pageviewer.frameset.tpl</A></TD>
+      <TD WIDTH="50%" VALIGN="TOP">Provides the <CODE>SRC</CODE> 
+        URL for the page navigation frame in the pageviewer frameset.</TD>
+    </TR>
+    <TR> 
+      <TD WIDTH="25%" VALIGN="TOP">&lt;?NEXT_PAGE_LINK&gt;</TD>
+      <TD WIDTH="12%" VALIGN="TOP">&#x00a0;</TD>
+      
+    <TD WIDTH="13%" VALIGN="TOP"><A HREF="tc-templates.xml#pageviewernav">pageviewer.nav.tpl</A></TD>
+      <TD WIDTH="50%" VALIGN="TOP">Used to insert <CODE>HREF</CODE> 
+        URL code for the &quot;next page&quot; button in pageviewer.</TD>
+    </TR>
+    <TR> 
+      <TD WIDTH="25%" VALIGN="TOP">&lt;?NUMBER_OF_COLLECTIONS&gt;</TD>
+      <TD WIDTH="12%" VALIGN="TOP">&#x00a0;</TD>
+      
+    <TD WIDTH="13%" VALIGN="TOP"><A HREF="tc-templates.xml#bib">bib.tpl</A><BR/>
+      <A HREF="tc-templates.xml#boolean">boolean.tpl</A><BR/>
+      <A HREF="tc-templates.xml#proximity">proximity.tpl</A><BR/>
+      <A HREF="tc-templates.xml#simple">simple.tpl</A></TD>
+      <TD WIDTH="50%" VALIGN="TOP">Previously used in search forms to indicate 
+        the number of collections currently being searched.</TD>
+    </TR>
+    <TR> 
+      <TD WIDTH="25%" VALIGN="TOP">&lt;?NUMBER_OF_TEXTS&gt;</TD>
+      <TD WIDTH="12%" VALIGN="TOP">&#x00a0;</TD>
+      
+    <TD WIDTH="13%" VALIGN="TOP"><A HREF="tc-templates.xml#bib">bib.tpl</A><BR/>
+      <A HREF="tc-templates.xml#boolean">boolean.tpl</A><BR/>
+      <A HREF="tc-templates.xml#proximity">proximity.tpl</A><BR/>
+      <A HREF="tc-templates.xml#simple">simple.tpl</A></TD>
+      <TD WIDTH="50%" VALIGN="TOP">Previously used in search forms to indicate 
+        the number of texts currently being searched.</TD>
+    </TR>
+    <TR> 
+      <TD WIDTH="25%" VALIGN="TOP">&lt;?PAGE_IMAGE_OR_TEXT&gt;</TD>
+      <TD WIDTH="12%" VALIGN="TOP">&#x00a0;</TD>
+      
+    <TD WIDTH="13%" VALIGN="TOP"><A HREF="tc-templates.xml#pageviewermain">pageviewer.main.tpl</A></TD>
+      <TD WIDTH="50%" VALIGN="TOP">Used to insert the ASCII text or image reference 
+        in the main content frame of pageviewer.</TD>
+    </TR>
+    <TR> 
+      <TD WIDTH="25%" VALIGN="TOP">&lt;?PAGE_SELECT onchange=&quot;this.form.submit();&quot;&gt;</TD>
+      <TD WIDTH="12%" VALIGN="TOP">&#x00a0;</TD>
+      
+    <TD WIDTH="13%" VALIGN="TOP"><A HREF="tc-templates.xml#pageviewernav">pageviewer.nav.tpl</A></TD>
+      <TD WIDTH="50%" VALIGN="TOP">Used to insert the select menu for jumping 
+        to a page in the current book in pageviewer.</TD>
+    </TR>
+    <TR> 
+      <TD WIDTH="25%" VALIGN="TOP">&lt;?PERIOD_LIST&gt;</TD>
+      <TD WIDTH="12%" VALIGN="TOP">&#x00a0;</TD>
+      
+    <TD WIDTH="13%" VALIGN="TOP"><A HREF="tc-templates.xml#bib">bib.tpl</A><BR/>
+      <A HREF="tc-templates.xml#boolean">boolean.tpl</A><BR/>
+      <A HREF="tc-templates.xml#proximity">proximity.tpl</A><BR/>
+      <A HREF="tc-templates.xml#simple">simple.tpl</A></TD>
+      <TD WIDTH="50%" VALIGN="TOP">Previously used in search forms to indicate 
+        the currently selected collection filter values for period.</TD>
+    </TR>
+    <TR> 
+      <TD WIDTH="25%" VALIGN="TOP">&lt;?PERIOD_SEARCH_SELECT&gt;</TD>
+      <TD WIDTH="12%" VALIGN="TOP">&#x00a0;</TD>
+      
+    <TD WIDTH="13%" VALIGN="TOP"><A HREF="tc-templates.xml#boolean">boolean.tpl</A><BR/>
+      <A HREF="tc-templates.xml#booleanbbag">booleanbbag.tpl</A><BR/>
+      <A HREF="tc-templates.xml#proximity">proximity.tpl</A><BR/>
+      <A HREF="tc-templates.xml#proximitybbag">proximitybbag.tpl</A><BR/>
+      <A HREF="tc-templates.xml#simple">simple.tpl</A><BR/>
+      <A HREF="tc-templates.xml#simplebbag">simplebbag.tpl</A></TD>
+      <TD WIDTH="50%" VALIGN="TOP">Used to insert an optional select menu for 
+        period restrictions in a search form.</TD>
+    </TR>
+    <TR> 
+      <TD WIDTH="25%" VALIGN="TOP">&lt;?PERIOD_SELECT&gt;</TD>
+      <TD WIDTH="12%" VALIGN="TOP">&#x00a0;</TD>
+      
+    <TD WIDTH="13%" VALIGN="TOP"><A HREF="tc-templates.xml#bibext">bibext.tpl</A><BR/>
+      <A HREF="tc-templates.xml#booleanext">booleanext.tpl</A><BR/>
+      <A HREF="tc-templates.xml#proximityext">proximityext.tpl</A><BR/>
+      <A HREF="tc-templates.xml#simpleext">simpleext.tpl</A></TD>
+      <TD WIDTH="50%" VALIGN="TOP">Used to insert a select menu in a multiple 
+        collection search form for filtering collections by period.</TD>
+    </TR>
+    <TR> 
+      <TD WIDTH="25%" VALIGN="TOP">&lt;?PICKLIST&gt;</TD>
+      <TD WIDTH="12%" VALIGN="TOP">&#x00a0;</TD>
+      
+    <TD WIDTH="13%" VALIGN="TOP"><A HREF="tc-templates.xml#pageviewerpicklist">pageviewer.picklist.tpl</A><BR/>
+      <A HREF="tc-templates.xml#textpicklist">text.picklist.tpl</A></TD>
+      <TD WIDTH="50%" VALIGN="TOP">Used to insert a linked list of possible titles 
+        to select for viewing in pageviewer or text display. </TD>
+    </TR>
+    <TR> 
+      <TD WIDTH="25%" VALIGN="TOP">&lt;?PREV_PAGE_LINK&gt;</TD>
+      <TD WIDTH="12%" VALIGN="TOP">&#x00a0;</TD>
+      
+    <TD WIDTH="13%" VALIGN="TOP"><A HREF="tc-templates.xml#pageviewernav">pageviewer.nav.tpl</A></TD>
+      <TD WIDTH="50%" VALIGN="TOP">Used to insert <CODE>HREF</CODE> 
+        URL code for the &quot;previous page&quot; button in pageviewer.</TD>
+    </TR>
+    <TR> 
+      <TD WIDTH="25%" VALIGN="TOP">&lt;?PROXIMITY_SEARCH_LINK&gt;</TD>
+      <TD WIDTH="12%" VALIGN="TOP">&#x00a0;</TD>
+      
+    <TD WIDTH="13%" VALIGN="TOP"><A HREF="tc-templates.xml#bbaglist">bbaglist.tpl</A><BR/>
+      <A HREF="tc-templates.xml#bib">bib.tpl</A><BR/>
+      <A HREF="tc-templates.xml#bibext">bibext.tpl</A><BR/>
+      <A HREF="tc-templates.xml#boolean">boolean.tpl</A><BR/>
+      <A HREF="tc-templates.xml#booleanext">booleanext.tpl</A><BR/>
+      <A HREF="tc-templates.xml#wwfull">ww-full.tpl</A><BR/>
+      <A HREF="tc-templates.xml#wwstart">ww-start.tpl</A></TD>
+      <TD WIDTH="50%" VALIGN="TOP">Provides the <CODE>HREF</CODE> 
+        URL for the &quot;proximity&quot; search form link in the main or footer 
+        navigation bar.</TD>
+    </TR>
+    <TR> 
+      <TD WIDTH="25%" VALIGN="TOP">&lt;?PUB_BETWEEN_SEARCH_SELECT&gt;</TD>
+      <TD WIDTH="12%" VALIGN="TOP">&#x00a0;</TD>
+      
+    <TD WIDTH="13%" VALIGN="TOP"><A HREF="tc-templates.xml#boolean">boolean.tpl</A><BR/>
+      <A HREF="tc-templates.xml#booleanbbag">booleanbbag.tpl</A><BR/>
+      <A HREF="tc-templates.xml#proximity">proximity.tpl</A><BR/>
+      <A HREF="tc-templates.xml#proximitybbag">proximitybbag.tpl</A><BR/>
+      <A HREF="tc-templates.xml#simple">simple.tpl</A><BR/>
+      <A HREF="tc-templates.xml#simplebbag">simplebbag.tpl</A></TD>
+      <TD WIDTH="50%" VALIGN="TOP">Inserts an optional pair of form INPUT boxes 
+        for restricting searches by a range of publication dates.</TD>
+    </TR>
+    <TR> 
+      <TD WIDTH="25%" VALIGN="TOP">&lt;?Q1_INPUT size=&quot;25&quot; class=&quot;formhilite&quot; 
+        default=&quot;&quot;&gt;</TD>
+      <TD WIDTH="12%" VALIGN="TOP">&#x00a0;</TD>
+      
+    <TD WIDTH="13%" VALIGN="TOP"><A HREF="tc-templates.xml#wwfull">ww-full.tpl</A><BR/>
+      <A HREF="tc-templates.xml#wwstart">ww-start.tpl</A><BR/>
+      <A HREF="tc-templates.xml#bib">bib.tpl</A><BR/>
+      <A HREF="tc-templates.xml#bibext">bibext.tpl</A><BR/>
+      <A HREF="tc-templates.xml#boolean">boolean.tpl</A><BR/>
+      <A HREF="tc-templates.xml#booleanbbag">booleanbbag.tpl</A><BR/>
+      <A HREF="tc-templates.xml#booleanext">booleanext.tpl</A><BR/>
+      <A HREF="tc-templates.xml#proximity">proximity.tpl</A><BR/>
+      <A HREF="tc-templates.xml#proximitybbag">proximitybbag.tpl</A><BR/>
+      <A HREF="tc-templates.xml#proximityext">proximityext.tpl</A><BR/>
+      <A HREF="tc-templates.xml#simple">simple.tpl</A><BR/>
+      <A HREF="tc-templates.xml#simplebbag">simplebbag.tpl</A><BR/>
+      <A HREF="tc-templates.xml#simpleext">simpleext.tpl</A></TD>
+      <TD WIDTH="50%" VALIGN="TOP">Used to insert an INPUT box into a search form 
+        for the first query term.</TD>
+    </TR>
+    <TR> 
+      <TD WIDTH="25%" VALIGN="TOP">&lt;?Q2_INPUT size=&quot;30&quot; class=&quot;formhilite&quot;&gt;</TD>
+      <TD WIDTH="12%" VALIGN="TOP">&#x00a0;</TD>
+      
+    <TD WIDTH="13%" VALIGN="TOP"><A HREF="tc-templates.xml#boolean">boolean.tpl</A><BR/>
+      <A HREF="tc-templates.xml#booleanbbag">booleanbbag.tpl</A><BR/>
+      <A HREF="tc-templates.xml#booleanext">booleanext.tpl</A><BR/>
+      <A HREF="tc-templates.xml#proximity">proximity.tpl</A><BR/>
+      <A HREF="tc-templates.xml#proximitybbag">proximitybbag.tpl</A><BR/>
+      <A HREF="tc-templates.xml#proximityext">proximityext.tpl</A></TD>
+      <TD WIDTH="50%" VALIGN="TOP">Used to insert an INPUT box into a search form 
+        for the second query term.</TD>
+    </TR>
+    <TR> 
+      <TD WIDTH="25%" VALIGN="TOP">&lt;?Q3_INPUT size=&quot;30&quot; class=&quot;formhilite&quot;&gt;</TD>
+      <TD WIDTH="12%" VALIGN="TOP">&#x00a0;</TD>
+      
+    <TD WIDTH="13%" VALIGN="TOP"><A HREF="tc-templates.xml#boolean">boolean.tpl</A><BR/>
+      <A HREF="tc-templates.xml#booleanbbag">booleanbbag.tpl</A><BR/>
+      <A HREF="tc-templates.xml#booleanext">booleanext.tpl</A><BR/>
+      <A HREF="tc-templates.xml#proximity">proximity.tpl</A><BR/>
+      <A HREF="tc-templates.xml#proximitybbag">proximitybbag.tpl</A><BR/>
+      <A HREF="tc-templates.xml#proximityext">proximityext.tpl</A></TD>
+      <TD WIDTH="50%" VALIGN="TOP">Used to insert an INPUT box into a search form 
+        for the third query term.</TD>
+    </TR>
+    <TR> 
+      <TD WIDTH="25%" VALIGN="TOP">&lt;?REGION_SEARCH_SELECT&gt;</TD>
+      <TD WIDTH="12%" VALIGN="TOP">&#x00a0;</TD>
+      
+    <TD WIDTH="13%" VALIGN="TOP"><A HREF="tc-templates.xml#bib">bib.tpl</A><BR/>
+      <A HREF="tc-templates.xml#bibext">bibext.tpl</A><BR/>
+      <A HREF="tc-templates.xml#boolean">boolean.tpl</A><BR/>
+      <A HREF="tc-templates.xml#booleanbbag">booleanbbag.tpl</A><BR/>
+      <A HREF="tc-templates.xml#booleanext">booleanext.tpl</A><BR/>
+      <A HREF="tc-templates.xml#proximity">proximity.tpl</A><BR/>
+      <A HREF="tc-templates.xml#proximitybbag">proximitybbag.tpl</A><BR/>
+      <A HREF="tc-templates.xml#proximityext">proximityext.tpl</A><BR/>
+      <A HREF="tc-templates.xml#simple">simple.tpl</A><BR/>
+      <A HREF="tc-templates.xml#simplebbag">simplebbag.tpl</A><BR/>
+      <A HREF="tc-templates.xml#simpleext">simpleext.tpl</A></TD>
+      <TD WIDTH="50%" VALIGN="TOP">Used to insert a select menu into a search 
+        form for selecting a region to restrict search terms to.</TD>
+    </TR>
+    <TR> 
+      <TD WIDTH="25%" VALIGN="TOP">&lt;?RESULTS&gt;</TD>
+      <TD WIDTH="12%" VALIGN="TOP">&#x00a0;</TD>
+      
+    <TD WIDTH="13%" VALIGN="TOP"><A HREF="tc-templates.xml#reslist">reslist.tpl</A></TD>
+      <TD WIDTH="50%" VALIGN="TOP">Inserts detailed results listings within table<CODE> 
+        &lt;TR&gt;</CODE> and <CODE>&lt;TD&gt;</CODE> 
+        tags</TD>
+    </TR>
+    <TR> 
+      <TD WIDTH="25%" VALIGN="TOP">&lt;?RESULTS_FRAME_HEADER&gt;</TD>
+      <TD WIDTH="12%" VALIGN="TOP">&#x00a0;</TD>
+      
+    <TD WIDTH="13%" VALIGN="TOP"><A HREF="tc-templates.xml#reslist">reslist.tpl</A></TD>
+      <TD WIDTH="50%" VALIGN="TOP">Used to insert summary info for results details 
+        per collection.</TD>
+    </TR>
+    <TR> 
+      <TD WIDTH="25%" VALIGN="TOP">&lt;?RETURN_TO_RESULTS&gt;</TD>
+      <TD WIDTH="12%" VALIGN="TOP">&#x00a0;</TD>
+      
+    <TD WIDTH="13%" VALIGN="TOP"><A HREF="tc-templates.xml#pageviewernav">pageviewer.nav.tpl</A></TD>
+      <TD WIDTH="50%" VALIGN="TOP">Used to insert an HTML link back to results 
+        listings from the pageviewer.</TD>
+    </TR>
+    <TR> 
+      <TD WIDTH="25%" VALIGN="TOP">&lt;?RE_AUTH_LINK&gt;</TD>
+      <TD WIDTH="12%" VALIGN="TOP">&#x00a0;</TD>
+      
+    <TD WIDTH="13%" VALIGN="TOP"><A HREF="tc-templates.xml#bib">bib.tpl</A><BR/>
+      <A HREF="tc-templates.xml#bibext">bibext.tpl</A><BR/>
+      <A HREF="tc-templates.xml#boolean">boolean.tpl</A><BR/>
+      <A HREF="tc-templates.xml#booleanbbag">booleanbbag.tpl</A><BR/>
+      <A HREF="tc-templates.xml#booleanext">booleanext.tpl</A><BR/>
+      <A HREF="tc-templates.xml#header">header.tpl</A><BR/>
+      <A HREF="tc-templates.xml#pageviewernav">pageviewer.nav.tpl</A><BR/>
+      <A HREF="tc-templates.xml#proximity">proximity.tpl</A><BR/>
+      <A HREF="tc-templates.xml#proximitybbag">proximitybbag.tpl</A><BR/>
+      <A HREF="tc-templates.xml#proximityext">proximityext.tpl</A><BR/>
+      <A HREF="tc-templates.xml#reslist">reslist.tpl</A><BR/>
+      <A HREF="tc-templates.xml#searchhistory">searchhistory.tpl</A><BR/>
+      <A HREF="tc-templates.xml#simple">simple.tpl</A><BR/>
+      <A HREF="tc-templates.xml#simplebbag">simplebbag.tpl</A><BR/>
+      <A HREF="tc-templates.xml#simpleext">simpleext.tpl</A><BR/>
+      <A HREF="tc-templates.xml#splash">splash.tpl</A><BR/>
+      <A HREF="tc-templates.xml#textpicklist">text.picklist.tpl</A><BR/>
+      <A HREF="tc-templates.xml#text">text.tpl</A><BR/>
+      <A HREF="tc-templates.xml#wwfull">ww-full.tpl</A><BR/>
+      <A HREF="tc-templates.xml#wwstart">ww-start.tpl</A></TD>
+      <TD WIDTH="50%" VALIGN="TOP">Provides the <CODE>HREF</CODE> 
+        URL for the &quot;Authorized user login&quot; link from any page.</TD>
+    </TR>
+    <TR> 
+      <TD WIDTH="25%" VALIGN="TOP">&lt;?SCOPEDNOTE&gt;</TD>
+      <TD WIDTH="12%" VALIGN="TOP">&#x00a0;</TD>
+      
+    <TD WIDTH="13%" VALIGN="TOP"><A HREF="tc-templates.xml#note">note.tpl</A></TD>
+      <TD WIDTH="50%" VALIGN="TOP">Used to insert the content of a linked note 
+        in a target window. </TD>
+    </TR>
+    <TR> 
+      <TD WIDTH="25%" VALIGN="TOP">&lt;?SCRIPT_NAME cginame=&quot;pageviewer-idx&quot;&gt;</TD>
+      <TD WIDTH="12%" VALIGN="TOP">&#x00a0;</TD>
+      <TD WIDTH="13%" VALIGN="TOP">
+        
+      <P><A HREF="tc-templates.xml#pageviewernav">pageviewer.nav.tpl</A> <A HREF="tc-templates.xml#bbagemail">bbagemail.tpl</A> 
+        <A HREF="tc-templates.xml#bbaglist">bbaglist.tpl</A> <A HREF="tc-templates.xml#bib">bib.tpl</A> 
+        <A HREF="tc-templates.xml#bibext">bibext.tpl</A> <A HREF="tc-templates.xml#boolean">boolean.tpl</A> 
+        <A HREF="tc-templates.xml#booleanbbag">booleanbbag.tpl</A> <A HREF="tc-templates.xml#booleanext">booleanext.tpl</A> 
+        <A HREF="tc-templates.xml#home"><BR/>
+        </A><A HREF="tc-templates.xml#home">home.tpl</A> <A HREF="tc-templates.xml#proximity"><BR/>
+        proximity.tpl</A> <A HREF="tc-templates.xml#proximitybbag">proximitybbag.tpl</A> 
+        <A HREF="tc-templates.xml#proximityext">proximityext.tpl</A> <A HREF="tc-templates.xml#simple">simple.tpl</A> 
+        <A HREF="tc-templates.xml#simplebbag">simplebbag.tpl</A> <A HREF="tc-templates.xml#simpleext">simpleext.tpl</A> 
+        <A HREF="tc-templates.xml#splash">splash.tpl</A> <A HREF="tc-templates.xml#wwfull">ww-full.tpl</A> 
+        <A HREF="tc-templates.xml#wwstart">ww-start.tpl</A></P>
+        </TD>
+      <TD WIDTH="50%" VALIGN="TOP">Used to insert a relevant script name into 
+        a collection-specific URL path.</TD>
+    </TR>
+    <TR> 
+      <TD WIDTH="25%" VALIGN="TOP">&lt;?SEARCH_HISTORY_LINK&gt;</TD>
+      <TD WIDTH="12%" VALIGN="TOP">&#x00a0;</TD>
+      
+    <TD WIDTH="13%" VALIGN="TOP"><A HREF="tc-templates.xml#bbaglist">bbaglist.tpl</A><BR/>
+      <A HREF="tc-templates.xml#bib">bib.tpl</A><BR/>
+      <A HREF="tc-templates.xml#bibext">bibext.tpl</A><BR/>
+      <A HREF="tc-templates.xml#boolean">boolean.tpl</A><BR/>
+      <A HREF="tc-templates.xml#booleanbbag">booleanbbag.tpl</A><BR/>
+      <A HREF="tc-templates.xml#booleanext">booleanext.tpl</A><BR/>
+      <A HREF="tc-templates.xml#header">header.tpl</A><BR/>
+      <A HREF="tc-templates.xml#pageviewernav">pageviewer.nav.tpl</A><BR/>
+      <A HREF="tc-templates.xml#proximity">proximity.tpl</A><BR/>
+      <A HREF="tc-templates.xml#proximitybbag">proximitybbag.tpl</A><BR/>
+      <A HREF="tc-templates.xml#proximityext">proximityext.tpl</A><BR/>
+      <A HREF="tc-templates.xml#reslist">reslist.tpl</A><BR/>
+      <A HREF="tc-templates.xml#simple">simple.tpl</A><BR/>
+      <A HREF="tc-templates.xml#simplebbag">simplebbag.tpl</A><BR/>
+      <A HREF="tc-templates.xml#simpleext">simpleext.tpl</A><BR/>
+      <A HREF="tc-templates.xml#splash">splash.tpl</A><BR/>
+      <A HREF="tc-templates.xml#textpicklist">text.picklist.tpl</A><BR/>
+      <A HREF="tc-templates.xml#text">text.tpl</A><BR/>
+      <A HREF="tc-templates.xml#wwfull">ww-full.tpl</A><BR/>
+      <A HREF="tc-templates.xml#wwstart">ww-start.tpl</A></TD>
+      <TD WIDTH="50%" VALIGN="TOP">Provides the <CODE>HREF</CODE> 
+        URL for the &quot;history&quot; page link in the main or footer navigation 
+        bar.</TD>
+    </TR>
+    <TR> 
+      <TD WIDTH="25%" VALIGN="TOP">&lt;?SEARCH_HISTORY_TABLE&gt;</TD>
+      <TD WIDTH="12%" VALIGN="TOP">&#x00a0;</TD>
+      
+    <TD WIDTH="13%" VALIGN="TOP"><A HREF="tc-templates.xml#searchhistory">searchhistory.tpl</A></TD>
+      <TD WIDTH="50%" VALIGN="TOP">Used to insert the search history items within 
+        table <CODE>&lt;TR&gt;</CODE> and <CODE>&lt;TD&gt;</CODE> 
+        tags.</TD>
+    </TR>
+    <TR> 
+      <TD WIDTH="25%" VALIGN="TOP">&lt;?SEARCH_IN_NATURAL_LANGUAGE&gt;</TD>
+      <TD WIDTH="12%" VALIGN="TOP">&#x00a0;</TD>
+      
+    <TD WIDTH="13%" VALIGN="TOP"><A HREF="tc-templates.xml#reslist">reslist.tpl</A> 
+    </TD>
+      <TD WIDTH="50%" VALIGN="TOP">Used to insert the current search string as 
+        entered atop the results list display.</TD>
+    </TR>
+    <TR> 
+      <TD WIDTH="25%" VALIGN="TOP">&lt;?SEARCH_RESTRICTION&gt;</TD>
+      <TD WIDTH="12%" VALIGN="TOP">&#x00a0;</TD>
+      
+    <TD WIDTH="13%" VALIGN="TOP"><A HREF="tc-templates.xml#proximity">proximity.tpl</A> 
+      <BR/>
+      <A HREF="tc-templates.xml#simple">simple.tpl</A></TD>
+      <TD WIDTH="50%" VALIGN="TOP">Used to insert an optional string indicating 
+        that a current search form is restricted to a single item.</TD>
+    </TR>
+    <TR> 
+      <TD WIDTH="25%" VALIGN="TOP">&lt;?SEARCH_WITHIN_LINKS&gt;</TD>
+      <TD WIDTH="12%" VALIGN="TOP">&#x00a0;</TD>
+      
+    <TD WIDTH="13%" VALIGN="TOP"><A HREF="tc-templates.xml#header">header.tpl</A></TD>
+      <TD WIDTH="50%" VALIGN="TOP">Used to insert HTML links into a header display 
+        for searches restricted to the current item.</TD>
+    </TR>
+    <TR> 
+      <TD WIDTH="25%" VALIGN="TOP">&lt;?SGML_RESULTS&gt;</TD>
+      <TD WIDTH="12%" VALIGN="TOP">&#x00a0;</TD>
+      
+    <TD WIDTH="13%" VALIGN="TOP"><A HREF="tc-templates.xml#text">text.tpl</A> 
+    </TD>
+      <TD WIDTH="50%" VALIGN="TOP">Used to insert the content of encoded items 
+        into a text display as HTML.</TD>
+    </TR>
+    <TR> 
+      <TD WIDTH="25%" VALIGN="TOP">&lt;?SIMPLE_SEARCH_LINK&gt;</TD>
+      <TD WIDTH="12%" VALIGN="TOP">&#x00a0;</TD>
+      
+    <TD WIDTH="13%" VALIGN="TOP"><A HREF="tc-templates.xml#bbaglist">bbaglist.tpl</A><BR/>
+      <A HREF="tc-templates.xml#bib">bib.tpl</A><BR/>
+      <A HREF="tc-templates.xml#bibext">bibext.tpl</A><BR/>
+      <A HREF="tc-templates.xml#boolean">boolean.tpl</A><BR/>
+      <A HREF="tc-templates.xml#booleanbbag">booleanbbag.tpl</A><BR/>
+      <A HREF="tc-templates.xml#booleanext">booleanext.tpl</A><BR/>
+      <A HREF="tc-templates.xml#header">header.tpl</A><BR/>
+      <A HREF="tc-templates.xml#pageviewernav">pageviewer.nav.tpl</A><BR/>
+      <A HREF="tc-templates.xml#proximity">proximity.tpl</A><BR/>
+      <A HREF="tc-templates.xml#proximitybbag">proximitybbag.tpl</A><BR/>
+      <A HREF="tc-templates.xml#proximityext">proximityext.tpl</A><BR/>
+      <A HREF="tc-templates.xml#reslist">reslist.tpl</A><BR/>
+      <A HREF="tc-templates.xml#searchhistory">searchhistory.tpl</A><BR/>
+      <A HREF="tc-templates.xml#simplebbag">simplebbag.tpl</A><BR/>
+      <A HREF="tc-templates.xml#splash">splash.tpl</A><BR/>
+      <A HREF="tc-templates.xml#textpicklist">text.picklist.tpl</A><BR/>
+      <A HREF="tc-templates.xml#text">text.tpl</A><BR/>
+      <A HREF="tc-templates.xml#wwfull">ww-full.tpl</A><BR/>
+      <A HREF="tc-templates.xml#wwstart">ww-start.tpl</A></TD>
+      <TD WIDTH="50%" VALIGN="TOP">Provides the <CODE>HREF</CODE> 
+        URL for the &quot;simple&quot; search form link in the main or footer 
+        navigation bar.</TD>
+    </TR>
+    <TR> 
+      <TD WIDTH="25%" VALIGN="TOP">&lt;?SINGLE_GENDER&gt;</TD>
+      <TD WIDTH="12%" VALIGN="TOP">&#x00a0;</TD>
+      
+    <TD WIDTH="13%" VALIGN="TOP"><A HREF="tc-templates.xml#boolean">boolean.tpl</A><BR/>
+      <A HREF="tc-templates.xml#booleanbbag">booleanbbag.tpl</A><BR/>
+      <A HREF="tc-templates.xml#proximity">proximity.tpl</A><BR/>
+      <A HREF="tc-templates.xml#proximitybbag">proximitybbag.tpl</A><BR/>
+      <A HREF="tc-templates.xml#simple">simple.tpl</A><BR/>
+      <A HREF="tc-templates.xml#simplebbag">simplebbag.tpl</A></TD>
+      <TD WIDTH="50%" VALIGN="TOP">Used to include or exclude HTML code in a single 
+        collection search form for adding restrictions by gender.</TD>
+    </TR>
+    <TR> 
+      <TD WIDTH="25%" VALIGN="TOP">&lt;?SINGLE_GENRE&gt;</TD>
+      <TD WIDTH="12%" VALIGN="TOP">&#x00a0;</TD>
+      
+    <TD WIDTH="13%" VALIGN="TOP"><A HREF="tc-templates.xml#boolean">boolean.tpl</A><BR/>
+      <A HREF="tc-templates.xml#booleanbbag">booleanbbag.tpl</A><BR/>
+      <A HREF="tc-templates.xml#proximity">proximity.tpl</A><BR/>
+      <A HREF="tc-templates.xml#proximitybbag">proximitybbag.tpl</A><BR/>
+      <A HREF="tc-templates.xml#simple">simple.tpl</A><BR/>
+      <A HREF="tc-templates.xml#simplebbag">simplebbag.tpl</A></TD>
+      <TD WIDTH="50%" VALIGN="TOP">Used to include or exclude HTML code in a single 
+        collection search form for adding restrictions by genre.</TD>
+    </TR>
+    <TR> 
+      <TD WIDTH="25%" VALIGN="TOP">&lt;?SINGLE_PERIOD&gt;</TD>
+      <TD WIDTH="12%" VALIGN="TOP">&#x00a0;</TD>
+      
+    <TD WIDTH="13%" VALIGN="TOP"><A HREF="tc-templates.xml#boolean">boolean.tpl</A><BR/>
+      <A HREF="tc-templates.xml#booleanbbag">booleanbbag.tpl</A><BR/>
+      <A HREF="tc-templates.xml#proximity">proximity.tpl</A><BR/>
+      <A HREF="tc-templates.xml#proximitybbag">proximitybbag.tpl</A><BR/>
+      <A HREF="tc-templates.xml#simple">simple.tpl</A><BR/>
+      <A HREF="tc-templates.xml#simplebbag">simplebbag.tpl</A></TD>
+      <TD WIDTH="50%" VALIGN="TOP">Used to include or exclude HTML code in a single 
+        collection search form for adding restrictions by period.</TD>
+    </TR>
+    <TR> 
+      <TD WIDTH="25%" VALIGN="TOP">&lt;?SINGLE_PUB_BETWEEN&gt;</TD>
+      <TD WIDTH="12%" VALIGN="TOP">&#x00a0;</TD>
+      
+    <TD WIDTH="13%" VALIGN="TOP"><A HREF="tc-templates.xml#boolean">boolean.tpl</A><BR/>
+      <A HREF="tc-templates.xml#booleanbbag">booleanbbag.tpl</A><BR/>
+      <A HREF="tc-templates.xml#proximity">proximity.tpl</A><BR/>
+      <A HREF="tc-templates.xml#proximitybbag">proximitybbag.tpl</A><BR/>
+      <A HREF="tc-templates.xml#simple">simple.tpl</A><BR/>
+      <A HREF="tc-templates.xml#simplebbag">simplebbag.tpl</A></TD>
+      <TD WIDTH="50%" VALIGN="TOP">Used to include or exclude HTML code in a single 
+        collection search form for restricting a search to a range of publication 
+        dates. </TD>
+    </TR>
+    <TR> 
+      <TD WIDTH="25%" VALIGN="TOP">&lt;?SIZE_SELECT onchange=&quot;this.form.submit();&quot;&gt;</TD>
+      <TD WIDTH="12%" VALIGN="TOP">&#x00a0;</TD>
+      
+    <TD WIDTH="13%" VALIGN="TOP"><A HREF="tc-templates.xml#pageviewernav">pageviewer.nav.tpl</A></TD>
+      <TD WIDTH="50%" VALIGN="TOP">Used to insert a select menu for changing the 
+        size of a page image in pageviewer.</TD>
+    </TR>
+    <TR> 
+      <TD WIDTH="25%" VALIGN="TOP">&lt;?SLICE_NAVIGATION_LINKS occ=&quot;1&quot;&gt;</TD>
+      <TD WIDTH="12%" VALIGN="TOP">&#x00a0;</TD>
+      
+    <TD WIDTH="13%" VALIGN="TOP"><A HREF="tc-templates.xml#reslist">reslist.tpl</A></TD>
+      <TD WIDTH="50%" VALIGN="TOP">Used to insert the links for navigating between 
+        the current page of search results and other pages of results.</TD>
+    </TR>
+    <TR> 
+      <TD WIDTH="25%" VALIGN="TOP">&lt;?TITLE mode=&quot;complex&quot;&gt;</TD>
+      <TD WIDTH="12%" VALIGN="TOP">&#x00a0;</TD>
+      
+    <TD WIDTH="13%" VALIGN="TOP"><A HREF="tc-templates.xml#bbagemail">bbagemail.tpl</A><BR/>
+      <A HREF="tc-templates.xml#bbaglist">bbaglist.tpl</A><BR/>
+      <A HREF="tc-templates.xml#bib">bib.tpl</A><BR/>
+      <A HREF="tc-templates.xml#bibext">bibext.tpl</A><BR/>
+      <A HREF="tc-templates.xml#boolean">boolean.tpl</A><BR/>
+      <A HREF="tc-templates.xml#booleanbbag">booleanbbag.tpl</A><BR/>
+      <A HREF="tc-templates.xml#booleanext">booleanext.tpl</A><BR/>
+      <A HREF="tc-templates.xml#header">header.tpl</A><BR/>
+      <A HREF="tc-templates.xml#pageviewernav">pageviewer.nav.tpl</A><BR/>
+      <A HREF="tc-templates.xml#proximity">proximity.tpl</A><BR/>
+      <A HREF="tc-templates.xml#proximitybbag">proximitybbag.tpl</A><BR/>
+      <A HREF="tc-templates.xml#proximityext">proximityext.tpl</A><BR/>
+      <A HREF="tc-templates.xml#reslist">reslist.tpl</A><BR/>
+      <A HREF="tc-templates.xml#searchhistory">searchhistory.tpl</A><BR/>
+      <A HREF="tc-templates.xml#simple">simple.tpl</A><BR/>
+      <A HREF="tc-templates.xml#simplebbag">simplebbag.tpl</A><BR/>
+      <A HREF="tc-templates.xml#simpleext">simpleext.tpl</A><BR/>
+      <A HREF="tc-templates.xml#splash">splash.tpl</A><BR/>
+      <A HREF="tc-templates.xml#textpicklist">text.picklist.tpl</A><BR/>
+      <A HREF="tc-templates.xml#text">text.tpl</A><BR/>
+      <A HREF="tc-templates.xml#wwfull">ww-full.tpl</A><BR/>
+      <A HREF="tc-templates.xml#wwstart">ww-start.tpl</A></TD>
+      <TD WIDTH="50%" VALIGN="TOP">Used to insert the collection title logo as 
+        an HTML graphic or text string within <CODE>&lt;A&gt;</CODE> 
+        tags linking to the collection home page. </TD>
+    </TR>
+    <TR> 
+      <TD WIDTH="25%" VALIGN="TOP">&lt;?TITLE&gt;</TD>
+      <TD WIDTH="12%" VALIGN="TOP">&#x00a0;</TD>
+      
+    <TD WIDTH="13%" VALIGN="TOP"><A HREF="tc-templates.xml#bbagemail">bbagemail.tpl</A><BR/>
+      <A HREF="tc-templates.xml#bbaglist">bbaglist.tpl</A><BR/>
+      <A HREF="tc-templates.xml#bib">bib.tpl</A><BR/>
+      <A HREF="tc-templates.xml#bibext">bibext.tpl</A><BR/>
+      <A HREF="tc-templates.xml#boolean">boolean.tpl</A><BR/>
+      <A HREF="tc-templates.xml#booleanbbag">booleanbbag.tpl</A><BR/>
+      <A HREF="tc-templates.xml#booleanext">booleanext.tpl</A><BR/>
+      <A HREF="tc-templates.xml#header">header.tpl</A><BR/>
+      <A HREF="tc-templates.xml#note">note.tpl</A><BR/>
+      <A HREF="tc-templates.xml#pageviewermain">pageviewer.main.tpl</A><BR/>
+      <A HREF="tc-templates.xml#pageviewernav">pageviewer.nav.tpl</A><BR/>
+      <A HREF="tc-templates.xml#pageviewerpicklist">pageviewer.picklist.tpl</A><BR/>
+      <A HREF="tc-templates.xml#proximity">proximity.tpl</A><BR/>
+      <A HREF="tc-templates.xml#proximitybbag">proximitybbag.tpl</A><BR/>
+      <A HREF="tc-templates.xml#proximityext">proximityext.tpl</A><BR/>
+      <A HREF="tc-templates.xml#reslist">reslist.tpl</A><BR/>
+      <A HREF="tc-templates.xml#searchhistory">searchhistory.tpl</A><BR/>
+      <A HREF="tc-templates.xml#simple">simple.tpl</A><BR/>
+      <A HREF="tc-templates.xml#simplebbag">simplebbag.tpl</A><BR/>
+      <A HREF="tc-templates.xml#simpleext">simpleext.tpl</A><BR/>
+      <A HREF="tc-templates.xml#splash">splash.tpl</A><BR/>
+      <A HREF="tc-templates.xml#textpicklist">text.picklist.tpl</A><BR/>
+      <A HREF="tc-templates.xml#text">text.tpl</A><BR/>
+      <A HREF="tc-templates.xml#viewtextnote">viewtextnote.tpl</A><BR/>
+      <A HREF="tc-templates.xml#wwfull">ww-full.tpl</A><BR/>
+      <A HREF="tc-templates.xml#wwstart">ww-start.tpl</A></TD>
+      <TD WIDTH="50%" VALIGN="TOP">Used to provide the content of the <CODE>&lt;TITLE&gt;</CODE> 
+        element.</TD>
+    </TR>
+    <TR> 
+      <TD WIDTH="25%" VALIGN="TOP">&lt;?VIEWFORM_HIDDEN_VARS exclude=&quot;seq&quot;&gt;</TD>
+      <TD WIDTH="12%" VALIGN="TOP">&#x00a0;</TD>
+      
+    <TD WIDTH="13%" VALIGN="TOP"><A HREF="tc-templates.xml#pageviewernav">pageviewer.nav.tpl</A></TD>
+      <TD WIDTH="50%" VALIGN="TOP">Used to insert hidden INPUT tags into a pageviewer 
+        navigation form indicating currently viewed page sequence number and/or 
+        current query term[s].</TD>
+    </TR>
+    <TR> 
+      <TD WIDTH="25%" VALIGN="TOP">&lt;?VIEW_SELECT onchange=&quot;this.form.submit();&quot;&gt;</TD>
+      <TD WIDTH="12%" VALIGN="TOP">&#x00a0;</TD>
+      
+    <TD WIDTH="13%" VALIGN="TOP"><A HREF="tc-templates.xml#pageviewernav">pageviewer.nav.tpl</A></TD>
+      <TD WIDTH="50%" VALIGN="TOP">Used to insert a form SELECT menu into the pageviewer 
+        navigation frame for selecting &quot;view page as&quot; options.</TD>
+    </TR>
+    <TR> 
+      <TD WIDTH="25%" VALIGN="TOP">&lt;?VIEW_TEXT_LINK&gt;</TD>
+      <TD WIDTH="12%" VALIGN="TOP">&#x00a0;</TD>
+      
+    <TD WIDTH="13%" VALIGN="TOP"><A HREF="tc-templates.xml#viewtextnote">viewtextnote.tpl</A></TD>
+      <TD WIDTH="50%" VALIGN="TOP">Provides the HREF URL for a link to view the entire text from the view mediating warning page.</TD>
+    </TR>
+    <TR> 
+      <TD WIDTH="25%" VALIGN="TOP">&lt;?WORDWHEEL_COMBINED_TABLE_ROWS&gt;</TD>
+      <TD WIDTH="12%" VALIGN="TOP">&#x00a0;</TD>
+      
+    <TD WIDTH="13%" VALIGN="TOP"><A HREF="tc-templates.xml#wwfull">ww-full.tpl</A></TD>
+      <TD WIDTH="50%" VALIGN="TOP">Used to insert the list of terms and occurrence 
+        numbers (within table <CODE>&lt;TR&gt;</CODE> 
+        and <CODE>&lt;TD&gt;</CODE> tags) for 
+        each slice of a word index.</TD>
+    </TR>
+    <TR> 
+      <TD WIDTH="25%" VALIGN="TOP">&lt;?WORDWHEEL_DOWN_BUTTON&gt;</TD>
+      <TD WIDTH="12%" VALIGN="TOP">&#x00a0;</TD>
+      
+    <TD WIDTH="13%" VALIGN="TOP"><A HREF="tc-templates.xml#wwfull">ww-full.tpl</A></TD>
+      <TD WIDTH="50%" VALIGN="TOP">Used to insert HTML code for the &quot;scroll-down&quot; 
+        button in the word index.</TD>
+    </TR>
+    <TR> 
+      <TD WIDTH="25%" VALIGN="TOP">&lt;?WORDWHEEL_QUICK_LINK class=&quot;wwquicklink&quot;&gt;</TD>
+      <TD WIDTH="12%" VALIGN="TOP">&#x00a0;</TD>
+      
+    <TD WIDTH="13%" VALIGN="TOP"><A HREF="tc-templates.xml#wwfull">ww-full.tpl</A><BR/>
+      <A HREF="tc-templates.xml#wwstart">ww-start.tpl</A></TD>
+      <TD WIDTH="50%" VALIGN="TOP">Used to insert alphabetical and/or numeric 
+        indexes into a word index as HTML links.</TD>
+    </TR>
+    <TR> 
+      <TD WIDTH="25%" VALIGN="TOP">&lt;?WORDWHEEL_RADIO_GROUP name=&quot;realm&quot; 
+        columns=&quot;5&quot;&gt;</TD>
+      <TD WIDTH="12%" VALIGN="TOP">&#x00a0;</TD>
+      
+    <TD WIDTH="13%" VALIGN="TOP"><A HREF="tc-templates.xml#wwfull">ww-full.tpl</A><BR/>
+      <A HREF="tc-templates.xml#wwstart">ww-start.tpl</A></TD>
+      <TD WIDTH="50%" VALIGN="TOP">Used to insert <CODE>RADIO</CODE> 
+        buttons into word index forms for selecting realms (i.e., text regions) 
+        to retrieve word indexes from.</TD>
+    </TR>
+    <TR> 
+      <TD WIDTH="25%" VALIGN="TOP">&lt;?WORDWHEEL_SEARCH_LINK&gt;</TD>
+      <TD WIDTH="12%" VALIGN="TOP">&#x00a0;</TD>
+      
+    <TD WIDTH="13%" VALIGN="TOP"><A HREF="tc-templates.xml#bbaglist">bbaglist.tpl</A><BR/>
+      <A HREF="tc-templates.xml#bib">bib.tpl</A><BR/>
+      <A HREF="tc-templates.xml#bibext">bibext.tpl</A><BR/>
+      <A HREF="tc-templates.xml#boolean">boolean.tpl</A><BR/>
+      <A HREF="tc-templates.xml#booleanext">booleanext.tpl</A><BR/>
+      <A HREF="tc-templates.xml#proximity">proximity.tpl</A><BR/>
+      <A HREF="tc-templates.xml#proximityext">proximityext.tpl</A></TD>
+      <TD WIDTH="50%" VALIGN="TOP">Provides the <CODE>HREF</CODE> 
+        URL for the &quot;word index&quot; start form link in the main or footer 
+        navigation bar.</TD>
+    </TR>
+    <TR> 
+      <TD WIDTH="25%" VALIGN="TOP">&lt;?WORDWHEEL_UP_BUTTON&gt;</TD>
+      <TD WIDTH="12%" VALIGN="TOP">&#x00a0;</TD>
+      
+    <TD WIDTH="13%" VALIGN="TOP"><A HREF="tc-templates.xml#wwfull">ww-full.tpl</A></TD>
+      <TD WIDTH="50%" VALIGN="TOP">Used to insert HTML code for the &quot;scroll-up&quot; 
+        button in the word index.</TD>
+    </TR>
+    <TR> 
+      <TD WIDTH="25%" VALIGN="TOP">&lt;?WW_NAV&gt;</TD>
+      <TD WIDTH="12%" VALIGN="TOP">&#x00a0;</TD>
+      
+    <TD WIDTH="13%" VALIGN="TOP"><A HREF="tc-templates.xml#bib">bib.tpl</A><BR/>
+      <A HREF="tc-templates.xml#bibext">bibext.tpl</A><BR/>
+      <A HREF="tc-templates.xml#boolean">boolean.tpl</A><BR/>
+      <A HREF="tc-templates.xml#booleanext">booleanext.tpl</A><BR/>
+      <A HREF="tc-templates.xml#proximity">proximity.tpl</A><BR/>
+      <A HREF="tc-templates.xml#proximityext">proximityext.tpl</A></TD>
+      <TD WIDTH="50%" VALIGN="TOP">Used to insert or exclude an HTML link to a 
+        word index search form.</TD>
+    </TR>
+    <TR> 
+      <TD WIDTH="25%" VALIGN="TOP">&lt;?XCOLL_TOTALS&gt;</TD>
+      <TD WIDTH="12%" VALIGN="TOP">&#x00a0;</TD>
+      
+    <TD WIDTH="13%" VALIGN="TOP"><A HREF="tc-templates.xml#reslist">reslist.tpl</A></TD>
+      <TD WIDTH="50%" VALIGN="TOP">Used to insert in a results display the total 
+        number of records retrieved for searches against multiple collections.</TD>
+    </TR>
+    <TR> 
+      <TD WIDTH="25%" VALIGN="TOP">&lt;?XC_COLLLIST&gt; </TD>
+      <TD WIDTH="12%" VALIGN="TOP">&#x00a0;</TD>
+      
+    <TD WIDTH="13%" VALIGN="TOP"><A HREF="tc-templates.xml#bib">bib.tpl</A><BR/>
+      <A HREF="tc-templates.xml#boolean">boolean.tpl</A><BR/>
+      <A HREF="tc-templates.xml#proximity">proximity.tpl</A><BR/>
+      <A HREF="tc-templates.xml#simple">simple.tpl</A></TD>
+      <TD WIDTH="50%" VALIGN="TOP">Used to insert or exclude multiple collection 
+        information in search forms.</TD>
+    </TR>
+ </TBODY>
+</TABLE>
+</DIV1>
+  </BODY>
+</DLPSDOC>

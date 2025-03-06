@@ -1,0 +1,119 @@
+<HTML>
+<HEAD>
+<TITLE>Perl Modules and Objects</TITLE>
+<META http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<LINK rel="stylesheet" href="../styles.css">
+</HEAD>
+<BODY class="mainpalette">
+<H2>Perl Modules and Objects</H2>
+<P><B>Standard distribution</B> </P>
+<UL>
+  <LI><B>CGI</B> (CGI query object manipulation and methods to create HTML)</LI>
+  <LI><B>IPC::Open3</B> (allows forking off of process; used for forking XPat 
+    so that the cgi can talk to XPat during its running)<BR>
+  </LI>
+</UL>
+<P><B>Additional Perl modules </B> </P>
+<UL>
+  <LI><B>DBI</B> (database interface)</LI>
+  <LI><B>Apache::Session</B> (used to store data on the server between runs of 
+    the CGI)</LI>
+</UL>
+<P><B>DLPS related</B> </P>
+<UL>
+  <LI><B>Object-Oriented</B> 
+    <UL>
+      <LI><B>XPat, XPatSearchSet, XPatResult, XPatResultSet</B></LI>
+      <LI><B> XPat</B> 
+        <UL>
+          <LI>encapsulates the cgi&#146;s communication with a running XPat process 
+          </LI>
+          <LI> searches can be individually created and results retrieved OR</LI>
+          <LI> the queries can be packaged into XPatSearchSet&#146;s and sent 
+            as a whole to be run as queries against XPat one after another</LI>
+          <LI> the results (an XPat set for each query is contained in an XPatResult 
+            object) are then packaged into Middleware XPatResultSet which can 
+            later be iterated through</LI>
+        </UL>
+      </LI>
+      <LI> <B>Bookbag</B> / Portfolio / Personal Collection 
+        <UL>
+          <LI> user can add individual items (bib records, images, books, etc.) 
+            into this set of items.</LI>
+          <LI> In TextClass, can run searches against this set.</LI>
+        </UL>
+      </LI>
+      <LI> <B>DlpsSession</B> 
+        <UL>
+          <LI> Since Apache::Session uses Perl tied hashes to access data, and 
+            we prefered a more consistent OO approach and syntax, we wrapped the 
+            Apache::Session object with our own object. Access to data is therefore 
+            the usual Perl Object -&gt; syntax</LI>
+        </UL>
+      </LI>
+      <LI> <B>QueryFactory, TerminologyMapper</B> 
+        <UL>
+          <LI> Maps are used to map certain terms to XPat regions (so, for example, 
+            the word &#147;title&#148; may map to &#147;region TITLE within ...&#148;.</LI>
+          <LI> The QueryFactory takes the CGI object and the TermMapper and creates 
+            a well-formed XPat query.</LI>
+          <LI> These are older object modules that could use some rewriting.</LI>
+        </UL>
+      </LI>
+      <LI> <B>ProcIns</B> 
+        <UL>
+          <LI> used in conjunction with HTML templates (html files with parts 
+            that will be filled in with the running of the cgi)</LI>
+          <LI> Processing Instructions in the form of &lt;?INSTRUCTION [param=value 
+            ...]&gt; can be inserted in HTML. When the cgi program parses the 
+            HTML template, the PI will be replaced with some html packaged data 
+            or image or...</LI>
+        </UL>
+      </LI>
+      <LI> <B>Classes</B> (for now TextClass only, BibClass &amp; ImageClass are 
+        not OO yet) 
+        <UL>
+          <LI> Each of the document classes has its own Perl class module that 
+            encapsulates much of its information and behavior.</LI>
+        </UL>
+      </LI>
+      <LI> <B>PageViewer</B> 
+        <UL>
+          <LI> This object encapsulates the page data in all the PB tags of a 
+            page-image based SGML document.</LI>
+        </UL>
+      </LI>
+      <LI> <B>WordWheel</B> 
+        <UL>
+          <LI> This object encapsulates a part of the data retrieved during a 
+            wordwheel search</LI>
+        </UL>
+      </LI>
+      <LI> <B>CollsInfo.pm, GroupsInfo.pm</B>
+        <UL>
+          <LI> During the beginning of the running of a cgi, info about collections 
+            and groups of collections are read into these objects so that it can 
+            be easily accessed during the rest of the cgi&#146;s run</LI>
+        </UL>
+      </LI>
+    </UL>
+  </LI>
+  <LI><B>non Object-Oriented</B> 
+    <UL>
+      <LI><B>DbUtils: </B>various subroutines to handle common DLXS related DBI 
+        work</LI>
+      <LI> <B>DlpsUtils: </B>miscellaneous utility subroutines; e.g., sorting 
+        and uniqu-ifying a list, max, min, get list of authorized collections 
+        from the environment, etc.</LI>
+      <LI> <B>DevUtils:</B> routines used only in the development environment</LI>
+      <LI> <B>TextClassUtils</B>: general routines in TextClass, filtering, building 
+        some HTML, etc. (many of the subroutines here will be moved to TextClass 
+        and turned into methods)</LI>
+      <LI> <B>DLPSLocalUtils</B></LI>
+      <LI> <B>ICLocalUtils</B></LI>
+      <LI> Versioned <B>LibVersion.pm</B></LI>
+    </UL>
+  </LI>
+</UL>
+</BODY>
+</HTML>

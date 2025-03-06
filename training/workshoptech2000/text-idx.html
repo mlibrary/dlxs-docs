@@ -1,0 +1,88 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<title>DLXS Programmers &amp; Technical Workshop</title>
+<link rel="stylesheet" href="styles.css">
+<style type="text/css">
+<!--
+ul {  line-height: 125%}
+-->
+</style>
+</head>
+
+<body class="mainpalette">
+<h3>text-idx CGI Script</h3>
+<ol>
+  <li><a href="barnapkinoverview.html">Overview Diagram</a></li>
+  <li>Functional Requirements 
+	<ol>
+	  <li>Maintain Content Specialist's ability to add collections</li>
+	  <li>Cross collection searching</li>
+	  <li>Cross machine searching</li>
+	  <li>Accomodate texts with high and low levels of encoding</li>
+	  <li>Session: 
+		<ol>
+		  <li>Bookbag</li>
+		  <li>Search History</li>
+		</ol>
+	  </li>
+	</ol>
+  </li>
+  <li>Configuration (cfg) files 
+	<ol>
+	  <li><a href="sourcetext/cgi/text-idx.cfg.txt" target="sourcetext">text-idx.cfg</a></li>
+	</ol>
+  </li>
+  <li>Objects used 
+	<ol>
+	  <li><a href="sourcetext/lib/CGI.pm.txt" target="sourcetext">CGI</a></li>
+	  <li><a href="sourcetext/cgi/TextClass.pm.txt" target="sourcetext">TextClass</a> 
+		and its subclasses</li>
+	  <li><a href="sourcetext/lib/CollsInfo.pm.txt" target="sourcetext">CollsInfo</a></li>
+	  <li>XPat related 
+		<ol>
+		  <li><a href="sourcetext/lib/XPat.pm.txt" target="sourcetext">XPat</a></li>
+		  <li><a href="sourcetext/lib/SearchSet.pm.txt" target="sourcetext">SearchSet</a> 
+			and <a href="sourcetext/lib/XPatResultSet.pm.txt" target="sourcetext">XPatResultSet</a></li>
+		  <li><a href="sourcetext/lib/RemoteXPatConnect.pm.txt" target="sourcetext">RemoteXPatConnect</a></li>
+		  <li><a href="sourcetext/lib/QueryFactory.pm.txt" target="sourcetext">QueryFactory</a> 
+			and <a href="sourcetext/lib/TerminologyMapper.pm.txt" target="sourcetext">TerminologyMapper</a></li>
+		</ol>
+	  </li>
+	  <li><a href="sourcetext/lib/DlpsSession.pm.txt" target="sourcetext">DlpsSession</a> 
+		/ Apache::Session</li>
+	  <li><a href="sourcetext/lib/SearchHistory.pm.txt" target="sourcetext">SearchHistory</a></li>
+	  <li>Bookbag</li>
+	  <li><a href="sourcetext/lib/ProcIns.pm.txt" target="sourcetext">ProcIns</a> 
+	  </li>
+	</ol>
+  </li>
+  <li>Other modules used 
+	<ol>
+	  <li><a href="sourcetext/lib/DlpsUtils.pm.txt" target="sourcetext">DlpsUtils.pm</a></li>
+	  <li><a href="sourcetext/lib/DevUtils.pm.txt" target="sourcetext">DevUtils.pm</a></li>
+	</ol>
+  </li>
+  <li><a href="http://dev.hti.umich.edu/docs/projects/shared/cgiparms.html" target="external">URL 
+	parameters</a>
+	<ol>
+	  <li>page <i>(request for an html page; e.g., to initiate a search)</i></li>
+	  <li>type <i>(type of search; e.g., simple, booean, proximity)</i></li>
+	  <li>view <i>(how to display results or item requested)</i></li>
+	  <li>id, node<i> (for identifying object level or DIV level items)</i></li>
+	</ol>
+  </li>
+  <li>text-idx walkthrough 
+	<ol>
+	  <li>high level</li>
+	  <li>deeper as needed</li>
+	</ol>
+  </li>
+</ol>
+</body>
+
+</html>
+

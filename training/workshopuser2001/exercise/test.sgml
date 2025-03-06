@@ -1,0 +1,91 @@
+<DLPSTEXTCLASS>
+<HEADER>
+<FILEDESC>
+<TITLESTMT>
+<TITLE>The Works of Smithee</TITLE>
+<AUTHOR TYPE="nameinv">Smithee, Al, 1947-</AUTHOR>
+</TITLESTMT>
+<PUBLICATIONSTMT>
+<PUBLISHER>DLPS</PUBLISHER>
+<PUBPLACE>Everytown, USA</PUBPLACE>
+<DATE>1998</DATE>
+</PUBLICATIONSTMT>
+</FILEDESC>
+</HEADER>
+
+<TEXT>
+<BODY>
+<DIV1 NODE="DA20001:4" TYPE="poem">
+<DIVINFO>
+<AUTHOR>
+Smithee, Al</AUTHOR>
+</DIVINFO>
+<HEAD REND="SMCAP">This and That</HEAD>
+<FIRSTL>
+<L N="1">
+The first line of the poem.</L>
+</FIRSTL>
+<L N="2">
+And now the second.</L>
+<L N="3">
+I took a trip to Nome.</L>
+<L N="4">
+It was cold, Jack Frost chomskied at my nose.</L>
+<L N="5">
+It very nearly froze.</L>
+</DIV1>
+<DIV1 NODE="DA20001:5" TYPE="poem">
+<DIVINFO>
+<AUTHOR>
+Smithee, 1947-</AUTHOR>
+</DIVINFO>
+<HEAD REND="SMCAP">That and This</HEAD>
+<FIRSTL>
+<L N="1">
+Returning from the frozen north,</L>
+</FIRSTL>
+<L N="2">
+We traveled back, we traveled forth.</L>
+<L N="3">
+Why can't I testify?</L>
+<L N="4">
+The memories gained, the moments lost</L>
+<L N="5">
+Can barely melt the cost of frost.</L>
+</DIV1>
+
+<DIV1 NODE="DA20001:21" TYPE="poem">
+<DIVINFO>
+<AUTHOR>
+Smithee</AUTHOR>
+</DIVINFO>
+<HEAD REND="SMCAP">Reconciliation</HEAD>
+<DIV2 NODE="DA20001:21.1" N="1">
+<HEAD>Head of first div 2</HEAD>
+<FIRSTL>
+<L N="1">
+Another first line.</L>
+</FIRSTL>
+<L N="2">
+Another second line.</L>
+<L N="3">
+The line is mine.</L>
+<L N="4">
+The lion yours.</L>
+</DIV2>
+<DIV2 NODE="DA20001:21.2" N="4">
+<HEAD>Head of second div 2</HEAD>
+<FIRSTL><L N="1">
+I think that I shall never see</L>
+</FIRSTL>
+<L N="2">
+A poem as lovely as my poe-tree.</L>
+</DIV2>
+
+</DIV1>
+</BODY>
+
+</TEXT>
+
+</DLPSTEXTCLASS>
+

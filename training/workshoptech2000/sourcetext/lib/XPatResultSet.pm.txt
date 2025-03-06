@@ -1,0 +1,485 @@
+package XPatResultSet;
+
+# $Id: XPatResultSet.pm,v 1.3 2000/07/21 18:17:32 pagliere Exp $
+
+# $Log: XPatResultSet.pm,v $
+# Revision 1.3  2000/07/21 18:17:32  pagliere
+# New fisheye code here and everywhere.
+#
+# Revision 1.2  2000/07/20 15:18:15  pagliere
+# Added $byte (byte offset of result) to return from GetResult function.
+#
+# Revision 1.1  2000/07/05 15:35:33  pagliere
+# Moved from /l1/lib/t/text/ to /l1/lib
+#
+# Revision 1.9  2000/06/21 15:19:07  pagliere
+# Search history related changes.
+#
+# Revision 1.8  2000/06/14 19:52:40  pagliere
+# Fisheye link. Some new info inside XPatResultSet object.
+#
+# Revision 1.7  2000/05/17 21:50:21  pagliere
+# Now have named searchsets and resultsets
+#
+# Revision 1.6  2000/05/15 20:30:32  pagliere
+# Changes to reslist filtering.
+#
+# Revision 1.5  2000/05/09 00:16:34  pagliere
+# Filtering on Guide Frame. New "total" records and hits vars in CollsInfo
+# which were needed for the guide frame information.
+#
+# Revision 1.4  2000/05/04 20:51:03  pagliere
+# Removed creation of TextClass objects from CollsInfo object's initialize. It
+# is now not automatic (ww2-idx after all did not need TC objects). There is now,
+# however, a new AddTextClassObjects method for CollsInfo.
+#
+# Revision 1.3  2000/05/03 16:31:36  pagliere
+# Changed Interator sorting in XPatResults
+# Added configurable session file path in DlpsSesion.pm by way of DlpsSession.cfg
+#
+# Revision 1.2  2000/04/27 18:39:10  pagliere
+# Moved some general routines into DlpsUtils. Some new filtering in TextClass.
+#
+# Revision 1.1  2000/04/26 14:31:51  pfarber
+# *** empty log message ***
+#
+# Revision 1.1  2000/04/21 18:58:01  pagliere
+# Initial commit of TextClass lib files.
+#
+# Revision 1.2  2000/04/20 12:47:15  pagliere
+# Still debugging XPat results, but wanted to commit this before launching
+# into a move of Session creation code from main a DlpsSession.pm wrapper of
+# Apache::Session.
+#
+# Revision 1.1  2000/04/16 20:49:39  pagliere
+# Added interaction of TextClass, XPat. Changed XResults to XPatResultSet.
+# Need next to parse out parts of results inside XPatResultSet.
+#
+# XPatResultSet.pm   set object package for containing results of searches
+
+use CGI qw( :standard :html3 escape unescape escapeHTML );    
+
+
+sub new 
+{
+    my $class = shift;
+    my $self = {};
+    bless $self, $class;
+#    $self->_initialize(@_);
+    return $self;
+}
+
+
+#sub _initialize 
+#{
+#    my $self = shift;
+#}
+
+
+# ----------------------------------------------------------------------
+# NAME         : AddResults
+# PURPOSE      : adds an XPat result to this XPatResultSet object
+# CALLED BY    : TextClass->SubmitSearchSet
+# CALLS        : NONE
+# INPUT        : result type (SSize, PSet or RSet), XPat result string,
+#                label (original label sent when doing query)
+# RETURNS      : NONE
+# GLOBALS      : 
+# SIDE-EFFECTS : affects XPatResultSet object
+# NOTES        : 
+# ----------------------------------------------------------------------
+
+sub AddResults
+{
+    my $self = shift;
+    
+    # type is SSize, PSet or RSet
+    # result is sgml result from XPat
+    # $label is same label as was sent by AddSearchSet
+    # $cgi is optional; used to get slice and size values if needed
+
+    my ( $type, $results, $label, $cgi ) = @_;
+    
+    if ( $type eq 'SSize' )
+    {
+        $self->{'ssizesearches'}{$label} = $results;
+        # keep track of total number of hits
+        if ( $label =~ m,^firstsearch, )
+        {   $self->SetTotalMatches( $results );    }
+
+        if ( $label =~ m,^slicesearch, )
+        {  
+            $self->SetSliceAndSize( $cgi );
+        }
+
+        if ( $label =~ m,^mainslicesearch, )
+        {   $self->SetTotalRecords( $results );    }
+    }
+
+   
+    elsif ( $type eq 'Error' )
+    {
+        
+    }
+    
+    # must be a PSet or RSet
+    else 
+    {
+        my @results = split ( /<Start>/, $results );
+        foreach $item ( @results ) 
+        {
+            # this code ripped out of Set2 as is, could be clearer!
+ 	    next     if ( $item eq "" );
+            
+	    study( $item );  
+	    my( $start, $end, $rawsize, $raw, $hdrsize, $hdr );
+            
+            if (($j = index($item, "</Start>")) != -1) 
+            {
+		$start = substr($item, 0, $j);
+	    }
+	    if ((($i = index($item, "<End>")) != -1) 
+		&& (($j = index($item, "</End>")) != -1)) 
+            {
+		$end = substr($item, ($i + 5), ($j - ($i + 5)));
+	    }
+	    if ((($i = index($item, "<Hdr><Size>")) != -1) 
+		&& (($j = index($item, "</Hdr>")) != -1)) 
+            {
+		$hdr     = substr($item, ($j - 10), 10);
+		$hdrsize = substr($item, ($i + 11), ($j - 17 - ($i + 11)));
+	    }
+	    if ( (($i = index($item, "<Raw><Size>")) != -1) 
+		&& (($j = index($item, "</Size>", $i)) != -1) ) 
+            {
+		$rawsize = substr($item, ($i + 11), ($j - ($i + 11)));
+	    }
+            
+	    if (($j = index($item, "</Raw>")) != -1) 
+            {
+		$k   = length($rawsize);
+		$raw = substr($item, ($i + 18 + $k), ($j - ($i + 18 + $k)));
+	    }
+            
+	    # design this conditional better...
+            my $set = ();
+	    if ($hdr) 
+            {
+		# it's a hdr type, a pset
+		$self->{'setsearches'}{$label}{$start} = 
+                {
+                 'start' => $start,
+                 'hdrsize' => $hdrsize,
+                 'hdr' => $hdr,
+                 'rawsize' => $rawsize,
+                 'raw' => $raw,
+                 'type' => 'PSet Raw Hdr'
+                };
+	    }
+            elsif ($start && $end) 
+            {
+		# it's a region set of some kind
+		$self->{'setsearches'}{$label}{$start} = 
+                {
+                 'start' => $start,
+                 'end' => $end,
+                 'rawsize' => $rawsize,
+                 'raw' => $raw,
+                 'type' => 'RSet Raw'
+                };
+	    }
+            else 
+            {
+		# it's some kind of PSet...
+		$self->{'setsearches'}{$label}{$start} = 
+                {
+                 'start' => $start,
+                 'rawsize' => $rawsize,
+                 'raw' => $raw,
+                 'type' => 'PSet Raw'
+                };
+	    }
+        }
+    }
+
+    if ( $ENV{'DEBUG'} >= 2 )
+    {
+        print qq{<h3>Added to results set: </h3>} .
+          join ("<br>\n<b>", ( $type, $label ) ) .
+            "</b><br>\n";
+    }
+
+}
+
+# ----------------------------------------------------------------------
+# NAME         : InitIterator
+# PURPOSE      : set up an order for the GetNextResult to work
+# CALLED BY    : TextClass->Output
+# CALLS        : 
+# INPUT        : 
+# RETURNS      : 
+# GLOBALS      : 
+# SIDE-EFFECTS : 
+# NOTES        : This iterator currently is set up so that things are
+#                ordered by byte offset order
+# ----------------------------------------------------------------------
+
+#        loop by label,
+#        push all byte/label pairs into an array
+#        then sort numeric by byte:
+
+sub InitIterator
+{
+    my $self = shift;
+    
+    my @itemArray = ();
+    
+    foreach my $label ( keys % { $self->{'setsearches'} } )
+    {
+        foreach $byte ( keys %{$self->{'setsearches'}{$label}} )
+        {
+                push ( @itemArray, [ $label, $byte ] );
+        }
+    }
+
+    @itemArray = sort {   $$a[1] <=> $$b[1]   } @itemArray;
+ 
+    $self->{'iterator'} = \@itemArray;
+    $self->{'iteratorIndex'} = 0;
+}
+
+# ----------------------------------------------------------------------
+# NAME         : GetNextResult
+# PURPOSE      : return next result in this XPatResultSet object in order
+#                set up for Iterator
+# CALLED BY    : 
+# CALLS        : 
+# INPUT        : 
+# RETURNS      : label sent with search and ref to results text
+# GLOBALS      : 
+# SIDE-EFFECTS : 
+# NOTES        : 
+# ----------------------------------------------------------------------
+
+sub GetNextResult
+{
+    my $self = shift;
+
+    my @itemArray = @ { $self->{'iterator'} };
+    my $index = $self->{'iteratorIndex'};
+
+    ## see if we are out of bounds
+    if ( $index > scalar( @itemArray ) )
+    {
+        return ( undef, undef );
+    }
+    ## otherwise, all is okay return next item's information
+    else
+    {
+        ## this should return a label and a byte offset
+        ## it is a dereferencing of the anonymous array in each
+        ## element of the @itemArray array
+        my $labelBytePairRef = $itemArray[$index];
+        my ( $label, $byte ) = @$labelBytePairRef;
+        
+        my $resultText = $self->{'setsearches'}{$label}{$byte}{'raw'};
+        my @returnArray = ( $label, \$resultText, $byte );
+
+        # increment for next time
+        $self->{'iteratorIndex'} += 1;        
+        return @returnArray;
+    }
+}
+
+# ----------------------------------------------------------------------
+# NAME         : 
+# PURPOSE      : 
+#                
+# CALLED BY    : 
+# CALLS        : 
+# INPUT        : 
+# RETURNS      : 
+# GLOBALS      : 
+# SIDE-EFFECTS : 
+# NOTES        : 
+# ----------------------------------------------------------------------
+
+sub SniffNextResult
+{
+    my $self = shift;
+
+    my @itemArray = @ { $self->{'iterator'} };
+    my $index = $self->{'iteratorIndex'};
+
+    ## see if we are out of bounds
+    if ( $index > scalar( @itemArray ) )
+    {
+        return ( undef );
+    }
+    ## otherwise, all is okay return next item's label
+    ## without incrementing the index
+    else
+    {
+        my $labelBytePairRef = $itemArray[$index];
+        my $label            = $$labelBytePairRef[0];
+        
+        return $label;
+    }
+}
+
+# ----------------------------------------------------------------------
+# NAME         : GetMainSearchResult
+# PURPOSE      : find the number of hits for a TextClass obj's result set
+#                (indexed by 'firstsearch')
+# CALLED BY    : 
+# CALLS        : 
+# INPUT        : 
+# RETURNS      : 
+# GLOBALS      : 
+# SIDE-EFFECTS : 
+# NOTES        : 
+# ----------------------------------------------------------------------
+
+sub GetMainSearchResult 
+{
+    my $self = shift;
+    my $sid = shift;
+    
+    my $index = 'firstsearch' . $sid;
+    
+    return  $self->{'ssizesearches'}{$index};
+}
+
+
+# ----------------------------------------------------------------------
+# NAME         : GetMainSubsetResult
+# PURPOSE      : find the number of records with hits for a TextClass obj's result set
+#                (indexed by 'mainslicesearch')
+# CALLED BY    : 
+# CALLS        : 
+# INPUT        : 
+# RETURNS      : 
+# GLOBALS      : 
+# SIDE-EFFECTS : 
+# NOTES        : 
+# ----------------------------------------------------------------------
+
+sub GetMainSubsetResult 
+{
+    my $self = shift;
+    my $sid = shift;
+    
+    my $index = 'mainslicesearch' . $sid;
+    
+    return  $self->{'ssizesearches'}{$index};
+}
+
+# ----------------------------------------------------------------------
+# NAME         : GetNextLabeledResult
+# PURPOSE      : return next result in this XPatResultSet object which is
+#                labeled by the input label
+# CALLED BY    : 
+# CALLS        : 
+# INPUT        : label
+# RETURNS      : ref to results text
+# GLOBALS      : 
+# SIDE-EFFECTS : 
+# NOTES        : This does not change the index on the iterator
+# ----------------------------------------------------------------------
+
+sub GetNextLabeledResult
+{
+    my $self = shift;
+    my $label = shift;
+
+    my @itemArray = @ { $self->{'iterator'} };
+    my $index = $self->{'iteratorIndex'};
+
+    my $limit =  scalar( @itemArray );
+    
+    ## see if we are out of bounds
+    if ( $index > $limit )
+    {
+        return ( undef, undef );
+    }
+    
+    # make copy of index
+    my $i;
+    
+    for ( $i = $index;
+          $i <= $limit;
+          $i++ )
+    {
+        my $nextLabel = $self->SniffNextResult( );
+        if ( $nextLabel =~ m,$label, )
+        {
+            ## this should return a label and a byte offset
+            ## it is a dereferencing of the anonymous array in each
+            ## element of the @itemArray array
+            my $labelBytePairRef = $itemArray[$i];
+            my ( $label, $byte ) = @$labelBytePairRef;
+            
+            my $resultText = $self->{'setsearches'}{$label}{$byte}{'raw'};
+            return \$resultText;
+        }
+    }
+    # if here, never found label
+    return undef;
+}
+
+ 
+sub SetTotalMatches
+{
+    my $self = shift;
+    my $matches = shift;
+    
+    $self->{'stats'}{'totalmatches'} = $matches;     
+}
+
+ 
+sub GetTotalMatches
+{
+    my $self = shift;
+    return $self->{'stats'}{'totalmatches'};
+}
+
+ 
+sub SetTotalRecords
+{
+    my $self = shift;
+    my $records = shift;
+    
+    $self->{'stats'}{'totalrecords'} = $records;     
+}
+
+ 
+sub GetTotalRecords
+{
+    my $self = shift;
+    return $self->{'stats'}{'totalrecords'};
+}
+ 
+sub SetSliceAndSize
+{
+    my $self = shift;
+    my $cgi  = shift;
+    
+    $self->{'stats'}{'slice'}     = $cgi->param( 'slice' );
+    $self->{'stats'}{'slicesize'} = $cgi->param( 'size' );
+    $self->{'stats'}{'start'}     = $cgi->param( 'start' );
+}
+
+sub GetSliceAndSize
+{
+    my $self = shift;
+    
+    my $slice = $self->{'stats'}{'slice'};
+    my $start = $self->{'stats'}{'start'};
+    my $size  = $self->{'stats'}{'slicesize'};
+    
+    return ( $slice, $size, $start );
+}
+
+# ----------------------------------------------------------------------
+# ----------------------------------------------------------------------
+1;

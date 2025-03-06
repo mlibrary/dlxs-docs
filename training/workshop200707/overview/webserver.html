@@ -1,0 +1,40 @@
+<html>
+<head>
+<title>Web Server Overview</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<link rel="stylesheet" href="../styles.css" type="text/css">
+</head>
+<body bgcolor="#FFFFFF" class="mainpalette">
+<h3>Web Server Overview</h3>
+<p>We give here, as an example, the DLPS environment.</p>
+<ul>
+  <li><a href="http://www.apache.org" target="external">Apache</a> (version 1.3.36
+      as of this workshop date)</li>
+  <li>Virtual hosts  with their own specific 
+    <ul>
+      <li> DocumentRoot</li>
+      <li>ScriptAlias</li>
+      <li>Directory setup for  basic authentication for the CollMgr</li>
+       <li>Environment variables</li>
+          <ul>
+      <li>DLXSROOT environment variable (see <a href="dirstructure.html">directory
+      structure</a>) </li>
+      <li>If no external <a href="auth.html">Auth</a> system, set the <span class="unixcommand">AUTHZD_COLL</span> environment
+         variable in the virtual host to contain a colon-separated list of
+        authorized collections (Middleware expects this environment variable
+        to be set) </li>
+          <li> <a href="../../../docs/13/intro/dirstruct.html#dlxsdatarootenv"> DLXSDATAROOT environment variable</a></li>
+            <li><a href="../../../docs/13/program/devenvironment.html#DLPS_DEV">DLPS_DEV</a></li>
+            <li>REMOTE_USER</li>             
+
+    </ul>
+          </ul>
+  </li>
+
+</ul>
+For more information on apache configuration see:
+<br>
+<a href="../installation/index.html#apacheconfig">installation notes on apache configuration</a>
+<br><a href="../installation/virtualhost.html">sample virtual host</a>
+</body>
+</html>

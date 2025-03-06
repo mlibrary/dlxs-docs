@@ -1,0 +1,808 @@
+<HTML>
+<head>
+<TITLE>Findaid Class Templates</TITLE>
+<LINK HREF="../../dlxsdocs.css" REL="stylesheet" TYPE="text/css">
+</head>
+<BODY>
+<table class="updateTable" CELLSPACING="3" CELLPADDING="3" BORDER="1">
+   <TR>
+      <td>Last updated</td>
+      <td>2003-12-01 15:37:07 EST</td>
+   </TR>
+   <TR>
+      <td>Doc Title</td>
+      <td>Findaid Class Templates</td>
+   </TR>
+   <TR>
+      <td>Author 1</td>
+      <td>Stoeffler, Matt</td>
+   </TR>
+   <TR>
+      <td>CVS Revision</td>
+      <td>$Revision: 1.6 $</td>
+   </TR>
+</table>
+<DIV CLASS="pageTitle">Findaid Class Processing Instructions (PIs)</DIV>
+<P>The following table includes descriptions of all the processing instructions
+   (PIs) that appear in FindaidClass templates and that are supported by the
+   CGI (see <A HREF="../../ui/dlxs-templates.html"> HTML Templates / Interfaces</A> for
+   more on PIs), as well as links to descriptions of the relevant template files
+   in which they may appear. Note that PIs are not interchangeable with templates;
+   they must be supported in the CGI to be rendered properly. </P>
+<table BORDER="1">
+   <THEAD>
+   <TR> <TH ALIGN="LEFT" WIDTH="25%">PI tag</TH><TH VALIGN="TOP" WIDTH="12%">Optional
+         parameters</TH><TH VALIGN="TOP" WIDTH="13%">Associated templates</TH><TH VALIGN="TOP" WIDTH="50%">Description</TH></TR>
+   </THEAD> <TBODY>
+   <TR>
+      <td>&lt;?BBAG_BOOLEAN_SEARCH_LINK&gt;</td>
+      <td></td>
+      <td>bbaglist.tpl<BR/>
+         bbagsimplesearchform.chnk<BR/>
+      </td>
+      <td>Provides the HREF URL for the &quot;Boolean&quot; search within book
+         bag link.</td>
+   </TR>
+   <TR>
+      <td>&lt;?BBAG_SIMPLE_SEARCH_LINK&gt;</td>
+      <td></td>
+      <td>bbagbooleansearchform.chnk<BR/>
+         bbaglist.tpl<BR/>
+      </td>
+      <td>Provides the HREF URL for the &quot;simple&quot; search within book
+         bag link.</td>
+   </TR>
+   <TR>
+      <td>&lt;?BIB_SEARCH_LINK&gt;</td>
+      <td></td>
+      <td>bbaglist.tpl<BR/>
+      </td>
+      <td>Provides the HREF URL for the &quot;citation&quot; search form link
+         in the main or footer navigation bar.</td>
+   </TR>
+   <TR>
+      <td>&lt;?BOOKBAG_DOWNLOAD&gt;</td>
+      <td></td>
+      <td>bbaglist.tpl<BR/>
+      </td>
+      <td>Used to insert a button to download book bag contents.</td>
+   </TR>
+   <TR>
+      <td>&lt;?BOOKBAG_EMAIL&gt;</td>
+      <td></td>
+      <td>bbaglist.tpl<BR/>
+      </td>
+      <td>Used to insert a button to email book bag contents.</td>
+   </TR>
+   <TR>
+      <td>&lt;?BOOKBAG_EMPTY&gt;</td>
+      <td></td>
+      <td>bbaglist.tpl<BR/>
+      </td>
+      <td>Used to insert a button for removing all book bag contents.</td>
+   </TR>
+   <TR>
+      <td>&lt;?BOOKBAG_ITEMS&gt;</td>
+      <td></td>
+      <td>bbaglist.tpl<BR/>
+         navheader.chnk<BR/>
+      </td>
+      <td>Used to insert the book bag items count in the current page.</td>
+   </TR>
+   <TR>
+      <td>&lt;?BOOKBAG_LINK&gt;</td>
+      <td></td>
+      <td>navheader.chnk<BR/>
+      </td>
+      <td>Provides the HREF URL for the &quot;view bookbag&quot; link in a page.</td>
+   </TR>
+   <TR>
+      <td>&lt;?BOOKBAG_RESULTS&gt;</td>
+      <td></td>
+      <td>bbaglist.tpl<BR/>
+      </td>
+      <td>Used to insert all current book bag items within table &lt;TR&gt; and &lt;TD&gt; tags.</td>
+   </TR>
+   <TR>
+      <td>&lt;?BOOLEAN_SEARCH_LINK&gt;</td>
+      <td></td>
+      <td>bbaglist.tpl<BR/>
+         navheader.chnk<BR/>
+         simplesearchform.chnk<BR/>
+      </td>
+      <td>Provides the HREF URL for the &quot;boolean&quot; search form link
+         in the main or footer navigation bar.</td>
+   </TR>
+   <TR>
+      <td>&lt;?BROWSE_GROUPS_LINK&gt;</td>
+      <td></td>
+      <td>search.tpl<BR/>
+      </td>
+      <td></td>
+   </TR>
+   <TR>
+      <td>&lt;?CHUNK&gt;</td>
+      <td>filename=&quot;[value]&quot; </td>
+      <td>browsecolls.tpl<BR/>
+         outline.tpl<BR/>
+         reslist.tpl<BR/>
+         text.tpl<BR/>
+         search.tpl<BR/>
+         bbagsearch.tpl<BR/>
+         browsecolls.tpl<BR/>
+         outline.tpl<BR/>
+         reslist.tpl<BR/>
+         search.tpl<BR/>
+         searchhistory.tpl<BR/>
+         text.tpl<BR/>
+         bbagsearch.tpl<BR/>
+         browsecolls.tpl<BR/>
+         outline.tpl<BR/>
+         reslist.tpl<BR/>
+         search.tpl<BR/>
+         searchhistory.tpl<BR/>
+         text.tpl<BR/>
+         bbagsearch.tpl<BR/>
+         search.tpl<BR/>
+      </td>
+      <td>Resolves to a chunk file specified in the filename attribute</td>
+   </TR>
+   <TR>
+      <td>&lt;?COLL_LIST_WITH_CHECKBOXES&gt;</td>
+      <td></td>
+      <td>search.tpl<BR/>
+      </td>
+      <td>On multiple collection search forms, used to insert the table of available
+         collections with check boxes for selecting or deselecting.</td>
+   </TR>
+   <TR>
+      <td>&lt;?COLL_SPECIFIC_CONTENT&gt;</td>
+      <td>id=&quot;collspecinlinehelp&quot; </td>
+      <td>bbagsearch.tpl<BR/>
+         navheader.chnk<BR/>
+      </td>
+      <td>Provides the HREF URL for a collection specific (e.g., browse) navigation
+         link in main nav bar or footer nav bar.</td>
+   </TR>
+   <TR>
+      <td>&lt;?CONTACT&gt;</td>
+      <td>type=&quot;[value]&quot; </td>
+      <td>footer.chnk<BR/>
+         footernolist.chnk<BR/>
+         searchhistory.tpl<BR/>
+      </td>
+      <td>If type=&quot;text&quot; returns the text contact of the contact link.
+         If type=&quot;link&quot; provides the HREF value for the link</td>
+   </TR>
+   <TR>
+      <td>&lt;?CSS_PATH&gt;</td>
+      <td>filename=&quot;[value]&quot; </td>
+      <td>searchhistory.tpl<BR/>
+         searchhistory.tpl<BR/>
+         reslist.tpl<BR/>
+         bbagsearch.tpl<BR/>
+         browsecolls.tpl<BR/>
+         outline.tpl<BR/>
+         reslist.tpl<BR/>
+         search.tpl<BR/>
+         text.tpl<BR/>
+         bbagsearch.tpl<BR/>
+         browsecolls.tpl<BR/>
+         outline.tpl<BR/>
+         reslist.tpl<BR/>
+         search.tpl<BR/>
+      </td>
+      <td>Invoking the fallback mechanism, resolves to an appropriate path to
+         a named css file.</td>
+   </TR>
+   <TR>
+      <td>&lt;?DOC_ROOT&gt;</td>
+      <td>mode=&quot;[value]&quot; </td>
+      <td>bbaglist.tpl<BR/>
+         viewtextnote.tpl<BR/>
+         bbaglist.tpl<BR/>
+         home.tpl<BR/>
+         text.tpl<BR/>
+         viewtextnote.tpl<BR/>
+      </td>
+      <td>Used to insert the appropriate root path for the collection accessing
+         the template for relative file reference.</td>
+   </TR>
+   <TR>
+      <td>&lt;?GO_TO_XCOLL&gt;</td>
+      <td></td>
+      <td>navheader.chnk<BR/>
+      </td>
+      <td>Provides the HREF URL for the &quot;multiple collection search&quot; link
+         in a page.</td>
+   </TR>
+   <TR>
+      <td>&lt;?GRAPHICS_PATH&gt;</td>
+      <td>filename=&quot;[value]&quot; </td>
+      <td>navheader.chnk<BR/>
+         navheader.chnk<BR/>
+         text.tpl<BR/>
+         footer.chnk<BR/>
+         searchhistory.tpl<BR/>
+      </td>
+      <td>Used to insert the appropriate path and filename for a graphics file.</td>
+   </TR>
+   <TR>
+      <td>&lt;?GROUPS_COLLS_LIST&gt;</td>
+      <td></td>
+      <td>browsecolls.tpl<BR/>
+      </td>
+      <td>Returns the list of available group names as links with associated
+         collection names on the browse collections page.</td>
+   </TR>
+   <TR>
+      <td>&lt;?GROUPS_SELECTION_NAV&gt;</td>
+      <td></td>
+      <td>search.tpl<BR/>
+      </td>
+      <td>Used to filter in/out HTML for the groups selection menu in the search.tpl<BR/>
+         page.</td>
+   </TR>
+   <TR>
+      <td>&lt;?GROUP_IN_FOCUS_NAME&gt;</td>
+      <td></td>
+      <td>search.tpl<BR/>
+      </td>
+      <td>Returns the name of the currently selected group that is being searched
+         for the search.tpl<BR/>
+         page.</td>
+   </TR>
+   <TR>
+      <td>&lt;?GUIDE_FRAME&gt;</td>
+      <td></td>
+      <td>reslist.tpl<BR/>
+      </td>
+      <td>Used to filter out HTML markup for the per-collection results summary
+         from the results page when only one collection has been searched.</td>
+   </TR>
+   <TR>
+      <td>&lt;?GUIDE_RESULTS_LINKS&gt;</td>
+      <td></td>
+      <td>reslist.tpl<BR/>
+      </td>
+      <td>That portion of the per-collection results summary code that inserts
+         links for viewing results detail for each collection.</td>
+   </TR>
+   <TR>
+      <td>&lt;?HELP_LINK&gt;</td>
+      <td></td>
+      <td>bbaglist.tpl<BR/>
+      </td>
+      <td>Provides the HREF URL for the &quot;help&quot; link in the main or
+         footer navigation bar.</td>
+   </TR>
+   <TR>
+      <td>&lt;?HIDDEN_BOOKBAG&gt;</td>
+      <td></td>
+      <td>bbagbooleansearchform.chnk<BR/>
+         bbagsimplesearchform.chnk<BR/>
+         search.tpl<BR/>
+      </td>
+      <td>Returns a hidden form variable named &quot;bookbag&quot; that is set
+         to 1 if the current search form is restricted to the current bookbag.</td>
+   </TR>
+   <TR>
+      <td>&lt;?HIDDEN_DEBUG&gt;</td>
+      <td></td>
+      <td>search.tpl<BR/>
+      </td>
+      <td>Used to flag the existence of a debug parameter in a call to the search
+         template. Returns an &lt;INPUT&gt; type=hidden element with name equal
+         to debug, and value equal to the param value.</td>
+   </TR>
+   <TR>
+      <td>&lt;?HIDDEN_G&gt;</td>
+      <td></td>
+      <td>bbagbooleansearchform.chnk<BR/>
+         bbagsimplesearchform.chnk<BR/>
+         search.tpl<BR/>
+      </td>
+      <td>Returns a hidden form variable indicating the current group.</td>
+   </TR>
+   <TR>
+      <td>&lt;?HIDDEN_IDNO&gt;</td>
+      <td></td>
+      <td>bbagbooleansearchform.chnk<BR/>
+         bbagsimplesearchform.chnk<BR/>
+         search.tpl<BR/>
+      </td>
+      <td>Returns a hidden form variable indicating current item id number.</td>
+   </TR>
+   <TR>
+      <td>&lt;?HIDDEN_REQUESTED_COLLECTIONS&gt;</td>
+      <td></td>
+      <td>bbagbooleansearchform.chnk<BR/>
+         bbagsimplesearchform.chnk<BR/>
+         search.tpl<BR/>
+      </td>
+      <td>Used to insert a hidden INPUT element into a search form storing the
+         currently selected collection[s].</td>
+   </TR>
+   <TR>
+      <td>&lt;?HIDDEN_SID&gt;</td>
+      <td></td>
+      <td>bbagbooleansearchform.chnk<BR/>
+         bbagsimplesearchform.chnk<BR/>
+         search.tpl<BR/>
+      </td>
+      <td>Used to insert hidden INPUT form elements indicating the current session
+         id.</td>
+   </TR>
+   <TR>
+      <td>&lt;?HIDDEN_SORT_VARS&gt;</td>
+      <td></td>
+      <td>reslist.tpl<BR/>
+      </td>
+      <td>For the sort form, returns a list of &lt;INPUT&gt; type hidden elements.</td>
+   </TR>
+   <TR>
+      <td>&lt;?HIDDEN_XC&gt;</td>
+      <td></td>
+      <td>bbagbooleansearchform.chnk<BR/>
+         bbagsimplesearchform.chnk<BR/>
+         search.tpl<BR/>
+      </td>
+      <td>Reflects a possible xc cgi parameter pair as an INPUT element of type
+         hidden. The xc parameter is used to flag the current environment to
+         indicate collection or group specific elements to the user interface
+         (e.g., collection home link URLs, fallback modes, etc.). </td>
+   </TR>
+   <TR>
+      <td>&lt;?HIDDEN_XG&gt;</td>
+      <td></td>
+      <td>bbagbooleansearchform.chnk<BR/>
+         bbagsimplesearchform.chnk<BR/>
+         search.tpl<BR/>
+      </td>
+      <td>Reflects a possible xg cgi parameter pair as an INPUT element of type
+         hidden. The xg parameter is used to flag the current enviroment for
+         searching; the presence of an xg=1 says to display the group select
+         frame.</td>
+   </TR>
+   <TR>
+      <td>&lt;?HOME_LINK&gt;</td>
+      <td></td>
+      <td>navheader.chnk<BR/>
+         navheader.chnk<BR/>
+      </td>
+      <td>Returns the HREF value for a link going to the collection/group home.</td>
+   </TR>
+   <TR>
+      <td>&lt;?INCLUDE_BOOKBAG_LINK&gt;</td>
+      <td></td>
+      <td>navheader.chnk<BR/>
+      </td>
+      <td>Used to filter in/out HTML markup for a link to the &quot;view bookbag&quot; link.</td>
+   </TR>
+   <TR>
+      <td>&lt;?INCLUDE_BOOKBAG_SEARCH_LINKS&gt;</td>
+      <td></td>
+      <td>bbaglist.tpl<BR/>
+      </td>
+      <td>Used to insert or exclude HTML markup for optional search links on
+         book bag contents and/or email forms.</td>
+   </TR>
+   <TR>
+      <td>&lt;?INCLUDE_COLL_LIST_WITH_CHECKBOXES&gt;</td>
+      <td></td>
+      <td>search.tpl<BR/>
+      </td>
+      <td>Used in search.tpl<BR/>
+         to filter in/out HTML markup containing the current colletions for the
+            selected group.</td>
+   </TR>
+   <TR>
+      <td>&lt;?INCLUDE_COLL_SPECIFIC_CONTENT&gt;</td>
+      <td>id=&quot;collspecinlinehelp&quot; </td>
+      <td>bbagsearch.tpl<BR/>
+         navheader.chnk<BR/>
+      </td>
+      <td>Used to include or exclude navigation link code for features that are
+         available only for certain collections.</td>
+   </TR>
+   <TR>
+      <td>&lt;?INCLUDE_DETAIL_DISPLAY_ITEMS&gt;</td>
+      <td></td>
+      <td>reslist.tpl<BR/>
+      </td>
+      <td>Used to include or exclude HTML markup for navigation elements specific
+         to the results item details display.</td>
+   </TR>
+   <TR>
+      <td>&lt;?INCLUDE_GO_TO_XCOLL&gt;</td>
+      <td></td>
+      <td>navheader.chnk<BR/>
+      </td>
+      <td>Used to include or exclude HTML markup for link going to the multiple
+         collection search.</td>
+   </TR>
+   <TR>
+      <td>&lt;?INCLUDE_GROUPS_SELECTION_NAV&gt;</td>
+      <td></td>
+      <td>search.tpl<BR/>
+      </td>
+      <td>Used to include or exclude HTML links for selecting alternative groups
+         in a mult-collection search interface.</td>
+   </TR>
+   <TR>
+      <td>&lt;?INCLUDE_OUTLINE_MENU?&gt;</td>
+      <td></td>
+      <td>outline.tpl<BR/>
+      </td>
+      <td>Used to include or exclude HTML links for navigating among the first
+         two section levels of the current finding aid.</td>
+   </TR>
+   <TR>
+      <td>&lt;?INCLUDE_RETURN_TO_RESULTS&gt;</td>
+      <td></td>
+      <td>reslist.tpl<BR/>
+         text.tpl<BR/>
+      </td>
+      <td>Returns a link to the current results list from a header, text, or
+         pageviewer display.</td>
+   </TR>
+   <TR>
+      <td>&lt;?INCLUDE_SEARCH_TAB&gt;</td>
+      <td></td>
+      <td>navheader.chnk<BR/>
+      </td>
+      <td>Used to filter in/out HTML markup for the &quot;Search&quot; navigation
+         tab.</td>
+   </TR>
+   <TR>
+      <td>&lt;?INCLUDE_SHORT_DISPLAY_ITEMS&gt;</td>
+      <td></td>
+      <td>reslist.tpl<BR/>
+      </td>
+      <td>Used to include or exclude HTML markup for elements (I.e., sorting)
+         specific to the short results display</td>
+   </TR>
+   <TR>
+      <td>&lt;?ITEM_TITLE?&gt;</td>
+      <td></td>
+      <td>outline.tpl<BR/>
+      </td>
+      <td>Returns the title of the current finding aid to the &quot;standard&quot; and
+         full text view display.</td>
+   </TR>
+   <TR>
+      <td>&lt;?JS_PATH&gt;</td>
+      <td>filename=&quot;[value]&quot; </td>
+      <td>bbagsearch.tpl<BR/>
+         browsecolls.tpl<BR/>
+         outline.tpl<BR/>
+         reslist.tpl<BR/>
+         search.tpl<BR/>
+         searchhistory.tpl<BR/>
+         text.tpl<BR/>
+         bbagsearch.tpl<BR/>
+         browsecolls.tpl<BR/>
+         search.tpl<BR/>
+         searchhistory.tpl<BR/>
+      </td>
+      <td>Invoking the fallback mechanism, resolves to an appropriate path to
+         a named js file.</td>
+   </TR>
+   <TR>
+      <td>&lt;?JS_REGION_ARRAYS&gt;</td>
+      <td></td>
+      <td>bbagsearch.tpl<BR/>
+         search.tpl<BR/>
+      </td>
+      <td>Used in multiple search forms to provide Javascript code for implementing
+         the collection selecting functionality.</td>
+   </TR>
+   <TR>
+      <td>&lt;?NAV_TAB_STYLE_OVERRIDES&gt;</td>
+      <td></td>
+      <td>bbagsearch.tpl<BR/>
+         browsecolls.tpl<BR/>
+         search.tpl<BR/>
+         searchhistory.tpl<BR/>
+         text.tpl<BR/>
+      </td>
+      <td>Returns a &lt;LINK&gt; element with path to a stylesheet containing
+         appropriate style declarations for the current navigation context (i.e.,
+         which tab is highlighted?).</td>
+   </TR>
+   <TR>
+      <td>&lt;?NUMBER_OF_COLLECTIONS&gt;</td>
+      <td></td>
+      <td>home.tpl<BR/>
+      </td>
+      <td>Previously used in search forms to indicate the number of collections
+         currently being searched.</td>
+   </TR>
+   <TR>
+      <td>&lt;?OP2_SELECT&gt;</td>
+      <td> class=&quot;[value]&quot; </td>
+      <td>bbagbooleansearchform.chnk<BR/>
+         booleansearchform.chnk<BR/>
+      </td>
+      <td>Returns a form &lt;SELECT&gt; element named op2, for designating the
+         boolean operator value between input values q1 and q2.</td>
+   </TR>
+   <TR>
+      <td>&lt;?OP3_SELECT&gt;</td>
+      <td> class=&quot;[value]&quot; </td>
+      <td>bbagbooleansearchform.chnk<BR/>
+         booleansearchform.chnk<BR/>
+      </td>
+      <td>Returns a form &lt;SELECT&gt; element named op3, for designating the
+         boolean operator value between input values q2 and q3.</td>
+   </TR>
+   <TR>
+      <td>&lt;?ORG_INFO&gt;</td>
+      <td>type=&quot;[text|link]&quot; </td>
+      <td>footer.chnk<BR/>
+         footernolist.chnk<BR/>
+      </td>
+      <td>If type=&quot;text&quot; returns the text of the orgainization info
+         link. If type=&quot;link&quot; provides the HREF value for the link</td>
+   </TR>
+   <TR>
+      <td>&lt;?OTHER_VIEW_LINKS?&gt;</td>
+      <td></td>
+      <td>outline.tpl<BR/>
+      </td>
+      <td>Used to insert links to other views of the current finding aid (E.g., &quot;search
+         terms in context,&quot; &quot;standard view,&quot; &quot;full text,&quot; &quot;add
+         to bookbag&quot;)</td>
+   </TR>
+   <TR>
+      <td>&lt;?OUTLINE_MENU?&gt;</td>
+      <td></td>
+      <td>outline.tpl<BR/>
+      </td>
+      <td>Inserts a columnar list of navigation links to all first and second
+         level sections of the current finding aid.</td>
+   </TR>
+   <TR>
+      <td>&lt;?PAGETYPE&gt;</td>
+      <td></td>
+      <td>bbagsearch.tpl<BR/>
+         search.tpl<BR/>
+      </td>
+      <td>Provides the current page type, as a string, to a search template.
+         The value is utilized by a javascript function.</td>
+   </TR>
+   <TR>
+      <td>&lt;?PREV_NEXT_ITEM_LINKS&gt;</td>
+      <td></td>
+      <td>reslist.tpl<BR/>
+      </td>
+      <td>Used to insert HREF URL code for the previous and next item when displaying
+         results details for a particular item.</td>
+   </TR>
+   <TR>
+      <td>&lt;?PRINTABLE_VERSION_LINK?&gt;</td>
+      <td></td>
+      <td>outline.tpl<BR/>
+      </td>
+      <td>Previous to release 11, this provided an HREF URL for an HTML link
+         to the fulltext version of a finding aid in the navigation margin of
+         the outline view.</td>
+   </TR>
+   <TR>
+      <td>&lt;?Q1_INPUT&gt;</td>
+      <td> size=&quot;[value]&quot; class=&quot;[value]&quot;</td>
+      <td>bbagbooleansearchform.chnk<BR/>
+         booleansearchform.chnk<BR/>
+         bbagsimplesearchform.chnk<BR/>
+         simplesearchform.chnk<BR/>
+      </td>
+      <td>Used to insert an INPUT box, q1, into a search form for the first query
+         term.</td>
+   </TR>
+   <TR>
+      <td>&lt;?Q2_INPUT&gt;</td>
+      <td> size=&quot;[value]&quot; class=&quot;[value]&quot; </td>
+      <td>bbagbooleansearchform.chnk<BR/>
+         booleansearchform.chnk<BR/>
+      </td>
+      <td>Used to insert an INPUT box, q2, into a search form for the second
+         query term.</td>
+   </TR>
+   <TR>
+      <td>&lt;?Q3_INPUT&gt;</td>
+      <td> size=&quot;[value]&quot; class=&quot;[value]&quot; </td>
+      <td>bbagbooleansearchform.chnk<BR/>
+         booleansearchform.chnk<BR/>
+      </td>
+      <td>Used to insert an INPUT box, q3, into a search form for the third query
+         term.</td>
+   </TR>
+   <TR>
+      <td>&lt;?REFINE_SEARCH_LINK&gt;</td>
+      <td></td>
+      <td>reslist.tpl<BR/>
+      </td>
+      <td>Returns a link to a results display to return to a search form to refine
+         the search.</td>
+   </TR>
+   <TR>
+      <td>&lt;?REGION_SEARCH_SELECT&gt;</td>
+      <td>class=&quot;[value]&quot; </td>
+      <td>bbagbooleansearchform.chnk<BR/>
+         bbagsimplesearchform.chnk<BR/>
+         booleansearchform.chnk<BR/>
+         simplesearchform.chnk<BR/>
+      </td>
+      <td>Returns a form &lt;SELECT&gt; element named rgn for designating the
+         field to apply qn fields to in boolean searches</td>
+   </TR>
+   <TR>
+      <td>&lt;?RESULTS&gt;</td>
+      <td></td>
+      <td>reslist.tpl<BR/>
+      </td>
+      <td>Inserts detailed results listings within table &lt;TR&gt; and &lt;TD&gt; tags</td>
+   </TR>
+   <TR>
+      <td>&lt;?RESULTS?&gt;</td>
+      <td></td>
+      <td>outline.tpl<BR/>
+      </td>
+      <td>Inserts detailed results listings within table &lt;TR&gt; and &lt;TD&gt; tags</td>
+   </TR>
+   <TR>
+      <td>&lt;?RETURN_TO_RESULTS&gt;</td>
+      <td></td>
+      <td>reslist.tpl<BR/>
+      </td>
+      <td>Used to insert an HTML link back to results listings from the pageviewer.</td>
+   </TR>
+   <TR>
+      <td>&lt;?RE_AUTH_LINK&gt;</td>
+      <td></td>
+      <td>home.tpl<BR/>
+         navheader.chnk<BR/>
+      </td>
+      <td>Provides the HREF URL for the &quot;Authorized user login&quot; link
+         from any page.</td>
+   </TR>
+   <TR>
+      <td>&lt;?SCRIPT_NAME&gt;</td>
+      <td>cginame=&quot;[value]&quot; </td>
+      <td>bbagbooleansearchform.chnk<BR/>
+         bbagsimplesearchform.chnk<BR/>
+         home.tpl<BR/>
+         reslist.tpl<BR/>
+         search.tpl<BR/>
+         bbaglist.tpl<BR/>
+      </td>
+      <td>Used to insert a relevant script name into a collection-specific URL
+         path.</td>
+   </TR>
+   <TR>
+      <td>&lt;?SEARCH_HISTORY_LINK&gt;</td>
+      <td></td>
+      <td>bbaglist.tpl<BR/>
+         navheader.chnk<BR/>
+      </td>
+      <td>Provides the HREF URL for the &quot;history&quot; page link in the
+         main or footer navigation bar.</td>
+   </TR>
+   <TR>
+      <td>&lt;?SEARCH_HISTORY_TABLE&gt;</td>
+      <td></td>
+      <td>searchhistory.tpl<BR/>
+      </td>
+      <td>Returns the list of recent searches in table markup.</td>
+   </TR>
+   <TR>
+      <td>&lt;?SEARCH_IN_NATURAL_LANGUAGE&gt;</td>
+      <td></td>
+      <td>reslist.tpl<BR/>
+      </td>
+      <td>Returns the currently query string to a search summary display atop
+         the results list.</td>
+   </TR>
+   <TR>
+      <td>&lt;?SEARCH_QUALIFIER&gt;</td>
+      <td></td>
+      <td>reslist.tpl<BR/>
+      </td>
+      <td>Used to add an appended qualifier to the search summary statement of
+         a results list indicating that the search was restricted to either a
+         bookbag or a specific text.</td>
+   </TR>
+   <TR>
+      <td>&lt;?SEARCH_RESTRICTION&gt;</td>
+      <td></td>
+      <td>search.tpl<BR/>
+      </td>
+      <td>Returns HTML markup containing the bibliographic info of an item currently
+         being searched.</td>
+   </TR>
+   <TR>
+      <td>&lt;?SEARCH_TYPE&gt;</td>
+      <td></td>
+      <td>search.tpl<BR/>
+      </td>
+      <td>Returns the current search type value for the hidden variable &quot;type&quot; in
+         search form templates.</td>
+   </TR>
+   <TR>
+      <td>&lt;?SEARCH_TYPE_TEXT&gt;</td>
+      <td></td>
+      <td>bbagsearch.tpl<BR/>
+         search.tpl<BR/>
+         searchhistory.tpl<BR/>
+      </td>
+      <td>Returns the current search type value for the search page header.</td>
+   </TR>
+   <TR>
+      <td>&lt;?SGML_RESULTS&gt;</td>
+      <td></td>
+      <td>text.tpl<BR/>
+      </td>
+      <td>Returns the item text in HTML markup in text view.</td>
+   </TR>
+   <TR>
+      <td>&lt;?SIMPLE_SEARCH_LINK&gt;</td>
+      <td></td>
+      <td>bbaglist.tpl<BR/>
+         booleansearchform.chnk<BR/>
+         navheader.chnk<BR/>
+      </td>
+      <td>Provides the HREF attribute value for the &quot;basic&quot; search
+         .</td>
+   </TR>
+   <TR>
+      <td>&lt;?SLICE_NAVIGATION_LINKS&gt;</td>
+      <td>occ=&quot;[1|2]&quot; </td>
+      <td>reslist.tpl<BR/>
+      </td>
+      <td>Used to insert the links navigating between the current page of search
+         results and other pages of results.</td>
+   </TR>
+   <TR>
+      <td>&lt;?SORT_SELECT&gt;</td>
+      <td>onchange=&quot;[Jscall]&quot; </td>
+      <td>reslist.tpl<BR/>
+      </td>
+      <td>Inserts a form select element providing options for sorting results.</td>
+   </TR>
+   <TR>
+      <td>&lt;?TITLE&gt;</td>
+      <td>mode=&quot;complex&quot; </td>
+      <td>bbaglist.tpl<BR/>
+         bbaglist.tpl<BR/>
+         bbagsearch.tpl<BR/>
+         browsecolls.tpl<BR/>
+         outline.tpl<BR/>
+         reslist.tpl<BR/>
+         search.tpl<BR/>
+         searchhistory.tpl<BR/>
+         text.tpl<BR/>
+         viewtextnote.tpl<BR/>
+      </td>
+      <td>Used to insert the collection title logo as an HTML graphic or text
+         string within &lt;A&gt; tags linking to the collection home page.</td>
+   </TR>
+   <TR>
+      <td>&lt;?VIEW_TEXT_LINK&gt;</td>
+      <td></td>
+      <td>viewtextnote.tpl<BR/>
+      </td>
+      <td>Appears in a warning notice before linking to the full length of a
+         given text. The PI returns the HREF URL to the link.</td>
+   </TR>
+   <TR>
+      <td>&lt;?XCOLL_TOTALS&gt;</td>
+      <td></td>
+      <td>reslist.tpl<BR/>
+      </td>
+      <td>Returns the number of matches and number of matched regions to a results
+         list summary statement.</td>
+   </TR>
+   </TBODY>
+</table>
+</BODY>
+</HTML>

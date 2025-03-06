@@ -1,0 +1,91 @@
+<html>
+<head>
+<title>DLXS Database Migration</title>
+
+
+
+ </head>         <BODY>
+<table class="updateTable" CELLSPACING="3" CELLPADDING="3" border="1">
+<tr>
+<td>Last updated</td>
+<td>2003-08-07 14:11:19 EDT</td>
+</tr>
+<tr>
+<td>Doc Title</td>
+<td>DLXS Database Migration</td>
+</tr>
+<tr>
+<td>Author 1</td>
+<td>Blanco, Jose</td>
+</tr>
+<tr>
+<td>Author 2</td>
+<td>Farber, Phillip</td>
+</tr>
+<tr>
+<td>CVS Revision</td>
+<td>$Revision: 1.8 $</td>
+</tr>
+</table>
+
+<DIV CLASS="pageTitle">Database Migration</div>
+    
+    
+      <H1>Database Migration</H1>
+      <UL>
+        
+        <LI><a href="#dbmove">Database moving</A> </LI>
+        <LI><a href="#dbconversion">Database conversion</A></LI>
+        <LI><a href="#dbinstall">Having two databases installed to support two DLXS versions</A> </LI>
+      </UL>
+      
+        <H2><A NAME="dbmove"></A>Database moving</H2>
+        <P> For initial installations, if you chose MySQL for your database,
+      use <a href="./dlxs-dbmove.html">$DLXSROOT/bin/db/dbmove</A>
+      to move the sample CSV database into your MySQL database before you try
+      to  run the sample data.  This assumes you have configured a MySQL database
+      as described in the <a href="../intro/dlxs-install.html#mysqlconfig">MySQL database configuration documentation</A>. </P>
+      
+      
+        <H2><A NAME="dbconversion"></A>Database conversion</H2>
+        <P> If you are installing DLXS for the first time, database conversion is not an issue. </P>
+        <P> If you have a Release 9 DLXS installation, an upgrade utility called <B><FONT FACE="Courier New, Courier, mono">upgrade_2_3</FONT></B> in $DLXSROOT/bin/db can be used to update your version 2 database to version 3.  See documentation on database functionality for <a href="./dlxs-upgrade.html">complete instructions</A>. </P>
+        <P> If you have a Release 8 DLXS installation, an upgrade utility called <B><FONT FACE="Courier New, Courier, mono">upgrade_1_2</FONT></B> in $DLXSROOT/bin/db can be used to update your version 1 database to version 2.  See documentation on database functionality for <a href="./dlxs-upgrade.html">complete instructions</A>. </P>
+        <P> If you have a DLXS installation that predates release 8, a conversion utility called <B><FONT FACE="Courier New, Courier, mono">dbconv</FONT></B> in $DLXSROOT/bin/db can be used to capture the data in your existing colldb files and merged into the CSV tables located in DlXSROOT/misc/db.  See documentation on database functionality for <a href="./dlxs-dbconv.html">complete instructions</A>. </P>
+      
+      
+        <H2><A NAME="dbinstall"></A>Having two database installed to support two DLXS versions</H2>
+        <P> Be aware of the following:
+        <UL>
+          <LI>Version 8 of DLXS uses version 1 of the database.</LI>
+          <LI>Version 9 of DLXS uses version 2 of the database</LI>
+          <LI>Version 10 of DLXS uses version 3 of the database.</LI>
+        </UL> </P>
+        <P>Therefore, if you have version 8 or 9 of DLXS and have installed version 10 of DLXS, you will need to get a database version 3 set up to use with your DLXS version 10 installation.</P>
+        <P> How should you go about doing this? Here are a few strategies to help you decide what to do:</P>
+        
+          <H3> 1. Say you have version 8 of DLXS using version 1 of a CSV database, and you want to create a version 3 CSV database to run with a DLXS 10 installation.</H3>
+          <P> If you do not have too many collections, you may just want to go though <TT>collmgr</TT> and change the database that way.</P>
+          <P> If this is not feasible, copy your CSV tables from version 8 ($DLXSROOT/misc/db, where $DLXSROOT is the environment variable you used for version 8) to the CSV dir for version 10 ($DLXSROOT/misc/db, $DLXSROOT is the one you used for version 10). Then run the upgrade scripts on the just copied files. To go from DLXS 8 to DLXS 10 you will need to run <TT>upgrade_1_2 -d CSV</TT>, and then <TT>upgrade_2_3 -d CSV</TT>. See <a href="./dlxs-upgrade.html">complete instructions</A> on the upgrade scripts. </P>
+        
+        
+          <H3> 2. Say you have version 8 of DLXS using version 1 of a CSV database, and you want to create a version 3 of a MySQL database to run with a DLXS 10 installation.</H3>
+          <P> In this case you could follow the instructions presented in 1, and then run <TT>$DLXSROOT/bin/db/dbmove -s CSV -t MySQL</TT>, This will move your CSV database into a MySQL database. Of course, a MySQL database needs to exists with the appropriate permissions. See <a href="../intro/dlxs-install.html#mysqlconfig">MySQL database configuration documentation</A> for more details. You could also move the database 1st and then run the upgrade scripts.</P>
+        
+        
+          <H3>3. Say you have version 8 of DLXS using version 1 of a MySQL database, and you want to create a version 3 of a MySQL database to run with a DLXS 10 installation.</H3>
+          <P> In this case, the easiest thing would be to start up MySQL with the root password and copy your database version 1 to the name you gave it when you installed DLXS 10. Then run the upgrade scripts on the copy of the database. Unfortunately, you cannot copy a database with MySQL. This is a feature MySQL is thinking of adding, but it is not available yet. To view a list of features to be added to MySQL, check <a href="http://www.mysql.com/doc/en/TODO_future.html">the MySQL web site</A>.</P>
+          <P> What we would suggest is that you dump your version 1 of the MySQL database into a dir and then load that data into a newly created database. Note that you may want to delete some entries in the sessions table before dumping the database into the directory since this table tends to get very large. After this is done you can run the upgrade scripts on the newly created database. Here are the steps to dump one database,  create a new database, and popultate it with the data dumped from the first:
+          <OL> 
+            <LI> From Unix prompt, make sure you have given DUMPDIR write permissions (you can also do this to backup the db): shell&gt;<TT>mysqldump -u root -p --tab=DUMPDIR dlxs</TT> </LI> 
+            <LI> Go into mysql as root and create the database mysql&gt; <TT>create database dlxs10;</TT> </LI> 
+            <LI> Create the tables in the new database shell&gt; <TT>cat DUMPDIR/*.sql | mysql -u root -p dlxs10</TT> </LI> 
+            <LI>Now load the data in the database. shell&gt;<TT> mysqlimport -u root -p dlxs10 DUMPDIR/*.txt</TT> </LI> 
+          </OL> 
+        </P>
+        
+      
+    
+  </BODY>
+ 
+</html>

@@ -1,0 +1,52 @@
+<HTML>
+<head>
+<TITLE>dbconv (DB Convert) utility</TITLE>
+
+
+
+
+
+
+
+<LINK HREF="../dlxsdocs.css" REL="stylesheet" TYPE="text/css"> </head>         <BODY>
+<table class="updateTable" CELLSPACING="3" CELLPADDING="3" BORDER="1">
+<TR>
+<td>Last updated</td>
+<td>2002-06-28 13:20:08 EDT</td>
+</TR>
+<TR>
+<td>Doc Title</td>
+<td>dbconv (DB Convert) utility</td>
+</TR>
+<TR>
+<td>Author 1</td>
+<td>Blanco, Jose</td>
+</TR>
+<TR>
+<td>CVS Revision</td>
+<td>$Revision: 1.8 $</td>
+</TR>
+</table>
+
+<DIV CLASS="pageTitle">dbconv (DB Convert) utility</DIV>
+		
+			<P>
+				<b>dbconv</b> is a Perl script designed to merge the data in the pre-CDROM#8  groups and collection tab-delimited files into CSV tables described in the <A HREF="dlxs-collmgr.html">collmgr documentation</A> section. These new tables are CSV tables that are then accessible by <A HREF="dlxs-collmgr.html">
+					<b>collmgr</b>
+				</A> and the middleware through the Perl <A HREF="../intro/dlxs-install.html#reqperlmodules">DBI</A>. The tables will reside in the directory <A HREF="../intro/dlxs-dirstruct.html#dlxsrootenv">$DLXSROOT</A>/misc/db.  All institutions that have been running DLXS and using colldb and the groups file will need to run <b>dbconv</b> to get their data from the colldb and groups files into the CSV tables that <b>collmgr</b> and the middleware will use. To run it, just enter <TT>dbconv</TT> from the command line in  <A HREF="../intro/dlxs-dirstruct.html#dlxsrootenv">$DLXSROOT/bin/db.</A>
+			</P>
+			<P>
+				<b>Important Points</b>:</P>
+			<UL>
+				<LI>This program will only need to be run once, when moving to version 8 of DLXS.  This program copies the collection metadata in colldb and groupdb into a MySQL CSV database.</LI>
+				<LI>There are some checks that <b>dbconv</b> performs and that you should be aware of. <UL>
+						<LI>If you have collid's, or groupid's that are the same across classes you will get an error and be asked to restart the <b>dbconv</b> script.</LI>
+						<LI>In Text Class <i>dd</i> is a required field, and must start with "$DLXSROOT", or the script will terminate and ask you to restart.</LI>
+						<LI>In Text Class <i>objdir</i> and <i>wwdd</i> are not required fields, but if they exist, they must start with "$DLXSROOT" or the script will terminate and ask you to restart.</LI>
+					</UL>
+				</LI>
+			</UL>
+		
+	</BODY>
+
+</HTML>

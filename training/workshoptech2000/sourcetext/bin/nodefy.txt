@@ -1,0 +1,90 @@
+#!/l/local/bin/perl
+
+use strict;
+
+#
+# This script first removes old NODE attributes in DIV tags, if 
+# any exist, and then inserts new NODE attributes into the DIV tags
+# based on the DIV level and the <IDNO TYPE="acc.no"> or <IDNO> value:
+#      <IDNO value>:<DIV1 node #>.<DIV2 node #>...
+#
+
+main:
+{
+   # Initialize Variables
+   $/ = "\>";        # set end-of-input-record
+   my $set_new_idno = 0;
+   my %node   = {};
+   my $idno   = "";
+   my $div    = 0;
+
+   # Get input filename or print syntax
+   if ( $#ARGV == -1 )
+   {
+      printf "usage: nodefy <input-file>\n";
+      exit; 
+   }
+   my $infile = $ARGV[0];
+   my $outfile = $infile . ".noded";
+
+   # open input and output files
+   open(INFILE, $infile) || die "Could not open: " . $infile;
+   open(OUTFILE, ">" . $outfile) || die "Could not open: " . $outfile;
+   
+   # Insert node values into DIV entries
+   while (<INFILE>)
+   {
+      # Set new IDNO value & reset %node hash
+      if ( $set_new_idno )
+      { 
+         ($idno) = split( /\</, $_, 0 ); 
+         %node = {};
+         $set_new_idno = 0;
+      }
+
+      # Check for new IDNO value
+      elsif ( m,\<IDNO\>, || m,\<IDNO TYPE=\"acc.no\"\>, ||
+              m,\<IDNO TYPE=\"dlps\"\>, )
+      { 
+         $set_new_idno = 1;
+      }
+      
+      # Check for new DIV tag and add NODE   
+      if ( m,\<DIV(\d+)[\s|\>],i )
+      {
+          # first rip out old NODE value if any
+          s, NODE=\"[^\"]*?\",,i;
+          
+          # get level again
+          m,\<DIV(\d+)[\s|\>],i ;
+          $div = $1;
+          $node{$div}++;
+          
+          my $node_string = '';
+          
+          foreach $::level (1..$div)
+             { $node_string .= "." . $node{$::level}; }
+          
+          # remove first period
+          $node_string =~ s,^\.,,;
+
+          # add to idno and colon to separate idno and following node string
+          $node_string = qq{NODE=\"} . $idno . ':' . $node_string . qq{\"};
+
+          
+          s,$div,$div $node_string,;
+      }
+      
+      # Check for DIV end-tag and clear nested node level
+      if ( m,\<\/DIV(\d+)\>,i )
+      {
+          $div = $1;
+          $node{$div+1} = "";
+      }
+   
+      print OUTFILE $_;   
+   }
+   
+   close(INFILE);
+   close(OUTFILE);
+}

@@ -1,0 +1,831 @@
+<html>
+<head>
+<title>User Interface</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<link rel="stylesheet" href="../styles.css" type="text/css">
+</head>
+<body bgcolor="#FFFFFF" leftmargin="10" topmargin="10" marginwidth="10" marginheight="10" class="mainpalette">
+<h1> User Interface</h1>
+<ul>
+	<li> <a href="#overview">HTML delivery via templates: an overview</a>
+  		<ul>
+  			<li><a href="#templates">HTML templates</a></li>
+  			<li><a href="#procins">Processing instructions</a></li>
+  			<li><a href="#fallback">Collection templates and class fallback</a> </li>
+		</ul>
+	</li>
+	<li><a href="#textclass">TextClass</a>
+  		<ul>
+  			<li><a href="#tcGenPgLayout">General Page Layout</a></li>
+  			<li><a href="#tcIndCollChars">Specifying Individual Collection Characteristics</a>
+    				<ul>
+    					<li><a href="#css">CSS files</a> </li>
+    					<li><a href="#graphics">Graphics</a> </li>
+    					<li><a href="#hdr">Header characteristics</a>
+      						<ul>
+      							<li><a href="#background">Background colors and graphics</a> </li>
+      							<li><a href="#hdrcollname">Title name or graphic</a> </li>
+      							<li><a href="#hdrtabs">Navigation tabs and fonts</a> </li>
+      							<li><a href="#submenus">Navigation sub menus</a></li>
+   							</ul>
+   						</li>
+							<li><a href="#samptemplate">Sample customized template[s] </a></li>
+ 					</ul>
+ 				</li>
+  			<li><a href="./tc-templates.html">Templates</a></li>
+  			<li><a href="./tc-templates.html#tcPis">Processing Instructions</a></li>
+		</ul>
+	</li>
+	<li><a href="#imageclass">ImageClass</a>
+  		<ul>
+  			<li><a href="#icIndCollChars">Specifying Individual Collection Characteristics</a>
+    				<ul>
+    					<li><a href="#iccss">CSS files</a> </li>
+    					<li><a href="#icgraphics">Graphics</a> </li>
+    					<li><a href="#ichdr">Header characteristics</a>
+      						<ul>
+      							<li><a href="#icbackground">Background colors and graphics</a> </li>
+      							<li><a href="#ichdrcollname">Title name or graphic</a> </li>
+      							<li><a href="#ichdrtabs">Navigation tabs and fonts</a> </li>
+   							</ul>
+   						</li>
+ 					</ul>
+ 				</li>
+  			<li><a href="./ic-templates.html">Templates</a></li>
+  			<li><a href="./ic-templates.html#icprocins">Processing Instructions</a></li>
+		</ul>
+	</li>
+</ul>
+<p><a name="main"> </a> </p>
+<hr size="1" width="90%">
+<p>&nbsp;</p>
+<p>&nbsp;</p><h2><a name="overview"></a>HTML delivery via templates: an overview </h2>
+<div class="level1"></div>
+<p>The user interface in the DLXS middleware is manifested by a combination of
+  interrelated techniques:</p>
+<ul>
+  <li>HTML Templates 
+  <li>Processing Instructions 
+  <li>ProcIns Module 
+</ul>
+<div class="level1"> 
+  <p>The first two techniques are of primary importance for specifying the various 
+    components of HTML delivery that make up the &quot;look and feel&quot; of 
+    the interface. </p>
+  <p>&nbsp;</p>
+</div>
+<div class="level2"></div>
+<h3><a name="templates"> </a> </h3>
+<h3>HTML Templates</h3>
+<p>HTML templates are used to deliver dynamic content from the CGI within a prescribed
+   HTML structure. In general, there are as many templates per class as there
+  are 
+  distinct page types in the overall functional architecture of the class. A
+  collection  implemented with the TextClass middleware, for example, can include
+  up to 33 
+  template files for delivering, among other pages, multiple search forms, results
+   displays, bibliographic headers and tables of contents, search histories and
+  
+  full text displays. Each HTML template is a combination of static HTML code
+   for areas of content that are unchanging from page to page, and processing
+  instructions 
+  that are either replaced by content provided by the CGI or used to remove content
+   or code from the template before delivery. Processing instructions can deliver
+  
+  simple strings, or large combinations of text and HTML code, depending on the
+   circumstance, but the practice has been to minimize the amount of HTML code
+  
+  replaced via a PI because this allows for easier maintenance of graphical interface
+   at the template level. Otherwise, the only rule governing template planning
+  
+  is that, when parsed, it should deliver valid or acceptable HTML to the browser.</p>
+<div class="level2"></div>
+<h4><a name="procins"> </a> </h4>
+<h3>Processing Instructions</h3>
+<p>HTML templates are combined with processing instruction tags that are parsed 
+  and replaced by the middleware. Processing instruction tags are of the form</p>
+<blockquote> 
+  <p><font size="4">&lt;?PI_IDENTIFIER_NAME [modifiername=&quot;value&quot;]*&gt;</font></p>
+</blockquote>
+<p>where all identifier names are preceded by a question mark and are represented 
+  in all capital letters with underscore characters. Zero or more modifier name/value 
+  pairs can be included to provide additional parameters. Here are two example 
+  PI tags:</p>
+<blockquote> 
+  <table border="1" cellpadding="5" cellspacing="0" style="border-width: 1px; border-style: solid; border-color: #CCCCCC" width="85%">
+    <tr> 
+      <td style="border-width: 1px; border-style: solid; border-color: #CCCCCC" valign="top"><code>&lt;?TITLE&gt;</code></td>
+      <td style="border-width: 1px; border-style: solid; border-color: #CCCCCC">Appears 
+        witin <code>&lt;TITLE&gt;&lt;/TITLE&gt;</code> tags and supplies a collection 
+        title string.</td>
+    </tr>
+    <tr> 
+      <td style="border-width: 1px; border-style: solid; border-color: #CCCCCC" valign="top"><code>&lt;?CSS_PATH
+     	filename=&quot;textclass-specific.css&quot;&gt;</code></td>
+      <td style="border-width: 1px; border-style: solid; border-color: #CCCCCC"><p>Appears
+      		within the <code>href</code> attribute of a <code>&lt;LINK&gt;</code> element
+      		to return the appropriate contextual path to a collection-specific
+      		CSS file, named in the filename modifier<br>
+      		(i.e., /DLXSROOT/c/coll/textclass-specific.css).</p>
+     	</td>
+    </tr>
+  </table>
+</blockquote>
+<p>Processing instruction tags are not, in all cases, a standardized API mechanism 
+  to collection information, though they share some of those characteristics. 
+  In general, the PIs are more likened to a customized API to the middleware itself. 
+  In this regard, PIs perform two general types of functionality:</p>
+<p><b>PIs may act as simple variable names</b>: As in <code>&lt;?TITLE&gt;</code> 
+  above, replaced by simple strings or even large blocks of HTML code and text; 
+</p>
+<p><b>PIs may act as include/exclude instructions</b>: A pair of PI tags may instruct 
+  the middleware to include or exclude code contained in the template, depending 
+  on specific context. </p>
+<blockquote> 
+  <p><code> &lt;?INCLUDE_COLL_SPECIFIC_CONTENT id=&quot;navbarbrowselink&quot;&gt;<br>
+    <br>
+&lt;td id=&quot;browsetab&quot; width=&quot;90&quot; height=&quot;23&quot; align=&quot;center&quot; nowrap&gt;<br> 
+&nbsp;&nbsp;&lt;span
+class=&quot;navlinks&quot;&gt;<br>
+&nbsp;&nbsp;&nbsp;&lt;a id=&quot;browselink&quot; &nbsp;&nbsp;&nbsp;&nbsp;href=&quot;&lt;?COLL_SPECIFIC_CONTENT&nbsp;id=&quot;navbarbrowselink&quot;&nbsp;cginame=&quot;text-idx&quot;&gt;&quot; &nbsp;&nbsp;&nbsp;&nbsp;class=&quot;nav&quot; onMouseOver=&quot;P7_autoLayers(0)&quot;&gt;Browse&lt;/a&gt;<br>
+  </code><code>&nbsp;&nbsp;&lt;/span&gt;<br>
+&lt;/td&gt;<br>
+&lt;td id=&quot;sep3&quot; width=&quot;1&quot;&gt;<br>
+&nbsp;&lt;img src=&quot;/t/text/graphics/plug.gif&quot; width=&quot;1&quot; height=&quot;1&quot; border=&quot;0&quot; alt=&quot;design
+  &nbsp;&nbsp;graphic&quot;&gt;<br>&lt;/td&gt;<br>
+  <br>
+&lt;?INCLUDE_COLL_SPECIFIC_CONTENT id=&quot;navbarbrowselink&quot;&gt;</code></p>
+</blockquote>
+<p>The code example above is from the table that contains cells navigation bar 
+  tabs and tab divisions. The HTML wrapped within the <code>&lt;?INCLUDE_COLL_SPECIFIC_CONTENT&gt;</code> 
+  PI tags is for a browse feature that is not supported by all collections. The 
+  PIs are used to remove the code in the case of collections that do not need 
+  this HTML, and to provide the appropriate url for the browse feature for collections 
+  that do have browse features. 
+<h3><a name="fallback"> </a> </h3>
+<h3>Collection templates and class fallback</h3>
+<p>Each of the class-specific sections below describes the techniques that are
+   applied within the class architecture to effect changes to overall class look
+  
+  and feel as it is expressed through the templates. It is important to note,
+   however, that the class middleware supports the implementation of customized,
+  
+  collection-specific templates and associated stylesheets. That is, when attempting
+  to render a particular page utilizing a specific template, the middleware will
+  first
+  look
+  for the
+  required 
+  template in the collection-specific path, using a customized template if it
+   exists. If there is no such customized version of the required template in
+  the 
+  collection path, the middleware will utilize the default class template. The
+   sections below, thus, apply to the techniques that can be applied to any templates,
+  
+  class defaults as well as optional individual versions.</p>
+<p>&nbsp;</p>
+<p><a name="textclass"></a> 
+<h2>TextClass</h2>
+<a name="tcGenPgLayout"> </a> 
+<h3 align="left">General Page Layout and Color</h3>
+<div class="level1"></div>
+<p>Default page delivery in Text Class is done via class-level templates that 
+  are shared by all instances of the class, though the middleware also supports 
+  collection-specific templates for any or all page-based behavior within the 
+  class. All default Text Class page templates are based on the same layout approach, 
+  which relies on tables (along with transparent spacer gifs) for all positioning 
+  and general color or graphic appearance. General layout is shown in <b>Figure 
+  1</b>, which shows top-level tables with borders showing, and using the color 
+  scheme for the Voltaire &eacute;lectronique collection. All table cells for 
+  header and navigation bar content at this level have default values for the 
+  <code>bgcolor</code> attribute for browsers that are not CSS-capable. Each header 
+  and navigation cell also has a default CSS class value and default background 
+  image specified in the <code>background</code> attribute. The background colors 
+  created by class and gif allow for flexibility to change appearances for different 
+  collections based on the same template. For more on specifiying individual collection 
+  appearance, see <a href="#tcIndCollChars">Specifying individual collection characteristics</a>.</p>
+<table border="0" cellpadding="0" cellspacing="2">
+  <tr> 
+    <td><img height="368" src="graphics/gen-layout.gif" width="450"></td>
+  </tr>
+  <tr> 
+    <td><b>Figure 1</b>: top-level table structure of a typical page.</td>
+  </tr>
+</table>
+<p>&nbsp;</p>
+<p><b> Figure 2</b> shows the simple search page for The American Verse collection
+  as it appears normally. Navigation bar labels, page text header markup (not
+  header text content, e.g., &quot;Basic Search&quot;), instruction text and footer text
+  are hard coded, and thus identical
+  across
+  all collections.
+  All other content is specified per collection by
+   processing 
+  instructions. </p>
+<table border="0" cellpadding="0" cellspacing="2">
+  <tr> 
+    <td><img src="graphics/amverse-basic.gif" border="1"></td>
+  </tr>
+  <tr> 
+    <td><b>Figure 2</b>: Basic search page for American Verse.</td>
+  </tr>
+</table>
+<p>&nbsp;</p>
+<p><a name="tcIndCollChars"></a></p>
+<h3>Specifying Individual Collection Characteristics</h3>
+<div class="level2"></div>
+<p>There are two primary--though not necessarily exlucsive--approaches, or methods,
+	to creating a different look for an individual collection. The first approach,
+	explained in the sections below, is the simplest. It involves making changes
+	in the collection directory to the peripheral files --i.e., CSS, background,
+	header, or other general graphics--that are referenced by the class templates.
+	This will keep the class page structures in tact for the collection, with changes
+	effected in header, page colors, or fonts, etc. To effect more extensive changes,
+	you probably have to create local versions of class templates in the collection
+	directory path. The simplest change along this path is to edit a local version
+	of the sub-template &quot;chunk&quot; files--e.g., navheader.chnk--but any template can
+	be changed.<br>
+</p>
+<p>	<a name="css"> </a> 
+</p>
+<h4>CSS files</h4>
+<p>Text class templates utilize two CSS files for controlling most font and color 
+  characteristics: textclass.css and textclass-specific.css. textclass.css is 
+  stored in at the <code>&lt;root&gt;/t/text/</code> path and contains all the 
+  default style declarations. textclass-specific.css is created for each individual 
+  collection and stored at the <code>&lt;root&gt;/c/coll/</code> path. References 
+  to both stylesheets are as follows:</p>
+<blockquote> 
+  <p> &lt;link rel=&quot;stylesheet&quot; href=&quot;/t/text/textclass.css&quot;&gt;<br>
+ 	&lt;link rel=&quot;stylesheet&quot; href=&quot;&lt;?CSS_PATH filename=&quot;textclass-specific.css&quot;&gt;&quot; type=&quot;text/css&quot;&gt; </p>
+</blockquote>
+<p>The &lt;?CSS_PATH&gt; processing instruction resolves to the relevant path
+	 for the collection-specific stylesheet, while the class stylesheet, textclass.css,
+	is hard coded. Because textclass-specific.css is referenced after textclass.css,
+	any style declarations that appear in textclass-specific.css will effectively
+	overwrite matching declarations in textclass.css. This is how fonts and background
+	colors are varied for each collection. (<a href="tc-textclass-css.html">full
+	  text of textclass.css</a>)</p>
+<p>See a <a href="css-compare.html" target="external">comparison</a> of textclass.css and a collection specific CSS file.</p>
+<br>
+<div class="level2"></div>
+<h4><a name="graphics"> </a> </h4>
+<h4>Graphics</h4>
+<p>Default text class templates employ a variety of relatively generic graphics
+	 that can be referenced by all collection instances. A <a href="tc-graphics.html">table
+	  of shared files</a> shows those files that are stored in the <code>&lt;dlxsroot&gt;/t/text/graphics/</code> 
+  directory. Any alternative graphics by identical names may be stored in individual
+   collection <code>graphics</code> directories to replace the default class
+   graphics  for that particular collection. Any files not stored in collection
+   graphics  directories, but referenced in the templates, will be referenced
+   from the class  graphics directory as a fallback mechanism. Graphics files
+   that are likely to  be unique to each collections are discussed in the section
+   on <a href="#background">header 
+  background colors and graphics</a>. </p>
+<br>
+<div class="level2"></div>
+<a name="hdr"> </a> 
+<h4>Header characteristics</h4>
+<p>The header of each page template includes that area in the top 75 pixels of
+	 the page containing those elements associated with unique collection identity:
+	 main collection title, global links, if any, and the main navigation bar.
+	As of release 10, all header and navigation components are contained in the
+	<code>navheader.chnk</code> sub-template file, which is imported into each of
+	the main functional template files. The relationship between a main template
+	file (e.g., reslist.tpl) and navheader.chnk is illustrated in <strong>Figure
+	3</strong> below.</p>
+<table border="0" cellpadding="7" cellspacing="2">
+	<tr>
+		<td bgcolor="#CCCCCC"><img src="graphics/gen-layout-top_r1_c1.gif" alt="" name="genlayouttop_r1_c1" width="450" height="79" hspace="4" vspace="4" border="0"><br clear="all">
+  			<span style="font-family: verdana,arial,sans-serif; font-size:10px">navheader.chnk</span></td></tr>
+	<tr>
+		<td bgcolor="#C5C5E2"><img src="graphics/gen-layout-bottom.gif" width="450" height="262" hspace="4" vspace="4"><br clear="all">
+  			<span style="font-family: verdana,arial,sans-serif; font-size:10px">[anytemplate].tpl</span></td></tr>
+	<tr>
+		<td><b>Figure 3 </b> : Template layout showing division between
+			main template content and the imported navheader &quot;chunk&quot; file..</td></tr>
+</table>
+<p>&nbsp; </p>
+<div class="level3"></div>
+<p><a name="background"> </a> </p>
+<p><i>Background color and graphics</i> </p>
+<p>Main background color for template headers is provided at three different
+  levels:  default background colors for table cells specified in the<code> bgcolor</code> 
+  attribute, style declarations in the textclass-specific.css stylesheet, and
+   table cell background graphics referenced by the <code>background</code> attribute. 
+  <b>Figure 4 </b> illustrates how these characteristics are specified in<code> 
+  td</code> opening tags in the Voltaire &eacute;lectronique collection.</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<table border="0" cellpadding="0" cellspacing="2">
+  <tr> 
+    <td><img border="1" height="91" src="graphics/text-hdr-layout.gif" width="633"></td>
+  </tr>
+  <tr> 
+    <td><b>Figure 4 </b>: Header cell color and graphics.</td>
+  </tr>
+</table>
+<p>The two top cells each have CSS class associations and background graphic references 
+  to files in the local collection graphics directory. The <code>hdrcolor</code> 
+  style is set locally in the textclass-specific.css style sheet as</p>
+<blockquote> 
+  <p><code>.hdrcolor { background-color: #FFFFF1 } </code></p>
+</blockquote>
+<p>The background graphics files, hdr-bg1.gif and hdr-bg2.gif, are, in fact, laying 
+  &quot;over&quot; the background color specified by the CSS style--the order 
+  of precedence for CSS capable browsers is<code> background</code>, <code>class</code>, 
+  <code>bgcolor</code>--but you see the CSS style colors because the gifs are 
+  transparent. The lower cell has a <code>bgcolor</code> value and a CSS style, 
+  <code>navcolor</code>, set again in the local textclass-specific.css as</p>
+<blockquote> 
+  <p><code>.navcolor { background-color: #F3E098 } </code></p>
+</blockquote>
+<br>
+<p><b>Figure 5 </b> illustrates the appearance of another header based on the
+  same  template using non-transparent background gifs that integrate with the
+  collection 
+  title gif and the CSS style for <code>navcolor.</code></p>
+<table border="0" cellpadding="0" cellspacing="2" width="75%">
+  <tr> 
+    <td><img border="1" height="78" src="graphics/umr-hdr.gif" width="625"></td>
+  </tr>
+  <tr> 
+    <td> 
+      <table border="0" cellpadding="10" cellspacing="0" width="100%">
+        <tr> 
+          <td valign="top"> 
+            <p><img border="1" height="51" src="graphics/umtr-combined.gif" width="333"></p>
+            <p>collection title gif</p>
+          </td>
+          <td class="stuff"><img border="1" height="91" src="graphics/bgmat.gif" style="left-margin: 5px; right-margin: 5px" width="100">hdr-bg1.gif 
+            and hdr-bg2.gif provide background.</td>
+        </tr>
+      </table>
+    </td>
+  </tr>
+  <tr> 
+    <td><b>Figure 5:</b> component files for a header portion of UM Technical
+       Reports templates.</td>
+  </tr>
+</table>
+<br>
+<br>
+<div class="level3"></div>
+<p><a name="hdrcollname"> </a> </p>
+<p><i>Title name or graphic</i> </p>
+<p>Collection title name is provided in the templates via the<code> &lt;?TITLE 
+  mode=&quot;complex&quot;&gt;</code> processing instruction. The PI will resolve 
+  to a text string or a graphic file as specified in the<code> colldb.</code> 
+  When rendered as text, titles are wrapped in H3 tags with CSS style <code>topheadlink</code> 
+  so that collection title font can be specified.</p>
+<br>
+<div class="level3"></div>
+<p><a name="hdrtabs"> </a> </p>
+<p><i>Navigation fonts and tabs</i> </p>
+<p>Color for navitation tabs is controlled by CSS styles, as are the border colors 
+  that surround and underline the tabs. Tab color is, in the &quot;backgrounded&quot; 
+  state, set by the <code>navcolor</code> style. The tab &quot;foreground&quot; 
+  state color is specified with the <code>navhicolor</code> style. Border and 
+  underline colors are set with<code> navdivision</code> and <code>navhrcolor</code> 
+  styles respectively. </p>
+<p>Font settings for tabs are also CSS controlled. Relative style declarations 
+  for fonts are as below:</p>
+<blockquote> 
+  <p><code>/* nav bar fonts */<br>
+    .navlinks { font-family: Arial, Helvetica, sans-serif; <br>
+    font-size: 12px; <br>
+    font-weight: bold; <br>
+    color: #666666; <br>
+    text-decoration: none<br>
+  }</code></p>
+  <p><code>/* nav link characteristics */<br>
+    A:hover { text-decoration: underline }<br>
+    A.nav { color: #FFFFFF; <br>
+    text-decoration: none <br>
+    }<br>
+    <br>
+    A.nav:hover { color : #FFCC33; <br>
+    text-decoration: underline <br>
+    }</code></p>
+</blockquote>
+<p>These styles set the default, &quot;closed&quot; tab state for all navigation fonts.
+  In previous releases of the class, each navigation state (e.g., basic search,
+  proximity search, browse, etc) has been represented by a separate template
+  file containing specific HTML markup: in that scheme,  styles for the &quot;open&quot;
+  state characteristics were declared in the style sheet and simply applied to
+different HTML elements as required.</p>
+<p>As mentioned above, the navigation menu is now contained in a single, separate
+	template file, <code>navheader.chnk</code>, that is inserted into all templates. Instead
+	of changing the various CSS class associations for relevant HTML elements to
+	effect state, the HTML elements in navheader have permanent ID associations,
+	and the template file referencing the nav header markup inserts necessary CSS
+	declarations to effect the preferred state. <strong>Figure 6 </strong> shows
+	a &quot;close-up&quot; of
+  the navigation bar HTML, with table borders showing, and illustrates the placement
+  of ID values on table cells
+that will serve as CSS selectors.</p>
+<p>&nbsp;</p>
+<table width="565" border="0" cellpadding="0" cellspacing="2">
+  <tr>
+    <td><img src="graphics/nav-tabs-layout.gif" width="565" height="226" border="1"></td>
+  </tr>
+  <tr>
+    <td><b>Figure 6 </b>: &quot;Close-up&quot; of the navigation bar with &quot;ID=&quot; values
+    	indicated. Additionally, the text of the &quot;Search&quot; and &quot;Browse&quot; tabs
+    	also have ID values (&quot;searchlink&quot; and &quot;browselink,&quot; respectively).</td>
+  </tr>
+</table>
+<p>When navheader.chnk is inserted into search.tpl, requiring that the search
+  tab be shown in an &quot;up&quot; state, the cgi also inserts the contents
+  of searchtabstyles.css
+into the page (shown below).</p>
+<blockquote>
+  <p><code>#searchtab { background-color: #ffffff } /* background color of the search
+      tab proper */<br>
+    #sttopborder { background-color: #333333 } /* search tab top border background
+      color */<br>
+    #sep1 { background-color: #333333 } /* separator 1 background color */<br>
+    #sep2 { background-color: #333333 } /* separator 2 background color */<br>
+    #stbotborder { background-color: #ffffff } /* search tab bottom border background
+      color */<br>
+    #searchlink { color: #000000 } /* search link color - attaches to the immediate
+      anchor element */</code><br>
+  </p>
+</blockquote>
+
+<p>The result is as is shown in <strong>Figure 2</strong> above.</p>
+<p><i>Changes in Navigation menu for findaid class.</i> </p>
+<p><strong>Figure 6a</strong> shows a close-up of the navigation bar for findaid class. </p>
+<table width="565" border="0" cellpadding="0" cellspacing="2">
+	<tr>
+		<td><img src="graphics/nav-tabs-layout-fa.gif" width="565" height="226" border="1"></td></tr>
+	<tr>
+		<td><b>Figure 6a </b>: &quot;Close-up&quot; of the navigation bar for findaid
+			class. </td></tr>
+</table>
+<p>You will note that the top and bottom &quot;border&quot; rows from the textclass
+	example are omitted. That is because findaidclass no longer relies on using
+	table cells [via their background color values] to represent tab borders. Instead,
+	borders are specified, if needed, with CSS styles. Also, in the textclass navigation
+	bar, the &quot;tabs&quot; <code>TABLE</code> element was contained within a
+	parent table <code>TD</code> with
+	a <code>class=&quot;navcolor&quot;</code> attribute, coresponding to the background
+	color of a navigation bar spanning the entire length of the page. That class
+	is still in existence in findaid class, but the default background colors for
+	individual tabs are now determined by a <code>class=&quot;mainnavcell&quot; </code> attribute
+	on the cell's TD element. The markup detail is shown in detail below:</p>
+<blockquote> <span style="font-family: courier; font-size:11px"> &lt;table width=&quot;100%&quot; border=&quot;0&quot; cellspacing=&quot;0&quot; cellpadding=&quot;0&quot;&gt;<br>
+&lt;!-- BEGIN rows outlining the navigation proper --&gt;<br>
+<br>
+&lt;!-- this row contains a table controlling layout for the nav tabs themselves
+--&gt;<br>
+<br>
+<br>
+&lt;tr&gt; <br>
+&lt;td class=&quot;navcolor&quot; colspan=&quot;2&quot; align=&quot;left&quot; height=&quot;23&quot; nowrap&gt; <br>
+&lt;table border=&quot;0&quot; cellspacing=&quot;0&quot; cellpadding=&quot;0&quot; id=&quot;mainnav&quot;&gt;<br>
+&lt;tr&gt; <br>
+&lt;!-- left anchor --&gt;<br>
+&lt;td width=&quot;2&quot; class=&quot;blank&quot;&gt;&lt;img src=&quot;/f/findaid/graphics/plug.gif&quot; width=&quot;2&quot; height=&quot;23&quot; border=&quot;0&quot; vspace=&quot;0&quot; hspace=&quot;0&quot; alt=&quot;design
+graphic&quot; name=&quot;leftanchor&quot; id=&quot;leftanchor&quot;&gt;&lt;/td&gt;<br>
+<br>
+&lt;!-- home --&gt;<br>
+<span style="color:red">&lt;td class=&quot;mainnavcell&quot; width=&quot;70&quot; height=&quot;23&quot; align=&quot;center&quot; nowrap&gt;</span>&lt;span
+class=&quot;navlinks&quot;&gt;&lt;a href=&quot;&lt;?HOME_LINK&gt;&quot; class=&quot;nav&quot; onMouseOver=&quot;P7_autoLayers(0)&quot;&gt;Home&lt;/a&gt;&lt;/span&gt;&lt;/td&gt;<br>
+&lt;!-- p7 include: onMouseOver=&quot;P7_autoLayers(0) --&gt;<br>
+&lt;td id=&quot;sep1&quot; width=&quot;2&quot; class=&quot;blank&quot;&gt;&lt;img
+src=&quot;/f/findaid/graphics/plug.gif&quot; width=&quot;2&quot; height=&quot;23&quot; border=&quot;0&quot; vspace=&quot;0&quot; hspace=&quot;0&quot; name=&quot;menuanchor&quot; id=&quot;menuanchor&quot; alt=&quot;design
+graphic&quot;&gt;&lt;/td&gt;<br>
+&lt;!-- search --&gt;<br>
+&lt;!-- this nav bar tab is conditionally included by the cgi --&gt;<br>
+&lt;?INCLUDE_SEARCH_TAB&gt;<br>
+&lt;td class=&quot;mainnavcell&quot; id=&quot;searchtab&quot; width=&quot;90&quot; height=&quot;23&quot; align=&quot;center&quot; nowrap&gt;&lt;span
+class=&quot;navlinks&quot;&gt;<br>
+&lt;a id=&quot;searchlink&quot; <br>
+href=&quot;&lt;?SIMPLE_SEARCH_LINK&gt;&quot; <br>
+class=&quot;nav&quot; <br>
+onMouseOver=&quot;P7_Snap('menuanchor','closer',-10,25,'menuanchor','ddsearchmenu',10,25);<br>
+P7_autoLayers(0,'ddsearchmenu','closer')&quot;&gt;Search<br>
+&lt;img name=&quot;navmenuarrow&quot; src=&quot;/t/text/graphics/navdwnarrow.gif&quot; alt=&quot;design
+graphic&quot; width=&quot;16&quot; height=&quot;8&quot; border=&quot;0&quot;&gt;&lt;/a&gt;&lt;/span&gt;&lt;/td&gt;<br>
+&lt;!-- p7 include: onMouseOver=&quot;P7_Snap('menuanchor','closer',-20,25,'menuanchor','ddsearchmenu',0,25);P7_autoLayers(0,'ddsearchmenu','closer')&quot; --&gt;<br>
+&lt;td id=&quot;sep2&quot; width=&quot;2&quot; class=&quot;blank&quot;&gt;&lt;img
+src=&quot;/f/findaid/graphics/plug.gif&quot; width=&quot;2&quot; height=&quot;1&quot; border=&quot;0&quot; alt=&quot;design
+graphic&quot;&gt;<br>
+&lt;/td&gt;<br>
+&lt;?INCLUDE_SEARCH_TAB&gt;<br>
+&lt;!-- browse --&gt;<br>
+<br>
+&lt;?INCLUDE_COLL_SPECIFIC_CONTENT id=&quot;navbarbrowselink&quot;&gt;<br>
+<br>
+&lt;td class=&quot;mainnavcell&quot; id=&quot;browsetab&quot; width=&quot;90&quot; height=&quot;23&quot; align=&quot;center&quot; nowrap&gt;&lt;span
+class=&quot;navlinks&quot;&gt;<br>
+&lt;a id=&quot;browselink&quot; <br>
+href=&quot;&lt;?COLL_SPECIFIC_CONTENT id=&quot;navbarbrowselink&quot; cginame=&quot;findaid-idx&quot;&gt;&quot; <br>
+class=&quot;nav&quot;<br>
+onMouseOver=&quot;P7_autoLayers(0)&quot;&gt;Browse&lt;/a&gt;&lt;/span&gt;&lt;/td&gt;<br>
+&lt;td id=&quot;sep3&quot; width=&quot;2&quot; class=&quot;blank&quot;&gt;&lt;img
+src=&quot;/f/findaid/graphics/plug.gif&quot; width=&quot;2&quot; height=&quot;1&quot; border=&quot;0&quot; alt=&quot;design
+graphic&quot;&gt;&lt;/td&gt;</p>
+<p> &lt;?INCLUDE_COLL_SPECIFIC_CONTENT id=&quot;navbarbrowselink&quot;&gt;</p>
+<p> &lt;!-- blankspace --&gt;<br>
+&lt;!-- &lt;td width=&quot;50&quot; height=&quot;23&quot; align=&quot;center&quot; nowrap&gt;&lt;img
+src=&quot;/f/findaid/graphics/plug.gif&quot; border=&quot;0&quot; width=&quot;50&quot; height=&quot;23&quot;&gt;&lt;/td&gt; --&gt;<br>
+&lt;!-- help --&gt;<br>
+&lt;td class=&quot;mainnavcell&quot; width=&quot;70&quot; height=&quot;23&quot; align=&quot;center&quot; nowrap&gt;&lt;font
+class=&quot;navlinks&quot; color=&quot;#ffffff&quot;&gt;&lt;a href=&quot;javascript:openHIndex('&lt;?HELP_LINK&gt;')&quot; class=&quot;nav&quot; onMouseOver=&quot;P7_autoLayers(0)&quot;&gt;Help&lt;/a&gt;&lt;/font&gt;&lt;/td&gt;<br>
+&lt;/tr&gt;<br>
+&lt;/table&gt;&lt;/td&gt;<br>
+&lt;/tr&gt;<br>
+	<br>
+	<br>
+&lt;/table&gt;</span></blockquote>
+<p><a name="submenus" id="submenus"> </a>
+</p>
+<p><i>Navigation sub menus</i> <br>
+</p>
+<p>In a previous release of the DLXS Text Class  design, multiple
+  search options were grouped under a single &quot;Search&quot; tab as a static
+  sub-menu. Figure 7 illustrates this design as implemented by the ACLS History
+  E-book collection.</p>
+<table width="389" border="0" cellpadding="0" cellspacing="2">
+  <tr>
+    <td><img src="graphics/acls-nav.gif" width="389" height="155" border="1"></td>
+  </tr>
+  <tr>
+    <td><b>Figure 7 </b>: The ACLS navigation bar showing static search sub-menu.</td>
+  </tr>
+</table>
+<p>In an effort to conserve vertical space, navigation is now implemented, by
+	default, as a &quot;pull-down&quot; menu that triggers by Javascript <code>onmouseover</code> events.
+  This menu is shown in <strong>Figure 8 </strong>.</p>
+<table width="455" border="0" cellpadding="0" cellspacing="2">
+  <tr>
+    <td><img src="graphics/amverse-nav.gif" width="455" height="121" border="1"></td>
+  </tr>
+  <tr>
+    <td><b>Figure 8 </b>: The American Verse navigation bar showing the &quot;pull-down&quot;
+    menu.</td>
+  </tr>
+</table>
+<p>The pull-down technique is an implementation of the <a href="http://projectseven.com/" target="external">Project
+    Seven</a> positioned dropped down menus design, utilizing Project Seven extensions
+    to <a href="http://www.macromedia.com/software/dreamweaver/" target="external">Macromedia
+    Dreamweaver</a>.
+    The Project Seven implementation is very reliable, working effectively for
+    Netscape 4.7 and up, and for Internet Explorer 5 and up (and most other browsers)
+    for the PC and Mac platforms. Even so, the search page design offers static
+    link alternatives for all menu options. </p>
+<p><strong>Figure 9</strong> shows  the navigation pulldown menu in more detail.</p>
+<table border="0" cellpadding="0" cellspacing="2">
+	<tr>
+		<td><img height="318" width="565" src="graphics/nav-dmenu-layout.gif"> </td></tr>
+	<tr>
+		<td><b>Figure 9 </b> :&quot;close-up&quot; of the navigation bar, showing main
+			DHTML menu components.</td></tr>
+</table>
+<p>HTML from <code>navheader.chnk</code> file is shown below; included here are
+	the two layers that constitute the hidden pull-down search menu, and the portion
+	of the navigation bar that triggers the menu (in highlighted colors). Since
+	the only portion of the menu that comes from the CGI are the search type link
+	hrefs, changing the look or shape of the menu is simply a matter of editing
+	the menu HTML. (Well, almost: the &quot;closer&quot; layer, which lays under
+	the drop down menu layer, should always be top-alligned with the menu layer,
+	but sufficiently wide and deep enough to provide a margin outside the left,
+	bottom, and right edges of the menu layer.) The javascript invoked by the search
+	link (in green below) opens the pull menu &quot;snapped&quot; to the image with
+	ID=&quot;menuanchor&quot; (shown in red). This means that so long as menuanchor
+	is present in relation to the search tab, the pull-down menu will always appear
+	in relation to the navigation bar. The javascript functions that execute the
+	menu behavior are contained in the <code>jsheader.chnk</code> template, and
+are imported into the page at load time.</p>
+<blockquote> <span style="font-family: courier; font-size:11px"> &lt;td id="sep1" width="1"&gt; <br>
+    	<span style="color:red"> &lt; img src="/t/text/graphics/plug.gif" width="1" height="23" border="0" vspace="0" hspace="0" name="menuanchor" id="menuanchor" alt="design
+    	graphic " &gt; </span>&lt;/td&gt; <br>
+&lt;!-- search --&gt; <br>
+&lt;!-- this nav bar tab is conditionally included by the cgi --&gt; <br>
+&lt;?INCLUDE_SEARCH_TAB&gt; <br>
+&lt;td id="searchtab" width="90" height="23" align="center" nowrap&gt; &nbsp; <br>
+&lt;span class="navlinks"&gt; <br>
+&nbsp; <span style="color:009900"> &lt; a id="searchlink" href="&lt;?SIMPLE_SEARCH_LINK&gt;" class="nav" onMouseOver="P7_Snap('menuanchor','closer',-70,25,'menuanchor','ddsearchmenu',-50,25);P7_autoLayers(0,'ddsearchmenu','closer')"&gt; </span>Search&lt;img
+name="navmenuarrow" src="/t/text/graphics/navdwnarrow.gif" alt="design graphic" width="16" height="8" border="0"&gt;&lt;/a&gt;&lt;/span&gt; <br>
+&lt;/td&gt; <br>
+&lt;td id="sep2" width="1"&gt;&lt;img src="/t/text/graphics/plug.gif" width="1" height="1" border="0" alt="design
+graphic"&gt; &lt;/td&gt; <br>
+	<br>
+&lt;div style="position:absolute; left:15px; top:70px; width:420px; height:22px;
+z-index:3; visibility: hidden;" id="ddsearchmenu"&gt; &lt;table width="420" border="0" cellspacing="0" cellpadding="0"&gt; &lt;tr&gt; &lt;td
+bgcolor="#666666"&gt; <br>
+		&lt;table width="100%" border="0" cellspacing="1" cellpadding="0"&gt; <br>
+&nbsp;&lt;tr&gt; <br>
+&nbsp; &nbsp;&lt;td class="mencellup" height="22" bgcolor="#E5E5E5" nowrap&gt;&nbsp; <br>
+&nbsp; &nbsp;&lt;span class="smallformfont"&gt;&lt;a class="menunav" href="&lt;?SIMPLE_SEARCH_LINK&gt;"&gt;Basic&lt;/a&gt;&lt;/span&gt; &nbsp; <br>
+&nbsp; &nbsp; | <br>
+&nbsp;&nbsp; &lt;span class="smallformfont"&gt;&lt;a class="menunav" href="&lt;?BOOLEAN_SEARCH_LINK&gt;"&gt;Boolean&lt;/a&gt;&lt;/span&gt; <br>
+&nbsp; &nbsp; | <br>
+&nbsp;&nbsp; &lt;span class="smallformfont"&gt;&lt;a class="menunav" href="&lt;?PROXIMITY_SEARCH_LINK&gt;"&gt;Proximity&lt;/a&gt;&lt;/span&gt; <br>
+&nbsp; &nbsp; | <br>
+&nbsp;&nbsp; &lt;span class="smallformfont"&gt;&lt;a class="menunav" href="&lt;?SEARCH_HISTORY_LINK&gt;"&gt;Search
+History&lt;/a&gt;&lt;/span&gt;&nbsp; <br>
+&nbsp; &nbsp;&lt;/td&gt; <br>
+&nbsp;&lt;/tr&gt; <br>
+&lt;/table&gt;&lt;/td&gt; &lt;/tr&gt; &lt;/table&gt; &lt;/div&gt; <br>
+&lt;div id="closer" style="position:absolute; left:3px; top:70px; width:460px;
+height:50px; z-index:2; visibility: hidden;"&gt;&lt;a href="javascript:;" onMouseOver="P7_autoLayers(0)"&gt;&lt;img
+src="/t/text/graphics/plug.gif" name="Image1" width="460" height="50" hspace="0" vspace="0" border="0" id="Image1" alt="design
+graphic"&gt;&lt;/a&gt;&lt;/div&gt; <br>
+&lt;!-- end menu divs --&gt;</span> </blockquote>
+<p>In summary, the relevant files for managing navigation look and feel for a
+	collection include the following files, any of which can be customized for individual
+	collections.</p>
+<blockquote>
+	<dl>
+		<dt> <code>navheader.chnk</code> </dt>
+		<dd>Contains html and PIs for the page header, the navigation bar, and the
+			pull-down menu layers.</dd>
+		<br>
+		<br>
+		<dt> <code>jsheader.chnk</code> </dt>
+		<dd>Contains the javascript files necessary to execute the pull-down search
+			menu.</dd>
+		<br>
+		<br>
+		<dt> <code>browsetabstyle.css</code> </dt>
+		<dd>Contains the appropriate CSS style rules that determine the appearance
+			of the browse tab in it's &quot;up&quot; state. This stylesheet is invoked
+			through the &lt;?NAV_TAB_STYLE_OVERRIDES&gt; PI that appears in a browse template.</dd>
+		<br>
+		<br>
+		<dt> <code>searchtabstyles.css</code> </dt>
+		<dd>Analogous to <code>browsetabstyle.css</code> . Contains the appropriate
+			CSS style rules that determine the appearance of the search tab in it's &quot; up &quot; state.
+			This stylesheet is invoked through the &lt;?NAV_TAB_STYLE_OVERRIDES&gt; PI
+			that appears in the <code>search.tpl</code> template.</dd>
+		<br>
+		<br>
+		<dt> <code>textclass.css / textclass-specific.css</code> </dt>
+		<dd>Contain class default or collection specific CSS style rules that determine
+			the appearance of the navigation bar colors and fonts.</dd>
+	</dl>
+  <p>&nbsp;</p>
+
+</blockquote>
+<a name="samptemplate" id="samptemplate"></a>
+<h3>Sample customized template</h3>
+<p>See two examples of collection-specific customizations:</p>
+<ol>
+	<li>Sample <a href="su04_demo-moaatxt-srch.html" target="_blank">search.tpl</a> for the Making of Ann Arbor text collection, shows how
+		a customized look was accomplished within a dlxs template framework.</li>
+  <li>Sample navheader variation as implemented in the <a href="http://www.hti.umich.edu/cgi/t/text/text-idx?page=simple&c=nal" target="_blank">National
+  		Agricultural Library OAIA site</a>, where the Finding Aids navheader tabs source HTML was
+  	substituted for the normal TC tabs, in conjunction with a <a href="http://www.hti.umich.edu/n/nal/textclass-specific.css" target="_blank">textclass-specific.css</a>  	file to create a different appearance. </li>
+</ol>
+<p>&nbsp;</p>
+<p>&nbsp; <a name="imageclass"></a> 
+<h2>ImageClass</h2>
+<a name="icIndCollChars"></a> 
+<h3>Specifying Individual Collection Characteristics<br>
+  <a name="iccss"> </a> </h3>
+<h4>CSS files</h4>
+<p>ImageClass templates, much like TextClass templates, utilize two CSS files 
+  for controlling most font and color characteristics. ImageClass templates differ, 
+  however, in that they do not include a default reference to a collection-specific 
+  CSS file, but only build a reference to a collections CSS file if one exists. 
+  This obviates the need to include a collection CSS file for every new collection. 
+</p>
+<p>The reference to the class CSS file is also different form the TextClass templates 
+  in the &lt;LINK&gt; element pointing to the file is written dynamically using 
+  Javascript code. This allows the template to refer to one of any number of separate 
+  CSS files to best suite the specific characteristics of a particular combination 
+  of browser and platform. A portion of the code, creating the &lt;LINK&gt; reference 
+  is shown below:</p>
+<blockquote> 
+  <p>if (ie) <br>
+    { <br>
+    &nbsp;&nbsp;document.writeln('<br>
+    &lt;link rel=&quot;stylesheet&quot; type=&quot;text/css&quot;<br>
+    href=&quot;&lt;?PATH type=&quot;web&quot;&gt;css/imageclass-ie-&nbsp;'+platform+'.css\&quot;&gt;\n'); 
+    <br>
+    &lt;?CSSURL type=&quot;ie&quot;&gt; <br>
+    <br>
+    } <br>
+    else <br>
+    { <br>
+    <br>
+    document.writeln('<br>
+    &lt;link rel=&quot;stylesheet&quot; type=&quot;text/css&quot; <br>
+    href=&quot;&lt;?PATH type=&quot;web&quot;&gt;css/imageclass-ns-'+platform+'.css\&quot;&gt;\n'); 
+    <br>
+    &lt;?CSSURL type=&quot;ns&quot;&gt; <br>
+  </p>
+</blockquote>
+<p>The &lt;?PATH type=&quot;web&quot;&gt; processing instruction resolves to the 
+  relevant path for each stylesheet. The &lt;?CSSURL&gt; processing instruction 
+  will create a link to a collection-specific CSS file if it exists. Because the 
+  collection-specific CSS is referenced after the class CSS, any style declarations 
+  that appear in latter file will effectively overwrite matching declarations 
+  in the former. This is how fonts and background colors are varied for each collection. 
+</p>
+<p>&nbsp;</p>
+<h4><a name="icgraphics"> </a> </h4>
+<h4>Graphics</h4>
+<p>Default ImageClass templates employ a variety of relatively generic graphics 
+  that can be referenced by all collection instances. A <a href="ic-graphics.html">table 
+  of shared files</a> shows those files that are stored in the <code>&lt;root&gt;/i/image/graphics/</code> 
+  directory. Any alternative graphics by identical names may be stored in individual 
+  collection <code>graphics</code> directories to replace the default class graphics 
+  for that particular collection. Any files not stored in collection graphics 
+  directories, but referenced in the templates, will be referenced from the class 
+  graphics directory as a fallback mechanism. </p>
+<p>&nbsp;</p>
+<p><a name="ichdr"> </a> </p>
+<h4>Header characteristics</h4>
+<p>The header of each page template includes that area at the top of the page 
+  containing those elements associated with unique collection identity: main collection 
+  or group title global links, if any, and the main navigation bar. ImageClass 
+  templates work very similaryly to TextClass templates to accomodate inclusion 
+  of background colors to provide some flexibility in creating unique appearances 
+  for different collections. </p>
+<div class="level3"></div>
+<p><a name="icbackground"> </a> </p>
+<p><i>Background color and graphics</i> </p>
+<p>Main background color for template headers is provided by style declarations
+   in the class CSS styleshee. <b>Figure 8</b> illustrates how these characteristics
+    are specified in<code> td</code> opening tags in the class template.</p>
+<table border="0" cellpadding="0" cellspacing="2">
+  <tr> 
+    <td><img src="graphics/image-hdr-layout.gif" width="699" height="84"></td>
+  </tr>
+  <tr> 
+    <td><b>Figure 8</b>: Header cell color and graphics.</td>
+  </tr>
+</table>
+<p>The three top cells each have CSS class associations inherited from the hdr1 
+  style attached to the parent table row. Likewise, the two bottom cells inherit 
+  styles from their parent table row.. The <code>hdr1</code> and <code>hdr2</code> 
+  styles are set locally in the class CSS style sheet as</p>
+<blockquote> 
+  <p><code>tr.hdr1 {background: black;} <br>
+    tr.hdr2 {background: #E7E5D6;} </code><br>
+  </p>
+</blockquote>
+<p>Any of the table cells involved can also include values for the <code>bgcolor</code> 
+  attribute as a backup to the style declarations. The order of precedence for 
+  CSS capable browsers is to render style first over<code> bgcolor</code> attribute 
+  value.</p>
+<p><a name="ichdrcollname"> </a> </p>
+<p><i>Title name or graphic</i> </p>
+<p>Collection title name is provided in the templates via the<code> &lt;?BANNER&gt;</code> 
+  processing instruction. The PI will, in the case of an individual collection, 
+  resolve to a text string or a graphic file as specified in the<code> colldb.</code> 
+  In cross-collection made, the content is specified in the <code>imageclass.cfg</code> 
+  file. When rendered as text, titles are wrapped in H3 tags with CSS style <code>topheadlink</code> 
+  so that collection title font can be specified.</p>
+<p><a name="ichdrtabs"> </a> </p>
+<p><i>Navigation fonts and tabs</i> </p>
+<p>Navigation tabs in ImageClass are implemented as an imagemap with a series 
+  of graphics files. The tabs graphics files represent the entire tab set in a 
+  particular state, showing all the relevant tabs in their relative state, and 
+  all against a background color that matches that of the table row containing 
+  the imagemap. Thus, in the header layout shown above, the navigation tabs are 
+  contained within the table row class attribute set as <code>class=&quot;hdr2&quot;</code> 
+  where hdr2 is defined as the background color <code>#E7E5D6</code>. The tab 
+  set uses an identical background color so that it blends in cleanly in the display 
+  ...</p>
+<p>&nbsp;</p>
+<table width="80%" border="0" cellspacing="0" cellpadding="0">
+  <tr> 
+    <td> 
+      <table width="100%" border="0" cellspacing="0" cellpadding="5">
+        <tr class="hdr1"> 
+          <td valign="middle" nowrap height="35" width="42%" bgcolor="#000000"> 
+            <p>&nbsp;</p>
+          </td>
+          <td align="left" nowrap width="31%" bgcolor="#000000"> 
+            <p>&nbsp;</p>
+          </td>
+          <td align="right" nowrap width="27%" bgcolor="#000000"> 
+            <p>&nbsp;</p>
+          </td>
+        </tr>
+      </table>
+    </td>
+  </tr>
+  <tr> 
+    <td bgcolor="fffffff" align="left" valign="bottom" nowrap height="1" colspan="2"><img src="graphics/plug.gif" height="1" width="1"></td>
+  </tr>
+  <tr class="hdr2"> 
+    <td> 
+      <table width="100%" border="0" cellspacing="0" cellpadding="0">
+        <tr> 
+          <td align="left" nowrap height="35" bgcolor="E7E5D6"><img src="graphics/display-tabs-WC.gif" width="348" height="35"></td>
+          <td align="right" bgcolor="E7E5D6">&nbsp;</td>
+        </tr>
+      </table>
+    </td>
+  </tr>
+</table>
+<p>&nbsp;</p>
+</body>
+</html>

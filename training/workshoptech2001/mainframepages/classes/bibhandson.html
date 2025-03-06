@@ -1,0 +1,41 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+  <head>
+    <title>BibClass Hands On: Filtering</title>
+    <META http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+    <LINK rel="stylesheet" href="../../styles.css">
+
+  </head>
+
+  <body class="mainpalette">
+    <h1>BibClass Hands On: Filtering</h1>
+
+    
+    <p><b>The Problem:</b> Ugly bare URL string in the rsults list for each record</p>
+    <p><b>Your Mission:</b>  Modify filter for nicer URL presentation<p>
+    <p><b>View the Problem:</b>
+    <ol>
+      <li>Go to http://yourid.workshop.umdl.umich.edu/cgi/b/bib/bib-idx
+      <li>Select MoA books
+      <li>Search for "smith"
+      <li>See URL link
+      <li>Change that link to hide the naked URL
+    </ol>
+
+    <p><b>How:</b><p>
+    <ol>
+      <li>Edit default.functions.cfg in cgi/b/bib/
+      <li>Find the $gDefaultShortRecordFilter
+      <li>Change the Substitution on the URL element
+ 
+    </ol>
+
+    <p><b> My answer: </b></p>
+
+    <p><b>BEFORE:</b>     $$i =~ s,&lt;URL[^>]*>(.*?)&lt;/URL>,&lt;strong>URL:&lt;/strong> &lt;a href="$1" target="_blank">$1&lt;/a>&lt;br>,gs;
+
+    <p><b>AFTER:&nbsp;&nbsp;</b>      $$i =~ s,&lt;URL[^>]*>(.*?)&lt;/URL>,&lt;a href="$1" target="_blank">&lt;strong>Link to full document&lt;/strong>&lt;/a>&lt;br>,gs;
+
+        
+  </body>
+</html>

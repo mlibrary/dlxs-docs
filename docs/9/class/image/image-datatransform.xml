@@ -1,0 +1,1006 @@
+<?xml version="1.0"?>
+
+<!-- SPO Editorial Services                  -->
+<!-- automatically-generated XML header file -->
+
+<?xml-stylesheet href="../../../pre11-dlxsdocs.xsl" type="text/xsl"?>
+<!DOCTYPE DLPSDOC PUBLIC "-//UM-DLPS//DTD DLPS Publications//EN" "http://docs.umdl.umich.edu/dlps/docs/dlpsdocs.dtd">
+<DLPSDOC>
+<TITLE>Image Class Data Transformation</TITLE>
+<HEADER>
+<JOURNAL>DLXS Documentation</JOURNAL>
+<PUBDATE>2002-07-03 17:10:09 EDT</PUBDATE>
+<AUTH1>Weise, John</AUTH1>
+<AUTH2></AUTH2>
+<DOCTITLE>Image Class Data Transformation</DOCTITLE>
+<VOL>class</VOL>
+<ISS>image</ISS>
+<FILE>dlxsdocs-image-datatransform</FILE>
+</HEADER>
+
+
+
+
+<BODY> 
+<BHEAD>Image Class Data Transformation</BHEAD> <DIV1 ID="main"> 
+
+
+  <P><A HREF="mailto:dlxs-info@umich.edu">dlxs-info@umich.edu</A> </P>
+<H1>Contents</H1>
+<A HREF="#Introduction">Introduction</A> 
+<P><A HREF="#Import data into FileMaker Pro">Import data into FileMaker Pro</A></P>
+<P><A HREF="#Check/prepare required data fie">Check/prepare required data fields</A></P>
+<P><A HREF="#Create configuration file using">Create configuration file using 
+  FileMaker Pro</A></P>
+<UL>
+  <LI><A HREF="#Record Number 1: Record Name">Record Number 1: Record Name</A></LI>
+  <LI><A HREF="#Record Number 2:&#0160;Category Abbre">Record Number 2:&#0160;Category 
+    Abbreviation</A></LI>
+  <LI><A HREF="#Record Number 3:&#0160;Category Metan">Record Number 3:&#0160;Category 
+    Metaname Mapping</A> 
+    <UL>
+      <LI>See also <A HREF="image-dc-guidelines.xml">Guidelines for Mapping to 
+        Core Categories for Image Services</A></LI>
+    </UL>
+  </LI>
+  <LI><A HREF="#RecordNumber4">Record Number 4:&#0160;Category Administrative 
+    Mapping</A></LI>
+</UL>
+<P><A HREF="#Export data from FileMaker Pro">Export data from FileMaker Pro to 
+  HTML table file</A></P>
+<P><A HREF="#Set-up the Work Space on the UNI">Set-up the Work Space on the UNIX 
+  Development Server</A></P>
+<P><A HREF="#Transfer the Exported Files to">Transfer the Exported Files to the 
+  UNIX Development Server</A></P>
+<P><A HREF="#CollectionLevelInformation">Collection Level Information</A></P>
+<P><A HREF="#Transform the Data into SGML">Transform the Data into SGML</A></P>
+
+<DIV2 ID="introduction"> 
+<H2><A NAME="Introduction"></A>Introduction</H2>
+<P>This document describes the process of transforming an image database into 
+  SGML for online access as part of the DLXS Image Class. The assumption is that 
+  there is a database of text records that describe digital image files. The digital 
+  images are typically continuous tone (i.e., grayscale or full color), although 
+  this is not a requirement.</P>
+<P>Technically speaking, these transformation tools, and the transformation process in general, are unsupported by DLXS. They 
+  are provided as one method possible method for transforming data into SGML for 
+  the Image Class. We hope that you find these tools useful, and we would appreciate 
+  knowing the extent to which you use them.</P>
+<P><B><A NAME="Commercial Software Required"></A>Commercial Software Required</B></P>
+<UL>
+  <LI>FileMaker Pro for Mac OS or Microsoft Windows (version 5 or newer)</LI>
+</UL>
+<P><B><A NAME="DLXS Software Required"></A>DLXS Software Required</B></P>
+<P>The following Perl programs are provided with the DLXS distribution of the 
+  Image Class.</P>
+<UL>
+  <LI><A HREF="image-imageloading.xml">imageprep</A></LI>
+  <LI>idb</LI>
+  <LI>clean.newlines.inplace.pl</LI>
+</UL>
+<P><B><A NAME="James Clark Freeware Required"></A>James Clark Freeware Required</B></P>
+<UL>
+  <LI><A HREF="http://www.jclark.com/">sgmlnorm</A></LI>
+</UL>
+<P><B><A NAME="Operating System"></A>Operating System</B></P>
+<UL>
+  <LI>Windows 95/98/NT&#0160;or Mac OS for FileMaker Pro</LI>
+  <LI>Solaris or Linux for all other software programs</LI>
+</UL>
+</DIV2> 
+<DIV2 ID="import">
+<H2><A NAME="Import data into FileMaker Pro"></A>Import data into FileMaker Pro</H2>
+<P>First of all, in most cases it is important to load the image files before 
+  doing the data transformation. It is OK to proceed without doing this first, but 
+  ultimately, it will not be possible to restrict searches to records that absolutely 
+  have images if you haven't loaded the images before transforming the data. Please see <A HREF="image-imageloading.xml">Image Loading</A>.</P>
+<P>Why FileMaker Pro? FileMaker Pro is easy to use, inexpensive, and available 
+  for both Macintosh and Windows. More importantly, it is a good tool to use for 
+  checking to make sure that the data is as expected. It is also good for making 
+  minor alterations to the data, which is sometimes necessary. Also, the data 
+  transformation program (idb) expects data to be in the HTML table format that FileMaker 
+  exports. The table format is simple and can be generated without FileMaker Pro if necessary. A sample can be seen at $DLXSROOT/prep/s/sampleic/sampleic-data.htm.</P>
+<P>Your original data may be in any number of formats including TAB-delimited 
+  ASCII text, Microsoft Access, Microsoft Excel and FileMaker Pro. It is not important 
+  what format is at hand as long as it can be imported into FileMaker Pro.</P>
+<P>So, go ahead, import the data into FileMaker Pro. (Please refer to FileMaker 
+  Pro documentation if detailed guidance is needed.)</P>
+<P><B>Tip:</B>The FileMaker import function requires a FileMaker table to be defined first. FileMaker can also "open" a wide variety of formats, in which case it automatically defines the table structure based on the data file being opened. </P>
+<P><B>Tip:</B> When selecting the file for import into FileMaker, be sure to specify 
+  the format of the file being imported. This typically makes a difference. FileMaker accepts many formats including tab/comma delimited text and Excel.</P>
+</DIV2> <DIV2 ID="check"> 
+<H2><A NAME="Check/prepare required data fie"></A>Check/prepare required data 
+  fields</H2>
+<P>Once the data is imported, confirm that it meets the <A HREF="image-datareqs.xml">minimal 
+  data requirements</A> (please read or review this now).</P>
+</DIV2> <DIV2 ID="configure"> 
+<H2><A NAME="Create configuration file using"></A>Create configuration file using 
+  FileMaker Pro</H2>
+<P>The configuration file is a FileMaker Pro file that has exactly 4 records and 
+  a field corresponding to each of the fields that will be transformed to SGML&#0160;for 
+  online use. The goal here is to create a file that defines the database in a 
+  way that the transformation program can understand. The transformation process&#0160;converts 
+  the database data into SGML. The decisions made in the configuration file directly 
+  affect accessibility of the data, especially the way in which two or more collections 
+  are searched simultaneously and how the results of such a search are displayed.</P>
+<P>For example, if the database has 5 fields named ID, Title, Artist, Description, 
+  and Filename, and all 5 fields are to be transformed to SGML for online use, 
+  then the configuration file must also have 5 fields with the same names. In 
+  some cases only a subset of the database's fields are to be used online, in 
+  which case the configuration file should have fewer fields.</P>
+<P>A great way to start a fresh configuration file is to save a copy of the data file as a clone with no records. This creates an empty database file with the same set of fields as the original data file. Using this method it is important to redefine all of the fields in the configruation database file simply as "text" (i.e., no calculations, auto-entries, or anything else). </P>
+
+<P>Each of the 4 records of the configuration file serves a different purpose 
+  in the transformation process.</P>
+<P>The terms "<B>field</B>" and "<B>category</B>"&#0160;are used synonymously.</P>
+<P>Database fields can be of many different types, including numeric, text, date, 
+  and calculated. Regardless of the original format of the fields, the fields 
+  in the configuration file should all be of the type <B>text</B>.</P>
+<TABLE BORDER="1 CELLPADDING=0">
+  <TBODY> 
+  <TR> 
+    <TD> 
+      <P><B>Record Number</B></P>
+    </TD>
+    <TD> 
+      <P><B>Record Name</B></P>
+    </TD>
+    <TD> 
+      <P><B>Record Purpose</B></P>
+    </TD>
+  </TR>
+  <TR> 
+    <TD> 
+      <P>1</P>
+    </TD>
+    <TD> 
+      <P><B>Category Name</B>(a.k.a. Field Name or Base Name)</P>
+    </TD>
+    <TD> 
+      <P>Supplies the transformation process with the common, unabbreviated, name 
+        of the field.</P>
+    </TD>
+  </TR>
+  <TR> 
+    <TD> 
+      <P >2</P>
+    </TD>
+    <TD> 
+      <P><B>Category Abbreviation</B></P>
+    </TD>
+    <TD> 
+      <P>An abbreviated and unique name for the category.</P>
+    </TD>
+  </TR>
+  <TR> 
+    <TD> 
+      <P >3</P>
+    </TD>
+    <TD> 
+      <P><B>Category Metaname Mapping</B></P>
+    </TD>
+    <TD> 
+      <P>Maps categories to a meta-category, which is used to enable cross-collection 
+        searching.</P>
+    </TD>
+  </TR>
+  <TR> 
+    <TD> 
+      <P >4</P>
+    </TD>
+    <TD> 
+      <P><B>Category Administrative Mapping</B></P>
+    </TD>
+    <TD> 
+      <P>Maps categories to administrative categories for purposes of transformation. 
+        Essentially, this is how the transformation program knows which field 
+        holds image filename references, for example.</P>
+    </TD>
+  </TR>
+  </TBODY> 
+</TABLE>
+<P>Now, in greater detail...</P>
+<P><B><A NAME="Record Number 1: Record Name"></A>Record Number 1: Record Name</B></P>
+<P>Supplies the transformation process with the common, unabbreviated, name of 
+  the field.</P>
+<P>This one is simple; if the field name is "Title", so is the value of the 
+  field. Actually, it is common to use a different field name in the online system.  Historically, database field names are sometimes terse or abbreviated. If 
+  a different or more descriptive name is desired in the online system, this is 
+  the place to do it. Pay attention to case, spaces, and spelling.</P>
+<UL>
+  <LI>Values are required for every field.</LI>
+  <LI>Limit 1 value per field.</LI>
+  <LI>Each field must have a unique value.</LI>
+  <LI>Avoid unnecessary spaces, tabs, returns, etc.</LI>
+</UL>
+<TABLE BORDER="1 CELLPADDING=0">
+  <TBODY> 
+  <TR> 
+    <TH COLSPAN="2"> 
+      <P>Example:&#0160;Record 1 of Configuration File</P>
+    </TH>
+  </TR>
+  <TR> 
+    <TD> 
+      <P><B>Field Name</B></P>
+    </TD>
+    <TD> 
+      <P><B>Field Value</B></P>
+    </TD>
+  </TR>
+  <TR> 
+    <TD> 
+      <P>ID</P>
+    </TD>
+    <TD> 
+      <P>ID</P>
+    </TD>
+  </TR>
+  <TR> 
+    <TD> 
+      <P>Title</P>
+    </TD>
+    <TD> 
+      <P>Title</P>
+    </TD>
+  </TR>
+  <TR> 
+    <TD> 
+      <P>Creator</P>
+    </TD>
+    <TD> 
+      <P>Creator</P>
+    </TD>
+  </TR>
+  <TR> 
+    <TD> 
+      <P>Location</P>
+    </TD>
+    <TD> 
+      <P>Location</P>
+    </TD>
+  </TR>
+  <TR> 
+    <TD> 
+      <P>View</P>
+    </TD>
+    <TD> 
+      <P>View</P>
+    </TD>
+  </TR>
+  <TR> 
+    <TD> 
+      <P>Date Range</P>
+    </TD>
+    <TD> 
+      <P>Date Range</P>
+    </TD>
+  </TR>
+  <TR> 
+    <TD> 
+      <P>Image Filename</P>
+    </TD>
+    <TD> 
+      <P>Image Filename</P>
+    </TD>
+  </TR>
+  </TBODY> 
+</TABLE>
+<P><B><A NAME="Record Number 2: Category Abbre"></A>Record Number 2:&#0160;Category 
+  Abbreviation</B></P>
+<P>An abbreviated and unique name for the category.</P>
+<P>For this example, the name of the database/collection is "French Architecture", 
+  and it's unique abbreviated name is "sampleic" (it used to be "frarch", but has been changed to "sampleic" as a matter of convention.</P>
+<UL>
+  <LI>Values are required for every field.</LI>
+  <LI>Limit 1 value per field.</LI>
+  <LI>Each field must have a unique value.</LI>
+  <LI>The Field Values must follow the case convention (i.e., UPPER.lower)</LI>
+  <LI>Consider carefully the collection abbreviation you choose. It will be carried 
+    throughout the system and will be part of the URL (e.g., http://images.umdl.umich.edu/s/sampleic/).</LI>
+  <LI>Avoid special characters and spaces in the collection abbreviation since 
+    it is currently limited to legal SGML ID characters.</LI>
+</UL>
+<TABLE BORDER="1 CELLPADDING=0">
+  <TBODY> 
+  <TR> 
+    <TH COLSPAN="2"> 
+      <P>Example:&#0160;Record 2 of Configuration File</P>
+    </TH>
+  </TR>
+  <TR> 
+    <TD> 
+      <P><B>Field Name</B></P>
+    </TD>
+    <TD> 
+      <P><B>Field Value</B></P>
+    </TD>
+  </TR>
+  <TR> 
+    <TD> 
+      <P>ID</P>
+    </TD>
+    <TD> 
+      <P>SAMPLEIC.id</P>
+    </TD>
+  </TR>
+  <TR> 
+    <TD> 
+      <P>Title</P>
+    </TD>
+    <TD> 
+      <P>SAMPLEIC.ti</P>
+    </TD>
+  </TR>
+  <TR> 
+    <TD> 
+      <P>Creator</P>
+    </TD>
+    <TD> 
+      <P>SAMPLEIC.cr</P>
+    </TD>
+  </TR>
+  <TR> 
+    <TD> 
+      <P>Location</P>
+    </TD>
+    <TD> 
+      <P>SAMPLEIC.lo</P>
+    </TD>
+  </TR>
+  <TR> 
+    <TD> 
+      <P>View</P>
+    </TD>
+    <TD> 
+      <P>SAMPLEIC.vi</P>
+    </TD>
+  </TR>
+  <TR> 
+    <TD> 
+      <P>Date Range</P>
+    </TD>
+    <TD> 
+      <P>SAMPLEIC.da</P>
+    </TD>
+  </TR>
+  <TR> 
+    <TD> 
+      <P>Image Filename</P>
+    </TD>
+    <TD> 
+      <P>SAMPLEIC.fn</P>
+    </TD>
+  </TR>
+  </TBODY> 
+</TABLE>
+<P><B><A NAME="Record Number 3: Category Metan"></A>Record Number 3:&#0160;Category 
+  Metaname Mapping</B></P>
+<P>This record maps categories to meta-categories, which are used to enable cross-collection 
+  searching. Please see <A HREF="image-dc-guidelines.xml">Guidelines for Mapping 
+  to Core Categories for Image Services</A> for detailed guidance on mapping.</P>
+<UL>
+  <LI>Values are optional, but recommended, for every field.</LI>
+  <LI>Fields may have multiple values, separated by <B>one</B> space.</LI>
+  <LI>Values may be used in multiple fields.</LI>
+</UL>
+
+<TABLE BORDER="1 CELLPADDING=0">
+  <TBODY> 
+  <TR> 
+    <TH COLSPAN="2"> 
+      <P>Example:&#0160;Record 3 of Configuration File</P>
+    </TH>
+  </TR>
+  <TR> 
+    <TD> 
+      <P><B>Field Name</B></P>
+    </TD>
+    <TD> 
+      <P><B>Field Value</B></P>
+    </TD>
+  </TR>
+  <TR> 
+    <TD> 
+      <P>ID</P>
+    </TD>
+    <TD> 
+      <P>DC.id</P>
+    </TD>
+  </TR>
+  <TR> 
+    <TD> 
+      <P>Title</P>
+    </TD>
+    <TD> 
+      <P>DC.ti DC.su DLXS.ma</P>
+    </TD>
+  </TR>
+  <TR> 
+    <TD> 
+      <P>Creator</P>
+    </TD>
+    <TD> 
+      <P>DC.cr DLXS.ma</P>
+    </TD>
+  </TR>
+  <TR> 
+    <TD> 
+      <P>Location</P>
+    </TD>
+    <TD> 
+      <P>DC.de</P>
+    </TD>
+  </TR>
+  <TR> 
+    <TD> 
+      <P>View</P>
+    </TD>
+    <TD> 
+      <P>DC.de</P>
+    </TD>
+  </TR>
+  <TR> 
+    <TD> 
+      <P>Date Range</P>
+    </TD>
+    <TD> 
+      <P>DC.da</P>
+    </TD>
+  </TR>
+  <TR> 
+    <TD> 
+      <P>Image Filename</P>
+    </TD>
+    <TD> 
+      <P></P>
+    </TD>
+  </TR>
+  </TBODY> 
+</TABLE>
+<P>"DC"&#0160;stands for <A HREF="http://purl.oclc.org/dc/">Dublin Core</A>. The 
+  meta-categories are based on Dublin Core categories. "DC.de" is an abbreviation 
+  for Dublin Core Description. Since field/category names vary greatly among collections, 
+  categories are mapped to the common set of meta-categories. When multiple 
+  collections are searched together, searching is done on the meta-categories. 
+  Alternatively, a collection may be searched independently by the collection specific 
+  categories.</P>
+<P>For example, a search across multiple collections using the DC Description 
+  field searches all of the collection specific fields that have been mapped to 
+  DC&#0160;Description. In the case of the above example, that is Location and 
+  View.</P>
+<P>While it is highly recommended that you continue to map fields to the Dublin 
+  Core categories, it is easy to create and use your own metanames if so desired. 
+  Modify the "idb" program to add your metanames and abbreviations to the gGenMetaNamesHash. 
+  Then use your mappings in Record 3 of the configuration file. You will also 
+  need to use CollMgr to add the new mappings to the relevant collection groups.</P>
+<TABLE BORDER="1 CELLPADDING=0">
+  <TBODY> 
+  <TR> 
+    <TH COLSPAN="2"> 
+      <P>Table of Default Metanames</P>
+    </TH>
+  </TR>
+  <TR> 
+    <TD> 
+      <P><B>Metaname Abbreviation</B></P>
+    </TD>
+    <TD> 
+      <P><B>Metaname</B></P>
+    </TD>
+  </TR>
+  <TR> 
+    <TD> 
+      <P>DC.ti</P>
+    </TD>
+    <TD> 
+      <P>Title</P>
+    </TD>
+  </TR>
+  <TR> 
+    <TD> 
+      <P>DC.cr</P>
+    </TD>
+    <TD> 
+      <P>Creator</P>
+    </TD>
+  </TR>
+  <TR> 
+    <TD> 
+      <P>DC.su</P>
+    </TD>
+    <TD> 
+      <P>Subject</P>
+    </TD>
+  </TR>
+  <TR> 
+    <TD> 
+      <P>DC.de</P>
+    </TD>
+    <TD> 
+      <P>Description</P>
+    </TD>
+  </TR>
+  <TR> 
+    <TD> 
+      <P>DC.pu</P>
+    </TD>
+    <TD> 
+      <P>Publisher</P>
+    </TD>
+  </TR>
+  <TR> 
+    <TD> 
+      <P>DC.co</P>
+    </TD>
+    <TD> 
+      <P>Contributors</P>
+    </TD>
+  </TR>
+  <TR> 
+    <TD> 
+      <P>DC.da</P>
+    </TD>
+    <TD> 
+      <P>Date</P>
+    </TD>
+  </TR>
+  <TR> 
+    <TD> 
+      <P>DC.ty</P>
+    </TD>
+    <TD> 
+      <P>Type</P>
+    </TD>
+  </TR>
+  <TR> 
+    <TD> 
+      <P>DC.fo</P>
+    </TD>
+    <TD> 
+      <P>Format</P>
+    </TD>
+  </TR>
+  <TR> 
+    <TD> 
+      <P>DC.id</P>
+    </TD>
+    <TD> 
+      <P>Identifier</P>
+    </TD>
+  </TR>
+  <TR> 
+    <TD> 
+      <P>DC.so</P>
+    </TD>
+    <TD> 
+      <P>Source</P>
+    </TD>
+  </TR>
+  <TR> 
+    <TD> 
+      <P>DC.la</P>
+    </TD>
+    <TD> 
+      <P>Language</P>
+    </TD>
+  </TR>
+  <TR> 
+    <TD> 
+      <P>DC.re</P>
+    </TD>
+    <TD> 
+      <P>Relation</P>
+    </TD>
+  </TR>
+  <TR> 
+    <TD> 
+      <P>DC.co</P>
+    </TD>
+    <TD> 
+      <P>Coverage</P>
+    </TD>
+  </TR>
+  <TR> 
+    <TD> 
+      <P>DC.ri</P>
+    </TD>
+    <TD> 
+      <P>Rights</P>
+    </TD>
+  </TR>
+  <TR> 
+    <TD> 
+      <P>DLXS.ma</P>
+    </TD>
+    <TD> 
+      <P>Main Entry</P>
+    </TD>
+  </TR>
+  <TR> 
+    <TD> 
+      <P>IC.misc</P>
+    </TD>
+    <TD> 
+      <P>Miscellaneous</P>
+    </TD>
+  </TR>
+  </TBODY> 
+</TABLE>
+<P>Please see <A HREF="image-dc-guidelines.xml">Guidelines for Mapping to Core 
+  Categories for Image Services</A> for detailed guidance on mapping. Mapping 
+  is an imperfect art. Mappings are not set in stone, and you may choose to change 
+  them at a later date for a given database.</P>
+<P><B>Main Entry</B></P>
+<P>Notice "DLXS.ma" in the table above. DLXS.ma is used to identify fields that 
+  should be used when displaying results in a cross collection search. It is strongly 
+  recommended that each collection have at least one field mapped to DLXS.ma.</P>
+
+<P> It is especially important to note that 
+  all fields, even those not mapped to a meta-category, will be searched when 
+  the query is not limited to a specific field or fields. 
+</P>
+<P><B><A NAME="RecordNumber4"></A>Record Number 4:&#0160;Category Administrative 
+  Mapping</B></P>
+<P>Maps categories to administrative categories for purposes of transformation 
+  to SGML. Essentially, this is how the transformation program knows which field 
+  holds image filenames, for example.</P>
+<UL>
+  <LI>Fields will often not have values.</LI>
+  <LI>Fields may have multiple values, separated by <B>one</B> space.</LI>
+  <LI>The "IC.fn" and "IC.vi" values may be used in more than one fields, but the other 
+    values may not.</LI>
+  <LI>Field values must follow the case convention (i.e., UPPER.lower)</LI>
+  <LI>Methods for mapping more complicated image structures are now available. 
+    Please see <A HREF="image-imagestructures.xml">Mapping Image Structures</A>.</LI>
+</UL>
+<TABLE BORDER="1 CELLPADDING=0">
+  <TBODY> 
+  <TR> 
+    <TD COLSPAN="2"> 
+      <P>Example:&#0160;Record 4 of Configuration File</P>
+    </TD>
+  </TR>
+  <TR> 
+    <TD> 
+      <P><B>Field Name</B></P>
+    </TD>
+    <TD> 
+      <P><B>Field Value</B></P>
+    </TD>
+  </TR>
+  <TR> 
+    <TD> 
+      <P>ID</P>
+    </TD>
+    <TD> 
+      <P>IC.id</P>
+    </TD>
+  </TR>
+  <TR> 
+    <TD> 
+      <P>Title</P>
+    </TD>
+    <TD> 
+      <P>IC.vi</P>
+    </TD>
+  </TR>
+  <TR> 
+    <TD height="18"> 
+      <P>Creator</P>
+    </TD>
+    <TD height="18"> </TD>
+  </TR>
+  <TR> 
+    <TD> 
+      <P>Location</P>
+    </TD>
+    <TD> 
+      <P>&#0160;</P>
+    </TD>
+  </TR>
+  <TR> 
+    <TD> 
+      <P>View</P>
+    </TD>
+    <TD> 
+      <P>IC.vi</P>
+    </TD>
+  </TR>
+  <TR> 
+    <TD> 
+      <P>Date Range</P>
+    </TD>
+    <TD> </TD>
+  </TR>
+  <TR> 
+    <TD> 
+      <P>Image Filename</P>
+    </TD>
+    <TD> 
+      <P>IC.fn</P>
+    </TD>
+  </TR>
+  </TBODY> 
+</TABLE>
+</DIV2></DIV1>
+<p> </p><DIV1 ID="main"><DIV2 ID="configure">
+<TABLE BORDER="1 CELLPADDING=0">
+  <TBODY> 
+  <TR> 
+    <TD COLSPAN="2"> 
+      <P><B>Table of Default Administrative Names</B></P>
+    </TD>
+  </TR>
+  <TR> 
+    <TD> 
+      <P><B>Admin Name Abbreviation</B></P>
+    </TD>
+    <TD> 
+      <P><B>Admin Name</B></P>
+    </TD>
+  </TR>
+  <TR> 
+    <TD> 
+      <P>IC.id</P>
+    </TD>
+    <TD> 
+      <P>ID</P>
+    </TD>
+  </TR>
+  <TR> 
+    <TD> 
+      <P>IC.vi</P>
+    </TD>
+    <TD> 
+      <P>View/Caption</P>
+    </TD>
+  </TR>
+  <TR> 
+    <TD> 
+      <P>IC.fn</P>
+    </TD>
+    <TD> 
+      <P>Image Filename</P>
+    </TD>
+  </TR>
+  <TR> 
+    <TD> 
+      <P>DLXS.ea</P>
+    </TD>
+    <TD> 
+      <P>Entry Auth (please see <A HREF="image-accesscontrol.xml">Image Class 
+        Access Control</A>)</P>
+    </TD>
+  </TR>
+  </TBODY> 
+</TABLE>
+<P>The administrative mappings are most important to the process of transforming 
+  the descriptive data from a fielded structure into&#0160;SGML. The program that 
+  transforms the data into SGML is informed of the following by the administrative 
+  mappings:</P>
+<OL>
+  <LI>which of the database fields holds the data that should be used as the unique 
+    identifier for each record;</LI>
+  <LI>which field holds image filename;</LI>
+  <LI>which field holds captions or view information.</LI>
+</OL>
+<P>This is a good time to review <A HREF="image-datareqs.xml">minimal data requirements</A>.</P>
+<P>Additionally, it is important to know that there are significant limitations 
+  on the characters that are allowed within SGML IDs. Unique record IDs in image 
+  databases can take many different forms and include many different characters. 
+  The Image Class transformation process intelligently filters illegal SGML ID 
+  characters into legal logical representations of the character in order to ensure 
+  legal SGML IDs without hassle. For example, ampersand characters that occur 
+  in ID data are changed to "-amp-". This can at times result in very long and very 
+  ugly SGML IDs. The unfiltered version of the the ID remains searchable and displayable 
+  since it is also encoded in a non-ID field in the SGML. If data is encountered 
+  that has illegal ID characters that are not filtered properly, contact dlxs-info@umich.edu 
+  for guidance.</P>
+<P><B>Tips for successful mapping of administrative categories:</B></P>
+<UL>
+  <LI>You must map one and only one field to IC.id</LI>
+  <LI>Image files are not required of a database, so it is <B>not</B> a requirement 
+    to map IC.fn or IC.vi to fields.</LI>
+  <LI>If a database <B>does</B> have image files, then it is essential to map 
+    IC.fn to the field that holds image file names.</LI>
+  <LI>It is sometimes desirable to use more than one database field for views/captions 
+    (i.e. IC.vi). Some databases have a very obvious "view" field, and other times a combination of fields provide the best view/caption. Exemplary data 
+    is "view of north facade."</LI>
+  <LI>Even in cases where there is only one image per record, it is a good idea 
+    to map at least one field to IC.vi, even if it is just the filename field.</LI>
+</UL>
+</DIV2> <DIV2 ID="export"> 
+<H2><A NAME="Export data from FileMaker Pro"></A>Export data from FileMaker Pro 
+  to HTML table file</H2>
+<P>Once the data are checked and prepared and the configuration file is ready, 
+  then it is time to export the data from the data file and the configuration 
+  file into HTML files. Later, the transformation program will read the HTML 
+  file and create the SGML&#0160;that will used by the access system.</P>
+<P>Make sure that all of the records to be exported are in FileMaker's current 
+  "found set". The "Show All Records" command does the trick unless there are 
+  some records you want to have excluded. Filemaker only exports the records that are in 
+  the current found set. This is also the time to sort the records. The order 
+  of export will be the default sort order for search results online.</P>
+<P>It is required that you name the exported database file like this: <B>collid-data.htm</B></P>
+<P>And the exported configuration file like this: <B>collid-config.htm</B></P>
+<P>Using the "French Architecture" collection example, these would be:</P>
+<UL>
+  <LI>sampleic-data.htm</LI>
+  <LI>sampleic-config.htm</LI>
+</UL>
+<B>Tips for successful data export:</B> 
+<UL>
+  <LI>The number and order of fields exported to the data and config files <B>do 
+    not </B> need to match. The requirement is that the Filemaker field names 
+    in the configuration file and the data file must match exactly. The transformation 
+    program (idb) links the configuration information to the data by the field 
+    name. Data fields without configuration fields will be excluded from the SGML.</LI>
+  <LI>Occasionally when you direct FileMaker to "Move All" fields to the export 
+    list, it excludes fields that have access restrictions. If the excluded fields 
+    are desired, try selecting and moving each individually to the export list.</LI>
+</UL>
+</DIV2> <DIV2 ID="unix"> 
+<H2><A NAME="Set-up the Work Space on the UNI"></A>Set-up the Work Space on the 
+  UNIX Development Server</H2>
+<P>The next steps in the transformation process are done in the UNIX environment.</P>
+
+<P>There is a <A HREF="http://docs.umdl.umich.edu/arch/general/directory_conventions.xml">standard 
+  directory structure</A> for storing collection specific files.</P>
+
+<P>All SGML&#0160;transformations happen in the <CODE>$DLXSROOT/prep</CODE> directory 
+  path. For example the sampleic collection example used earlier in this document 
+  is at $DLXSROOT/prep/s/sampleic<BR/>
+  Where "s" is the first letter of the collection abbreviation "sampleic".</P>
+<P>If the collection is new, it will be necessary to create the collection directory, 
+  and possibly the directory above if there are not yet any collections with the 
+  same first letter of the collection id. For example, if the "sampleic" collection 
+  is new, and there are no other collections that begin with "s", then both the 
+  "s"&#0160;directory and the "sampleic" directory will need to be created.</P>
+</DIV2> <DIV2 ID="transfer"> 
+<H2><A NAME="Transfer the Exported Files to"></A>Transfer the Exported Files to 
+  the UNIX Development Server</H2>
+<P>The collid-data.htm and collid-conf.htm files need to be transferred to 
+  the UNIX development server for transformation to SGML. SCP is commonly 
+  the protocol used for making the transfer. (FTP may also be used, though at Michigan we prefer SCP since it is encrypted.)</P>
+<P>As noted above, transfer the files into the $DLXSROOT/prep path, and in to the 
+  collection specific directory. For example,</P>
+<PRE>$DLXSROOT/prep/s/sampleic</PRE>
+<B>Tips for successful file transfer:</B> 
+<UL>
+  <LI>If using FTP, make sure to transfer the files in <B>ascii</B> mode, not binary. This is 
+    really important. (It is not an issue with SCP.)</LI>
+</UL>
+<P>With the development space set-up and the files transferred in to place, our example 
+  "sampleic" directory would look like this.</P>
+<PRE>
+   $DLXSROOT/prep/s/sampleic/sampleic-data.htm<BR/>
+   $DLXSROOT/prep/s/sampleic/sampleic-config.htm</PRE>
+</DIV2> <DIV2 ID="collectionlevelinformation"> 
+<H2><A NAME="CollectionLevelInformation"></A>Collection Level Information</H2>
+<P>The name of the database, the source of the database, and item level access 
+  restrictions need to be established in a text file called the Collection Level Information File. The file is required, and 
+  must be located and named like this...</P>
+<PRE>$DLXSROOT/prep/c/collabr/collid-info.txt</PRE>
+<P>The file needs just one line with four fields that are delimited by the "#" 
+  character. Using the sampleic collection as an example again you would have...</P>
+<PRE>$DLXSROOT/prep/s/sampleic/sampleic-info.txt</PRE>
+<P>... and the contents of the file might be something like...</P>
+<PRE>French Architecture#Images by Rebecca Price#SAMPLEIC</PRE>
+<P>To fully understand the purpose and importance of the third field of the Collection 
+  Level Information file, please see <A HREF="image-accesstable.xml">Image Class 
+  Access Control Summary and Examples Table</A> as well as Image Class Collection 
+  <A HREF="image-accesscontrol.xml">Access Restrictions</A>.</P>
+<P>Legal values for the fourth field are "summary", "detail" and "both". If the field 
+  is excluded, the default is "both".</P>
+<P>To take advantage of this functionality it is also necessary to properly prepare 
+  and configure the image file fields in the data. Please see <A HREF="#RecordNumber4">Record 
+  Number 4: Category Administrative Mapping</A>.</P>
+<P>As an example, consider the situation where there is an overview image of 
+  a building, and 20 additional detail images, and all of these images together 
+  are associated with a single record. By specifying the fourth field as "summary", 
+  a search that retrieves the record will display the summary image as the lone 
+  result for the record. If the fourth field is "detail", the 20 detail images will display, abut not the overview or summary image. If the fourth field is "both", then 21 results will appear, 
+  all linked to the single record. In any case, all of the images related to an 
+  image are linked from the record if the HTML template includes a "relatedviews" 
+  place holder.</P>
+</DIV2> <DIV2 ID="transform"> 
+<H2><A NAME="Transform the Data into SGML"></A>Transform the Data into SGML</H2>
+<P>The "idb" program is used to control the transformation, validation, and normalization 
+  of the data.</P>
+<UL>
+  <LI>$DLXSROOT/bin/i/image/idb</LI>
+  <LI>$DLXSROOT/bin/i/image/clean.new.lines.in.place.pl</LI>
+  <LI><A HREF="http://www.jclark.com/">sgmlnorm</A></LI>
+</UL>
+<P>sgmlnorm is not distributed with the DLXS Image Class. </P>
+
+<UL>
+  <LI>Obtain sgmlnorm from <A HREF="http://www.jclark.com/">http://www.jclark.com/</A></LI>
+</UL>
+
+<P>To execute the <B>idb</B> program to transform the sampleic collection data 
+  to sgml, do this...</P>
+<PRE>$DLXSROOT/bin/i/image/idb transform sampleic</PRE>
+<P>For testing purposes it is possible to transform a limited number of records 
+  instead of the entire database. For example, to process just the first 10 records 
+  of a collection, try the following...</P>
+<PRE>$DLXSROOT/bin/i/image/idb transform sampleic 10</PRE>
+<P>When the program is done running, it will present a report. The report, along 
+  with several other reports on the process, are saved in the prep directory and 
+  are useful for troubleshooting.</P>
+<P>Most importantly, the process creates an SGML file.</P>
+<P>The SGML&#0160;file uses the following name convention...</P>
+<PRE>ic.collid.unnorm.sgm</PRE>
+<P>For the "sampleic" collection, that would be...</P>
+<PRE>ic.sampleic.unnorm.sgm</PRE>
+<P><B><A NAME="Viewing and Assessing the SGML"></A>Viewing and Assessing the SGML</B></P>
+<P>You can view the file with the UNIX&#0160;command "less" (if your system doesn't 
+  have the program "less", try "more"). For example,</P>
+<PRE>less ic.sampleic.unnorm.sgm</PRE>
+<P>You can also use "less" and "more" to view the other files output by the transformation 
+  process.</P>
+<P>Things to look for in the SGML:</P>
+<P>Do ENTRY elements have IDs?</P>
+<PRE>&lt;ENTRY ENTRYID="<B>x-34</B>" COLLID="MCsampleic" CA="sampleic"&gt;</PRE>
+<P>If not, then check that the ID field (IC.id) is properly configured and 
+  that the data has values in the ID field.</P>
+<P>Are there appropriate Entry Auth values?</P>
+<PRE>&lt;ENTRYAUTH MALLOW="<B>SAMPLEIC</B>"&gt;</PRE>
+<P>If not, then check the Collection Level Information file (collid-info.txt) and the configuration 
+  of the Entry Auth field (DLXS.ea) if there is one.</P>
+<P>Do all of the attributes of the ISTRUCT have values? Does the M attribute have 
+  an image file name when it should? Does the MS attribute have a "P" value in 
+  cases where an image file is present on the disk and an "N" value when the image 
+  file is not present?</P>
+<PRE>&lt;ISTRUCT ISENTRYID="s-sampleic-34-1" STID="1" FACE="FRONT" STTY="SUMM" X="1" Y="1" MT="IMAGE" MS="<B>P</B>" M="<B>0034</B>"&gt;distant view from Avranches&lt;/ISTRUCT&gt;</PRE>
+<P>If not, check the configuration of all image filename (IC.fn) and image view (IC.vi) 
+  fields. Has the <A HREF="image-imageloading.xml">imageprep</A> program been 
+  run to create an index directory for the images, and is the index directory 
+  located on the machine that the transformation is being done on?</P>
+<P>Are field values present?</P>
+<PRE>&lt;C CN="SAMPLEIC.lo" CM="DC.cr"&gt;<B>Normandy, France</B>&lt;/C&gt;</PRE>
+<P>Empty field instances are not included in the SGML, but if the field is not 
+  empty and not showing in the SGML, check the configuration of the field. Make 
+  sure that the category abbreviation (e.g., SAMPLEIC.lo) was not assigned to more than 
+  one field.</P>
+<B><A NAME="Normalization and Cleaning of t"></A>Normalization and Cleaning of 
+the SGML</B> 
+<P>After transformation of data to SGML, the SGML must be normalized, validated, 
+  and have newline characters removed. The SGML must be checked against the Image 
+  Class DTD (SGML Document Type Definition) to make sure the SGML is valid. At 
+  the same time, the SGML is normalized, which means that the tagging is made 
+  as consistent as possible within the SGML file. In a final step, all new line 
+  characters are removed, resulting in a single line SGML file. These processes 
+  together are referred to "normalization", though again it includes validation 
+  and cleaning too.</P>
+<P>The <B>idb</B> command is used as follows to normalize the "sampleic" collection 
+  SGML.</P>
+<PRE>$DLXSROOT/bin/i/image/idb norm sampleic</PRE>
+<P>The output is a new, normalized and validated, SGML file in the form...</P>
+<PRE>ic.collid.norm.sgm </PRE>
+<P>The normalization process may also generate errors. In the majority of instances, 
+  the errors are caused by illegal characters in the SGML. On the one hand, it 
+  is often possible to ignore illegal characters and successfully build an index 
+  and begin searching. On the other hand, it is worthwhile to fix the illegal 
+  characters so that they do not interfere with searching and the display of results 
+  to the user.</P>
+<P>There are two basic ways to handle illegal characters in the Image Class:</P>
+<OL>
+  <LI>Edit the source data so that all characters are ISO 8859 Latin 1 Compliant.</LI>
+  <LI>Create a character conversion file that the transformation program can use 
+    to convert specific characters to a compliant substitute.</LI>
+</OL>
+<P>A nice feature of FileMaker Pro's HTML export function is that it normalizes 
+  decimal character value differences that are due to differences among fonts. 
+  The HTML has HTML decimal character entities, which the transformation program 
+  easily converts to legal decimal values in the SGML. Beyond this it is still 
+  necessary to convert non ISO 8859 Latin 1 Compliant characters to compliant 
+  equivalents or suitable replacements with the character conversion file.</P>
+<P>The hardest part about creating a character conversion file is identifying 
+  the illegal characters and specifying suitable replacements. This topic is discussed 
+  in detail in the document <A HREF="image-charconversion.xml">Image Class Character 
+  Set Conversion</A>.</P>
+</DIV2> </DIV1> 
+</BODY>
+</DLPSDOC>

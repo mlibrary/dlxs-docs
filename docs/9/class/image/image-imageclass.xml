@@ -1,0 +1,622 @@
+<?xml version="1.0"?>
+
+<!-- SPO Editorial Services                  -->
+<!-- automatically-generated XML header file -->
+
+<?xml-stylesheet href="../../../pre11-dlxsdocs.xsl" type="text/xsl"?>
+<!DOCTYPE DLPSDOC PUBLIC "-//UM-DLPS//DTD DLPS Publications//EN" "http://docs.umdl.umich.edu/dlps/docs/dlpsdocs.dtd">
+<DLPSDOC>
+<TITLE>The Image Class</TITLE>
+<HEADER>
+<JOURNAL>DLXS Documentation</JOURNAL>
+<PUBDATE>2002-03-13 11:27:57 EST</PUBDATE>
+<AUTH1>Weise, John</AUTH1>
+<AUTH2></AUTH2>
+<DOCTITLE>The Image Class</DOCTITLE>
+<VOL>class</VOL>
+<ISS>image</ISS>
+<FILE>dlxsdocs-image-imageclass</FILE>
+</HEADER>
+
+
+<BODY>
+<BHEAD>The Image Class</BHEAD>
+<DIV1 ID="main">
+
+<P><A HREF="http://images.umdl.umich.edu/">Image
+Services</A><BR/>
+<A HREF="http://www.umdl.umich.edu/">Digital
+Library Production Service</A><BR/>
+University of Michigan<BR/>
+<A HREF="http://www.umdl.umich.edu/dlxs/">Digital
+Library eXtension Service </A><BR/>
+<A HREF="mailto:dlxs-info@umich.edu">dlxs-info@umich.edu</A>
+</P>
+
+
+<UL>
+   <LI><A HREF="#Abstract">Abstract</A></LI>
+   
+   <LI><A HREF="#Description">Description</A>
+   
+   <UL>
+      <LI><A HREF="#Basic Characteristics">Basic
+      Characteristics</A></LI>
+      
+      <LI><A HREF="#General Characteristics">General
+      Characteristics</A>
+      
+      <UL>
+         <LI><A HREF="#Typical Sources of Data">Typical
+         Sources of Data</A></LI>
+         
+         <LI><A HREF="#Typical Applications of the Cla">Typical
+         Applications of the Class</A></LI>
+         
+         <LI><A HREF="#Behaviors of the Image Class">Behaviors
+         of the Image Class</A></LI>
+      </UL>
+      </LI>
+      
+      <LI><A HREF="#General Parameters">General
+      Parameters</A></LI>
+      
+      <LI><A HREF="#Dynamics">Dynamics</A></LI>
+      
+      <LI><A HREF="#Formal Data Definition">Formal
+      Data Definition</A>
+      
+      <UL>
+         <LI><A HREF="#Descriptive Metadata (text)">Descriptive
+         Metadata (text)</A></LI>
+         
+         <LI><A HREF="#Image Data">Image
+         Data</A></LI>
+      </UL>
+      </LI>
+      
+      <LI><A HREF="#Representative Resource(s)">Representative
+      Resource(s)</A></LI>
+   </UL>
+   </LI>
+</UL>
+
+<DIV2 ID="abstract">
+<H2><A NAME="Abstract"></A>Abstract</H2>
+
+<P>The Image Class is a system of tools and methods for providing
+web-based access to diverse image databases. The Image Class was
+created at the University of Michigan in the Digital Library
+Production Service. At the University of Michigan, the Image Class
+&#91; <A HREF="http://images.umdl.umich.edu/">http://images.umdl.umich.edu</A>
+&#93; provides broad access to a wide range of library, museum,
+archive, visual resources, and special collections. The Image Class
+is specifically geared for continuous tone images. Continuous tone
+images are image files commonly with a bit depth of 24 for color, and
+8 for grayscale. The demands for capture of the features of the
+source materials dictate the bit depth of the image. For example, the
+complex features of a papyri and art images cannot be captured with
+bitonal methods, and are thus captured at a high bit-depth and high
+resolution. Strictly speaking, an image with a bit depth greater than
+1 can be considered continous tone. Continous tone images usually
+come with associated bibliographic or descriptive information, as
+well as more complex administrative metadata. Currently, the
+associated descriptive information is the primary means of locating
+these images in the Image Class, but browsing mechanisms are also
+made available to users. Descriptive metadata also varies from
+minimal--e.g., only a title--to rich, with complex vocabularies for
+subject and theme analysis. Of special importance in the Image Class
+are methods for navigating high resolution images (e.g., pan and
+zoom) and methods for using images in a variety of contexts (e.g.,
+comparing images or creating small collections for study).</P>
+</DIV2>
+</DIV1>
+<DIV1 ID="description">
+<H1><A NAME="Description"></A>Description</H1>
+
+<DIV2 ID="basic">
+<H2><A NAME="Basic Characteristics"></A>Basic Characteristics</H2>
+
+<P>The Image Class serves two main purposes.</P>
+
+<OL>
+   <LI>Online access to continuous tone images (i.e., full color and
+   grayscale)</LI>
+   
+   <LI>Online access to image databases</LI>
+</OL>
+
+<P>The Image Class provides advanced funtionality for access to
+continous tone images. Continous tone images are typically have 24
+bits of color or 8 bits of gray values. Advanced functionality
+includes the abilty to view the entire image at a variety of
+resolutions, and panning and zooming.</P>
+
+<P>The Image Class federates image databases at the point of access.
+Access minimally includes search and retrieval of descriptive text
+records and display of digital images associated with the record.
+</P>
+</DIV2>
+<DIV2 ID="general">
+<H2><A NAME="General Characteristics"></A>General
+Characteristics</H2>
+
+<UL>
+   <LI>Text based search and retrieval of images</LI>
+   
+   <LI>Searching across multiple collections simultaneously</LI>
+   
+   <LI>Searching of each collection independently</LI>
+   
+   <LI>Useful display functions and customizable interface
+   layouts</LI>
+   
+   <LI>Advanced image display functionality, including panning and
+   zooming</LI>
+   
+   <LI>Bookmarkable records and images</LI>
+   
+   <LI>Minimal descriptive data requirements</LI>
+   
+   <LI>Reasonable data submission process for database managers</LI>
+   
+   <LI>Simple data transformation process for online deployment</LI>
+   
+   <LI>Uses a single data model and shared middleware for all
+   databases in the system</LI>
+   
+   <LI>Storage of multiple image resolutions in a single file
+   format</LI>
+   
+   <LI>Assimilates data from practically any management system</LI>
+   
+   <LI>Access restrictions at collection and image levels</LI>
+</UL>
+
+<P>At the University of Michigan, the Image Class access system is
+administered by the Digital Library Production Service, Image
+Services. Image Services receives data (descriptive metadata and
+digital images) on a periodic basis from a variety of organizations
+on and off campus, and fully handles the process of putting the data
+online in a production level environment. Image Services has
+technical expertise and resources for providing reliable online
+access to image collections. This is not the only model for
+implementing the Image Class, but it is one that has worked.
+</P>
+<P>The Image Class provides no functionality for creating and
+managing image databases. Database management is handled by separate
+systems under the control of the organizations that have provided
+collections. For example, the University of Michigan Museum of Art
+uses Embark as a database management system. The Museum provides
+public access through Image Services and the Image Class.
+</P>
+
+<H2><A NAME="Typical Sources of Data"></A>Typical Sources of
+Data</H2>
+
+<P>The following sources of data have influenced the process defining
+the Image Class. Other sources are possible.</P>
+
+<UL>
+   <LI>Libraries: photograph collections, manuscripts, papyrus</LI>
+   
+   <LI>Museums:&#0160;art, archaeological</LI>
+   
+   <LI>Visual Resources:&#0160;slide libraries, slide vendors</LI>
+</UL>
+
+
+<H2><A NAME="Typical Applications of the Cla"></A>Typical
+Applications of the Class</H2>
+
+<UL>
+   <LI>Campus database access</LI>
+   
+   <LI>Public database access</LI>
+</UL>
+
+<H2><A NAME="Behaviors of the Image Class"></A>Behaviors of the Image
+Class</H2>
+
+<UL>
+   <LI><A HREF="http://images.umdl.umich.edu/">Cross collection
+   searching</A>; any combination of collections</LI>
+   
+   <LI><A HREF="http://images.umdl.umich.edu/m/musart/">Collection
+   specific searching</A></LI>
+   
+   <LI><A HREF="http://images.umdl.umich.edu/m/musart/simple.html">Simple</A>
+   and <A HREF="http://images.umdl.umich.edu/m/musart/boolean.html">Boolean</A>
+   searching</LI>
+   
+   <LI>Results viewing as <A HREF="http://images.umdl.umich.edu/cgi/i/image/image-idx?c=bhl;type=simple;xc=1;q1=auto;rgn1=All+Categories;med=1;view=thumbnail;thsz=12;txsz=50;slsz=1;sstrt=1">thumbnail</A>,
+   <A HREF="http://images.umdl.umich.edu/cgi/i/image/image-idx?c=bhl;type=simple;xc=1;q1=auto;rgn1=All+Categories;med=1;view=text;thsz=12;txsz=50;slsz=1;sstrt=1">text</A>,
+   or <A HREF="http://images.umdl.umich.edu/cgi/i/image/image-idx?c=bhl;type=simple;xc=1;q1=auto;rgn1=All+Categories;med=1;view=slide;thsz=12;txsz=50;slsz=1;sstrt=1">slideshow</A></LI>
+   
+   <LI><A HREF="http://images.umdl.umich.edu/cgi/i/image/image-idx?lasttype=simple;view=entry;subview=detail;cc=bhl;entryid=X-bl000208;viewid=1;sstrt=1;hits=3;q1=auto;rgn1=All+Categories;c=bhl;med=1;xc=1;thsz=12;txsz=50;slsz=1">Full
+   record view</A></LI>
+   <LI><A HREF="http://images.umdl.umich.edu/cgi/i/image/image-idx?lasttype=boolean;view=entry;subview=detail;cc=apis;entryid=X-1637;viewid=1;sstrt=1;hits=5;q1=2810;op2=And;op3=And;rgn1=All+Categories;rgn2=All+Categories;rgn3=All+Categories;c=apis;thsz=12;txsz=100;slsz=1">Display of complex image structures</A> (Please scroll through entire page.)</LI>
+   <LI><A HREF="http://images.umdl.umich.edu/cgi/i/image/image-idx?sstrt=1;q1=auto;rgn1=All+Categories;c=bhl;med=1;xc=1;thsz=12;txsz=50;slsz=1;subview=getsid;lasttype=simple;view=entry;viewid=1;entryid=X-bl000208;cc=bhl;ox=1447;oy=294;lastres=1;quality=small;res=1;image.x=266;image.y=202">Zooming
+   and panning</A> for image display; integrated into template
+   scheme; no special client software needed</LI>
+   
+   <LI><A HREF="http://images.umdl.umich.edu/cgi/i/image/image-idx?lasttype=simple;view=entry;subview=detail;cc=blake;entryid=X-1;viewid=1;sstrt=1;hits=54;q1=blake;rgn1=All+Categories;c=blake;med=1;thsz=12;txsz=55;slsz=1">Flipping</A>
+   among pages/images associated with a record</LI>
+   
+   <LI><A HREF="http://images.umdl.umich.edu/k/kma/compare.html">Comparison</A>
+   of two images from two searches</LI>
+   
+   <LI>Browsing, either by <A HREF="http://images.umdl.umich.edu/cgi/i/image/image-idx?type=simple;q1=captain;rgn1=All+Categories;c=bhl;med=1;thsz=12;txsz=50;slsz=1;sstrt=1;view=thumb">a
+   canned query</A> embedded in a link, or with a the "<A HREF="http://www.picturesofrecord-wired.com/bin/por-idx?page=browseimgframe">word
+   wheel</A>." (note that the word wheel is not
+   currently an integral component of the Image Class)</LI>
+</UL>
+</DIV2>
+
+
+<DIV2 ID="generalparams">
+<H2><A NAME="General Parameters"></A>General Parameters</H2>
+
+<P>Campus image collections, such as those found in museums,
+libraries, and departments, are spread across campus, and managed
+independently and differently. Each collection is unique, from the
+nature of the images, to the cataloging methods, to the management
+system, and providing public access to catalogs and images requires
+an understanding of the similarities and disparities that exist. No
+amount of technology will fully resolve the differences among data,
+and only an appropriate and practical application of technology and
+the sharing of documentation methods, will make a broad service image
+access system work well to serve instructional and research needs.
+The Image Class federates collections at the point of access in order
+to best support the diversity of collections and management
+practices.</P>
+
+<P>The Image Class supports descriptive text databases that are built
+of structured records and fields. Continuous tone image files are
+typically associated with the database, and referenced by filename
+data maintained in one of the fields. Within this basic structure
+there are many variations. Digital images are actually not a
+requirement, though if they are available, they must be continuos
+tone. The basic variations are as follows:</P>
+
+<UL>
+   <LI>zero digital images per record</LI>
+   
+   <LI>one digital image per record</LI>
+   
+   <LI>multiple digital images per record</LI>
+</UL>
+
+<TABLE BORDER="1">
+<TBODY>
+   <TR>
+      <TH>
+         <P>Images Per Record</P>
+      </TH>
+      <TH>
+         <P>Example</P>
+      </TH>
+   </TR>
+   <TR>
+      <TD>
+         <P>0</P>
+      </TD>
+      <TD>
+         <P><A HREF="http://images.umdl.umich.edu/a/afroammugroup/"><B>African American Music Collection</B></A></P>
+      </TD>
+   </TR>
+   <TR>
+      <TD>
+         <P>1</P>
+      </TD>
+      <TD>
+         <P><A HREF="http://images.umdl.umich.edu/b/bhl/"><B>Bentley
+         Historical Library</B></A></P>
+      </TD>
+   </TR>
+   <TR>
+      <TD>
+         <P>Multiple</P>
+      </TD>
+      <TD>
+         <P><B>Kelsey Museum of Archaeology - </B><A HREF="http://images.umdl.umich.edu/k/kma/"><B>Egyptian
+         Amulets</B></A></P>
+      </TD>
+   </TR>
+   <TR>
+      <TD>
+         <P>Combination</P>
+      </TD>
+      <TD>
+         <P><A HREF="http://images.umdl.umich.edu/m/musart/"><B>Museum
+         of Art</B></A></P>
+      </TD>
+   </TR>
+</TBODY>
+</TABLE>
+
+<P>A database may have any combination of the above. Once deployed in
+the Image Class, it is possible to represent each individually in a search
+results set, even though they are from a single record. When the record
+is viewed, links to all referenced images are displayed. For example,
+a <A HREF="http://images.umdl.umich.edu/cgi/i/image/image-idx?type=simple;q1=4110;cat1=All+Categories;med=1;thsz=12;txsz=50;slsz=1;c=kma;sstrt=1;res=thumbnail">search
+for "4110"</A> in the Kelsey Amulet collection comes up with 2 results, both from one record.
+</P>
+<P>It has been discovered through experience with multiple datasets
+from internal and external sources that data structures vary only
+slightly (as depicted in the table above), but that the content in
+the structures varies tremendously. As an example, compare the
+<A HREF="http://images.umdl.umich.edu/cgi/i/image/image-idx?view=entry;subview=detail;cc=musart;entryid=X-1895.17;viewid=1">artist</A>
+field in the Museum of Art database with the <A HREF="http://images.umdl.umich.edu/cgi/i/image/image-idx?view=entry;subview=detail;cc=blake;entryid=X-1;viewid=4">creator</A>
+field in William Blake's <I>Songs of Innocence and Experience</I>.
+</P>
+<P>The disparities are not much of a problem until searching across
+databases is attempted. It is a considerable achievement that the
+Image Class supports cross-collection searching, and that it does so
+without forcing low level normalization of the data. All database
+specific fields are available to the user for search and display when
+doing a collection specific search. In the cross-collection search
+all of the fields are available, but only through a common set of
+generalized field mappings (thought of as high level normalization).
+For example, a <A HREF="http://images.umdl.umich.edu/cgi/i/image/image-idx?type=simple;view=thumb;sstrt=1;q1=blake;rgn1=Creator;c=blake;c=musart;xc=1;thsz=12;txsz=50;slsz=1">cross-collection
+search on a common field</A> called "creator"&#0160;searches the
+artist field of the Museum of Art database and the creator field of
+the Blake database.
+</P>
+<P>The Image Class by default uses a basic version of <A HREF="http://purl.oclc.org/dc/">Dublin
+Core</A> &#91; <A HREF="http://purl.oclc.org/dc/">http://purl.oclc.org/dc/</A>
+&#93;as the set of common fields for cross-collection searching. Any
+common set of fields may be used in addition to or in place of Dublin
+Core. It is easy to envision the situation where subsets of
+collections use core field sets that are suitable to their subject.
+For instance, databases from slide libraries might be drawn together
+with the <A HREF="http://www.oberlin.edu/~art/vra/core.html">VRA
+Core</A> &#91; <A HREF="http://www.oberlin.edu/~art/vra/core.html">http://www.oberlin.edu/~art/vra/core.html</A>
+&#93; (Visual Resources Association).</P>
+
+<P>It is possible to represent complex image relationships in the Image Class. For example, a summary image with several additional images as detailed views. Or a matrix of images that together represent something larger. The <A HREF="http://images.umdl.umich.edu/a/apis/">Advanced Papyrological Information System</A> makes good use of these features.</P> 
+
+<P>Continuos tone images serve clearly
+different purposes than bitonal images. Bitonal images are typically
+used for text page images and other high contrast imaging situations
+where gradations among the visual elements of the page are not
+essential to the intellectual value of the content represented. For
+example, in most cases the intellectual value of a typeset page from
+a book can be fully captured in a bitonal image. The purpose is met
+if the text is readable. A color photograph, however, will typically
+lose valuable information if the full range of tones is not captured
+in the digital image. Given this, continuos tone images and bitonal
+images, need vastly different functionality for viewing by users.
+Bitonal images generally need to be flipped like the pages of a book,
+and continuos tone images need to be evaluated in a glance for
+relevance or inspected at the greatest detail. The generalizations
+are obvious, and there are already situations in the Image Class
+where continuos tone images are flipped like the pages of a book.
+But, the Image Class specializes in serving the most popular uses of
+continuos tone images by providing pages of thumbnails for making
+sweeping relevance decisions, and powerful panning and zooming
+functionality for inspecting the finest details of an image.
+</P>
+<P>Digital images are retrieved by the unique record identifiers of
+the text database, and never by filename. Filenames, moreso than
+record identifiers, have potential to change over time. The Image
+Class implementation strives to provide reliable, long term, access
+to specific records and images.
+</P>
+<P>The flexibility of the Image Class to assimilate databases and
+that same time maintain unique characteristics of each is perhaps
+it's greatest strength. The advanced capabilities for viewing
+continuous tone images may be just as important. The Image Class
+successfully handles databases from a variety of domains including
+art, art history, architecture, archaeology, archives, and journals.
+The baseline requirement is only that there is some degree of item
+level description-- minimally a unique identifier.
+</P>
+</DIV2>
+<DIV2 ID="dynamics">
+<H2><A NAME="Dynamics"></A>Dynamics</H2>
+
+<P>The data structure and behaviors of the Image Class best serve the
+functional requirements of single images (e.g., photographs), and
+multiple images that provide multiple views of single objects (e.g.,
+views of a sculpture). Multiple images from a bound manuscript or
+illustrated journal are also handled well, especially when a
+text-based counterpart exists (e.g., <A HREF="http://www.hti.umich.edu/h/harpersweekly/">Harper's
+Weekly</A> &#91; <A HREF="http://www.hti.umich.edu/h/harpersweekly/">http://www.hti.umich.edu/h/harpersweekly/</A>
+&#93;). At this time the Image Class has basic functionality for
+<A HREF="http://images.umdl.umich.edu/cgi/i/image/image-idx?lasttype=simple;view=entry;subview=detail;cc=harpersweekly;entryid=X-1865;viewid=1;sstrt=1;hits=836;q1=a;rgn1=All+Categories;c=harpersweekly;med=1;thsz=12;txsz=55;slsz=1">page
+flipping</A>, which is more often handled in a text system. If in the
+future a considerable amount of content emerges that requires both
+continuous tone images and book-like functionality, it may be
+sensible to establish a new class to better serve the homogeneity and
+distinctiveness of the content in the Image Class and in the spin-off
+class.
+</P>
+<P>Digital video and audio also have potential to stretch the Image
+Class in unsuitable ways. The Image Class was actually designed with
+the notion that it might some day accommodate video and audio in the
+future. It is easy to envision using the Image Class as a starting
+place for these media types. It also seems likely that the time-based
+characteristics of video and audio would instantiate a new class
+based on the existing flexible fielded text searching with added
+time-based functionality. Consideration also needs to be given to the
+question of whether it is appropriate to search still images, video,
+and audio together. Similarly, methods of searching still images by
+visual characteristics are evolving and it may soon be desirable to
+complement the text searching with such features. This does not
+necessarily put a tension on the Image Class as it is, but might
+increase the likelihood of splitting away other media types.
+</P>
+
+</DIV2>
+<DIV2 ID="datadef">
+<H2><A NAME="Formal Data Definition"></A>Formal Data Definition</H2>
+
+<DIV3>
+<H3><A NAME="Descriptive Metadata (text)"></A>Descriptive Metadata
+(text)</H3>
+
+<P>The Image Class relies on a single Standard Generalized Markup Language (SGML)&#0160;<A HREF="image-dtd.xml">Document 
+  Type Definition (DTD)</A> to represent all collections in the class. Typically 
+  each collection has descriptive text in a database of records and fields. The 
+  fielded data is exported from the database to a simple ASCII text format. The 
+  fielded data is then encoded with the SGML tags defined by the DTD giving it 
+  a clearly defined and parsable structure. The SGML&#0160;is then indexed and 
+  made searchable on the Web by the Image Class middleware.</P>
+
+<P>In the <A HREF="#General Parameters">General Parameters</A> section the variety 
+  of record to image relationships were described. The structure imposed by the 
+  Image Class DTD normalizes these relationships in order to optimize search and 
+  retrieval performance. Descriptive data is replicated within the SGML in order 
+  to create a 1 to 1 relationship between the descriptive data provided by the 
+  original text record and all of the image files associated with the record. 
+  The original hierarchical relationship (one record with many images) are maintained 
+  through additional tagging and structure that wraps the multiple images together 
+  in an itemized fashion. A more detailed breakdown, with examples, is available 
+  in the document <A HREF="image-dtd.xml">Image Class DTD Description</A>.</P>
+
+<P>The outstanding strength of the Image Class DTD&#0160;is the way
+that it encodes the full set of collection specific data categories
+while mapping the categories to a more general set of categories
+commonly applied to all collections of the Class. This topic is
+covered fully in the <A HREF="#General Parameters">General
+Parameters</A> section of this document.</P>
+</DIV3>
+<DIV3>
+<H3><A NAME="Image Data"></A>Image Data</H3>
+
+<P>The Image data in the Image Class is continous tone, most often
+meaning 24-bits of color or 8-bits of grayscale pixel data.</P>
+
+<P>Thumbnail size images used in the display of search results are
+stored on the server as static JPEG&#0160;(JFIF&#0160;format with lossy
+JPEG compression) files. The GIF format is also supported.</P>
+
+<P>The larger, display, version of an image may be stored on the
+server as a static JPEG (JFIF format with lossy JPEG compression)
+file in two resolutions (large and medium), or in a SID&#0160;format (<A HREF="http://www.lizardtech.com">LizardTech's
+MrSID</A> &#91; <A HREF="http://www.lizardtech.com">http://www.lizardtech.com</A>
+&#93; format with lossy wavelet compression) file with multiple
+levels of resolution inherently available through the compression
+scheme. The SID format is a far superior option with compression
+ratios of 20 to 1 easily achieved with minimal image degradation and
+multiple resolutions by default. Since the SID format is not
+supported internally by web browsers, the Image Class middleware
+extracts image data from the SID format on the fly and delivers it to
+the browser in the JPEG format. MrSID allows the extraction of any
+portion of any predefined resolution level from an image, enabling
+panning, zooming, and cropping functionality in the user interface.
+</P>
+</DIV3>
+</DIV2>
+<DIV2 ID="resources">
+<H2><A NAME="Representative Resource(s)"></A>Representative
+Resource(s)</H2>
+
+<P>The University of Michigan, Museum of Art, The Kelsey Museum of
+Archaeology's Registry Database, and William Blake's <I>Songs of
+Innocence and Experience</I> are resources implemented in the Image
+Class that represent well the depth and breadth of intended use.</P>
+
+<P><A HREF="http://images.umdl.umich.edu/m/musart/">The University of
+Michigan, Museum of Art</A><BR/>
+&#91; <A HREF="http://images.umdl.umich.edu/m/musart/">http://images.umdl.umich.edu/m/musart/</A>
+&#93;</P>
+
+<P>A comprehensive and growing catalog of the Museum's holdings, the
+implementation of this database in the Image Class is the best all
+around example. There are over 12,000 text records, and over 10,000
+digital images. Most records have <A HREF="http://images.umdl.umich.edu/cgi/i/image/image-idx?type=detail;cc=musart;entryid=X-1935.28;viewid=1;sstrt=2;hits=448;q1=water;cat1=All%20Categories;thsz=12;txsz=50;slsz=1;c=musart">one
+digital image</A>, some records have <A HREF="http://images.umdl.umich.edu/cgi/i/image/image-idx?type=detail;cc=musart;entryid=X-1942.6;viewid=2;sstrt=2;hits=10;q1=processional%20cross;cat1=All%20Categories;thsz=12;txsz=50;slsz=1;c=musart">multiple
+images</A>, and a far smaller number do not yet have digital images.
+In the mid-1990's the Museum photographed and digitized the entire
+collection. At the same time they migrated their collection
+management database to the DCI&#0160;Embark system. The Embark system
+provides good internal management functionality for curators,
+including the ability to view the digital images. Image Services
+provides public access to the collection via the Image Class. The
+digital images provided by the Museum are of very high quality and
+make good use of the advanced image viewing functionality of the
+Class. The Museum of Art data is updated about three times a year,
+but as often as monthly. Additionally, it is worth noting that the
+Museum restricts access outside of the University to some large
+versions of images due to copyright restrictions.</P>
+
+<P><A HREF="http://images.umdl.umich.edu/k/kelsey/">The Kelsey Museum
+of Archaeology's Registry Database</A><BR/>
+&#91; <A HREF="http://images.umdl.umich.edu/k/kelsey/">http://images.umdl.umich.edu/k/kelsey/</A>
+&#93;</P>
+
+<P>The Kelsey manages a database of over 90,000 records that
+describes the physical artifacts held by the museum. Currently there
+are <A HREF="http://images.umdl.umich.edu/cgi/i/image/image-idx?type=detail;cc=kelsey;entryid=X-0000.00.0001;viewid=1;sstrt=1;hits=3561;q1=lamp;cat1=All%20Categories;txsz=50;slsz=1;c=kelsey">about 200
+digital images</A> associated with the database. The Kelsey uses
+FileMaker Pro, setup with a relational structure that includes
+several tables. Previous to providing public access through Image
+Services, the Kelsey provided restricted access to the database with
+FileMaker's database sharing capabilities on an under powered
+Macintosh. The database is now available to the world through the
+Image Class. The Kelsey database is updated in the Image Class
+quarterly. Recently 200 images were digitized by Image Services. The
+images are the primary images used by two UM&#0160;courses, and are available in conjunction with the Kelseyt entity entity's Registry Database.
+</P>
+<P><A HREF="http://images.umdl.umich.edu/b/blake/">William Blake's
+<I>Songs of Innocence and Experience</I></A><I><BR/>
+</I>&#91; <A HREF="http://images.umdl.umich.edu/b/blake/">http://images.umdl.umich.edu/b/blake/</A>
+&#93;</P>
+
+<P>Blake's <I>Songs</I> is an illustrated manuscript that is
+preferably accessed by <A HREF="http://www.hti.umich.edu/b/blake/">searching
+the full text</A>. The digital images are color, and of high enough
+quality to merit use of the Image Class advanced image viewing
+functionality. Blake's <I>Songs</I>, implemented as a "collection" in
+the Image Class, has only <A HREF="http://images.umdl.umich.edu/cgi/i/image/image-idx?type=detail;cc=blake;entryid=X-1;viewid=1;sstrt=1;hits=54;q1=blake;cat1=All%20Categories;thsz=12;txsz=55;slsz=1;med=1;c=blake">one
+bibliographic-like record</A> with all of the manuscript's images associated with it. The record
+also has descriptive title's for each image, taken from the text of
+each page. It is valuable to have Blake's Songs in the Image Class so
+that users searching across collections have an opportunity to
+discover the illustrated manuscript pages along with works by Blake
+in other collections. Furthermore, the searchable text which is
+online on a separate machine in a separate system, has links to the
+images in the Image Class, and vice-versa. The links are handled by
+the DLPS&#0160;ID Resolver, which is a simple mechanism for resolving
+a unique identifier into a URL. This interoperability provides the
+user with the best functions for viewing images and the best
+functions for retrieving text, and delegates functionality in an
+appropriate manner.
+</P>
+<P>The decision process for inclusion of content in the Image Class
+is roughly based on the following:
+</P>
+<UL>
+   <LI>Digital images are, or potentially would be in cases where
+   digital images are not yet available, continuous tone (i.e., color
+   or grayscale)</LI>
+   
+   <LI>Descriptive text is structured in fields, such as in a
+   database</LI>
+   
+   <LI>The database describes, directly in the case of museums, or
+   indirectly in the case of visual resources collections, images,
+   objects, artifacts, or specimens, that contain visual
+   information.</LI>
+   
+   <LI>The campus and/or world community would benefit from access to
+   the information.</LI>
+</UL>
+
+<P>These are, at best, general guidelines for decision making based
+on the current state of the Image Class implementation at the
+University of Michigan. There is plenty of room to diversify the
+content, or deploy additional instantiations of the Class to serve
+another content area.
+</P>
+
+
+
+<P>jweise@umich.edu</P>
+
+</DIV2>
+</DIV1>
+</BODY>
+</DLPSDOC>

@@ -1,0 +1,79 @@
+<html>
+  <head>
+    <title>Newspaper Clip Image Access Mechanisms</title>
+    <link href="../../dlxsdocs.css" rel="stylesheet" type="text/css">
+  </head>         
+  <body>
+    <div class="pageTitle">Newspaper Clip Image Access Mechanisms</div>
+    
+    <h1>Introduction</h1>
+    <p>This document describes the mechanisms and programs used by DLXS for accessing and viewing images of newspaper clips and their containing page image that correspond to pages in TextClass documents. It also explains the particular metadata requirements that exist for this
+      functionality for this to be possible.  As of this writing, this mechanism is still in the prototype stage and will continue to advance as the defining XML text data evolves.  It is currently based on XML designed by the Apex Corporation as a demonstration for the British Library.</p>
+    <ul>
+      <li><a href="#GeneralInfo">General Information</a> 
+        <ul>
+          <li><a href="ivimageconversion.html">Itemviewer Image Conversion</a> </li>
+        </ul>
+      </li>
+      <li><a href="#divelements">The DIV1 and DIV2 Elements and Clip Image Metadata</a> </li>
+      <li><a href="#clipviewTable">Populating the ArticleClips Table</a></li>
+    </ul>
+    <h1><a name="GeneralInfo"></a>General Information</h1>
+    <p>Newspaper collections are typically accompanied by page and article clip images in addition to the text content of the papers.  The mechanism for viewing these image is the
+      <span class="command">pageviewer-idx</span> CGI program which calls upon subclasses to handle the specifics of newspapers.
+      In order  to link from the XML text to the corresponding page or article clip image, this CGI expects that page images are stored in directories based on 
+      <ol>
+        <li>the DLXSROOT value</li>
+        <li>the object directory recorded in the collection manager</li>
+        <li>the unique identifier assigned to the XML text and stored in the IDNO element</li>
+      </ol>
+      In these respects, the Clipviewer is identical to the Pageviewer. However, 
+      in addition, DIV1 XML elements that wrap articles are associated with containing pages using rows in the <a href="articleclipsschema.html"><code>ArticleClips</code></a> database table.  Note this table is a prototype and is not normalized. Each row lists the clip image file name, its sequence in the XML text, the page number (if any) specified on the containing page, the sequence of the containing page in the XML text, the page image file name.</p>
+    <p><span class="command">pageviewer-idx</span> connects to the database and
+      retrieves the name and location of the clip image file from the
+      ArticleClips table. <span class="command">pageviewer-idx</span> then decides
+      how to deliver the page. If the stored file format is different from the requested
+      format as recorded in the collection manager (e.g., stored as
+      tiff and requested as gif), a separate program, tif2web, is started
+      to convert the image on the fly. <em>For more information
+        about how pageviewer-idx does its work in deciding how
+        to deliver the page image, see <a href="ivimageconversion.html">Itemviewer
+          Image Conversion </a>. </em></p>
+    <h1><a name="divelements"></a>The DIV1 and DIV2 Elements and Clip Image Metadata</h1>
+    <p>The DIV1 element in the XML data, represents an article.  It has this form in Text Class:
+      
+    </p><pre>&lt;DIV1 NODE="0FFO.1711.1012:1" TYPE="News" ID="0FFO-1711-OCT12-001-001"></pre>
+    <p>
+      The attributes are:  
+    </p>
+    <ul>
+      <li>NODE: The document IDNO and sequence of the DIV1</li>
+      <li>TYPE: Information derived from the source XML, e.g. "News" or "Classified Advertising"</li>
+      <li>ID: The name article identifer.</li>
+    </ul>
+    
+    </p><pre>&lt;DIV2 NODE="0FFO.1711.1012:1.1" TYPE="clip" REF="0FFO-1711-OCT12-001-001-001" PGREF="0FFO-1711-OCT12-001" PGSEQ="1" SEQ="1" N="1"></pre>
+    <p>
+      Note that an article can consist of more that one clip and that the clips for a give article may apan more that one page. The attributes are:  
+    </p>
+    <ul>
+      <li>NODE: The document IDNO and sequence of the DIV2</li>
+      <li>TYPE: clip</li>
+      <li>REF: The name of the clip image file</li>
+      <li>PGREF: The name of the page image file containg this clip</li>
+      <li>PGSEQ: The sequence of the page containg this clip</li>
+      <li>SEQ: The sequence of the clip in the XML data.</li>
+      <li>N: article identifer.</li>
+    </ul>
+<p>
+      The information in thses tag allows the Text Class middleware to create a URL to call the pageviewer-idx program with the parameters necessary to retrieve and display the corresponding page image. pageviewer-idx, when viewing clips and their pages, uses the ArticleClips table of the dlxs metadata database to do so.
+    </p>
+    
+    <h1><a name="clipviewTable"></a>Populating the ArticleClips Table</h1>
+    <p>The ArticleClips table rows for a particular XML newspaper text can be automatically populated provided that the metadata required is stored as attributes in the DIV1 and DIV2 elements described above.  On the distribution CD-ROM, in the directory DLXSROOT/bin/t/text/, you will find a perl script named newsdtd2mysql.pl.  When run at the commandline with the name of the XML file, it will populate the ArticleClips table.  For example, </p>
+    <pre>DLXSROOT/bin/t/text/newsdtd2mysql.pl DLXSROOT/obj/b/bldemo/bldemo.xml</pre>
+   
+
+  </body>
+  
+</html>

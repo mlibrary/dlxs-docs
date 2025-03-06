@@ -1,0 +1,1366 @@
+<?xml version="1.0"?>
+
+<!-- SPO Editorial Services                  -->
+<!-- automatically-generated XML header file -->
+
+<?xml-stylesheet href="../../pre11-dlxsdocs.xsl" type="text/xsl"?>
+<!DOCTYPE DLPSDOC PUBLIC "-//UM-DLPS//DTD DLPS Publications//EN" "http://docs.umdl.umich.edu/dlps/docs/dlpsdocs.dtd">
+<DLPSDOC>
+<TITLE>DLXS Collection Manager field descriptions</TITLE>
+<HEADER>
+<JOURNAL>DLXS Documentation</JOURNAL>
+<PUBDATE>2002-06-24 11:27:21 EDT</PUBDATE>
+<AUTH1>Stoeffler, Matt</AUTH1>
+<AUTH2></AUTH2>
+<DOCTITLE>DLXS Collection Manager field descriptions</DOCTITLE>
+<VOL>collmeta</VOL>
+<ISS></ISS>
+<FILE>dlxsdocs-dlxs-collmgr-fields</FILE>
+</HEADER>
+<BODY>
+   <BHEAD>Collection Manager (collmgr) Field Descriptions</BHEAD> 
+<DIV1 ID="main">
+<TABLE CELLPADDING="2" CELLSPACING="0" WIDTH="100%">
+<TBODY>  
+<TR> 
+    <TD ALIGN="LEFT"><A NAME="collid" ID="collid"></A> 
+      <P>  </P>
+      <SPAN CLASS="normalfont"><B>collid</B></SPAN></TD>
+  </TR>
+  <TR> 
+    <TD ALIGN="LEFT" VALIGN="TOP"><SPAN CLASS="normalfont"><I>required</I><BR />
+      <I>value/format:</I>string</SPAN><BR />
+      <I>class: </I>all 
+      <P>The unique ID string used for the collection. Usually corresponds to 
+        the directory name holding the collection files.</P>
+      <P>  </P>
+    </TD>
+  </TR>
+  <TR> 
+    <TD ALIGN="LEFT"><A NAME="collname" ID="collname"></A> 
+      <P>  </P>
+      <SPAN CLASS="normalfont"><B>collname</B></SPAN></TD>
+  </TR>
+  <TR> 
+    <TD ALIGN="LEFT" VALIGN="TOP"><SPAN CLASS="normalfont"><I>required</I><BR />
+      <I>value/format:</I>string</SPAN><BR />
+      <I>class: </I>all 
+      <P>The collection name as it will appear on the cross-collection results 
+        lists, in the collection picker (sorted alphabetically), and on the home page for the collection.</P>
+      <P>  </P>
+    </TD>
+  </TR>
+  <TR> 
+    <TD ALIGN="LEFT"><A NAME="contactlink" ID="contactlink"></A> 
+      <P>  </P>
+      <SPAN CLASS="normalfont"><B>contactlink</B></SPAN></TD>
+  </TR>
+  <TR> 
+    <TD ALIGN="LEFT" VALIGN="TOP"><SPAN CLASS="normalfont"><I>optional</I><BR />
+      <I>value/format:</I>string</SPAN><BR />
+      <I>class: </I>all 
+      <P>For constructing the contact mailto link; contains the content of the 
+        HREF attribute of the A element (e.g., "mailto:hti-info@umich.edu/")</P>
+      <P>  </P>
+    </TD>
+  </TR>
+  <TR> 
+    <TD ALIGN="LEFT"><A NAME="contacttext" ID="contacttext"></A> 
+      <P>  </P>
+      <SPAN CLASS="normalfont"><B>contacttext</B></SPAN></TD>
+  </TR>
+  <TR> 
+    <TD ALIGN="LEFT" VALIGN="TOP"><SPAN CLASS="normalfont"><I>optional</I><BR />
+      <I>value/format:</I>string</SPAN><BR />
+      <I>class: </I>all 
+      <P>For constructing the contact mailto link; contains the content of the 
+        A element that will appear as the link text (e.g. "hti-info@umich.edu/").</P>
+      <P>  </P>
+    </TD>
+  </TR> 
+ <TR> 
+    <TD ALIGN="LEFT"><A NAME="orglink" ID="orglink"></A> 
+      <P>  </P>
+      <SPAN CLASS="normalfont"><B>orglink</B></SPAN></TD>
+  </TR>
+  <TR> 
+    <TD ALIGN="LEFT" VALIGN="TOP"><SPAN CLASS="normalfont"><I>optional</I><BR />
+      <I>value/format:</I>string</SPAN><BR />
+      <I>class: </I>all 
+      <P>For constructing the organization mailto link; contains the content of the 
+        HREF attribute of the A element (e.g., "mailtoorginfo@umich.edu/")</P>
+      <P>  </P>
+    </TD>
+  </TR>
+  <TR> 
+    <TD ALIGN="LEFT"><A NAME="orgtext" ID="orgtext"></A> 
+      <P>  </P>
+      <SPAN CLASS="normalfont"><B>orgtext</B></SPAN></TD>
+  </TR>
+  <TR> 
+    <TD ALIGN="LEFT" VALIGN="TOP"><SPAN CLASS="normalfont"><I>optional</I><BR />
+      <I>value/format:</I>string</SPAN><BR />
+      <I>class: </I>all 
+      <P>For constructing the organization mailto link; contains the content of the 
+        A element that will appear as the link text (e.g. "org-info@umich.edu/").</P>
+      <P>  </P>
+    </TD>
+  </TR>
+ <TR> 
+    <TD ALIGN="LEFT"><A NAME="homesite" ID="homesite"></A> 
+      <P>  </P>
+      <SPAN CLASS="normalfont"><B>homesite</B></SPAN></TD>
+  </TR>
+  <TR> 
+    <TD ALIGN="LEFT" VALIGN="TOP"><SPAN CLASS="normalfont"><I>required</I><BR />
+      <I>value/format:</I>string</SPAN><BR />
+      <I>class: </I>text, bib
+      <P>The URL for the host webserver hosting the middleware. (e.g. "http//www.hti.umich.edu/")</P>
+      <P>  </P>
+    </TD>
+  </TR>
+  <TR> 
+    <TD ALIGN="LEFT"><A NAME="host" ID="host"></A> 
+      <P>  </P>
+      <SPAN CLASS="normalfont"><B>host</B></SPAN></TD>
+  </TR>
+  <TR> 
+    <TD ALIGN="LEFT" VALIGN="TOP"><SPAN CLASS="normalfont"><I>required</I><BR />
+      <I>value/format:</I>string</SPAN><BR />
+      <I>class: </I>all 
+      <P>The host name for the machine hosting the collection data and data indexes. 
+        This is usually the same host hosting the middleware. </P>
+      <P>The value should agree with the value of the HTTP_HOST environment variable 
+        set by a webserver running on that machine. (e.g., "www.hti.umich.edu/")</P>
+    </TD>
+  </TR>
+  <TR> 
+    <TD ALIGN="LEFT"><A NAME="dd" ID="dd"></A> 
+      <P>  </P>
+      <SPAN CLASS="normalfont"><B>dd</B></SPAN></TD>
+  </TR>
+  <TR> 
+    <TD ALIGN="LEFT" VALIGN="TOP"><SPAN CLASS="normalfont"><I>required</I><BR />
+      <I>value/format: </I>array</SPAN><BR />
+      <I>class:</I> all 
+      <P><B>bib, image: </B> A list of one or more XPAT .dd files for the collection.  Their location is specified by the dddir field. </P>
+      <P><B>text: </B>A list of one or more  XPAT dd files for the collection specified as full paths relative to DLXSROOT..</P>
+    </TD>
+  </TR>
+  <TR> 
+    <TD ALIGN="LEFT"><A NAME="dddir" ID="dddir"></A> 
+      <P>  </P>
+      <SPAN CLASS="normalfont"><B>dddir</B></SPAN></TD>
+  </TR>
+  <TR> 
+    <TD ALIGN="LEFT" VALIGN="TOP"><SPAN CLASS="normalfont"><I>required</I><BR />
+      <I>value/format: </I>string</SPAN><BR />
+      <I>class:</I> bib, image 
+      <P>The directory containing the XPAT dd file or files (specified  in the dd field) for the collection. </P>
+    </TD>
+  </TR>
+  <TR> 
+    <TD ALIGN="LEFT"><A NAME="ignoreon" ID="ignoreon"></A> 
+      <P>  </P>
+      <SPAN CLASS="normalfont"><B>ignoreon</B></SPAN></TD>
+  </TR>
+  <TR> 
+    <TD ALIGN="LEFT" VALIGN="TOP"><SPAN CLASS="normalfont"><I>optional</I><BR />
+      <I>value/format:</I>string</SPAN><BR />
+      <I>class: </I>all 
+      <P>The name of a single machine you don't want this collection to appear on, 
+        if you are running the middleware on multiple servers.</P>
+      <P>  </P>
+    </TD>
+  </TR>
+  <TR> 
+    <TD ALIGN="LEFT"><A NAME="locale" ID="locale"></A> 
+      <P>  </P>
+      <SPAN CLASS="normalfont"><B>locale</B></SPAN></TD>
+  </TR>
+  <TR> 
+    <TD ALIGN="LEFT" VALIGN="TOP"><SPAN CLASS="normalfont"><I>optional</I><BR />
+      <I>value/format:</I>string</SPAN><BR />
+      <I>class: </I>text 
+      <P>POSIX standard locale values, used for sorting of words with 8-bit characters. 
+      </P>
+      <P>If not supplied, the locale for sorting defaults to the locale 
+        of the webserver running the middleware. If a collection is predominantly 
+        French, the locale value would be 'fr'. For more information about locales, 
+        type "locale -a" at the prompt of any Unix machine.</P>
+    </TD>
+  </TR>
+  <TR> 
+    <TD ALIGN="LEFT"><A NAME="map" ID="map"></A> 
+      <P>  </P>
+      <SPAN CLASS="normalfont"><B>map</B></SPAN></TD>
+  </TR>
+  <TR> 
+    <TD ALIGN="LEFT" VALIGN="TOP"><SPAN CLASS="normalfont"><I>required</I><BR />
+      <I>value/format:</I>string</SPAN><BR />
+      <I>class: </I>all 
+      <P>The location of the TerminologyMapper map file for the collection.</P>
+      <P>  </P>
+    </TD>
+  </TR>
+  <TR> 
+    <TD ALIGN="LEFT"><A NAME="objdir" ID="objdir"></A> 
+      <P>  </P>
+      <SPAN CLASS="normalfont"><B>objdir</B></SPAN></TD>
+  </TR>
+  <TR> 
+    <TD ALIGN="LEFT" VALIGN="TOP"><SPAN CLASS="normalfont"><I>required</I><BR />
+      <I>value/format:</I>string</SPAN><BR />
+      <I>class: </I>text, bib
+      <P>The directory where text/image objects are stored. Only necessary for 
+        collections.</P>
+      <P>  </P>
+    </TD>
+  </TR>
+  <TR> 
+    <TD ALIGN="LEFT"><A NAME="port" ID="port"></A> 
+      <P>  </P>
+      <SPAN CLASS="normalfont"><B>port</B></SPAN></TD>
+  </TR>
+  <TR> 
+    <TD ALIGN="LEFT" VALIGN="TOP"><SPAN CLASS="normalfont"><I>optional</I><BR />
+      <I>value/format:</I>number</SPAN><BR />
+      <I>class: </I>all 
+      <P>The access port for the XPAT daemon on the machine identified in "host" 
+        above. Only necessary for collections where data and indexes are on a different machine than the middleware (CGI program).</P>
+      <P>  </P>
+    </TD>
+  </TR>
+  <TR> 
+    <TD ALIGN="LEFT"><A NAME="browseable" ID="browseable"></A> 
+      <P>  </P>
+      <SPAN CLASS="normalfont"><B>browseable</B></SPAN></TD>
+  </TR>
+  <TR> 
+    <TD ALIGN="LEFT" VALIGN="TOP"><SPAN CLASS="normalfont"><I>optional</I><BR />
+      <I>value/format:</I>string</SPAN><BR />
+      <I>class: </I>all 
+      <P>The field takes "yes" or "no" as a value. If "yes" 
+        the navbar browse link will appear and if clicked, browse.tpl will be 
+        served from the collection-specific web dir.</P>
+      <P>  </P>
+    </TD>
+  </TR>
+<TR> 
+    <TD ALIGN="LEFT"><A NAME="webdir" ID="webdir"></A> 
+      <P>  </P>
+      <SPAN CLASS="normalfont"><B>webdir</B></SPAN></TD>
+  </TR>
+  <TR> 
+    <TD ALIGN="LEFT" VALIGN="TOP"><SPAN CLASS="normalfont"><I>required</I><BR />
+      <I>value/format:</I>string</SPAN><BR />
+      <I>class: </I>all 
+      <P>The directory path relative to DLXSROOT for the collection (usually in the form 
+        /c/collid).</P>
+      <P>  </P>
+    </TD>
+  </TR>
+  <TR> 
+    <TD ALIGN="LEFT"><A NAME="wwdd" ID="wwdd"></A> 
+      <P>  </P>
+      <SPAN CLASS="normalfont"><B>wwdd</B></SPAN></TD>
+  </TR>
+  <TR> 
+    <TD ALIGN="LEFT" VALIGN="TOP"><SPAN CLASS="normalfont"><I>optional</I><BR />
+      <I>value/format:</I>string</SPAN><BR />
+      <I>class: </I>text 
+      <P>The location of the XPAT data dictionary for the collection word wheel/word 
+        index, if there is one.</P>
+      <P>  </P>
+    </TD>
+  </TR>
+  <TR> 
+    <TD ALIGN="LEFT"><A NAME="extendedname" ID="extendedname"></A> 
+      <P>  </P>
+      <SPAN CLASS="normalfont"><B>extendedname</B></SPAN></TD>
+  </TR>
+  <TR> 
+    <TD ALIGN="LEFT" VALIGN="TOP"><SPAN CLASS="normalfont"><I>required</I><BR />
+      <I>value/format:</I>string </SPAN><BR />
+      <I>class: </I>bib 
+      <P>If a value other than default is supplied for the extendedname, the value 
+        will appear on individual search pages (e.g., simple or advanced) above 
+        the search input boxes. </P>
+      <P>  </P>
+    </TD>
+  </TR>
+  <TR> 
+    <TD ALIGN="LEFT"><A NAME="minmaxyearend" ID="minmaxyearend"></A> 
+      <P>  </P>
+      <SPAN CLASS="normalfont"><B>minmaxyearend</B></SPAN></TD>
+  </TR>
+  <TR> 
+    <TD ALIGN="LEFT" VALIGN="TOP"><SPAN CLASS="normalfont"><I>required</I><BR />
+      <I>value/format:</I>number </SPAN><BR />
+      <I>class: </I>bib 
+      <P>The maximum valid year value to be used to check user input for date searches. </P>
+      <P>  </P>
+    </TD>
+  </TR>
+  <TR> 
+    <TD ALIGN="LEFT"><A NAME="minmaxyearinc" ID="minmaxyearinc"></A> 
+      <P>  </P>
+      <SPAN CLASS="normalfont"><B>minmaxyearinc</B></SPAN></TD>
+  </TR>
+  <TR> 
+    <TD ALIGN="LEFT" VALIGN="TOP"><SPAN CLASS="normalfont"><I>optional</I><BR />
+      <I>value/format:</I>number </SPAN><BR />
+      <I>class: </I>bib 
+      <P>The year increment value to be used for date searches. </P>
+      <P>  </P>
+    </TD>
+  </TR>
+  <TR> 
+    <TD ALIGN="LEFT"><A NAME="minmaxyearstart" ID="minmaxyearstart"></A> 
+      <P>  </P>
+      <SPAN CLASS="normalfont"><B>minmaxyearstart</B></SPAN></TD>
+  </TR>
+  <TR> 
+    <TD ALIGN="LEFT" VALIGN="TOP"><SPAN CLASS="normalfont"><I>required</I><BR />
+      <I>value/format:</I>number </SPAN><BR />
+      <I>class: </I>bib 
+      <P>The minimum valid year value to be used to check user input for date searches. </P>
+      <P>  </P>
+    </TD>
+  </TR>
+  <TR> 
+    <TD ALIGN="LEFT"><A NAME="primaryhref" ID="primaryhref"></A> 
+      <P>  </P>
+      <SPAN CLASS="normalfont"><B>primaryhref</B></SPAN></TD>
+  </TR>
+  <TR> 
+    <TD ALIGN="LEFT" VALIGN="TOP"><SPAN CLASS="normalfont"><I>optional</I><BR />
+      <I>value/format:</I>string </SPAN><BR />
+      <I>class: </I>bib 
+      <P>The primarytitle can be presented as a link. If a value other than default 
+        appears in the database, the template renders that value as a link. (See primarytitle)</P>
+      <P>  </P>
+    </TD>
+  </TR>
+  <TR> 
+    <TD ALIGN="LEFT"><A NAME="primarytitle" ID="primarytitle"></A> 
+      <P>  </P>
+      <SPAN CLASS="normalfont"><B>primarytitle</B></SPAN></TD>
+  </TR>
+  <TR> 
+    <TD ALIGN="LEFT" VALIGN="TOP"><SPAN CLASS="normalfont"><I>required</I><BR />
+      <I>value/format:</I>value/format: string</SPAN><BR />
+      <I>class: </I>bib 
+      <P>The first title (or graphical banner) that appears at the top of the 
+        initial web page. Text strings must be preceded by "text:" and graphical 
+        banners must be preceded by "graphic:". The template and database permit 
+        either a textual title or a graphical banner, but not both.  (See primaryhref)</P>
+      <P>  </P>
+    </TD>
+  </TR>
+  <TR> 
+    <TD ALIGN="LEFT"><A NAME="secondarytitle" ID="secondarytitle"></A> 
+      <P>  </P>
+      <SPAN CLASS="normalfont"><B>secondarytitle</B></SPAN></TD>
+  </TR>
+  <TR> 
+    <TD ALIGN="LEFT" VALIGN="TOP"><SPAN CLASS="normalfont"><I>required</I><BR />
+      <I>value/format:</I>string </SPAN><BR />
+      <I>class: </I>bib 
+      <P>A textual second title, appearing below the primarytitle. If the value 
+        default appears, no secondary title is displayed. </P>
+      <P>  </P>
+    </TD>
+  </TR>
+  <TR> 
+    <TD ALIGN="LEFT"><A NAME="banner" ID="banner"></A> 
+      <P>  </P>
+      <SPAN CLASS="normalfont"><B>banner</B></SPAN></TD>
+  </TR>
+  <TR> 
+    <TD ALIGN="LEFT" VALIGN="TOP"><SPAN CLASS="normalfont"><I>required</I><BR />
+      <I>value/format:</I>string </SPAN><BR />
+      <I>class: </I>image 
+      <P>Often the same as collname, but used in the header of pages. May be specified 
+        as text, or as a graphic (e.g., image:bhlbanner.gif). Graphic file must 
+        be in $DLXSROOT/web/[c/collid]/graphics. The banner for cross collection 
+        display is configured in imageclass.cfg (in cgi dir).</P>
+      <P>  </P>
+    </TD>
+  </TR>
+  <TR> 
+    <TD ALIGN="LEFT"><A NAME="briefcollname" ID="briefcollname"></A> 
+      <P>  </P>
+      <SPAN CLASS="normalfont"><B>briefcollname</B></SPAN></TD>
+  </TR>
+  <TR> 
+    <TD ALIGN="LEFT" VALIGN="TOP"><SPAN CLASS="normalfont"><I>required</I><BR />
+      <I>value/format:</I>string </SPAN><BR />
+      <I>class: </I>image 
+      <P>A brief version of the collection name. Used for display beneath thumbnail 
+        images in results view.</P>
+      <P>  </P>
+    </TD>
+  </TR>
+  <TR> 
+    <TD ALIGN="LEFT"><A NAME="brwsimg" ID="brwsimg"></A> 
+      <P>  </P>
+      <SPAN CLASS="normalfont"><B>brwsimg</B></SPAN></TD>
+  </TR>
+  <TR> 
+    <TD ALIGN="LEFT" VALIGN="TOP"><SPAN CLASS="normalfont"><I>required</I><BR />
+      <I>value/format:</I>string </SPAN><BR />
+      <I>class: </I>image 
+      <P>Used to configure the "browse images" link on collection specific index pages. Enter "default" to retrieve all records with images. Leave the field blank to omit the link completely. Enter any search term (e.g., "snow") to retrieve sample records that match the term. </P>
+      <P>  </P>
+    </TD>
+  </TR>
+  <TR> 
+    <TD ALIGN="LEFT"><A NAME="brwsrec" ID="brwsrec"></A> 
+      <P>  </P>
+      <SPAN CLASS="normalfont"><B>brwsrec</B></SPAN></TD>
+  </TR>
+  <TR> 
+    <TD ALIGN="LEFT" VALIGN="TOP"><SPAN CLASS="normalfont"><I>required</I><BR />
+      <I>value/format:</I>string </SPAN><BR />
+      <I>class: </I>image 
+      <P>Used to configure the "browse records" link on collection specific index pages. Enter "default" to retrieve all records (with or without images). Leave the field blank to omit the link completely. Enter any search term (e.g., "snow") to retrieve sample records that match the term.</P>
+      <P>  </P>
+    </TD>
+  </TR>
+  <TR> 
+    <TD ALIGN="LEFT"><A NAME="dfltentryflds" ID="dfltentryflds"></A> 
+      <P>  </P>
+      <SPAN CLASS="normalfont"><B>dfltentryflds</B></SPAN></TD>
+  </TR>
+  <TR> 
+    <TD ALIGN="LEFT" VALIGN="TOP"><SPAN CLASS="normalfont"><I>required</I><BR />
+      <I>value/format:</I>default or array </SPAN><BR />
+      <I>class: </I>image 
+      <P>The list of fields (as abbreviations) to display in entry (full record) 
+        views. To display all fields, enter the value "default".</P>
+      <P>For details about the full range of options, please see the appropriate <A HREF="../class/image/image-colldb.xml">Image Class documentation</A>.</P>
+<P>  </P>
+    </TD>
+  </TR>
+  <TR> 
+    <TD ALIGN="LEFT"><A NAME="dfltresentryflds" ID="dfltresentryflds"></A> 
+      <P>  </P>
+      <SPAN CLASS="normalfont"><B>dfltresentryflds</B></SPAN></TD>
+  </TR>
+  <TR> 
+    <TD ALIGN="LEFT" VALIGN="TOP"><SPAN CLASS="normalfont"><I>required</I><BR />
+      <I>value/format:</I>default or array </SPAN><BR />
+      <I>class: </I>image 
+      <P>The list of fields (as abbreviations) to display in the results view 
+        that includes the full record (i.e., thumbfull view). To display all fields, 
+        enter the value "default".</P>
+        <P>For details about the full range of options, please see the appropriate <A HREF="../class/image/image-colldb.xml">Image Class documentation</A>.</P>
+      <P>  </P>
+    </TD>
+  </TR>
+  <TR> 
+    <TD ALIGN="LEFT"><A NAME="dfltsrchflds" ID="dfltsrchflds"></A> 
+      <P>  </P>
+      <SPAN CLASS="normalfont"><B>dfltsrchflds</B></SPAN></TD>
+  </TR>
+  <TR> 
+    <TD ALIGN="LEFT" VALIGN="TOP"><SPAN CLASS="normalfont"><I>required</I><BR />
+      <I>value/format:</I>default or array </SPAN><BR />
+      <I>class: </I>image 
+      <P>The list of fields (as abbreviations) that may be searched. These are 
+        the fields that show up in the search form. to display all fields, enter 
+        the value "default".</P>
+      <P>  </P>
+    </TD>
+  </TR>
+  <TR> 
+    <TD ALIGN="LEFT"><A NAME="entrydivs" ID="entrydivs"></A> 
+      <P>  </P>
+      <SPAN CLASS="normalfont"><B>entrydivs</B></SPAN></TD>
+  </TR>
+  <TR> 
+    <TD ALIGN="LEFT" VALIGN="TOP"><SPAN CLASS="normalfont"><I>required</I><BR />
+      <I>value/format:</I>array </SPAN><BR />
+      <I>class: </I>image 
+      <P>The entry/record display uses HTML DIVs to provide two different display 
+        modes (i.e., "full image" and "description"). The user can flip back and 
+        forth between the two display modes. If a collection has records with 
+        images and descriptions, you will want to include both, (e.g., full image, 
+        on one line, and description, on another ). For a collection that has 
+        descriptions but no images, you probably want to only include "description."</P>
+      <P>  </P>
+    </TD>
+  </TR>
+  <TR> 
+    <TD ALIGN="LEFT"><A NAME="entrydivsdefault" ID="entrydivsdefault"></A> 
+      <P>  </P>
+      <SPAN CLASS="normalfont"><B>entrydivsdefault</B></SPAN></TD>
+  </TR>
+  <TR> 
+    <TD ALIGN="LEFT" VALIGN="TOP"><SPAN CLASS="normalfont"><I>required</I><BR />
+      <I>value/format:</I>string </SPAN><BR />
+      <I>class: </I>image 
+      <P>The default display mode for the entry/record display. When the record 
+        is first displayed, should the "full image" view be shown first, or the 
+        "description" view?</P>
+      <P>  </P>
+    </TD>
+  </TR>
+  <TR> 
+    <TD ALIGN="LEFT"><A NAME="imgqual" ID="imgqual"></A> 
+      <P>  </P>
+      <SPAN CLASS="normalfont"><B>imgqual</B></SPAN></TD>
+  </TR>
+  <TR> 
+    <TD ALIGN="LEFT" VALIGN="TOP"><SPAN CLASS="normalfont"><I>required</I><BR />
+      <I>value/format:</I> string</SPAN><BR />
+      <I>class: </I>image 
+      <P>The default size for image display. There are several ways to specify 
+        the quality. </P>
+<BLOCKQUOTE>examples:
+	    <UL>
+	      	<LI>h600 -- height no larger than 600 pixels</LI>
+	<LI>w500 -- width no larger than 600 pixels</LI>
+	<LI>m800 -- max dimension of image no larger than 800 pixels</LI>
+	<LI>min -- smallest available</LI>
+	<LI>max -- largest available</LI>
+	<LI>mid -- mid-size among available</LI>
+	<LI>preview -- defined in imageclass.cfg ($gDefaultPreviewImageSize)</LI>
+	<LI>screen -- defined in imageclass.cfg ($gDefaultScreenImageSize)</LI>
+	<LI>integer value -- MrSID res value</LI>
+
+	    </UL>
+	  </BLOCKQUOTE>
+      <P>  </P>
+    </TD>
+  </TR>
+  <TR> 
+    <TD ALIGN="LEFT"><A NAME="imgsizemax" ID="imgsizemax"></A> 
+      <P>  </P>
+      <SPAN CLASS="normalfont"><B>imgsizemax</B></SPAN></TD>
+  </TR>
+  <TR> 
+    <TD ALIGN="LEFT" VALIGN="TOP"><SPAN CLASS="normalfont"><I>optional</I><BR />
+      <I>value/format:</I>string </SPAN><BR />
+      <I>class: </I>image 
+      <P>Allows a restriction to be put on the maximum full size image displayed. 
+        Definable in terms similar to imgqual above.leave field blank for no restriction.</P>
+      <P>  </P>
+    </TD>
+  </TR>
+  <TR> 
+    <TD ALIGN="LEFT"><A NAME="imgsizemin" ID="imgsizemin"></A> 
+      <P>  </P>
+      <SPAN CLASS="normalfont"><B>imgsizemin</B></SPAN></TD>
+  </TR>
+  <TR> 
+    <TD ALIGN="LEFT" VALIGN="TOP"><SPAN CLASS="normalfont"><I>optional</I><BR />
+      <I>value/format:</I>string </SPAN><BR />
+      <I>class: </I>image 
+      <P>Allows a restriction to be put on the minimum full size image displayed. 
+        Definable in terms similar to imgqual above.leave field blank for no restriction.</P>
+      <P>  </P>
+    </TD>
+  </TR>
+  <TR> 
+    <TD ALIGN="LEFT"><A NAME="mediaonly" ID="mediaonly"></A> 
+      <P>  </P>
+      <SPAN CLASS="normalfont"><B>mediaonly</B></SPAN></TD>
+  </TR>
+  <TR> 
+    <TD ALIGN="LEFT" VALIGN="TOP"><SPAN CLASS="normalfont"><I>required</I><BR />
+      <I>value/format:</I>string </SPAN><BR />
+      <I>class: </I>image 
+      <P>Controls the presence and default status of the "media only" restriction 
+        in the search form. There are several possible values.</P>
+      <P>  </P>
+    </TD>
+  </TR>
+  <TR> 
+    <TD ALIGN="LEFT"><A NAME="numqs" ID="numqs"></A> 
+      <P>  </P>
+      <SPAN CLASS="normalfont"><B>numqs</B></SPAN></TD>
+  </TR>
+  <TR> 
+    <TD ALIGN="LEFT" VALIGN="TOP"><SPAN CLASS="normalfont"><I>required</I><BR />
+      <I>value/format:</I>number </SPAN><BR />
+      <I>class: </I>image 
+      <P>The number of text fields to display in search form.</P>
+      <P>  </P>
+    </TD>
+  </TR>
+  <TR> 
+    <TD ALIGN="LEFT"><A NAME="relviewmenu" ID="relviewmenu"></A> 
+      <P>  </P>
+      <SPAN CLASS="normalfont"><B>relviewmenu</B></SPAN></TD>
+  </TR>
+  <TR> 
+    <TD ALIGN="LEFT" VALIGN="TOP"><SPAN CLASS="normalfont"><I>required</I><BR />
+      <I>value/format:</I>string </SPAN><BR />
+      <I>class: </I>image 
+      <P>Related view menu. Set to "on" to display a pop-up menu in the entry/record 
+        view that allows navigation to any of the images associated with the entry/record 
+        (the record must have multiple images). Useful as a page-flipping mechanism. 
+        e.g.: "off".</P>
+      <P>  </P>
+    </TD>
+  </TR>
+  <TR> 
+    <TD ALIGN="LEFT"><A NAME="relviewmenuinstruct" ID="relviewmenuinstruct"></A> 
+      <P>  </P>
+      <SPAN CLASS="normalfont"><B>relviewmenuinstruct</B></SPAN></TD>
+  </TR>
+  <TR> 
+    <TD ALIGN="LEFT" VALIGN="TOP"><SPAN CLASS="normalfont"><I>required</I><BR />
+      <I>value/format:</I>string </SPAN><BR />
+      <I>class: </I>image 
+      <P>String of instruction text to precede the related view menu (relviewmenu). 
+        e.g.: "default".</P>
+      <P>  </P>
+    </TD>
+  </TR>
+  <TR> 
+    <TD ALIGN="LEFT"><A NAME="relviewmenuprefx" ID="relviewmenuprefx"></A> 
+      <P>  </P>
+      <SPAN CLASS="normalfont"><B>relviewmenuprefx</B></SPAN></TD>
+  </TR>
+  <TR> 
+    <TD ALIGN="LEFT" VALIGN="TOP"><SPAN CLASS="normalfont"><I>required</I><BR />
+      <I>value/format:</I>string </SPAN><BR />
+      <I>class: </I>image 
+      <P>String of text to precede each item in the related view menu (relviewmenu) 
+        e.g.: "default."</P>
+      <P>  </P>
+    </TD>
+  </TR>
+  <TR> 
+    <TD ALIGN="LEFT"><A NAME="relviewmenuvals" ID="relviewmenuvals"></A> 
+      <P>  </P>
+      <SPAN CLASS="normalfont"><B>relviewmenuvals</B></SPAN></TD>
+  </TR>
+  <TR> 
+    <TD ALIGN="LEFT" VALIGN="TOP"><SPAN CLASS="normalfont"><I>required</I><BR />
+      <I>value/format:</I>string </SPAN><BR />
+      <I>class: </I>image 
+
+     <P>The SGML ISTRUCT attribute to use for display values in the
+      related view menu (relviewmenu)</P>
+
+<BLOCKQUOTE>e.g.: "default" (same as "CAPTIONS").</BLOCKQUOTE>
+
+<P>In addition to "CAPTIONS", any of the ISTRUCT attribute names are valid (e.g., "FACE").</P>
+      <P>  </P>
+    </TD>
+  </TR>
+  <TR> 
+    <TD ALIGN="LEFT"><A NAME="resfldtrim" ID="resfldtrim"></A> 
+      <P>  </P>
+      <SPAN CLASS="normalfont"><B>resfldtrim</B></SPAN></TD>
+  </TR>
+  <TR> 
+    <TD ALIGN="LEFT" VALIGN="TOP"><SPAN CLASS="normalfont"><I>required</I><BR />
+      <I>value/format:</I>number </SPAN><BR />
+      <I>class: </I>image 
+      <P>Maximum character string length for each field in dfltresflds. This is 
+        used for trimming long fields down to the specified number of characters 
+        when being displayed under thumbnail images. e.g.: "50".</P>
+      <P>  </P>
+    </TD>
+  </TR>
+  <TR> 
+    <TD ALIGN="LEFT"><A NAME="reslistresflds" ID="reslistresflds"></A> 
+      <P>  </P>
+      <SPAN CLASS="normalfont"><B>reslistresflds</B></SPAN></TD>
+  </TR>
+  <TR> 
+    <TD ALIGN="LEFT" VALIGN="TOP"><SPAN CLASS="normalfont"><I>required</I><BR />
+      <I>value/format:</I>default or array </SPAN><BR />
+      <I>class: </I>image 
+      <P>The list of fields (as abbreviations) to display in "captions only " 
+        results view. To display all fields, enter the value "default".</P>
+      <P>  </P>
+    </TD>
+  </TR>
+  <TR> 
+    <TD ALIGN="LEFT"><A NAME="resultsviews" ID="resultsviews"></A> 
+      <P>  </P>
+      <SPAN CLASS="normalfont"><B>resultsviews</B></SPAN></TD>
+  </TR>
+  <TR> 
+    <TD ALIGN="LEFT" VALIGN="TOP"><SPAN CLASS="normalfont"><I>required</I><BR />
+      <I>value/format:</I>array </SPAN><BR />
+      <I>class: </I>image 
+      <P>The list of results views to be made available to users. Legal values 
+        are any combination of: thumbnail, thumbfull, reslist. Order is not important. 
+      </P>
+      <P>  </P>
+    </TD>
+  </TR>
+  <TR> 
+    <TD ALIGN="LEFT"><A NAME="resultsviewsdefault" ID="resultsviewsdefault"></A> 
+      <P>  </P>
+      <SPAN CLASS="normalfont"><B>resultsviewsdefault</B></SPAN></TD>
+  </TR>
+  <TR> 
+    <TD ALIGN="LEFT" VALIGN="TOP"><SPAN CLASS="normalfont"><I>required</I><BR />
+      <I>value/format:</I>string </SPAN><BR />
+      <I>class: </I>image 
+      <P>The default result view. Legal values (choose one): thumbnail, thumbfull, 
+        reslist</P>
+      <P>  </P>
+    </TD>
+  </TR>
+  <TR> 
+    <TD ALIGN="LEFT"><A NAME="sortflds" ID="sortflds"></A> 
+      <P>  </P>
+      <SPAN CLASS="normalfont"><B>sortflds</B></SPAN></TD>
+  </TR>
+  <TR> 
+    <TD ALIGN="LEFT" VALIGN="TOP"><SPAN CLASS="normalfont"><I>required</I><BR />
+      <I>value/format:</I>array </SPAN><BR />
+      <I>class: </I>image 
+      <P>The list of field abbreviations that should be provided as options for 
+        sorting. Sort fields for multiple collections is configured in the groups 
+        database. "none" must always be the first value. </P>
+      <P>  </P>
+    </TD>
+  </TR>
+  <TR> 
+    <TD ALIGN="LEFT"><A NAME="thumbfullresflds" ID="thumbfullresflds"></A> 
+      <P>  </P>
+      <SPAN CLASS="normalfont"><B>thumbfullresflds</B></SPAN></TD>
+  </TR>
+  <TR> 
+    <TD ALIGN="LEFT" VALIGN="TOP"><SPAN CLASS="normalfont"><I>required</I><BR />
+      <I>value/format:</I>default or array </SPAN><BR />
+      <I>class: </I>image 
+      <P>The list of fields (as abbreviations) To display in "thumbnail with full 
+        record" results view. to display all fields, enter the value "default". 
+      </P>
+      <P>  </P>
+    </TD>
+  </TR>
+  <TR> 
+    <TD ALIGN="LEFT"><A NAME="thumbnailresflds" ID="thumbnailresflds"></A> 
+      <P>  </P>
+      <SPAN CLASS="normalfont"><B>thumbnailresflds</B></SPAN></TD>
+  </TR>
+  <TR> 
+    <TD ALIGN="LEFT" VALIGN="TOP"><SPAN CLASS="normalfont"><I>required</I><BR />
+      <I>value/format:</I>default or array </SPAN><BR />
+      <I>class: </I>image 
+      <P>The list of fields (as abbreviations) to display in "thumbnail with captions" 
+        results view. To display all fields, enter the value "default".</P>
+      <P>  </P>
+    </TD>
+  </TR>
+  <TR> 
+    <TD ALIGN="LEFT"><A NAME="bibsearch" ID="bibsearch"></A> 
+      <P>  </P>
+      <SPAN CLASS="normalfont"><B>bibsearch</B></SPAN></TD>
+  </TR>
+  <TR> 
+    <TD ALIGN="LEFT" VALIGN="TOP"><SPAN CLASS="normalfont"><I>required</I><BR />
+      <I>value/format:</I>array </SPAN><BR />
+      <I>class: </I>text 
+      <P>The regions in which citation searches are conducted (minimally, citation). 
+      </P>
+      <P>  </P>
+    </TD>
+  </TR>
+  <TR> 
+    <TD ALIGN="LEFT"><A NAME="charfilters" ID="charfilters"></A> 
+      <P>  </P>
+      <SPAN CLASS="normalfont"><B>charfilters</B></SPAN></TD>
+  </TR>
+  <TR> 
+    <TD ALIGN="LEFT" VALIGN="TOP"><SPAN CLASS="normalfont"><I>optional</I><BR />
+      <I>value/format:</I></SPAN><BR />
+      <I>class: </I>text 
+      <P>Supply one or more of 'isogreek', 'pldgreek', 'chgreek', 'ipa', or 'misc' 
+        to filter each class of character entity references (if present in the 
+        collection data).</P>
+      <P>  </P>
+    </TD>
+  </TR>
+  <TR> 
+    <TD ALIGN="LEFT"><A NAME="divheadrange" ID="divheadrange"></A> 
+      <P>  </P>
+      <SPAN CLASS="normalfont"><B>divheadrange</B></SPAN></TD>
+  </TR>
+  <TR> 
+    <TD ALIGN="LEFT" VALIGN="TOP"><SPAN CLASS="normalfont"><I>required</I><BR />
+      <I>value/format:</I></SPAN><BR />
+      <I>class: </I>text 
+      <P>A number indicating the deepest level of encoding present in the collection, 
+        e.g. "4" if the lowest division is &lt;DIV4&gt;</P>
+      <P>  </P>
+    </TD>
+  </TR>
+  <TR> 
+    <TD ALIGN="LEFT"><A NAME="firstpublishedstart" ID="firstpublishedstart"></A> 
+      <P>  </P>
+      <SPAN CLASS="normalfont"><B>firstpublishedstart</B></SPAN></TD>
+  </TR>
+  <TR> 
+    <TD ALIGN="LEFT" VALIGN="TOP"><SPAN CLASS="normalfont"><I>optional</I><BR />
+      <I>value/format:</I>string </SPAN><BR />
+      <I>class: </I>text 
+      <P>Indicates whether there are maps for dates of first publication, if available, 
+        in the form YYYY where YYYY is the earliest publication date. Derived 
+        from markup in the collection. Must be supported by entries in the collection 
+        map.</P>
+      <P>  </P>
+    </TD>
+  </TR>
+  <TR> 
+    <TD ALIGN="LEFT"><A NAME="firstpublishedend" ID="firstpublishedend"></A> 
+      <P>  </P>
+      <SPAN CLASS="normalfont"><B>firstpublishedend</B></SPAN></TD>
+  </TR>
+  <TR> 
+    <TD ALIGN="LEFT" VALIGN="TOP"><SPAN CLASS="normalfont"><I>optional</I><BR />
+      <I>value/format:</I>string</SPAN><BR />
+      <I>class: </I>text 
+      <P>Indicates whether there are maps for dates of first publication, if available, 
+        in the form YYYY where YYYY is the latest publication date. Must be supported 
+        by entries in the collection map.</P>
+      <P>  </P>
+    </TD>
+  </TR>
+  <TR> 
+    <TD ALIGN="LEFT"><A NAME="firstpublishedinc" ID="firstpublishedinc"></A> 
+      <P>  </P>
+      <SPAN CLASS="normalfont"><B>firstpublishedinc</B></SPAN></TD>
+  </TR>
+  <TR> 
+    <TD ALIGN="LEFT" VALIGN="TOP"><SPAN CLASS="normalfont"><I>optional</I><BR />
+      <I>value/format:</I>string</SPAN><BR />
+      <I>class: </I>text 
+      <P>Indicates whether there are maps for dates of first publication, if available, 
+        X where X is increment in the number of years between firstpublishedstart 
+        and firstpublishedend. Derived from markup in the collection. Must be 
+        supported by entries in the collection map.</P>
+      <P>  </P>
+    </TD>
+  </TR>
+  <TR> 
+    <TD ALIGN="LEFT"><A NAME="fisheyethreshold" ID="fisheyethreshold"></A> 
+      <P>  </P>
+      <SPAN CLASS="normalfont"><B>fisheyethreshold</B></SPAN></TD>
+  </TR>
+  <TR> 
+    <TD ALIGN="LEFT" VALIGN="TOP"><SPAN CLASS="normalfont"><I>reserved for future use</I><BR />
+      <I>value/format:</I></SPAN><BR />
+      <I>class: </I>text 
+      <P>Not currently used. </P>
+      <P>  </P>
+    </TD>
+  </TR>
+  <TR> 
+    <TD ALIGN="LEFT"><A NAME="genre" ID="genre"></A> 
+      <P>  </P>
+      <SPAN CLASS="normalfont"><B>genre</B></SPAN></TD>
+  </TR>
+  <TR> 
+    <TD ALIGN="LEFT" VALIGN="TOP"><SPAN CLASS="normalfont"><I>required</I><BR />
+      <I>value/format:</I>array </SPAN><BR />
+      <I>class: </I>text 
+      <P>Standard terms assigned to describe the contents of a collection, used 
+        by the collection picker. Derived from collection coordinator's assessment 
+        of the collection. Available values are specified in $DLXSROOT/cgi/t/text/textclass.cfg.</P>
+      <P>  </P>
+    </TD>
+  </TR>
+  <TR> 
+    <TD ALIGN="LEFT"><A NAME="gender" ID="gender"></A> 
+      <P>  </P>
+      <SPAN CLASS="normalfont"><B>gender</B></SPAN></TD>
+  </TR>
+  <TR> 
+    <TD ALIGN="LEFT" VALIGN="TOP"><SPAN CLASS="normalfont"><I>required</I><BR />
+      <I>value/format:</I>array </SPAN><BR />
+      <I>class: </I>text 
+      <P>Gender of the principal authors of the works in this collection, used 
+        by the collection picker. Derived from collection coordinator's assessment 
+        of the collection. Available values are specified in $DLXSROOT/cgi/t/text/textclass.cfg. One of 'male', female', 'all'.</P>
+      <P>  </P>
+    </TD>
+  </TR>
+  <TR> 
+    <TD ALIGN="LEFT"><A NAME="language" ID="language"></A> 
+      <P>  </P>
+      <SPAN CLASS="normalfont"><B>language</B></SPAN></TD>
+  </TR>
+  <TR> 
+    <TD ALIGN="LEFT" VALIGN="TOP"><SPAN CLASS="normalfont"><I>required</I><BR />
+      <I>value/format:</I>array </SPAN><BR />
+      <I>class: </I>text 
+      <P>The languages of texts in collections, used by the collection picker. Available values are specified in $DLXSROOT/cgi/t/text/textclass.cfg.  
+        Derived from collection coordinator's assessment of the collection. </P>
+      <P>  </P>
+    </TD>
+  </TR>
+  <TR> 
+    <TD ALIGN="LEFT"><A NAME="lel" ID="lel"></A> 
+      <P>  </P>
+      <SPAN CLASS="normalfont"><B>lel</B></SPAN></TD>
+  </TR>
+  <TR> 
+    <TD ALIGN="LEFT" VALIGN="TOP"><SPAN CLASS="normalfont"><I>required</I><BR />
+      <I>value/format:</I>number </SPAN><BR />
+      <I>class: </I>text 
+      <P>The encoding level of the document that has the lowest level of encoding of any document in the collection.
+      </P>
+      <P>  </P>
+    </TD>
+  </TR>
+
+  <TR> 
+    <TD ALIGN="LEFT"><A NAME="lel2divtype" ID="lel2divtype"></A> 
+      <P>  </P>
+      <SPAN CLASS="normalfont"><B>lel2divtype</B></SPAN></TD>
+  </TR>
+  <TR> 
+    <TD ALIGN="LEFT" VALIGN="TOP"><SPAN CLASS="normalfont"><I>optional</I><BR />
+      <I>value/format:</I>string</SPAN><BR />
+      <I>class: </I>text
+      <P>Used to specify the proper link target div form a level 2 collection results list.  The existence of any value in the field will make a level 2 collection have a results string where teh "item of interest" is the string that is the value of the field.  <B>important:</B>The value of the string must correspond to a fabricated region of the same name.</P>
+      <P>  </P>
+    </TD>
+  </TR>
+
+
+  <TR> 
+    <TD ALIGN="LEFT"><A NAME="maxdepthitems" ID="maxdepthitems"></A> 
+      <P>  </P>
+      <SPAN CLASS="normalfont"><B>maxdepthitems</B></SPAN></TD>
+  </TR>
+  <TR> 
+    <TD ALIGN="LEFT" VALIGN="TOP"><SPAN CLASS="normalfont"><I>required</I><BR />
+      <I>value/format:</I></SPAN><BR />
+      <I>class: </I>text 
+      <P>A list of the most deeply nested elements in the collection's SGML/XML, 
+        (e.g. "LINE"), which, in boolean and proximity searches are listed as search regions in the search form
+        pulldown.  For each low-level search region in the pulldown, use the corresponding value marked up by the &lt;SYNTHETIC&gt; 
+        element in the collection's map file for that region.  Used to generate the region hit summary in boolean and proximity results displays, e.g. "7 lines" within a given scene within a given act in a given play.</P>
+      <P>  </P>
+    </TD>
+  </TR>
+  <TR> 
+    <TD ALIGN="LEFT"><A NAME="notemaxdivhead" ID="notemaxdivhead"></A> 
+      <P>  </P>
+      <SPAN CLASS="normalfont"><B>notemaxdivhead</B></SPAN></TD>
+  </TR>
+  <TR> 
+    <TD ALIGN="LEFT" VALIGN="TOP"><SPAN CLASS="normalfont"><I>optional</I><BR />
+      <I>value/format:</I></SPAN><BR />
+      <I>class: </I>text 
+      <P>If collection contains notes, this is the number of the most deeply nested 
+        division enclosing either a &lt;NOTE&gt; or the target of a &lt;PTR&gt;, e.g. 
+        "3" if &lt;DIV3&gt; is the lowest division containing &lt;NOTE&gt; or the target 
+        of a &lt;PTR&gt;.</P>
+      <P>  </P>
+    </TD>
+  </TR>
+  <TR> 
+    <TD ALIGN="LEFT"><A NAME="notesfilters" ID="notesfilters"></A> 
+      <P>  </P>
+      <SPAN CLASS="normalfont"><B>notesfilters</B></SPAN></TD>
+  </TR>
+  <TR> 
+    <TD ALIGN="LEFT" VALIGN="TOP"><SPAN CLASS="normalfont"><I>optional</I><BR />
+      <I>value/format:</I></SPAN><BR />
+      <I>class: </I>text 
+      <P>Supply either or both of 'inline' or 'ptr' to filter each kind of note 
+        (if present in the collection data) corresponding to &lt;NOTE&gt; and &lt;PTR&gt; 
+        elements.</P>
+      <P>  </P>
+    </TD>
+  </TR>
+  <TR> 
+    <TD ALIGN="LEFT"><A NAME="period" ID="period"></A> 
+      <P>  </P>
+      <SPAN CLASS="normalfont"><B>period</B></SPAN></TD>
+  </TR>
+  <TR> 
+    <TD ALIGN="LEFT" VALIGN="TOP"><SPAN CLASS="normalfont"><I>required</I><BR />
+      <I>value/format:</I>array </SPAN><BR />
+      <I>class: </I>text 
+      <P>The date ranges covered by collections, used by the collection picker. Available values are specified in $DLXSROOT/cgi/t/text/textclass.cfg. 
+        Derived from collection coordinator's assessment of the collection. </P>
+      <P>  </P>
+    </TD>
+  </TR>
+  <TR> 
+    <TD ALIGN="LEFT"><A NAME="qtytext" ID="qtytext"></A> 
+      <P>  </P>
+      <SPAN CLASS="normalfont"><B>qtytext</B></SPAN></TD>
+  </TR>
+  <TR> 
+    <TD ALIGN="LEFT" VALIGN="TOP"><SPAN CLASS="normalfont"><I>required</I><BR />
+      <I>value/format:</I>number </SPAN><BR />
+      <I>class: </I>text 
+      <P>The number of DLPSTEXTCLASS objects (or texts) in the collection.</P>
+      <P>  </P>
+    </TD>
+  </TR>
+  <TR> 
+    <TD ALIGN="LEFT"><A NAME="rankfile" ID="rankfile"></A> 
+      <P>  </P>
+      <SPAN CLASS="normalfont"><B>rankfile</B></SPAN></TD>
+  </TR>
+  <TR> 
+    <TD ALIGN="LEFT" VALIGN="TOP"><SPAN CLASS="normalfont"><I>optional</I><BR />
+      <I>value/format:</I>string </SPAN><BR />
+      <I>class: </I>text 
+      <P>The location of rank files. Only necessary for collections with more 
+        than one data dictionary.</P>
+      <P>  </P>
+    </TD>
+  </TR>
+  <TR> 
+    <TD ALIGN="LEFT"><A NAME="regionsearch" ID="regionsearch"></A> 
+      <P>  </P>
+      <SPAN CLASS="normalfont"><B>regionsearch</B></SPAN></TD>
+  </TR>
+  <TR> 
+    <TD ALIGN="LEFT" VALIGN="TOP"><SPAN CLASS="normalfont"><I>required</I><BR />
+      <I>value/format:</I>array </SPAN><BR />
+      <I>class: </I>text, bib 
+      <P>The regions which are retrieved for Boolean searches (minimally, "work"). 
+      </P>
+      <P>  </P>
+    </TD>
+  </TR>
+  <TR> 
+    <TD ALIGN="LEFT"><A NAME="singlegender" ID="singlegender"></A> 
+      <P>  </P>
+      <SPAN CLASS="normalfont"><B>singlegender</B></SPAN></TD>
+  </TR>
+  <TR> 
+    <TD ALIGN="LEFT" VALIGN="TOP"><SPAN CLASS="normalfont"><I>optional</I><BR />
+      <I>value/format:</I>string </SPAN><BR />
+      <I>class: </I>text 
+      <P>'mappped' indicates that there are maps for specific assigned genders for a 
+        single collection, used to create restrictions for searches if available. Otherwise blank. 
+        Derived from markup in the collection. Must be supported by entries in 
+        the collection map.</P>
+      <P>  </P>
+    </TD>
+  </TR>
+  <TR> 
+    <TD ALIGN="LEFT"><A NAME="singlegenre" ID="singlegenre"></A> 
+      <P>  </P>
+      <SPAN CLASS="normalfont"><B>singlegenre</B></SPAN></TD>
+  </TR>
+  <TR> 
+    <TD ALIGN="LEFT" VALIGN="TOP"><SPAN CLASS="normalfont"><I>optional</I><BR />
+      <I>value/format:</I>string </SPAN><BR />
+      <I>class: </I>text 
+      <P>'mapped' indicates that there are maps for specific assigned genres for a single 
+        collection, used to create restrictions for searches if available. Otherwise blank.  Derived 
+        from markup in the collection. Must be supported by entries in the collection 
+        map.</P>
+      <P>  </P>
+    </TD>
+  </TR>
+  <TR> 
+    <TD ALIGN="LEFT"><A NAME="singleperiod" ID="singleperiod"></A> 
+      <P>  </P>
+      <SPAN CLASS="normalfont"><B>singleperiod</B></SPAN></TD>
+  </TR>
+  <TR> 
+    <TD ALIGN="LEFT" VALIGN="TOP"><SPAN CLASS="normalfont"><I>optional</I><BR />
+      <I>value/format:</I>string </SPAN><BR />
+      <I>class: </I>text 
+      <P>'mapped' indicates that there are maps for specific assigned periods for a 
+        single collection, used to create restrictions for searches, if available. Otherwise blank. 
+        Derived from markup in the collection. Must be supported by entries in 
+        the collection map.</P>
+      <P>  </P>
+    </TD>
+  </TR>
+  <TR> 
+    <TD ALIGN="LEFT"><A NAME="sortthreshold" ID="sortthreshold"></A> 
+      <P>  </P>
+      <SPAN CLASS="normalfont"><B>sortthreshold</B></SPAN></TD>
+  </TR>
+  <TR> 
+    <TD ALIGN="LEFT" VALIGN="TOP"><SPAN CLASS="normalfont"><I>required</I><BR />
+      <I>value/format:</I></SPAN><BR />
+      <I>class: </I>text 
+      <P>Threshold above which results obtained from multiple indexes 
+        are not sorted.(e.g. "1000")</P>
+      <P>  </P>
+    </TD>
+  </TR>
+  <TR> 
+    <TD ALIGN="LEFT"><A NAME="standalonename" ID="standalonename"></A> 
+      <P>  </P>
+      <SPAN CLASS="normalfont"><B>standalonename</B></SPAN></TD>
+  </TR>
+  <TR> 
+    <TD ALIGN="LEFT" VALIGN="TOP"><SPAN CLASS="normalfont"><I>required</I><BR />
+      <I>value/format:</I>string, preceded by text: or graphic: </SPAN><BR />
+      <I>class: </I>text 
+      <P>The collection banner for the standalone collection, which will create 
+        a link to the collections index page from all underlying pages. </P>
+      <P>  </P>
+    </TD>
+  </TR>
+  <TR> 
+    <TD ALIGN="LEFT"><A NAME="subclass" ID="subclass"></A> 
+      <P>  </P>
+      <SPAN CLASS="normalfont"><B>subclass</B></SPAN></TD>
+  </TR>
+  <TR> 
+    <TD ALIGN="LEFT" VALIGN="TOP"><SPAN CLASS="normalfont"><I>reserved for future 
+      use</I><BR />
+      <I>value/format:</I></SPAN><BR />
+      <I>class: </I>text 
+      <P>Not currently used</P>
+      <P>  </P>
+    </TD>
+  </TR>
+  <TR> 
+    <TD ALIGN="LEFT"> <A NAME="subclassmodule" ID="subclassmodule"></A> 
+      <P>  </P>
+      <SPAN CLASS="normalfont"><B>subclassmodule</B></SPAN></TD>
+  </TR>
+  <TR> 
+    <TD ALIGN="LEFT" VALIGN="TOP"><SPAN CLASS="normalfont"><I>required</I><BR />
+      <I>value/format:</I>string </SPAN><BR />
+      <I>class: </I>bib, text 
+      <P>The name of the subclass module (without the '.pm' suffix) that defines 
+        the subclass of the TextClass or BibClass object for the collection. </P>
+      <P>Many text collections will simply use the value "TextClass" and, likewise, 
+        many bib collections will use the value "BibClass." For others 
+        with a specific subclass, the convention is "collidTC" ("collidBC" 
+        for bib) corresponding to the file collidTC.pm or collidBC.pm. These 
+        modules are located in the Text Class cgi directory for Text or Bib Class. (e.g., The subclass should be entered as "TextClass/collidTC").</P>
+    </TD>
+  </TR>
+  <TR> 
+    <TD ALIGN="LEFT"> <A NAME="appmodule" ID="appmodule"></A> 
+      <P>  </P>
+      <SPAN CLASS="normalfont"><B>appmodule</B></SPAN></TD>
+  </TR>
+  <TR> 
+    <TD ALIGN="LEFT" VALIGN="TOP"><SPAN CLASS="normalfont"><I>required</I><BR />
+      <I>value/format:</I>string </SPAN><BR />
+      <I>class: </I>all
+      <P>The module name (without .pm suffix) of the Application Object or subclass 
+        thereof supporting the basic application functionality for a given class (Text, Image, Bib)
+        of the middleware.  Supply one of TextApp, ImageApp or BibApp for the default application behavior or a subclass if one has been written for this collection. (e.g., the subclass should be entered as "TextApp/FootCApp".)</P>
+    </TD>
+  </TR>
+  <TR> 
+    <TD ALIGN="LEFT"> <A NAME="pvappmodule" ID="pvappmodule"></A> 
+      <P>  </P>
+      <SPAN CLASS="normalfont"><B>pvappmodule</B></SPAN></TD>
+  </TR>
+  <TR> 
+    <TD ALIGN="LEFT" VALIGN="TOP"><SPAN CLASS="normalfont"><I>required</I><BR />
+      <I>value/format:</I>string </SPAN><BR />
+      <I>class: </I>text 
+      <P>The module name (without .pm suffix) of the PVApp object or subclass 
+        thereof supporting the pageviewer application for this collection. Use 
+        "PVApp" unless a subclass has been written for this collection. (e.g., the subclass should be entered as "PVApp/FooPCApp".)</P>
+    </TD>
+  </TR>
+  <TR> 
+    <TD ALIGN="LEFT"><A NAME="tcumodule" ID="tcumodule"></A> 
+      <P>  </P>
+      <SPAN CLASS="normalfont"><B>tcumodule</B></SPAN></TD>
+  </TR>
+  <TR> 
+    <TD ALIGN="LEFT" VALIGN="TOP"><SPAN CLASS="normalfont"><I>required</I><BR />
+      <I>value/format:</I></SPAN><BR />
+      <I>class: </I>text 
+      <P>The module name (without .pm suffix) of the TextClassUtils object or 
+        subclass thereof supporting this collection. Use "TextClassUtils" unless 
+        a subclass has been written for this collection. (e.g., the subclass should be entered as "TextClassUtils/FooTCU".)</P>
+      </TD>
+  </TR>
+  <TR> 
+    <TD ALIGN="LEFT"><A NAME="termsearch" ID="termsearch"></A> 
+      <P>  </P>
+      <SPAN CLASS="normalfont"><B>termsearch</B></SPAN></TD>
+  </TR>
+  <TR> 
+    <TD ALIGN="LEFT" VALIGN="TOP"><SPAN CLASS="normalfont"><I>required</I><BR />
+      <I>value/format:</I>array </SPAN><BR />
+      <I>class: </I>text 
+      <P>The regions in which simple searches are conducted, as they appear in the simple search pull-down menu (minimally, full text).</P>
+      <P>  </P>
+    </TD>
+  </TR>
+  <TR> 
+    <TD ALIGN="LEFT"><A NAME="wwappmodule" ID="wwappmodule"></A> 
+      <P>  </P>
+      <SPAN CLASS="normalfont"><B>wwappmodule</B></SPAN></TD>
+  </TR>
+  <TR> 
+    <TD ALIGN="LEFT" VALIGN="TOP"><SPAN CLASS="normalfont"><I>required</I><BR />
+      <I>value/format:</I></SPAN><BR />
+      <I>class: </I>text 
+      <P>The module name (without .pm suffix) of the WWApp object or subclass 
+        thereof supporting the wordwheel application for this collection. Use 
+        "WWApp" unless a subclass has been written for this collection. (e.g., subclass should be entered as "WWApp/FooWWApp".)</P>
+      <P>  </P>
+    </TD>
+  </TR>
+  <TR> 
+    <TD ALIGN="LEFT"><A NAME="pageviewmodule" ID="pageviewmodule"></A> 
+      <P>  </P>
+      <SPAN CLASS="normalfont"><B>pageviewmodule</B></SPAN></TD>
+  </TR>
+  <TR> 
+    <TD ALIGN="LEFT" VALIGN="TOP"><SPAN CLASS="normalfont"><I>required</I><BR />
+      <I>value/format:</I></SPAN><BR />
+      <I>class: </I>text 
+      <P>The module name (without .pm suffix) of the PageView object or subclass 
+        thereof supporting the database access and image transformation function for the page viewer application for this collection. Use "PageView" unless a subclass has been written for this collection.(e.g., subclass should be entered as "PageView/FooPV".)</P>
+      <P>  </P>
+    </TD>
+  </TR>
+  <TR> 
+    <TD ALIGN="LEFT"><A NAME="wwrealms" ID="wwrealms"></A> 
+      <P>  </P>
+      <SPAN CLASS="normalfont"><B>wwrealms</B></SPAN></TD>
+  </TR>
+  <TR> 
+    <TD ALIGN="LEFT" VALIGN="TOP"><SPAN CLASS="normalfont"><I>required</I><BR />
+      <I>value/format:</I>array (TITLE, AUTHOR, TEXT)</SPAN><BR />
+      <I>class: </I>text 
+      <P>The SGML regions from which word wheel/word index words are gathered 
+        if a word wheel/word index is built. </P>
+      <P>  </P>
+    </TD>
+  </TR>
+  <TR> 
+    <TD ALIGN="LEFT"><A NAME="wwrealmseng" ID="wwrealmseng"></A> 
+      <P>  </P>
+      <SPAN CLASS="normalfont"><B>wwrealmseng</B></SPAN></TD>
+  </TR>
+  <TR> 
+    <TD ALIGN="LEFT" VALIGN="TOP"><SPAN CLASS="normalfont"><I>required</I><BR />
+      <I>value/format:</I>array. (title, author, full text) </SPAN><BR />
+      <I>class: </I>text 
+      <P>The values that appear (i.e., the displayed labels) with radio buttons 
+        on the word wheel/word index search template. Must correspond to wwrealms. 
+      </P>
+      <P>  </P>
+    </TD>
+  </TR>
+  <TR> 
+    <TD ALIGN="LEFT"><A NAME="pageimages" ID="pageimages"></A> 
+      <P>  </P>
+      <SPAN CLASS="normalfont"><B>pageimages</B></SPAN></TD>
+  </TR>
+  <TR> 
+    <TD ALIGN="LEFT" VALIGN="TOP"><SPAN CLASS="normalfont"><I>optional</I><BR />
+      <I>value/format:</I>string</SPAN><BR />
+      <I>class: </I>text 
+      <P>Enter 1 if the collection has page images for viewing under page viewer, 
+        0 otherwise.</P>
+      </TD>
+  </TR>
+  <TR> 
+    <TD ALIGN="LEFT"><A NAME="defaultpageview" ID="defaultpageview"></A> 
+      <P>  </P>
+      <SPAN CLASS="normalfont"><B>defaultpageview</B></SPAN></TD>
+  </TR>
+  <TR> 
+    <TD ALIGN="LEFT" VALIGN="TOP"><SPAN CLASS="normalfont"><I>optional</I><BR />
+      <I>value/format:</I>string. </SPAN><BR />
+      <I>class: </I>text 
+      <P>If the collection has page images, enter one of 'image, 'text' or 'pdf' 
+        to control which view of the page the page viewer will offer by default.</P>
+      </TD>
+  </TR>
+  <TR> 
+    <TD ALIGN="LEFT"><A NAME="pageviewselectvalues" ID="pageviewselectvalues"></A> 
+      <P>  </P>
+      <SPAN CLASS="normalfont"><B>pageviewselectvalues</B></SPAN></TD>
+  </TR>
+  <TR> 
+    <TD ALIGN="LEFT" VALIGN="TOP"><SPAN CLASS="normalfont"><I>optional</I><BR />
+      <I>value/format:</I>array </SPAN><BR />
+      <I>class: </I>text 
+      <P>If the collection has page images, enter one or more of 'image, 'text' or 'pdf' 
+        to control which viewing formats will be displayed in the page viewer pulldown list.</P>
+      </TD>
+  </TR>
+ <TR> 
+    <TD ALIGN="LEFT"><A NAME="pdfchunk" ID="pdfchunk"></A> 
+      <P>  </P>
+      <SPAN CLASS="normalfont"><B>pdfchunk</B></SPAN></TD>
+  </TR>
+  <TR> 
+    <TD ALIGN="LEFT" VALIGN="TOP"><SPAN CLASS="normalfont"><I>optional</I><BR />
+      <I>value/format:</I>string. </SPAN><BR />
+      <I>class: </I>text 
+      <P>If the collection has pdf, enter the number of image files which are to
+         be bundled into a single pdf file for viewing under page viewer.</P>
+      </TD>
+  </TR>
+<TR> 
+    <TD ALIGN="LEFT"><A NAME="pageviewimageformat" ID="pageviewimageformat"></A> 
+      <P>  </P>
+      <SPAN CLASS="normalfont"><B>pageviewimageformat</B></SPAN></TD>
+  </TR>
+  <TR> 
+    <TD ALIGN="LEFT" VALIGN="TOP"><SPAN CLASS="normalfont"><I>optional</I><BR />
+      <I>value/format:</I>string. </SPAN><BR />
+      <I>class: </I>text 
+      <P>The format of the object which should be generated from the stored object, e.g. 'gif', 'pdf', 'tif'.</P>
+      </TD>
+  </TR>
+  <TR> 
+    <TD ALIGN="LEFT"><A NAME="storedimageformat" ID="storedimageformat"></A> 
+      <P>  </P>
+      <SPAN CLASS="normalfont"><B>storedimageformat</B></SPAN></TD>
+  </TR>
+  <TR> 
+    <TD ALIGN="LEFT" VALIGN="TOP"><SPAN CLASS="normalfont"><I>optional</I><BR />
+      <I>value/format:</I>string. </SPAN><BR />
+      <I>class: </I>text 
+      <P>The format of the the stored object representing a page, e.g. 'gif', 'pdf', 'tif'.  This is the source of the transformation whose output is specified by the pageviewimageformat field.</P>
+      </TD>
+  </TR>
+  <TR> 
+    <TD ALIGN="LEFT"><A NAME="resultsviewlength" ID="resultsviewlength"></A> 
+      <P>  </P>
+      <SPAN CLASS="normalfont"><B>resultsviewlength</B></SPAN></TD>
+  </TR>
+  <TR> 
+    <TD ALIGN="LEFT" VALIGN="TOP"><SPAN CLASS="normalfont"><I>reserved for future 
+      use</I><BR />
+      <I>value/format:</I>string. </SPAN><BR />
+      <I>class: </I>text 
+      <P>Placeholder for future enhancements. Not currently used.</P>
+      </TD>
+  </TR>
+  <TR> 
+    <TD ALIGN="LEFT"><A NAME="longviewtype" ID="longviewtype"></A> 
+      <P>  </P>
+      <SPAN CLASS="normalfont"><B>longviewtype</B></SPAN></TD>
+  </TR>
+  <TR> 
+    <TD ALIGN="LEFT" VALIGN="TOP"><SPAN CLASS="normalfont"><I>reserved for future 
+      use</I><BR />
+      <I>value/format:</I>string. </SPAN><BR />
+      <I>class: </I>text 
+      <P>Placeholder for future enhancements. Not currently used.</P>
+      </TD>
+  </TR></TBODY>
+</TABLE>
+                    
+<BR />
+<HR />
+</DIV1> 
+ </BODY></DLPSDOC>
+

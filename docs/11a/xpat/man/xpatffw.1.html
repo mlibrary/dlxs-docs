@@ -1,0 +1,280 @@
+
+
+<HTML><HEAD><TITLE>Manpage of XPATFFW</TITLE>
+<LINK HREF="../../dlxsdocs.css" REL="stylesheet" TYPE="text/css"> </head><BODY>
+<table class="updateTable" cellspacing="3" cellpadding="3">
+<tr>
+<td>CVS Revision</td>
+<td>$Revision: 1.3 $</td>
+</tr>
+</table>
+
+<H1>XPATFFW</H1>
+Section: User Commands  (1)<BR>Updated: November 2000<BR><A HREF="#index">Index</A>
+<A HREF="http://localhost/cgi-bin/man/man2html">Return to Main Contents</A><HR>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<A NAME="lbAB">&nbsp;</A>
+<H2>NAME</H2>
+
+<B>xpatffw</B> - XPAT Fast-Find Word List builder
+<A NAME="lbAC">&nbsp;</A>
+<H2>SYNOPSIS</H2>
+
+<B>xpatffw</B>
+[
+<B>-v</B>
+
+]
+[
+<B>-b</B><I> block_size</I>
+
+]
+[
+<B>-I</B><I> index_name</I>
+
+]
+[
+<B>-m</B><I> memory</I>
+
+k|m ]
+[
+<B>-o</B><I> output_name</I>
+
+]
+
+[
+[
+<B>-w</B><I> word_wheel_prefix</I>
+
+
+]
+[
+<B>-r</B><I> region_name</I>
+
+
+]
+[
+<B>-f</B><I> region_names_list_file_name</I>
+
+
+]
+
+
+]
+
+<B>-D</B>
+
+<I>data_dictionary</I>
+<A NAME="lbAD">&nbsp;</A>
+<H2>DESCRIPTION</H2>
+
+<B>xpatffw</B> builds a Fast-Find Word List for a Main Index of the database
+specified by <I>data_dictionary</I>.
+The Fast-Find Word List, combined with
+the Fast-Find Index, greatly increases the speed of text searching
+in <B>xpat</B>.
+<P>
+
+<B>xpatffw</B> builds the Fast-Find Word List using the memory that is specified.
+If the index cannot be built in the given amount of memory,
+it builds the index in pieces, making one pass over the
+text for each piece.
+
+<P>
+
+
+<B>xpatffw</B> can also be used to build a Word Wheel database at the same
+time as it builds the Fast-Find Word List.  See the <B>-w</B> and
+<B>-r</B> options, below, for more details.
+
+<A NAME="lbAE">&nbsp;</A>
+<H2>OPTIONS</H2>
+
+The following options are available:
+<DL COMPACT>
+<DT><B>-v</B><DD>
+Specify verbose mode.  This option tells <B>xpatffw</B> to print progress messages
+while it builds the Fast-Find Word List.  By default, <B>xpatffw</B> works quietly,
+only printing a message if an error occurs.
+<DT><B>-b</B> <I>block_size</I><DD>
+Specify compression block size (in bytes).
+Must be the same as that specified to <B>xpatffi</B> (refer to the <B><A HREF="http://localhost/cgi-bin/man/man2html?1+xpatffi">xpatffi</A></B>(1) man page for
+more detail on this parameter).
+<DT><B>-I</B> <I>index_name</I><DD>
+Specify the index name over which to build the Fast-Find index.  The default
+is the first index in the <I>data_dictionary</I>.
+<DT><B>-m</B><I> N</I><B>k</B><DD>
+<DT><B>-m</B><I> N</I><B>m</B><DD>
+memory size - use <I>N</I> <B>k</B>ilobytes or <I>N</I> <B>m</B>egabytes
+of physical memory for building the Fast-Find index.
+A larger memory specification results in faster indexing.   Note that
+the amount of memory specified is limited by the amount of <I>available
+physical memory</I>.  Also note that the amount of memory that is
+specified is usually the same as that specified to the <B>xpatbld</B> program.
+Refer to the <B><A HREF="http://localhost/cgi-bin/man/man2html?1+xpatbld">xpatbld</A></B>(1) man page for further details.
+<DT><B>-o</B> <I>output_name</I><DD>
+Specify file name prefix for the Fast-Find index.  This may be a complete path.  <B>xpatffw</B>
+produces one file, with the suffix `.ffw'.
+By default <B>xpatffw</B> takes the name for that file from the `FastFind' section
+of the <I>data_dictionary</I>, or uses the prefix of the <I>data_dictionary</I> file itself if that file does not
+contain any Fast-Find specifications.
+
+<DT><B>-w</B> <I>word_wheel_prefix</I><DD>
+
+Specify Word Wheel database generation.  This option tells <B>xpatffw</B> to
+generate the Word Wheel database files for this database while it generates
+the Fast-Find Word List.  <B>xpatffw</B> creates three
+Word Wheel files: the tagged Word Wheel text file (with a `.ww'
+suffix), the Word Wheel regions intermediate file (with a `.ptr'
+suffix), and the Word Wheel tagnames file (with a `.tag'
+suffix).  These files are all named with the prefix,
+`<I>word_wheel_prefix</I>'.
+<DT>&nbsp;<DD>
+
+The <B>-w</B> option may be used in conjunction
+with one or more <B>-r</B> options,
+or with the <B>-f</B> option, to produce region-specific Word
+Wheels, in addition to the main Word Wheel.  See the <B>-r</B> option
+and the <B>-f</B> option,
+below, for more details.
+<DT>&nbsp;<DD>
+
+After you have run <B>xpatffw</B> to produce the Word Wheel files, you must build
+a separate database on those files.
+A Word Wheel database is built by first
+running <B>xpatbld</B> to produce a Data Dictionary and a `.idx' file.  Then, you must run
+<B>multirgn</B>, giving it the <B>-sw</B> option and passing it the `.ptr'
+file and the `.tag' file.  <B>multirgn</B> will produce a `.rgn' file
+and will update the Word Wheel database's Data Dictionary.
+Note that if you are using <B>dbbuild</B> to build the main database,
+all the 
+Word Wheel generation and database building operations will be
+performed automatically.
+<DT><B>-r</B> <I>region_name</I><DD>
+
+Specify a region to build a region-specific Word Wheel on.  This
+option can only be used in conjunction with the <B>-w</B> option.
+A region-specific Word Wheel is a Word Wheel on the
+words that occur within members of the region,
+<I>region_name</I>.
+The <B>-r</B> option can be specified multiple times to build
+region-specific Word Wheels on several regions (see the examples,
+below).  <B>xpatffw</B> merges all the region-specific
+Word Wheels into the main tagged Word Wheel (`.ww') file.
+The format of that file, including the region-specific Word
+Wheels, is detailed in the <B><A HREF="http://localhost/cgi-bin/man/man2html?5+word_wheel">word_wheel</A></B>(5) man page.
+<DT><B>-f</B> <I>region_names_list_file_name</I><DD>
+
+Specify a file containing a list of regions to build a region-specific
+Word Wheel on.  The specified file must list region names only, with
+each region name separated by a newline. This
+option can only be used in conjunction with the <B>-w</B> option.
+This option may be used in conjunction with one or more <B>-r</B> options.
+
+</DL>
+<A NAME="lbAF">&nbsp;</A>
+<H2>RESTRICTIONS</H2>
+
+The Main Index must already have been built using <B>xpatbld</B> before <B>xpatffw</B> is run.
+
+<P>
+
+
+If any region-specific Word Wheels are to be built, both the region
+indexes <I>and</I> the Fast-Region indexes for those regions must have
+already been built before <B>xpatffw</B> is run.
+<A NAME="lbAG">&nbsp;</A>
+<H2>EXAMPLES</H2>
+
+
+
+<A NAME="lbAH">&nbsp;</A>
+<H2>EXAMPLE</H2>
+
+
+xpatffw -m 8m -o /data/text -I second -D text.dd
+
+<P>
+
+This example builds a Word List on the database specified by the Data Dictionary,
+`text.dd' (`-D&nbsp;text.dd').  It uses 8 MB of
+memory (`-m 8m') (presumably
+that was the same amount given to <B>xpatbld</B>).  It puts the output Word
+List file in the `/data' directory and calls it `text.ffw'
+(`-o&nbsp;/data/text').  It uses the index called `second'
+(`-I&nbsp;second')
+in the `text.dd' Data Dictionary (`-D text.dd').
+
+<P>
+
+
+
+
+xpatffw -v -m 45m -w dbww -r Headline -r Author -D db.dd
+
+
+<P>
+
+
+This example builds an Fast-Find Word List on the database specified by
+the Data Dictionary, `db.dd' (`-D&nbsp;db.dd').  It prints out progress
+messages as it builds the index (`-v') and it uses 45 MB of memory
+(`-m&nbsp;45m').  The Word List is placed in a file called `db.ffw' 
+(the default action).  This example also creates a Word Wheel which
+it places in the files, `dbww.ww', `dbww.ptr' and
+`dbww.tag' (`-w&nbsp;dbww').  This Word Wheel database also includes
+region-specific Word Wheels for the `Headline' (`-r&nbsp;Headline')
+and `Author' (`-r&nbsp;Author') regions.
+
+
+<A NAME="lbAI">&nbsp;</A>
+<H2>SEE ALSO</H2>
+
+<I>Database Administration Guide</I>
+<BR>
+
+
+<B><A HREF="http://localhost/cgi-bin/man/man2html?1+xpat">xpat</A></B>(1), <B><A HREF="http://localhost/cgi-bin/man/man2html?1+xpatffi">xpatffi</A></B>(1), <B><A HREF="http://localhost/cgi-bin/man/man2html?1+xpatbld">xpatbld</A></B>(1), <B><A HREF="http://localhost/cgi-bin/man/man2html?5+word_wheel">word_wheel</A></B>(5), <B><A HREF="http://localhost/cgi-bin/man/man2html?5+regions">regions</A></B>(5)
+
+<B><A HREF="http://localhost/cgi-bin/man/man2html?1+xpat">xpat</A></B>(1), <B><A HREF="http://localhost/cgi-bin/man/man2html?1+xpatffi">xpatffi</A></B>(1), <B><A HREF="http://localhost/cgi-bin/man/man2html?1+xpatbld">xpatbld</A></B>(1), <B><A HREF="http://localhost/cgi-bin/man/man2html?5+regions">regions</A></B>(5)
+<P>
+
+<HR>
+<A NAME="index">&nbsp;</A><H2>Index</H2>
+<DL>
+<DT><A HREF="#lbAB">NAME</A><DD>
+<DT><A HREF="#lbAC">SYNOPSIS</A><DD>
+<DT><A HREF="#lbAD">DESCRIPTION</A><DD>
+<DT><A HREF="#lbAE">OPTIONS</A><DD>
+<DT><A HREF="#lbAF">RESTRICTIONS</A><DD>
+<DT><A HREF="#lbAG">EXAMPLES</A><DD>
+<DT><A HREF="#lbAH">EXAMPLE</A><DD>
+<DT><A HREF="#lbAI">SEE ALSO</A><DD>
+</DL>
+<HR>
+This document was created by
+<A HREF="http://localhost/cgi-bin/man/man2html">man2html</A>,
+using the manual pages.<BR>
+Time: 18:03:38 GMT, March 26, 2001
+</BODY>
+</HTML>

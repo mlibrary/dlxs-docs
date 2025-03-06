@@ -1,0 +1,19 @@
+<!ELEMENT WW        o o   (COLL+)>
+
+<!ELEMENT COLL      - -   (COLLNAME, REALM+)>
+
+<!ELEMENT COLLNAME  - -  CDATA>
+
+<!ELEMENT REALM     - -  (REALMNAME, ALPHA?, MISC?, NUM?)>
+
+<!ELEMENT REALMNAME - -  CDATA>
+
+<!ELEMENT ALPHA     - -  (E+) -- entries -- >
+<!ELEMENT NUM       - -  (E+) -- entries -- >
+<!ELEMENT MISC      - -  (E+) -- entries -- >
+
+<!ELEMENT E         - -  CDATA -- word -- >
+<!ATTLIST E         N    NUMBER    #REQUIRED 
+                    O    NUMBER    #REQUIRED 
+                    L    CDATA     #IMPLIED>
+

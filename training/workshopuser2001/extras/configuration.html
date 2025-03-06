@@ -1,0 +1,38 @@
+<HTML>
+<HEAD>
+<TITLE>Configuration</TITLE>
+<META http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<LINK rel="stylesheet" href="../styles.css">
+</HEAD>
+<BODY class="mainpalette">
+<H2>Configuration</H2>
+<UL>
+  <LI>colldb 
+    <UL>
+      <LI>holds information about all collections in the Class</LI>
+      <LI>e.g., collection id, collection name, host machine, XPat dd location, 
+        etc.</LI>
+    </UL>
+  </LI>
+  <LI>groupsdb 
+    <UL>
+      <LI>combines certain collections into groups</LI>
+    </UL>
+  </LI>
+  <LI>cfg files 
+    <UL>
+      <LI>Class specific information: see textclass.cfg</LI>
+      <LI>Some general library modules have cfg files; e.g., DlpsSession.cfg</LI>
+    </UL>
+  </LI>
+  <LI>patservd, patviewd</LI>
+  <UL>
+    <LI>need to edit access.c and re-make</LI>
+    <LI>we plan to pull certain information out and into a config file and simply 
+      deliver a binary</LI>
+  </UL>
+</UL>
+<P>Note: For this workshop, participants have individual working versions of the 
+  colldb and groupsdb files</P>
+</BODY>
+</HTML>

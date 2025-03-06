@@ -1,0 +1,68 @@
+<?xml version="1.0"?>
+
+<!-- SPO Editorial Services                  -->
+<!-- automatically-generated XML header file -->
+
+<?xml-stylesheet href="../../../pre11-dlxsdocs.xsl" type="text/xsl"?>
+<!DOCTYPE DLPSDOC PUBLIC "-//UM-DLPS//DTD DLPS Publications//EN" "http://docs.umdl.umich.edu/dlps/docs/dlpsdocs.dtd">
+<DLPSDOC>
+<TITLE>Text Class</TITLE>
+<HEADER>
+<JOURNAL>DLXS Documentation</JOURNAL>
+<PUBDATE>2002-07-08 12:19:55 EDT</PUBDATE>
+<AUTH1>Powell, Chris</AUTH1>
+<AUTH2></AUTH2>
+<DOCTITLE>Text Class</DOCTITLE>
+<VOL>class</VOL>
+<ISS>text</ISS>
+<FILE>dlxsdocs-tc-index</FILE>
+</HEADER>
+<BODY>
+		<BHEAD>Text Class Documentation</BHEAD>
+		<DIV1>
+			<UL>
+				<LI>
+					<A HREF="tc-overview.xml">Overview of Text Class, which refers to a document explaining the origin and purposes of classes</A>
+				</LI>
+				<LI>Programmer Middleware Documentation
+<UL>
+						<LI>
+							<A HREF="../../intro/dlxs-install.xml">Installation of Middleware</A>
+						</LI>
+						<LI>
+							<A HREF="tc-changingmiddleware.xml">Making Changes to the Text Class Middleware</A>
+						</LI>
+						<LI>
+							<A HREF="tc-perlmodules.xml">Text Class Perl Modules Used (Summaries)</A>
+						</LI>
+						<LI>
+							<A HREF="tc-codewalkthrough.xml">Text Class Code Walkthrough</A>
+						</LI>
+					</UL>
+				</LI>
+				<LI>Collection Coordinator Middleware Documentation
+<UL>
+						<LI>
+							<A HREF="../../collmeta/dlxs-collmgr-fields.xml">Collection Metadata Manager (collmgr) Fields </A>
+						</LI>
+						<LI>
+							<A HREF="../../collmeta/dlxs-maps.xml">DLXS Map Files</A>
+						</LI>
+						<LI><A HREF="tc-pageviewer.xml">Page Image Access Mechanisms</A> </LI>
+						<LI>About the User Interface<UL><LI><A HREF="tc-gen-pg-layout.xml">General Page Layout and Color</A></LI><LI><A HREF="tc-ind-coll-chars.xml">Specifying Individual Collection Characteristics</A></LI><LI><A HREF="tc-templates.xml">Text Class Templates</A></LI><LI><A HREF="tc-pis.xml">Processing Instructions (PIs)</A></LI><LI><A HREF="tc-graphics.xml">Text Class Graphics Files</A></LI><LI><A HREF="tc-textclass-css.xml">The Text Class CSS File (textclass.css)</A></LI></UL></LI>
+					</UL>
+				</LI>
+				<LI>Collection Preparation Documentation
+<UL>
+						<LI><A HREF="examples/textclass.dtd">The Text Class DTD (textclass.dtd)</A></LI>
+						<LI><A HREF="tc-docstruct.xml">Text Class Documents -- Structure</A></LI><LI><A HREF="tc-convert.xml">Converting Collections to Text Class</A></LI><LI><A HREF="tc-prep.xml">Preparing Data for Index Building</A></LI><LI><A HREF="tc-indexing.xml">Indexing the Collection</A></LI>
+						<LI>
+							<A HREF="tc-ww.xml">Creating Word Wheels</A>
+						 </LI>
+						<LI><A HREF="tc-pageviewer.xml">Populating the Pageview Table</A></LI>
+					</UL>
+				</LI>
+			</UL>
+		</DIV1>
+	</BODY>
+</DLPSDOC>

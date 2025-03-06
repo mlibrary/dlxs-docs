@@ -1,0 +1,9 @@
+<!DOCTYPE WW SYSTEM "/l1/obj/lib/sgml/wordwheel.dtd"[
+
+<!ENTITY % entrefs SYSTEM "/l1/idx/b/bosnia/charents.frag">
+%entrefs;
+
+<!ENTITY nbsp SDATA "&nbsp;">
+
+]>
+

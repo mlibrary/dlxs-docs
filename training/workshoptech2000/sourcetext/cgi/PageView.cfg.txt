@@ -1,0 +1,87 @@
+## ***** where the pageview data is stored for all ocr-ed text files in a directory
+$gPageViewDataFile = 'pageview.dat';
+
+## ***** access to tif2gif libraries
+$ENV{'LD_LIBRARY_PATH'} = $ENV{'LD_LIBRARY_PATH'} . ':/l/local/tiff/lib';
+
+# need for creating subdirs in the image caching directory
+$gMakeDirExecutable = '/bin/mkdir';
+$gMakeDirOutputLog  = '/tmp/pageviewergifdir.log';
+
+# $gThumbnailDir = $gCollSubDir . "thumbnails";
+# $gThumbnailSubDir = "/";
+
+
+## ***** error messages *****
+$gPageNotFoundERROR = qq{The page you requested was not found\n};
+
+# Programs run by CGI scripts
+#$gTIF2GIF = "/l/local/bin/tif2gif";
+
+$gTIF2GIF = "/l/local/tif2gif/bin/tif2gif";
+
+## ***** this may better be tiff2ps (for now using -1 for printps; try -2 sometime?) *****
+$gPrintps = "/l/local/bin/printps -1";
+
+$gDistiller = "/l/local/acrobat-3.0/bin/distill";
+
+
+## for tif2gif
+
+$gNumGrey = 4;
+$gGamma = 1.1;
+
+%gSizes  =  (
+             'l'  => 'large',
+             's' => 'normal',
+             'S'  => 'small',
+            );
+
+%gViews  =  (
+             'image'  => 'image',
+             'pdf' => 'pdf',
+             'text'  => 'text',
+#             'thumbnails'  => 'thumbnails',
+            );
+
+$gDefaultView = 'image';
+
+$gDefaultSize = 's';
+
+$gDefaultSeq = '1';
+
+%gPageFeatureTypes = (
+                            'TPG' => 'Title Page',
+                            'TOC' => 'Table of Contents',
+                            'LOI' => 'List of Illustrations',
+                            'LOT' => 'List of Tables',
+                            'BIB' => 'Bibliography',
+                            'REF' => 'References',
+                            'IND' => 'Comprehensive Index',
+                            'SUI' => 'Subject Index',
+                            'PNI' => 'Author or Name Index',
+                            'SPI' => 'Special Index',
+                            'VOI' => 'Volume Index',
+## UNS always commented out so it doesn't appear for user 
+## 'UNS' => 'Unspecified',
+
+  			  '1stpg' => 'First Page',       ## this is the one that always exists...
+
+#                            ## ***** new for MoaCornell *****
+#                            'PNT' => 'Production Note',
+
+
+#                            ## ***** new for LoC  *****
+                            'ADV' => 'Advertisement',
+                            'BLP' => 'Blank Pages',
+                            'CTP' => 'Cover Title Page',
+                            'ERR' => 'Errata',
+                            'VES' => 'Volume End Sheets',
+                            'VLI' => 'Volume List of Illus',
+                            'VTP' => 'Volume Title Page',
+                            'VTV' => 'Volume Title Page Verso',
+                            );
+
+## ------------------------------------------------------------
+
+1;

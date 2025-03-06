@@ -1,0 +1,36 @@
+<?xml version="1.0"?>
+
+<!-- SPO Editorial Services                  -->
+<!-- automatically-generated XML header file -->
+
+<?xml-stylesheet href="../../pre11-dlxsdocs.xsl" type="text/xsl"?>
+<!DOCTYPE DLPSDOC PUBLIC "-//UM-DLPS//DTD DLPS Publications//EN" "http://docs.umdl.umich.edu/dlps/docs/dlpsdocs.dtd">
+<DLPSDOC>
+<TITLE>DLXS Programming Issues</TITLE>
+<HEADER>
+<JOURNAL>DLXS Documentation</JOURNAL>
+<PUBDATE>2002-06-25 15:36:08 EDT</PUBDATE>
+<AUTH1>Pagliere, Alan</AUTH1>
+<AUTH2></AUTH2>
+<DOCTITLE>DLXS Programming Issues</DOCTITLE>
+<VOL>program</VOL>
+<ISS></ISS>
+<FILE>dlxsdocs-dlxs-programming-index</FILE>
+</HEADER>
+
+
+
+<BODY>
+<BHEAD>DLXS Programming Issues</BHEAD>
+<DIV1>
+<P>When programming with the DLXS system, one should keep in mind the following items:</P>
+<UL>
+  <LI><A HREF="dlxs-releasenotes.xml">Release Notes </A></LI>
+  <LI><A HREF="dlxs-libmodules.xml">DLXS Middleware Library Modules</A></LI>
+  <LI><A HREF="dlxs-cgi-param.xml">CGI Parameter Standards</A></LI>
+  <LI><A HREF="dlxs-debug.xml">Debugging DLXS Perl Code</A></LI>
+  <LI><A HREF="dlps-dlxs-devenvironment.xml">DLPS's Development Environment for DLXS Software</A></LI>
+</UL>
+</DIV1>
+</BODY>
+</DLPSDOC>

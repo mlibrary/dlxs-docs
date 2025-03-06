@@ -1,0 +1,72 @@
+## makefile for the pat50 multifile index
+## IDXDIRPREFIX and NAMEPREFIX are self-explanatory
+## GROUPNAME must be the same as both:
+##     the <GroupName>element in the *.cfg file and
+##     in the text following "sgml" in DisplayFmt in the *.dd file
+##        we have both the optional "wrapper" element and the
+##        element that encloses each separate sgm file
+##        e.g. "<DisplayFmt>sgml,WW,COLL</DisplayFmt>
+
+NODEFY = /l1/bin/t/text/nodefy
+PAGEVIEW = /l1/bin/t/text/makepageviewdata.pl
+IDXDIRPREFIX = /l1/idx/b/bosnia/
+NAMEPREFIX = bosnia
+OBJECTS = /l1/obj/a/a/s/aas7611.0001.001/aas7611.0001.001 \
+		/l1/obj/a/b/u/abu0246.0001.001/abu0246.0001.001 \
+		/l1/obj/a/b/e/abe5413.0001.001/abe5413.0001.001 \
+		/l1/obj/a/f/g/afg3177.0001.001/afg3177.0001.001
+GROUPNAME = DLPSTEXTCLASS
+BINDIRPREFIX = /l1/bin/
+
+all:	noded validate norm dd extra
+
+pageview:
+	for x in $(OBJECTS) ; do \
+		dir=`echo $$x | cut -d/ -f1-7` ; \
+		$(PAGEVIEW) $$dir ; \
+	done
+
+noded:
+	for x in $(OBJECTS) ; do \
+		$(NODEFY) $$x.sgm ; \
+		echo "node attributes created for $$x.sgm.noded" ; \
+	done
+
+validate:
+	for x in $(OBJECTS) ; do \
+		nsgmls -s $(NAMEPREFIX).inp $$x.sgm.noded ; \
+		echo "validated sgml for $$x.sgm.noded" ; \
+	done
+
+norm:
+	for x in $(OBJECTS) ; do \
+		sgmlnorm $(NAMEPREFIX).inp $$x.sgm.noded > $$x.sgm ; \
+		echo "normalized sgml for $$x.sgm" ; \
+	done
+
+dd:
+	cat $(IDXDIRPREFIX)$(NAMEPREFIX).blank.dd > $(IDXDIRPREFIX)$(NAMEPREFIX).dd
+
+##	This block does what dbbuild50 would do, but in separate steps in order
+##
+#	dbbuild50 -v -m 64m -o $(DIRPREFIX)$(NAMEPREFIX) -c $(NAMEPREFIX).cfg -D $(NAMEPREFIX).dd
+##
+##	Don't need to do multirgn since we don't have non-sgml tags in our data
+##	(the *.tag file in that line is what would have definitions of tagged regions to index)
+
+	mfsbld50 -D $(IDXDIRPREFIX)$(NAMEPREFIX).dd -o $(IDXDIRPREFIX)$(NAMEPREFIX).mfs
+	mfsmeta50 -o $(IDXDIRPREFIX)$(NAMEPREFIX).str -D $(IDXDIRPREFIX)$(NAMEPREFIX).dd
+
+#	multirgn50 -o $(NAMEPREFIX) -D $(IDXDIRPREFIX)$(NAMEPREFIX).dd -t tagFile.tag -meta $(IDXDIRPREFIX)$(NAMEPREFIX).str
+
+	sgmlrgn50 -m region -o $(IDXDIRPREFIX)$(NAMEPREFIX) -M $(IDXDIRPREFIX)$(NAMEPREFIX).str -G $(GROUPNAME) -D $(IDXDIRPREFIX)$(NAMEPREFIX).dd $(IDXDIRPREFIX)$(NAMEPREFIX).inp $(IDXDIRPREFIX)$(NAMEPREFIX).dd
+	patbld50 -m 20m -D $(IDXDIRPREFIX)$(NAMEPREFIX).dd
+	patffw50 -m 20m -o $(NAMEPREFIX) -D $(IDXDIRPREFIX)$(NAMEPREFIX).dd
+	patffi50 -m 20m -o $(NAMEPREFIX) -D $(IDXDIRPREFIX)$(NAMEPREFIX).dd
+	echo "built pat50 index for $(NAMEPREFIX)"
+
+extra:
+##	## Finally, add any fabricated regions
+	pat50 -q $(NAMEPREFIX).dd < $(NAMEPREFIX).extra.srch | $(BINDIRPREFIX)output.dd.frag.pl $(IDXDIRPREFIX) > $(NAMEPREFIX).extra.dd
+	$(BINDIRPREFIX)inc.extra.dd.pl $(NAMEPREFIX).extra.dd $(NAMEPREFIX).dd
+	echo "made fabricated regions for $(NAMEPREFIX)"

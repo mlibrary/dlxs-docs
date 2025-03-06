@@ -1,0 +1,245 @@
+<html>
+<head>
+<title>DLXS Statistics System</title>
+<link href="../dlxsdocs.css" rel="stylesheet" type="text/css">
+</head>
+<body>
+<a name="top"></a>
+<div align="center" class="pageTitle">DLXS Statistics System</div><h1>Contents</h1>
+<ul>
+   <li><a href="#func">Functional overview</a></li>
+   <li><a href="#tech">Technical overview</a></li>
+   <li><a href="#inst">Installation</a></li>
+   <li><a href="#reprocess">Reprocessing web log files and retabulating statistics</a>
+   <li><a href="#appendixa">Appendix A: Sample XML file for resource pattern definitions</a>
+   <li><a href="#appendixb">Appendix B: Stats system architecture</a>
+</ul>
+<h1><a name="func"></a>Functional overview</h1>
+<p>The DLXS statistics system consists of two parts: (1) a tool to run on each web server to parse web log files, calculate hits, and insert those hits into the database, and (2) a web interface for retrieving reports such as HTML or MS Excel files.  The web log parsing tool is based on XML configuration files called "resource pattern definitions". The pattern definition for a resource describes the string patterns in a URL that would indicate that a hit is in reference to that resource.  Many DLXS collections can be described in the same configuration file.  For example, all Text Class collections will have the same definition, so only one XML file will be created for all Text Class collections.  See <a href="#appendixa">Appendix A</a> for a sample XML configuration file.</p>
+<p>The pattern definition file uses regular expressions to describe the resource in two ways: (1) the string that must be present in a hit URL to signify that the hit is in reference to this resource, and (2) the string or strings that must or must not be present to describe what <i>type</i> of hit occurred on this resource (such as a search, browse, etc.).</p>
+<p>After parsing a web log file, the software compares each hit to each configuration file and tries to answer two questions:
+<ol>
+<li>Does this hit reference this resource?
+<li>If so, what type (and then subtype) of hit is this?
+</ol>
+The XML configuration file also contains elements to describe a second and third level of tracking within a resource, such as titles (idno=*) and pages (seq=*) in DLXS collections.  These levels are used in the creation of COUNTER reports.
+</p>
+<p><b>To add tracking for a new resource, one would only have to add a new pattern definition XML file for the resource or include the resource name in an existing XML file (see <a href="#appendixa">Appendix A</a>).  Please check the XML configuration files for XML well-formedness and validity (a DTD file is included, <i>/misc/s/stats/stats-config.dtd</i>).</b></p>
+<p>Reports are available through the web interface. The interface recognizes a user's IP address and determines to which collections the user has access. The interface then presents a number of reports in different formats:
+<ul>
+<li>COUNTER reports in Excel format available by email
+<li>Collection-level reports in Excel format or in HTML
+</ul>
+</p>
+
+<a href="#top">Top</a>
+
+<h1><a name="tech"></a>Technical overview</h1>
+<p>This section walks through the algorithm used by the <i>stats_driver.pl</i> script to process web log files and tabulate statistics in the database.</p>
+<p>In general, the algorithm is as follows:
+<ol>
+      <li>Build Stats::Resource objects to represent each of the XML pattern definition files.
+      <li>Process log file one line at a time
+      <li>Parse log file line
+      <li>Determine which Stats::Resource object matches the log line, if any
+      <li>Upon matching a hit to a Stats::Resource object, determine the 'type' and 'subtype' of the hit
+      <li>Determine if the hit is a resource-, title-, or section-level hit
+      <li>Increment the hit count in the database
+</ol>
+</p>
+<p>
+<b>1. Build Stats::Resource objects</b><br/>
+The script uses a configuration variable to determine where to look for the resource pattern definition XML files. All *.xml files in that directory are considered. The script creates a Stats::Resource object for each of those XML files. This object parses the XML using the XML::Simple Perl module and stores the pattern definition data in member variables.</p>
+<p>
+<b>2. Process log file one line at a time</b><br/>
+On the command line the script takes a string that should be the full path to a web log file.  This log file is opened and read one line at a time.  Each line is completely processed and the hit data updated in the database before moving on to the next line.</p>
+<p>
+<b>3. Parse log file line</b><br/>
+The log file line is parsed and a Stats::Hit object is created to represent the data in that line.</p> 
+<p>The Stats::Hit constructor does most of the work of parsing the log file line.  It assumes the log file is in Common Logfile Format (CLF) with the elements:</p>
+
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;host rfc931user authuser [date] "method file protocol" status bytes "referer" "useragent"</p>
+
+<p>The string is matched against the following regular expression:</p>
+
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/(\S+)\s(\S+)\s(\S+)\s(\[.+\])\s(".+|-")\s(\S+)\s(\S+)\s(".+|-")\s(".*")\s/</p>
+
+<p>At this point double clicks are discarded.  To determine if a hit is a double click the code must keep a structure that stores the time of all previous hits organized by host and URL.  If the current hit is within  10 seconds of any previous hit from the same host to the same URL, then it is considered a double click and discarded.  If a third hit occurs within 10 seconds of a hit determined to be a double-click, then that third hit is discarded as well.</p>
+
+<p><b>4. Determine which Stats::Resource object matches the hit, if any</b><br/>
+The hit is compared to each of the Stats::Resource objects to determine which resources it matches.</p>
+
+<p>As an example, consider this line from a log file:</p>
+
+<p><i>222.166.160.134 - - [31/Mar/2006:00:00:06 -0500] "GET /cgi/t/text/text-idx?c=moajrnl;idno=acw8433.1-03.054;node=acw8433.1-03.054:3 HTTP/1.1" 200 15123 "http://www.hti.umich.edu/cgi/b/bib/bibperm?q1=ACW8433-1329APPL-257" "Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1; SV1)" www.hti.umich.edu</i></p>
+
+<p>Also, consider the resource pattern definition XML file in <a href="#appendixa">Appendix A</a>.</p>
+
+<p>Say the Stats::Resource object that represents the XML in <a href="#appendixa">Appendix A</a> (we'll call it Resource A) is the first Stats::Resource object considered.  The script first has to answer the question "Does this hit refer to Resource A?".  To determine this, the script compares the hit URL, "/cgi/t/text/text-idx?c=moajrnl;idno=acw8433.1-03.054;node=acw8433.1-03.054:3", to the value of the <i>&lt;identifier&gt;</i> element in the XML.  Literally, it tries to do a regular expression match $hiturl =~ /$identifier/.</p>
+
+<p>If that regular expression match fails, then the code moves on to the next Stats::Resource object.</p>
+
+<p>If the match returns true, then it also tries to match one or more of the <i>&lt;resource_definition&gt;</i> structures.  To do this it loops through each of the <i>&lt;or&gt;</i> elements doing a regular expression match on each of the <i>&lt;and&gt;</i> elements and a !~ match on each of the <i>&lt;not&gt;</i> elements.  If the match on any of the <i>&lt;and&gt;</i> or <i>&lt;not&gt;</i> elements fails, then we jump out of the loop that was evaluating this <i>&lt;or&gt;</i> element and go to the next one.  As soon as the hit URL matches all of the <i>&lt;and&gt;</i> and <i>&lt;not&gt;</i> elements in an <i>&lt;or&gt;</i>, the code stores the resource ID in a list.  It then evaluates the next <i>&lt;resource_definition&gt;</i> element.  Finally, the method returns the list of resource IDs that matched the hit URL.  This means that a hit URL could refer to more than one resource within a resource definition file.</p>
+
+<p>The code then moves on to the next Stats::Resource object and tries to match the hit to that resource definition.  This means that a hit could also match more than one resource definition.  This is probably an unlikely scenario, but the functionality exists in case you want to tabulate different types of statistics for the same resource.</p>
+
+<p>If the hit does not match any of the Stats::Resource objects, then nothing more is done with that line and the script moves on to analyze the next line in the log file.</p>
+
+<p><b>5. Determine the type and subtype.</b><br/>
+If the hit does match a Stats::Resource object, then the next step is to determine the "type" and "subtype" of the hit.  This determination is made by comparing the hit URL to the regular expressions in the <i>&lt;hit&gt;</i> elements in the XML.</p>
+
+<p>The possible types and subtypes from the resource definition file are stored in a hash with their corresponding sets of regular expressions.  The code loops through the <i>&lt;or&gt;</i> elements doing pattern matches on the <i>&lt;and&gt;</i> and <i>&lt;not&gt;</i> strings.</p>
+
+<p>Once the code finds a matching (type, subtype), it returns that match.  This means that a hit URL can match one and only one type/subtype combination.</p>
+
+<p><b>6. Determine if the hit is a resource-, title-, or section-level hit</b><br/>
+The final analysis on the hit is to determine if the hit is a resource-level, title-level, or section-level hit.  If a <i>&lt;title&gt;</i> element exists in the XML and the hit URL matches the value of the <i>&lt;title&gt;</i> element, then we know that the hit is at least a title-level hit.  If a <i>&lt;section&gt;</i> element exists in the XML and the hit URL matches the value of the <i>&lt;section&gt;</i> element, then we know that the hit is a section-level hit. </p>
+
+<p><b>7. Increment the hit count in the database</b><br/>
+Once the script has made this determination, it updates the database.  Starting with the most granular type of hit:  If we're dealing with a section-level hit, the "Total" column is incremented for the row with the resource, title, and section fields filled in.  If we're dealing with a title-level hit, the "Total" column is incremented for the row with the resource and title fields filled in, but the section field is the empty string.  If we're dealing with a resource-level hit, the "Total" column is incremented for the row with the resource field filled in, but the title and section fields are the empty string.  So each hit is only counted once in the database, for the type that is the most specific.</p>
+
+<p>This all works out because if you want to say "Show me all resource-level hits for resource X" the query would be</p>
+
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<tt>SELECT * FROM hit_totals WHERE resource = X AND title = '' AND section = ''</tt></p>
+
+<p>which basically gets all rows for that resource regardless of the title or section values.  If you want to say "Show me all title-level hits for resource X" the query would be</p>
+
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<tt>SELECT * FROM hit_totals WHERE resource = X AND title != '' AND section = ''</tt></p>
+
+<p>which gets all rows for that resource that do contain a value in the title field. </p>
+
+<p>After matching a hit to a resource, we still loop through the rest of the resources to see if the hit also matches another resource.  This is probably unlikely, but currently the script has no reason to believe that this type of situation would not occur, so it checks anyway.</p>
+
+<a href="#top">Top</a>
+
+<h1><a name="inst"></a>Installation</h1>
+<ol>
+<li><b>Set up the database.</b> Create the stats database on one server using the <i>stats_db.sql</i> file. The <i>stats_driver.pl</i> script on each of the web servers must be able to talk to the stats database.
+<li><b>Set up the log parsing software. </b>Install the script <i>stats_driver.pl</i> on each web server. In addition, this script relies on:
+<ul>
+	  <li> the configuration file
+	  <li> the supporting Stats::* Perl modules
+	  <li> the pattern definition XML files
+</ul>
+<p>Each of those must also be installed on each web server and the configuration file appropriately configured on each server. Set the full path to the configuration file in the Stats::Config module.</p>
+<p>The following third-party Perl modules are also required:
+<ul>
+	  <li> Config::Auto
+	  <li> DBI
+	  <li> Socket
+	  <li> Time::Local
+	  <li> XML::Simple
+</ul>
+</p>
+<p>Create an entry in the crontab on each web server to run the <i>stats_driver.pl</i> script once per day. If you run that script more than once on a given log file, then the results in the database will be erroneously doubled, and you will have to delete all results in the database for that day and reprocess the log files.</p>
+<li><b>Create pattern definition XML files.</b> (See <a href="#appendixa">Appendix A</a>) Also, be sure to set the full path to these files in the <i>resource_def_path</i> configuration variable. Check the configuration file for well-formed, valid XML using 'xmllint': <tt>xmllint --noout --valid *.xml</tt> The DTD file is <i>stats-config.dtd</i>.
+<li><b>Set up the COUNTER processing script.</b> One of the servers must have the <i>process_counter_queue.pl</i> script installed. This script could be installed on one of the web servers or a different machine, but it only needs to run on one server. The only requirement is that the script be able to access the stats database from the remote host. This script reads COUNTER requests from the database, creates COUNTER reports, and emails the reports (as MS Excel files) to users.
+<p>This script relies on:
+<ul>
+	  <li> the configuration file (be sure to configure appropriately and set the full path to the config file in Stats::Config)
+	  <li> the supporting Stats::* Perl modules
+</ul>
+</p>
+<p>
+The following third-party Perl modules are also required:
+<ul>
+	  <li> Config::Auto
+	  <li> DBI
+	  <li> Mail::Mailer
+	  <li> MIME::Base64
+	  <li> Spreadsheet::WriteExcel (version 2.18)
+	  <li> Socket
+</ul>
+</p>
+<p> Create a crontab entry to run this script frequently, such as every 15 minutes. Sample crontab entry:<br/>
+<tt>0,15,30,45 * * * * perl /l1/bin/s/stats/process_counter_queue.pl 2>&1 >>/l1/bin/s/stats/process_counter_queue.log</tt>
+</p>
+<li><b>Set up the web interface.</b> The stats web interface should be installed on one server.  The interface consists of two CGI scripts, <i>subscriber</i> and <i>manager</i>.  The idea is that the <i>manager</i> script will sit behind an authentication method to require users to authenticate before accessing the interface.  A user who has authenticated at <i>manager</i> will be able to view stats for all institutions and for all collections found in the AUTHZD_COLL environment variable.  A user at <i>subscriber</i> will be able to view stats only for their institution.
+<p>
+The stats web interface also relies on:
+<ul>
+	  <li> the configuration file (be sure to configure appropriately and set the full path to the config file in Stats::Config)
+	  <li> the supporting Stats::* Perl modules
+	  <li> the XSLT file for displaying results in HTML
+	  <li> the Javascript files in <i>/web/s/stats</i>
+	  <li> a CSS file (if one is referenced in the configuration file)
+</ul>
+<p>The following third-party Perl modules are also required:
+<ul>
+	  <li> Config::Auto
+	  <li> CGI
+	  <li> DBI
+	  <li> XML::Simple
+	  <li> XML::LibXSLT
+	  <li> Digest::MD5
+	  <li> Mail::Mailer
+	  <li> Socket
+	  <li> Spreadsheet::WriteExcel (version 2.18)
+	  <li> XML::Writer
+	  <li> XML::LibXML
+</ul>
+</p>
+</ol>
+
+<a href="#top">Top</a>
+
+<h1><a name="reprocess"></a>Reprocessing web log files and retabulating statistics</h1>
+<p>The <i>reprocess_stats.pl</i> script, which wraps the <i>stats_driver.pl</i> script, can be used to regenerate data in the database if necessary. The two likely cases are:
+<ol>
+      <li>Reprocess past log files to tabulate stats for a collection newly added to a resource definition config file.
+	<p>The SQL <tt>DELETE FROM hit_totals WHERE resource='foo' AND hitdate >= '2006-09-01' AND hitdate <= '2006-09-30';</tt> will delete all stats for collection "foo" during September 2006. You can then regenerate those stats (assuming the web log files still exist) by running the script <i>reprocess_stats.pl</i> on all relevant web servers:</p>
+<p><tt>perl reprocess_stats.pl foo 20060902 20061001</tt></p>
+<p>(Note: Web log file conventions may differ, but in our case the log files contain data for the day prior to the date in the filename. So '20060902 - 20061001' are the dates in the log file names for dates 20060901 through 20060930.)</p>
+<p>This will reprocess all web log files and tabulate stats for collection "foo" only between the given date ranges.</p>
+      <li>Reprocess past log files for all collections over a period of time.
+	<p>The SQL <tt>DELETE FROM hit_totals WHERE hitdate >= '2006-09-01' AND hitdate <= '2006-09-30';</tt> will delete all stats for all collections during September 2006. You can then regenerate those stats (assuming the log files still exist) by running the script <i>reprocess_stats.pl</i> on all relevant web servers like this:</p>
+<p><tt>perl reprocess_stats.pl all 20060902 20061001</tt></p>
+</ol>
+
+<a href="#top">Top</a>
+
+<h1><a name="appendixa"></a>Appendix A: Sample XML file for resource pattern definitions</h1>
+<p>Important: Use 'xmllint' or other utility to validate the XML.</p>
+<p><a href="statssample.xml">Sample resource pattern definition file</a></p> 
+
+<a href="#top">Top</a>
+
+<h1><a name="appendixb"></a>Appendix B: Stats system architecture</h1>
+<p>Following is a description of where the various parts of the software are located:</p>
+<p>Web server log processing script:
+<ul>
+      <li>$dlxs_root/bin/s/stats/stats_driver.pl
+</ul></p>
+<p>COUNTER reports request processing:
+<ul>
+      <li>$dlxs_root/bin/s/stats/process_counter_queue.pl
+</ul></p>
+<p>Web interface:
+<ul>
+      <li>$dlxs_root/cgi/s/stats/subscriber
+      <li>$dlxs_root/cgi/s/stats/manager
+</ul></p>
+<p>XSLT stylesheets for dynamic HTML reports:
+<ul>
+      <li>$dlxs_root/web/s/stats/resource_level_report.xsl
+</ul></p>
+<p>CSS for web interface:
+<ul>
+      <li>$dlxs_root/web/s/stats/webstats.css
+</ul></p>
+<p>All supporting Perl modules:
+<ul>
+      <li>$dlxs_root/lib/Stats/*.pm
+</ul></p>
+<p>Other:
+<ul>
+      <li>The location where COUNTER reports should be temporarily created is defined in the 'counter_reports_path' configuration variable.
+      <li>The location of the resource pattern definition XML files is defined in the 'resource_def_path' configuration variable.
+      <li>The configuration file template <i>'stats.conf.template'</i> and the database script <i>'stats_db.sql'</i> are in $dlxs_root/misc/s/stats/
+</ul></p>
+
+<a href="#top">Top</a>
+
+</ol>
+</body>
+</html>

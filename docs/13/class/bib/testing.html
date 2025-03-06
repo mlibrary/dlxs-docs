@@ -1,0 +1,26 @@
+<html>
+<head>
+<title>Testing Procedures: Bibliographic Class</title>
+<link href="../../dlxsdocs.css" rel="stylesheet" type="text/css">
+</head>
+
+<body>
+<div class="pageTitle">Testing Procedures: Bibliographic Class</div>
+
+<p>The following is a suite of test searches for BibClass middleware. It is designed to be run against the sample BibClass collection <i>samplebc</i>, a collection of records converted from USMARC format for the old University of Michigan Reports series.</p>
+
+<p>The test is designed to be a series of searches on the command line that correspond to searches in the interface, and which provide numbers for results that can be verified through the interface.</p>
+
+<p>Significantly, this test suite lacks a test of searching multiple simultaneous indexes.  When searching multiple simultaneous indexes, you may run into problems such as numbering, where, for example, the results numbering restarts in the second index when it should run continuously across the indexes.  This omission will be corrected after the test system is in production.</p>
+
+<ol>
+<li>Run these searches from the command line to generate numbers or reproduce the numbers provided here. The syntax is:<br/>
+<tt>xpat -e /{DLXSROOT}/idx/s/samplebc/samplebc.dd &lt; /{DLXSROOT}/idx/s/samplebc/bibtest.srch</tt></li>
+<li>Run the <a href="bibtest.srch">bibtest.srch searches</a> in the test interface to attempt to replicate the numbers indicated. This is typically something that can be delegated to other staff, preferably students.</li>
+</ol>
+
+<p>Steps that could be used to test bookbag, downloading, and the array of generic behaviors only visible through the interface are still needed.</p>
+
+</body>
+
+</html>

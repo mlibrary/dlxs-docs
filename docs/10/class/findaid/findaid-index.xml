@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+
+<!-- SPO Editorial Services                  -->
+<!-- automatically-generated XML header file -->
+
+<?xml-stylesheet href="../../../pre11-dlxsdocs.xsl" type="text/xsl"?>
+<!DOCTYPE DLPSDOC PUBLIC "-//UM-DLPS//DTD DLPS Publications//EN" "http://docs.umdl.umich.edu/dlps/docs/dlpsdocs.dtd">
+<DLPSDOC>
+<TITLE>Finding Aids Class</TITLE>
+<HEADER>
+<JOURNAL>DLXS Documentation</JOURNAL>
+<PUBDATE>2002-06-20 17:25:08 EDT</PUBDATE>
+<AUTH1>Powell, Chris</AUTH1>
+<AUTH2></AUTH2>
+<DOCTITLE>Finding Aids Class</DOCTITLE>
+<VOL>class</VOL>
+<ISS>findaid</ISS>
+<FILE>dlxsdocs-findaid-index</FILE>
+</HEADER>
+<BODY>
+<BHEAD>Documentation</BHEAD>
+<DIV1 ID="body">
+<OL><LI>About Finding Aids Class<OL><LI><A HREF="./findaid-encoding.xml">Encoding Supported in Finding Aids "Class"</A></LI></OL></LI><LI>Mounting a Collection<OL><LI><A HREF="./findaid-prep.xml">Preparation for Index Building</A></LI><LI><A HREF="./findaid-indexing.xml">Indexing the Collection</A></LI><LI><A HREF="./findaid-map.xml">Collection Map Files</A></LI><LI><A HREF="./findaid-config.xml">Configuring the Middleware</A></LI></OL></LI></OL></DIV1>
+</BODY>
+</DLPSDOC>

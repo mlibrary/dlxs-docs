@@ -1,0 +1,109 @@
+<?xml version="1.0"?>
+
+<!-- SPO Editorial Services                  -->
+<!-- automatically-generated XML header file -->
+
+<?xml-stylesheet href="../../../pre11-dlxsdocs.xsl" type="text/xsl"?>
+<!DOCTYPE DLPSDOC PUBLIC "-//UM-DLPS//DTD DLPS Publications//EN" "http://docs.umdl.umich.edu/dlps/docs/dlpsdocs.dtd">
+<DLPSDOC>
+<TITLE>Image Services Characterization</TITLE>
+<HEADER>
+<JOURNAL>DLXS Documentation</JOURNAL>
+<PUBDATE>2002-07-03 17:05:32 EDT</PUBDATE>
+<AUTH1>Weise, John</AUTH1>
+<AUTH2></AUTH2>
+<DOCTITLE>Image Services Characterization</DOCTITLE>
+<VOL>class</VOL>
+<ISS>image</ISS>
+<FILE>dlxsdocs-image-characterization</FILE>
+</HEADER>
+
+
+
+
+<BODY>
+<BHEAD>University of Michigan Image Services Characterization</BHEAD>
+<DIV1 ID="main">
+
+<P><A HREF="mailto:dlxs-info@umich.edu">dlxs-info@umich.edu</A></P>
+
+<P>Image Services, part of the <A HREF="http://www.umdl.umich.edu/">Digital Library Production Service</A> at
+the University of Michigan, was established to federate digital image
+collections online for the purpose of campus and broader public
+access. Participation in the Museum Educational Site Licensing
+Project and related campus activities highlighted the existing
+diversity among curatorial practices and management systems, in
+museums, libraries, visual resources departments, and commercial
+distributors. While there is clearly much to be gained through
+standardization, we feel that the diversity exists for logical, as
+well as historical, reasons (ranging from curatorial opinion to
+technological infrastructure) and that it should be supported at the
+same time that we encourage standardized practices.</P>
+
+<P>Image Services has been very successful in creating a service for
+the campus that enables and facilitates online access to image
+collections. The term "collections" is used loosely and includes
+faculty databases as well as museum, archive, library, visual
+resources, and commercial databases. Organizationally within the
+University Library, Image Services leverages the Library's commitment
+to providing online access to image content, and absorbs the marginal
+costs of providing the same services to the broader campus.
+Technically, Image Services has minimized the requirements for
+submitting data, and developed generalized mechanisms for processing
+data that make deployment online simple. With no costs and minimal
+technical requirements for the content provider, it is often just a
+matter of handing data off to Image Services.</P>
+
+<P>It is worth emphasizing that Image Services only provides online
+access services for image collections. The libraries, museums, etc.
+that provide content use a variety of database systems to manage
+their data (e.g., FileMaker Pro, Oracle, Excel). Periodically,
+content providers transfer the latest version of their entire
+database to Image Services for updating online. Only entire databases
+are updated, and there is no provision for the update of individual
+records. This approach has pros and cons.</P>
+<DIV2 ID="pros">
+<H2><B>Pros </B></H2>
+
+<P><B>Federated Content:</B> Content providers are not only on
+campus, but from other institutions and commercial entities. All
+content is integrated into a common system for access.</P>
+
+<P><B>Core Categories:</B> Collection specific database fields can
+easily be mapped to one or more core category sets, such as Dublin
+Core and VRA Core. This increases compatibility and enhances
+searchablity among similar collections. All collections are
+searchable together in the <A HREF="http://images.umdl.umich.edu">Image Services access system</A>. At the same
+time, the collections are searchable independently by the unique
+attributes of each.</P>
+
+<P><B>Optimized for Access:</B> The Image Services system is
+optimized to provide access, without the overhead of a management
+system. Relational data structures are flattened for efficiency. </P>
+
+<P><B>Independent Management:</B> Departments can choose management
+systems appropriate to needs and available resources.</P>
+
+<P><B>Reliable Public Access:</B> The majority of the content
+providers have extremely limited resources for providing reliable
+public access. Image Services has robust servers, backed up,
+constantly monitored, and with advanced baseline services such as
+institutional login.</P>
+</DIV2>
+<DIV2 ID="cons">
+<H2><B>Cons</B></H2>
+
+<P><B>Currency Lag: </B>Since collections are updated periodically
+and in their entirety, the version in Image Services is typically not
+as current as the version for management.</P>
+
+<P><B>No Editing: </B>Database records cannot be edited through the
+Image Services system.</P>
+</DIV2>
+
+
+
+
+</DIV1>
+</BODY>
+</DLPSDOC>

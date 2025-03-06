@@ -1,0 +1,146 @@
+<html>
+  <head>
+    <title>IDRESOLVER</title>
+    
+    
+    
+    <link href="../dlxsdocs.css" rel="stylesheet" type="text/css">
+    </head>         <body>
+    <div class="pageTitle">DLXS IDRESOLVER</div>
+    
+    <h1><a name="idresolver" id="idresolver"></a>IDRESOLVER</h1>
+    <p>IDRESOLVER is a simple mechanism for resolving a unique ID to a URL. The
+      DLXS Classes can use it to, for example, link digital object identifiers
+      in an Electronic Finding Aid to the actual digital object in another Class.</p>
+    <p>IDRESOLVER is the combination of a data table and a CGI. The table stores
+      IDs and URLs, and the CGI responds to requests for ID resolution. It is
+      also possible to skip the CGI and query the table directly, and some of
+    the Classes take this approach. </p>
+    <p>The MySQL table in the DLXS database is named &quot;idresolver&quot;. It has
+    three fields: id, url, and modified. IDs must be unique. </p>
+    <p>The IDRESOLVER
+        CGI ($DLXSROOT/cgi/i/idresolver/idresolver) will return a single URL
+      (wrapped in XML) when given an ID that is in the database. </p>
+    <p>Below is an example from the <a href="http://images.umdl.umich.edu/cgi/i/image/image-idx?c=bhl" target="_blank">Bentley
+        Image Bank</a>, which links from a digital
+      image record in Image Class to the Bentley Electronic Finding Aid (in FindAid
+        Class) using IDRESOLVER. It is also possible to link in the other direction,
+        but this way is easier to explain and understand. </p>
+    <p>The <a href="http://images.umdl.umich.edu/cgi/i/image/image-idx?rgn1=bhl_href;med=1;c=bhl2ic;q1=awm00096;back=back1183735019;size=20;subview=detail;resnum=1;view=entry;lastview=thumbnail;cc=bhl2ic;entryid=x-awm00096;viewid=AWM00096" target="_blank">image
+    record</a> has a field named &quot;Finding Aid&quot; containing an ID. The
+    field is configured (in Collmgr) so that Image Class uses 
+    IDRESOLVER to turn the ID into a link. The Image Class middleware takes the
+    value of the field, &quot;umich-bhl-02160&quot;, passes to IDRESOLVER in the form of
+    an HTTP request, which returns the value from the URL field in IDRESOLVER.</p>
+    <table width="644" height="44" border="1">
+      <tr>
+        <td>ID</td>
+        <td>URL</td>
+      </tr>
+      <tr>
+        <td width="172">umich-bhl-02160</td>
+        <td width="456"><a href="http://www.hti.umich.edu/cgi/f/findaid/findaid-idx?c=bhlead;idno=umich-bhl-02160" target="_blank">http://www.hti.umich.edu/cgi/f/findaid/findaid-idx?c=bhlead;idno=umich-bhl-02160</a></td>
+      </tr>
+    </table>
+    <p>The above example links to the top level of the Finding Aid.
+      Going the other direction, from the finding aid to the image record in
+      Image Class is more specific. The <a href="http://quod.lib.umich.edu/cgi/f/findaid/findaid-idx?c=bhlead;cc=bhlead;idno=umich-bhl-02160;type=simple;rgn=Entire%20Finding%20Aid;q1=NYDA.1986.004.00096;view=text;didno=umich-bhl-02160;focusrgn=C04;byte=224462" target="_blank">list
+      of objects</a> in the finding aid has several links, each built by using
+      IDRESOLVER to look up the URL by ID.</p>
+    <p>An ID may resolve to any type of URL, for instance, one that returns a
+      result set (many items) rather than a single item. In all cases, it is
+      up to you to create and maintain the IDs and URLs. The IDRESOLVER table
+      and and CGI do nothing to help with this. The University of Michigan keeps
+      a FileMaker database of IDRESOLVER IDs and URLs. Data is periodically added,
+      removed, and updated in the FileMaker database. And then as needed, the
+      data is dumped out of FileMaker as XML and loaded in to MySQL, replacing
+      the existing IDRESOLVER data.</p>
+    <p>Here are the generic steps for loading or updating IDRESOLVER data. </p>
+    <ol>
+      <li>Load all ID/URL pairs in to an intermediate/short term table in MySQL.</li>
+      <li>Create an empty copy of the current, production, &quot;idresolver&quot; table.</li>
+      <li>Transfer all IDs/URLs from the intermediate table to the <strong>copy</strong> of the
+        production table. </li>
+      <li>Rename the current production table, essentially taking it
+        out of service. </li>
+      <li>Rename the copy of the production table as 'idresolver' so that it
+        becomes the production table.</li>
+      <li>Test the new production table. If all is well, drop/delete the intermediate
+        table and the previous production table.</li>
+    </ol>
+    <p>Using the above method keeps the definition of the MySQL table in tact,
+  including indexes. </p>
+    <p>Michigan has a more <a href="http://www.umdl.umich.edu/docs/dlps/docs/id_resolver.html" target="_blank">specific
+        set of instructions</a> for internal use
+       that might be helpful to you in creating your own set of steps and
+      instructions for updating idresolver.</p>
+    <p>It is worthwhile to come up with a well defined plan for creating IDs
+      so that they are unambiguous and, in particular, unique.</p>
+    <p>For example, let's say you have a book in Text Class that has full color
+      figures in Image Class and you want to display thumbnails for the figures
+      in Text Class and link them to the full record and large image in Image
+      Class. Plus, you want Image Class to link back to the page in the book.
+      This requires 3 ID/URL pairs. </p>
+    <ol>
+      <li>ID/URL for the thumbnail image</li>
+      <li>ID/URL for the full record in Image Class </li>
+      <li>ID/URL for the book page in Text Class</li>
+    </ol>
+    <p>In order to disambiguate these related items, add to each ID a suffix
+      such as &quot;rec&quot; for record and &quot;th&quot; for thumbnail. Also prefix each with
+      a DLXS Class abbreviation and the collection id. The following is an ID
+      for linking from Text Class to Image Class. Let's break it down because
+      it is slightly counter-intuitive how it is constructed. </p>
+    <p>Example ID:  ic-micounty-2911266.0001.001-P0000063.TIF-rec</p>
+    <p>Assume the Text Class object (i.e., XML) contains a <strong>Text
+        Class </strong>(not Image Class) collection ID,
+      volume ID, and page ID. And the middleware has been configured/programmed
+      to resolve IDs for this collection in order to link to Image Class. Text
+      Class does not, however, know the Image Class collection ID that it needs
+      to link to. Granted, this could be hardcoded into the middleware, but it
+      is better to leave the Image Class collection ID out of the code and let
+      IDRESOLVER take care of it. Again, we want the above Example ID to resolve
+        to an Image Class URL. The counter-intuitive part is that the collection
+        id is the Text Class collection ID, but we are linking to an Image Class
+        collection.</p>
+    <p>Keep in mind that the DLXS classes do not require IDs to follow a particular
+      convention, but you may have to make middleware changes/overrides if you
+      choose your own convention. </p>
+<p>Once you have your database of IDs and URLs, you need to know how to make
+      the Classes do look-ups. </p>
+    <p><strong>Image Class</strong></p>
+    <p>To make Image Class look up the value of a
+      field as an ID, use Collmgr to turn on the &quot;idres&quot; option in any list of
+      display fields such as (dfltentryflds). The field value 
+      must match the ID in the IDRESOLVER table exactly. For more informatoin
+      about enabling the idres option see <a href="../class/image/colldb.html" target="_blank">Image
+      Class COLLDB (Collection Database) Configuration</a>.</p>
+    <p><strong>FindAid Class</strong></p>
+    <p>FindAid Class is coded to look up every DAO in idresolver and build a
+      link if it finds the ID in the IDRESOLVER table. It uses the DAO as is.
+      The method <strong>FilterAllDaos_XML</strong> in <strong>$DLXSROOT/cgi/f/findaid/FindAidClass.pm</strong>      can be overridden per collection if different behavior is needed. </p>
+  <p><strong>Text Class </strong></p>
+    <p>Text Class attempts to resolve all FIGURE IDs. It uses IDRESOLVER if the
+      FIGURE TYPE is INLINE or THUMBAIL. IDRESOLVER lookups assume image class.
+      The method <strong>GenerateExternalId</strong> in <strong>$DLXSROOT/cgi/t/text/TextClass.pm</strong> can
+      be overridden per collection if different behavior is needed. </p>
+  <p><strong>More Information </strong></p>
+  <p>More information about subclassing can be found in the document <a href="../program/subclassing.html" target="_blank">Subclassing
+    in TextClass</a>.</p>
+<p>The utility script $DLXSROOT/bin/data2db.pl is useful for loading data in
+  to a MySQL table and it can be subclassed for different formats.</p>
+<p>&nbsp;</p>
+<p><br />
+      <br />
+        <br />
+          <br />
+            <br />
+              <br />
+                <br />
+                  <br />
+                    <br />
+                      <br />
+        </p>
+    </body>
+  
+</html>

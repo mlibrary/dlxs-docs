@@ -1,0 +1,152 @@
+
+
+<HTML><HEAD><TITLE>Manpage of XPATFFI</TITLE>
+<LINK HREF="../../dlxsdocs.css" REL="stylesheet" TYPE="text/css"> </head><BODY>
+<table class="updateTable" cellspacing="3" cellpadding="3">
+<tr>
+<td>CVS Revision</td>
+<td>$Revision: 1.3 $</td>
+</tr>
+</table>
+
+<H1>XPATFFI</H1>
+Section: User Commands  (1)<BR>Updated: November 2000<BR><A HREF="#index">Index</A>
+<A HREF="http://localhost/cgi-bin/man/man2html">Return to Main Contents</A><HR>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<A NAME="lbAB">&nbsp;</A>
+<H2>NAME</H2>
+
+<B>xpatffi</B> - XPAT Fast-Find Index builder
+<A NAME="lbAC">&nbsp;</A>
+<H2>SYNOPSIS</H2>
+
+<B>xpatffi</B>
+[
+<B>-v</B>
+
+]
+[
+<B>-b</B><I> block_size</I>
+
+]
+[
+<B>-I</B><I> index_name</I>
+
+]
+[
+<B>-m</B><I> memory</I>
+
+k|m ]
+[
+<B>-o</B><I> output_name</I>
+
+]
+[
+<B>-t</B><I> temp</I>
+
+]
+<B>-D</B>
+
+<I>data_dictionary</I>
+<A NAME="lbAD">&nbsp;</A>
+<H2>DESCRIPTION</H2>
+
+<B>xpatffi</B> builds an Fast-Find Index for a Main Index of the database specified
+by <I>data_dictionary</I>.  The Fast-Find Index, combined with the Fast-Find Word List,
+greatly increases the speed of text searching
+in <B>xpat</B>.  The Fast-Find Index is about 1/4 to 1/3 the size
+of the Main Index.  During index building, additional temporary file
+space equal to about 1&nbsp;1/4 the size of the Main Index is required.  
+<A NAME="lbAE">&nbsp;</A>
+<H2>OPTIONS</H2>
+
+The following options are available:
+<DL COMPACT>
+<DT><B>-v</B><DD>
+Specify verbose mode.  If this option is specified, <B>xpatffi</B> prints progress
+messages as it builds the Fast-Find Index.  By default, <B>xpatffi</B> works
+quietly, only printing a message if it encounters an error condition.
+<DT><B>-b</B> <I>block_size</I><DD>
+Specify compression block size (in bytes).
+The Fast-Find Index is compressed as it is built, and is uncompressed
+in blocks as it is used.  If the index is to be used on a machine with very
+little memory, it may be desirable to make the uncompressed blocks
+as small as possible (this is usually only needed in extreme cases).
+By default, <B>xpatffi</B> uses 8192 byte blocks.
+<DT><B>-I</B> <I>index_name</I><DD>
+Specify the index name over which to build the Fast-Find Index.  The default
+is the first index in the <I>data_dictionary</I>.
+<DT><B>-m</B><I> N</I><B>k</B><DD>
+<DT><B>-m</B><I> N</I><B>m</B><DD>
+memory size - use <I>N</I> <B>k</B>ilobytes or <I>N</I> <B>m</B>egabytes
+of physical memory for building the Fast-Find Index.
+A larger memory allocation results in faster indexing.  Note that
+the amount of memory specified is
+limited by the amount of <I>available system memory</I>.  Also note
+that the memory parameter is usually the same as that specified
+to <B>xpatbld</B>.  Refer to the <B><A HREF="http://localhost/cgi-bin/man/man2html?1+xpatbld">xpatbld</A></B>(1) man page for further details.
+<DT><B>-o</B> <I>output_name</I><DD>
+Specify the file name prefix for the Fast-Find Index files.  <B>xpatffi</B> produces two
+files, with the suffixes `.ffc' and `.ffi'.  By default
+<B>xpatffi</B> takes the prefixes for those two files from the
+`FastFind' section in the <I>data_dictionary</I>, or uses the prefix of the <I>data_dictionary</I> file itself
+if that file does not already contain any Fast-Find specifications.
+<DT><B>-t</B> <I>temp</I><DD>
+Specify the full path prefix for temporary files.  The default is
+to put these in the local directory using a file prefix of &quot;ll&quot;.
+</DL>
+<A NAME="lbAF">&nbsp;</A>
+<H2>RESTRICTIONS</H2>
+
+The Main Index must already have been built using <B>xpatbld</B>.
+<A NAME="lbAG">&nbsp;</A>
+<H2>EXAMPLE</H2>
+
+
+xpatffi -v -m 8m -o /text/fastfind -t /tmp/svec -I first -D text.dd
+
+<A NAME="lbAH">&nbsp;</A>
+<H2>SEE ALSO</H2>
+
+<I>Database Administration Guide</I>
+<BR>
+
+<B><A HREF="http://localhost/cgi-bin/man/man2html?1+xpat">xpat</A></B>(1), <B><A HREF="http://localhost/cgi-bin/man/man2html?1+xpatffw">xpatffw</A></B>(1), <B><A HREF="http://localhost/cgi-bin/man/man2html?1+xpatbld">xpatbld</A></B>(1)
+<P>
+
+<HR>
+<A NAME="index">&nbsp;</A><H2>Index</H2>
+<DL>
+<DT><A HREF="#lbAB">NAME</A><DD>
+<DT><A HREF="#lbAC">SYNOPSIS</A><DD>
+<DT><A HREF="#lbAD">DESCRIPTION</A><DD>
+<DT><A HREF="#lbAE">OPTIONS</A><DD>
+<DT><A HREF="#lbAF">RESTRICTIONS</A><DD>
+<DT><A HREF="#lbAG">EXAMPLE</A><DD>
+<DT><A HREF="#lbAH">SEE ALSO</A><DD>
+</DL>
+<HR>
+This document was created by
+<A HREF="http://localhost/cgi-bin/man/man2html">man2html</A>,
+using the manual pages.<BR>
+Time: 18:03:38 GMT, March 26, 2001
+</BODY>
+</HTML>

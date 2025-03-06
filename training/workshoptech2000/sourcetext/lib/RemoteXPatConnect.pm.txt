@@ -1,0 +1,82 @@
+package RemoteXPatConnect;
+
+use strict;
+
+use Symbol;
+
+
+
+## --------------------------------------------------
+## PatClient.pl
+## --------------------------------------------------
+
+use Socket;          # for setting up XPat process on a remote server
+
+
+sub Open
+{
+    my ( $wtr,
+         $rdr,
+         $host,
+         $port
+       ) = @_;
+
+    my ( $sock, $addr ) =  &SetUpSocket ( $host, $port );
+    
+    &BindAndConnect( $sock, $port, $addr );
+    
+    $wtr = $rdr = $sock;
+    return ( $wtr, $rdr );
+}
+
+## --------------------------------------------------
+sub SetUpSocket 
+{
+    my ( $server, $port ) = @_;
+    my ( $name, $aliases, $protocol, $type, $len, $thataddr );
+
+    ($name, $aliases, $protocol) = getprotobyname('tcp');
+    
+    if ($port !~ /^\d+$/) 
+    {
+        ($name, $aliases, $port) = getservbyname($port,'tcp');
+    }
+        
+    ($name, $aliases, $type, $len, $thataddr) = gethostbyname($server);
+        
+    # use gensym to get unique socket handle identifier
+    my $sock = gensym();
+
+#    if (!socket(SOCK, AF_INET, SOCK_STREAM, $protocol)) 
+    if (!socket($sock, AF_INET, SOCK_STREAM, $protocol)) 
+       { die "Socket : $!\n"; }
+
+#    select (SOCK);
+    select ($sock);
+    $| = 1;  # autoflush
+    select(STDOUT);
+
+#    return (\*SOCK, $thataddr );
+    return ($sock, $thataddr );
+}
+
+## --------------------------------------------------
+sub BindAndConnect
+{
+    my ( $socketHandle, $port, $thataddr ) = @_;
+    
+    my $thisaddr;
+    
+    my $sockaddr = 'S n a4 x8';
+    my $this = pack($sockaddr, AF_INET, 0, $thisaddr);
+    my $that = pack($sockaddr, AF_INET, $port, $thataddr);
+
+    if (!bind($socketHandle, $this)) 
+       { die $!; }
+
+    if (!connect($socketHandle, $that)) 
+       { die $!; }
+}
+
+
+1;

@@ -1,0 +1,41 @@
+<HTML>
+<HEAD>
+<TITLE>GetItemEncodingLevel</TITLE>
+<META http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+</HEAD>
+
+<BODY bgcolor="#FFFFFF" text="#000000">
+<PRE>
+sub GetItemEncodingLevel 
+{ 
+     my $self = shift; 
+     my $cgi = shift; 
+
+     my $idno = $cgi-&gt;param('idno'); 
+     my $tm = $self-&gt;GetTermMapper( ); 
+     my $rgn; 
+     ASSERT( $rgn = $tm-&gt;map('ITEM', 'synthetic', 'native') ); 
+     my $idnorgn; 
+     ASSERT( $idnorgn = $tm-&gt;map('IDNO', 'synthetic', 'native') ); 
+
+     # find xpat with this item 
+     my $xpat = $self-&gt;FindXPatContainingIdno( $idno ); 
+
+     my $query = 
+     # qq{pr.region.&quot;A-N&quot; (region &quot;A-N&quot; within (region &quot;EDITORIALDECL-T&quot; within ( region mainheader within ( $rgn incl ( $idnorgn incl &quot;$idno&quot; ) ) ) ) );}; 
+
+     qq{pr.region.&quot;EDITORIALDECL-T&quot; (region &quot;EDITORIALDECL-T&quot; within ( region mainheader within ( $rgn incl ( $idnorgn incl &quot;$idno&quot; ) ) ) );}; 
+
+     my ( $error, $result ) = <B>$xpat-&gt;GetSimpleResultsFromQuery( $query );</B> 
+     if ( $error ) 
+     { &amp;DlpsUtils::errorBail( qq{Query error in GetItemEncodingLevel: $result} ); } 
+
+     &amp;DlpsUtils::StripAllRSetCruft( \$result ); 
+
+     $result =~ s,.*N=\&quot;(\d+)\&quot;.*,$1,; 
+
+     return $result; 
+} 
+</PRE>
+</BODY>
+</HTML>

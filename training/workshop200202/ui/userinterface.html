@@ -1,0 +1,2892 @@
+<HTML>
+<HEAD>
+<TITLE>User Interface</TITLE>
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+<LINK REL="stylesheet" HREF="../styles.css" TYPE="text/css">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF" LEFTMARGIN="10" TOPMARGIN="10" MARGINWIDTH="10" MARGINHEIGHT="10" CLASS="mainpalette">
+<H1> User Interface</H1>
+<UL>
+  <LI> <A HREF="#overview">HTML delivery via templates: an overview</A> 
+    <UL>
+      <LI><A HREF="#templates">HTML templates</A></LI>
+      <LI><A HREF="#procins">Processing instructions</A></LI>
+      <LI><A HREF="#fallback">Collection templates and class fallback</A> </LI>
+    </UL>
+  </LI>
+  <LI><A HREF="#textclass">TextClass</A> 
+    <UL>
+      <LI><A HREF="#tcGenPgLayout">General Page Layout</A></LI>
+      <LI><A HREF="#tcIndCollChars">Specifying Individual Collection Characteristics</A> 
+        <UL>
+          <LI><A HREF="#css">CSS files</A> </LI>
+          <LI><A HREF="#graphics">Graphics</A> </LI>
+          <LI><A HREF="#hdr">Header characteristics</A> 
+            <UL>
+              <LI><A HREF="#background">Background colors and graphics</A> </LI>
+              <LI><A HREF="#hdrcollname">Title name or graphic</A> </LI>
+              <LI><A HREF="#hdrtabs">Navigation tabs and fonts</A> </LI>
+            </UL>
+          </LI>
+        </UL>
+      </LI>
+      <LI><A HREF="#tcTemplates">Templates</A></LI>
+      <LI><A HREF="#tcPis">Processing Instructions</A></LI>
+    </UL>
+  </LI>
+  <LI><A HREF="#imageclass">ImageClass</A> 
+    <UL>
+      <LI><A HREF="#icIndCollChars">Specifying Individual Collection Characteristics</A> 
+        <UL>
+          <LI><A HREF="#iccss">CSS files</A> </LI>
+          <LI><A HREF="#icgraphics">Graphics</A> </LI>
+          <LI><A HREF="#ichdr">Header characteristics</A> 
+            <UL>
+              <LI><A HREF="#icbackground">Background colors and graphics</A> </LI>
+              <LI><A HREF="#ichdrcollname">Title name or graphic</A> </LI>
+              <LI><A HREF="#ichdrtabs">Navigation tabs and fonts</A> </LI>
+            </UL>
+          </LI>
+        </UL>
+      </LI>
+      <LI><A HREF="#ictemplates">Templates</A></LI>
+      <LI><A HREF="#icprocins">Processing Instructions</A></LI>
+    </UL>
+  </LI>
+</UL>
+<P><A NAME="main"> </A> </P>
+<HR SIZE="1" WIDTH="90%">
+
+<P>&nbsp;</P><H2><A NAME="overview"></A>HTML delivery via templates: an overview </H2>
+<DIV CLASS="level1"></DIV>
+<P>The user interface in the DLXS middleware is realized by a combination of interrelated 
+  techniques:</P>
+<UL>
+  <LI>HTML Templates 
+  <LI>Processing Instructions 
+  <LI>ProcIns Module 
+</UL>
+<DIV CLASS="level1"> 
+  <P>The first two techniques are of primary importance for specifying the various 
+    components of HTML delivery that make up the &quot;look and feel&quot; of 
+    the interface. </P>
+  <P>&nbsp;</P>
+</DIV>
+<DIV CLASS="level2"></DIV>
+<H3><A NAME="templates"> </A> </H3>
+<H3>HTML Templates</H3>
+<P>HTML templates are used to deliver dynamic content from the CGI within a prescribed 
+  HTML structure. In general, there are as many templates per class as there are 
+  distinct page types in the overall functional architecture of the class. A collection 
+  implemented with the TextClass middleware, for example, can include up to 23 
+  template files for delivering, among other pages, multiple search forms, results 
+  displays, bibliographic headers and tables of contents, search histories and 
+  full text displays. Each HTML template is a combination of static HTML code 
+  for areas of content that are unchanging from page to page, and processing instructions 
+  that are either replaced by content provided by the CGI or used to remove content 
+  or code from the template before delivery. Processing instructions can deliver 
+  simple strings, or large combinations of text and HTML code, depending on the 
+  circumstance, but the practice has been to minimize the amount of HTML code 
+  replaced via a PI because this allows for easier maintenance of graphical interface 
+  at the template level. Otherwise, the only rule governing template planning 
+  is that, when parsed, it should deliver valid or acceptable HTML to the browser.</P>
+<DIV CLASS="level2"></DIV>
+<H4><A NAME="procins"> </A> </H4>
+<H3>Processing Instructions</H3>
+<P>HTML templates are combined with processing instruction tags that are parsed 
+  and replaced by the middleware. Processing instruction tags are of the form</P>
+<BLOCKQUOTE> 
+  <P><FONT SIZE="4">&lt;?PI_IDENTIFIER_NAME [modifiername=&quot;value&quot;]*&gt;</FONT></P>
+</BLOCKQUOTE>
+<P>where all identifier names are preceded by a question mark and are represented 
+  in all capital letters with underscore characters. Zero or more modifier name/value 
+  pairs can be included to provide additional parameters. Here are two example 
+  PI tags:</P>
+<BLOCKQUOTE> 
+  <TABLE BORDER="1" CELLPADDING="5" CELLSPACING="0" STYLE="border-width: 1px; border-style: solid; border-color: #CCCCCC" WIDTH="85%">
+    <TR> 
+      <TD STYLE="border-width: 1px; border-style: solid; border-color: #CCCCCC" VALIGN="top"><CODE>&lt;?TITLE&gt;</CODE></TD>
+      <TD STYLE="border-width: 1px; border-style: solid; border-color: #CCCCCC">Appears 
+        witin <CODE>&lt;TITLE&gt;&lt;/TITLE&gt;</CODE> tags and supplies a collection 
+        title string.</TD>
+    </TR>
+    <TR> 
+      <TD STYLE="border-width: 1px; border-style: solid; border-color: #CCCCCC" VALIGN="top"><CODE>&lt;?DOC_ROOT 
+        mode=&quot;single&quot;&gt;</CODE></TD>
+      <TD STYLE="border-width: 1px; border-style: solid; border-color: #CCCCCC">Can 
+        appear within the <CODE>href</CODE> or <CODE>src</CODE> attribute values 
+        in individual collection templates to return the appropriate local root 
+        path of that collection.</TD>
+    </TR>
+  </TABLE>
+</BLOCKQUOTE>
+<P>Processing instruction tags are not, in all cases, a standardized API mechanism 
+  to collection information, though they share some of those characteristics. 
+  In general, the PIs are more likened to a customized API to the middleware itself. 
+  In this regard, PIs perform two general types of functionality:</P>
+<P><B>PIs may act as simple variable names</B>: As in <CODE>&lt;?TITLE&gt;</CODE> 
+  above, replaced by simple strings or even large blocks of HTML code and text; 
+</P>
+<P><B>PIs may act as include/exclude instructions</B>: A pair of PI tags may instruct 
+  the middleware to include or exclude code contained in the template, depending 
+  on specific context. </P>
+<BLOCKQUOTE> 
+  <P><CODE><BR>
+    &lt;?INCLUDE_COLL_SPECIFIC_CONTENT id=&quot;cs001&quot;&gt;<BR>
+    &lt;td width=&quot;75&quot; height=&quot;23&quot; align=&quot;center&quot; 
+    nowrap&gt;&lt;font class=&quot;navlinks&quot; color=&quot;#ffffff&quot;&gt;&lt;a 
+    href=&quot;&lt;?COLL_SPECIFIC_CONTENT id=&quot;cs001&quot; cginame=&quot;text-idx&quot;&gt;&quot; 
+    class=&quot;nav&quot; target=&quot;_top&quot;&gt;browse&lt;/a&gt;&lt;/font&gt;&lt;/td&gt;<BR>
+    &lt;?INCLUDE_COLL_SPECIFIC_CONTENT id=&quot;cs001&quot;&gt;</CODE></P>
+</BLOCKQUOTE>
+<P>The code example above is from the table that contains cells navigation bar 
+  tabs and tab divisions. The HTML wrapped within the <CODE>&lt;?INCLUDE_COLL_SPECIFIC_CONTENT&gt;</CODE> 
+  PI tags is for a browse feature that is not supported by all collections. The 
+  PIs are used to remove the code in the case of collections that do not need 
+  this HTML, and to provide the appropriate url for the browse feature for collections 
+  that do have browse features. 
+<H3><A NAME="fallback"> </A> </H3>
+<H3>Collection templates and class fallback</H3>
+<P>Each of the class-specific sections below describes the techniques that are 
+  applied within the class architecture to effect changes to overall class look 
+  and feel as it is expressed through the templates. It is important to note, 
+  however, that the class middleware supports the implementation of customized, 
+  collection-specific templates. That is, when attempting to render a particular 
+  page utilizing a specific template, the middleware will first look for the required 
+  template in the collection-specific path, using a customized templete if it 
+  exists. If there is no such customized version of the required template in the 
+  collection path, the middleware will utilize the default class template. The 
+  sections below, thus, apply to the techniques that can be applied to any templates, 
+  class defaults as well as optional individual versions.</P>
+<P>&nbsp;</P>
+<P><A NAME="textclass"></A> 
+<H2>TextClass</H2>
+<A NAME="tcGenPgLayout"> </A> 
+<H3 ALIGN="left">General Page Layout and Color</H3>
+<DIV CLASS="level1"></DIV>
+<P>Default page delivery in Text Class is done via class-level templates that 
+  are shared by all instances of the class, though the middleware also supports 
+  collection-specific templates for any or all page-based behavior within the 
+  class. All default Text Class page templates are based on the same layout approach, 
+  which relies on tables (along with transparent spacer gifs) for all positioning 
+  and general color or graphic appearance. General layout is shown in <B>Figure 
+  1</B>, which shows top-level tables with borders showing, and using the color 
+  scheme for the Voltaire &eacute;lectronique collection. All table cells for 
+  header and navigation bar content at this level have default values for the 
+  <CODE>bgcolor</CODE> attribute for browsers that are not CSS-capable. Each header 
+  and navigation cell also has a default CSS class value and default background 
+  image specified in the <CODE>background</CODE> attribute. The background colors 
+  created by class and gif allow for flexibility to change appearances for different 
+  collections based on the same template. For more on specifiying individual collection 
+  appearance, see <A HREF="#tcIndCollChars">Specifying individual collection characteristics</A>.</P>
+<TABLE BORDER="0" CELLPADDING="0" CELLSPACING="2">
+  <TR> 
+    <TD><IMG HEIGHT="368" SRC="graphics/gen-layout.gif" WIDTH="450"></TD>
+  </TR>
+  <TR> 
+    <TD><B>Figure 1</B>: top-level tables with borders showing.</TD>
+  </TR>
+</TABLE>
+<BR>
+<P><B> Figure 2</B> shows the simple search page for Voltaire &eacute;lectronique 
+  as it appears normally. Navigation bar labels, page header (i.e., &quot;Simple 
+  search&quot;), instruction text and footer text are hard coded, and thus identical 
+  across all collections. All other content is specified per collection by processing 
+  instructions. </P>
+<TABLE BORDER="0" CELLPADDING="0" CELLSPACING="2">
+  <TR> 
+    <TD><IMG BORDER="1" HEIGHT="289" SRC="graphics/simple-voltaire-450.gif" WIDTH="449"></TD>
+  </TR>
+  <TR> 
+    <TD><B>Figure 2</B>: simple search page for Voltaire &eacute;lectronique.</TD>
+  </TR>
+</TABLE>
+<P>&nbsp;</P>
+<P><A NAME="tcIndCollChars"></A></P>
+<H3>Specifying Individual Collection Characteristics</H3>
+<DIV CLASS="level2"></DIV>
+<A NAME="css"> </A> 
+<H4>CSS files</H4>
+<P>Text class templates utilize two CSS files for controlling most font and color 
+  characteristics: textclass.css and textclass-specific.css. textclass.css is 
+  stored in at the <CODE>&lt;root&gt;/t/text/</CODE> path and contains all the 
+  default style declarations. textclass-specific.css is created for each individual 
+  collection and stored at the <CODE>&lt;root&gt;/c/coll/</CODE> path. References 
+  to both stylesheets are as follows:</P>
+<BLOCKQUOTE> 
+  <P> &lt;link rel=&quot;stylesheet&quot; href=&quot;&lt;?DOC_ROOT&gt;textclass.css&quot; 
+    type=&quot;text/css&quot;&gt;<BR>
+    &lt;link rel=&quot;stylesheet&quot; href=&quot;&lt;?DOC_ROOT mode=&quot;single&quot;&gt;textclass-specific.css&quot; 
+    type=&quot;text/css&quot;&gt; </P>
+</BLOCKQUOTE>
+<P>The &lt;?DOC_ROOT&gt; processing instruction resolves to the relevant path 
+  for each stylesheet. Because textclass-specific.css is referenced after textclass.css, 
+  any style declarations that appear in textclass-specific.css will effectively 
+  overwrite matching declarations in textclass.css. This is how fonts and background 
+  colors are varied for each collection. (<A HREF="../misc/tc-textclass-css.html">full 
+  text of textclass.css</A>)</P>
+<BR>
+<DIV CLASS="level2"></DIV>
+<H4><A NAME="graphics"> </A> </H4>
+<H4>Graphics</H4>
+<P>Default text class templates employ a variety of relatively generic graphics 
+  that can be referenced by all collection instances. A <A HREF="tc-graphics.html">table 
+  of shared files</A> shows those files that are stored in the <CODE>&lt;root&gt;/t/text/graphics/</CODE> 
+  directory. Any alternative graphics by identical names may be stored in individual 
+  collection <CODE>graphics</CODE> directories to replace the default class graphics 
+  for that particular collection. Any files not stored in collection graphics 
+  directories, but referenced in the templates, will be referenced from the class 
+  graphics directory as a fallback mechanism. Graphics files that are likely to 
+  be unique to each collections are discussed in the section on <A HREF="#background">header 
+  background colors and graphics</A>. </P>
+<BR>
+<DIV CLASS="level2"></DIV>
+<A NAME="hdr"> </A> 
+<H4>Header characteristics</H4>
+<P>The header of each page template includes that area in the top 75 pixels of 
+  the page containing those elements associated with unique collection identity: 
+  main collection title, global links, if any, and the main navigation bar. The 
+  templates accomodate inclusion of background colors or graphics to provide some 
+  flexibility in creating unique appearances for different collections. </P>
+<DIV CLASS="level3"></DIV>
+<P><A NAME="background"> </A> </P>
+<P><I>Background color and graphics</I> </P>
+<P>Main background color for template headers is provided at three different levels: 
+  default background colors for table cells specified in the<CODE> bgcolor</CODE> 
+  attribute, style declarations in the textclass-specific.css stylesheet, and 
+  table cell background graphics referenced by the <CODE>background</CODE> attribute. 
+  <B>Figure 1</B> illustrates how these characteristics are specified in<CODE> 
+  td</CODE> opening tags in the Voltaire &eacute;lectronique collection.</P>
+<TABLE BORDER="0" CELLPADDING="0" CELLSPACING="2">
+  <TR> 
+    <TD><IMG BORDER="1" HEIGHT="91" SRC="graphics/text-hdr-layout.gif" WIDTH="633"></TD>
+  </TR>
+  <TR> 
+    <TD><B>Figure 1</B>: Header cell color and graphics.</TD>
+  </TR>
+</TABLE>
+<P>The two top cells each have CSS class associations and background graphic references 
+  to files in the local collection graphics directory. The <CODE>hdrcolor</CODE> 
+  style is set locally in the textclass-specific.css style sheet as</P>
+<BLOCKQUOTE> 
+  <P><CODE>.hdrcolor { background-color: #FFFFF1 } </CODE></P>
+</BLOCKQUOTE>
+<P>The background graphics files, hdr-bg1.gif and hdr-bg2.gif, are, in fact, laying 
+  &quot;over&quot; the background color specified by the CSS style--the order 
+  of precedence for CSS capable browsers is<CODE> background</CODE>, <CODE>class</CODE>, 
+  <CODE>bgcolor</CODE>--but you see the CSS style colors because the gifs are 
+  transparent. The lower cell has a <CODE>bgcolor</CODE> value and a CSS style, 
+  <CODE>navcolor</CODE>, set again in the local textclass-specific.css as</P>
+<BLOCKQUOTE> 
+  <P><CODE>.navcolor { background-color: #F3E098 } </CODE></P>
+</BLOCKQUOTE>
+<BR>
+<P><B>Figure 2</B> illustrates the appearance of another header based on the same 
+  template using non-transparent background gifs that integrate with the collection 
+  title gif and the CSS style for <CODE>navcolor.</CODE></P>
+<TABLE BORDER="0" CELLPADDING="0" CELLSPACING="2" WIDTH="75%">
+  <TR> 
+    <TD><IMG BORDER="1" HEIGHT="78" SRC="graphics/umr-hdr.gif" WIDTH="625"></TD>
+  </TR>
+  <TR> 
+    <TD> 
+      <TABLE BORDER="0" CELLPADDING="10" CELLSPACING="0" WIDTH="100%">
+        <TR> 
+          <TD VALIGN="top"> 
+            <P><IMG BORDER="1" HEIGHT="51" SRC="graphics/umtr-combined.gif" WIDTH="333"></P>
+            <P>collection title gif</P>
+          </TD>
+          <TD CLASS="stuff"><IMG BORDER="1" HEIGHT="91" SRC="graphics/bgmat.gif" STYLE="left-margin: 5px; right-margin: 5px" WIDTH="100">hdr-bg1.gif 
+            and hdr-bg2.gif provide background.</TD>
+        </TR>
+      </TABLE>
+    </TD>
+  </TR>
+  <TR> 
+    <TD><B>Figure 2:</B> component files for a header portion of UM Technical 
+      Reports templates.</TD>
+  </TR>
+</TABLE>
+<BR>
+<BR>
+<DIV CLASS="level3"></DIV>
+<P><A NAME="hdrcollname"> </A> </P>
+<P><I>Title name or graphic</I> </P>
+<P>Collection title name is provided in the templates via the<CODE> &lt;?TITLE 
+  mode=&quot;complex&quot;&gt;</CODE> processing instruction. The PI will resolve 
+  to a text string or a graphic file as specified in the<CODE> colldb.</CODE> 
+  When rendered as text, titles are wrapped in H3 tags with CSS style <CODE>topheadlink</CODE> 
+  so that collection title font can be specified.</P>
+<BR>
+<DIV CLASS="level3"></DIV>
+<P><A NAME="hdrtabs"> </A> </P>
+<P><I>Navigation fonts and tabs</I> </P>
+<P>Color for navitation tabs is controlled by CSS styles, as are the border colors 
+  that surround and underline the tabs. Tab color is, in the &quot;backgrounded&quot; 
+  state, set by the <CODE>navcolor</CODE> style. The tab &quot;foreground&quot; 
+  state color is specified with the <CODE>navhicolor</CODE> style. Border and 
+  underline colors are set with<CODE> navdivision</CODE> and <CODE>navhrcolor</CODE> 
+  styles respectively. </P>
+<P>Font settings for tabs are also CSS controlled. Relative style declarations 
+  for fonts are as below:</P>
+<BLOCKQUOTE> 
+  <P><CODE>/* nav bar fonts */<BR>
+    .navlinks { font-family: Arial, Helvetica, sans-serif; <BR>
+    font-size: 12px; <BR>
+    font-weight: bold; <BR>
+    color: #666666; <BR>
+    text-decoration: none<BR>
+    }</CODE></P>
+  <P><CODE><BR>
+    /* label font for up tabs */<BR>
+    .navhilinks { font-family: Arial, Helvetica, sans-serif; <BR>
+    font-size: 12px; <BR>
+    font-weight: bold; <BR>
+    text-decoration: none <BR>
+    }</CODE></P>
+  <P><CODE>/* nav link characteristics */<BR>
+    A:hover { text-decoration: underline }<BR>
+    A.nav { color: #FFFFFF; <BR>
+    text-decoration: none <BR>
+    }<BR>
+    <BR>
+    A.nav:hover { color : #FFCC33; <BR>
+    text-decoration: underline <BR>
+    }</CODE></P>
+</BLOCKQUOTE>
+<P><BR>
+</P>
+<P><BR>
+</P>
+<P><A NAME="tcTemplates"></A> 
+<H3 ALIGN="left">Text Class Templates</H3>
+<DIV CLASS="level1"></DIV>
+<P>The table below gives a brief description of all templates included in the 
+  Text Class distribution. As a companion, you may also want to view the list 
+  of processing instructions also supported in text class.</P>
+<TABLE BORDER="1" CELLPADDING="5" CELLSPACING="0" FRAME="border" RULES="all" STYLE="border-width: 1px; border-color: #CCCCCC" WIDTH="100%">
+  <TR> 
+    <TH VALIGN="top" WIDTH="10%">Template name</TH>
+    <TH VALIGN="top" WIDTH="90%">Description</TH>
+  </TR>
+  <TR> 
+    <TD VALIGN="top" WIDTH="10%"><A NAME="bbagemail"> </A><SPAN>bbagemail.tpl</SPAN></TD>
+    <TD VALIGN="top" WIDTH="90%">Displays a form for emailing the contents of 
+      the book bag. The form contains only one input box for an email address.</TD>
+  </TR>
+  <TR> 
+    <TD VALIGN="top" WIDTH="10%"><A NAME="bbaglist"> </A><SPAN>bbaglist.tpl</SPAN></TD>
+    <TD VALIGN="top" WIDTH="90%">Displays current contents of the book bag. </TD>
+  </TR>
+  <TR> 
+    <TD VALIGN="top" WIDTH="10%"><A NAME="bib"> </A><SPAN>bib.tpl</SPAN></TD>
+    <TD VALIGN="top" WIDTH="90%">Form for citation searching in individual collections.</TD>
+  </TR>
+  <TR> 
+    <TD VALIGN="top" WIDTH="10%"><A NAME="bibext"> </A><SPAN>bibext.tpl</SPAN></TD>
+    <TD VALIGN="top" WIDTH="90%">Extended form for citation searching across multiple 
+      collections.</TD>
+  </TR>
+  <TR> 
+    <TD VALIGN="top" WIDTH="10%"><A NAME="boolean"> </A><SPAN>boolean.tpl</SPAN></TD>
+    <TD VALIGN="top" WIDTH="90%">Form for boolean searching in individual collections.</TD>
+  </TR>
+  <TR> 
+    <TD VALIGN="top" WIDTH="10%"><A NAME="booleanbbag"> </A><SPAN>booleanbbag.tpl</SPAN></TD>
+    <TD VALIGN="top" WIDTH="90%">Form for boolean searching within contents of 
+      book bag.</TD>
+  </TR>
+  <TR> 
+    <TD VALIGN="top" WIDTH="10%"><A NAME="booleanext"> </A><SPAN>booleanext.tpl</SPAN></TD>
+    <TD VALIGN="top" WIDTH="90%">Extended form for boolean searching across multiple 
+      collections. </TD>
+  </TR>
+  <TR> 
+    <TD VALIGN="top" WIDTH="10%"><A NAME="header"> </A><SPAN>header.tpl</SPAN></TD>
+    <TD VALIGN="top" WIDTH="90%">Displays bibliographic header and table of contents 
+      or search results.</TD>
+  </TR>
+  <TR> 
+    <TD VALIGN="top" WIDTH="10%"><A NAME="home"> </A><SPAN>home.tpl</SPAN></TD>
+    <TD VALIGN="top" WIDTH="90%">Home page template for links to home after sessions 
+      have been established.</TD>
+  </TR>
+  <TR> 
+    <TD VALIGN="top" WIDTH="10%"><A NAME="note"> </A><SPAN>note.tpl</SPAN></TD>
+    <TD VALIGN="top" WIDTH="90%">Displays contents of a note within a designated 
+      target window.</TD>
+  </TR>
+  <TR> 
+    <TD VALIGN="top" WIDTH="10%"><A NAME="pageviewerframeset"> </A><SPAN>pageviewer.frameset.tpl</SPAN></TD>
+    <TD VALIGN="top" WIDTH="90%">Draws the frameset for displaying documents as 
+      page-facsimile-images.</TD>
+  </TR>
+  <TR> 
+    <TD VALIGN="top" WIDTH="10%"><A NAME="pageviewermain"> </A><SPAN>pageviewer.main.tpl</SPAN></TD>
+    <TD VALIGN="top" WIDTH="90%">Main frame of pageviewer.frameset containing 
+      the current page image.</TD>
+  </TR>
+  <TR> 
+    <TD VALIGN="top" WIDTH="10%"><A NAME="pageviewernav"> </A><SPAN>pageviewer.nav.tpl</SPAN></TD>
+    <TD VALIGN="top" WIDTH="90%">Top frame of pageviewer.frameset containint all 
+      document and site navigation.</TD>
+  </TR>
+  <TR> 
+    <TD VALIGN="top" WIDTH="10%"><A NAME="pageviewerpicklist"> </A><SPAN>pageviewer.picklist.tpl</SPAN></TD>
+    <TD VALIGN="top" WIDTH="90%">For incidences where an id reference to a document 
+      may be incomplete, producing a list of documents with ids that contain the 
+      id reference. The template generates a list of possible documents as a linked 
+      list. </TD>
+  </TR>
+  <TR> 
+    <TD VALIGN="top" WIDTH="10%"><A NAME="proximity"> </A><SPAN>proximity.tpl</SPAN></TD>
+    <TD VALIGN="top" WIDTH="90%">Form for proximity searching in an individual 
+      collection.</TD>
+  </TR>
+  <TR> 
+    <TD VALIGN="top" WIDTH="10%"><A NAME="proximitybbag"> </A><SPAN>proximitybbag.tpl</SPAN></TD>
+    <TD VALIGN="top" WIDTH="90%">Form for proximity searching within book bag 
+      contents.</TD>
+  </TR>
+  <TR> 
+    <TD VALIGN="top" WIDTH="10%"><A NAME="proximityext"> </A><SPAN>proximityext.tpl</SPAN></TD>
+    <TD VALIGN="top" WIDTH="90%">Extended form for proximity searching across 
+      multiple collections.</TD>
+  </TR>
+  <TR> 
+    <TD VALIGN="top" WIDTH="10%"><A NAME="reslist"> </A><SPAN>reslist.tpl</SPAN></TD>
+    <TD VALIGN="top" WIDTH="90%">Displays results for searches against one or 
+      more collections.</TD>
+  </TR>
+  <TR> 
+    <TD VALIGN="top" WIDTH="10%"><A NAME="searchhistory"> </A><SPAN>searchhistory.tpl</SPAN></TD>
+    <TD VALIGN="top" WIDTH="90%">Displays a search history for the current session 
+      as a table, containing, in one table, the successfully submitted queries 
+      as links for resubmission.</TD>
+  </TR>
+  <TR> 
+    <TD VALIGN="top" WIDTH="10%" HEIGHT="29"><A NAME="simple"> </A><SPAN>simple.tpl</SPAN></TD>
+    <TD VALIGN="top" WIDTH="90%" HEIGHT="29">Form for simple searches against 
+      an individual collections.</TD>
+  </TR>
+  <TR> 
+    <TD VALIGN="top" WIDTH="10%"><A NAME="simplebbag"> </A><SPAN>simplebbag.tpl</SPAN></TD>
+    <TD VALIGN="top" WIDTH="90%">Form for simple searches within book bag contents.</TD>
+  </TR>
+  <TR> 
+    <TD VALIGN="top" WIDTH="10%"><A NAME="simpleext"> </A><SPAN>simpleext.tpl</SPAN></TD>
+    <TD VALIGN="top" WIDTH="90%">Extended form for simple searches across multiple 
+      collections. </TD>
+  </TR>
+  <TR> 
+    <TD VALIGN="top" WIDTH="10%"><A NAME="splash"> </A><SPAN>splash.tpl</SPAN></TD>
+    <TD VALIGN="top" WIDTH="90%">Displays a linked list of all available collections 
+      (in a multiple collection context), allowing users to go to home pages for 
+      each collection.</TD>
+  </TR>
+  <TR> 
+    <TD VALIGN="top" WIDTH="10%"><A NAME="textpicklist"> </A><SPAN>text.picklist.tpl</SPAN></TD>
+    <TD VALIGN="top" WIDTH="90%">Similar to pageviewer.picklist.tpl, but for documents 
+      that are fully encoded text.</TD>
+  </TR>
+  <TR> 
+    <TD VALIGN="top" WIDTH="10%"><A NAME="text"> </A><SPAN>text.tpl</SPAN></TD>
+    <TD VALIGN="top" WIDTH="90%">Displays any requested portion of a fully encoded 
+      text. </TD>
+  </TR>
+  <TR> 
+    <TD VALIGN="top" WIDTH="10%"><A NAME="viewtextnote"> </A><SPAN>viewtextnote.tpl</SPAN></TD>
+    <TD VALIGN="top" WIDTH="90%">Displays a warning note when the &quot;view entire 
+      text&quot; link is selected from a bibliographic header page.</TD>
+  </TR>
+  <TR> 
+    <TD VALIGN="top" WIDTH="10%"><A NAME="wwfull"> </A><SPAN>ww-full.tpl</SPAN></TD>
+    <TD VALIGN="top" WIDTH="90%">Word index form after a word index has been started. 
+      Produces a picklist containing a range of words from the word index.</TD>
+  </TR>
+  <TR> 
+    <TD VALIGN="top" WIDTH="10%"><A NAME="wwstart"> </A><SPAN>ww-start.tpl</SPAN></TD>
+    <TD VALIGN="top" WIDTH="90%">Word index initial form. displays an input box 
+      or linked index for entering a word index.</TD>
+  </TR>
+</TABLE>
+<P>&nbsp; 
+<P><A NAME="tcPis"></A> 
+<H3 ALIGN="left">Text Class Processing Instructions</H3>
+<DIV CLASS="level1"></DIV>
+<P>The following table includes descriptions of all the processing instructions 
+  that appear in TextClass templates, as well as links to descriptions of the 
+  relevant template files in which they appear. </P>
+<TABLE BORDER="1" CELLPADDING="5" CELLSPACING="0" FRAME="BORDER" RULES="ALL" STYLE="border-width: 1px; border-color: #CCCCCC" WIDTH="100%">
+  <THEAD> 
+  <TR> 
+    <TH ALIGN="LEFT" WIDTH="25%">PI tag</TH>
+    <TH VALIGN="TOP" WIDTH="12%">Optional parameters</TH>
+    <TH VALIGN="TOP" WIDTH="13%">Associated templates</TH>
+    <TH VALIGN="TOP" WIDTH="50%">Description</TH>
+  </TR>
+  </THEAD> <TBODY> 
+  <TR> 
+    <TD VALIGN="TOP" WIDTH="25%">&lt;?BBAG_BOOLEAN_SEARCH_LINK&gt;</TD>
+    <TD VALIGN="TOP" WIDTH="12%">&nbsp;</TD>
+    <TD VALIGN="TOP" WIDTH="13%"><A HREF="#bbagemail">bbagemail.tpl</A><BR>
+      <A HREF="#bbaglist">bbaglist.tpl</A><BR>
+      <A HREF="#proximitybbag">proximitybbag.tpl</A><BR>
+      <A HREF="#reslist">reslist.tpl</A><BR>
+      <A HREF="#simplebbag">simplebbag.tpl</A><BR>
+      <A HREF="#textpicklist">text.picklist.tpl</A></TD>
+    <TD VALIGN="TOP" WIDTH="50%">Provides the <CODE>HREF</CODE> URL for the &quot;Boolean&quot; 
+      search within book bag link.</TD>
+  </TR>
+  <TR> 
+    <TD VALIGN="TOP" WIDTH="25%">&lt;?BBAG_PROXIMITY_SEARCH_LINK&gt;</TD>
+    <TD VALIGN="TOP" WIDTH="12%">&nbsp;</TD>
+    <TD VALIGN="TOP" WIDTH="13%"><A HREF="#bbagemail">bbagemail.tpl</A><BR>
+      <A HREF="#bbaglist">bbaglist.tpl</A><BR>
+      <A HREF="#proximitybbag">proximitybbag.tpl</A><BR>
+      <A HREF="#reslist">reslist.tpl</A><BR>
+      <A HREF="#simplebbag">simplebbag.tpl</A><BR>
+      <A HREF="#textpicklist">text.picklist.tpl</A></TD>
+    <TD VALIGN="TOP" WIDTH="50%">Provides the <CODE>HREF</CODE> URL for the &quot;proximity&quot; 
+      search within book bag link.</TD>
+  </TR>
+  <TR> 
+    <TD VALIGN="TOP" WIDTH="25%">&lt;?BBAG_SIMPLE_SEARCH_LINK&gt;</TD>
+    <TD VALIGN="TOP" WIDTH="12%">&nbsp;</TD>
+    <TD VALIGN="TOP" WIDTH="13%"><A HREF="#bbagemail">bbagemail.tpl</A><BR>
+      <A HREF="#bbaglist">bbaglist.tpl</A><BR>
+      <A HREF="#proximitybbag">proximitybbag.tpl</A><BR>
+      <A HREF="#reslist">reslist.tpl</A><BR>
+      <A HREF="#simplebbag">simplebbag.tpl</A><BR>
+      <A HREF="#textpicklist">text.picklist.tpl</A></TD>
+    <TD VALIGN="TOP" WIDTH="50%">Provides the <CODE>HREF</CODE> URL for the &quot;simple&quot; 
+      search within book bag link.</TD>
+  </TR>
+  <TR> 
+    <TD VALIGN="TOP" WIDTH="25%">&lt;?BIB_SEARCH_LINK&gt;</TD>
+    <TD VALIGN="TOP" WIDTH="12%">&nbsp;</TD>
+    <TD VALIGN="TOP" WIDTH="13%"><A HREF="#bbaglist">bbaglist.tpl</A><BR>
+      <A HREF="#boolean">boolean.tpl</A><BR>
+      <A HREF="#booleanext">booleanext.tpl</A><BR>
+      <A HREF="#proximity">proximity.tpl</A><BR>
+      <A HREF="#proximityext">proximityext.tpl</A><BR>
+      <A HREF="#wwfull">ww-full.tpl</A><BR>
+      <A HREF="#wwstart">ww-start.tpl</A></TD>
+    <TD VALIGN="TOP" WIDTH="50%">Provides the <CODE>HREF</CODE> URL for the &quot;citation&quot; 
+      search form link in the main or footer navigation bar.</TD>
+  </TR>
+  <TR> 
+    <TD VALIGN="TOP" WIDTH="25%">&lt;?BOOKBAG_ADD_REMOVE_ITEM&gt;</TD>
+    <TD VALIGN="TOP" WIDTH="12%">&nbsp;</TD>
+    <TD VALIGN="TOP" WIDTH="13%"><A HREF="#header">header.tpl</A></TD>
+    <TD VALIGN="TOP" WIDTH="50%">Used to insert a full link from a bibliographic 
+      header page for adding the current item to the book bag. </TD>
+  </TR>
+  <TR> 
+    <TD VALIGN="TOP" WIDTH="25%">&lt;?BOOKBAG_DISPLAY&gt;</TD>
+    <TD VALIGN="TOP" WIDTH="12%">&nbsp;</TD>
+    <TD VALIGN="TOP" WIDTH="13%"><A HREF="#bbagemail">bbagemail.tpl</A><BR>
+      <A HREF="#bbaglist">bbaglist.tpl</A></TD>
+    <TD VALIGN="TOP" WIDTH="50%">Used to insert a button to toggle book bag contents 
+      in long or short format.</TD>
+  </TR>
+  <TR> 
+    <TD VALIGN="TOP" WIDTH="25%">&lt;?BOOKBAG_DOWNLOAD&gt;</TD>
+    <TD VALIGN="TOP" WIDTH="12%">&nbsp;</TD>
+    <TD VALIGN="TOP" WIDTH="13%"><A HREF="#bbagemail">bbagemail.tpl</A><BR>
+      <A HREF="#bbaglist">bbaglist.tpl</A></TD>
+    <TD VALIGN="TOP" WIDTH="50%">Used to insert a button to download book bag 
+      contents.</TD>
+  </TR>
+  <TR> 
+    <TD VALIGN="TOP" WIDTH="25%">&lt;?BOOKBAG_EMAIL&gt;</TD>
+    <TD VALIGN="TOP" WIDTH="12%">&nbsp;</TD>
+    <TD VALIGN="TOP" WIDTH="13%"><A HREF="#bbaglist">bbaglist.tpl</A></TD>
+    <TD VALIGN="TOP" WIDTH="50%">Used to insert a button to email book bag contents.</TD>
+  </TR>
+  <TR> 
+    <TD VALIGN="TOP" WIDTH="25%">&lt;?BOOKBAG_EMPTY&gt;</TD>
+    <TD VALIGN="TOP" WIDTH="12%">&nbsp;</TD>
+    <TD VALIGN="TOP" WIDTH="13%"><A HREF="#bbagemail">bbagemail.tpl</A><BR>
+      <A HREF="#bbaglist">bbaglist.tpl</A></TD>
+    <TD VALIGN="TOP" WIDTH="50%">Used to insert a button for removing all book 
+      bag contents.</TD>
+  </TR>
+  <TR> 
+    <TD VALIGN="TOP" WIDTH="25%">&lt;?BOOKBAG_ITEMS&gt;</TD>
+    <TD VALIGN="TOP" WIDTH="12%">&nbsp;</TD>
+    <TD VALIGN="TOP" WIDTH="13%"><A HREF="#bbagemail">bbagemail.tpl</A><BR>
+      <A HREF="#bbaglist">bbaglist.tpl</A><BR>
+      <A HREF="#bib">bib.tpl</A><BR>
+      <A HREF="#bibext">bibext.tpl</A><BR>
+      <A HREF="#boolean">boolean.tpl</A><BR>
+      <A HREF="#booleanext">booleanext.tpl</A><BR>
+      <A HREF="#header">header.tpl</A><BR>
+      <A HREF="#pageviewernav">pageviewer.nav.tpl</A><BR>
+      <A HREF="#proximity">proximity.tpl</A><BR>
+      <A HREF="#proximityext">proximityext.tpl</A><BR>
+      <A HREF="#searchhistory">searchhistory.tpl</A><BR>
+      <A HREF="#simple">simple.tpl</A><BR>
+      <A HREF="#simpleext">simpleext.tpl</A><BR>
+      <A HREF="#splash">splash.tpl</A><BR>
+      <A HREF="#text">text.tpl</A><BR>
+      <A HREF="#wwfull">ww-full.tpl</A><BR>
+      <A HREF="#wwstart">ww-start.tpl</A></TD>
+    <TD VALIGN="TOP" WIDTH="50%">Used to insert the book bag items count in the 
+      current page.</TD>
+  </TR>
+  <TR> 
+    <TD VALIGN="TOP" WIDTH="25%">&lt;?BOOKBAG_LINK&gt;</TD>
+    <TD VALIGN="TOP" WIDTH="12%">&nbsp;</TD>
+    <TD VALIGN="TOP" WIDTH="13%"><A HREF="#bib">bib.tpl</A><BR>
+      <A HREF="#bibext">bibext.tpl</A><BR>
+      <A HREF="#boolean">boolean.tpl</A><BR>
+      <A HREF="#booleanbbag">booleanbbag.tpl</A><BR>
+      <A HREF="#booleanext">booleanext.tpl</A><BR>
+      <A HREF="#header">header.tpl</A><BR>
+      <A HREF="#pageviewernav">pageviewer.nav.tpl</A><BR>
+      <A HREF="#proximity">proximity.tpl</A><BR>
+      <A HREF="#proximitybbag">proximitybbag.tpl</A><BR>
+      <A HREF="#proximityext">proximityext.tpl</A><BR>
+      <A HREF="#reslist">reslist.tpl</A><BR>
+      <A HREF="#searchhistory">searchhistory.tpl</A><BR>
+      <A HREF="#simple">simple.tpl</A><BR>
+      <A HREF="#simplebbag">simplebbag.tpl</A><BR>
+      <A HREF="#simpleext">simpleext.tpl</A><BR>
+      <A HREF="#splash">splash.tpl</A><BR>
+      <A HREF="#textpicklist">text.picklist.tpl</A><BR>
+      <A HREF="#text">text.tpl</A><BR>
+      <A HREF="#wwfull">ww-full.tpl</A><BR>
+      <A HREF="#wwstart">ww-start.tpl</A></TD>
+    <TD VALIGN="TOP" WIDTH="50%">Provides the <CODE>HREF</CODE> URL for the &quot;view 
+      bookbag&quot; link in a page.</TD>
+  </TR>
+  <TR> 
+    <TD VALIGN="TOP" WIDTH="25%">&lt;?BOOKBAG_RESULTS&gt;</TD>
+    <TD VALIGN="TOP" WIDTH="12%">&nbsp;</TD>
+    <TD VALIGN="TOP" WIDTH="13%"><A HREF="#bbaglist">bbaglist.tpl</A></TD>
+    <TD VALIGN="TOP" WIDTH="50%">Used to insert all current book bag items within 
+      table <CODE>&lt;TR&gt;</CODE> and <CODE>&lt;TD&gt;</CODE> tags.</TD>
+  </TR>
+  <TR> 
+    <TD VALIGN="TOP" WIDTH="25%">&lt;?BOOLEAN_SEARCH_LINK&gt;</TD>
+    <TD VALIGN="TOP" WIDTH="12%">&nbsp;</TD>
+    <TD VALIGN="TOP" WIDTH="13%"><A HREF="#bbaglist">bbaglist.tpl</A><BR>
+      <A HREF="#bib">bib.tpl</A><BR>
+      <A HREF="#bibext">bibext.tpl</A><BR>
+      <A HREF="#booleanbbag">booleanbbag.tpl</A><BR>
+      <A HREF="#header">header.tpl</A><BR>
+      <A HREF="#pageviewernav">pageviewer.nav.tpl</A><BR>
+      <A HREF="#proximity">proximity.tpl</A><BR>
+      <A HREF="#proximitybbag">proximitybbag.tpl</A><BR>
+      <A HREF="#proximityext">proximityext.tpl</A><BR>
+      <A HREF="#reslist">reslist.tpl</A><BR>
+      <A HREF="#searchhistory">searchhistory.tpl</A><BR>
+      <A HREF="#simple">simple.tpl</A><BR>
+      <A HREF="#simplebbag">simplebbag.tpl</A><BR>
+      <A HREF="#simpleext">simpleext.tpl</A><BR>
+      <A HREF="#splash">splash.tpl</A><BR>
+      <A HREF="#textpicklist">text.picklist.tpl</A><BR>
+      <A HREF="#text">text.tpl</A><BR>
+      <A HREF="#wwfull">ww-full.tpl</A><BR>
+      <A HREF="#wwstart">ww-start.tpl</A></TD>
+    <TD VALIGN="TOP" WIDTH="50%">Provides the <CODE>HREF</CODE> URL for the &quot;boolean&quot; 
+      search form link in the main or footer navigation bar.</TD>
+  </TR>
+  <TR> 
+    <TD VALIGN="TOP" WIDTH="25%">&lt;?COLLECTION_LIST&gt;</TD>
+    <TD VALIGN="TOP" WIDTH="12%">&nbsp;</TD>
+    <TD VALIGN="TOP" WIDTH="13%"><A HREF="#bib">bib.tpl</A><BR>
+      <A HREF="#boolean">boolean.tpl</A><BR>
+      <A HREF="#proximity">proximity.tpl</A><BR>
+      <A HREF="#simple">simple.tpl</A><BR>
+      <A HREF="#splash">splash.tpl</A></TD>
+    <TD VALIGN="TOP" WIDTH="50%">Previously used with search forms to display 
+      a table fo collections currently being searched</TD>
+  </TR>
+  <TR> 
+    <TD VALIGN="TOP" WIDTH="25%">&lt;?COLL_LIST_WITH_CHECKBOXES&gt;</TD>
+    <TD VALIGN="TOP" WIDTH="12%">&nbsp;</TD>
+    <TD VALIGN="TOP" WIDTH="13%"><A HREF="#bibext">bibext.tpl</A><BR>
+      <A HREF="#booleanext">booleanext.tpl</A><BR>
+      <A HREF="#proximityext">proximityext.tpl</A><BR>
+      <A HREF="#simpleext">simpleext.tpl</A></TD>
+    <TD VALIGN="TOP" WIDTH="50%">On multiple collection search forms, used to 
+      insert the table of available collections with check boxes for selecting 
+      or deselecting.</TD>
+  </TR>
+  <TR> 
+    <TD VALIGN="TOP" WIDTH="25%">&lt;?COLL_SPECIFIC_CONTENT id=&quot;cs001&quot; 
+      cginame=&quot;text-idx&quot;&gt;</TD>
+    <TD VALIGN="TOP" WIDTH="12%">&nbsp;</TD>
+    <TD VALIGN="TOP" WIDTH="13%"><A HREF="#bib">bib.tpl</A><BR>
+      <A HREF="#boolean">boolean.tpl</A><BR>
+      <A HREF="#booleanbbag">booleanbbag.tpl</A><BR>
+      <A HREF="#header">header.tpl</A><BR>
+      <A HREF="#proximity">proximity.tpl</A><BR>
+      <A HREF="#proximitybbag">proximitybbag.tpl</A><BR>
+      <A HREF="#reslist">reslist.tpl</A><BR>
+      <A HREF="#searchhistory">searchhistory.tpl</A><BR>
+      <A HREF="#simple">simple.tpl</A><BR>
+      <A HREF="#simplebbag">simplebbag.tpl</A><BR>
+      <A HREF="#textpicklist">text.picklist.tpl</A><BR>
+      <A HREF="#text">text.tpl</A><BR>
+      <A HREF="#wwfull">ww-full.tpl</A><BR>
+      <A HREF="#wwstart">ww-start.tpl</A></TD>
+    <TD VALIGN="TOP" WIDTH="50%"> Provides the <CODE>HREF</CODE> URL for a collection 
+      specific (e.g., browse) navigation link in main nav bar or footer nav bar. 
+    </TD>
+  </TR>
+  <TR> 
+    <TD VALIGN="TOP" WIDTH="25%">&lt;?DOC_ROOT&gt;</TD>
+    <TD VALIGN="TOP" WIDTH="12%">&nbsp;</TD>
+    <TD VALIGN="TOP" WIDTH="13%"><A HREF="#bbagemail">bbagemail.tpl</A><BR>
+      <A HREF="#bbaglist">bbaglist.tpl</A><BR>
+      <A HREF="#bib">bib.tpl</A><BR>
+      <A HREF="#bibext">bibext.tpl</A><BR>
+      <A HREF="#boolean">boolean.tpl</A><BR>
+      <A HREF="#booleanbbag">booleanbbag.tpl</A><BR>
+      <A HREF="#booleanext">booleanext.tpl</A><BR>
+      <A HREF="#header">header.tpl</A><BR>
+      <A HREF="#home">home.tpl</A><BR>
+      <A HREF="#note">note.tpl</A><BR>
+      <A HREF="#pageviewermain">pageviewer.main.tpl</A><BR>
+      <A HREF="#pageviewernav">pageviewer.nav.tpl</A><BR>
+      <A HREF="#pageviewerpicklist">pageviewer.picklist.tpl</A><BR>
+      <A HREF="#proximity">proximity.tpl</A><BR>
+      <A HREF="#proximitybbag">proximitybbag.tpl</A><BR>
+      <A HREF="#proximityext">proximityext.tpl</A><BR>
+      <A HREF="#reslist">reslist.tpl</A><BR>
+      <A HREF="#searchhistory">searchhistory.tpl</A><BR>
+      <A HREF="#simple">simple.tpl</A><BR>
+      <A HREF="#simplebbag">simplebbag.tpl</A><BR>
+      <A HREF="#simpleext">simpleext.tpl</A><BR>
+      <A HREF="#splash">splash.tpl</A><BR>
+      <A HREF="#textpicklist">text.picklist.tpl</A><BR>
+      <A HREF="#text">text.tpl</A><BR>
+      <A HREF="#viewtextnote">viewtextnote.tpl</A><BR>
+      <A HREF="#wwfull">ww-full.tpl</A><BR>
+      <A HREF="#wwstart">ww-start.tpl</A></TD>
+    <TD VALIGN="TOP" WIDTH="50%">Used to insert the appropriate root path for 
+      the collection accessing the template for relative file reference.</TD>
+  </TR>
+  <TR> 
+    <TD VALIGN="TOP" WIDTH="25%">&lt;?EXT_BIB_SEARCH_FORM_LINK&gt;</TD>
+    <TD VALIGN="TOP" WIDTH="12%">&nbsp;</TD>
+    <TD VALIGN="TOP" WIDTH="13%"><A HREF="#bib">bib.tpl</A></TD>
+    <TD VALIGN="TOP" WIDTH="50%">Previously used to insert a navigation link from 
+      the current citation search form to an extended version of the form.</TD>
+  </TR>
+  <TR> 
+    <TD VALIGN="TOP" WIDTH="25%">&lt;?EXT_BOOLEAN_SEARCH_FORM_LINK&gt;</TD>
+    <TD VALIGN="TOP" WIDTH="12%">&nbsp;</TD>
+    <TD VALIGN="TOP" WIDTH="13%"><A HREF="#boolean">boolean.tpl</A></TD>
+    <TD VALIGN="TOP" WIDTH="50%">Previously used to insert a navigation link from 
+      the current boolean search form to an extended version of the form.</TD>
+  </TR>
+  <TR> 
+    <TD VALIGN="TOP" WIDTH="25%">&lt;?EXT_PROXIMITY_SEARCH_FORM_LINK&gt;</TD>
+    <TD VALIGN="TOP" WIDTH="12%">&nbsp;</TD>
+    <TD VALIGN="TOP" WIDTH="13%"><A HREF="#proximity">proximity.tpl</A></TD>
+    <TD VALIGN="TOP" WIDTH="50%">Previously used to insert a navigation link from 
+      the current proximity search form to an extended version of the form.</TD>
+  </TR>
+  <TR> 
+    <TD VALIGN="TOP" WIDTH="25%">&lt;?EXT_SIMPLE_SEARCH_FORM_LINK&gt;</TD>
+    <TD VALIGN="TOP" WIDTH="12%">&nbsp;</TD>
+    <TD VALIGN="TOP" WIDTH="13%"><A HREF="#simple">simple.tpl</A></TD>
+    <TD VALIGN="TOP" WIDTH="50%">Previously used to insert a navigation link from 
+      the current citation search form to an extended version of the form.</TD>
+  </TR>
+  <TR> 
+    <TD VALIGN="TOP" WIDTH="25%">&lt;?GENDER_LIST&gt;</TD>
+    <TD VALIGN="TOP" WIDTH="12%">&nbsp;</TD>
+    <TD VALIGN="TOP" WIDTH="13%"><A HREF="#bib">bib.tpl</A><BR>
+      <A HREF="#boolean">boolean.tpl</A><BR>
+      <A HREF="#proximity">proximity.tpl</A><BR>
+      <A HREF="#simple">simple.tpl</A></TD>
+    <TD VALIGN="TOP" WIDTH="50%">Previously used in search forms to indicate the 
+      currently selected collection filter values for gender.</TD>
+  </TR>
+  <TR> 
+    <TD VALIGN="TOP" WIDTH="25%">&lt;?GENDER_SEARCH_SELECT&gt;</TD>
+    <TD VALIGN="TOP" WIDTH="12%">&nbsp;</TD>
+    <TD VALIGN="TOP" WIDTH="13%"><A HREF="#boolean">boolean.tpl</A><BR>
+      <A HREF="#booleanbbag">booleanbbag.tpl</A><BR>
+      <A HREF="#proximity">proximity.tpl</A><BR>
+      <A HREF="#proximitybbag">proximitybbag.tpl</A><BR>
+      <A HREF="#simple">simple.tpl</A><BR>
+      <A HREF="#simplebbag">simplebbag.tpl</A></TD>
+    <TD VALIGN="TOP" WIDTH="50%">Used to insert an optional select menu for gender 
+      restrictions in a search form.</TD>
+  </TR>
+  <TR> 
+    <TD VALIGN="TOP" WIDTH="25%">&lt;?GENDER_SELECT&gt;</TD>
+    <TD VALIGN="TOP" WIDTH="12%">&nbsp;</TD>
+    <TD VALIGN="TOP" WIDTH="13%"><A HREF="#bibext">bibext.tpl</A><BR>
+      <A HREF="#booleanext">booleanext.tpl</A><BR>
+      <A HREF="#proximityext">proximityext.tpl</A><BR>
+      <A HREF="#simpleext">simpleext.tpl</A></TD>
+    <TD VALIGN="TOP" WIDTH="50%">Used to insert a select menu in a mulitple collection 
+      search form for filtering collections by gender.</TD>
+  </TR>
+  <TR> 
+    <TD VALIGN="TOP" WIDTH="25%">&lt;?GENRE_LIST&gt;</TD>
+    <TD VALIGN="TOP" WIDTH="12%">&nbsp;</TD>
+    <TD VALIGN="TOP" WIDTH="13%"><A HREF="#bib">bib.tpl</A><BR>
+      <A HREF="#boolean">boolean.tpl</A><BR>
+      <A HREF="#proximity">proximity.tpl</A><BR>
+      <A HREF="#simple">simple.tpl</A></TD>
+    <TD VALIGN="TOP" WIDTH="50%">Previously used in search forms to indicate the 
+      currently selected collection filter values for genre.</TD>
+  </TR>
+  <TR> 
+    <TD VALIGN="TOP" WIDTH="25%">&lt;?GENRE_SEARCH_SELECT&gt;</TD>
+    <TD VALIGN="TOP" WIDTH="12%">&nbsp;</TD>
+    <TD VALIGN="TOP" WIDTH="13%"><A HREF="#boolean">boolean.tpl</A><BR>
+      <A HREF="#booleanbbag">booleanbbag.tpl</A><BR>
+      <A HREF="#proximity">proximity.tpl</A><BR>
+      <A HREF="#proximitybbag">proximitybbag.tpl</A><BR>
+      <A HREF="#simple">simple.tpl</A><BR>
+      <A HREF="#simplebbag">simplebbag.tpl</A></TD>
+    <TD VALIGN="TOP" WIDTH="50%">Used to insert an optional select menu for genre 
+      restrictions in a search form.</TD>
+  </TR>
+  <TR> 
+    <TD VALIGN="TOP" WIDTH="25%">&lt;?GENRE_SELECT&gt;</TD>
+    <TD VALIGN="TOP" WIDTH="12%">&nbsp;</TD>
+    <TD VALIGN="TOP" WIDTH="13%"><A HREF="#bibext">bibext.tpl</A><BR>
+      <A HREF="#booleanext">booleanext.tpl</A><BR>
+      <A HREF="#proximityext">proximityext.tpl</A><BR>
+      <A HREF="#simpleext">simpleext.tpl</A></TD>
+    <TD VALIGN="TOP" WIDTH="50%">Used to insert a select menu in a mulitple collection 
+      search form for filtering collections by genre.</TD>
+  </TR>
+  <TR> 
+    <TD VALIGN="TOP" WIDTH="25%">&lt;?GO_TO_XCOLL&gt;</TD>
+    <TD VALIGN="TOP" WIDTH="12%">&nbsp;</TD>
+    <TD VALIGN="TOP" WIDTH="13%"><A HREF="#bib">bib.tpl</A><BR>
+      <A HREF="#bibext">bibext.tpl</A><BR>
+      <A HREF="#boolean">boolean.tpl</A><BR>
+      <A HREF="#booleanbbag">booleanbbag.tpl</A><BR>
+      <A HREF="#booleanext">booleanext.tpl</A><BR>
+      <A HREF="#header">header.tpl</A><BR>
+      <A HREF="#pageviewernav">pageviewer.nav.tpl</A><BR>
+      <A HREF="#proximity">proximity.tpl</A><BR>
+      <A HREF="#proximitybbag">proximitybbag.tpl</A><BR>
+      <A HREF="#proximityext">proximityext.tpl</A><BR>
+      <A HREF="#reslist">reslist.tpl</A><BR>
+      <A HREF="#searchhistory">searchhistory.tpl</A><BR>
+      <A HREF="#simple">simple.tpl</A><BR>
+      <A HREF="#simplebbag">simplebbag.tpl</A><BR>
+      <A HREF="#simpleext">simpleext.tpl</A><BR>
+      <A HREF="#textpicklist">text.picklist.tpl</A><BR>
+      <A HREF="#text">text.tpl</A><BR>
+      <A HREF="#wwfull">ww-full.tpl</A><BR>
+      <A HREF="#wwstart">ww-start.tpl</A></TD>
+    <TD VALIGN="TOP" WIDTH="50%">Provides the <CODE>HREF</CODE> URL for the &quot;multiple 
+      collection search&quot; link in a page.</TD>
+  </TR>
+  <TR> 
+    <TD VALIGN="TOP" WIDTH="25%">&lt;?GRAPHICS_PATH&gt;</TD>
+    <TD VALIGN="TOP" WIDTH="12%">filename</TD>
+    <TD VALIGN="TOP" WIDTH="13%"><A HREF="#bbagemail">bbagemail.tpl</A><BR>
+      <A HREF="#bbaglist">bbaglist.tpl</A><BR>
+      <A HREF="#bib">bib.tpl</A><BR>
+      <A HREF="#bibext">bibext.tpl</A><BR>
+      <A HREF="#boolean">boolean.tpl</A><BR>
+      <A HREF="#booleanbbag">booleanbbag.tpl</A><BR>
+      <A HREF="#booleanext">booleanext.tpl</A><BR>
+      <A HREF="#header">header.tpl</A><BR>
+      <A HREF="#home">home.tpl</A><BR>
+      <A HREF="#note">note.tpl</A><BR>
+      <A HREF="#pageviewermain">pageviewer.main.tpl</A><BR>
+      <A HREF="#pageviewernav">pageviewer.nav.tpl</A><BR>
+      <A HREF="#pageviewerpicklist">pageviewer.picklist.tpl</A><BR>
+      <A HREF="#proximity">proximity.tpl</A><BR>
+      <A HREF="#proximitybbag">proximitybbag.tpl</A><BR>
+      <A HREF="#proximityext">proximityext.tpl</A><BR>
+      <A HREF="#reslist">reslist.tpl</A><BR>
+      <A HREF="#searchhistory">searchhistory.tpl</A><BR>
+      <A HREF="#simple">simple.tpl</A><BR>
+      <A HREF="#simplebbag">simplebbag.tpl</A><BR>
+      <A HREF="#simpleext">simpleext.tpl</A><BR>
+      <A HREF="#splash">splash.tpl</A><BR>
+      <A HREF="#textpicklist">text.picklist.tpl</A><BR>
+      <A HREF="#text">text.tpl</A><BR>
+      <A HREF="#viewtextnote">viewtextnote.tpl</A><BR>
+      <A HREF="#wwfull">ww-full.tpl</A><BR>
+      <A HREF="#wwstart">ww-start.tpl</A></TD>
+    <TD VALIGN="TOP" WIDTH="50%">Used to insert the appropriate path and filename 
+      for a graphics file. </TD>
+  </TR>
+  <TR> 
+    <TD VALIGN="TOP" WIDTH="25%">&lt;?GUIDE_FRAME&gt;</TD>
+    <TD VALIGN="TOP" WIDTH="12%">&nbsp;</TD>
+    <TD VALIGN="TOP" WIDTH="13%"><A HREF="#reslist">reslist.tpl</A></TD>
+    <TD VALIGN="TOP" WIDTH="50%">Used to filter out HTML code for the per-collection 
+      results summary from the results page when only one collection has been 
+      searched.</TD>
+  </TR>
+  <TR> 
+    <TD VALIGN="TOP" WIDTH="25%">&lt;?GUIDE_RESULTS_LINKS&gt;</TD>
+    <TD VALIGN="TOP" WIDTH="12%">&nbsp;</TD>
+    <TD VALIGN="TOP" WIDTH="13%"><A HREF="#reslist">reslist.tpl</A></TD>
+    <TD VALIGN="TOP" WIDTH="50%">That portion of the per-collection results summary 
+      code that inserts links for viewing results detail for each collection.</TD>
+  </TR>
+  <TR> 
+    <TD VALIGN="TOP" WIDTH="25%">&lt;?HEADER&gt;</TD>
+    <TD VALIGN="TOP" WIDTH="12%">&nbsp;</TD>
+    <TD VALIGN="TOP" WIDTH="13%"><A HREF="#header">header.tpl</A></TD>
+    <TD VALIGN="TOP" WIDTH="50%">Used to insert bibliographic information on a 
+      particular book within table &lt;TR&gt; and &lt;TD&gt; tags.</TD>
+  </TR>
+  <TR> 
+    <TD VALIGN="TOP" WIDTH="25%">&lt;?HEADER_TOC&gt;</TD>
+    <TD VALIGN="TOP" WIDTH="12%">&nbsp;</TD>
+    <TD VALIGN="TOP" WIDTH="13%"><A HREF="#header">header.tpl</A></TD>
+    <TD VALIGN="TOP" WIDTH="50%">Used to insert a linked table of contents from 
+      a book header display to the text display.</TD>
+  </TR>
+  <TR> 
+    <TD VALIGN="TOP" WIDTH="25%">&lt;?HELP_LINK&gt;</TD>
+    <TD VALIGN="TOP" WIDTH="12%">&nbsp;</TD>
+    <TD VALIGN="TOP" WIDTH="13%"><A HREF="#bbaglist">bbaglist.tpl</A><BR>
+      <A HREF="#bib">bib.tpl</A><BR>
+      <A HREF="#bibext">bibext.tpl</A><BR>
+      <A HREF="#boolean">boolean.tpl</A><BR>
+      <A HREF="#booleanbbag">booleanbbag.tpl</A><BR>
+      <A HREF="#booleanext">booleanext.tpl</A><BR>
+      <A HREF="#header">header.tpl</A><BR>
+      <A HREF="#pageviewernav">pageviewer.nav.tpl</A><BR>
+      <A HREF="#proximity">proximity.tpl</A><BR>
+      <A HREF="#proximitybbag">proximitybbag.tpl</A><BR>
+      <A HREF="#proximityext">proximityext.tpl</A><BR>
+      <A HREF="#reslist">reslist.tpl</A><BR>
+      <A HREF="#searchhistory">searchhistory.tpl</A><BR>
+      <A HREF="#simple">simple.tpl</A><BR>
+      <A HREF="#simplebbag">simplebbag.tpl</A><BR>
+      <A HREF="#simpleext">simpleext.tpl</A><BR>
+      <A HREF="#splash">splash.tpl</A><BR>
+      <A HREF="#textpicklist">text.picklist.tpl</A><BR>
+      <A HREF="#text">text.tpl</A><BR>
+      <A HREF="#wwfull">ww-full.tpl</A><BR>
+      <A HREF="#wwstart">ww-start.tpl</A></TD>
+    <TD VALIGN="TOP" WIDTH="50%">Provides the <CODE>HREF</CODE> URL for the &quot;help&quot; 
+      link in the main or footer navigation bar.</TD>
+  </TR>
+  <TR> 
+    <TD VALIGN="TOP" WIDTH="25%">&lt;?HIDDEN_BOOKBAG&gt;</TD>
+    <TD VALIGN="TOP" WIDTH="12%">&nbsp;</TD>
+    <TD VALIGN="TOP" WIDTH="13%"><A HREF="#boolean">boolean.tpl</A><BR>
+      <A HREF="#booleanbbag">booleanbbag.tpl</A><BR>
+      <A HREF="#proximity">proximity.tpl</A><BR>
+      <A HREF="#proximitybbag">proximitybbag.tpl</A><BR>
+      <A HREF="#simple">simple.tpl</A><BR>
+      <A HREF="#simplebbag">simplebbag.tpl</A></TD>
+    <TD VALIGN="TOP" WIDTH="50%">???</TD>
+  </TR>
+  <TR> 
+    <TD VALIGN="TOP" WIDTH="25%">&lt;?HIDDEN_CHECKED_ITEMS&gt;</TD>
+    <TD VALIGN="TOP" WIDTH="12%">&nbsp;</TD>
+    <TD VALIGN="TOP" WIDTH="13%"><A HREF="#wwfull">ww-full.tpl</A></TD>
+    <TD VALIGN="TOP" WIDTH="50%">Used to insert one or more hidden INPUT elements 
+      into a word index form to retain values checked in the index in previous 
+      pages. </TD>
+  </TR>
+  <TR> 
+    <TD VALIGN="TOP" WIDTH="25%">&lt;?HIDDEN_IDNO&gt;</TD>
+    <TD VALIGN="TOP" WIDTH="12%">&nbsp;</TD>
+    <TD VALIGN="TOP" WIDTH="13%"><A HREF="#bib">bib.tpl</A><BR>
+      <A HREF="#bibext">bibext.tpl</A><BR>
+      <A HREF="#boolean">boolean.tpl</A><BR>
+      <A HREF="#booleanbbag">booleanbbag.tpl</A><BR>
+      <A HREF="#booleanext">booleanext.tpl</A><BR>
+      <A HREF="#pageviewernav">pageviewer.nav.tpl</A><BR>
+      <A HREF="#proximity">proximity.tpl</A><BR>
+      <A HREF="#proximitybbag">proximitybbag.tpl</A><BR>
+      <A HREF="#proximityext">proximityext.tpl</A><BR>
+      <A HREF="#simple">simple.tpl</A><BR>
+      <A HREF="#simplebbag">simplebbag.tpl</A><BR>
+      <A HREF="#simpleext">simpleext.tpl</A></TD>
+    <TD VALIGN="TOP" WIDTH="50%">???</TD>
+  </TR>
+  <TR> 
+    <TD VALIGN="TOP" WIDTH="25%">&lt;?HIDDEN_REQUESTED_CHARTYPE&gt;</TD>
+    <TD VALIGN="TOP" WIDTH="12%">&nbsp;</TD>
+    <TD VALIGN="TOP" WIDTH="13%"><A HREF="#wwfull">ww-full.tpl</A></TD>
+    <TD VALIGN="TOP" WIDTH="50%">???</TD>
+  </TR>
+  <TR> 
+    <TD VALIGN="TOP" WIDTH="25%">&lt;?HIDDEN_REQUESTED_COLLECTIONS&gt;</TD>
+    <TD VALIGN="TOP" WIDTH="12%">&nbsp;</TD>
+    <TD VALIGN="TOP" WIDTH="13%"><A HREF="#bib">bib.tpl</A><BR>
+      <A HREF="#boolean">boolean.tpl</A><BR>
+      <A HREF="#booleanbbag">booleanbbag.tpl</A><BR>
+      <A HREF="#pageviewernav">pageviewer.nav.tpl</A><BR>
+      <A HREF="#proximity">proximity.tpl</A><BR>
+      <A HREF="#proximitybbag">proximitybbag.tpl</A><BR>
+      <A HREF="#simple">simple.tpl</A><BR>
+      <A HREF="#simplebbag">simplebbag.tpl</A><BR>
+      <A HREF="#wwfull">ww-full.tpl</A><BR>
+      <A HREF="#wwstart">ww-start.tpl</A></TD>
+    <TD VALIGN="TOP" WIDTH="50%">Used to insert a hidden INPUT element into a 
+      search form storing the currently selected collection[s].</TD>
+  </TR>
+  <TR> 
+    <TD VALIGN="TOP" WIDTH="25%">&lt;?HIDDEN_REQUESTED_REALM&gt;</TD>
+    <TD VALIGN="TOP" WIDTH="12%">&nbsp;</TD>
+    <TD VALIGN="TOP" WIDTH="13%"><A HREF="#wwfull">ww-full.tpl</A></TD>
+    <TD VALIGN="TOP" WIDTH="50%">Used to insert a hidden INPUT element in a word 
+      index form to indicate the search region for the index terms.</TD>
+  </TR>
+  <TR> 
+    <TD VALIGN="TOP" WIDTH="25%">&lt;?HIDDEN_REQUESTED_TOPBOTTOM&gt;</TD>
+    <TD VALIGN="TOP" WIDTH="12%">&nbsp;</TD>
+    <TD VALIGN="TOP" WIDTH="13%"><A HREF="#wwfull">ww-full.tpl</A></TD>
+    <TD VALIGN="TOP" WIDTH="50%">Used to insert hidden INPUT elements in a word 
+      index form to indicate the top and bottom terms in the current slice of 
+      the word index.</TD>
+  </TR>
+  <TR> 
+    <TD VALIGN="TOP" WIDTH="25%">&lt;?HIDDEN_SID&gt;</TD>
+    <TD VALIGN="TOP" WIDTH="12%">&nbsp;</TD>
+    <TD VALIGN="TOP" WIDTH="13%"><A HREF="#bib">bib.tpl</A><BR>
+      <A HREF="#bibext">bibext.tpl</A><BR>
+      <A HREF="#boolean">boolean.tpl</A><BR>
+      <A HREF="#booleanbbag">booleanbbag.tpl</A><BR>
+      <A HREF="#booleanext">booleanext.tpl</A><BR>
+      <A HREF="#pageviewernav">pageviewer.nav.tpl</A><BR>
+      <A HREF="#proximity">proximity.tpl</A><BR>
+      <A HREF="#proximitybbag">proximitybbag.tpl</A><BR>
+      <A HREF="#proximityext">proximityext.tpl</A><BR>
+      <A HREF="#simple">simple.tpl</A><BR>
+      <A HREF="#simplebbag">simplebbag.tpl</A><BR>
+      <A HREF="#simpleext">simpleext.tpl</A><BR>
+      <A HREF="#wwfull">ww-full.tpl</A><BR>
+      <A HREF="#wwstart">ww-start.tpl</A></TD>
+    <TD VALIGN="TOP" WIDTH="50%">Used to insert hidden INPUT form elements indicating 
+      the current session id.</TD>
+  </TR>
+  <TR> 
+    <TD VALIGN="TOP" WIDTH="25%">&lt;?HIDDEN_XC&gt;</TD>
+    <TD VALIGN="TOP" WIDTH="12%">&nbsp;</TD>
+    <TD VALIGN="TOP" WIDTH="13%"><A HREF="#bib">bib.tpl</A><BR>
+      <A HREF="#bibext">bibext.tpl</A><BR>
+      <A HREF="#boolean">boolean.tpl</A><BR>
+      <A HREF="#booleanbbag">booleanbbag.tpl</A><BR>
+      <A HREF="#booleanext">booleanext.tpl</A><BR>
+      <A HREF="#pageviewernav">pageviewer.nav.tpl</A><BR>
+      <A HREF="#proximity">proximity.tpl</A><BR>
+      <A HREF="#proximitybbag">proximitybbag.tpl</A><BR>
+      <A HREF="#proximityext">proximityext.tpl</A><BR>
+      <A HREF="#simple">simple.tpl</A><BR>
+      <A HREF="#simplebbag">simplebbag.tpl</A><BR>
+      <A HREF="#simpleext">simpleext.tpl</A><BR>
+      <A HREF="#wwfull">ww-full.tpl</A><BR>
+      <A HREF="#wwstart">ww-start.tpl</A></TD>
+    <TD VALIGN="TOP" WIDTH="50%">???</TD>
+  </TR>
+  <TR> 
+    <TD VALIGN="TOP" WIDTH="25%">&lt;?INCLUDE_BOOKBAG_NAV_LINKS&gt;</TD>
+    <TD VALIGN="TOP" WIDTH="12%">&nbsp;</TD>
+    <TD VALIGN="TOP" WIDTH="13%"><A HREF="#reslist">reslist.tpl</A><BR>
+      <A HREF="#textpicklist">text.picklist.tpl</A></TD>
+    <TD VALIGN="TOP" WIDTH="50%">Used to insert or exclude HTML code for a secondary 
+      navigation bar for within book bag search options.</TD>
+  </TR>
+  <TR> 
+    <TD VALIGN="TOP" WIDTH="25%">&lt;?INCLUDE_BOOKBAG_SEARCH_LINKS&gt;</TD>
+    <TD VALIGN="TOP" WIDTH="12%">&nbsp;</TD>
+    <TD VALIGN="TOP" WIDTH="13%"><A HREF="#bbagemail">bbagemail.tpl</A><BR>
+      <A HREF="#bbaglist">bbaglist.tpl</A></TD>
+    <TD VALIGN="TOP" WIDTH="50%">Used to insert or exclude HTML code for optional 
+      search links on book bag contents and/or email forms.</TD>
+  </TR>
+  <TR> 
+    <TD VALIGN="TOP" WIDTH="25%">&lt;?INCLUDE_COLL_SPECIFIC_CONTENT id=&quot;cs001&quot;&gt;</TD>
+    <TD VALIGN="TOP" WIDTH="12%">&nbsp;</TD>
+    <TD VALIGN="TOP" WIDTH="13%"><A HREF="#bib">bib.tpl</A><BR>
+      <A HREF="#boolean">boolean.tpl</A><BR>
+      <A HREF="#booleanbbag">booleanbbag.tpl</A><BR>
+      <A HREF="#booleanext">booleanext.tpl</A><BR>
+      <A HREF="#header">header.tpl</A><BR>
+      <A HREF="#pageviewernav">pageviewer.nav.tpl</A><BR>
+      <A HREF="#proximity">proximity.tpl</A><BR>
+      <A HREF="#proximitybbag">proximitybbag.tpl</A><BR>
+      <A HREF="#reslist">reslist.tpl</A><BR>
+      <A HREF="#searchhistory">searchhistory.tpl</A><BR>
+      <A HREF="#simple">simple.tpl</A><BR>
+      <A HREF="#simplebbag">simplebbag.tpl</A><BR>
+      <A HREF="#textpicklist">text.picklist.tpl</A><BR>
+      <A HREF="#text">text.tpl</A><BR>
+      <A HREF="#wwfull">ww-full.tpl</A><BR>
+      <A HREF="#wwstart">ww-start.tpl</A></TD>
+    <TD VALIGN="TOP" WIDTH="50%">Used to include or exclude navigation link code 
+      for features that are available only for certain collections.</TD>
+  </TR>
+  <TR> 
+    <TD VALIGN="TOP" WIDTH="25%">&lt;?INCLUDE_GO_TO_XCOLL&gt;</TD>
+    <TD VALIGN="TOP" WIDTH="12%">&nbsp;</TD>
+    <TD VALIGN="TOP" WIDTH="13%"><A HREF="#bib">bib.tpl</A><BR>
+      <A HREF="#bibext">bibext.tpl</A><BR>
+      <A HREF="#boolean">boolean.tpl</A><BR>
+      <A HREF="#booleanbbag">booleanbbag.tpl</A><BR>
+      <A HREF="#booleanext">booleanext.tpl</A><BR>
+      <A HREF="#header">header.tpl</A><BR>
+      <A HREF="#pageviewernav">pageviewer.nav.tpl</A><BR>
+      <A HREF="#proximity">proximity.tpl</A><BR>
+      <A HREF="#proximitybbag">proximitybbag.tpl</A><BR>
+      <A HREF="#proximityext">proximityext.tpl</A><BR>
+      <A HREF="#reslist">reslist.tpl</A><BR>
+      <A HREF="#searchhistory">searchhistory.tpl</A><BR>
+      <A HREF="#simple">simple.tpl</A><BR>
+      <A HREF="#simplebbag">simplebbag.tpl</A><BR>
+      <A HREF="#simpleext">simpleext.tpl</A><BR>
+      <A HREF="#textpicklist">text.picklist.tpl</A><BR>
+      <A HREF="#text">text.tpl</A><BR>
+      <A HREF="#wwfull">ww-full.tpl</A><BR>
+      <A HREF="#wwstart">ww-start.tpl</A></TD>
+    <TD VALIGN="TOP" WIDTH="50%">Used to insert or exclude HTML code for a link 
+      to multiple collection interface.</TD>
+  </TR>
+  <TR> 
+    <TD VALIGN="TOP" WIDTH="25%">&lt;?INCLUDE_HEADER_TOC&gt;</TD>
+    <TD VALIGN="TOP" WIDTH="12%">&nbsp;</TD>
+    <TD VALIGN="TOP" WIDTH="13%"><A HREF="#header">header.tpl</A></TD>
+    <TD VALIGN="TOP" WIDTH="50%">Used to include or exclude a linked table of 
+      contents to a bibliographic header display.</TD>
+  </TR>
+  <TR> 
+    <TD VALIGN="TOP" WIDTH="25%">&lt;?INCLUDE_RETURN_TO_RESULTS&gt;</TD>
+    <TD VALIGN="TOP" WIDTH="12%">&nbsp;</TD>
+    <TD VALIGN="TOP" WIDTH="13%"><A HREF="#header">header.tpl</A><BR>
+      <A HREF="#pageviewernav">pageviewer.nav.tpl</A><BR>
+      <A HREF="#text">text.tpl</A></TD>
+    <TD VALIGN="TOP" WIDTH="50%">Used to include an HTML link back to most current 
+      results listing from a text display or header display.</TD>
+  </TR>
+  <TR> 
+    <TD VALIGN="TOP" WIDTH="25%">&lt;?INCLUDE_SIZE_SELECT&gt;</TD>
+    <TD VALIGN="TOP" WIDTH="12%">&nbsp;</TD>
+    <TD VALIGN="TOP" WIDTH="13%"><A HREF="#pageviewernav">pageviewer.nav.tpl</A></TD>
+    <TD VALIGN="TOP" WIDTH="50%">Used to include or exclude HTML code for a page 
+      size menu in pageviewer.</TD>
+  </TR>
+  <TR> 
+    <TD VALIGN="TOP" WIDTH="25%">&lt;?JS_REGION_ARRAYS&gt;</TD>
+    <TD VALIGN="TOP" WIDTH="12%">&nbsp;</TD>
+    <TD VALIGN="TOP" WIDTH="13%"><A HREF="#bibext">bibext.tpl</A><BR>
+      <A HREF="#booleanext">booleanext.tpl</A><BR>
+      <A HREF="#proximityext">proximityext.tpl</A><BR>
+      <A HREF="#simpleext">simpleext.tpl</A></TD>
+    <TD VALIGN="TOP" WIDTH="50%">Used in multiple search forms to provide Javascript 
+      code for implementing the collection selecting functionality.</TD>
+  </TR>
+  <TR> 
+    <TD VALIGN="TOP" WIDTH="25%">&lt;?LANGUAGE_LIST&gt;</TD>
+    <TD VALIGN="TOP" WIDTH="12%">&nbsp;</TD>
+    <TD VALIGN="TOP" WIDTH="13%"><A HREF="#bib">bib.tpl</A><BR>
+      <A HREF="#boolean">boolean.tpl</A><BR>
+      <A HREF="#proximity">proximity.tpl</A><BR>
+      <A HREF="#simple">simple.tpl</A></TD>
+    <TD VALIGN="TOP" WIDTH="50%">Previously used in search forms to indicate the 
+      currently selected collection filter values for language.</TD>
+  </TR>
+  <TR> 
+    <TD VALIGN="TOP" WIDTH="25%">&lt;?LANGUAGE_SELECT&gt;</TD>
+    <TD VALIGN="TOP" WIDTH="12%">&nbsp;</TD>
+    <TD VALIGN="TOP" WIDTH="13%"><A HREF="#bibext">bibext.tpl</A><BR>
+      <A HREF="#booleanext">booleanext.tpl</A><BR>
+      <A HREF="#proximityext">proximityext.tpl</A><BR>
+      <A HREF="#simpleext">simpleext.tpl</A></TD>
+    <TD VALIGN="TOP" WIDTH="50%">Used to insert a select menu in a mulitple collection 
+      search form for filtering collections by language.</TD>
+  </TR>
+  <TR> 
+    <TD VALIGN="TOP" WIDTH="25%">&lt;?MAIN_FRAME_SRC&gt;</TD>
+    <TD VALIGN="TOP" WIDTH="12%">&nbsp;</TD>
+    <TD VALIGN="TOP" WIDTH="13%"><A HREF="#pageviewerframeset">pageviewer.frameset.tpl</A></TD>
+    <TD VALIGN="TOP" WIDTH="50%">Provides the <CODE>SRC</CODE> URL for the page 
+      content frame in the pageviewer frameset.</TD>
+  </TR>
+  <TR> 
+    <TD VALIGN="TOP" WIDTH="25%">&lt;?NAV_FRAME_SRC&gt;</TD>
+    <TD VALIGN="TOP" WIDTH="12%">&nbsp;</TD>
+    <TD VALIGN="TOP" WIDTH="13%"><A HREF="#pageviewerframeset">pageviewer.frameset.tpl</A></TD>
+    <TD VALIGN="TOP" WIDTH="50%">Provides the <CODE>SRC</CODE> URL for the navigation 
+      frame in the pageviewer frameset.</TD>
+  </TR>
+  <TR> 
+    <TD VALIGN="TOP" WIDTH="25%">&lt;?NEXT_PAGE_LINK&gt;</TD>
+    <TD VALIGN="TOP" WIDTH="12%">&nbsp;</TD>
+    <TD VALIGN="TOP" WIDTH="13%"><A HREF="#pageviewernav">pageviewer.nav.tpl</A></TD>
+    <TD VALIGN="TOP" WIDTH="50%">Used to insert <CODE>HREF</CODE> URL code for 
+      the &quot;next page&quot; button in pageviewer.</TD>
+  </TR>
+  <TR> 
+    <TD VALIGN="TOP" WIDTH="25%">&lt;?NUMBER_OF_COLLECTIONS&gt;</TD>
+    <TD VALIGN="TOP" WIDTH="12%">&nbsp;</TD>
+    <TD VALIGN="TOP" WIDTH="13%"><A HREF="#bib">bib.tpl</A><BR>
+      <A HREF="#boolean">boolean.tpl</A><BR>
+      <A HREF="#proximity">proximity.tpl</A><BR>
+      <A HREF="#simple">simple.tpl</A></TD>
+    <TD VALIGN="TOP" WIDTH="50%">Previously used in search forms to indicate the 
+      number of collections currently being searched.</TD>
+  </TR>
+  <TR> 
+    <TD VALIGN="TOP" WIDTH="25%">&lt;?NUMBER_OF_TEXTS&gt;</TD>
+    <TD VALIGN="TOP" WIDTH="12%">&nbsp;</TD>
+    <TD VALIGN="TOP" WIDTH="13%"><A HREF="#bib">bib.tpl</A><BR>
+      <A HREF="#boolean">boolean.tpl</A><BR>
+      <A HREF="#proximity">proximity.tpl</A><BR>
+      <A HREF="#simple">simple.tpl</A></TD>
+    <TD VALIGN="TOP" WIDTH="50%">Previously used in search forms to indicate the 
+      number of texts currently being searched.</TD>
+  </TR>
+  <TR> 
+    <TD VALIGN="TOP" WIDTH="25%">&lt;?PAGE_IMAGE_OR_TEXT&gt;</TD>
+    <TD VALIGN="TOP" WIDTH="12%">&nbsp;</TD>
+    <TD VALIGN="TOP" WIDTH="13%"><A HREF="#pageviewermain">pageviewer.main.tpl</A></TD>
+    <TD VALIGN="TOP" WIDTH="50%">Used to insert the ascii text or image reference 
+      in the main content frame of pageviewer.</TD>
+  </TR>
+  <TR> 
+    <TD VALIGN="TOP" WIDTH="25%">&lt;?PAGE_SELECT onchange=&quot;this.form.submit();&quot;&gt;</TD>
+    <TD VALIGN="TOP" WIDTH="12%">&nbsp;</TD>
+    <TD VALIGN="TOP" WIDTH="13%"><A HREF="#pageviewernav">pageviewer.nav.tpl</A></TD>
+    <TD VALIGN="TOP" WIDTH="50%">Used to insert the select menu for jumping to 
+      a page in the current book in pageviewer.</TD>
+  </TR>
+  <TR> 
+    <TD VALIGN="TOP" WIDTH="25%">&lt;?PERIOD_LIST&gt;</TD>
+    <TD VALIGN="TOP" WIDTH="12%">&nbsp;</TD>
+    <TD VALIGN="TOP" WIDTH="13%"><A HREF="#bib">bib.tpl</A><BR>
+      <A HREF="#boolean">boolean.tpl</A><BR>
+      <A HREF="#proximity">proximity.tpl</A><BR>
+      <A HREF="#simple">simple.tpl</A></TD>
+    <TD VALIGN="TOP" WIDTH="50%">Previously used in search forms to indicate the 
+      currently selected collection filter values for period.</TD>
+  </TR>
+  <TR> 
+    <TD VALIGN="TOP" WIDTH="25%">&lt;?PERIOD_SEARCH_SELECT&gt;</TD>
+    <TD VALIGN="TOP" WIDTH="12%">&nbsp;</TD>
+    <TD VALIGN="TOP" WIDTH="13%"><A HREF="#boolean">boolean.tpl</A><BR>
+      <A HREF="#booleanbbag">booleanbbag.tpl</A><BR>
+      <A HREF="#proximity">proximity.tpl</A><BR>
+      <A HREF="#proximitybbag">proximitybbag.tpl</A><BR>
+      <A HREF="#simple">simple.tpl</A><BR>
+      <A HREF="#simplebbag">simplebbag.tpl</A></TD>
+    <TD VALIGN="TOP" WIDTH="50%">Used to insert an optional select menu for period 
+      restrictions in a search form.</TD>
+  </TR>
+  <TR> 
+    <TD VALIGN="TOP" WIDTH="25%">&lt;?PERIOD_SELECT&gt;</TD>
+    <TD VALIGN="TOP" WIDTH="12%">&nbsp;</TD>
+    <TD VALIGN="TOP" WIDTH="13%"><A HREF="#bibext">bibext.tpl</A><BR>
+      <A HREF="#booleanext">booleanext.tpl</A><BR>
+      <A HREF="#proximityext">proximityext.tpl</A><BR>
+      <A HREF="#simpleext">simpleext.tpl</A></TD>
+    <TD VALIGN="TOP" WIDTH="50%">Used to insert a select menu in a mulitple collection 
+      search form for filtering collections by period.</TD>
+  </TR>
+  <TR> 
+    <TD VALIGN="TOP" WIDTH="25%">&lt;?PICKLIST&gt;</TD>
+    <TD VALIGN="TOP" WIDTH="12%">&nbsp;</TD>
+    <TD VALIGN="TOP" WIDTH="13%"><A HREF="#pageviewerpicklist">pageviewer.picklist.tpl</A><BR>
+      <A HREF="#textpicklist">text.picklist.tpl</A></TD>
+    <TD VALIGN="TOP" WIDTH="50%">Used to insert a linked list of possible titles 
+      to select for viewing in pageviewer or text display. </TD>
+  </TR>
+  <TR> 
+    <TD VALIGN="TOP" WIDTH="25%">&lt;?PREV_PAGE_LINK&gt;</TD>
+    <TD VALIGN="TOP" WIDTH="12%">&nbsp;</TD>
+    <TD VALIGN="TOP" WIDTH="13%"><A HREF="#pageviewernav">pageviewer.nav.tpl</A></TD>
+    <TD VALIGN="TOP" WIDTH="50%">Used to insert <CODE>HREF</CODE> URL code for 
+      the &quot;previous page&quot; button in pageviewer.</TD>
+  </TR>
+  <TR> 
+    <TD VALIGN="TOP" WIDTH="25%">&lt;?PROXIMITY_SEARCH_LINK&gt;</TD>
+    <TD VALIGN="TOP" WIDTH="12%">&nbsp;</TD>
+    <TD VALIGN="TOP" WIDTH="13%"><A HREF="#bbaglist">bbaglist.tpl</A><BR>
+      <A HREF="#bib">bib.tpl</A><BR>
+      <A HREF="#bibext">bibext.tpl</A><BR>
+      <A HREF="#boolean">boolean.tpl</A><BR>
+      <A HREF="#booleanext">booleanext.tpl</A><BR>
+      <A HREF="#wwfull">ww-full.tpl</A><BR>
+      <A HREF="#wwstart">ww-start.tpl</A></TD>
+    <TD VALIGN="TOP" WIDTH="50%">Provides the <CODE>HREF</CODE> URL for the &quot;proximity&quot; 
+      search form link in the main or footer navigation bar.</TD>
+  </TR>
+  <TR> 
+    <TD VALIGN="TOP" WIDTH="25%">&lt;?PUB_BETWEEN_SEARCH_SELECT&gt;</TD>
+    <TD VALIGN="TOP" WIDTH="12%">&nbsp;</TD>
+    <TD VALIGN="TOP" WIDTH="13%"><A HREF="#boolean">boolean.tpl</A><BR>
+      <A HREF="#booleanbbag">booleanbbag.tpl</A><BR>
+      <A HREF="#proximity">proximity.tpl</A><BR>
+      <A HREF="#proximitybbag">proximitybbag.tpl</A><BR>
+      <A HREF="#simple">simple.tpl</A><BR>
+      <A HREF="#simplebbag">simplebbag.tpl</A></TD>
+    <TD VALIGN="TOP" WIDTH="50%">Inserts an optional pair of form INPUT boxes 
+      for restricting searches by a range of publication dates.</TD>
+  </TR>
+  <TR> 
+    <TD VALIGN="TOP" WIDTH="25%">&lt;?Q1_INPUT size=&quot;25&quot; class=&quot;formhilite&quot; 
+      default=&quot;&quot;&gt;</TD>
+    <TD VALIGN="TOP" WIDTH="12%">&nbsp;</TD>
+    <TD VALIGN="TOP" WIDTH="13%"><A HREF="#wwfull">ww-full.tpl</A><BR>
+      <A HREF="#wwstart">ww-start.tpl</A><BR>
+      <A HREF="#bib">bib.tpl</A><BR>
+      <A HREF="#bibext">bibext.tpl</A><BR>
+      <A HREF="#boolean">boolean.tpl</A><BR>
+      <A HREF="#booleanbbag">booleanbbag.tpl</A><BR>
+      <A HREF="#booleanext">booleanext.tpl</A><BR>
+      <A HREF="#proximity">proximity.tpl</A><BR>
+      <A HREF="#proximitybbag">proximitybbag.tpl</A><BR>
+      <A HREF="#proximityext">proximityext.tpl</A><BR>
+      <A HREF="#simple">simple.tpl</A><BR>
+      <A HREF="#simplebbag">simplebbag.tpl</A><BR>
+      <A HREF="#simpleext">simpleext.tpl</A></TD>
+    <TD VALIGN="TOP" WIDTH="50%">Used to insert an INPUT box into a search form 
+      for the first query term.</TD>
+  </TR>
+  <TR> 
+    <TD VALIGN="TOP" WIDTH="25%">&lt;?Q2_INPUT size=&quot;30&quot; class=&quot;formhilite&quot;&gt;</TD>
+    <TD VALIGN="TOP" WIDTH="12%">&nbsp;</TD>
+    <TD VALIGN="TOP" WIDTH="13%"><A HREF="#boolean">boolean.tpl</A><BR>
+      <A HREF="#booleanbbag">booleanbbag.tpl</A><BR>
+      <A HREF="#booleanext">booleanext.tpl</A><BR>
+      <A HREF="#proximity">proximity.tpl</A><BR>
+      <A HREF="#proximitybbag">proximitybbag.tpl</A><BR>
+      <A HREF="#proximityext">proximityext.tpl</A></TD>
+    <TD VALIGN="TOP" WIDTH="50%">Used to insert an INPUT box into a search form 
+      for the second query term.</TD>
+  </TR>
+  <TR> 
+    <TD VALIGN="TOP" WIDTH="25%">&lt;?Q3_INPUT size=&quot;30&quot; class=&quot;formhilite&quot;&gt;</TD>
+    <TD VALIGN="TOP" WIDTH="12%">&nbsp;</TD>
+    <TD VALIGN="TOP" WIDTH="13%"><A HREF="#boolean">boolean.tpl</A><BR>
+      <A HREF="#booleanbbag">booleanbbag.tpl</A><BR>
+      <A HREF="#booleanext">booleanext.tpl</A><BR>
+      <A HREF="#proximity">proximity.tpl</A><BR>
+      <A HREF="#proximitybbag">proximitybbag.tpl</A><BR>
+      <A HREF="#proximityext">proximityext.tpl</A></TD>
+    <TD VALIGN="TOP" WIDTH="50%">Used to nsert an INPUT box into a search form 
+      for the third query term.</TD>
+  </TR>
+  <TR> 
+    <TD VALIGN="TOP" WIDTH="25%">&lt;?REGION_SEARCH_SELECT&gt;</TD>
+    <TD VALIGN="TOP" WIDTH="12%">&nbsp;</TD>
+    <TD VALIGN="TOP" WIDTH="13%"><A HREF="#bib">bib.tpl</A><BR>
+      <A HREF="#bibext">bibext.tpl</A><BR>
+      <A HREF="#boolean">boolean.tpl</A><BR>
+      <A HREF="#booleanbbag">booleanbbag.tpl</A><BR>
+      <A HREF="#booleanext">booleanext.tpl</A><BR>
+      <A HREF="#proximity">proximity.tpl</A><BR>
+      <A HREF="#proximitybbag">proximitybbag.tpl</A><BR>
+      <A HREF="#proximityext">proximityext.tpl</A><BR>
+      <A HREF="#simple">simple.tpl</A><BR>
+      <A HREF="#simplebbag">simplebbag.tpl</A><BR>
+      <A HREF="#simpleext">simpleext.tpl</A></TD>
+    <TD VALIGN="TOP" WIDTH="50%">Used to insert a select menu into a search form 
+      for selecting a region to restrict search terms to.</TD>
+  </TR>
+  <TR> 
+    <TD VALIGN="TOP" WIDTH="25%">&lt;?RESULTS&gt;</TD>
+    <TD VALIGN="TOP" WIDTH="12%">&nbsp;</TD>
+    <TD VALIGN="TOP" WIDTH="13%"><A HREF="#reslist">reslist.tpl</A></TD>
+    <TD VALIGN="TOP" WIDTH="50%">Inserts detailed results listings within table<CODE> 
+      &lt;TR&gt;</CODE> and <CODE>&lt;TD&gt;</CODE> tags</TD>
+  </TR>
+  <TR> 
+    <TD VALIGN="TOP" WIDTH="25%">&lt;?RESULTS_FRAME_HEADER&gt;</TD>
+    <TD VALIGN="TOP" WIDTH="12%">&nbsp;</TD>
+    <TD VALIGN="TOP" WIDTH="13%"><A HREF="#reslist">reslist.tpl</A></TD>
+    <TD VALIGN="TOP" WIDTH="50%">Used to insert summary info for results details 
+      per collection.</TD>
+  </TR>
+  <TR> 
+    <TD VALIGN="TOP" WIDTH="25%">&lt;?RETURN_TO_RESULTS&gt;</TD>
+    <TD VALIGN="TOP" WIDTH="12%">&nbsp;</TD>
+    <TD VALIGN="TOP" WIDTH="13%"><A HREF="#pageviewernav">pageviewer.nav.tpl</A></TD>
+    <TD VALIGN="TOP" WIDTH="50%">Used to insert an HTML link back to results listings 
+      from the pageviewer.</TD>
+  </TR>
+  <TR> 
+    <TD VALIGN="TOP" WIDTH="25%">&lt;?RE_AUTH_LINK&gt;</TD>
+    <TD VALIGN="TOP" WIDTH="12%">&nbsp;</TD>
+    <TD VALIGN="TOP" WIDTH="13%"><A HREF="#bib">bib.tpl</A><BR>
+      <A HREF="#bibext">bibext.tpl</A><BR>
+      <A HREF="#boolean">boolean.tpl</A><BR>
+      <A HREF="#booleanbbag">booleanbbag.tpl</A><BR>
+      <A HREF="#booleanext">booleanext.tpl</A><BR>
+      <A HREF="#header">header.tpl</A><BR>
+      <A HREF="#pageviewernav">pageviewer.nav.tpl</A><BR>
+      <A HREF="#proximity">proximity.tpl</A><BR>
+      <A HREF="#proximitybbag">proximitybbag.tpl</A><BR>
+      <A HREF="#proximityext">proximityext.tpl</A><BR>
+      <A HREF="#reslist">reslist.tpl</A><BR>
+      <A HREF="#searchhistory">searchhistory.tpl</A><BR>
+      <A HREF="#simple">simple.tpl</A><BR>
+      <A HREF="#simplebbag">simplebbag.tpl</A><BR>
+      <A HREF="#simpleext">simpleext.tpl</A><BR>
+      <A HREF="#splash">splash.tpl</A><BR>
+      <A HREF="#textpicklist">text.picklist.tpl</A><BR>
+      <A HREF="#text">text.tpl</A><BR>
+      <A HREF="#wwfull">ww-full.tpl</A><BR>
+      <A HREF="#wwstart">ww-start.tpl</A></TD>
+    <TD VALIGN="TOP" WIDTH="50%">Provides the <CODE>HREF</CODE> URL for the &quot;Authorized 
+      user login&quot; link from any page.</TD>
+  </TR>
+  <TR> 
+    <TD VALIGN="TOP" WIDTH="25%">&lt;?SCOPEDNOTE&gt;</TD>
+    <TD VALIGN="TOP" WIDTH="12%">&nbsp;</TD>
+    <TD VALIGN="TOP" WIDTH="13%"><A HREF="#note">note.tpl</A></TD>
+    <TD VALIGN="TOP" WIDTH="50%">Used to insert the content of a linked note in 
+      a target window. </TD>
+  </TR>
+  <TR> 
+    <TD VALIGN="TOP" WIDTH="25%">&lt;?SCRIPT_NAME cginame=&quot;pageviewer-idx&quot;&gt;</TD>
+    <TD VALIGN="TOP" WIDTH="12%">&nbsp;</TD>
+    <TD VALIGN="TOP" WIDTH="13%"> 
+      <P><A HREF="#pageviewernav">pageviewer.nav.tpl</A> <A HREF="#bbagemail">bbagemail.tpl</A> 
+        <A HREF="#bbaglist">bbaglist.tpl</A> <A HREF="#bib">bib.tpl</A> <A HREF="#bibext">bibext.tpl</A> 
+        <A HREF="#boolean">boolean.tpl</A> <A HREF="#booleanbbag">booleanbbag.tpl</A> 
+        <A HREF="#booleanext">booleanext.tpl</A> <A HREF="#home"><BR>
+        </A><A HREF="#home">home.tpl</A> <A HREF="#proximity"><BR>
+        proximity.tpl</A> <A HREF="#proximitybbag">proximitybbag.tpl</A> <A HREF="#proximityext">proximityext.tpl</A> 
+        <A HREF="#simple">simple.tpl</A> <A HREF="#simplebbag">simplebbag.tpl</A> 
+        <A HREF="#simpleext">simpleext.tpl</A> <A HREF="#splash">splash.tpl</A> 
+        <A HREF="#wwfull">ww-full.tpl</A> <A HREF="#wwstart">ww-start.tpl</A></P>
+    </TD>
+    <TD VALIGN="TOP" WIDTH="50%">Used to insert a relevant script name into a 
+      collection-specific URL path.</TD>
+  </TR>
+  <TR> 
+    <TD VALIGN="TOP" WIDTH="25%">&lt;?SEARCH_HISTORY_LINK&gt;</TD>
+    <TD VALIGN="TOP" WIDTH="12%">&nbsp;</TD>
+    <TD VALIGN="TOP" WIDTH="13%"><A HREF="#bbaglist">bbaglist.tpl</A><BR>
+      <A HREF="#bib">bib.tpl</A><BR>
+      <A HREF="#bibext">bibext.tpl</A><BR>
+      <A HREF="#boolean">boolean.tpl</A><BR>
+      <A HREF="#booleanbbag">booleanbbag.tpl</A><BR>
+      <A HREF="#booleanext">booleanext.tpl</A><BR>
+      <A HREF="#header">header.tpl</A><BR>
+      <A HREF="#pageviewernav">pageviewer.nav.tpl</A><BR>
+      <A HREF="#proximity">proximity.tpl</A><BR>
+      <A HREF="#proximitybbag">proximitybbag.tpl</A><BR>
+      <A HREF="#proximityext">proximityext.tpl</A><BR>
+      <A HREF="#reslist">reslist.tpl</A><BR>
+      <A HREF="#simple">simple.tpl</A><BR>
+      <A HREF="#simplebbag">simplebbag.tpl</A><BR>
+      <A HREF="#simpleext">simpleext.tpl</A><BR>
+      <A HREF="#splash">splash.tpl</A><BR>
+      <A HREF="#textpicklist">text.picklist.tpl</A><BR>
+      <A HREF="#text">text.tpl</A><BR>
+      <A HREF="#wwfull">ww-full.tpl</A><BR>
+      <A HREF="#wwstart">ww-start.tpl</A></TD>
+    <TD VALIGN="TOP" WIDTH="50%">Provides the <CODE>HREF</CODE> URL for the &quot;history&quot; 
+      page link in the main or footer navigation bar.</TD>
+  </TR>
+  <TR> 
+    <TD VALIGN="TOP" WIDTH="25%">&lt;?SEARCH_HISTORY_TABLE&gt;</TD>
+    <TD VALIGN="TOP" WIDTH="12%">&nbsp;</TD>
+    <TD VALIGN="TOP" WIDTH="13%"><A HREF="#searchhistory">searchhistory.tpl</A></TD>
+    <TD VALIGN="TOP" WIDTH="50%">Used to insert the search history items within 
+      table <CODE>&lt;TR&gt;</CODE> and <CODE>&lt;TD&gt;</CODE> tags.</TD>
+  </TR>
+  <TR> 
+    <TD VALIGN="TOP" WIDTH="25%">&lt;?SEARCH_IN_NATURAL_LANGUAGE&gt;</TD>
+    <TD VALIGN="TOP" WIDTH="12%">&nbsp;</TD>
+    <TD VALIGN="TOP" WIDTH="13%"><A HREF="#reslist">reslist.tpl</A> </TD>
+    <TD VALIGN="TOP" WIDTH="50%">Used to insert the current search string as entered 
+      atop the results list display.</TD>
+  </TR>
+  <TR> 
+    <TD VALIGN="TOP" WIDTH="25%">&lt;?SEARCH_RESTRICTION&gt;</TD>
+    <TD VALIGN="TOP" WIDTH="12%">&nbsp;</TD>
+    <TD VALIGN="TOP" WIDTH="13%"><A HREF="#proximity">proximity.tpl</A> <BR>
+      <A HREF="#simple">simple.tpl</A></TD>
+    <TD VALIGN="TOP" WIDTH="50%">Used to insert an optional string indicating 
+      that a current search form is restricted to a single book.</TD>
+  </TR>
+  <TR> 
+    <TD VALIGN="TOP" WIDTH="25%">&lt;?SIMPLE_SEARCH_WITHIN_LINK&gt;</TD>
+    <TD VALIGN="TOP" WIDTH="12%">&nbsp;</TD>
+    <TD VALIGN="TOP" WIDTH="13%"><A HREF="#header">header.tpl</A></TD>
+    <TD VALIGN="TOP" WIDTH="50%">Used to insert an HTML link into a header display 
+      for simple searches restricted to the current book.</TD>
+  </TR>
+  <TR> 
+    <TD VALIGN="TOP" WIDTH="25%">&lt;?BOOLEAN_SEARCH_WITHIN_LINK&gt;</TD>
+    <TD VALIGN="TOP" WIDTH="12%">&nbsp;</TD>
+    <TD VALIGN="TOP" WIDTH="13%"><A HREF="#header">header.tpl</A></TD>
+    <TD VALIGN="TOP" WIDTH="50%">Used to insert an HTML link into a header display 
+      for boolean searches restricted to the current book.</TD>
+  </TR>
+  <TR> 
+    <TD VALIGN="TOP" WIDTH="25%">&lt;?PROXIMITY_SEARCH_WITHIN_LINK&gt;</TD>
+    <TD VALIGN="TOP" WIDTH="12%">&nbsp;</TD>
+    <TD VALIGN="TOP" WIDTH="13%"><A HREF="#header">header.tpl</A></TD>
+    <TD VALIGN="TOP" WIDTH="50%">Used to insert an HTML link into a header display 
+      for proximity searches restricted to the current book.</TD>
+  </TR>
+  <TR> 
+    <TD VALIGN="TOP" WIDTH="25%">&lt;?VIEW_ENTIRE_TEXT_LINK&gt;</TD>
+    <TD VALIGN="TOP" WIDTH="12%">&nbsp;</TD>
+    <TD VALIGN="TOP" WIDTH="13%"><A HREF="#header">header.tpl</A></TD>
+    <TD VALIGN="TOP" WIDTH="50%">Used to insert an HTML links into a header display 
+      to view the entire text of the current book.</TD>
+  </TR>
+  <TR> 
+    <TD VALIGN="TOP" WIDTH="25%">&lt;?HEADER_TOC_LINK&gt;</TD>
+    <TD VALIGN="TOP" WIDTH="12%">&nbsp;</TD>
+    <TD VALIGN="TOP" WIDTH="13%"><A HREF="#header">header.tpl</A></TD>
+    <TD VALIGN="TOP" WIDTH="50%">Used to insert an HTML link to a Table of Contents 
+      view if not already in a TOC view restricted to the current book.</TD>
+  </TR>
+  <TR> 
+    <TD VALIGN="TOP" WIDTH="25%">&lt;?SGML_RESULTS&gt;</TD>
+    <TD VALIGN="TOP" WIDTH="12%">&nbsp;</TD>
+    <TD VALIGN="TOP" WIDTH="13%"><A HREF="#text">text.tpl</A> </TD>
+    <TD VALIGN="TOP" WIDTH="50%">Used to insert the content of encoded books into 
+      a text display as HTML.</TD>
+  </TR>
+  <TR> 
+    <TD VALIGN="TOP" WIDTH="25%">&lt;?SIMPLE_SEARCH_LINK&gt;</TD>
+    <TD VALIGN="TOP" WIDTH="12%">&nbsp;</TD>
+    <TD VALIGN="TOP" WIDTH="13%"><A HREF="#bbaglist">bbaglist.tpl</A><BR>
+      <A HREF="#bib">bib.tpl</A><BR>
+      <A HREF="#bibext">bibext.tpl</A><BR>
+      <A HREF="#boolean">boolean.tpl</A><BR>
+      <A HREF="#booleanbbag">booleanbbag.tpl</A><BR>
+      <A HREF="#booleanext">booleanext.tpl</A><BR>
+      <A HREF="#header">header.tpl</A><BR>
+      <A HREF="#pageviewernav">pageviewer.nav.tpl</A><BR>
+      <A HREF="#proximity">proximity.tpl</A><BR>
+      <A HREF="#proximitybbag">proximitybbag.tpl</A><BR>
+      <A HREF="#proximityext">proximityext.tpl</A><BR>
+      <A HREF="#reslist">reslist.tpl</A><BR>
+      <A HREF="#searchhistory">searchhistory.tpl</A><BR>
+      <A HREF="#simplebbag">simplebbag.tpl</A><BR>
+      <A HREF="#splash">splash.tpl</A><BR>
+      <A HREF="#textpicklist">text.picklist.tpl</A><BR>
+      <A HREF="#text">text.tpl</A><BR>
+      <A HREF="#wwfull">ww-full.tpl</A><BR>
+      <A HREF="#wwstart">ww-start.tpl</A></TD>
+    <TD VALIGN="TOP" WIDTH="50%">Provides the <CODE>HREF</CODE> URL for the &quot;simple&quot; 
+      search form link in the main or footer navigation bar.</TD>
+  </TR>
+  <TR> 
+    <TD VALIGN="TOP" WIDTH="25%">&lt;?SINGLE_GENDER&gt;</TD>
+    <TD VALIGN="TOP" WIDTH="12%">&nbsp;</TD>
+    <TD VALIGN="TOP" WIDTH="13%"><A HREF="#boolean">boolean.tpl</A><BR>
+      <A HREF="#booleanbbag">booleanbbag.tpl</A><BR>
+      <A HREF="#proximity">proximity.tpl</A><BR>
+      <A HREF="#proximitybbag">proximitybbag.tpl</A><BR>
+      <A HREF="#simple">simple.tpl</A><BR>
+      <A HREF="#simplebbag">simplebbag.tpl</A></TD>
+    <TD VALIGN="TOP" WIDTH="50%">Used to include or exclude HTML code in a single 
+      collection search form for adding restrictions by gender.</TD>
+  </TR>
+  <TR> 
+    <TD VALIGN="TOP" WIDTH="25%">&lt;?SINGLE_GENRE&gt;</TD>
+    <TD VALIGN="TOP" WIDTH="12%">&nbsp;</TD>
+    <TD VALIGN="TOP" WIDTH="13%"><A HREF="#boolean">boolean.tpl</A><BR>
+      <A HREF="#booleanbbag">booleanbbag.tpl</A><BR>
+      <A HREF="#proximity">proximity.tpl</A><BR>
+      <A HREF="#proximitybbag">proximitybbag.tpl</A><BR>
+      <A HREF="#simple">simple.tpl</A><BR>
+      <A HREF="#simplebbag">simplebbag.tpl</A></TD>
+    <TD VALIGN="TOP" WIDTH="50%">Used to include or exclude HTML code in a single 
+      collection search form for adding restrictions by genre.</TD>
+  </TR>
+  <TR> 
+    <TD VALIGN="TOP" WIDTH="25%">&lt;?SINGLE_PERIOD&gt;</TD>
+    <TD VALIGN="TOP" WIDTH="12%">&nbsp;</TD>
+    <TD VALIGN="TOP" WIDTH="13%"><A HREF="#boolean">boolean.tpl</A><BR>
+      <A HREF="#booleanbbag">booleanbbag.tpl</A><BR>
+      <A HREF="#proximity">proximity.tpl</A><BR>
+      <A HREF="#proximitybbag">proximitybbag.tpl</A><BR>
+      <A HREF="#simple">simple.tpl</A><BR>
+      <A HREF="#simplebbag">simplebbag.tpl</A></TD>
+    <TD VALIGN="TOP" WIDTH="50%">Used to include or exclude HTML code in a single 
+      collection search form for adding restrictions by period.</TD>
+  </TR>
+  <TR> 
+    <TD VALIGN="TOP" WIDTH="25%">&lt;?SINGLE_PUB_BETWEEN&gt;</TD>
+    <TD VALIGN="TOP" WIDTH="12%">&nbsp;</TD>
+    <TD VALIGN="TOP" WIDTH="13%"><A HREF="#boolean">boolean.tpl</A><BR>
+      <A HREF="#booleanbbag">booleanbbag.tpl</A><BR>
+      <A HREF="#proximity">proximity.tpl</A><BR>
+      <A HREF="#proximitybbag">proximitybbag.tpl</A><BR>
+      <A HREF="#simple">simple.tpl</A><BR>
+      <A HREF="#simplebbag">simplebbag.tpl</A></TD>
+    <TD VALIGN="TOP" WIDTH="50%">Used to include or exclude HTML code in a single 
+      collection search form for restricting a search to a range of publication 
+      dates. </TD>
+  </TR>
+  <TR> 
+    <TD VALIGN="TOP" WIDTH="25%">&lt;?SIZE_SELECT onchange=&quot;this.form.submit();&quot;&gt;</TD>
+    <TD VALIGN="TOP" WIDTH="12%">&nbsp;</TD>
+    <TD VALIGN="TOP" WIDTH="13%"><A HREF="#pageviewernav">pageviewer.nav.tpl</A></TD>
+    <TD VALIGN="TOP" WIDTH="50%">Used to insert a select menu for changing the 
+      size of a page image in pageviewer.</TD>
+  </TR>
+  <TR> 
+    <TD VALIGN="TOP" WIDTH="25%">&lt;?SLICE_NAVIGATION_LINKS occ=&quot;1&quot;&gt;</TD>
+    <TD VALIGN="TOP" WIDTH="12%">&nbsp;</TD>
+    <TD VALIGN="TOP" WIDTH="13%"><A HREF="#reslist">reslist.tpl</A></TD>
+    <TD VALIGN="TOP" WIDTH="50%">Used to insert the links navigating between the 
+      current page of search results and other pages of results.</TD>
+  </TR>
+  <TR> 
+    <TD VALIGN="TOP" WIDTH="25%">&lt;?TITLE mode=&quot;complex&quot;&gt;</TD>
+    <TD VALIGN="TOP" WIDTH="12%">&nbsp;</TD>
+    <TD VALIGN="TOP" WIDTH="13%"><A HREF="#bbagemail">bbagemail.tpl</A><BR>
+      <A HREF="#bbaglist">bbaglist.tpl</A><BR>
+      <A HREF="#bib">bib.tpl</A><BR>
+      <A HREF="#bibext">bibext.tpl</A><BR>
+      <A HREF="#boolean">boolean.tpl</A><BR>
+      <A HREF="#booleanbbag">booleanbbag.tpl</A><BR>
+      <A HREF="#booleanext">booleanext.tpl</A><BR>
+      <A HREF="#header">header.tpl</A><BR>
+      <A HREF="#pageviewernav">pageviewer.nav.tpl</A><BR>
+      <A HREF="#proximity">proximity.tpl</A><BR>
+      <A HREF="#proximitybbag">proximitybbag.tpl</A><BR>
+      <A HREF="#proximityext">proximityext.tpl</A><BR>
+      <A HREF="#reslist">reslist.tpl</A><BR>
+      <A HREF="#searchhistory">searchhistory.tpl</A><BR>
+      <A HREF="#simple">simple.tpl</A><BR>
+      <A HREF="#simplebbag">simplebbag.tpl</A><BR>
+      <A HREF="#simpleext">simpleext.tpl</A><BR>
+      <A HREF="#splash">splash.tpl</A><BR>
+      <A HREF="#textpicklist">text.picklist.tpl</A><BR>
+      <A HREF="#text">text.tpl</A><BR>
+      <A HREF="#wwfull">ww-full.tpl</A><BR>
+      <A HREF="#wwstart">ww-start.tpl</A></TD>
+    <TD VALIGN="TOP" WIDTH="50%">Used to insert the collection title logo as an 
+      HTML graphic or text string within <CODE>&lt;A&gt;</CODE> tags linking to 
+      the collection home page. </TD>
+  </TR>
+  <TR> 
+    <TD VALIGN="TOP" WIDTH="25%">&lt;?TITLE&gt;</TD>
+    <TD VALIGN="TOP" WIDTH="12%">&nbsp;</TD>
+    <TD VALIGN="TOP" WIDTH="13%"><A HREF="#bbagemail">bbagemail.tpl</A><BR>
+      <A HREF="#bbaglist">bbaglist.tpl</A><BR>
+      <A HREF="#bib">bib.tpl</A><BR>
+      <A HREF="#bibext">bibext.tpl</A><BR>
+      <A HREF="#boolean">boolean.tpl</A><BR>
+      <A HREF="#booleanbbag">booleanbbag.tpl</A><BR>
+      <A HREF="#booleanext">booleanext.tpl</A><BR>
+      <A HREF="#header">header.tpl</A><BR>
+      <A HREF="#note">note.tpl</A><BR>
+      <A HREF="#pageviewermain">pageviewer.main.tpl</A><BR>
+      <A HREF="#pageviewernav">pageviewer.nav.tpl</A><BR>
+      <A HREF="#pageviewerpicklist">pageviewer.picklist.tpl</A><BR>
+      <A HREF="#proximity">proximity.tpl</A><BR>
+      <A HREF="#proximitybbag">proximitybbag.tpl</A><BR>
+      <A HREF="#proximityext">proximityext.tpl</A><BR>
+      <A HREF="#reslist">reslist.tpl</A><BR>
+      <A HREF="#searchhistory">searchhistory.tpl</A><BR>
+      <A HREF="#simple">simple.tpl</A><BR>
+      <A HREF="#simplebbag">simplebbag.tpl</A><BR>
+      <A HREF="#simpleext">simpleext.tpl</A><BR>
+      <A HREF="#splash">splash.tpl</A><BR>
+      <A HREF="#textpicklist">text.picklist.tpl</A><BR>
+      <A HREF="#text">text.tpl</A><BR>
+      <A HREF="#viewtextnote">viewtextnote.tpl</A><BR>
+      <A HREF="#wwfull">ww-full.tpl</A><BR>
+      <A HREF="#wwstart">ww-start.tpl</A></TD>
+    <TD VALIGN="TOP" WIDTH="50%">Used to provide the content of the <CODE>&lt;TITLE&gt;</CODE> 
+      element.</TD>
+  </TR>
+  <TR> 
+    <TD VALIGN="TOP" WIDTH="25%">&lt;?VIEWFORM_HIDDEN_VARS exclude=&quot;seq&quot;&gt;</TD>
+    <TD VALIGN="TOP" WIDTH="12%">&nbsp;</TD>
+    <TD VALIGN="TOP" WIDTH="13%"><A HREF="#pageviewernav">pageviewer.nav.tpl</A></TD>
+    <TD VALIGN="TOP" WIDTH="50%">Used to insert hidden INPUT tags into a pageviewer 
+      navigation form indicating currently viewed page sequence number and/or 
+      current query term[s].??</TD>
+  </TR>
+  <TR> 
+    <TD VALIGN="TOP" WIDTH="25%">&lt;?VIEW_SELECT onchange=&quot;this.form.submit();&quot;&gt;</TD>
+    <TD VALIGN="TOP" WIDTH="12%">&nbsp;</TD>
+    <TD VALIGN="TOP" WIDTH="13%"><A HREF="#pageviewernav">pageviewer.nav.tpl</A></TD>
+    <TD VALIGN="TOP" WIDTH="50%">Used to insert a form SELECT menu into pageviewer 
+      navigation frame for selecting &quot;view page as&quot; options.</TD>
+  </TR>
+  <TR> 
+    <TD VALIGN="TOP" WIDTH="25%">&lt;?VIEW_TEXT_LINK&gt;</TD>
+    <TD VALIGN="TOP" WIDTH="12%">&nbsp;</TD>
+    <TD VALIGN="TOP" WIDTH="13%"><A HREF="#viewtextnote">viewtextnote.tpl</A></TD>
+    <TD VALIGN="TOP" WIDTH="50%">Provides the HREF URL for a link to view the 
+      the entire text from the view mediating warning page</TD>
+  </TR>
+  <TR> 
+    <TD VALIGN="TOP" WIDTH="25%">&lt;?WORDWHEEL_COMBINED_TABLE_ROWS&gt;</TD>
+    <TD VALIGN="TOP" WIDTH="12%">&nbsp;</TD>
+    <TD VALIGN="TOP" WIDTH="13%"><A HREF="#wwfull">ww-full.tpl</A></TD>
+    <TD VALIGN="TOP" WIDTH="50%">Used to insert the list of terms and occurence 
+      numbers (within table <CODE>&lt;TR&gt;</CODE> and <CODE>&lt;TD&gt;</CODE> 
+      tags) for each slice of a word index.</TD>
+  </TR>
+  <TR> 
+    <TD VALIGN="TOP" WIDTH="25%">&lt;?WORDWHEEL_DOWN_BUTTON&gt;</TD>
+    <TD VALIGN="TOP" WIDTH="12%">&nbsp;</TD>
+    <TD VALIGN="TOP" WIDTH="13%"><A HREF="#wwfull">ww-full.tpl</A></TD>
+    <TD VALIGN="TOP" WIDTH="50%">Used to insert HTML code for the &quot;scroll-down&quot; 
+      button in the word index.</TD>
+  </TR>
+  <TR> 
+    <TD VALIGN="TOP" WIDTH="25%">&lt;?WORDWHEEL_QUICK_LINK class=&quot;wwquicklink&quot;&gt;</TD>
+    <TD VALIGN="TOP" WIDTH="12%">&nbsp;</TD>
+    <TD VALIGN="TOP" WIDTH="13%"><A HREF="#wwfull">ww-full.tpl</A><BR>
+      <A HREF="#wwstart">ww-start.tpl</A></TD>
+    <TD VALIGN="TOP" WIDTH="50%">Used to insert alphabetical and/or numeric indexes 
+      into a word index as HTML links.</TD>
+  </TR>
+  <TR> 
+    <TD VALIGN="TOP" WIDTH="25%">&lt;?WORDWHEEL_RADIO_GROUP name=&quot;realm&quot; 
+      columns=&quot;5&quot;&gt;</TD>
+    <TD VALIGN="TOP" WIDTH="12%">&nbsp;</TD>
+    <TD VALIGN="TOP" WIDTH="13%"><A HREF="#wwfull">ww-full.tpl</A><BR>
+      <A HREF="#wwstart">ww-start.tpl</A></TD>
+    <TD VALIGN="TOP" WIDTH="50%">Used to insert <CODE>RADIO</CODE> buttons into 
+      word index forms for selecting realms (i.e., text regions) to retrieve word 
+      indexes from.</TD>
+  </TR>
+  <TR> 
+    <TD VALIGN="TOP" WIDTH="25%">&lt;?WORDWHEEL_SEARCH_LINK&gt;</TD>
+    <TD VALIGN="TOP" WIDTH="12%">&nbsp;</TD>
+    <TD VALIGN="TOP" WIDTH="13%"><A HREF="#bbaglist">bbaglist.tpl</A><BR>
+      <A HREF="#bib">bib.tpl</A><BR>
+      <A HREF="#bibext">bibext.tpl</A><BR>
+      <A HREF="#boolean">boolean.tpl</A><BR>
+      <A HREF="#booleanext">booleanext.tpl</A><BR>
+      <A HREF="#proximity">proximity.tpl</A><BR>
+      <A HREF="#proximityext">proximityext.tpl</A></TD>
+    <TD VALIGN="TOP" WIDTH="50%">Provides the <CODE>HREF</CODE> URL for the &quot;word 
+      index&quot; start form link in the main or footer navigation bar.</TD>
+  </TR>
+  <TR> 
+    <TD VALIGN="TOP" WIDTH="25%">&lt;?WORDWHEEL_UP_BUTTON&gt;</TD>
+    <TD VALIGN="TOP" WIDTH="12%">&nbsp;</TD>
+    <TD VALIGN="TOP" WIDTH="13%"><A HREF="#wwfull">ww-full.tpl</A></TD>
+    <TD VALIGN="TOP" WIDTH="50%">Used to insert HTML code for the &quot;scroll-up&quot; 
+      button in the word index.</TD>
+  </TR>
+  <TR> 
+    <TD VALIGN="TOP" WIDTH="25%">&lt;?WW_NAV&gt;</TD>
+    <TD VALIGN="TOP" WIDTH="12%">&nbsp;</TD>
+    <TD VALIGN="TOP" WIDTH="13%"><A HREF="#bib">bib.tpl</A><BR>
+      <A HREF="#bibext">bibext.tpl</A><BR>
+      <A HREF="#boolean">boolean.tpl</A><BR>
+      <A HREF="#booleanext">booleanext.tpl</A><BR>
+      <A HREF="#proximity">proximity.tpl</A><BR>
+      <A HREF="#proximityext">proximityext.tpl</A></TD>
+    <TD VALIGN="TOP" WIDTH="50%">Used to insert or exclude an HTML link to a word 
+      index search form.</TD>
+  </TR>
+  <TR> 
+    <TD VALIGN="TOP" WIDTH="25%">&lt;?XCOLL_TOTALS&gt;</TD>
+    <TD VALIGN="TOP" WIDTH="12%">&nbsp;</TD>
+    <TD VALIGN="TOP" WIDTH="13%"><A HREF="#reslist">reslist.tpl</A></TD>
+    <TD VALIGN="TOP" WIDTH="50%">Used to insert in a results display the total 
+      number of records retrieved for searches against multiple collections.</TD>
+  </TR>
+  <TR> 
+    <TD VALIGN="TOP" WIDTH="25%">&lt;?XC_COLLLIST&gt; </TD>
+    <TD VALIGN="TOP" WIDTH="12%">&nbsp;</TD>
+    <TD VALIGN="TOP" WIDTH="13%"><A HREF="#bib">bib.tpl</A><BR>
+      <A HREF="#boolean">boolean.tpl</A><BR>
+      <A HREF="#proximity">proximity.tpl</A><BR>
+      <A HREF="#simple">simple.tpl</A></TD>
+    <TD VALIGN="TOP" WIDTH="50%">Used to insert or exclude multiple collection 
+      information in search forms.</TD>
+  </TR>
+  <TR> 
+    <TD VALIGN="TOP" WIDTH="25%">&lt;?SCOPEDNOTE&gt; </TD>
+    <TD VALIGN="TOP" WIDTH="12%">&nbsp;</TD>
+    <TD VALIGN="TOP" WIDTH="13%"><A HREF="#note">note.tpl</A></TD>
+    <TD VALIGN="TOP" WIDTH="50%">Used to insert a note and closest scoping head 
+      in notes popup.</TD>
+  </TR>
+  <TR> 
+    <TD VALIGN="TOP" WIDTH="25%">&lt;?SCOPEDNOTE_EXTRA_CONTENT&gt; </TD>
+    <TD VALIGN="TOP" WIDTH="12%">&nbsp;</TD>
+    <TD VALIGN="TOP" WIDTH="13%"><A HREF="#note">note.tpl</A></TD>
+    <TD VALIGN="TOP" WIDTH="50%">Used to insert arbitrary content in notes popup.</TD>
+  </TR>
+  </TBODY> 
+</TABLE>
+<P>&nbsp; 
+<P>&nbsp; <A NAME="imageclass"></A> 
+<H2>ImageClass</H2>
+<A NAME="icIndCollChars"></A> 
+<H3>Specifying Individual Collection Characteristics<BR>
+  <A NAME="iccss"> </A> </H3>
+<H4>CSS files</H4>
+<P>ImageClass templates, much like TextClass templates, utilize two CSS files 
+  for controlling most font and color characteristics. ImageClass templates differ, 
+  however, in that they do not include a default reference to a collection-specific 
+  CSS file, but only build a reference to a collections CSS file if one exists. 
+  This obviates the need to include a collection CSS file for every new collection. 
+</P>
+<P>The reference to the class CSS file is also different form the TextClass templates 
+  in the &lt;LINK&gt; element pointing to the file is written dynamically using 
+  Javascript code. This allows the template to refer to one of any number of separate 
+  CSS files to best suite the specific characteristics of a particular combination 
+  of browser and platform. A portion of the code, creating the &lt;LINK&gt; reference 
+  is shown below:</P>
+<BLOCKQUOTE> 
+  <P>if (ie) <BR>
+    { <BR>
+    &nbsp;&nbsp;document.writeln('<BR>
+    &lt;link rel=&quot;stylesheet&quot; type=&quot;text/css&quot;<BR>
+    href=&quot;&lt;?PATH type=&quot;web&quot;&gt;css/imageclass-ie-&nbsp;'+platform+'.css\&quot;&gt;\n'); 
+    <BR>
+    &lt;?CSSURL type=&quot;ie&quot;&gt; <BR>
+    <BR>
+    } <BR>
+    else <BR>
+    { <BR>
+    <BR>
+    document.writeln('<BR>
+    &lt;link rel=&quot;stylesheet&quot; type=&quot;text/css&quot; <BR>
+    href=&quot;&lt;?PATH type=&quot;web&quot;&gt;css/imageclass-ns-'+platform+'.css\&quot;&gt;\n'); 
+    <BR>
+    &lt;?CSSURL type=&quot;ns&quot;&gt; <BR>
+  </P>
+</BLOCKQUOTE>
+<P>The &lt;?PATH type=&quot;web&quot;&gt; processing instruction resolves to the 
+  relevant path for each stylesheet. The &lt;?CSSURL&gt; processing instruction 
+  will create a link to a collection-specific CSS file if it exists. Because the 
+  collection-specific CSS is referenced after the class CSS, any style declarations 
+  that appear in latter file will effectively overwrite matching declarations 
+  in the former. This is how fonts and background colors are varied for each collection. 
+</P>
+<P>&nbsp;</P>
+<H4><A NAME="icgraphics"> </A> </H4>
+<H4>Graphics</H4>
+<P>Default ImageClass templates employ a variety of relatively generic graphics 
+  that can be referenced by all collection instances. A <A HREF="ic-graphics.html">table 
+  of shared files</A> shows those files that are stored in the <CODE>&lt;root&gt;/i/image/graphics/</CODE> 
+  directory. Any alternative graphics by identical names may be stored in individual 
+  collection <CODE>graphics</CODE> directories to replace the default class graphics 
+  for that particular collection. Any files not stored in collection graphics 
+  directories, but referenced in the templates, will be referenced from the class 
+  graphics directory as a fallback mechanism. </P>
+<P>&nbsp;</P>
+<P><A NAME="ichdr"> </A> </P>
+<H4>Header characteristics</H4>
+<P>The header of each page template includes that area at the top of the page 
+  containing those elements associated with unique collection identity: main collection 
+  or group title global links, if any, and the main navigation bar. ImageClass 
+  templates work very similaryly to TextClass templates to accomodate inclusion 
+  of background colors to provide some flexibility in creating unique appearances 
+  for different collections. </P>
+<DIV CLASS="level3"></DIV>
+<P><A NAME="icbackground"> </A> </P>
+<P><I>Background color and graphics</I> </P>
+<P>Main background color for template headers is provided by style declarations 
+  in the class CSS styleshee. <B>Figure 1</B> illustrates how these characteristics 
+  are specified in<CODE> td</CODE> opening tags in the class template.</P>
+<TABLE BORDER="0" CELLPADDING="0" CELLSPACING="2">
+  <TR> 
+    <TD><IMG SRC="graphics/image-hdr-layout.gif" WIDTH="699" HEIGHT="84"></TD>
+  </TR>
+  <TR> 
+    <TD><B>Figure 1</B>: Header cell color and graphics.</TD>
+  </TR>
+</TABLE>
+<P>The three top cells each have CSS class associations inherited from the hdr1 
+  style attached to the parent table row. Likewise, the two bottom cells inherit 
+  styles from their parent table row.. The <CODE>hdr1</CODE> and <CODE>hdr2</CODE> 
+  styles are set locally in the class CSS style sheet as</P>
+<BLOCKQUOTE> 
+  <P><CODE>tr.hdr1 {background: black;} <BR>
+    tr.hdr2 {background: #E7E5D6;} </CODE><BR>
+  </P>
+</BLOCKQUOTE>
+<P>Any of the table cells involved can also include values for the <CODE>bgcolor</CODE> 
+  attribute as a backup to the style declarations. The order of precedence for 
+  CSS capable browsers is to render style first over<CODE> bgcolor</CODE> attribute 
+  value.</P>
+<BR>
+<BR>
+<BR>
+<DIV CLASS="level3"></DIV>
+<P><A NAME="ichdrcollname"> </A> </P>
+<P><I>Title name or graphic</I> </P>
+<P>Collection title name is provided in the templates via the<CODE> &lt;?BANNER&gt;</CODE> 
+  processing instruction. The PI will, in the case of an individual collection, 
+  resolve to a text string or a graphic file as specified in the<CODE> colldb.</CODE> 
+  In cross-collection made, the content is specified in the <CODE>imageclass.cfg</CODE> 
+  file. When rendered as text, titles are wrapped in H3 tags with CSS style <CODE>topheadlink</CODE> 
+  so that collection title font can be specified.</P>
+<BR>
+<DIV CLASS="level3"></DIV>
+<P><A NAME="ichdrtabs"> </A> </P>
+<P><I>Navigation fonts and tabs</I> </P>
+<P>Navigation tabs in ImageClass are implemented as an imagemap with a series 
+  of graphics files. The tabs graphics files represent the entire tab set in a 
+  particular state, showing all the relevant tabs in their relative state, and 
+  all against a background color that matches that of the table row containing 
+  the imagemap. Thus, in the header layout shown above, the navigation tabs are 
+  contained within the table row class attribute set as <CODE>class=&quot;hdr2&quot;</CODE> 
+  where hdr2 is defined as the background color <CODE>#E7E5D6</CODE>. The tab 
+  set uses an identical background color so that it blends in cleanly in the display 
+  ...</P>
+<P>&nbsp;</P>
+<TABLE WIDTH="100%" BORDER="0" CELLSPACING="0" CELLPADDING="0">
+  <TR> 
+    <TD> 
+      <TABLE WIDTH="100%" BORDER="0" CELLSPACING="0" CELLPADDING="5">
+        <TR CLASS="hdr1"> 
+          <TD VALIGN="middle" nowrap HEIGHT="35" WIDTH="42%" BGCOLOR="#000000"> 
+            <P>&nbsp;</P>
+          </TD>
+          <TD ALIGN="left" nowrap WIDTH="31%" BGCOLOR="#000000"> 
+            <P>&nbsp;</P>
+          </TD>
+          <TD ALIGN="right" nowrap WIDTH="27%" BGCOLOR="#000000"> 
+            <P>&nbsp;</P>
+          </TD>
+        </TR>
+      </TABLE>
+    </TD>
+  </TR>
+  <TR> 
+    <TD BGCOLOR="fffffff" ALIGN="left" VALIGN="bottom" nowrap HEIGHT="1" COLSPAN="2"><IMG SRC="file:///zombywoof/Users/mstoef/Documents/work/DLXS-proj-development/imageclass/work/graphics/inDevelopmentIMG/plug.gif" HEIGHT="1" WIDTH="1"></TD>
+  </TR>
+  <TR CLASS="hdr2"> 
+    <TD> 
+      <TABLE WIDTH="100%" BORDER="0" CELLSPACING="0" CELLPADDING="0">
+        <TR> 
+          <TD ALIGN="left" nowrap HEIGHT="35" BGCOLOR="E7E5D6"><IMG SRC="graphics/display-tabs-WC.gif" WIDTH="348" HEIGHT="35"></TD>
+          <TD ALIGN="right" BGCOLOR="E7E5D6">&nbsp;</TD>
+        </TR>
+      </TABLE>
+    </TD>
+  </TR>
+</TABLE>
+<P>&nbsp;</P>
+<P>&nbsp;</P>
+<A NAME="ictemplates"></A> 
+<H3>ImageClass Templates</H3>
+<P>The table bellow gives a brief description of all templates included in the 
+  Image Class distribution. </P>
+<TABLE WIDTH="100%" BORDER="1" CELLPADDING="5" CELLSPACING="0">
+  <TR> 
+    <TH nowrap VALIGN="top">Template name</TH>
+    <TH WIDTH="90%">Description</TH>
+  </TR>
+  <TR> 
+    <TD nowrap VALIGN="top"><A NAME="bbdel"></A>bbdel.tpl</TD>
+    <TD WIDTH="90%">Delete portfolio dialog display.</TD>
+  </TR>
+  <TR> 
+    <TD nowrap VALIGN="top"><A NAME="bbentry"></A>bbentry.tpl</TD>
+    <TD WIDTH="90%">Displays an image viewer window for a record when invoked 
+      from a portfolio window.</TD>
+  </TR>
+  <TR> 
+    <TD nowrap VALIGN="top"><A NAME="bbname"></A>bbname.tpl</TD>
+    <TD WIDTH="90%">Displays in a popup dialog window a form for naming a new 
+      portfolio, or for selecting an existing portfolio, to add selected images 
+      to.</TD>
+  </TR>
+  <TR> 
+    <TD nowrap VALIGN="top"><A NAME="bbopen"></A>bbopen.tpl</TD>
+    <TD WIDTH="90%">Displays in a popup dialog window a form for selecting a portfolio 
+      to open.</TD>
+  </TR>
+  <TR> 
+    <TD nowrap VALIGN="top"><A NAME="bbreslist"></A>bbreslist.tpl</TD>
+    <TD WIDTH="90%">Displays portfolio contents as a list of image captions linking 
+      to full record displays. </TD>
+  </TR>
+  <TR> 
+    <TD nowrap VALIGN="top"><A NAME="bbslideentry"></A>bbslideentry.tpl</TD>
+    <TD WIDTH="90%">Displays an image viewer window for a record when invoked 
+      from a portfolio window. </TD>
+  </TR>
+  <TR> 
+    <TD nowrap VALIGN="top"><A NAME="bbthumbfull"></A>bbthumbfull.tpl</TD>
+    <TD WIDTH="90%">Displays portfolio contents as a table of image thumbnails 
+      with short captions and a sidebar that displays full record information 
+      for any thumbnail when an &quot;info&quot; link for that thumbnail is clicked. 
+      Thumbnails also link to full record displays </TD>
+  </TR>
+  <TR> 
+    <TD nowrap VALIGN="top"><A NAME="bbthumbnail"></A>bbthumbnail.tpl</TD>
+    <TD WIDTH="90%">Displays portfolio contents as a table of image thumbnails 
+      with short captions, where thumbnails link to full record displays. </TD>
+  </TR>
+  <TR> 
+    <TD nowrap VALIGN="top"><A NAME="collinfo"></A>collinfo.tpl</TD>
+    <TD WIDTH="90%">Displays brief collection information.</TD>
+  </TR>
+  <TR> 
+    <TD nowrap VALIGN="top"><A NAME="entry"></A>entry.tpl</TD>
+    <TD WIDTH="90%">Displays an image viewer window for a record when invoked 
+      from a normal results window. </TD>
+  </TR>
+  <TR> 
+    <TD nowrap VALIGN="top"><A NAME="groups"></A>groups.tpl</TD>
+    <TD WIDTH="90%">Displays a page for selecting among multiple collection groups.</TD>
+  </TR>
+  <TR>
+    <TD nowrap VALIGN="top"><A NAME="searchgroup"></A>searchgroup.tpl</TD>
+    <TD WIDTH="90%">Form for searching image collection groups.</TD>
+  </TR>
+  <TR> 
+    <TD nowrap VALIGN="top"><A NAME="index"></A>index.tpl</TD>
+    <TD WIDTH="90%">A collection home page.</TD>
+  </TR>
+  <TR> 
+    <TD nowrap VALIGN="top"><A NAME="noresults"></A>noresults.tpl</TD>
+    <TD WIDTH="90%">No results display.</TD>
+  </TR>
+  <TR> 
+    <TD nowrap VALIGN="top"><A NAME="reslist"></A>reslist.tpl</TD>
+    <TD WIDTH="90%">Displays search results as a list of image captions linking 
+      to full record displays.</TD>
+  </TR>
+  <TR> 
+    <TD nowrap VALIGN="top"><A NAME="search"></A>search.tpl</TD>
+    <TD WIDTH="90%">Form for searching image collection databases.</TD>
+  </TR>
+  <TR> 
+    <TD nowrap VALIGN="top"><A NAME="thumbfull"></A>thumbfull.tpl</TD>
+    <TD WIDTH="90%">Displays search results as a table of image thumbnails with 
+      short captions and a sidebar that displays full record information for any 
+      thumbnail when an &quot;info&quot; link for that thumbnail is clicked. Thumbnails 
+      also link to full record displays </TD>
+  </TR>
+  <TR> 
+    <TD nowrap VALIGN="top"><A NAME="thumbnail"></A>thumbnail.tpl</TD>
+    <TD WIDTH="90%">Displays search results as a table of image thumbnails with 
+      short captions, where thumbnails link to full record displays. </TD>
+  </TR>
+  <TR> 
+    <TD nowrap VALIGN="top"><A NAME="tips"></A>tips.tpl</TD>
+    <TD WIDTH="90%">Displays in a popup window tips for conducting effective searches. 
+    </TD>
+  </TR>
+</TABLE>
+<P><BR>
+</P>
+<P> 
+<H3><A NAME="icprocins"></A>ImageClass Processing Instructions</H3>
+<P>The following table includes descriptions of all the processing instructions 
+  that appear in ImageClass templates, as well as links to descriptions of the 
+  relevant template files in which they appear. </P>
+<TABLE BORDER="1" CELLPADDING="5" CELLSPACING="0" WIDTH="100%">
+  <TR> 
+    <TH ALIGN="left" WIDTH="25%">PI tag</TH>
+    <TH VALIGN="top" WIDTH="12%">Optional parameters</TH>
+    <TH VALIGN="top" WIDTH="13%">Associated templates</TH>
+    <TH VALIGN="top" WIDTH="50%">Description</TH>
+  </TR>
+  <TR> 
+    <TD VALIGN="top" WIDTH="25%"> &lt;?BANNER&gt; </TD>
+    <TD VALIGN="top" WIDTH="12%">none</TD>
+    <TD VALIGN="top" WIDTH="13%"> <A HREF="#entry">entry.tpl</A><BR>
+      <A HREF="#groups">groups.tpl</A><BR>
+      <A HREF="#index">index.tpl</A><BR>
+      <A HREF="#reslist">reslist.tpl</A><BR>
+      <A HREF="#search">search.tpl</A><BR>
+      <A HREF="#thumbfull">thumbfull.tpl</A><BR>
+      <A HREF="#thumbnail">thumbnail.tpl</A><BR>
+    </TD>
+    <TD VALIGN="top" WIDTH="25%">inserts the name of the collection or the cross 
+      collection banner (e.g., UM Image Source) in cross collection mode. banner 
+      text is configurable in the &quot;banner&quot; colldb field. Cross collection 
+      banner specified in imageclass.cfg. May be text or graphic.</TD>
+  </TR>
+  <TR> 
+    <TD VALIGN="top" WIDTH="25%"> &lt;?ALLPUROSE&gt; </TD>
+    <TD VALIGN="top" WIDTH="12%">any </TD>
+    <TD VALIGN="top" WIDTH="13%">all </TD>
+    <TD VALIGN="top" WIDTH="25%">this PI does nothing by default, but may be programmed 
+      to do almost anything. The allpurpose routine is in $DLXSROOT/cgi/i/image/ICLocalUtils.pm.</TD>
+  </TR>
+  <TR> 
+    <TD VALIGN="top" WIDTH="25%"> &lt;?BBACTIONFORM&gt; </TD>
+    <TD VALIGN="top" WIDTH="12%">action</TD>
+    <TD VALIGN="top" WIDTH="13%"> <A HREF="#bbentry">bbentry.tpl</A><BR>
+      <A HREF="#bbreslist">bbreslist.tpl</A><BR>
+      <A HREF="#bbthumbfull">bbthumbfull.tpl</A><BR>
+      <A HREF="#bbthumbnail">bbthumbnail.tpl</A><BR>
+      <A HREF="#entry">entry.tpl</A><BR>
+      <A HREF="#reslist">reslist.tpl</A><BR>
+      <A HREF="#thumbfull">thumbfull.tpl</A><BR>
+      <A HREF="#thumbnail">thumbnail.tpl</A><BR>
+    </TD>
+    <TD VALIGN="top" WIDTH="25%"> 
+      <P>inserts form for activating the various portfolio actions, such as adding 
+        an item to a portfolio.</P>
+      <P><B>action</B> param may be set to: add or remove</P>
+    </TD>
+  </TR>
+  <TR> 
+    <TD VALIGN="top" WIDTH="25%"> &lt;?BBAGINFO&gt; </TD>
+    <TD VALIGN="top" WIDTH="12%">colname</TD>
+    <TD VALIGN="top" WIDTH="13%"> <A HREF="#bbentry">bbentry.tpl</A><BR>
+      <A HREF="#bbreslist">bbreslist.tpl</A><BR>
+      <A HREF="#bbslideentry">bbslideentry.tpl</A><BR>
+      <A HREF="#bbthumbfull">bbthumbfull.tpl</A><BR>
+      <A HREF="#bbthumbnail">bbthumbnail.tpl</A><BR>
+    </TD>
+    <TD VALIGN="top" WIDTH="25%"> 
+      <P>inserts information about the portfolio, such as the title of the portfolio. 
+        any field of the bookbagdb can be displayed(?).</P>
+      <P>Most often, colname=&quot;bbagname&quot;, which displays the name of 
+        the portfolio.</P>
+    </TD>
+  </TR>
+  <TR> 
+    <TD VALIGN="top" WIDTH="25%"> &lt;?BBAGNAMEFORM&gt; </TD>
+    <TD VALIGN="top" WIDTH="12%">none</TD>
+    <TD VALIGN="top" WIDTH="13%"> <A HREF="#bbname">bbname.tpl</A><BR>
+    </TD>
+    <TD VALIGN="top" WIDTH="25%">inserts form for creating/naming a new portfolio</TD>
+  </TR>
+  <TR> 
+    <TD VALIGN="top" WIDTH="25%"> &lt;?BBAGPICKLIST&gt; </TD>
+    <TD VALIGN="top" WIDTH="12%">action<BR>
+      type </TD>
+    <TD VALIGN="top" WIDTH="13%"> <A HREF="#bbdel">bbdel.tpl</A><BR>
+      <A HREF="#bbname">bbname.tpl</A><BR>
+      <A HREF="#bbopen">bbopen.tpl</A><BR>
+    </TD>
+    <TD VALIGN="top" WIDTH="25%"> 
+      <P>insert list of existing portfolios for opening a portfolio or adding 
+        to a portfolio.</P>
+      <P><B>action</B> can be &quot;open&quot; or &quot;add&quot;</P>
+      <P><B>type</B> can be &quot;public&quot; or &quot;private&quot;. <B>type</B> 
+        is only specifice when <B>action</B> is &quot;open&quot;.</P>
+    </TD>
+  </TR>
+  <TR> 
+    <TD VALIGN="top" WIDTH="25%"> &lt;?COLLNAME&gt; </TD>
+    <TD VALIGN="top" WIDTH="12%">none </TD>
+    <TD VALIGN="top" WIDTH="13%"> <A HREF="#bbentry">bbentry.tpl</A><BR>
+      <A HREF="#bbslideentry">bbslideentry.tpl</A><BR>
+      <A HREF="#entry">entry.tpl</A><BR>
+      <A HREF="#reslist">reslist.tpl</A><BR>
+      <A HREF="#thumbfull">thumbfull.tpl</A><BR>
+      <A HREF="#thumbnail">thumbnail.tpl</A><BR>
+    </TD>
+    <TD VALIGN="top" WIDTH="25%">inserts the collection name as specified in &quot;collname&quot; 
+      field of colldb or &quot;Multiple Collections&quot; in cross collection 
+      mode.</TD>
+  </TR>
+  <TR> 
+    <TD VALIGN="top" WIDTH="25%"> &lt;?COLLPICK&gt; </TD>
+    <TD VALIGN="top" WIDTH="12%">none</TD>
+    <TD VALIGN="top" WIDTH="13%"> <A HREF="#index">index.tpl</A><BR>
+      <A HREF="#search">search.tpl</A><BR>
+    </TD>
+    <TD VALIGN="top" WIDTH="25%">inserts a list of collections for selection by 
+      the user</TD>
+  </TR>
+  <TR> 
+    <TD VALIGN="top" WIDTH="25%"> &lt;?COLLPICKARRAYS&gt; </TD>
+    <TD VALIGN="top" WIDTH="12%">none</TD>
+    <TD VALIGN="top" WIDTH="13%"> <A HREF="#search">search.tpl</A><BR>
+    </TD>
+    <TD VALIGN="top" WIDTH="25%">inserts javascript arrays that are needed by 
+      collpicker. the arrays hold field lists per coll.</TD>
+  </TR>
+  <TR> 
+    <TD VALIGN="top" WIDTH="25%"> &lt;?COLLPICKBUTTON&gt; </TD>
+    <TD VALIGN="top" WIDTH="12%">none</TD>
+    <TD VALIGN="top" WIDTH="13%"> <A HREF="#search">search.tpl</A><BR>
+    </TD>
+    <TD VALIGN="top" WIDTH="25%">inserts a button (but why?)</TD>
+  </TR>
+  <TR> 
+    <TD VALIGN="top" WIDTH="25%"> &lt;?CSSURL&gt; </TD>
+    <TD VALIGN="top" WIDTH="12%">type</TD>
+    <TD VALIGN="top" WIDTH="13%"> <A HREF="#bbentry">bbentry.tpl</A><BR>
+      <A HREF="#bbname">bbname.tpl</A><BR>
+      <A HREF="#bbopen">bbopen.tpl</A><BR>
+      <A HREF="#bbreslist">bbreslist.tpl</A><BR>
+      <A HREF="#bbslideentry">bbslideentry.tpl</A><BR>
+      <A HREF="#bbthumbfull">bbthumbfull.tpl</A><BR>
+      <A HREF="#bbthumbnail">bbthumbnail.tpl</A><BR>
+      <A HREF="#entry">entry.tpl</A><BR>
+      <A HREF="#groups">groups.tpl</A><BR>
+      <A HREF="#index">index.tpl</A><BR>
+      <A HREF="#reslist">reslist.tpl</A><BR>
+      <A HREF="#search">search.tpl</A><BR>
+      <A HREF="#thumbfull">thumbfull.tpl</A><BR>
+      <A HREF="#thumbnail">thumbnail.tpl</A><BR>
+    </TD>
+    <TD VALIGN="top" WIDTH="25%"> 
+      <P>inserts the necessary CSS (cascading style sheet) link depending on the 
+        situation.</P>
+      <P><B>type</B> can be &quot;ie&quot; or &quot;ns&quot; (internet explorer 
+        or netscape)</P>
+    </TD>
+  </TR>
+  <TR> 
+    <TD VALIGN="top" WIDTH="25%"> &lt;?DELETEPORTFOLIO&gt; </TD>
+    <TD VALIGN="top" WIDTH="12%">none</TD>
+    <TD VALIGN="top" WIDTH="13%"> <A HREF="#bbreslist">bbreslist.tpl</A><BR>
+      <A HREF="#bbthumbfull">bbthumbfull.tpl</A><BR>
+      <A HREF="#bbthumbnail">bbthumbnail.tpl</A><BR>
+    </TD>
+    <TD VALIGN="top" WIDTH="25%">inserts button to initiate deletion of entire 
+      portfolio </TD>
+  </TR>
+  <TR> 
+    <TD VALIGN="top" WIDTH="25%"> &lt;?DIVBUTTONS&gt; </TD>
+    <TD VALIGN="top" WIDTH="12%">none</TD>
+    <TD VALIGN="top" WIDTH="13%"> <A HREF="#bbentry">bbentry.tpl</A><BR>
+      <A HREF="#entry">entry.tpl</A><BR>
+    </TD>
+    <TD VALIGN="top" WIDTH="25%">inserts the radio buttons used for switching 
+      between &quot;full image&quot; and &quot;description&quot; entry views</TD>
+  </TR>
+  <TR> 
+    <TD VALIGN="top" WIDTH="25%"> &lt;?ENTRYID&gt; </TD>
+    <TD VALIGN="top" WIDTH="12%">none</TD>
+    <TD VALIGN="top" WIDTH="13%"> <A HREF="#bbentry">bbentry.tpl</A><BR>
+      <A HREF="#bbslideentry">bbslideentry.tpl</A><BR>
+      <A HREF="#entry">entry.tpl</A><BR>
+    </TD>
+    <TD VALIGN="top" WIDTH="25%">inserts the entry (record) id.</TD>
+  </TR>
+  <TR> 
+    <TD VALIGN="top" WIDTH="25%"> &lt;?FISHEYE&gt; </TD>
+    <TD VALIGN="top" WIDTH="12%">none </TD>
+    <TD VALIGN="top" WIDTH="13%"> <A HREF="#reslist">reslist.tpl</A><BR>
+      <A HREF="#thumbfull">thumbfull.tpl</A><BR>
+      <A HREF="#thumbnail">thumbnail.tpl</A><BR>
+    </TD>
+    <TD VALIGN="top" WIDTH="25%">inserts the &quot;fisheye&quot; tool in to a 
+      results view. the fisheye tool allows quick jumping among the full range 
+      of results. </TD>
+  </TR>
+  <TR> 
+    <TD VALIGN="top" WIDTH="25%"> &lt;?GROUPNAME&gt; </TD>
+    <TD VALIGN="top" WIDTH="12%">none</TD>
+    <TD VALIGN="top" WIDTH="13%"> <A HREF="#index">index.tpl</A><BR>
+      <A HREF="#search">search.tpl</A><BR>
+    </TD>
+    <TD VALIGN="top" WIDTH="25%">inserts the name of the group being searched 
+      if in cross collection mode. groups are defined in the &quot;groups&quot; 
+      table. </TD>
+  </TR>
+  <TR> 
+    <TD VALIGN="top" WIDTH="25%"> &lt;?GROUPSLINK&gt; </TD>
+    <TD VALIGN="top" WIDTH="12%">none </TD>
+    <TD VALIGN="top" WIDTH="13%"> <A HREF="#index">index.tpl</A><BR>
+      <A HREF="#search">search.tpl</A><BR>
+    </TD>
+    <TD VALIGN="top" WIDTH="25%">inserts a link to the group selection page</TD>
+  </TR>
+  <TR> 
+    <TD VALIGN="top" WIDTH="25%"> &lt;?GROUPSPICK&gt; </TD>
+    <TD VALIGN="top" WIDTH="12%">none </TD>
+    <TD VALIGN="top" WIDTH="13%"> <A HREF="#groups">groups.tpl</A><BR>
+    </TD>
+    <TD VALIGN="top" WIDTH="25%">inserts a list of groups for selecting a group 
+      to search</TD>
+  </TR>
+  <TR> 
+    <TD VALIGN="top" WIDTH="25%"> &lt;?CONTACT&gt; </TD>
+    <TD VALIGN="top" WIDTH="12%">type </TD>
+    <TD VALIGN="top" WIDTH="13%"> <A HREF="#entry">entry.tpl</A><BR>
+      <A HREF="#reslist">reslist.tpl</A><BR>
+      <A HREF="#thumbfull">thumbfull.tpl</A><BR>
+      <A HREF="#thumbnail">thumbnail.tpl</A><BR>
+    </TD>
+    <TD VALIGN="top" WIDTH="25%"> 
+      <P>type=&quot;link&quot; inserts value from colldb &quot;contactlink&quot; 
+        field</P>
+      <P>type=&quot;text&quot; inserts value from colldb &quot;contacttext&quot; 
+        field</P>
+      <P>if multiple collection mode, default contact info from imageclass.cfg 
+        is used.</P>
+    </TD>
+  </TR>
+  <TR> 
+    <TD VALIGN="top" WIDTH="25%"> &lt;?HIDDENSID&gt; </TD>
+    <TD VALIGN="top" WIDTH="12%">none </TD>
+    <TD VALIGN="top" WIDTH="13%"> 
+      <P><A HREF="#searchgroup">searchgroup.tpl</A><BR>
+        <A HREF="#search">search.tpl</A><BR>
+      </P>
+    </TD>
+    <TD VALIGN="top" WIDTH="25%">inserts session id in search form</TD>
+  </TR>
+  <TR> 
+    <TD VALIGN="top" WIDTH="25%"> &lt;?IMAGE&gt; </TD>
+    <TD VALIGN="top" WIDTH="12%">quality<BR>
+      override </TD>
+    <TD VALIGN="top" WIDTH="13%"> <A HREF="#bbentry">bbentry.tpl</A><BR>
+      <A HREF="#bbslideentry">bbslideentry.tpl</A><BR>
+      <A HREF="#entry">entry.tpl</A><BR>
+    </TD>
+    <TD VALIGN="top" WIDTH="25%"> 
+      <P>inserts an image without a form. this means that the image is not interactive 
+        (you can't click on it to zoom). it is just an image.</P>
+      <P><B>quality</B> = the default size for image display. there are several 
+        ways to specify the <B>quality</B>. </P>
+      <P>examples:</P>
+      <UL>
+        <LI>h600 -- height no larger than 600 pixels 
+        <LI>w500 -- width no larger than 600 pixels 
+        <LI>m800 -- max dimension of image no larger than 800 pixels 
+        <LI>min -- smallest available 
+        <LI>max -- largest available 
+        <LI>mid -- mid-size among available 
+        <LI>preview -- defined in imageclass.cfg ($gDefaultPreviewImageSize) 
+        <LI>screen -- defined in imageclass.cfg ($gDefaultScreenImageSize) 
+        <LI>integer value -- MrSID res value 
+      </UL>
+      <P>Image Class version 1 quality terms are approximately converted to the 
+        above quality terms. </P>
+      <P><B>override</B> should be set to &quot;on&quot; to allow the template 
+        to be overriden by the value of the quality cgi parameter, if present. 
+        See existing templates for examples.</P>
+    </TD>
+  </TR>
+  <TR> 
+    <TD VALIGN="top" WIDTH="25%"> &lt;?IMAGEPANTOOL&gt; </TD>
+    <TD VALIGN="top" WIDTH="12%">quality<BR>
+      override </TD>
+    <TD VALIGN="top" WIDTH="13%"> <A HREF="#bbentry">bbentry.tpl</A><BR>
+      <A HREF="#entry">entry.tpl</A><BR>
+    </TD>
+    <TD VALIGN="top" WIDTH="25%"> 
+      <P>inserts the interface tool for panning a MrSID image.</P>
+      <P>See &lt;?IMAGE&gt; for description of quality and override values.</P>
+    </TD>
+  </TR>
+  <TR> 
+    <TD VALIGN="top" WIDTH="25%"> &lt;?IMAGESIZETOOL&gt; </TD>
+    <TD VALIGN="top" WIDTH="12%">quality</TD>
+    <TD VALIGN="top" WIDTH="13%"> <A HREF="#bbentry">bbentry.tpl</A><BR>
+      <A HREF="#entry">entry.tpl</A><BR>
+    </TD>
+    <TD VALIGN="top" WIDTH="25%"> 
+      <P>inserts the interface tool for choosing from the range of full-size images 
+        that are available.</P>
+      <P>See &lt;?IMAGE&gt; for description of quality values.</P>
+    </TD>
+  </TR>
+  <TR> 
+    <TD VALIGN="top" WIDTH="25%"> &lt;?IMAGEWITHFORM&gt; </TD>
+    <TD VALIGN="top" WIDTH="12%">quality<BR>
+      override </TD>
+    <TD VALIGN="top" WIDTH="13%"> <A HREF="#bbentry">bbentry.tpl</A><BR>
+      <A HREF="#entry">entry.tpl</A><BR>
+    </TD>
+    <TD VALIGN="top" WIDTH="25%"> 
+      <P>inserts an image with a form. this means that the image is interactive 
+        and can be clicked on for zooming.</P>
+      <P>See &lt;?IMAGE&gt; for description of quality and override values.</P>
+    </TD>
+  </TR>
+  <TR> 
+    <TD VALIGN="top" WIDTH="25%"> &lt;?IMAGEZOOMTOOL&gt; </TD>
+    <TD VALIGN="top" WIDTH="12%"> 
+      <P>quality<BR>
+        override </P>
+    </TD>
+    <TD VALIGN="top" WIDTH="13%"> <A HREF="#bbentry">bbentry.tpl</A><BR>
+      <A HREF="#entry">entry.tpl</A><BR>
+    </TD>
+    <TD VALIGN="top" WIDTH="25%"> 
+      <P>inserts the interface tool for zooming.</P>
+      <P>See &lt;?IMAGE&gt; for description of quality and override values.</P>
+    </TD>
+  </TR>
+  <TR> 
+    <TD VALIGN="top" WIDTH="25%"> &lt;?INFOTEXT&gt; </TD>
+    <TD VALIGN="top" WIDTH="12%">none </TD>
+    <TD VALIGN="top" WIDTH="13%"> <A HREF="#index">index.tpl</A><BR>
+      <A HREF="#collinfo">collinfo.tpl</A> <BR>
+    </TD>
+    <TD VALIGN="top" WIDTH="25%">inserts the info.txt file if the file is found 
+      in the collections web directory. this allows a collection specific description 
+      to be included for each collection without necessarily creating a collection 
+      specific <A HREF="#index">index.tpl</A> and <A HREF="#collinfo">collinfo.tpl</A> 
+      template. the info.txt file may include HTML tags, but it should not be 
+      a complete HTML document. </TD>
+  </TR>
+  <TR> 
+    <TD VALIGN="top" WIDTH="25%"> &lt;?JAVASCRIPTURL&gt; </TD>
+    <TD VALIGN="top" WIDTH="12%">none</TD>
+    <TD VALIGN="top" WIDTH="13%"> <A HREF="#bbentry">bbentry.tpl</A><BR>
+      <A HREF="#bbreslist">bbreslist.tpl</A><BR>
+      <A HREF="#bbslideentry">bbslideentry.tpl</A><BR>
+      <A HREF="#bbthumbfull">bbthumbfull.tpl</A><BR>
+      <A HREF="#bbthumbnail">bbthumbnail.tpl</A><BR>
+      <A HREF="#entry">entry.tpl</A><BR>
+      <A HREF="#groups">groups.tpl</A><BR>
+      <A HREF="#index">index.tpl</A><BR>
+      <A HREF="#reslist">reslist.tpl</A><BR>
+      <A HREF="#search">search.tpl</A><BR>
+      <A HREF="#thumbfull">thumbfull.tpl</A><BR>
+      <A HREF="#thumbnail">thumbnail.tpl</A><BR>
+    </TD>
+    <TD VALIGN="top" WIDTH="25%">inserts link that loads Image Class JavaScript. 
+    </TD>
+  </TR>
+  <TR> 
+    <TD VALIGN="top" WIDTH="25%"> &lt;?LOGINLINK&gt; </TD>
+    <TD VALIGN="top" WIDTH="12%">type<BR>
+      on </TD>
+    <TD VALIGN="top" WIDTH="13%"> <A HREF="#bbentry">bbentry.tpl</A><BR>
+      <A HREF="#bbreslist">bbreslist.tpl</A><BR>
+      <A HREF="#bbslideentry">bbslideentry.tpl</A><BR>
+      <A HREF="#bbthumbfull">bbthumbfull.tpl</A><BR>
+      <A HREF="#bbthumbnail">bbthumbnail.tpl</A><BR>
+      <A HREF="#entry">entry.tpl</A><BR>
+      <A HREF="#groups">groups.tpl</A><BR>
+      <A HREF="#index">index.tpl</A><BR>
+      <A HREF="#reslist">reslist.tpl</A><BR>
+      <A HREF="#search">search.tpl</A><BR>
+      <A HREF="#thumbfull">thumbfull.tpl</A><BR>
+      <A HREF="#thumbnail">thumbnail.tpl</A><BR>
+    </TD>
+    <TD VALIGN="top" WIDTH="25%"> 
+      <P>inserts login button. if login is turned off in imageclass.cfg, button 
+        is not displayed. </P>
+      <P><B>type</B> can be set to &quot;bbag&quot;, in which case a message precedes 
+        the button encouraging the user to login to use bbag functions. </P>
+      <P><B>on</B> can be set to &quot;white&quot;, which causes the login button 
+        designed to sit on a white background to be loaded (login-white.gif). 
+        usually, login-black.gif is loaded. <B>on</B> can be set to any color, 
+        and the file login-color.gif will be loaded, however only login-white.gif 
+        and login-black.gif are provided.</P>
+    </TD>
+  </TR>
+  <TR> 
+    <TD VALIGN="top" WIDTH="25%"> &lt;?MEDIAONLYBUTTON&gt; </TD>
+    <TD VALIGN="top" WIDTH="12%">none </TD>
+    <TD VALIGN="top" WIDTH="13%"> <A HREF="#search">search.tpl</A><BR>
+      <A HREF="#searchgroup">searchgroup.tpl</A> <BR>
+    </TD>
+    <TD VALIGN="top" WIDTH="25%">inserts media restriction in search form (i.e., 
+      search for images only)</TD>
+  </TR>
+  <TR> 
+    <TD VALIGN="top" WIDTH="25%"> &lt;?NEXT&gt; </TD>
+    <TD VALIGN="top" WIDTH="12%">none </TD>
+    <TD VALIGN="top" WIDTH="13%"> <A HREF="#reslist">reslist.tpl</A><BR>
+      <A HREF="#thumbfull">thumbfull.tpl</A><BR>
+      <A HREF="#thumbnail">thumbnail.tpl</A><BR>
+    </TD>
+    <TD VALIGN="top" WIDTH="25%">inserts link to next page of results.</TD>
+  </TR>
+  <TR> 
+    <TD VALIGN="top" WIDTH="25%"> &lt;?NEXTENTRY&gt; </TD>
+    <TD VALIGN="top" WIDTH="12%">none </TD>
+    <TD VALIGN="top" WIDTH="13%"> <A HREF="#bbentry">bbentry.tpl</A><BR>
+      <A HREF="#bbslideentry">bbslideentry.tpl</A><BR>
+      <A HREF="#entry">entry.tpl</A><BR>
+    </TD>
+    <TD VALIGN="top" WIDTH="25%">inserts link to next result in entry/record view.</TD>
+  </TR>
+  <TR> 
+    <TD VALIGN="top" WIDTH="25%"> &lt;?NORESULTSMESSAGE&gt; </TD>
+    <TD VALIGN="top" WIDTH="12%">none</TD>
+    <TD VALIGN="top" WIDTH="13%"> <A HREF="#noresults">noresults.tpl</A><BR>
+    </TD>
+    <TD VALIGN="top" WIDTH="25%">inserts message to user about the fact they got 
+      no results.</TD>
+  </TR>
+  <TR> 
+    <TD VALIGN="top" WIDTH="25%"> &lt;?OPENPORTFOLIO&gt; </TD>
+    <TD VALIGN="top" WIDTH="12%">none </TD>
+    <TD VALIGN="top" WIDTH="13%"> <A HREF="#bbentry">bbentry.tpl</A><BR>
+      <A HREF="#bbreslist">bbreslist.tpl</A><BR>
+      <A HREF="#bbslideentry">bbslideentry.tpl</A><BR>
+      <A HREF="#bbthumbfull">bbthumbfull.tpl</A><BR>
+      <A HREF="#bbthumbnail">bbthumbnail.tpl</A><BR>
+      <A HREF="#entry">entry.tpl</A><BR>
+      <A HREF="#groups">groups.tpl</A><BR>
+      <A HREF="#index">index.tpl</A><BR>
+      <A HREF="#reslist">reslist.tpl</A><BR>
+      <A HREF="#search">search.tpl</A><BR>
+      <A HREF="#thumbfull">thumbfull.tpl</A><BR>
+      <A HREF="#thumbnail">thumbnail.tpl</A><BR>
+    </TD>
+    <TD VALIGN="top" WIDTH="25%">inserts button and link for opening a portfolio</TD>
+  </TR>
+  <TR> 
+    <TD VALIGN="top" WIDTH="25%"> &lt;?PATH&gt; </TD>
+    <TD VALIGN="top" WIDTH="12%">type </TD>
+    <TD VALIGN="top" WIDTH="13%"> <A HREF="#bbdel">bbdel.tpl</A><BR>
+      <A HREF="#bbentry">bbentry.tpl</A><BR>
+      <A HREF="#bbname">bbname.tpl</A><BR>
+      <A HREF="#bbopen">bbopen.tpl</A><BR>
+      <A HREF="#bbslideentry">bbslideentry.tpl</A><BR>
+      <A HREF="#entry">entry.tpl</A><BR>
+      <A HREF="#groups">groups.tpl</A><BR>
+      <A HREF="#search">search.tpl</A><BR>
+      <A HREF="#tips">tips.tpl</A><BR>
+    </TD>
+    <TD VALIGN="top" WIDTH="25%">inserts a path of a certain type, most commonly 
+      &quot;web&quot;, which creates a relative url path to the currently web 
+      directory.</TD>
+  </TR>
+  <TR> 
+    <TD VALIGN="top" WIDTH="25%"> &lt;?PREV&gt; </TD>
+    <TD VALIGN="top" WIDTH="12%">none </TD>
+    <TD VALIGN="top" WIDTH="13%"> <A HREF="#bbentry">bbentry.tpl</A><BR>
+      <A HREF="#bbslideentry">bbslideentry.tpl</A><BR>
+      <A HREF="#entry">entry.tpl</A><BR>
+      <A HREF="#reslist">reslist.tpl</A><BR>
+      <A HREF="#thumbfull">thumbfull.tpl</A><BR>
+      <A HREF="#thumbnail">thumbnail.tpl</A><BR>
+    </TD>
+    <TD VALIGN="top" WIDTH="25%">inserts link to previous page of results. </TD>
+  </TR>
+  <TR> 
+    <TD VALIGN="top" WIDTH="25%"> &lt;?PREVENTRY&gt; </TD>
+    <TD VALIGN="top" WIDTH="12%">none </TD>
+    <TD VALIGN="top" WIDTH="13%"> <A HREF="#bbentry">bbentry.tpl</A><BR>
+      <A HREF="#bbslideentry">bbslideentry.tpl</A><BR>
+      <A HREF="#entry">entry.tpl</A><BR>
+    </TD>
+    <TD VALIGN="top" WIDTH="25%">inserts link to previous result in entry/record 
+      view. </TD>
+  </TR>
+  <TR> 
+    <TD VALIGN="top" WIDTH="25%"> &lt;?RECORDTABLE&gt; </TD>
+    <TD VALIGN="top" WIDTH="12%"> 
+      <P>fields<BR>
+        table <BR>
+        thumb </P>
+    </TD>
+    <TD VALIGN="top" WIDTH="13%"> <A HREF="#bbentry">bbentry.tpl</A><BR>
+      <A HREF="#bbslideentry">bbslideentry.tpl</A><BR>
+      <A HREF="#entry">entry.tpl</A><BR>
+    </TD>
+    <TD VALIGN="top" WIDTH="25%"> 
+      <P>Displays a record in entry (full record) views. Fields and field order 
+        are specified in the colldb field &quot;dfltentryflds,&quot; or may be 
+        overridden by a <B>fields</B> parameter. Whether specified in colldb or 
+        by <B>fields </B>parameter, the rules about how to specify the fields 
+        to display are as follows. </P>
+      <P>Fields must be listed as abbreviations in the order desired and delimited 
+        by pipes ( &quot;|&quot; ). e.g., MUSART.TI|MUSART.CR|musart.DA</P>
+      <P>Values are not case sensitive. </P>
+      <P>There are several options that may be turned on and off to enhance the 
+        display of records. The options are specified inline with the field abbreviations. 
+        When the status of an option is changed, the change is persistent for 
+        all subsequent fields, until the status is changed again. The exceptions 
+        to this is the &quot;sectionlabel&quot; and &quot;urltext&quot;, which 
+        are specified as often as needed.</P>
+      <P>The &quot;url&quot; option, for example, causes fields that contain a 
+        url (and nothing but a url), to be turned in to a hyperlink. It can be 
+        used in conjunction with the &quot;urltext&quot; option, which makes allows 
+        the link text to be specified. Normally the url itself is used for the 
+        link text. e.g., <BR>
+        MUSART.TI|url:on|urltext:View_Copyright_Statement|MUSART.cp|url:off|MUSART.DA</P>
+      <P>The &quot;hilite&quot; option causes search terms to be hilited. This 
+        option is &quot;on&quot; by default, but if you wanted to turn hiliting 
+        off for several consecutive fields, you could. e.g., MUSART.TI|hilite:off|MUSART.DA|MUSART.PG|MUSART.LI|hilite:on|MUSART.TY</P>
+      <P>The complete list of field options are as follows: </P>
+      <TABLE BORDER="1" CELLPADDING="1" CELLSPACING="1" WIDTH="100%">
+        <TR> 
+          <TH WIDTH="14%">option</TH>
+          <TH WIDTH="31%">values</TH>
+          <TH WIDTH="7%">default</TH>
+          <TH WIDTH="48%">description</TH>
+        </TR>
+        <TR> 
+          <TD WIDTH="14%">label</TD>
+          <TD WIDTH="31%">on/off</TD>
+          <TD WIDTH="7%">on</TD>
+          <TD WIDTH="48%">display name of field before field value</TD>
+        </TR>
+        <TR> 
+          <TD HEIGHT="37" WIDTH="14%">sectionlabel</TD>
+          <TD HEIGHT="37" WIDTH="31%">text string*<BR>
+          </TD>
+          <TD HEIGHT="37" WIDTH="7%">empty</TD>
+          <TD HEIGHT="37" WIDTH="48%">display a section label before a series 
+            of fields. allows a record to split in to sections.</TD>
+        </TR>
+        <TR> 
+          <TD WIDTH="14%">url</TD>
+          <TD WIDTH="31%">on/off</TD>
+          <TD WIDTH="7%">off</TD>
+          <TD WIDTH="48%">turn the entire contents of the field in to a link. 
+            assumes the field contains a single url.</TD>
+        </TR>
+        <TR> 
+          <TD WIDTH="14%">urltext</TD>
+          <TD WIDTH="31%">text string*</TD>
+          <TD WIDTH="7%">empty</TD>
+          <TD WIDTH="48%">display the provided string as the text of the &quot;url&quot; 
+            option link. if &quot;urltext&quot; is not specified, the url value 
+            is used as the text of the link.</TD>
+        </TR>
+        <TR> 
+          <TD WIDTH="14%">idres</TD>
+          <TD WIDTH="31%">on/off</TD>
+          <TD WIDTH="7%">off</TD>
+          <TD WIDTH="48%">look the value of the field up in the id resolver and 
+            display the value. use with &quot;url&quot; and/or &quot;urltext&quot; 
+            to turn the value in to a link.</TD>
+        </TR>
+        <TR> 
+          <TD WIDTH="14%">dateconv</TD>
+          <TD WIDTH="31%">on/off</TD>
+          <TD WIDTH="7%">off</TD>
+          <TD WIDTH="48%"> 
+            <P>displays some ISO format dates in a more human readable form.</P>
+            <P>supports YYYYMMDD, YYYYMMDD/YYYYMMDD and maintains any data that 
+              might follow the date in the field e.g, (ca.)</P>
+          </TD>
+        </TR>
+        <TR> 
+          <TD WIDTH="14%">hilite</TD>
+          <TD WIDTH="31%">on/off</TD>
+          <TD WIDTH="7%">on</TD>
+          <TD WIDTH="48%"> 
+            <P>hilites search terms in the field. </P>
+            <P>DLXS hiliting supports 3 search fields only (q1 - q3). </P>
+          </TD>
+        </TR>
+      </TABLE>
+      <P>* use underscores for spaces. special characters may not work.</P>
+      <P><B>table</B> parameter may be set to &quot;on&quot; or &quot;off&quot; 
+        to specify whether record is wrapped in a table, or simple text with line 
+        breaks. Default is&quot;on&quot;.</P>
+      <P><B>thumb</B> parameter may be set to &quot;on&quot; or &quot;off&quot; 
+        to specify whether a thumbnail image should be included with the record. 
+        Default is &quot;on&quot;.</P>
+      <P>Cross collection fields are configured in imageclass.cfg.</P>
+    </TD>
+  </TR>
+  <TR> 
+    <TD VALIGN="top" WIDTH="25%"> &lt;?RELATEDVIEWS&gt; </TD>
+    <TD VALIGN="top" WIDTH="12%">none </TD>
+    <TD VALIGN="top" WIDTH="13%"> <A HREF="#bbentry">bbentry.tpl</A><BR>
+      <A HREF="#entry">entry.tpl</A><BR>
+    </TD>
+    <TD VALIGN="top" WIDTH="25%">inserts table of related views for a record (all 
+      of the images associated with a single record). See also documentation on 
+      &quot;Image Structures&quot;.</TD>
+  </TR>
+  <TR> 
+    <TD VALIGN="top" WIDTH="25%"> &lt;?RELATEDVIEWSMENU&gt; </TD>
+    <TD VALIGN="top" WIDTH="12%">none </TD>
+    <TD VALIGN="top" WIDTH="13%"> <A HREF="#bbentry">bbentry.tpl</A><BR>
+      <A HREF="#entry">entry.tpl</A><BR>
+    </TD>
+    <TD VALIGN="top" WIDTH="25%"> 
+      <P>inserts a menu for entry type templates that is a menu of all related 
+        views (aka &quot;other views&quot;). If a record has more than one image 
+        associated with it, then it has related views. the related views menu 
+        is intended for use with colls that need a &quot;pageflipping&quot; function. 
+        <BR>
+        e.g., &quot;Students on Site&quot;, &quot;Harpers Weekly&quot;.<BR>
+      </P>
+      <P>uses the colldb for configuration.<BR>
+        colldb fields used:<BR>
+        relviewmenu -- on/off switch for the menu<BR>
+        relviewmenuvals -- specifies which istruct attribute value to use for 
+        menu *display*<BR>
+        options. default is &quot;CAPTIONS&quot;<BR>
+        relviewmenuinstruct -- instruction text, if any to put in from of form<BR>
+        relviewmenuprefx -- prefix string to put in front of each and every displayed 
+        menu <BR>
+        option</P>
+      <P>if a particular record has only one view/image, a related views menu 
+        is not built/displayed, even if the option is turned on.</P>
+    </TD>
+  </TR>
+  <TR> 
+    <TD VALIGN="top" WIDTH="25%"> &lt;?RESULTSTABLE&gt; </TD>
+    <TD VALIGN="top" WIDTH="12%">x</TD>
+    <TD VALIGN="top" WIDTH="13%"> <A HREF="#bbreslist">bbreslist.tpl</A><BR>
+      <A HREF="#bbthumbfull">bbthumbfull.tpl</A><BR>
+      <A HREF="#bbthumbnail">bbthumbnail.tpl</A><BR>
+      <A HREF="#reslist">reslist.tpl</A><BR>
+      <A HREF="#thumbfull">thumbfull.tpl</A><BR>
+      <A HREF="#thumbnail">thumbnail.tpl</A><BR>
+    </TD>
+    <TD VALIGN="top" WIDTH="25%"> 
+      <P>Inserts a table of results. Layout varies automatically depending on 
+        the view. </P>
+      <P><B>x</B> parameter is for specifying the number of columns in a table 
+        of thumbnail results. The default is 5.</P>
+      <P>the fields displayed for each results are configurable in the colldb 
+        field called &quot;dfltresflds&quot;. </P>
+      <P>term hiliting happens by default, and without an option to turn it off.</P>
+      <P>optionally, field values may be trimmed to a specific character length 
+        to conserve space in thumbnail views. configure this option in the colldb 
+        field called &quot;resfldtrim&quot;.</P>
+    </TD>
+  </TR>
+  <TR> 
+    <TD VALIGN="top" WIDTH="25%"> &lt;?SEARCHFORM&gt; </TD>
+    <TD VALIGN="top" WIDTH="12%">none </TD>
+    <TD VALIGN="top" WIDTH="13%"> <A HREF="#search">search.tpl</A><BR>
+      <A HREF="#searchgroup">searchgroup.tpl</A><BR>
+    </TD>
+    <TD VALIGN="top" WIDTH="25%">inserts a search form. </TD>
+  </TR>
+  <TR> 
+    <TD VALIGN="top" WIDTH="25%"> &lt;?SEARCHLINK&gt; </TD>
+    <TD VALIGN="top" WIDTH="12%">none </TD>
+    <TD VALIGN="top" WIDTH="13%"> 
+      <P><A HREF="#reslist">reslist.tpl</A><BR>
+        <A HREF="#thumbfull">thumbfull.tpl</A><BR>
+        <A HREF="#thumbnail">thumbnail.tpl</A><BR>
+        <A HREF="#index">index.tpl</A><BR>
+        <A HREF="#noresults">noresults.tpl</A><BR>
+        <BR>
+      </P>
+    </TD>
+    <TD VALIGN="top" WIDTH="25%">inserts link to search form page</TD>
+  </TR>
+  <TR> 
+    <TD VALIGN="top" WIDTH="25%"> &lt;?SLICESUMMARY&gt; </TD>
+    <TD VALIGN="top" WIDTH="12%">none </TD>
+    <TD VALIGN="top" WIDTH="13%"> <A HREF="#reslist">reslist.tpl</A><BR>
+      <A HREF="#thumbfull">thumbfull.tpl</A><BR>
+      <A HREF="#thumbnail">thumbnail.tpl</A><BR>
+    </TD>
+    <TD VALIGN="top" WIDTH="25%">inserts a summary of search results. </TD>
+  </TR>
+  <TR> 
+    <TD VALIGN="top" WIDTH="25%"> &lt;?SORTMENU&gt; </TD>
+    <TD VALIGN="top" WIDTH="12%">none</TD>
+    <TD VALIGN="top" WIDTH="13%"> <A HREF="#bbreslist">bbreslist.tpl</A><BR>
+      <A HREF="#bbthumbfull">bbthumbfull.tpl</A><BR>
+      <A HREF="#bbthumbnail">bbthumbnail.tpl</A><BR>
+      <A HREF="#reslist">reslist.tpl</A><BR>
+      <A HREF="#thumbfull">thumbfull.tpl</A><BR>
+      <A HREF="#thumbnail">thumbnail.tpl</A><BR>
+    </TD>
+    <TD VALIGN="top" WIDTH="25%">inserts sort menu</TD>
+  </TR>
+  <TR> 
+    <TD VALIGN="top" WIDTH="25%"> &lt;?SWITCHENTRYVIEW&gt; </TD>
+    <TD VALIGN="top" WIDTH="12%">view</TD>
+    <TD VALIGN="top" WIDTH="13%"> <A HREF="#bbentry">bbentry.tpl</A><BR>
+      <A HREF="#bbslideentry">bbslideentry.tpl</A><BR>
+    </TD>
+    <TD VALIGN="top" WIDTH="25%"> 
+      <P>inserts a url link for switching between portfolio entry view and portfolio 
+        slideshow view. Likely values are...</P>
+      <P>bbentry</P>
+      <P>bbslideentry </P>
+    </TD>
+  </TR>
+  <TR> 
+    <TD VALIGN="top" WIDTH="25%"> &lt;?THUMBFULLDIVS&gt; </TD>
+    <TD VALIGN="top" WIDTH="12%">none</TD>
+    <TD VALIGN="top" WIDTH="13%"> <A HREF="#bbthumbfull">bbthumbfull.tpl</A><BR>
+      <A HREF="#thumbfull">thumbfull.tpl</A><BR>
+    </TD>
+    <TD VALIGN="top" WIDTH="25%">inserts the set of HTML DIVs, one for every record 
+      included in the page of results, that is used for displaying full records 
+      on the results page (thumb with full record view).</TD>
+  </TR>
+  <TR> 
+    <TD VALIGN="top" WIDTH="25%"> &lt;?THUMBFULLJSARRAYS&gt; </TD>
+    <TD VALIGN="top" WIDTH="12%">none </TD>
+    <TD VALIGN="top" WIDTH="13%"> <A HREF="#bbthumbfull">bbthumbfull.tpl</A><BR>
+      <A HREF="#thumbfull">thumbfull.tpl</A><BR>
+    </TD>
+    <TD VALIGN="top" WIDTH="25%">inserts JavaScript arrays used for dynamically 
+      displaying a full record on the results page when requested.</TD>
+  </TR>
+  <TR> 
+    <TD VALIGN="top" WIDTH="25%"> &lt;?THUMBFULLSTYLE&gt; </TD>
+    <TD VALIGN="top" WIDTH="12%">none </TD>
+    <TD VALIGN="top" WIDTH="13%"> <A HREF="#bbthumbfull">bbthumbfull.tpl</A><BR>
+      <A HREF="#thumbfull">thumbfull.tpl</A><BR>
+    </TD>
+    <TD VALIGN="top" WIDTH="25%">inserts style definitions for positioning of 
+      the full record divs.</TD>
+  </TR>
+  <TR> 
+    <TD VALIGN="top" WIDTH="25%"> &lt;?THUMBNAIL&gt; </TD>
+    <TD VALIGN="top" WIDTH="12%">none </TD>
+    <TD VALIGN="top" WIDTH="13%"><A HREF="#entry">entry.tpl</A><BR>
+      <A HREF="#bbentry">bbentry.tpl</A><BR>
+       </TD>
+    <TD VALIGN="top" WIDTH="25%">inserts a thumbnail image. (does this really 
+      work???) </TD>
+  </TR>
+  <TR> 
+    <TD VALIGN="top" WIDTH="25%"> &lt;?VIEWINSTRUCT&gt; </TD>
+    <TD VALIGN="top" WIDTH="12%">none </TD>
+    <TD VALIGN="top" WIDTH="13%"> <A HREF="#bbreslist">bbreslist.tpl</A><BR>
+      <A HREF="#bbthumbfull">bbthumbfull.tpl</A><BR>
+      <A HREF="#bbthumbnail">bbthumbnail.tpl</A><BR>
+      <A HREF="#reslist">reslist.tpl</A><BR>
+      <A HREF="#thumbfull">thumbfull.tpl</A><BR>
+      <A HREF="#thumbnail">thumbnail.tpl</A><BR>
+    </TD>
+    <TD VALIGN="top" WIDTH="25%">inserts instructions for the user, depending 
+      on the situation.</TD>
+  </TR>
+  <TR> 
+    <TD VALIGN="top" WIDTH="25%"> &lt;?VIEWTABS&gt; </TD>
+    <TD VALIGN="top" WIDTH="12%">none</TD>
+    <TD VALIGN="top" WIDTH="13%"> <A HREF="#bbreslist">bbreslist.tpl</A><BR>
+      <A HREF="#bbthumbfull">bbthumbfull.tpl</A><BR>
+      <A HREF="#bbthumbnail">bbthumbnail.tpl</A><BR>
+      <A HREF="#reslist">reslist.tpl</A><BR>
+      <A HREF="#thumbfull">thumbfull.tpl</A><BR>
+      <A HREF="#thumbnail">thumbnail.tpl</A><BR>
+    </TD>
+    <TD VALIGN="top" WIDTH="25%">inserts the graphical view tabs that are used 
+      for switching among the results views.</TD>
+  </TR>
+  <TR> 
+    <TD VALIGN="top" WIDTH="25%"> &lt;?VISIBILITY&gt; </TD>
+    <TD VALIGN="top" WIDTH="12%">div</TD>
+    <TD VALIGN="top" WIDTH="13%"> <A HREF="#bbentry">bbentry.tpl</A><BR>
+      <A HREF="#bbslideentry">bbslideentry.tpl</A><BR>
+      <A HREF="#entry">entry.tpl</A><BR>
+    </TD>
+    <TD VALIGN="top" WIDTH="25%"> 
+      <P>inserts styles that control the visibility of DIVs in the entry/record 
+        display. the default divs are listed below, but there are ways to add 
+        or change DIVs if that is of interest. Contact dlps-help[at]umich.edufor 
+        guidance.</P>
+      <P>full-image</P>
+      <P>description</P>
+      <P>other-views </P>
+    </TD>
+  </TR>
+  <TR> 
+    <TD VALIGN="top" WIDTH="25%"> &lt;?ZOOMTHUMB&gt; </TD>
+    <TD VALIGN="top" WIDTH="12%">none </TD>
+    <TD VALIGN="top" WIDTH="13%"> <A HREF="#entry">entry.tpl</A><BR>
+    </TD>
+    <TD VALIGN="top" WIDTH="25%">this is not ready for primetime, but it is a 
+      feature for displaying a thumbnail that has a red box drawn on it indicating 
+      the portion of the full image that is currently being viewed. It is a navigational 
+      tool. </TD>
+  </TR>
+  <TR> 
+    <TD VALIGN="top" WIDTH="25%"> &lt;?RESTRICTSTATUS&gt; </TD>
+    <TD VALIGN="top" WIDTH="12%">none</TD>
+    <TD VALIGN="top" WIDTH="13%"><A HREF="#index">index.tpl</A><BR>
+      <A HREF="#collinfo">collinfo.tpl</A> </TD>
+    <TD VALIGN="top" WIDTH="25%">inserts authority of the user relative to the 
+      collection</TD>
+  </TR>
+</TABLE>
+</BODY>
+</HTML>

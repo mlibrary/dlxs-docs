@@ -1,0 +1,130 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+  <head>
+    <title>Installer Questions</title>
+      <link rel="stylesheet" href="../styles.css" type="text/css">
+
+  </head>
+
+  <body class="mainpalette" leftmargin="10" topmargin="10" marginwidth="10" marginheight="10">
+    <h1>Installer Questions</h1>
+
+    <ul>
+      <li>Which platform are you using? (SunOS/Linux) [Linux]</li>
+      <li>Where is Perl installed? [/l/local/bin/perl]</li>
+      <li>Where is XPAT installed? [/l/local/bin/xpat]</li>
+      <li>Do you want to use tif2web (required for TextClass page viewer)? [Y]</li>
+      <li>Where is tif2web installed? [/l/local/bin/tif2web]</li>
+      <li>Do you want to use c42pdf (required for TextClass page viewer)? [Y]</li>
+      <li>Where is c42pdf installed? [/l/local/bin/c42pdf]</li>
+      <li>Do you want to use MrSID (required for ImageClass, TextClass Pageviewer)? [Y]</li>
+      <li>Where is mrsid_retrieve installed? [/l/local/bin/mrsid_retrieve]</li>
+      <li>Do you want to use kdu_expand (required for ImageClass)? [Y]</li>
+      <li>Where is kdu_expand installed? [/l/local/bin/kdu_expand]</li>
+      <li>Do you want to use cjpeg (required for ImageClass)? [Y]</li>
+      <li>Where is cjpeg installed? [/l/local/bin/cjpeg]</li>
+      <li>Do you want to use zip (required for ImageClass Portfolio Export)? [Y]</li>
+      <li>Where is zip installed? [/usr/bin/zip]</li>
+      <li>Is this an I)nitial install or a R)econfiguration? (I/R) [I]</li>
+      <li>Where would you like to install DLXS? [//]</li>
+      
+      
+      <ul>
+        <li class="deemphasize">Unpacking tarball...</li>
+        <li class="deemphasize">Making symlinks...</li>
+      </ul>
+      
+      <li>What is the fully-qualified name of this server? [pilsner.umdl.umich.edu]</li>
+      <li>What is the IP address of this server? [127.0.0.0]</li>
+
+      <ul>
+        <li class="deemphasize">Processing config-examples...</li>
+        <li class="deemphasize">Processing ImageClass perl hashbangs...</li>
+        <li class="deemphasize">ImageClass thumb symlinking...</li>
+        <li class="deemphasize">Processing TextClass index replacements...</li>
+        <li class="deemphasize">Processing TextClass bin replacements...</li>
+        <li class="deemphasize">Processing TextClass prep replacements...</li>
+        <li class="deemphasize">Processing TextClass WW sample UTF-8 DLXSROOT replacements...</li>
+        <li class="deemphasize">Processing TextClass sample UTF-8 WW XPAT path...</li>
+        <li class="deemphasize">Processing TextClass DLXSROOT/bin/WW replacements...</li>
+        <li class="deemphasize">Processing BibClass index replacements...</li>
+        <li class="deemphasize">Processing FindaidClass index replacements...</li>
+        <li class="deemphasize">Processing FindaidClass perl hashbangs...</li>
+        <li class="deemphasize">Processing FindaidClass DLXSROOT/... replacements...</li>
+        <li class="deemphasize">Processing miscellaneous bin utilities perl hashbangs...</li>
+        <li class="deemphasize">Processing database utilities perl hashbangs...</li>
+        <li class="deemphasize">Making DLXSROOT/web/cache for TextClass image cache</li>
+        <li class="deemphasize">Opening permissions to u+w g+w o+w on DLXSROOT/web/cache</li>
+        <li class="deemphasize">Processing replacements in DLXSROOT/bin/installer/README-postinstall</li>
+      </ul>
+
+      <li>Configuring LibGlobals.cfg</li>
+      <ul>
+        <li class="deemphasize">authentication system disabled: using Basic Auth</li>
+        <li class="deemphasize">Setting Item-level restriction table name to NULL</li>
+      </ul>
+
+
+      <li>Enter MySQL database name [test02_ws]</li>
+      <li>Enter MySQL database user name (middleware will connect as this user) [dlxs]</li>
+      <li>Enter password for MySQL database user name [guest]</li>
+      <li>Enter MySQL database password for the "dlxsadm" ADMINISTRATIVE user [guest]</li>
+      <li>Enter MySQL database server name [dev.mysql.umdl.umich.edu]</li>
+
+      <ul>      
+        <li class="deemphasize">Setting MySQL *development* database server name to NULL</li>
+      </ul>
+
+
+      <li>Enter the virtual host of the idresolver cgi. [images.umdl.umich.edu]</li>
+      <li>Select sendmail or smtp to deliver mail. (sendmail/smtp) [sendmail]</li>
+      <li>Enter the email address from which the generated (e.g. BookBag) mail will be sent ["UMDL Mailer" &lt;dlps-help@umich.edu&gt;]</li>
+      <li>Enter your Help email HTML href [mailto:dlps-help@umich.edu]</li>
+      <li>Enter your Help email text string [UMDL Help]</li>
+      
+      <li>Configuring broker20.cfg</li>
+      <ul>      
+        <li class="deemphasize">Covered later ...</li>
+      </ul>
+        
+      <li>Configuring sru.cfg</li> 
+       <ul>      
+        <li class="deemphasize">Covered later ...</li>
+      </ul>
+    
+
+      <li>Configuring collmgr.cfg (Collection Database Manager)</li>
+
+      <ul>      
+        <li class="deemphasize">no logout URL: using Basic Auth</li>
+      </ul>
+      
+      <li>Enter your Collmgr Help email HTML href [mailto:collmgr-info@umich.edu]</li>
+      <li>Enter your Collmgr Help email text string [collmgr info]</li>
+      <li>Configuring findaidclass.cfg</li>
+      <li>Enable filtering of DAOs. .   (1/0) [1]</li>
+      <li>Configuring imageclass.cfg</li>
+      <li>Enter the image file server host name.</li>
+      <li>If it is the same as the host serving image-idx, enter '/', otherwise enter e.g. imageserver.umdl.umich.edu   [/]</li>
+      
+      <ul>
+        <li class="deemphasize">not using a development host</li>
+      </ul>
+      <ul>
+        <li class="deemphasize">enabling Portfolios</li>
+        <li class="deemphasize">enabling Portfolio export/download (when Portfolios enabled)</li>
+      </ul>
+
+      <li>Configuring textclass.cfg</li>
+      <li>Enter your name resolver URL or an empty string, if you do not have one. [http://name.umdl.umich.edu/]</li>
+      <ul>
+        <li class="deemphasize">Setting POD-permitted table name to NULL</li>
+       <li class="deemphasize">Print On Demand host set to null.</li>
+      </ul>
+
+      <li>Configuring ImageView.cfg</li>
+      <li>Create web optimized pdfs? (Requires Ghostscript pdfopt in PATH) [Y]</li>
+      <hr>
+        
+  </body>
+</html>

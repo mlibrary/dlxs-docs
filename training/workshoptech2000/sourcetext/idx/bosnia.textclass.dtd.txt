@@ -1,0 +1,188 @@
+<!ELEMENT COLL O O (dlpstextclass)+>
+<!ELEMENT header - -  (fileDesc, (encodingDesc)*, (profileDesc)*, (revisionDesc)*)>
+<!ELEMENT fileDesc - - (titleStmt, (editionStmt)?, (extent)?, publicationStmt, (seriesStmt)?, (notesStmt)?, (sourceDesc)+)>
+<!ELEMENT titleStmt - - ((title)+, (author | editor | respStmt)*)>
+<!ELEMENT editionStmt - - ((edition, (respStmt)*) | (p)+)>
+<!ELEMENT edition - - (#pcdata | HI1)*>
+<!ELEMENT respStmt - - ((resp & name), (resp | name)*)>
+<!ELEMENT resp - - (#PCDATA | hi1)*>
+<!ELEMENT name - - (#PCDATA | hi1)*>
+<!ELEMENT extent - - (#pcdata | hi1)*>
+<!ELEMENT publicationStmt - - (((publisher | distributor | authority), ((pubPlace)?, (address)?, (series)?, (idno)*,  (acc.no)*, (availability)?, (date)?)+)+)>
+<!ELEMENT distributor - - (#PCDATA | hi1)*>
+<!ELEMENT author - - (#PCDATA, ((descrip) | (dates) | (alias))* )>
+<!ELEMENT editor - - (#PCDATA, ((descrip) | (dates) | (alias))* )>
+<!ELEMENT authority - - (#PCDATA | hi1)*>
+<!ELEMENT series - - (#pcdata | hi1)*>
+<!ELEMENT descrip - - (#pcdata | hi1)*>
+<!ELEMENT alias - - (#pcdata | hi1)*>
+<!ELEMENT sourceDesc - - (p | bibl | biblFull)+>
+<!ELEMENT biblFull - - (titleStmt, (editionStmt)?, (extent)?, publicationStmt, (seriesStmt)?, (notesStmt)?, (sourceDesc)*)>
+<!ELEMENT title - - (num | date | foreign | #pcdata | hi1)* >
+<!ELEMENT num - - (#pcdata | hi1)*>
+<!ELEMENT acc.no - - (#pcdata | hi1)*>
+<!ELEMENT idno - - (#pcdata | hi1)*>
+<!ELEMENT dates - - (#pcdata | hi1)*>
+<!ELEMENT availability - - (p)+>
+<!ELEMENT publisher - - (#PCDATA | HI1)*>
+<!ELEMENT pubplace - - (#PCDATA | hi1)*>
+<!ELEMENT address - - (#PCDATA | hi1)*>
+<!ELEMENT date - - (#PCDATA | hi1)*>
+<!ELEMENT notesstmt - - (note)+>
+<!ELEMENT hi1 - - ANY>
+<!ELEMENT hi2 - - ANY>
+<!ELEMENT hi3 - - ANY>
+<!ELEMENT encodingDesc - - ((projectDesc)*, (editorialDecl)*, (p)*)>
+<!ELEMENT projectDesc - - (p+)>
+<!ELEMENT editorialDecl - - (p+)>
+<!ELEMENT profileDesc - - ((langUsage)*, (textClass)*)>
+<!ELEMENT langUsage - - (p | language)+>
+<!ELEMENT language - - (#pcdata)>
+<!ELEMENT textClass - - (classcode | catref | keywords)*>
+<!ELEMENT keywords - - ANY>
+<!ELEMENT term - - (#PCDATA | HI1)*>
+<!ELEMENT classcode - - (#PCDATA | HI1)*>
+<!ELEMENT catref - - (#PCDATA)>
+<!ELEMENT price - - (#PCDATA)>
+<!ELEMENT copyright - - (#PCDATA)>
+<!ELEMENT revisionDesc - - (change)+>
+<!ELEMENT change - - (date, (respStmt)+, item)>
+<!ELEMENT seriesStmt - - ((title, (idno | respStmt)*) | (p)+)>
+<!ELEMENT bibl - - (#PCDATA | address | biblscope | date | hi1 | title | author | edition | editor | extent | idno | note | publisher | pubPlace | respStmt | price | copyright)*>
+<!ELEMENT BIBLSCOPE - - (#PCDATA | hi1)*>
+<!ELEMENT DIV1 - - ANY>
+<!ELEMENT DIV2 - - ANY>
+<!ELEMENT DIV3 - - ANY>
+<!ELEMENT DIV4 - - ANY>
+<!ELEMENT DIV5 - - ANY>
+<!ELEMENT DIV6 - - ANY>
+<!ELEMENT DIV7 - - ANY>
+<!ELEMENT DIV8 - - ANY>
+<!ELEMENT DIV9 - - ANY>
+<!ELEMENT DIV10 - - ANY>
+<!ELEMENT REF - - ANY>
+<!ELEMENT CIT - - ANY>
+<!ELEMENT TITLEPAGE - - ANY>
+<!ELEMENT TITLEPART - - ANY>
+<!ELEMENT BYLINE - - ANY>
+<!ELEMENT DOCTITLE - - ANY>
+<!ELEMENT DOCAUTHOR - - ANY>
+<!ELEMENT DOCIMPRINT - - ANY>
+<!ELEMENT DOCDATE - - ANY>
+<!ELEMENT DOCEDITION - - ANY>
+<!ELEMENT ARGUMENT - - ANY>
+<!ELEMENT SIC - - ANY>
+<!ELEMENT SALUTE - - ANY>
+<!ELEMENT CAESURA - O EMPTY>
+<!ELEMENT LB - O EMPTY>
+<!ELEMENT GAP - O EMPTY>
+<!ELEMENT PB - O EMPTY>
+<!ELEMENT SPEAKER - - ANY>
+<!ELEMENT SP - - ANY>
+<!ELEMENT L - - ANY>
+<!ELEMENT DEDICAT - - ANY>
+<!ELEMENT EPIGRAPH - - ANY>
+<!ELEMENT CAPTION - - ANY>
+<!ELEMENT DLPSTEXTCLASS - - (HEADER, TEXT)>
+<!ELEMENT LG - - ANY>
+<!ELEMENT TRAILER - - ANY>
+<!ELEMENT FIRSTL - - ANY>
+<!ELEMENT STAGE - - ANY>
+<!ELEMENT PREFACE - - ANY>
+<!ELEMENT SIGNED - - ANY>
+<!ELEMENT LIST - - ((head)*, (caption | item | label)+) >
+<!ELEMENT FIGURE - - ANY>
+<!ELEMENT P - - ANY>
+<!ELEMENT FOREIGN - - ANY>
+<!ELEMENT CLOSER - - ANY>
+<!ELEMENT ITEM - - ANY>
+<!ELEMENT LABEL - - ANY>
+<!ELEMENT HEAD - - ANY>
+<!ELEMENT TEXT - - ((head*, front?, body, back?) | (group)) +(foreign | ptr | epb | pb | lb | milestone | table | caption | figure | note1)>
+<!ELEMENT GROUP - - (TEXT)+>
+<!ELEMENT NOTE1 - - ANY>
+<!ELEMENT NOTE2 - - ANY>
+<!ELEMENT NOTE3 - - ANY>
+<!ELEMENT DIVINFO - - ANY>
+<!ELEMENT ORIGINAL - - ANY>
+<!ELEMENT NOTE - - ANY>
+<!ELEMENT FRONT - - ANY>
+<!ELEMENT BODY - - ANY>
+<!ELEMENT BACK - - ANY>
+<!ELEMENT PROLOGUE - - ANY>
+<!ELEMENT EPILOGUE - - ANY>
+<!ELEMENT Q1 - - ANY>
+<!ELEMENT Q2 - - ANY>
+<!ELEMENT PTR - O EMPTY>
+<!ELEMENT EPB - O EMPTY>
+<!ELEMENT MILESTONE - O EMPTY>
+<!ELEMENT APP - - ANY>
+<!ELEMENT RDG - - ANY>
+<!ELEMENT WIT - - ANY>
+ <!ELEMENT OPENER - - ANY>
+<!ELEMENT TABLE - - (head*, (caption | row)+)>
+<!ELEMENT ROW - - (cell)+>
+<!ELEMENT CELL - - ANY>
+<!attlist DIV1
+	NODE CDATA #IMPLIED
+	TYPE CDATA #IMPLIED
+>
+<!attlist DIV2
+	NODE CDATA #IMPLIED
+	TYPE CDATA #IMPLIED
+>
+<!attlist FOREIGN
+	LANG CDATA #IMPLIED
+	REND CDATA #IMPLIED
+>
+<!attlist HEAD
+	TYPE CDATA #IMPLIED
+>
+<!attlist HI1
+	REND CDATA #IMPLIED
+>
+<!attlist IDNO
+	TYPE CDATA #IMPLIED
+>
+<!attlist L
+	REND CDATA #IMPLIED
+>
+<!attlist LANGUAGE
+	ID CDATA #IMPLIED
+>
+<!attlist LG
+	LANG CDATA #IMPLIED
+	REND CDATA #IMPLIED
+	TYPE CDATA #IMPLIED
+>
+<!attlist MILESTONE
+	UNIT CDATA #IMPLIED
+	N CDATA #IMPLIED
+>
+<!attlist NOTE1
+	N CDATA #IMPLIED
+>
+<!attlist PB
+	REF CDATA #IMPLIED
+	SEQ CDATA #IMPLIED
+	RES CDATA #IMPLIED
+	FMT CDATA #IMPLIED
+	FTR CDATA #IMPLIED
+	N CDATA #IMPLIED
+>
+<!attlist SIC
+	CORR CDATA #IMPLIED
+>
+<!attlist TITLE
+	LANG CDATA #IMPLIED
+	TYPE CDATA #IMPLIED
+        REND CDATA #IMPLIED
+>
+<!attlist TITLEPAGE
+	TYPE CDATA #IMPLIED
+>
+<!attlist TITLEPART
+	TYPE CDATA #IMPLIED
+>
+
+

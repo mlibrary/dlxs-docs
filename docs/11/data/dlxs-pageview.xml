@@ -1,0 +1,63 @@
+<?xml version="1.0"?>
+
+<!-- SPO Editorial Services                  -->
+<!-- automatically-generated XML header file -->
+
+<?xml-stylesheet href="../../pre11-dlxsdocs.xsl" type="text/xsl"?>
+<!DOCTYPE DLPSDOC PUBLIC "-//UM-DLPS//DTD DLPS Publications//EN" "http://docs.umdl.umich.edu/dlps/docs/dlpsdocs.dtd">
+<DLPSDOC>
+<TITLE>Copying Page-level Metadata from pageview.dat files to a Database Store</TITLE>
+<HEADER>
+<JOURNAL>DLXS Documentation</JOURNAL>
+<PUBDATE>2002-09-20 13:20:45 EDT</PUBDATE>
+<AUTH1>Snavely, Cory</AUTH1>
+<AUTH2></AUTH2>
+<DOCTITLE>Copying Page-level Metadata from pageview.dat files to a Database Store</DOCTITLE>
+<VOL>data</VOL>
+<ISS></ISS>
+<FILE>dlxsdocs-dlxs-pageview</FILE>
+</HEADER>
+
+
+
+
+
+<BODY>
+<BHEAD>Copying Page-level Metadata from <CODE>pageview.dat</CODE> files to a Database Store</BHEAD>
+<DIV1>
+<P>As of Release 8, DLXS Text Class middleware employs standard database mechanisms for
+storing page-level metadata (an improvement for scalability and
+management from the legacy <CODE>pageview.dat</CODE> file mechanism). DLXS encourages
+participants to move away from this legacy mechanism, and is currently working toward
+release of a utility that can be used during digitization to populate the database
+store directly as metadata is generated.</P>
+<P>In the meantime, to help
+transition materials that are using the legacy mechanism, we've
+supplied a utility to copy metadata from <CODE>pageview.dat</CODE> files into the
+database store (the Pageview table in the DLXS database) used by Text Class.</P>
+<P>The utility <CODE>bin/t/text/importpageviewdata.pl</CODE> can be run once
+(for a one-time cutover) or on a regular basis via <CODE>cron</CODE> or your preferred
+scheduling utility (for situations where
+<CODE>pageview.dat</CODE> files are still being maintained and updated).</P>
+<P>The syntax is
+<PRE>
+  importpageviewdata.pl -d [directory] [-f]
+</PRE>
+</P>
+<P>The required <CODE>[directory]</CODE> argument specifies the directory to crawl for <CODE>pageview.dat</CODE> files.
+If there is more than one, use <CODE>"directory1 directory2 directory3 ..."</CODE>,
+with the quotes.</P>
+<P>Directories may be excluded from crawling (for performance or other reasons) by creating files named <CODE>.importpageviewdata.skip</CODE> directly inside them. There is no limit on the number of directories that may be skipped using mechanism.</P>
+<P>The optional <CODE>[-f]</CODE> argument specifies a "full" run. If used,
+the recorded time of the previous run is
+ignored, and all <CODE>pageview.dat</CODE> files are processed regardless of their
+age. Without this argument, the utility runs in a "maintenance" mode,
+copying only metadata changed since the last run to the database store
+to increase performance and reduce database fragmentation and load.</P>
+<P><CODE>importpageviewdata.pl</CODE> will automatically use the database, user, and
+password that you entered when installing Text Class. If you manually
+change these configurations in Text Class, <CODE>importpageviewdata.pl</CODE> will
+honor the changes and connect using the new parameters.</P>
+</DIV1>
+</BODY>
+</DLPSDOC>

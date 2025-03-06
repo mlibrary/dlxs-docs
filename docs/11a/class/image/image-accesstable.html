@@ -1,0 +1,187 @@
+<html>
+<head>
+<title>Image Class Access Control Summary and Examples Table</title>
+
+
+
+
+
+ <link href="../../dlxsdocs.css" rel="stylesheet" type="text/css"></head>         <body>
+<table class="updateTable" cellspacing="3" cellpadding="3" border="1">
+<tr>
+<td>Last updated</td>
+<td>2002-03-13 11:56:33 EST</td>
+</tr>
+<tr>
+<td>Doc Title</td>
+<td>Image Class Access Control Summary and Examples Table</td>
+</tr>
+<tr>
+<td>Author 1</td>
+<td>Weise, John</td>
+</tr>
+<tr>
+<td>CVS Revision</td>
+<td>$Revision: 1.6 $</td>
+</tr>
+</table>
+
+<div class="pageTitle">Image Class Access Control Summary and Examples Table</div>
+
+<p><a href="http://images.umdl.umich.edu/">Image Services</a><br/>
+<a href="http://www.umdl.umich.edu/">Digital Library Production
+Service</a><br/>
+University of Michigan<br/>
+<a href="http://www.umdl.umich.edu/dlxs/">Digital Library eXtension
+Service </a><br/>
+<a href="mailto:dlxs-help@umich.edu">dlxs-help@umich.edu</a></p>
+
+
+
+
+<p>It is important to also read the following documentation:</p>
+<ul>
+<li><a href="../../intro/dlxs-auth.html">DLXS Authentication and Authorization</a> </li>   
+  <li><a href="image-accesscontrol.html">Image Class Access Control </a></li>
+   
+   
+  <li><a href="image-datatransform.html">Image Class Data Transformation</a>, especially the section on <a href="image-datatransform.html#CollectionLevelInformation">Collection 
+    Level Information</a></li>
+</ul>
+
+<p>The following table represents all of the possible combinations of access control 
+  for the Image Class version 2.</p>
+
+<table border="1">
+  <tbody> 
+  <tr> 
+    <th> 
+      <p>Descriptive Data</p>
+    </th>
+    <th> 
+      <p>Thumbnail Images</p>
+    </th>
+    <th> 
+      <p>Images (larger than thumbnail)</p>
+    </th>
+    <th> 
+      <p>Collection Info Field 3 Value</p>
+    </th>
+    <th> 
+      <p>Entry Auth Field (DLXS.ea) Needed In Record*</p>
+    </th>
+    <th> 
+      <p>Environment Variable (add collid to this var)</p>
+    </th>
+    <th> 
+      <p>Collection Level Information File Example</p>
+    </th>
+  </tr>
+  <tr> 
+    <td> 
+      <p>Unrestricted Access</p>
+    </td>
+    <td> 
+      <p>Unrestricted Access</p>
+    </td>
+    <td> 
+      <p>Unrestricted Access</p>
+    </td>
+    <td> 
+      <p>WORLD</p>
+    </td>
+    <td> 
+      <p>No</p>
+    </td>
+    <td> 
+      <p>PUBLIC_COLL</p>
+    </td>
+    <td> 
+      <p>French Architecture#Images by Rebecca Price#WORLD</p>
+    </td>
+  </tr>
+  <tr> 
+    <td> 
+      <p>Unrestricted Access</p>
+    </td>
+    <td> 
+      <p>Unrestricted Access</p>
+    </td>
+    <td> 
+      <p>Restricted</p>
+    </td>
+    <td> 
+      <p>COLLID</p>
+    </td>
+    <td> 
+      <p>No</p>
+    </td>
+    <td> 
+      <p>PUBLIC_COLL</p>
+    </td>
+    <td> 
+      <p>French Architecture#Images by Rebecca Price#SAMPLEIC</p>
+    </td>
+  </tr>
+  <tr> 
+    <td> 
+      <p>Unrestricted Access</p>
+    </td>
+    <td> 
+      <p>Unrestricted Access</p>
+    </td>
+    <td> 
+      <p>Mixed</p>
+    </td>
+    <td> 
+      <p>COLLID (this will be overridden by values found in the records Entry 
+        Auth Field (DLXS.ea).</p>
+    </td>
+    <td> 
+      <p>Yes</p>
+      <p>Entry Auth Field (DLXS.ea) value must be "WORLD" for records with images 
+        (larger than thumbnail) that should not be restricted.</p>
+      <p>Other Entry Auth Field values will result in restricted access for the 
+        records images (larger than thumbnail).</p>
+    </td>
+    <td> 
+      <p>PUBLIC_COLL</p>
+    </td>
+    <td> 
+      <p>French Architecture#Images by Rebecca Price#SAMPLEIC</p>
+    </td>
+  </tr>
+  <tr> 
+    <td> 
+      <p>Restricted</p>
+    </td>
+    <td> 
+      <p>Restricted</p>
+    </td>
+    <td> 
+      <p>Restricted</p>
+    </td>
+    <td> 
+      <p>COLLID</p>
+    </td>
+    <td> 
+      <p>No</p>
+    </td>
+    <td> 
+      <p>AUTHZD_COLL</p>
+    </td>
+    <td> 
+      <p>French Architecture#Images by Rebecca Price#SAMPLEIC</p>
+    </td>
+  </tr>
+  </tbody> 
+</table>
+
+
+<p>* Meaning, there needs to be a field in the raw data to be transformed to SGML.</p>
+<p>jweise@umich.edu<br/>
+</p>
+
+</body>
+
+</html>

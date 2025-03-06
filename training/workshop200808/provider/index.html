@@ -1,0 +1,419 @@
+<html>
+  <head>
+    <meta HTTP-EQUIV="Content-Type" content="text/html; charset=iso-8859-1">
+    <title>UM Provider setup / design</title>
+    <link rel="stylesheet" href="../icstyle/icstyles.css" type="TEXT/CSS">
+    <link rel="stylesheet" href="../styles.css" type="TEXT/CSS">
+    <style type="text/css">
+      <!--
+      .style1 { color: #FF0907; font-weight: bold; }
+      -->
+   </style>
+  </head>
+
+  <body BGCOLOR="#FFFFFF" TEXT="#000000" CLASS="mainpalette">
+    <h1>UM Provider (OAI-PMH 2.0 data provider)</h1>
+
+    <h2 class="partheader">Overview, design and installation</h2>
+
+
+    <p>Similar to our decisions regarding new nameresolver2, we wanted to create a new OAI data provider that would move away from using <a href="http://webservices.itcs.umich.edu/mediawiki/dlxs13/index.php/Broker20">broker20</a> and Bibliographic Class. We also were creating the new MBooks environment, which used metadata directly from our online library catalog (Mirlyn). It seemed counterintuituve to put Mirlyn metadata (essentially marc21 data) into Bibliographic Class to make it work in broker20, and our method for crosswalking TEI to Text Class to Bibliographic Class had always seemed sub-standard. We also had to handle a new rights environment for MBooks-- those that were public domain and those that were restricted-- and there was no clean method to connect the rights database with broker20.</p>
+
+<p>Consequently, we created UMProvider to hold and provide access to all our OAI metadata-- the MBooks metadata as well as the DLPS/DLXS metadata from our Text Class and Image Class collections. And we decided to make it re-usable at the same time, i.e., that it be a single perl module that connects to any relational database (e.g., MySQL) and that it have no other requirements other than common perl system modules (e.g., XML::LibXML, CGI, DBI).</p>
+
+<p>We'll provide a <a href="oai_verb.html">brief overview of OAI</a> before we show UMProvider.</p>
+
+    <h2 class="partheader">Getting started</h2>
+
+    <p>Steps for getting started:</p>
+    <ol>
+      <li>Get the UMProvider module</li>
+      <li>Set up database tables</li>
+      <li>Create or modify example CGI script</li>
+      <li>Edit UMProvider config</li>
+      <li>Load your data</li>
+    </ol>
+
+    <h3 class="sectionheader">1) Get the UMProvider module</h3>
+
+    <p>The UMProvider will be included in DLXS release 14 (<span style="font-family: monospace;">$DLXSROOT/bin/o/oai/, 
+    $DLXSROOT/cgi/o/oai/</span>) and is available right now on sourceforge (non-DLXS enabled): 
+    <a href="http://sourceforge.net/projects/umoaitoolkit/">http://www.sourceforge.net/projects/umoaitoolkit/</a>. 
+    The existing OAI Provider (<a href="http://webservices.itcs.umich.edu/mediawiki/dlxs13/index.php/Broker20">broker20</a>) 
+    will continue to be distributed with DLXS.  However, we encourage you to start using the UMProvider, as it is simpler to manage and conforms to the OAI specification correctly (something that broker20 never did completely).</p>
+
+    <p>The UM OAI Toolkit (<a href="http://sourceforge.net/projects/umoaitoolkit/">umoaitoolkit/</a>) available from sourceforge
+    contains the OAI-PMH <a href="http://webservices.itcs.umich.edu/mediawiki/dlxs14/index.php/OAI_Harvester">harvesting scripts</a>
+    as well.
+
+
+    <h3 class="sectionheader">2) Set up database tables</h3>
+
+    <p>The first MySQL table is mandatory and stores all of the required data for the UMProvider.  
+    The second table can be used if you would like to organize your records into sets.  Sets, in OAI-PMH, 
+    are used for organizing the data for selective harvesting of the content.  
+    Both tables are created as they appear below when you install DLXS release 14.</p>
+   
+    First table (oai):
+    <pre>
+      +-----------+--------------+------+-----+-------------------+
+      | Field     | Type         | Null | Key | Default           |
+      +-----------+--------------+------+-----+-------------------+
+      | id        | varchar(150) | NO   | PRI |                   |
+      | timestamp | timestamp    | NO   | MUL | CURRENT_TIMESTAMP |
+      | oai_dc    | mediumblob   | YES  |     | NULL              |
+      | marc21    | mediumblob   | YES  |     | NULL              |
+      | mods      | mediumblob   | YES  |     | NULL              |
+      +-----------+--------------+------+-----+-------------------+
+    </pre>
+
+    Second table (oaisets) optional: <br>
+    <pre>
+      +-----------+--------------+------+-----+---------+
+      | Field     | Type         | Null | Key | Default |
+      +-----------+--------------+------+-----+---------+
+      | id        | varchar(150) | NO   | PRI |         |
+      | oaiset    | varchar(32)  | NO   | PRI |         |
+      +-----------+--------------+------+-----+---------+
+    </pre>
+
+    <pre>
+      CREATE TABLE oai (
+          id        VARCHAR(150) PRIMARY KEY,
+          timestamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+          oai_dc    MEDIUMBLOB,
+          mods      MEDIUMBLOB,
+          marc21    MEDIUMBLOB,
+          key 'timestamp' (timestamp) );
+
+      CREATE TABLE oaisets (id VARCHAR(150), oaiset VARCHAR(32), PRIMARY KEY ('id','oaiset'), KEY 'oaiset' (oaiset));
+    </pre>
+
+
+    <h3 class="sectionheader">3) Create or modify example CGI script</h3>
+
+    <p>First, log onto pilsner with your workshop ID.</p>
+
+    <p>The only thing that needs to be changed for the CGI script (<span style="font-family: monospace;">$DLXSROOT/cgi/o/oai/oai</span>) 
+    is the information needed to connect to the database.  Other than that, the sample script should work out of the box.</p>
+
+    <ul>
+      <li>If using the UMProvider with DLXS, <span style="font-family: monospace;">$DLXSROOT/cgi/o/oai/oai</span> should load the 
+      connection information from the configuration file here: 
+      <span style="font-family: monospace;">$DLXSROOT/lib/oaiGlobals.conf</span></li>
+
+      <ol>
+        <li>Look at <span style="font-family: monospace;">$DLXSROOT/cgi/o/oai/oai</span></li>
+        <li><span style="font-family: monospace;"># cd $DLXSROOT/lib/</span></li>
+        <li><span style="font-family: monospace;"># edit (vi) oaiGlobals.conf</span>
+        to set database connection information [ "userX" should be replaced with your user ID for the workshop ]</li>
+        <pre>
+        mysqlServer           = dev.mysql.umdl.umich.edu
+        mysqlDbName           = userX_ws
+        mysqlUser             = dlxs
+        mysqlPasswd           = middleware
+        </pre>
+      </ol>
+    </ul>
+
+    <div style="margin-left: 40px;"><span style="font-style: italic;">
+    NOTE: If you are NOT using the UMProvider with DLXS, you could add the database connection information directly into the CGI script 
+    (<span style="font-family: monospace;">$DLXSROOT/cgi/o/oai/oai</span>) or load a config file like we do in DLXS.</span></div>
+    
+
+    <h3 class="sectionheader">4) Edit UMProvider config</h3>
+
+    <p>The UMProvider configuration contains information about the repository for the Identify, ListSets and ListMetadataFormats OAI-PMH verbs.  
+    This data is not really dynamic so it is just stored in an XML configuration file.</p>
+
+    <span style="font-family: monospace;">
+      <ol>
+        <li># cd $DLXSROOT/cgi/o/oai/</li>
+        <li># cp sample_config.xml oai_conf.xml</li>
+        <li>edit oai_config.xml</li>
+      </ol>
+    </span>
+
+    <p>change:</p>
+    <ol style="font-family: monospace;">
+      <li>&lt;repositoryName></li>
+      <li>&lt;baseURL> [userX.ws.umdl.umich.edu]</li>
+      <li>&lt;adminEmail> </li>
+      <li>&lt;repositoryIdentifier> [userX.ws.umdl.umich.edu]</li>
+      <li>&lt;sampleIdentifier> [ oai:userX.ws.umdl.umich.edu:MIU01-000053324]</li>
+      <li>the list of sets and possible metadata formats</li>
+        Let's add some dlps sets for use later on. Add <a href="dlps_sets.html">these</a> under &lt;ListSets>
+    </ol>
+    <br>
+
+
+    <p>Test the configuration with a few OAI requests:<br />
+Again, "userX" should be replaced with your user ID for the workshop.</p>
+
+    <pre>
+      <a href="http://userX.ws.umdl.umich.edu/cgi/o/oai/oai?verb=Identify">http://userX.ws.umdl.umich.edu/cgi/o/oai/oai?verb=Identify</a>
+      <a href="http://userX.ws.umdl.umich.edu/cgi/o/oai/oai?verb=ListSets">http://userX.ws.umdl.umich.edu/cgi/o/oai/oai?verb=ListSets</a>
+      <a href="http://userX.ws.umdl.umich.edu/cgi/o/oai/oai?verb=ListMetadataFormats">http://userX.ws.umdl.umich.edu/cgi/o/oai/oai?verb=ListMetadataFormats</a>
+
+        [ should be one DC record in the table by default ]
+      <a href="http://userX.ws.umdl.umich.edu/cgi/o/oai/oai?verb=ListRecords&metadataPrefix=oai_dc">http://userX.ws.umdl.umich.edu/cgi/o/oai/oai?verb=ListRecords&metadataPrefix=oai_dc</a>
+      <a href="http://userX.ws.umdl.umich.edu/cgi/o/oai/oai?verb=GetRecord&metadataPrefix=oai_dc&identifier=oai:userX.ws.umdl.umich.edu:MIU01-12345678">http://userX.ws.umdl.umich.edu/cgi/o/oai/oai?verb=GetRecord&metadataPrefix=oai_dc&identifier=oai:userX.ws.umdl.umich.edu:MIU01-12345678</a>
+    </pre>
+
+
+    <h3 class="sectionheader">5) Load your data into the database</h3>
+    
+
+    <p>In this step we are going to load already formatted metadata (<span style="font-family: monospace;">oai_dc</span> first) 
+    using the <span style="font-family: monospace;">loadOai.pl</span> script.  The data that is fed to this script for loading needs to be wrapped in a 
+    <span style="font-family: monospace;">&lt;records></span> element.  Also, mirroring the OAI-PMH format, a 
+    <span style="font-family: monospace;">&lt;header></span> (containing the unique identifier) and a 
+    <span style="font-family: monospace;">&lt;metadata></span> element are required for each record.</p>
+
+    <p>Here is an example of that data:</p>
+
+    <pre>
+    &lt;?xml version="1.0" encoding="UTF-8"?>
+    &lt;records>
+      &lt;record>
+        &lt;header>
+          &lt;identifier>MIU01-000053324&lt;/identifier>
+          &lt;setSpec>mbooks:pd&lt;/setSpec>
+        &lt;/header>
+        &lt;metadata>
+          &lt;oai_dc:dc> 
+            <b>[ YOUR oai_dc DATA HERE ]</b>
+          &lt;/oai_dc:dc>
+        &lt;/metadata>
+      &lt;/record>
+      <b>[ MORE RECORDS HERE ]</b>
+    &lt;/records>
+    </pre>
+
+    <ol>
+      <li>Take a look at the sample data: <span style="font-family: monospace;">$DLXSROOT/prep/s/sampleoai/oai_dc_samples/oai_sample.xml</span></li>
+      <li><span style="font-family: monospace;"> # cd $DLXSROOT/bin/o/oai/</span> </li>
+      <li><span style="font-family: monospace;"> # ./loadOai.pl -d  $DLXSROOT/prep/s/sampleoai/oai_dc_samples/</span> </li>
+      <li>Test to see if you have oai_dc records:</li>
+    </ol>
+    <pre>
+      <a href="http://userX.ws.umdl.umich.edu/cgi/o/oai/oai?verb=ListRecords&metadataPrefix=oai_dc">http://userX.ws.umdl.umich.edu/cgi/o/oai/oai?verb=ListRecords&metadataPrefix=oai_dc</a>
+    </pre>
+
+    Here are more metadata format (marc21 and mods) examples:
+    <pre>
+      # ./loadOai.pl -d $DLXSROOT/prep/s/sampleoai/marc21_samples/
+      # ./loadOai.pl -d $DLXSROOT/prep/s/sampleoai/mods_samples/
+
+      <a href="http://userX.ws.umdl.umich.edu/cgi/o/oai/oai?verb=ListRecords&metadataPrefix=marc21">http://userX.ws.umdl.umich.edu/cgi/o/oai/oai?verb=ListRecords<b>&metadataPrefix=marc21</b></a>
+
+      <a href="http://userX.ws.umdl.umich.edu/cgi/o/oai/oai?verb=ListRecords&metadataPrefix=mods">http://userX.ws.umdl.umich.edu/cgi/o/oai/oai?verb=ListRecords<b>&metadataPrefix=mods</b></a>
+
+    </pre>
+
+    <p><span style="font-family: monospace;">loadOai.pl</span> also allows you to force the records at the time of loading into a specified set.  </p>
+    <pre>
+      # ./loadOai.pl -d $DLXSROOT/prep/s/sampleoai/oai_dc_samples/ <b>-s dlps</b>
+
+      <a href="http://userX.ws.umdl.umich.edu/cgi/o/oai/oai?verb=ListRecords&metadataPrefix=oai_dc&set=dlps">http://userX.ws.umdl.umich.edu/cgi/o/oai/oai?verb=ListRecords&metadataPrefix=oai_dc<b>&set=dlps</b></a>
+
+    </pre>
+
+    <p><strong>Tip:</strong> If your data is in broker20 already, you can use the 
+    <a href="http://webservices.itcs.umich.edu/mediawiki/dlxs14/index.php/OAI_Harvester">OAI harvester</a> 
+    to collect your data.  Then, change the <span style="font-family: monospace;">$recordXpath</span> (see below) to
+    load any OAI-PMH <span style="font-family: monospace;">ListRecords</span> response from a file.
+
+    <pre>
+      ## optional config -- xpath to find records
+      my $recordXpath = "/OAI-PMH/ListRecords/record";
+    </pre>
+
+
+    <!-- Converting data: -->
+    <h2 class="partheader">Converting data</h2>
+
+    The first slide of the <a
+    href="umprovider_flow_diagrams_and_examples.ppt"/>UMProvider: Process Flows and Examples presentation</a>  
+    shows the complete process flow for transforming a DLXS test class
+    collection to oai_dc data and making it available from UMProvider. In this
+    hands-on activity, we will cover the three main scripts necessary for the
+    transformation. Those scripts are circled in red on the slide. 
+    
+    <h3 class="sectionheader">Instructions for DLXS Text Class to oai_dc Transformation Hands On
+    Activity</h3>
+    
+    <ol>
+    <li>Enter: <span style="font-family: monospace;">cd
+    $DLXSROOT/bin/o/oai/provider</span><br/><br/></li>
+    
+
+    <li>View the contents of the collection configuration xml file by typing: <span style="font-family: monospace;">more exampleColls.xml</span>. 
+    Here you can see that we are going to process three collections: alajournals, conraditc, and emerson. 
+    These are collections ids (collids) used by collmgr. This configuration file is used as the input to 
+    all of the scripts to indicate which collections should be processed.
+    <br/><br/></li>
+
+    <li>Run: <span style="font-family: monospace;">./ExtractHeaders.pl -c exampleColls.xml</span>. This will extract the header files from xpat. 
+    This allows us to capture only the metadata for each record instead of parsing
+    the full text. NOTE: If there are problems running this script, you can copy the extracted header files by doing  <span style="font-family: monospace;"> cp /l/l1-workshop/workshop-samples/kludewig/*headers.xml .</span><br/><br/></li>
+
+    <li>Run: <span style="font-family: monospace;">ls *headers.xml</span>.
+    You will see that there are three files: alajournals-headers.xml, conraditc-headers.xml, and emerson-headers.xml. <br/><br/></li>
+
+    <li> Do: <span style="font-family: monospace;">more alajournals-headers.xml</span> to see the header data extracted from xpat.
+    <br/><br/></li>
+    
+    <li>Do: <span style="font-family: monospace;">more logs/log-2008-8-6.txt</span>.
+    This shows you the xpat commands used to create the header xml files. For example, for alajournals, 
+    you can see that we used the following 3 xpat commands:<br>
+    
+    <pre>
+      started xpat: $DLXSROOT/idx/a/alajournals/alajournals.dd
+      executing:&nbsp; pr.region.HEADER
+      region HEADER
+      executing: Stop
+    </pre>
+If you had trouble running the ExtractHeaders.pl script, there will be no output in the log.    
+</li>
+
+    <li>Move these headers to the prep directory:<br>
+    <pre>
+      mv *headers.xml $DLXSROOT/prep/o/oai/headers
+    </pre>
+    </li>
+
+    <li>
+    Next we're going to convert the record from Text Class format to oai dc. In the browser, run:<br>
+
+    <pre>
+      ./ConvertToDc.pl -c exampleColls.xml&nbsp; -d $DLXSROOT/prep/o/oai/headers
+    </pre>
+    </li>
+
+    <li>Do: <span style="font-family: monospace;">more logs/log-2008-8-6.txt </span>
+    again. Use the spacebar to scroll down to the section titled "Results from 
+    ConvertToDc execution". This shows you the XSLT stylesheets invoked by the script. 
+    The snippet below shows you that the alajournals-headers.xml file, the collection 
+    type (DLPS), collid, and language were passed to the textClassToDc.xsl
+    stylesheet which were processed using the XLST program called xsltproc. 
+    This produced the output file alajournals-dc.xml. <br>
+
+    <pre>
+      parsing dynamic collection alajournals
+      executing xsltproc -o $DLXSROOT/prep/o/oai/provider/alajournals-dc.xml
+      --param collid "'alajournals'" --param lang "'eng'" --param type
+      "'DLPS'" textClassToDc.xsl
+      $DLXSROOT/prep/o/oai/headers/alajournals-headers.xml
+    </pre>
+    
+    <p>
+    Below is some example XSLT code from textClassToDc.xsl that maps the title
+    from Text Class to the dc:title field.
+    	<pre>
+	&lt;xsl:for-each select="FILEDESC/SOURCEDESC/BIBLFULL/TITLESTMT/TITLE">
+	    &lt;xsl:if test="normalize-space(.)">		
+		&lt;dc:title>
+			&lt;xsl:apply-templates select="."/>
+		&lt;/dc:title>			
+		&lt;xsl:call-template name="lineBreak"/>
+	    &lt;/xsl:if>
+	&lt;/xsl:for-each>
+	</pre>
+    </p>
+    </li>
+    <li> Do: <span style="font-family: monospace;">more $DLXSROOT/prep/o/oai/provider/alajournals-dc.xml</span> to see the transformed data.
+    <br/><br/></li>
+
+    <li>Now it's time to load the database: Run:
+    <pre>
+    ./LoadDB.pl -d $DLXSROOT/prep/o/oai/provider -c exampleColls.xml -p
+    </pre>
+    </li>
+
+    <li>Now test the records in your dev space: <br>
+    <pre>
+      <a href="http://userX.ws.umdl.umich.edu/cgi/o/oai/oai?verb=ListSets">http://userX.ws.umdl.umich.edu/cgi/o/oai/oai?verb=ListSets</a>
+    </pre>
+    
+    to see the list of sets in the repository. You'll see that there are 8
+    sets: dlps, dlpstext, dlps:collid (3), and dlpstext:collid (3). This set structure is optional. 
+    We chose to organize our sets this way so that a harvester could request all dlps collections or only the images or only the texts. <br/><br/></li>
+
+    <li>You can view the records by collection: <br>
+    <br>
+    <pre>
+      <a href="http://userX.ws.umdl.umich.edu/cgi/o/oai/oai?verb=ListRecords&metadataPrefix=oai_dc&set=dlps:alajournals">http://userX.ws.umdl.umich.edu/cgi/o/oai/oai?verb=ListRecords&amp;metadataPrefix=oai_dc&amp;set=dlps:alajournals</a>
+      <a href="http://userX.ws.umdl.umich.edu/cgi/o/oai/oai?verb=ListRecords&metadataPrefix=oai_dc&set=dlpstext:emerson">http://userX.ws.umdl.umich.edu/cgi/o/oai/oai?verb=ListRecords&amp;metadataPrefix=oai_dc&amp;set=dlpstext:emerson</a>
+      <a href="http://userX.ws.umdl.umich.edu/cgi/o/oai/oai?verb=ListRecords&metadataPrefix=oai_dc&set=dlpstext:conraditc">http://userX.ws.umdl.umich.edu/cgi/o/oai/oai?verb=ListRecords&amp;metadataPrefix=oai_dc&amp;set=dlpstext:conraditc</a>
+    </pre>
+    </li>
+    </ol>
+    
+    <h3 class="sectionheader">Further Documentation</h3>
+    
+    The <a href="umprovider_flow_diagrams_and_examples.ppt"/>UMProvider: Process Flows and Examples presentation</a> contains a process 
+    flow diagram and examples of the oai_dc transformations. Slides 2 - 4 of the presentation provide examples of transforming other types of records (serial text, Bib Class, and Image Class) to oai_dc. See <span style="font-family: monospace;">$DLXSROOT/bin/o/oai/provider/README.txt</span> for detailed instructions. Additionally, 
+    each script has a -h option which can be used to display a usage message for that particular script.
+    <br><br>
+    
+    <h3 class="sectionheader">Challenges Encountered</h3>
+    <ol>
+       <li>Formatting of serial text collections <p>In order to obtain the article-level metadata for the serial collections, 
+       we use the whole Text Class file in addition to the header files from xpat. We also needed to 
+       account for exceptions in how the volume and article data is organized so that our oai_dc data was cleanly formatted.  </p></li>
+       <li>Different identifiers between nameresolver and Text Class
+       <p>Identifiers cannot have colons in OAI. Some of our serial collections use colons to indicate article identifiers (e.g. 0522508.0001.001:1). We had to replace these with dashes to be OAI-PMH compatible. 
+       There were also some instances where different identifier types were used (acc.no vs. dlps).</p></li>
+       <li>UTF8 encoding/SGML characters 
+       <p>Some of the older, static collections are coded in SGML instead of XML. Since these collections are not modified often, we used the Bib Class files for the 
+       transformation instead of the Text Class files.</p></li>
+       <li>Sub-collections (e.g. LLMC)
+       <p>We have one collection with the Scholarly Publishing Office that has 150 sub-collections. Rather than list all of the sub-collections 
+       in the configuration XML file (<tt>exampleColls.xml</tt> in our demo), we list only the base collection with the collid <tt>llmc</tt>. The script will then process all 
+       of the sub-collections within the llmc directory, e.g. <tt>$DLXSROOT/obj/l/llmc/subcoll1</tt>, <tt>$DLXSROOT/obj/l/llmc/subcoll2</tt>, etc. </p></li>
+       <li>Image record titles almost identical
+       <p>For some Image Class collections, the title, subject, description are identical and the IDs similiar. In order to distinguish records,
+       we appended the view (e.g. front, back, side) to the title. <a href="http://quod.lib.umich.edu/cgi/o/oai/oai?verb=ListRecords&metadataPrefix=oai_dc&set=dlps:scltinternic">The collection scltinteric is such an example</a>.</p></li>
+    </ol>
+
+    <h2 class="partheader">Other</h2>
+    <h3 class="sectionheader">Tips for Automation:</h2>
+    
+    Look at: <span style="font-family: monospace;">$DLXSROOT/bin/o/oai/provider/oai_update.pl</span>
+    <ol>
+      <li>Make a copy of the tables (otherwise table is contantly changing and resumption tokens become invalid)</li> 
+      <li>Automate harvesting or converting data</li>
+      <li>Automate loading data into the copied table</li>
+      <li>Make a backup of the existing MySQL tables before replacing them with the updated copies</li>
+    </ol>
+
+    <h3 class="sectionheader">Example Reports</h3>
+    
+    <p>The <a href="umprovider_flow_diagrams_and_examples.ppt"/>UMProvider:
+    Process Flows and Examples presentation</a> contains  
+    flow diagrams of the weekly automated processes for checking for updated
+    records and new collections on slides 5 and 6.</p>
+    
+    <p>View <a href="example_oai_report.html">an example of the oai update report</a>. 
+    The Perl script that generates the content of the report is at 
+    <span style="font-family: monospace;">$DLXSROOT/bin/o/oai/provider/GenerateReport.pl</span>. 
+    To change the email addresses to which the report is sent, you must edit 
+    <span style="font-family: monospace;">$DLXSROOT/bin/o/oai/provider/text_ic_oai_cron.pl</span>.</p>
+    
+    <p>View <a href="example_newcoll_report.html">an example of the new collection report</a>. 
+    The Perl script containing the content and email addresses for this report is at 
+    <span style="font-family: monospace;">$DLXSROOT/bin/o/oai/provider/GetNewCollections.pl</span>.</p>
+    
+
+    <!-- 
+    <pre>
+      http://userX.ws.umdl.umich.edu/cgi/o/oai/oai? 
+        verb=ListMetadataFormats
+        verb=ListMetadataFormats&amp;identifier=oai:userX.ws.umdl.umich.edu:MIU01-000053324
+        verb=GetRecord&amp;metadataPrefix=oai_dc&amp;identifier=oai:userX.ws.umdl.umich.edu:MIU01-000053324
+    </pre>
+    -->
+
+  </body>
+</html>

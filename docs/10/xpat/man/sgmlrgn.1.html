@@ -1,0 +1,1362 @@
+
+
+<HTML><HEAD><TITLE>Manpage of SGMLRGN</TITLE>
+</HEAD><BODY>
+<H1>SGMLRGN</H1>
+Section: User Commands  (1)<BR>Updated: November 2000<BR><A HREF="#index">Index</A>
+<A HREF="http://localhost/cgi-bin/man/man2html">Return to Main Contents</A><HR>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<A NAME="lbAB">&nbsp;</A>
+<H2>NAME</H2>
+
+<B>sgmlrgn</B> - XPAT multi-purpose SGML application
+<P>
+An SGML Application Conforming to International Standard ISO 8879 ---
+<BR>
+
+Standard Generalized Markup Language
+<A NAME="lbAC">&nbsp;</A>
+<H2>SYNOPSIS</H2>
+
+<B>sgmlrgn</B>
+<B>-m</B> <I>mode</I>
+[ <B>-C</B> ]
+[ <B>-J</B> ]
+[ <B>-c</B> ]
+[ <B>-d</B> ]
+[ <B>-D</B> <I>dd_name</I> ]
+[ <B>-e</B> ]
+[ <B>-g</B> ]
+[ <B>-p</B> ]
+[ <B>-u</B> ]
+[ <B>-v</B> ]
+[ <B>-i</B> <I>name</I> ]
+[ <B>-o</B> <I>outfile_name</I> ]
+[ <B>-M</B> <I>meta_structure_file</I> ]
+[ <B>-G</B> <I>group_name</I> ]
+<I>filename</I> ...
+<A NAME="lbAD">&nbsp;</A>
+<H2>DESCRIPTION</H2>
+
+<B>sgmlrgn</B> parses and validates the SGML document entity in
+<I>filename</I>(s) and prints the results on the standard output
+according to the <I>mode</I> specification.
+Note that the document entity may be spread among several files.
+For example, the SGML document type definition (DTD) and
+document instance set could each be in a separate file.
+If the <I>filename</I> is a dash (-), <B>sgmlrgn</B> will process SGML text from
+standard input.  This is especially useful in <B>filter</B> mode.
+<A NAME="lbAE">&nbsp;</A>
+<H2>OPTIONS</H2>
+
+<DL COMPACT>
+<DT><B>-m</B> <I>mode</I><DD>
+mode - specify a processing mode.
+All results are printed on standard output and
+all error messages are printed on standard error.
+The following are the valid modes.  Note that only the first two letters of the
+mode name are significant. <B>NOTE:</B> For MFS database,
+refer to <B>MFS DATABASE OPTIONS</B> for building regions only in SGML documents.
+<DL COMPACT><DT><DD>
+<B>region</B> <B>-D</B> <I>data_dictionary</I> [ <B>-Cv</B> ] [ <B>-o</B> <I>outfile_name</I> ] [<B>-M</B> <I>meta_structure_file</I> ] [ <B>-G</B> <I>group_name</I> ]
+<DL COMPACT><DT><DD>
+Generate <B>xpat</B> region indices (see <B><A HREF="http://localhost/cgi-bin/man/man2html?5+regions">regions</A></B>(5)) and
+update the region information in the <I>data_dictionary</I>.
+The <B>-D</B> argument must be included - it specifies the Data Dictionary to be updated.
+If the name of the input file is named Text,
+the output region file will be named Text.rgn.
+Region files produced by <B>sgmlrgn</B> have the same format
+as those produced by <B><A HREF="http://localhost/cgi-bin/man/man2html?1+xpatrgn">xpatrgn</A></B>(1) and <B><A HREF="http://localhost/cgi-bin/man/man2html?1+multirgn">multirgn</A></B>(1).
+The <B>-o</B> option can be used to specify the output region file name;
+otherwise, the region file name will be the same as the data dictionary file
+name with (`.rgn') extension. For <B>-M</B> and <B>-G</B> options, read
+the section on <B>MFS DATABASE OPTIONS</B>.
+</DL>
+
+<B>filter</B> [ <B>-Cv</B> ] [ <B>-R</B> <B>0</B> | <B>1</B> ]
+<DL COMPACT><DT><DD>
+Parse the DTD and normalize the SGML input.
+Specifying <B>-R 1</B> (default) will expand
+entity references but specifying <B>-R 0</B> will not expand entity references.
+This mode is frequently used as a filter to normalize any minimized SGML references in the text.
+When <B>sgmlrgn</B> is used in this way, it has two extra <I>filename</I> arguments.  The
+first is the name of the document type declaration (`.inp') file and
+the second is a dash (to specify standard input).
+</DL>
+
+<B>check</B> [ <B>-Ccdegipuv</B> ] [ <B>-D</B> <I>data_dictionary</I> ]
+<DL COMPACT><DT><DD>
+Validate the DTD and document instance. Only errors are reported.
+</DL>
+
+<B>dtd</B> [ <B>-Ccdegipuv</B> ] [ <B>-D</B> <I>data_dictionary</I> ]
+<DL COMPACT><DT><DD>
+Parse the DTD and expand all parameter entity references.
+The elements are nicely printed and sorted alphabetically.
+</DL>
+
+<B>root</B> [ <B>-v</B> ] [ <B>-D</B> <I>data_dictionary</I> ]
+<DL COMPACT><DT><DD>
+Print the root element of the
+document instance in the form `{DefaultRegion root}'.
+The DefaultRegion command is a <B>xpat</B> command to set the default region.
+The output from this mode can be used in the <B>xpat</B> initialization file
+(see <B><A HREF="http://localhost/cgi-bin/man/man2html?1+xpat">xpat</A></B>(1) and <B><A HREF="http://localhost/cgi-bin/man/man2html?5+data_dict">data_dict</A></B>(5)).
+</DL>
+
+<B>elist</B> [ <B>-Ccipv</B> ] [ <B>-D</B> <I>data_dictionary</I> ]
+<DL COMPACT><DT><DD>
+Alphabetically list all elements defined in the DTD.
+</DL>
+
+<B>normalize</B> [ <B>-Cciv</B> ] [ <B>-D</B> <I>data_dictionary</I> ]
+<DL COMPACT><DT><DD>
+Transform the document instance into a fully expanded document instance,
+expanding all minimized elements.
+</DL>
+
+<B>declare</B> [ <B>-v</B> ] [ <B>-D</B> <I>data_dictionary</I> ]
+<DL COMPACT><DT><DD>
+Print the SGML declaration.
+
+The following options are &quot;undocumented&quot;:
+</DL>
+
+
+<B>print</B> [ <B>-Cciv</B> ] [ <B>-D</B> <I>data_dictionary</I> ] [-S <I>print_length</I>]
+<DL COMPACT><DT><DD>
+
+Print the start tag, end tag and attribute position in the document instance.
+A sample of region, with maximum <I>print_length</I> (default is 30),
+will be printed.
+</DL>
+
+
+<B>test</B> [ <B>-D</B> <I>generate_file</I> ] [ <B>-S</B> <I>seed#</I> ]
+<DL COMPACT><DT><DD>
+
+Generate a test document according to the DTD. The generation parameters can
+be specified in the <I>generate_file</I>
+and the random number generator seed is <I>seed#</I>.
+The generate test parameter mode, '<I>-m gentest</I>', can be used to produce
+the initial <I>generate_file</I>.
+If the <I>generate_file</I> is not specified, the default parameters will be
+used.
+</DL>
+
+
+<B>gentest</B>
+<DL COMPACT><DT><DD>
+
+Generate a set of default test-generation parameters.
+These parameters can be changed and used in the test mode, '<I>-m test</I>'.
+
+</DL>
+
+</DL>
+
+<DT><B>-C</B>
+
+<DD>
+Make <B>sgmlrgn</B> case sensitive.
+<DT><B>-J</B>
+
+<DD>
+Enable <B>sgmlrgn</B> to merge the new regions into the existing regions.
+<DT><B>-c</B>
+
+<DD>
+Describe capacity usage at the end of the parse.
+<DT><B>-d</B>
+
+<DD>
+Warn about duplicate entity declarations.
+<DT><B>-e</B>
+
+<DD>
+Describe open entities in error messages.
+Error messages always include the position of the most recently
+opened external entity.
+<DT><B>-g</B>
+
+<DD>
+Show the Generic Identifiers of open elements in error messages.
+<DT><B>-i</B> <I>name</I><DD>
+Pretend that
+<DL COMPACT><DT><DD>
+<DL COMPACT>
+<DT><DD>
+<B>&lt;!ENTITY&nbsp;%&nbsp;</B><I>name&nbsp;</I><B>INCLUDE&gt;</B>
+
+</DL>
+<P>
+
+occurs at the start of the document type definition subset
+in the SGML document entity.
+Since repeated definitions of an entity are ignored,
+this definition will take precedence over any other definitions
+of this entity in the document type definition.
+Multiple
+<B>-i</B>
+
+options are allowed.
+If the SGML declaration replaces the reserved name
+<B>INCLUDE</B>
+
+then the new reserved name will be the replacement text of the entity.
+Typically the document type definition will contain
+<DL COMPACT>
+<DT><DD>
+<B>&lt;!ENTITY&nbsp;%&nbsp;</B><I>name&nbsp;</I><B>IGNORE&gt;</B>
+
+</DL>
+<P>
+
+and will use
+<B>%</B><I>name</I><B>;</B>
+
+in the status keyword specification of a marked section declaration.
+In this case the effect of the option will be to cause the marked
+section not to be ignored.
+</DL>
+
+<DT><B>-o</B>
+
+<DD>
+specify the output region file name. It will automatically append the region
+file extension ('.rgn') at the end when generating the file name.
+<DT><B>-p</B>
+
+<DD>
+Parse only the prologue.
+<B>sgmlrgn</B> will exit after parsing the document type definition.
+<DT><B>-u</B>
+
+<DD>
+Warn about undefined elements - elements used in the DTD but not defined.
+<DT><B>-v</B>
+
+<DD>
+Turn ON verbose mode.  Verbose mode outputs messages concerning the progress
+of <B>sgmlrgn</B>.
+<DT><B>-M</B> <I>meta_structure_file</I><DD>
+The <I>meta_structure_file</I> is generated by <B><A HREF="http://localhost/cgi-bin/man/man2html?1+mfsmeta">mfsmeta</A></B>(1) program.
+The structure file
+contains information about each file start and end parsing positions.
+Only the files which have &lt;DisplayFmt&gt; equal to 'sgml' will be
+processed by <B>sgmlrgn</B>. The <B>-G </B><I>group_name</I> option
+further narrows which group of SGML documents can be parsed by the given DTD.
+<DT><B>-G</B> <I>group_name</I><DD>
+The <I>group_name</I> identifies which group of SGML documents should be parsed.
+Since only one DTD can be used for each <B>sgmlrgn</B> run, the <I>group_name</I>
+basically defines the SGML documents that can be parsed by the given DTD.
+<P>
+<P>
+</DL>
+<A NAME="lbAF">&nbsp;</A>
+<H2>MFS DATABASE OPTIONS</H2>
+
+<A NAME="lbAG">&nbsp;</A>
+<H3>Background</H3>
+
+<P>
+In MFS databases, the MFS system creates  a ``virtual text'' from the
+text of all the files in the database.  The portion of this virtual
+text that corresponds to each file consists of three pieces: the
+Meta-Header section, the Data section, and the Meta-Trailer section. 
+This breakdown is illustrated in the following diagram:
+<P>
+<PRE>
+<TT>
+  &lt;OTDoc&gt;&lt;OTMeta&gt;..&lt;/OTMeta&gt;&lt;OTData&gt;.............&lt;/OTData&gt;&lt;/OTDoc&gt;
+  |--------- Meta-Header ----------|| SGML Data ||- Meta-Trailer -|
+  ^                                 ^            ^                ^
+  start                             start        start            end
+  header                            data         trailer          pos
+</TT>
+</PRE>
+
+<P>
+<P>
+
+The data in the Meta-Header and Meta-Trailer sections is highly
+structured and is uniform across all the files in the MFS database.
+In contrast, the data in the Data sections may be untagged text,
+tagged text without a DTD, or tagged text with a DTD (SGML data).
+<P>
+
+The process of building region indices on such databases involves
+several steps.  The first step involves running <B>mfsmeta</B> over the database
+to build a <I>meta_structure_file</I>.  This file contains information
+about the positions of the Meta-Header, Data, and Meta-Trailer sections
+for each file in the database.
+<P>
+
+The second step involves building regions on the fields in the
+Meta-Header and Meta-Trailer sections that are common to all files.
+Refer to the <B><A HREF="http://localhost/cgi-bin/man/man2html?1+multirgn">multirgn</A></B>(1) man page for further details.
+<P>
+
+The third step involves building regions for the Data sections.  For
+the Data sections that contain tagged text without a DTD, this task is
+accomplished using <B>multirgn</B>.  For SGML Data sections (that do have a DTD),
+this task is accomplished using <B>sgmlrgn</B>.
+<P>
+
+There are three types of SGML MFS databases.  The first consists of
+a group of SGML files that all conform to the same DTD -
+each file is a complete document.
+<P>
+
+The second type consists of a group of SGML files that conform to
+several different DTD's - each file is still a complete document.
+<P>
+
+The third type consists of a group of SGML files that conform to one or
+more DTD's - the files may contain either complete documents
+or pieces of documents (i.e., the text for specific elements in the
+DTD).  Each of the next three sections discusses how to build regions
+for one of the above database types.
+<P>
+<A NAME="lbAH">&nbsp;</A>
+<H3>Building Regions for Type 1 SGML Databases</H3>
+
+The first step involves setting up the FilterChain section of the Data Dictionary
+which specifies the SGML files to be included in the database.  In
+particular, the DisplayFmt field should be set to the value,
+`sgml'.
+<P>
+For example, the following FilterChain section might be
+appropriate for a the first kind of SGML database:
+<P>
+<PRE>
+
+      &lt;FilterChain&gt;
+        &lt;SearchView&gt;meta&lt;/SearchView&gt;
+        &lt;DisplayView&gt;meta&lt;/DisplayView&gt;
+        &lt;RawView&gt;meta&lt;/RawView&gt;
+        &lt;DisplayFmt&gt;sgml&lt;/DisplayFmt&gt;
+        &lt;FileGroup&gt;
+          &lt;MfsDir&gt;sgmldata&lt;/MfsDir&gt;
+          &lt;MfsFile&gt;*.sgm&lt;/MfsFile&gt;
+          &lt;MfsExpand&gt;tree&lt;/MfsExpand&gt;
+        &lt;/FileGroup&gt;
+      &lt;/FilterChain&gt;
+
+</PRE>
+
+<P>
+Once the FilterChain sections have been set up, the following
+command can be used to build the SGML regions (usually separately after <B>dbbuild</B>).
+For this example, assume the <I>meta_structure_file</I> generated by
+<B>mfsmeta</B> is called `data.str' and the `data.inp' contains the
+&lt;!DOCTYPE&gt; declaration for the SGML files in the database:
+<P>
+<PRE>
+
+  % sgmlrgn -v -m region -M data.str -D data.dd data.inp data.dd
+
+</PRE>
+
+<P>
+<B>sgmlrgn</B> will use the data.str to identify
+all the sgml format files and will build SGML regions on them.
+<P>
+<A NAME="lbAI">&nbsp;</A>
+<H3>Building Regions for Type 2 SGML Databases</H3>
+
+As with Type 1 SGML databases, the first step involves setting up
+the FilterChain sections of the Data Dictionary.  However, because the files
+conform to more than one DTD, they must be separated into <I>groups</I>,
+where all the files in a group conform to a particular DTD.  A
+FilterChain section is then set up for each group.
+<P>
+
+The DisplayFmt section of each FilterChain section is
+then set to contain two values, separated by a comma.  The first value
+is the keyword `sgml' and the second value is a short <I>group
+name</I> that you pick, which uniquely identifies the group.
+<P>
+For example, the following FilterChain sections might be
+appropriate a Type 2 SGML database that contains files from two DTD's
+(with group names, `manual' and `news').
+<P>
+<PRE>
+
+      &lt;FilterChain&gt;
+        &lt;SearchView&gt;meta&lt;/SearchView&gt;
+        &lt;DisplayView&gt;meta&lt;/DisplayView&gt;
+        &lt;RawView&gt;meta&lt;/RawView&gt;
+        &lt;DisplayFmt&gt;sgml,manual&lt;/DisplayFmt&gt;
+        &lt;FileGroup&gt;
+          &lt;MfsDir&gt;mandata&lt;/MfsDir&gt;
+          &lt;MfsFile&gt;*.sgm&lt;/MfsFile&gt;
+          &lt;MfsExpand&gt;tree&lt;/MfsExpand&gt;
+        &lt;/FileGroup&gt;
+      &lt;/FilterChain&gt;
+      &lt;FilterChain&gt;
+        &lt;SearchView&gt;meta&lt;/SearchView&gt;
+        &lt;DisplayView&gt;meta&lt;/DisplayView&gt;
+        &lt;RawView&gt;meta&lt;/RawView&gt;
+        &lt;DisplayFmt&gt;sgml,news&lt;/DisplayFmt&gt;
+        &lt;FileGroup&gt;
+          &lt;MfsDir&gt;newsdata&lt;/MfsDir&gt;
+          &lt;MfsFile&gt;*.sgm&lt;/MfsFile&gt;
+          &lt;MfsExpand&gt;tree&lt;/MfsExpand&gt;
+        &lt;/FileGroup&gt;
+      &lt;/FilterChain&gt;
+
+</PRE>
+
+<P>
+Once the FilterChain sections have been set up, the following
+commands can be used to build the SGML regions (each DTD in the
+database requires one pass with <B>sgmlrgn</B>).
+For this example, assume the <I>meta_structure_file</I> generated by
+<B>mfsmeta</B> is called data.str.  Assume that the file, `manual.inp'
+contains the &lt;!DOCTYPE&gt; declaration for the `manual' files.
+Finally, assume that the file, `news.inp'
+contains the &lt;!DOCTYPE&gt; declaration for the `news' files.
+<P>
+<PRE>
+
+  % sgmlrgn -v -m region -M data.str -G manual -D data.dd manual.inp data.dd
+  % sgmlrgn -v -m region -M data.str -G news -D data.dd news.inp data.dd
+
+</PRE>
+
+<P>
+Note that the `-G' option is used to specify which group to build
+the regions on in each pass.
+<P>
+<A NAME="lbAJ">&nbsp;</A>
+<H3>Building Regions for Type 3 SGML Databases</H3>
+
+As with Type 2 SGML databases, the first step involves setting up
+the FilterChain sections of the Data Dictionary.  Also, as in Type 2 SGML
+databases, the files must be separated into groups.  What is different
+in Type 3 databases is that the groups not only specifies files which
+use a particular DTD, but may also be further refined to specify files
+which contain text for a <I>specific element</I> of a DTD.
+<P>
+
+For example, assume the newspaper documents in the example above
+consisted of two elements, HEADLINE and TEXT.  Further,
+assume that text for all the HEADLINE parts were in files with
+the suffix, `.hl' and that the text for the TEXT parts were
+in files with the suffix, .txt'.  Then the following
+FilterChain sections could be used to define this database (which
+also includes the `manual' files in the other directory):
+<P>
+<PRE>
+
+      &lt;FilterChain&gt;
+        &lt;SearchView&gt;meta&lt;/SearchView&gt;
+        &lt;DisplayView&gt;meta&lt;/DisplayView&gt;
+        &lt;RawView&gt;meta&lt;/RawView&gt;
+        &lt;DisplayFmt&gt;sgml,manual&lt;/DisplayFmt&gt;
+        &lt;FileGroup&gt;
+          &lt;MfsDir&gt;mandata&lt;/MfsDir&gt;
+          &lt;MfsFile&gt;*.sgm&lt;/MfsFile&gt;
+          &lt;MfsExpand&gt;tree&lt;/MfsExpand&gt;
+        &lt;/FileGroup&gt;
+      &lt;/FilterChain&gt;
+      &lt;FilterChain&gt;
+        &lt;SearchView&gt;meta&lt;/SearchView&gt;
+        &lt;DisplayView&gt;meta&lt;/DisplayView&gt;
+        &lt;RawView&gt;meta&lt;/RawView&gt;
+        &lt;DisplayFmt&gt;sgml,newshl,HEADLINE&lt;/DisplayFmt&gt;
+        &lt;FileGroup&gt;
+          &lt;MfsDir&gt;newsdata&lt;/MfsDir&gt;
+          &lt;MfsFile&gt;*.hl&lt;/MfsFile&gt;
+          &lt;MfsExpand&gt;tree&lt;/MfsExpand&gt;
+        &lt;/FileGroup&gt;
+      &lt;/FilterChain&gt;
+      &lt;FilterChain&gt;
+        &lt;SearchView&gt;meta&lt;/SearchView&gt;
+        &lt;DisplayView&gt;meta&lt;/DisplayView&gt;
+        &lt;RawView&gt;meta&lt;/RawView&gt;
+        &lt;DisplayFmt&gt;sgml,newstxt,TEXT&lt;/DisplayFmt&gt;
+        &lt;FileGroup&gt;
+          &lt;MfsDir&gt;newsdata&lt;/MfsDir&gt;
+          &lt;MfsFile&gt;*.txt&lt;/MfsFile&gt;
+          &lt;MfsExpand&gt;tree&lt;/MfsExpand&gt;
+        &lt;/FileGroup&gt;
+      &lt;/FilterChain&gt;
+
+</PRE>
+
+<P>
+Note that a third attribute has been added to the DisplayFmt
+fields of the `news' files, which identifies the element that the text
+in those files corresponds to.  Also note that `HEADLINE' and
+`TEXT' groups have different group names (`newshl' and
+`newstxt').  Also note that there is no element attribute defined
+for the `manual' files because they are to be parsed using the
+entire `manual' DTD.
+<P>
+
+Once the FilterChain sections have been set up, the following
+commands can be used to build the SGML regions.
+For this example, assume the <I>meta_structure_file</I> generated by
+<B>mfsmeta</B> is called data.str.  Assume that the file, `manual.inp'
+contains the &lt;!DOCTYPE&gt; declaration for the `manual' files.
+Finally, assume that the file, `news.inp'
+contains the &lt;!DOCTYPE&gt; declaration for the `news' files.
+<P>
+<PRE>
+
+  % sgmlrgn -v -m region -M data.str -G manual -D data.dd manual.inp data.dd
+  % sgmlrgn -v -m region -M data.str -G newshl -D data.dd news.inp data.dd
+  % sgmlrgn -v -m region -M data.str -G newstxt -D data.dd news.inp data.dd
+
+</PRE>
+
+<P>
+Note that the `-G' option is used to specify which group to build
+the regions on in each pass.
+<P>
+<P>
+<A NAME="lbAK">&nbsp;</A>
+<H2>DESCRIPTIONS</H2>
+
+<A NAME="lbAL">&nbsp;</A>
+<H3>Entity Manager</H3>
+
+An external entity resides in one or more files.
+The entity manager component of <B>sgmlrgn</B>
+maps a sequence of files into an entity in three sequential stages:
+<DL COMPACT>
+<DT>1.<DD>
+each carriage return character is turned into a non-SGML character;
+<DT>2.<DD>
+each newline character is turned into a record end character,
+and at the same time
+a record start character is inserted at the beginning of each line;
+<DT>3.<DD>
+the files are concatenated.
+</DL>
+<P>
+
+A system identifier is
+interpreted as a list of filenames separated by colons.
+If no system identifier is supplied, then the entity manager will
+attempt to generate a filename using the public identifier.
+The searching of the related system filename associated with the public
+identifier is done by a table lookup.
+The table is named sgmlentity.map in the system.
+The sgmlentity.map file has two white-space delimited 
+fields per document type.  The first field is the system filename.
+The second field is the PUBLIC ID.
+The following are sample entries for document types in the sgmlentity
+file:
+<DL COMPACT><DT><DD>
+# comments
+<BR>
+
+filename_1  &quot;PUBLIC ID 1&quot;
+<BR>
+
+filename_2  &quot;PUBLIC ID 2&quot;
+<BR>
+
+<BR>&nbsp;&nbsp;....
+<BR>
+
+filename_N  &quot;PUBLIC ID N&quot;
+<BR>
+
+</DL>
+
+<P>
+
+<B>sgmlrgn</B> uses the following precedence order searching algorithm
+to find the PUBLIC ID:
+<DL COMPACT>
+<DT>1.<DD>
+the sgmlentity.map file in the local directory.
+<DT>2.<DD>
+the sgmlentity.map file pointed to by the SGMLREGION_PATH
+environment variable
+<DT>3.<DD>
+the system filename in the local directory.
+</DL>
+<A NAME="lbAM">&nbsp;</A>
+<H3>Example</H3>
+
+The <I>mode</I> examples that follow rely on three files: the document type
+definition, the document instance, and the input file.
+<P>
+The following is a sample document type definition called example.dtd.
+<DL COMPACT><DT><DD>
+&lt;!ENTITY % ISOlat1 PUBLIC
+<BR>
+
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&quot;ISO&nbsp;8879-1986//ENTITIES&nbsp;Added&nbsp;Latin&nbsp;1//EN&quot;&gt;
+<BR>
+
+%ISOlat1;
+<BR>
+
+&lt;!ELEMENT doc      - O  (intro, body, concl)&gt;
+<BR>
+
+&lt;!ELEMENT intro    - O  (#PCDATA)&gt;
+<BR>
+
+&lt;!ELEMENT body     - O  (p|#PCDATA)+&gt;
+<BR>
+
+&lt;!ELEMENT concl    - O  (#PCDATA)&gt;
+<BR>
+
+&lt;!ELEMENT p        - O  (#PCDATA)&gt;
+<BR>
+
+&lt;!ATTLIST p        type (center|left|right) left&gt;
+<BR>
+
+
+</DL>
+
+The following is an example SGML document instance called example.sgm:
+<DL COMPACT><DT><DD>
+&lt;!DOCTYPE doc SYSTEM &quot;example.dtd&quot;&gt;
+<BR>
+
+&lt;doc&gt;&lt;intro&gt;Introduction
+<BR>
+
+&lt;body&gt;&lt;p type=left&gt;Paragraph 1
+<BR>
+
+&lt;p type=center&gt;Paragraph 2
+<BR>
+
+&lt;concl&gt;Conclusion
+<BR>
+
+
+</DL>
+
+The PUBLIC entity &quot;ISO 8879-1986//ENTITIES Added Latin 1//EN&quot;
+will produce a table lookup in the entity map file sgmlentity.map
+(or in $(SGMLREGION_PATH)/sgmlentity.map).
+The following is an entry in the sgmlentity.map file:
+<DL COMPACT><DT><DD>
+<BR>&nbsp;&nbsp;....
+<BR>
+
+<BR>&nbsp;&nbsp;/usr/app/isolat1.gml&nbsp;&nbsp;&quot;ISO&nbsp;8879-1986//ENTITIES&nbsp;Added&nbsp;Latin&nbsp;1//EN&quot;
+<BR>
+
+<BR>&nbsp;&nbsp;....
+</DL>
+
+This particular ISOlat1 public entity will be mapped to the system id
+/usr/app/isolat1.gml.
+<P>
+
+The following is a simple input file:
+<DL COMPACT><DT><DD>
+&lt;!DOCTYPE doc SYSTEM &quot;example.dtd&quot;&gt;
+</DL>
+
+<A NAME="lbAN">&nbsp;</A>
+<H3>Example: region mode</H3>
+
+The following invokes <B>sgmlrgn</B> as a region file generator.
+<DL COMPACT><DT><DD>
+sgmlrgn -v -m region -D example.dd example.sgm
+</DL>
+
+This will generate a region file called example.rgn containing region
+pointers in the document instance called example.sgm.  The region names
+are the names of the entities defined in the DTD.  When <B>sgmlrgn</B> completes, the
+example.dd Data Dictionary will be updated.  The <B>-v</B> option causes the following
+messages to be displayed while <B>sgmlrgn</B> executes:
+<DL COMPACT><DT><DD>
+
+<BR>&nbsp;&nbsp;..&nbsp;building&nbsp;regions#(0)&nbsp;size(0K)&nbsp;<A HREF="http://localhost/cgi-bin/man/man2html?1s+time">time</A>(1s)
+<BR>
+
+<BR>&nbsp;&nbsp;total&nbsp;built&nbsp;regions#(14)&nbsp;size(0K)&nbsp;<A HREF="http://localhost/cgi-bin/man/man2html?1s+time">time</A>(1s)
+<BR>
+
+<BR>&nbsp;&nbsp;..&nbsp;sorting&nbsp;now
+<BR>
+
+<BR>&nbsp;&nbsp;..&nbsp;writing&nbsp;now
+<BR>
+
+
+</DL>
+
+The total number of regions is 14 and the total execution time is 1 second.
+The resulting regions can be used by <B><A HREF="http://localhost/cgi-bin/man/man2html?1+xpat">xpat</A></B>(1) and Latitude Query.
+See <B><A HREF="http://localhost/cgi-bin/man/man2html?5+regions">regions</A></B>(5) and <B><A HREF="http://localhost/cgi-bin/man/man2html?5+data_dict">data_dict</A></B>(5) for more details.
+<A NAME="lbAO">&nbsp;</A>
+<H3>Example: filter mode</H3>
+
+The filter mode can be invoked as follows:
+<DL COMPACT><DT><DD>
+
+sgmlrgn -m filter example.inp -
+
+</DL>
+
+With this command, <B>sgmlrgn</B> is invoked as a filter.
+The example.inp (the document type declaration)
+file is parsed and the filter is loaded with the DTD.
+<B>sgmlrgn</B> will expect the SGML text on standard input (-)
+and will produce a fully expanded instance of the input text on standard output.
+<A NAME="lbAP">&nbsp;</A>
+<H3>Example: check mode</H3>
+
+The following invokes <B>sgmlrgn</B> to check the validity of the SGML document instance:
+<DL COMPACT><DT><DD>
+<TT>sgmlrgn -m check example.sgm</TT>
+</DL>
+
+<B>sgmlrgn</B> will produce error messages for any syntax errors in the DTD or the
+document instance.  <B>sgmlrgn</B> will produce a summary line when it has finished
+parsing the document instance.  The following is an example of the summary
+information produced.
+<DL COMPACT><DT><DD>
+checking total size(94K) <A HREF="http://localhost/cgi-bin/man/man2html?1s+time">time</A>(1s)
+</DL>
+
+<B>sgmlrgn</B> took 1 second to validate the file (which is approximately 94 KB in length).
+<A NAME="lbAQ">&nbsp;</A>
+<H3>Example: dtd mode</H3>
+
+The following invokes <B>sgmlrgn</B> to expand the DTD.
+<DL COMPACT><DT><DD>
+sgmlrgn -m dtd example.sgm
+<BR>
+
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;or
+<BR>
+
+sgmlrgn -m dtd example.inp
+</DL>
+
+<P>
+
+The first form of the command retrieves the name of the DTD from the SGML
+document instance, whereas the second form retrieves the name of the DTD from
+the document type declaration file.
+Either of the above commands will generate the following output:
+<DL COMPACT><DT><DD>
+&lt;!ELEMENT BODY     - O  (P|#PCDATA)+&gt;
+<BR>
+
+&lt;!ELEMENT CONCL    - O  (#PCDATA)&gt;
+<BR>
+
+&lt;!ELEMENT DOC      - O  (INTRO,BODY,CONCL)&gt;
+<BR>
+
+&lt;!ELEMENT INTRO    - O  (#PCDATA)&gt;
+<BR>
+
+&lt;!ELEMENT P        - O  (#PCDATA)&gt;
+<BR>
+
+&lt;!ATTLIST P             TYPE         (CENTER|LEFT|RIGHT) LEFT&gt;
+
+</DL>
+
+All of the parameter entity references are expanded.
+The element names are sorted alphabetically and
+the element definitions are nicely printed in a structured format.
+
+<A NAME="lbAR">&nbsp;</A>
+<H3>Example: print mode</H3>
+
+
+The following command invokes <B>sgmlrgn</B> in <B>print</B> mode:
+<DL COMPACT><DT><DD>
+
+sgmlrgn -m print example.sgm
+</DL>
+
+
+It will generate the following output:
+<DL COMPACT><DT><DD>
+
+[STG DOC 36:40]--&gt;[&lt;doc&gt;]
+<BR>
+
+
+<BR>&nbsp;[STG&nbsp;INTRO&nbsp;41:47]--&gt;[&lt;intro&gt;]
+<BR>
+
+
+<BR>&nbsp;[ETG&nbsp;INTRO&nbsp;41:61]--&gt;[&lt;intro&gt;Introduction&nbsp;\n\]
+<BR>
+
+
+<BR>&nbsp;[STG&nbsp;BODY&nbsp;62:67]--&gt;[&lt;body&gt;]
+<BR>
+
+
+<BR>&nbsp;&nbsp;[ATT&nbsp;P
+<BR>
+
+
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;TYPE&nbsp;TOKEN&nbsp;76:79]--&gt;[left]
+<BR>
+
+
+<BR>&nbsp;&nbsp;[STG&nbsp;P&nbsp;68:80]--&gt;[&lt;p&nbsp;type=left&gt;]
+<BR>
+
+
+<BR>&nbsp;&nbsp;[ETG&nbsp;P&nbsp;68:92]--&gt;[&lt;p&nbsp;type=left&gt;Paragraph&nbsp;1\n\]
+<BR>
+
+
+<BR>&nbsp;&nbsp;[ATT&nbsp;P
+<BR>
+
+
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;TYPE&nbsp;TOKEN&nbsp;101:106]--&gt;[center]
+<BR>
+
+
+<BR>&nbsp;&nbsp;[STG&nbsp;P&nbsp;93:107]--&gt;[&lt;p&nbsp;type=center&gt;]
+<BR>
+
+
+<BR>&nbsp;&nbsp;[ETG&nbsp;P&nbsp;93:119]--&gt;[&lt;p&nbsp;type=center&gt;Paragraph&nbsp;2\n\]
+<BR>
+
+
+<BR>&nbsp;[ETG&nbsp;BODY&nbsp;62:119]--&gt;[&lt;body&gt;&lt;p&nbsp;type=l....er&gt;Paragraph&nbsp;2\n\]
+<BR>
+
+
+<BR>&nbsp;[STG&nbsp;CONCL&nbsp;120:126]--&gt;[&lt;concl&gt;]
+<BR>
+
+
+<BR>&nbsp;[ETG&nbsp;CONCL&nbsp;120:120]
+<BR>
+
+
+[ETG DOC 36:120]
+<BR>
+
+
+
+</DL>
+
+
+The number before the colon is the starting position; the number after the
+colon is the ending position.
+The STG stands for start tag region, ETG stands for
+the tag's region and ATT stands for the attribute regions within a tag.
+For each nested level of region, the printing is indented
+by a corresponding number of blank characters.
+The end of line character is represented by \n\.
+If the printed region is too long, it will be shortened and .... will be
+substituted.  For example:
+<DL COMPACT><DT><DD>
+
+[ETG BODY 62:119]--&gt;[&lt;body&gt;&lt;p type=l....er&gt;Paragraph 2]
+</DL>
+
+
+This can be used to check the region generation and also allows structure of
+the document instance to be viewed.
+
+<A NAME="lbAS">&nbsp;</A>
+<H3>Example: root mode</H3>
+
+The following invokes the <B>root</B> mode of <B>sgmlrgn</B>:
+<DL COMPACT><DT><DD>
+sgmlrgn -m root example.sgm
+<BR>
+
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;or
+<BR>
+
+sgmlrgn -m root example.inp
+</DL>
+
+The first form of the command retrieves the name of the DTD from the SGML
+document instance, whereas the second form retrieves the name of the DTD from
+the document type declaration file.  The DTD is then parsed to determine the
+root element.
+Either of the above commands will generate the following output:
+<DL COMPACT><DT><DD>
+{DefaultRegion DOC}
+
+</DL>
+
+The output is suitable as part of a <B><A HREF="http://localhost/cgi-bin/man/man2html?1+xpat">xpat</A></B>(1)
+initialization file to set the default region.
+<A NAME="lbAT">&nbsp;</A>
+<H3>Example: elist mode</H3>
+
+The following invokes the element list generation mode:
+<DL COMPACT><DT><DD>
+sgmlrgn -m elist example.sgm
+</DL>
+
+This will list all the element names in alphabetical order:
+<DL COMPACT><DT><DD>
+BODY
+<BR>
+
+CONCL
+<BR>
+
+DOC
+<BR>
+
+INTRO
+<BR>
+
+P
+<BR>
+
+
+</DL>
+
+<A NAME="lbAU">&nbsp;</A>
+<H3>Example: normalize mode</H3>
+
+The following invokes <B>sgmlrgn</B>'s document instance normalization mode:
+<DL COMPACT><DT><DD>
+sgmlrgn -m normalize example.sgm
+</DL>
+
+The original minimized document instance is transformed to a fully expanded
+document instance:
+<DL COMPACT><DT><DD>
+&lt;DOC&gt;
+<BR>
+
+&lt;INTRO&gt;Introduction &lt;/INTRO&gt;
+<BR>
+
+&lt;BODY&gt;
+<BR>
+
+&lt;P TYPE=LEFT&gt;Paragraph 1&lt;/P&gt;
+<BR>
+
+&lt;P TYPE=CENTER&gt;Paragraph 2&lt;/P&gt;&lt;/BODY&gt;
+<BR>
+
+&lt;CONCL&gt;Conclusion&lt;/CONCL&gt;&lt;/DOC&gt;
+<BR>
+
+
+</DL>
+
+
+<A NAME="lbAV">&nbsp;</A>
+<H3>Example: test mode</H3>
+
+
+The <B>test</B> mode is used to generate a test document instance and is
+invoked by:
+<DL COMPACT><DT><DD>
+
+sgmlrgn -m test example.sgm
+<BR>
+
+
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;or
+<BR>
+
+
+sgmlrgn -m test example.inp
+</DL>
+
+
+The following is fully validated sample output generated by <B>sgmlrgn</B>:
+<DL COMPACT><DT><DD>
+
+&lt;DOC&gt;&lt;INTRO&gt;&lt;/INTRO&gt;&lt;BODY&gt;cb b
+<BR>
+
+
+&lt;P TYPE=CENTER&gt;bca bccabcab&lt;/P&gt;&lt;/BODY&gt;&lt;CONCL&gt;&lt;/DOC&gt;
+<BR>
+
+
+
+</DL>
+
+
+This output document instance can be used as a test input document to <B>sgmlrgn</B>. 
+If the <I>generate_file</I> is specified, the generation parameters will be
+taken from <I>generate_file</I>.
+Otherwise, the default generation parameters will be used.
+<A NAME="lbAW">&nbsp;</A>
+<H3>Example: gentest mode</H3>
+
+
+Invoke the generation of a sample set of test-generation parameters by:
+<DL COMPACT><DT><DD>
+
+sgmlrgn -m gentest example.sgm
+<BR>
+
+
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;or
+<BR>
+
+
+sgmlrgn -m gentest example.inp
+</DL>
+
+
+The parameters are described in a tagged format and their meanings are:
+<P>
+
+<TABLE>
+<TR VALIGN=top><TD><B>Tag Name</B></TD><TD><B>Description</B></TD><TD><B>Default</B><BR></TD></TR>
+<TR VALIGN=top><TD><I>&lt;OmitStag&gt;</I></TD><TD>allow omit start tag</TD><TD>0<BR></TD></TR>
+<TR VALIGN=top><TD><I>&lt;OmitStagProb&gt;</I></TD><TD>allow omit start tag probability</TD><TD>0.3<BR></TD></TR>
+<TR VALIGN=top><TD><I>&lt;OmitEtag&gt;</I></TD><TD>allow omit end tag</TD><TD>1<BR></TD></TR>
+<TR VALIGN=top><TD><I>&lt;OmitEtagProb&gt;</I></TD><TD>allow omit end tag probability</TD><TD>0.3<BR></TD></TR>
+<TR VALIGN=top><TD><I>&lt;NetTag&gt;</I></TD><TD>allow NET tag</TD><TD>1<BR></TD></TR>
+<TR VALIGN=top><TD><I>&lt;NetTagProb&gt;</I></TD><TD>allow NET tag probability</TD><TD>0.1<BR></TD></TR>
+<TR VALIGN=top><TD><I>&lt;UncloseTag&gt;</I></TD><TD>allow unclosed tag</TD><TD>1<BR></TD></TR>
+<TR VALIGN=top><TD><I>&lt;UncloseProb&gt;</I></TD><TD>allow unclosed tag probability</TD><TD>0.1<BR></TD></TR>
+<TR VALIGN=top><TD><I>&lt;Orep&gt;</I></TD><TD>range of * element</TD><TD>2<BR></TD></TR>
+<TR VALIGN=top><TD><I>&lt;Rep&gt;</I></TD><TD>range of + element</TD><TD>3<BR></TD></TR>
+<TR VALIGN=top><TD><I>&lt;OptProb&gt;</I></TD><TD>? element probability</TD><TD>0.3<BR></TD></TR>
+<TR VALIGN=top><TD><I>&lt;GrpOrep&gt;</I></TD><TD>range of * group</TD><TD>2<BR></TD></TR>
+<TR VALIGN=top><TD><I>&lt;GrpRep&gt;</I></TD><TD>range of + group</TD><TD>3<BR></TD></TR>
+<TR VALIGN=top><TD><I>&lt;GrpOptProb&gt;</I></TD><TD>? group probability</TD><TD>0.3<BR></TD></TR>
+<TR VALIGN=top><TD><I>&lt;DataRange&gt;</I></TD><TD>range of # of data chars</TD><TD>12<BR></TD></TR>
+<TR VALIGN=top><TD><I>&lt;DataCharRange&gt;</I></TD><TD>range of data used chars</TD><TD>3<BR></TD></TR>
+<TR VALIGN=top><TD><I>&lt;DataCharStart&gt;</I></TD><TD>start data used char</TD><TD>a<BR></TD></TR>
+<TR VALIGN=top><TD><I>&lt;DataEoln&gt;</I></TD><TD>allow end of line in data</TD><TD>1<BR></TD></TR>
+<TR VALIGN=top><TD><I>&lt;DataEolnProb&gt;</I></TD><TD>allow eoln in data probability</TD><TD>0.3<BR></TD></TR>
+<TR VALIGN=top><TD><I>&lt;StagEoln&gt;</I></TD><TD>allow end of line in start tag</TD><TD>1<BR></TD></TR>
+<TR VALIGN=top><TD><I>&lt;StagEolnProb&gt;</I></TD><TD>allow eoln in start tag probability</TD><TD>0.3<BR></TD></TR>
+<TR VALIGN=top><TD><I>&lt;AttRange&gt;</I></TD><TD>range of # of char-attrib. chars</TD><TD>8<BR></TD></TR>
+<TR VALIGN=top><TD><I>&lt;AttCharRange&gt;</I></TD><TD>range of char-attrib. used chars</TD><TD>2<BR></TD></TR>
+<TR VALIGN=top><TD><I>&lt;AttCharStart&gt;</I></TD><TD>start char-attrib. used char</TD><TD>x<BR></TD></TR>
+<TR VALIGN=top><TD><I>&lt;AttNumRange&gt;</I></TD><TD>range of # of number-attrib. chars</TD><TD>8<BR></TD></TR>
+<TR VALIGN=top><TD><I>&lt;AttNumCharRange&gt;</I></TD><TD>range of number-attrib. used chars</TD><TD>2<BR></TD></TR>
+<TR VALIGN=top><TD><I>&lt;AttNumCharStart&gt;</I></TD><TD>start number-attrib. used char</TD><TD>0<BR></TD></TR>
+<TR VALIGN=top><TD><I>&lt;IDVal&gt;</I></TD><TD>start ID number</TD><TD>0<BR></TD></TR>
+<TR VALIGN=top><TD><I>&lt;OpenElement&gt;</I></TD><TD>not used</TD><TD>0<BR></TD></TR>
+</TABLE>
+
+
+<P>
+
+The global default values, apply to any element,
+are enclosed by pairs of &lt;Regions&gt; tags.
+<P>
+
+
+Within the &lt;Regions&gt; description,
+each element can override values in the global set of parameters by:
+<DL COMPACT><DT><DD>
+
+&lt;Region&gt;&lt;Name&gt;BODY&lt;/Name&gt;
+<BR>
+
+
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;Orep&gt;10&lt;/Orep&gt;
+<BR>
+
+
+&lt;/Region&gt;
+<BR>
+
+
+
+</DL>
+
+
+In this case, the BODY element will have
+the range of 10 if it is optional and repeatable in a definition.
+Otherwise, BODY element will take the global values.
+<P>
+
+
+This set of test-generation parameters can be stored in a <I>generate_file</I>
+which can be used in the test generation mode, <B>-m test</B>.
+
+<P>
+<A NAME="lbAX">&nbsp;</A>
+<H3>System Declaration</H3>
+
+The system declaration for
+<B>sgmlrgn</B> is as follows:
+<P>
+
+
+<TABLE>
+<TR VALIGN=top><TD ALIGN=center COLSPAN=9>SYSTEM &quot;ISO 8879:1986&quot;&nbsp;<BR></TD></TR>
+<TR VALIGN=top><TD ALIGN=center COLSPAN=9>CHARSET<BR></TD></TR>
+<TR VALIGN=top><TD>BASESET</TD><TD COLSPAN=8>&quot;ISO 646-1983//CHARSET<BR></TD></TR>
+<TR VALIGN=top><TD></TD><TD COLSPAN=8>International Reference Version (IRV)//ESC 2/5 4/0&quot;<BR></TD></TR>
+<TR VALIGN=top><TD>DESCSET</TD><TD COLSPAN=8>0&nbsp;128&nbsp;0<BR></TD></TR>
+<TR VALIGN=top><TD>CAPACITY</TD><TD>PUBLIC</TD><TD COLSPAN=7>&quot;ISO 8879:1986//CAPACITY Reference//EN&quot;<BR></TD></TR>
+<TR VALIGN=top><TD ALIGN=center COLSPAN=9>FEATURES<BR></TD></TR>
+<TR VALIGN=top><TD>MINIMIZE</TD><TD>DATATAG</TD><TD>NO</TD><TD>OMITTAG</TD><TD>YES</TD><TD>RANK</TD><TD>NO</TD><TD>SHORTTAG</TD><TD>YES<BR></TD></TR>
+<TR VALIGN=top><TD>LINK</TD><TD>SIMPLE</TD><TD>NO</TD><TD>IMPLICIT</TD><TD>NO</TD><TD>EXPLICIT</TD><TD>NO</TD><TD></TD><TD><BR></TD></TR>
+<TR VALIGN=top><TD>OTHER</TD><TD>CONCUR</TD><TD>NO</TD><TD>SUBDOC</TD><TD>YES 1</TD><TD>FORMAL</TD><TD>YES</TD><TD></TD><TD><BR></TD></TR>
+<TR VALIGN=top><TD>SCOPE</TD><TD COLSPAN=8>DOCUMENT<BR></TD></TR>
+<TR VALIGN=top><TD>SYNTAX</TD><TD>PUBLIC</TD><TD COLSPAN=7>&quot;ISO 8879:1986//SYNTAX Reference//EN&quot;<BR></TD></TR>
+<TR VALIGN=top><TD>SYNTAX</TD><TD>PUBLIC</TD><TD COLSPAN=7>&quot;ISO 8879:1986//SYNTAX Core//EN&quot;<BR></TD></TR>
+<TR VALIGN=top><TD ALIGN=center COLSPAN=9>VALIDATE<BR></TD></TR>
+<TR VALIGN=top><TD></TD><TD>GENERAL</TD><TD>YES</TD><TD>MODEL</TD><TD>YES</TD><TD>EXCLUDE</TD><TD>YES</TD><TD>CAPACITY</TD><TD>YES<BR></TD></TR>
+<TR VALIGN=top><TD></TD><TD>NONSGML</TD><TD>YES</TD><TD>SGML</TD><TD>YES</TD><TD>FORMAL</TD><TD>YES</TD><TD></TD><TD><BR></TD></TR>
+<TR VALIGN=top><TD ALIGN=center COLSPAN=9>SDIF<BR></TD></TR>
+<TR VALIGN=top><TD></TD><TD>PACK</TD><TD>NO</TD><TD>UNPACK</TD><TD>NO</TD><TD></TD><TD></TD><TD></TD><TD><BR></TD></TR>
+</TABLE>
+
+
+<P>
+
+The memory usage of
+<B>sgmlrgn</B> is not a function of the capacity points used by a document;
+however,
+<B>sgmlrgn</B> can handle capacities significantly greater than the reference capacity set.
+<P>
+
+In some environments,
+higher values may be supported for the <FONT SIZE="-1">SUBDOC</FONT> parameter.
+<P>
+
+Documents that do not use optional features are also supported.
+For example, if
+<B>FORMAL&nbsp;NO</B>
+
+is specified in the SGML declaration,
+public identifiers will not be required to be valid formal public identifiers.
+<P>
+
+Certain parts of the concrete syntax may be changed:
+<DL COMPACT><DT><DD>
+<P>
+
+The shunned character numbers can be changed.
+<P>
+
+Eight bit characters can be assigned to
+<FONT SIZE="-1">LCNMSTRT</FONT>, <FONT SIZE="-1">UCNMSTRT</FONT>, <FONT SIZE="-1">LCNMCHAR</FONT> and <FONT SIZE="-1">UCNMCHAR</FONT>.
+Declaring this requires that the syntax reference character set be declared
+like this:
+<DL COMPACT><DT><DD>
+
+<TABLE>
+<TR VALIGN=top><TD>BASESET</TD><TD>&quot;ISO Registration Number 100//CHARSET<BR></TD></TR>
+<TR VALIGN=top><TD></TD><TD>ECMA-94 Right Part of Latin Alphabet Nr. 1//ESC 2/13 4/1&quot;<BR></TD></TR>
+<TR VALIGN=top><TD>DESCSET</TD><TD>0&nbsp;256&nbsp;0<BR></TD></TR>
+</TABLE>
+
+</DL>
+
+<P>
+
+Uppercase substitution can be performed or not performed
+both for entity names and for other names.
+<P>
+
+Either short reference delimiters assigned by the reference delimiter set
+or no short reference delimiters are supported.
+<P>
+
+The reserved names can be changed.
+<P>
+
+The quantity set can be increased within certain limits
+subject to there being sufficient memory available.
+The upper limit on <FONT SIZE="-1">NAMELEN</FONT> is 239.
+The upper limits on
+<FONT SIZE="-1">ATTCNT</FONT>, <FONT SIZE="-1">ATTSPLEN</FONT>, <FONT SIZE="-1">BSEQLEN</FONT>, <FONT SIZE="-1">ENTLVL</FONT>,
+<FONT SIZE="-1">LITLEN</FONT>, <FONT SIZE="-1">PILEN</FONT>, <FONT SIZE="-1">TAGLEN</FONT>, and <FONT SIZE="-1">TAGLVL</FONT>
+are more than thirty times greater than the reference limits.
+The upper limit on
+<FONT SIZE="-1">GRPCNT</FONT>, <FONT SIZE="-1">GRPGTCNT</FONT>, and <FONT SIZE="-1">GRPLVL</FONT> is 253.
+<FONT SIZE="-1">NORMSEP</FONT>
+cannot be changed.
+<FONT SIZE="-1">DTAGLEN</FONT>
+are
+<FONT SIZE="-1">DTEMPLEN</FONT>
+irrelevant since
+<B>sgmlrgn</B> does not support the
+<FONT SIZE="-1">DATATAG</FONT>
+feature.
+</DL>
+
+<P>
+<A NAME="lbAY">&nbsp;</A>
+<H3>SGML Declaration</H3>
+
+The SGML declaration may be omitted.  If the SGML declaration is omitted,
+the following declaration will be implied:
+<TABLE>
+<TR VALIGN=top><TD ALIGN=center COLSPAN=9>&lt;!SGML &quot;ISO 8879:1986&quot;&nbsp;<BR></TD></TR>
+<TR VALIGN=top><TD ALIGN=center COLSPAN=9>CHARSET<BR></TD></TR>
+<TR VALIGN=top><TD>BASESET</TD><TD COLSPAN=8>&quot;ISO 646-1983//CHARSET<BR></TD></TR>
+<TR VALIGN=top><TD></TD><TD COLSPAN=8>International Reference Version (IRV)//ESC 2/5 4/0&quot;<BR></TD></TR>
+<TR VALIGN=top><TD>DESCSET</TD><TD COLSPAN=8>&nbsp;&nbsp;0&nbsp;&nbsp;9&nbsp;UNUSED<BR></TD></TR>
+<TR VALIGN=top><TD></TD><TD COLSPAN=8>&nbsp;&nbsp;9&nbsp;&nbsp;2&nbsp;&nbsp;9<BR></TD></TR>
+<TR VALIGN=top><TD></TD><TD COLSPAN=8>&nbsp;11&nbsp;&nbsp;2&nbsp;UNUSED<BR></TD></TR>
+<TR VALIGN=top><TD></TD><TD COLSPAN=8>&nbsp;13&nbsp;&nbsp;1&nbsp;13<BR></TD></TR>
+<TR VALIGN=top><TD></TD><TD COLSPAN=8>&nbsp;14&nbsp;18&nbsp;UNUSED<BR></TD></TR>
+<TR VALIGN=top><TD></TD><TD COLSPAN=8>&nbsp;32&nbsp;95&nbsp;32<BR></TD></TR>
+<TR VALIGN=top><TD></TD><TD COLSPAN=8>127&nbsp;&nbsp;1&nbsp;UNUSED<BR></TD></TR>
+<TR VALIGN=top><TD>CAPACITY</TD><TD COLSPAN=8>SGMLREF<BR></TD></TR>
+<TR VALIGN=top><TD></TD><TD>TOTALCAP</TD><TD COLSPAN=7>1000000<BR></TD></TR>
+<TR VALIGN=top><TD></TD><TD>ENTCAP</TD><TD COLSPAN=7>1000000<BR></TD></TR>
+<TR VALIGN=top><TD></TD><TD>ENTCHCAP</TD><TD COLSPAN=7>1000000<BR></TD></TR>
+<TR VALIGN=top><TD></TD><TD>ELEMCAP</TD><TD COLSPAN=7>1000000<BR></TD></TR>
+<TR VALIGN=top><TD></TD><TD>GRPCAP</TD><TD COLSPAN=7>1000000<BR></TD></TR>
+<TR VALIGN=top><TD></TD><TD>EXGRPCAP</TD><TD COLSPAN=7>1000000<BR></TD></TR>
+<TR VALIGN=top><TD></TD><TD>EXNMCAP</TD><TD COLSPAN=7>1000000<BR></TD></TR>
+<TR VALIGN=top><TD></TD><TD>ATTCAP</TD><TD COLSPAN=7>1000000<BR></TD></TR>
+<TR VALIGN=top><TD></TD><TD>ATTCHCAP</TD><TD COLSPAN=7>1000000<BR></TD></TR>
+<TR VALIGN=top><TD></TD><TD>AVGRPCAP</TD><TD COLSPAN=7>1000000<BR></TD></TR>
+<TR VALIGN=top><TD></TD><TD>NOTCAP</TD><TD COLSPAN=7>1000000<BR></TD></TR>
+<TR VALIGN=top><TD></TD><TD>NOTCHCAP</TD><TD COLSPAN=7>1000000<BR></TD></TR>
+<TR VALIGN=top><TD></TD><TD>IDCAP</TD><TD COLSPAN=7>1000000<BR></TD></TR>
+<TR VALIGN=top><TD></TD><TD>IDREFCAP</TD><TD COLSPAN=7>1000000<BR></TD></TR>
+<TR VALIGN=top><TD></TD><TD>MAPCAP</TD><TD COLSPAN=7>1000000<BR></TD></TR>
+<TR VALIGN=top><TD></TD><TD>LKSETCAP</TD><TD COLSPAN=7>1000000<BR></TD></TR>
+<TR VALIGN=top><TD></TD><TD>LKNMCAP</TD><TD COLSPAN=7>1000000<BR></TD></TR>
+<TR VALIGN=top><TD>SCOPE</TD><TD COLSPAN=8>DOCUMENT<BR></TD></TR>
+<TR VALIGN=top><TD>SYNTAX</TD><TD>PUBLIC</TD><TD COLSPAN=7>&quot;ISO 8879:1986//SYNTAX Reference//EN&quot;<BR></TD></TR>
+<TR VALIGN=top><TD>QUANTITY</TD><TD COLSPAN=8>SGMLREF<BR></TD></TR>
+<TR VALIGN=top><TD></TD><TD>ATTCNT</TD><TD COLSPAN=7>100<BR></TD></TR>
+<TR VALIGN=top><TD></TD><TD>ATTSPLEN</TD><TD COLSPAN=7>960<BR></TD></TR>
+<TR VALIGN=top><TD></TD><TD>BSEQLEN</TD><TD COLSPAN=7>960<BR></TD></TR>
+<TR VALIGN=top><TD></TD><TD>DTAGLEN</TD><TD COLSPAN=7>32<BR></TD></TR>
+<TR VALIGN=top><TD></TD><TD>DTEMPLEN</TD><TD COLSPAN=7>32<BR></TD></TR>
+<TR VALIGN=top><TD></TD><TD>ENTLVL</TD><TD COLSPAN=7>32<BR></TD></TR>
+<TR VALIGN=top><TD></TD><TD>GRPCNT</TD><TD COLSPAN=7>100<BR></TD></TR>
+<TR VALIGN=top><TD></TD><TD>GRPGTCNT</TD><TD COLSPAN=7>96<BR></TD></TR>
+<TR VALIGN=top><TD></TD><TD>GRPLVL</TD><TD COLSPAN=7>32<BR></TD></TR>
+<TR VALIGN=top><TD></TD><TD>LITLEN</TD><TD COLSPAN=7>1024<BR></TD></TR>
+<TR VALIGN=top><TD></TD><TD>NAMELEN</TD><TD COLSPAN=7>80<BR></TD></TR>
+<TR VALIGN=top><TD></TD><TD>NORMSEP</TD><TD COLSPAN=7>2<BR></TD></TR>
+<TR VALIGN=top><TD></TD><TD>PILEN</TD><TD COLSPAN=7>1024<BR></TD></TR>
+<TR VALIGN=top><TD></TD><TD>TAGLEN</TD><TD COLSPAN=7>960<BR></TD></TR>
+<TR VALIGN=top><TD></TD><TD>TAGLVL</TD><TD COLSPAN=7>1000<BR></TD></TR>
+<TR VALIGN=top><TD ALIGN=center COLSPAN=9>FEATURES<BR></TD></TR>
+<TR VALIGN=top><TD>MINIMIZE</TD><TD>DATATAG</TD><TD>NO</TD><TD>OMITTAG</TD><TD>YES</TD><TD>RANK</TD><TD>NO</TD><TD>SHORTTAG</TD><TD>YES<BR></TD></TR>
+<TR VALIGN=top><TD>LINK</TD><TD>SIMPLE</TD><TD>NO</TD><TD>IMPLICIT</TD><TD>NO</TD><TD>EXPLICIT</TD><TD>NO</TD><TD></TD><TD><BR></TD></TR>
+<TR VALIGN=top><TD>OTHER</TD><TD>CONCUR</TD><TD>NO</TD><TD>SUBDOC</TD><TD>YES 99999</TD><TD>FORMAL</TD><TD>YES</TD><TD></TD><TD><BR></TD></TR>
+<TR VALIGN=top><TD ALIGN=center COLSPAN=9>APPINFO NONE&gt;<BR></TD></TR>
+</TABLE>
+
+with the exception that characters 128 through 254 will be assigned to
+<FONT SIZE="-1">DATACHAR</FONT>.
+When exporting documents that use characters in this range,
+an accurate description of the upper half of the document character set
+should be added to this declaration.
+For ISO Latin-1, an appropriate description would be:
+<BR>
+
+
+<TABLE>
+<TR VALIGN=top><TD>BASESET</TD><TD>&quot;ISO Registration Number 100//CHARSET<BR></TD></TR>
+<TR VALIGN=top><TD></TD><TD>ECMA-94 Right Part of Latin Alphabet Nr. 1//ESC 2/13 4/1&quot;<BR></TD></TR>
+<TR VALIGN=top><TD>DESCSET</TD><TD>128&nbsp;32&nbsp;UNUSED<BR></TD></TR>
+<TR VALIGN=top><TD></TD><TD>160&nbsp;95&nbsp;32<BR></TD></TR>
+<TR VALIGN=top><TD></TD><TD>255&nbsp;&nbsp;1&nbsp;UNUSED<BR></TD></TR>
+</TABLE>
+
+<P>
+The reference capacity set is upgraded to a 1 MB limit and the reference
+quantity set is upgraded to a bigger limit.
+<A NAME="lbAZ">&nbsp;</A>
+<H2>SEE ALSO</H2>
+
+<B><A HREF="http://localhost/cgi-bin/man/man2html?1+xpat">xpat</A></B>(1), <B><A HREF="http://localhost/cgi-bin/man/man2html?1+xpatrgn">xpatrgn</A></B>(1), <B><A HREF="http://localhost/cgi-bin/man/man2html?1+multirgn">multirgn</A></B>(1), <B><A HREF="http://localhost/cgi-bin/man/man2html?1+mfsmeta">mfsmeta</A></B>(1), <B><A HREF="http://localhost/cgi-bin/man/man2html?5+regions">regions</A></B>(5), <B><A HREF="http://localhost/cgi-bin/man/man2html?5+data_dict">data_dict</A></B>(5) <B><A HREF="http://localhost/cgi-bin/man/man2html?5+mfs">mfs</A></B>(5)
+<P>
+<I>The SGML Handbook</I>, Charles F. Goldfarb
+<P>
+<I></I><FONT SIZE="-1"><I>ISO</I></FONT><I> 8879 (Standard Generalized Markup Language)</I>,
+International Organization for Standardization
+<P>
+<I>CAN/CSA-Z243.210-89 (ISO 8879, 9069)</I>, Canadian Standard Association
+<A NAME="lbBA">&nbsp;</A>
+<H2>ORIGIN</H2>
+
+<FONT SIZE="-1">ARCSGML</FONT> was written by Charles F. Goldfarb.
+<P>
+<B>Sgmls</B> was derived from <FONT SIZE="-1">ARCSGML</FONT> by James Clark.
+<P>
+<B>sgmlrgn</B> was derived from <B>Sgmls</B>.
+<P>
+<P>
+
+<HR>
+<A NAME="index">&nbsp;</A><H2>Index</H2>
+<DL>
+<DT><A HREF="#lbAB">NAME</A><DD>
+<DT><A HREF="#lbAC">SYNOPSIS</A><DD>
+<DT><A HREF="#lbAD">DESCRIPTION</A><DD>
+<DT><A HREF="#lbAE">OPTIONS</A><DD>
+<DT><A HREF="#lbAF">MFS DATABASE OPTIONS</A><DD>
+<DL>
+<DT><A HREF="#lbAG">Background</A><DD>
+<DT><A HREF="#lbAH">Building Regions for Type 1 SGML Databases</A><DD>
+<DT><A HREF="#lbAI">Building Regions for Type 2 SGML Databases</A><DD>
+<DT><A HREF="#lbAJ">Building Regions for Type 3 SGML Databases</A><DD>
+</DL>
+<DT><A HREF="#lbAK">DESCRIPTIONS</A><DD>
+<DL>
+<DT><A HREF="#lbAL">Entity Manager</A><DD>
+<DT><A HREF="#lbAM">Example</A><DD>
+<DT><A HREF="#lbAN">Example: region mode</A><DD>
+<DT><A HREF="#lbAO">Example: filter mode</A><DD>
+<DT><A HREF="#lbAP">Example: check mode</A><DD>
+<DT><A HREF="#lbAQ">Example: dtd mode</A><DD>
+<DT><A HREF="#lbAR">Example: print mode</A><DD>
+<DT><A HREF="#lbAS">Example: root mode</A><DD>
+<DT><A HREF="#lbAT">Example: elist mode</A><DD>
+<DT><A HREF="#lbAU">Example: normalize mode</A><DD>
+<DT><A HREF="#lbAV">Example: test mode</A><DD>
+<DT><A HREF="#lbAW">Example: gentest mode</A><DD>
+<DT><A HREF="#lbAX">System Declaration</A><DD>
+<DT><A HREF="#lbAY">SGML Declaration</A><DD>
+</DL>
+<DT><A HREF="#lbAZ">SEE ALSO</A><DD>
+<DT><A HREF="#lbBA">ORIGIN</A><DD>
+</DL>
+<HR>
+This document was created by
+<A HREF="http://localhost/cgi-bin/man/man2html">man2html</A>,
+using the manual pages.<BR>
+Time: 18:03:38 GMT, March 26, 2001
+</BODY>
+</HTML>

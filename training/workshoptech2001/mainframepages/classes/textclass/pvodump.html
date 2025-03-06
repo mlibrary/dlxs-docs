@@ -1,0 +1,142 @@
+<HTML>
+<HEAD>
+<TITLE>Typical OCR/SGML File</TITLE>
+<META http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+</HEAD>
+
+<BODY bgcolor="#FFFFFF" text="#000000">
+<P> <FONT face="Arial, Helvetica, sans-serif">Following is a perl debugger
+dump of a PageView object which encapsulates the <A href="pageviewdatdump.html" target="extras">pageview.dat</A> 
+  file.</FONT></P>
+<PRE>
+
+  DB&lt;3&gt; x $pvo
+0  PageView=HASH(0x45da50)
+   'defaultseq' =&gt; 1
+   'defaultsize' =&gt; 's'
+   'defaultview' =&gt; 'image'
+   'featuretable' =&gt; HASH(0x96cb4c)
+      '1stpg' =&gt; '00000001.tif'
+   'fullobjdir' =&gt; '/l1/obj/a/a/s/aas5580.0001.001/'
+   'lastpageseq' =&gt; 00000198
+   'mode' =&gt; 'remote'
+   'pagefeaturetypes' =&gt; HASH(0x967394)
+      '1stpg' =&gt; 'First Page'
+      'ADV' =&gt; 'Advertisement'
+      'BIB' =&gt; 'Bibliography'
+      'BLP' =&gt; 'Blank Pages'
+      'CTP' =&gt; 'Cover Title Page'
+      'ERR' =&gt; 'Errata'
+      'IND' =&gt; 'Comprehensive Index'
+      'LOI' =&gt; 'List of Illustrations'
+      'LOT' =&gt; 'List of Tables'
+      'PNI' =&gt; 'Author or Name Index'
+      'REF' =&gt; 'References'
+      'SPI' =&gt; 'Special Index'
+      'SUI' =&gt; 'Subject Index'
+      'TOC' =&gt; 'Table of Contents'
+      'TPG' =&gt; 'Title Page'
+      'VES' =&gt; 'Volume End Sheets'
+      'VLI' =&gt; 'Volume List of Illus'
+      'VOI' =&gt; 'Volume Index'
+      'VTP' =&gt; 'Volume Title Page'
+      'VTV' =&gt; 'Volume Title Page Verso'
+   'pageinfo' =&gt; HASH(0x96cb28)
+      00000001 =&gt; HASH(0xa36cb0)
+         'confid' =&gt; 100
+         'feature' =&gt; 'UNS'
+         'filename' =&gt; '00000001.tif'
+         'pagenum' =&gt; 00000000
+         'seq' =&gt; 00000001
+      00000002 =&gt; HASH(0xb3f630)
+         'confid' =&gt; 100
+         'feature' =&gt; 'UNS'
+         'filename' =&gt; '00000002.tif'
+         'pagenum' =&gt; 00000000
+         'seq' =&gt; 00000002
+      00000003 =&gt; HASH(0xb59d58)
+         'confid' =&gt; 100
+         'feature' =&gt; 'UNS'
+         'filename' =&gt; '00000003.tif'
+         'pagenum' =&gt; 00000000
+         'seq' =&gt; 00000003
+      00000004 =&gt; HASH(0xb59dd0)
+         'confid' =&gt; 100
+         'feature' =&gt; 'UNS'
+         'filename' =&gt; '00000004.tif'
+         'pagenum' =&gt; 00000000
+         'seq' =&gt; 00000004
+      00000005 =&gt; HASH(0xb59e48)
+         'confid' =&gt; 100
+         'feature' =&gt; 'UNS'
+         'filename' =&gt; '00000005.tif'
+         'pagenum' =&gt; 00000001
+         'seq' =&gt; 00000005
+      00000006 =&gt; HASH(0xb59e9c)
+         'confid' =&gt; 100
+         'feature' =&gt; 'FRP'
+         'filename' =&gt; '00000006.tif'
+         'pagenum' =&gt; 00000002
+         'seq' =&gt; 00000006
+      00000007 =&gt; HASH(0xb59ef0)
+         'confid' =&gt; 800
+         'feature' =&gt; 'TPG'
+         'filename' =&gt; '00000007.tif'
+         'pagenum' =&gt; 00000003
+         'seq' =&gt; 00000007
+      00000008 =&gt; HASH(0xb59f44)
+         'confid' =&gt; 855
+         'feature' =&gt; 'UNS'
+         'filename' =&gt; '00000008.tif'
+         'pagenum' =&gt; 00000004
+         'seq' =&gt; 00000008
+      00000009 =&gt; HASH(0xb59f98)
+         'confid' =&gt; 866
+         'feature' =&gt; 'UNS'
+         'filename' =&gt; '00000009.tif'
+         'pagenum' =&gt; 00000005
+         'seq' =&gt; 00000009
+      00000010 =&gt; HASH(0xb59fec)
+         'confid' =&gt; 100
+         'feature' =&gt; 'UNS'
+         'filename' =&gt; '00000010.tif'
+         'pagenum' =&gt; 00000006
+         'seq' =&gt; 00000010
+		 
+		 ...   data for pages 11 through 195   ...
+		 
+		 
+      00000196 =&gt; HASH(0xba4438)
+         'confid' =&gt; 872
+         'feature' =&gt; 'UNS'
+         'filename' =&gt; '00000196.tif'
+         'pagenum' =&gt; 00000192
+         'seq' =&gt; 00000196
+      00000197 =&gt; HASH(0xba448c)
+         'confid' =&gt; 100
+         'feature' =&gt; 'UNS'
+         'filename' =&gt; '00000197.tif'
+         'pagenum' =&gt; 00000000
+         'seq' =&gt; 00000197
+      00000198 =&gt; HASH(0xba44e0)
+         'confid' =&gt; 100
+         'feature' =&gt; 'UNS'
+         'filename' =&gt; '00000198.tif'
+         'pagenum' =&gt; 00000000
+         'seq' =&gt; 00000198
+   'pageviewdatfile' =&gt; '/l1/obj/a/a/s/aas5580.0001.001/pageview.dat'
+   'rdr' =&gt; GLOB(0xb59da0)
+      -&gt; *Symbol::GEN10
+            FileHandle({*Symbol::GEN10}) =&gt; fileno(20)
+   'sizehash' =&gt; HASH(0x967370)
+      'S' =&gt; 'small'
+      'l' =&gt; 'large'
+      's' =&gt; 'normal'
+   'viewhash' =&gt; HASH(0x9673e8)
+      'image' =&gt; 'image'
+      'pdf' =&gt; 'pdf'
+      'text' =&gt; 'text'
+   'wtr' =&gt; GLOB(0xb59da0)
+      -&gt; REUSED_ADDRESS</PRE>
+</BODY>
+</HTML>

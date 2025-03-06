@@ -1,0 +1,129 @@
+<HTML>
+<head>
+<TITLE>Image  Class</TITLE>
+
+
+
+
+
+ <LINK HREF="../../dlxsdocs.css" REL="stylesheet" TYPE="text/css"></head>         <BODY>
+<table class="updateTable" CELLSPACING="3" CELLPADDING="3" BORDER="1">
+<TR>
+<td>Last updated</td>
+<td>2003-12-01 10:34:27 EST</td>
+</TR>
+<TR>
+<td>Doc Title</td>
+<td>Image  Class</td>
+</TR>
+<TR>
+<td>Author 1</td>
+<td>Weise, John</td>
+</TR>
+<TR>
+<td>CVS Revision</td>
+<td>$Revision: 1.6 $</td>
+</TR>
+</table>
+
+<DIV CLASS="pageTitle">Guide to Image Class Documentation</DIV>
+
+
+
+
+
+
+
+
+<P>See <b><A HREF="../../intro/dlxsintro-index.html">DLXS, Getting
+Started</A></b> for installation of DLXS, including sample data.</P>
+
+
+<P>Image Class offers two options for metadata indexing and
+searching.</P>
+
+<P><strong>Option 1, <A HREF="http://www.mysql.org">MySQL</A></strong>, is the preferred choice because MySQL is free, and
+because loading data is straight forward.<BR />
+
+<strong>Option 2, <A HREF="http://www.dlxs.org/products/xpat.html">XPAT</A></strong>, was
+previously the only choice. There is a license fee associated with
+XPat, and preparing the data as SGML is complex.</P>
+
+<P>It is recomended that existing image collections be migrated from XPAT to
+MySQL. New collections should use MySQL from the start.</P>
+
+
+<table BORDER="2" CELLPADDING="10" CELLSPACING="0"><TBODY>
+<TR><td>topic / engine</td><td WIDTH="275" ALIGN="MIDDLE"><strong>MySQL</strong></td><td WIDTH="275" ALIGN="MIDDLE"><strong>XPAT/SGML</strong></td></TR>
+
+<TR><td><strong>Media</strong></td><td  COLSPAN="2" ALIGN="MIDDLE"><A HREF="image-imageloading.html">Loading Image Files</A><BR /><A HREF="image-jpeg2000.html">Image Class and JPEG2000</A></td></TR>
+
+<TR><td><strong>Migration</strong></td><td ALIGN="MIDDLE"><A HREF="image-xpat2mysql.html">XPat/SGML to
+MySQL</A></td><td ALIGN="MIDDLE"><A HREF="image-migration.html">Migration to DLXS 11</A></td></TR>
+
+<TR><td><strong>Metadata</strong></td><td ALIGN="MIDDLE"><A HREF="image-mysql.html">Image Class Data Loading: MySQL</A></td><td ALIGN="MIDDLE"><A HREF="image-datatransform.html">Data Transformation</A><BR /><A HREF="image-indexbuild.html">Image Class Index Building</A><BR /><A HREF="image-charconversion.html">Image Class Character Set Conversion</A><BR /><A HREF="image-dtd.html">DTD Description</A></td></TR>
+<TR><td><strong>Advanced</strong></td><td ALIGN="MIDDLE"><A HREF="image-mediatable.html">Media Table</A></td><td ALIGN="MIDDLE"><A HREF="image-imagestructures.html">Mapping Image Structures</A></td></TR>
+<TR><td><strong>General</strong></td><td ALIGN="MIDDLE" COLSPAN="2"><A HREF="image-imagefilenaming.html">Image File Naming</A><BR /><A HREF="image-datareqs.html">Data Requirements</A><BR /><A HREF="image-accesstable.html">Access Control</A></td></TR>
+<TR><td><strong>Interface</strong></td><td ALIGN="MIDDLE" COLSPAN="2"><A HREF="../../ui/dlxs-templates.html">Templates</A><BR /><A HREF="image-colldb.html">Collmgr/Collection Database</A><BR /><A HREF="image-pi.html">Processing Instructions</A></td></TR>
+</TBODY></table>
+
+
+<P>Perhaps the best way to familiarize yourself with collection
+deployment in Image Class is to step through the <strong>tutorial-like documentation</strong> that is used
+in the workshop.<BR /><strong>Start <A HREF="http://www.dlxs.org/training/workshops.html">here</A></strong> and follow the links to the Image Class
+section of the most recently taught workshop.
+</P>
+
+<P><b><FONT COLOR="RED">Worth Noting</FONT></b></P>
+<UL>
+<LI>MySQL, by default, indexes words 4 characters or longer. Shorter
+words are therefore not searchable. This can be changed if desired. It
+requires having the following configuration directive in the [mysqld] section of the MySQL configuration file (usually /etc/my.cnf):
+<BR /><BR />
+<CODE>  ft_min_word_len=2</CODE>
+<BR /><BR />
+Once this is done, existing fulltext indexes will need to be
+rebuilt. The following command does the job nicely in MySQL.
+<BR /><BR />
+<CODE>REPAIR TABLE tbl_name QUICK</CODE>
+<BR /></LI>
+
+
+<LI>There are other situations where you might need to repair tables or
+rebuild indexes. Migration of tables from one version of MySQL to
+another can be such a case. Signs of trouble may be subtle. Boolean
+searching has been known to fail quietly. In addition to the REPAIR
+command above, you can try...<BR /><BR />
+<CODE>REPAIR TABLE tbl_name USE_FRM</CODE>
+<BR /><BR />
+Thanks to Aaron Brenner for the tip and this link <A HREF="http://dev.mysql.com/doc/mysql/en/Fulltext_Fine-tuning.html">http://dev.mysql.com/doc/mysql/en/Fulltext_Fine-tuning.html</A>. 
+</LI>
+</UL>
+
+<P><b><FONT COLOR="RED">Easily Overlooked</FONT></b></P>
+<UL>
+<LI>The amount of time it takes for thumbnail images to display in the browser can be reduced dramatically by creating a symlink for each collection like this....  <BR/>
+<CODE>cd $DLXSROOT/web/c/coll<BR/>ln -s $DLXSROOT/img/c/coll/index thumb</CODE><BR/>
+<BR/>
+The only drawback to this approach is that it bypasses the cgi and authentication <b>for thumbnails</b> by essentially putting them under the web document root. If thumbnail security is important, don't create the symlink.
+</LI>
+</UL>
+
+<P><FONT COLOR="RED"><b>A Common Problem</b></FONT></P>
+<UL>
+<LI>If you get a division by zero error from the Image Class CGI when trying to view a full size image, double check the installation of mrsid_retrieve. Most likeley, it is not installed properly.</LI>
+</UL> 
+
+<P>In the past, documentation specific to Image Services at the
+University of Michigan was included here as well. It is now available
+<A HREF="http://images.umdl.umich.edu/i/imageservices">elsewhere</A>. </P>
+
+
+
+
+
+<P> </P>
+
+</BODY>
+
+</HTML>

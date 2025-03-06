@@ -1,0 +1,10 @@
+<!DOCTYPE COLL SYSTEM "/l1/idx/b/bosnia/bosnia.textclass.dtd" [
+
+
+<!ENTITY % entrefs SYSTEM "/l1/idx/b/bosnia/charents.frag">
+%entrefs;
+
+<!entity nbsp SDATA "&nbsp;">
+
+]>
+

@@ -1,0 +1,170 @@
+<?xml version="1.0"?>
+
+<!-- SPO Editorial Services                  -->
+<!-- automatically-generated XML header file -->
+
+<?xml-stylesheet href="../../../pre11-dlxsdocs.xsl" type="text/xsl"?>
+<!DOCTYPE DLPSDOC PUBLIC "-//UM-DLPS//DTD DLPS Publications//EN" "http://docs.umdl.umich.edu/dlps/docs/dlpsdocs.dtd">
+<DLPSDOC>
+<TITLE>Text Class Perl Modules Used (Summaries)</TITLE>
+<HEADER>
+<JOURNAL>DLXS Documentation</JOURNAL>
+<PUBDATE>2002-03-13 13:43:10 EST</PUBDATE>
+<AUTH1>Pagliere, Alan</AUTH1>
+<AUTH2></AUTH2>
+<DOCTITLE>Text Class Perl Modules Used (Summaries)</DOCTITLE>
+<VOL>class</VOL>
+<ISS>text</ISS>
+<FILE>dlxsdocs-tc-perlmodules</FILE>
+</HEADER>
+
+<BODY>
+<BHEAD>Text Class Perl Modules Used (Summaries)</BHEAD>
+<DIV1><H1>STANDARD PERL DISTRIBUTION</H1><A NAME="Heading2"></A>
+<P>Several Perl modules that are delivered with the standard Perl distribution
+are used in the DLXS
+middleware:</P>
+<UL>
+<LI>CGI</LI>
+<LI>IPC::Open3</LI>
+<LI>Symbol</LI>
+</UL>
+</DIV1>
+<DIV1><H1>ADDITIONAL PERL MODULES</H1><A NAME="Heading10"></A>
+<P>Some modules that are not in the standard Perl distribution but are readily
+available at no cost through CPAN are also used:</P>
+<UL>
+<LI>Apache::Session</LI>
+<LI>DBI</LI>
+<LI>DBD::CSV or DBI::mysql (for colldb and sessions)</LI>
+<LI>LWP (for ID Resolver)</LI>
+</UL>
+</DIV1>
+<DIV1><H1>TEXTCLASS RELATED PERL OBJECTS</H1><A NAME="Heading20"></A>
+<DIV2><H2>PageViewer.pm</H2><A NAME="Heading21"></A>
+<P>The <B>PageView</B> object holds data from the pageview.dat file (a file
+containing metadata about all page images available for a particular SGML
+file).</P></DIV2>
+<DIV2><H2>TextClass.pm</H2><A NAME="Heading23"></A>
+<P>This is both the default class for collections that are of the <B>TextClass</B> type note requiring specific subclassing code and the
+superclass for those that do. It contains code for storing and retrieving
+collection data (including other objects) as well as code for searching and
+filtering.</P>
+<P>Collections that do not require special filtering or searching
+can be instantiations of this module&#8217;s class.</P></DIV2>
+<DIV2><H2>Subclasses of TextClass.pm</H2><A NAME="Heading27"></A>
+<P>These modules, e.g., <B>TesoTC.pm</B> and <B>BosniaTC.pm</B>, are
+subclasses of the default/superclass <B>TextClass</B>. This allows overriding
+certain data and behaviors in the default class. For example, some collections
+contain symbols needing filtering that most collections do not have or require
+XPat searches to be done to differing depths of encoded levels.</P></DIV2>
+</DIV1>
+<DIV1><H1>DLXS PERL LIBRARY MODULES</H1><A NAME="Heading29"></A>
+<DIV2><H2>XPat related</H2><A NAME="Heading30"></A><P></P>
+<DIV3><H3>XPat.pm</H3><A NAME="Heading31"></A>
+<P><B>XPat.pm</B> contains code to handle the opening up of an XPat session
+for a particular TextClass instantiation. This entails forking off a process for
+a collection that is local to the machine from which the request comes or
+opening up a socket connection to a remote machine, if the collection data
+resides on a different machine.</P>
+<P>It also has methods for accepting objects
+encapsulating queries and returning results information to objects that
+encapsulate results.</P></DIV3>
+<DIV3><H3>SearchSet.pm</H3><A NAME="Heading35"></A>
+<P>The <B>SearchSet</B> object encapsulates queries that will be sent in a
+group to an XPat session. Each search is given a <B>label</B> by the CGI to
+identify the kind of information which will be returned. This label is returned
+along with the results for that search query. In this way, the type of results
+can be known by the CGI, primarily so that decisions can be made about how to
+filter the results. Search sets are grouped and identified by a <B>name</B>.
+This is done so that, if needed, more than one group or set of searches can be
+manipulated during the course of one CGI invocation.</P></DIV3>
+<DIV3><H3>XPatResult.pm</H3><A NAME="Heading37"></A>
+<P>Results of one XPat query are grouped along with some information such as
+the result, the byte offset of the result, etc., and, optionally, the XPat
+object used to retrieve the results.</P></DIV3>
+<DIV3><H3>XPatResultSet.pm</H3><A NAME="Heading39"></A>
+<P>Results of queries are grouped by the same <B>name</B> identifying the <B>SearchSet</B> that led to the results. Each result consists of three pieces
+of information (which are acquired, parsed and separated by the <B>XPat</B>
+object&#8217;s <B>AddResult</B> method, plus another separate value. These four
+pieces are: the index containing the result (see the section on multiple indexes
+per collection), the byte offset of the result in the particular index&#8217;s
+data, the label given by the search, and the raw SGML returned by the XPat query
+(in the case of <B>XPat</B> <B>pr</B> requests) or the number of matches (in the
+case of simple requests), and a reference to the <B>XPat</B> object that was
+used to get the results.</P></DIV3>
+<DIV3><H3>RemoteXPatConnect.pm</H3><A NAME="Heading41"></A>
+<P>This object encapsulates all the data necessary for handling remote
+connections via sockets to an XPat process on another machine. The <B>XPat</B>
+object talks to the <B>RemoteXPatConnection</B> object. It is not anything the
+programmer needs to deal with.</P></DIV3></DIV2>
+<DIV2><H2>CollsInfo.pm</H2><A NAME="Heading43"></A>
+<P>This object contains information read in from the <B>colldb</B>. All
+collections that are authorized to the user are included. Each collection that
+is also requested by the user, via the URL, is flagged as such.</P></DIV2>
+<DIV2><H2>DlpsSession.pm</H2><A NAME="Heading45"></A>
+<P>This object wraps the <B>Apache::Session</B> object so that an object
+interface can be maintained, rather than using the <B>Apache::Session</B>'s tied
+hash interface. Although the beta version of TextClass uses a tab-delimited file
+as the session database, a version employing a mysql (or other common database
+format) DBI is forthcoming.</P></DIV2>
+<DIV2><H2>BookBag.pm</H2><A NAME="Heading47"></A>
+<P>The <B>BookBag</B> object is a mechanism that allows a user to save
+particular items in a virtual collection. We sometimes refer to this as a
+"personal collection." The <B>BookBag</B> object a collection of items/works.
+For each, it holds the collection id, the item's idno and a string (composed of
+the author and title of the work). Besides being able to add or remove items
+from this virtual collection, the user can also submit searches that are
+restricted to this group of items.</P>
+<P>The <B>BookBag</B> object is saved
+with the <B>DlpsSession</B> object.</P></DIV2>
+<DIV2><H2>SearchHistory.pm</H2><A NAME="Heading51"></A>
+<P>A list of searches submitted during the course of a session is saved in the <B>SearchHistory</B> object. The list can be recalled at any time. From the
+displayed list, clicking on any previous search will resubmit that
+search.</P>
+<P>The <B>SearchHistory</B> object is saved with the <B>DlpsSession</B> object.</P></DIV2>
+<DIV2><H2>ProcIns.pm</H2><A NAME="Heading55"></A>
+<P>In order to provide more sophisticated use of HTML templates, processing
+instructions (PI) embedded in HTML templates have been implemented. In the form
+&lt;?INSTRUCTION&gt; or &lt;?INSTRUCTION param=value ...&gt;. The CGI needs to
+have a handler for any specific instruction. Any parameters and their values
+listed in the PI are passed into the handler.</P></DIV2>
+<DIV2><H2>WordWheel.pm</H2><A NAME="Heading57"></A>
+<P>The <B>WordWheel</B> object is a mechanism for holding data retrieved from
+an XPat query during the running of the
+<TT>ww2-idx</TT>.</P></DIV2>
+<DIV2><H2>QueryFactory.pm</H2><A NAME="Heading59"></A>
+<P>The <B>QueryFactory</B> object is used in creating XPat queries. Given a <B>CGI</B> object, it will create a properly formatted XPat query based on all
+the parameters of the URL.</P>
+<P>The QueryFactory module remains essentially
+unmodified from its original form, written for an earlier generation of DLPS
+middleware.</P></DIV2>
+<DIV2><H2>TerminologyMapper.pm</H2><A NAME="Heading63"></A>
+<P>The <B>TerminologyMapper</B> object is also used in creating XPat queries.
+It associates certain user interface terms (e.g., from an HTML pull-down form)
+to terms needed in the creation of XPat queries. <I>See documentation for the
+Content Specialist.</I></P>
+<P>The TerminologyMapper module remains essentially
+unmodified from its original form, written for an earlier generation of DLPS
+middleware.</P></DIV2>
+<DIV2><H2>Other Modules (not object oriented)</H2><A NAME="Heading67"></A>
+<DIV3><H3>DlpsUtils.pm</H3><A NAME="Heading68"></A>
+<P>This module contains a variety of subroutines that are of general utility.
+They are not specifically TextClass orientd. Examples of functions are those for
+certain kinds of character filtering, finding maximum and minimums of values,
+sorting and uniquing lists, intersecting lists as sets, common HTML page output
+functions, etc.</P>
+</DIV3>
+<DIV3><H3>DevUtils.pm</H3><A NAME="Heading70"></A>
+<P>This module has just one function in it:
+<TT>GetDevUsernameFromScript</TT>. This is used
+in conjunction with the directory structure and cgi program naming convention we
+use in software development and in conjunction with CVS.</P></DIV3>
+<DIV3><H3>roman_numeral.pm</H3><A NAME="Heading72"></A>
+<P>This module is used to convert Arabic numerals into Roman
+numbers.</P>
+</DIV3>
+</DIV2>
+</DIV1>
+</BODY>
+</DLPSDOC>

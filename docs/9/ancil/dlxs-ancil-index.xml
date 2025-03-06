@@ -1,0 +1,33 @@
+<?xml version="1.0"?>
+
+<!-- SPO Editorial Services                  -->
+<!-- automatically-generated XML header file -->
+
+<?xml-stylesheet href="../../pre11-dlxsdocs.xsl" type="text/xsl"?>
+<!DOCTYPE DLPSDOC PUBLIC "-//UM-DLPS//DTD DLPS Publications//EN" "http://docs.umdl.umich.edu/dlps/docs/dlpsdocs.dtd">
+<DLPSDOC>
+<TITLE>DLXS Ancillary Systems</TITLE>
+<HEADER>
+<JOURNAL>DLXS Documentation</JOURNAL>
+<PUBDATE>2002-07-03 16:43:37 EDT</PUBDATE>
+<AUTH1>Snavely, Cory</AUTH1>
+<AUTH2></AUTH2>
+<DOCTITLE>DLXS Ancillary Systems</DOCTITLE>
+<VOL>ancil</VOL>
+<ISS></ISS>
+<FILE>dlxsdocs-dlxs-ancil-index</FILE>
+</HEADER>
+
+
+
+
+
+<BODY>
+<BHEAD>DLXS Ancillary Systems</BHEAD>
+<DIV1>
+<UL>
+<LI><A HREF="dlxs-auth-system.xml">DLXS Authentication and Authorization System</A></LI>
+</UL>
+</DIV1>
+</BODY>
+</DLPSDOC>

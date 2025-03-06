@@ -1,0 +1,216 @@
+<html>
+<head>
+    <title>Image Class Data Loading: MySQL</title>
+</head>
+    <body> 
+      <h1>Image Class Data Loading: MySQL</h1>
+      <div1> 
+        <div2 id="Requirements"> 
+          <h2> 
+            <a name="Requirements"></a>
+            Requirements</h2>
+          <ul> 
+            <li>MySQL 3.23 or newer. MySQL 4.0.2 or newer is recommended for best 
+              searching functionality. Image Class uses the full text search capabilities 
+              of MySQL. MySQL version 3.23 has basic full text capability. Version 
+              4.02 introduced several new features such as phrase searching, stemming 
+              with wildcard, and better boolean controls.</li>
+			  <li>Using MySQL for Image Class content requires that MySQL also be used for the CollMgr Collection Database.</li>
+			  <li>Also see: <a href="../../intro/dlxs-sysreq.html">DLXS System Requirements</a></li>
+          </ul>
+        </div2>
+        <div2 id="Introduction"> 
+          <h2> 
+            <a name="Introduction"></a>
+            Introduction</h2>
+          <p>Image Class version 3 (<a href="http://www.dlxs.org">DLXS</a> 11) introduces the use of MySQL for search 
+            and retrieval. Assuming DLXS has been installed and tested, the basic 
+            steps to bringing a collection online with Image Class and MySQL are 
+            as follows.</p>
+          <ol> 
+            <li><a href="image-imageloading.html">load image/media files</a> to server, including the running of imageprep.</li>
+            <li>import descriptive metadata into MySQL as an Image Class Data 
+              Table.</li>
+            <li>import media file metadata into MySQL as an Image Class Media 
+              Table (sometimes optional).</li>
+            <li>use collmgr to create the colldb record for the collection and 
+              configure the collection for use. Documentation is
+provided contextually within Collmgr.</li>
+            <li>test in browser.</li>
+          </ol>
+          <p> 
+            <strong>Note:</strong>
+            <a href="image-accesstable.html">Access restrictions</a> for the collection must also be
+established / configured. </p>
+        </div2>
+        <div2 id="DataTable"> 
+          <h2> 
+            <a name="DataTable"></a>
+            Data Table</h2>
+          <p>A Data Table is required for each collection. The Data Table holds 
+            descriptive metadata. A collection can have any number of descriptive 
+            metadata fields, and for each there is a column in the Data Table.</p>
+          <p>Field names must be legal MySQL field names, otherwise there are 
+            no restrictions. </p>
+          <p>The Data Table must have a field with unique values that can be used 
+            as record identifiers.</p>
+          <p>A media filename field is necessary if image files or other types 
+            of media are to be displayed by Image Class. Filenames must have filename 
+            extensions. It is best if the filename extension matches that of the 
+            master image file, and not that of the file to be delivered online. 
+            Sometimes they do not differ.</p>
+          <p>If searching of the entire record at once is desired, an additional 
+            field concatenating the values of all other fields is needed. This 
+            is referred to as the "all" field.</p>
+          <p>The ID field must have a full text index.</p>
+          <p>Each additional field to be searchable in Image Class must have a 
+            full text index.</p>
+        </div2>
+        <div2 id="MediaTable"> 
+          <h2> 
+            <a name="Media Table"></a>
+            Media Table</h2>
+          <p>A collection may require a Media Table. The Media Table contains 
+            detailed information about the media files ( i.e., most often images 
+            ) that are part of a collection.</p>
+          <p>In contrast to the Data Table, the Media Table has a required set 
+            of fields that do not vary.</p>
+          <p>A Media Table is required in the following situations: </p>
+          <ul> 
+	  <li>A collection includes jp2 files.</li>
+            <li>A collection includes multiple media file formats. e.g., any collection simultaneously using sid and jp2 files will need a media table.</li>
+            <li>A collection includes multiple media files per metadata record.</li>
+			<li>Some records of a collection do not have media files.</li>
+            
+            <li>Some images of the collection need to be restricted, while others 
+              not.</li>
+          </ul>
+
+	<p>A Media Table is required in most situations. It is only when the collection follows the simple model of having image files in the sid format, with thumbnails as jpg, and only one image per record that a Media Table is not needed.</p>
+		  <p><strong>Note:</strong> The m_id and m_iid fields of the Media Table should be indexed. 
+              A full text index is not necessary.</p>
+          <p>View the detailed <a href="image-mediatable.html">Media Table Definition</a>.</p>
+        </div2>
+        <div2 id="TableNamingConventions"> 
+          <h2> 
+            <a name="Table Naming Conventions"></a>
+            Table Naming Conventions</h2>
+          <p>It is recommended that Data and Media Table names relate to the collection 
+            ID. Name the Data Table exactly as the collid, and the Media Table 
+            as "collid_media". Attaching a simple version number to each will 
+            facilitate deployment and minimize interruption of service. </p>
+          <p> Initially,</p>
+          <ul> 
+            <li>collid_1</li>
+            <li>collid_media_1</li>
+          </ul>
+          <p>and at the next data update, </p> 
+           <ul>
+            <li>collid_2 </li>
+            <li>collid_media_2 </li></ul> 
+          <p>The table names are stored in each collection's Collmgr Collection 
+            Database record. Therefore, the tables are not used by Image Class 
+            until the Collmgr record is updated and released. This facilitates 
+            switching from the old version to the new.</p>
+        </div2>
+        <div2 id="FieldNamingConventions"> 
+          <h2> 
+            <a name="Field Naming Conventions"></a>
+            Field Naming Conventions</h2>
+          <p>Field labels, as displayed to the end-user in Image Class are easily 
+            changed on a whim using Collmgr. Field names, on the other hand, are 
+            used behind the scenes for unique identification of fields.</p>
+          <p>Image Class has traditionally relied on abbreviated field names that 
+            follow the convention collid_fieldabbrev, e.g,. bhl_ti for the Title 
+            field of the Bentley Image Bank collection. There is nothing 
+            requiring this convention be followed. There is merit in using brief 
+            field names since they are carried around on the URL, entered multiple 
+            times in the Collmgr Collection Database record, and stored on the 
+            CGI session.</p>
+          <p>Field names must be legal MySQL field names.</p>
+        </div2>
+        <div2 id="BasicMySQLCommands"> 
+          <h2> 
+            <a name="Basic MySQL Commands"></a>
+            Basic MySQL Commands</h2>
+          <p>Please refer to MySQL documentation at <a href="http://www.mysql.com">www.mysql.com</a> for full instruction 
+            on how to use the following MySQL commands on the MySQL command line.</p>
+          <p> <hr />Command: 
+            <strong>show</strong>
+            <br></BR>
+            Purpose: 
+            <strong>list existing tables</strong>
+            <br></BR>
+            Example: </P>
+          <code>show tables;</code>
+          <p><hr />Command: 
+            <strong>create</strong>
+            <br></BR>
+            Purpose: 
+            <strong>creating a new table</strong>
+            <br></BR>
+            Example (using the collection id "art" using the conventions above):</P>
+          <code>create table ( art_id varchar(10), art_fn varchar(12), art_ti 
+            text, art_cr text, art_su text, art_all text ) TYPE=MyISAM;</code>
+          <p><hr />Command: 
+            <strong>describe</strong>
+            <br></BR>
+            Purpose: 
+            <strong>show the field definitions for a table</strong>
+            <br></BR>
+            Example: </P>
+          <code>describe art;</code>
+          <p><hr />Command: 
+            <strong>drop</strong>
+            <br></BR>
+            Purpose: 
+            <strong>drop/delete a table</strong>
+            <br></BR>
+            Example:</P>
+          <code>drop table art;</code>
+          <p><hr />Command: 
+            <strong>load</strong>
+            <br></BR>
+            Purpose: 
+            <strong>load tab delimited ascii data into table</strong>
+            <br></BR>
+            See also MySQL documentation: 
+            <strong>mysqlimport</strong>
+            <br></BR>
+            Example:</P>
+          <code>load data local infile 'art.txt' into table art;</code>
+          <p><hr />Command: 
+            <strong>select</strong>
+            <br></BR>
+            Purpose: 
+            <strong>submit query and display results</strong>
+            <br></BR>
+            Examples: </P>
+          <code>select count(*) from table art;
+		  select art_ti, art_cr from table 
+            art limit 10;
+			<br />
+			select art_ti, art_cr from table art where art_cr = 
+            "picasso";</code>
+          <p><hr />Command: 
+            <strong>alter</strong>
+            <br></BR>
+            Purpose: 
+            <strong>adding an index to a field</strong>
+            <br></BR>
+            Examples: </P>
+          <code>alter table art add FULLTEXT art_all (art_all); 
+		  <br />alter table art 
+            add index art_id (art_id(10));</code>
+          <p><hr />Command: 
+            <strong>show</strong>
+            <br />
+            Purpose: 
+            <strong>show definitions of database components</strong>
+            <br />
+            Example:</P>
+          <code>show create table art;</code>
+        </div2>
+      </div1>
+    </body>
+</html>

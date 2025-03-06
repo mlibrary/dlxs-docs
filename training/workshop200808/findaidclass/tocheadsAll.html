@@ -1,0 +1,40 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+<title>Untitled Document</title>
+</head>
+
+<body>
+<h3>Section of $DLXSROOT/cgi/f/findaid/findaidclass.cfg</h3>
+
+
+
+<hr/>
+<pre>
+
+
+# **********************************************************************
+# Hash of section heads that XPAT should search for.  A reference to
+# this hash is added as member data keyed by 'tocheads' to the
+# FindaidClass object at initialization time. Comment out those that
+# are missing in your finding aids.
+# **********************************************************************
+%gSectHeadsHash = (
+                   'bioghist-t'      =>  {
+                                          'collection' => qq{Biography},
+                                          'recordgrp' => qq{History},
+                                         },
+                   'controlaccess-t' => qq{Subject Terms},
+                   'frontmatter-t'   => qq{Title Page},
+                   'arrangement-t'   => qq{Arrangement},
+                   'scopecontent-t'  => qq{Collection Scope and Content Note},
+                   'summaryinfo-t'   => qq{Summary Information},
+                   'contentslist-t'  => qq{Contents List},
+                   'admininfo-t'     => qq{Access and Use},
+                   'add-t'           => qq{Additional Descriptive Data},
+                  );
+
+</pre>
+</body>
+</html>

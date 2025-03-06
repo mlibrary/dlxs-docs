@@ -1,0 +1,235 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <title>Customizing and Troubleshooting Findaid Class</title>
+ <link rel="stylesheet" href="../styles.css" type="TEXT/CSS" />
+<style type="text/css">
+/*<![CDATA[*/
+<!--
+body {
+        margin-left: 10px;
+        margin-top: 5px;
+        margin-right: 10px;
+        margin-bottom: 5px;
+}
+-->
+/*]]>*/
+</style>
+<!--$Id$-->
+  </head>
+
+
+<body bgcolor="#FFFFCC" class="mainpalette">
+
+
+    <h1>Customizing and Troubleshooting Findaid Class</h1>
+
+This is a work in progress!
+
+  <h2 class="partheader"><a name="Customizing" id=
+  "Customizing"></a>Customizing and Troubleshooting Findaid Class</h2>
+
+Outline
+
+<ul>
+<li><a href="#Overview">Overview</a></li>
+<li><a href="#changesEncoding">Types of changes to accomodate differing encoding practices and/or interface changes</a></li>
+<li><a href="#SpecificEncoding">Specific encoding issues</a></li>
+
+<li><a href="#DataPrepIssues">Data Prep Issues</a></li>
+<li><a href="#ModTOC">Modifying the Table of Contents</a></li>
+<li><a href="#Trouble">General troubleshooting techniques</a></li>
+<li><a href=""></a></li>
+<li><a href=""></a></li>
+</ul>
+
+<h3><a name="" id=""></a></h3>
+
+
+
+  <p align="right" class="navlink"><a href="#Top">go to table of
+  contents</a></p>
+
+<h3><a name="Overview" id="Overview"></a>Overview</h3>
+
+<p>The EAD standard was designed as a "loose" standard in order to accommodate the large variety in local practices for paper finding aids and make it easy for archives to convert from paper to electronic form. As a result, conformance with the EAD standard still allows a great deal of variety in encoding practices.
+</p>
+<p>
+The DLXS software is primarily designed as a system for mounting University of Michigan collections. In the case of finding aids, the software has been designed to accommodate the encoding practices of the Bentley Historical Library. 
+</p>
+
+Most of the questions we get from sites implementing FindaidClass for the first time involve dealing with encoding practices that are different than the Bentley's.
+
+<p>We will first look at a number of issues involved in data preparation, then we will look at making changed to the Table of Contents.  The modifications to the Table of Contents will involve a number of useful techniques such as
+<ul>
+<li>Creating custom fabricated regions</li>
+<li>Subclassing Findaid Class to create collection specific  behavior</li>
+<li>Creating collection specific XSL templates</li>
+<li>Debugging XSl?</li>
+<li>Perl debugger?</li>
+</ul>
+</p>
+
+
+
+  <h3><a name="changesEncoding" id="changesEncoding"></a>Types of changes to accomodate differing encoding practices and/or
+  interface changes</h3>
+
+  <ul>
+    <li>Custom preprocessing</li>
+
+    <li>Add dummy EAD to data</li>
+
+    <li>Modify prep scripts (Makefile, preparedocs.pl, validateeach.sh)</li>
+
+    <li>Modify *dcl files (DOCTYPE declarations and entities)</li>
+
+    <li>Modify fabricated regions (*.extra.srch)</li>
+
+    <li>Modify CollMgr entries</li>
+
+    <li>Modify findaidclass.cfg (change table of contents sections)</li>
+
+    <li>Subclass FindaidClass.pm</li>
+
+    <li>Modify XSL</li>
+
+    <li>Modify XML templates</li>
+
+    <li>Modify CSS</li>
+  </ul>
+
+
+
+<h3>Specific Encoding Issues <a name="SpecificEncoding" id="SpecificEncoding"></a></h3>
+<p>There are a number of encoding issues that may affect the data preparation, indexing, searching, and rendering of your finding aids. Some of them are:
+</p>
+
+<ul>
+<li> <b>Preprocessing and Data Prep issues</b></li>
+<ul>
+        
+
+<li> <span class="redtext">&lt;eadid&gt; should be less than about 20 characters in length</span>
+</li>
+<li> Attribute ids must be unique within the entire collection </li>
+<li> If you use attribute ids and corresponding targets within your EADs preparedocs.pl may need to be modified.
+</li>
+<li> Character Encoding issues
+</li>
+<li> 
+UTF-8 Byte Order Marks (BOM) should be removed from EADs prior to concatenation
+</li>
+<li> 
+XML processing instructions should be removed from EADs prior to concatenation
+</li>
+
+<li>
+ If your DOCTYPE declaration contains entities, you need to modify the appropriate *dcl files accordingly. See $DLXSROOT/prep/s/samplefa/samplefa.ead2002.entity.example.dcl for an example )
+</li>
+<li> Out-of-the-box &lt;dao&gt; handling may need to be modified for your needs</li>
+</ul>
+
+
+
+<li> <b>Fabricated region issues  (some of these involve XSL as well)</b></li>
+
+<ul>
+<li> If your<span class="tomcommand"> &lt;unititle&gt; </span>element precedes your 
+<span class="tomcommand">&lt;origination&gt; </span>element in the top level <span class="tomcommand">&lt;did&gt;</span>, you will have to modify the maintitle fabricated region query in<span class="tomcommand"> *.extra.srch </span> See <a href="http://webservices.itcs.umich.edu/mediawiki/dlxs14/index.php/Mounting_Finding_Aids:_Release_14/Workshop_working_copy#Title_of_Finding_Aid_does_not_show_up"> Troubleshooting:Title of Finding Aid does not show up</a>  </li>
+
+<li> If you do not use a <span class="tomcommand">&lt;frontmatter&gt;</span> element, you will either have to either a) create and populate frontmatter elements in your EADs manually, or b) run your EADs through some preprocessing XSL to create and populate frontmatter elements, or c) you will have to create a fabricated region  to provide an appropriate "Title Page" region based on the<span class="tomcommand"> &lt;eadheader&gt;</span> and you may also need to change the XSL and/or subclass FindaidClass to change the code that handles the Title Page region.
+</li>
+</ul>
+
+
+<li>
+<b> Table of Contents and Focus Region issues</b>
+</li>
+<ul>
+<li> If you do not use a <span class="tomcommand">&lt;frontmatter&gt;</span> element you may have to make the changes mentioned above to get the title page to show in the table of contents and when the user clicks on the "Title Page" link in the table of contents
+</li>
+
+<li>
+ If your encoding practices for <span class="tomcommand">&lt;biohist&gt;</span> differ from the Bentley's, you may need to make changes in findaidclass.cfg or create a subclass of FindaidClass and override FindaidClass:: GetBioghistTocHead, and/or change the appropriate XSL files.
+See: <a href="http://webservices.itcs.umich.edu/mediawiki/dlxs14/index.php/Mounting_a_Finding_Aids_Collection#Changing_the_Bioghist_labels_to_use_the_appropriate_.3Chead.3E_elements">Changing the Bioghist labels</a> </li>
+<li> If you want <span class="tomcommand">&lt;relatedmaterial&gt;</span> and/or <span class="tomcommand">&lt;separatedmaterial&gt;</span> to show up in the table of contents (TOC) on the left hand side of the Finding Aids, you may have to modify findaidclass.cfg and make other modifications to the code. This also applies if there are other sections of the finding aid not listed in the out-of-the-box findaidclass.cfg %gSectHeadsHash. 
+See <a href="http://webservices.itcs.umich.edu/mediawiki/dlxs14/index.php/Mounting_a_Finding_Aids_Collection#Adding_sections_to_the_table_of_contents"></a>
+</li>
+
+ See also:
+<ul>
+<li> <a href="http://webservices.itcs.umich.edu/mediawiki/dlxs14/index.php/Mounting_a_Finding_Aids_Collection#Customizing_Findaid_Class">Customizing Findaid Class</a></li>
+<li><a href="http://webservices.itcs.umich.edu/mediawiki/dlxs14/index.php/Mounting_a_Finding_Aids_Collection#Troubleshooting_Finding_Aids">Troubleshooting Finding Aids</a></li>
+</ul>
+
+</ul>
+<li>
+<b> XSL issues</b>
+</li>
+<ul>
+<li> If you have encoded &lt;unitdate&gt;s as siblings of &lt;unittitle&gt;s, you may have to modify the appropriate XSL templates.
+</li>
+<li> If you want the middleware to use the &lt;head&gt; element for labeling sections instead of the default hard-coded values in findaidclass.cfg, you may need to change fabricated regions and/or make changes to the XSL and/or possibly modify findaidclass.cfg or subclass FindaidClass.</li>
+</ul>
+</ul>
+
+
+<h3><a name="DataPrepIssues" id="DataPrepIssues"></a>Data Prep Issues</h3>
+
+Need to decide on order and reorder
+<ul>
+
+<li> long eadid</li>
+<li> Missing famname simulate with added "fooname"</li>
+<li> id and target</li>
+<li> origination/title   title doesnt show up</li>
+<li> entiteyrefs  (ask chris!)</li>
+<li> Use of filelist option for prepdocs.pl</li>
+<li> setup_newcoll script</li>
+ <li>sep related material</li>
+</ul>
+Techniques to include
+
+running xpat region queries on command line
+
+
+<h3><a name="ModTOC" id="ModTOC"></a>Modifying the Table of Contents</h3>
+
+<ul>
+
+<li>Changing labels in TOC</li>
+<li>Adding related and separated material</li>
+<li>Changing Biohist labels to use <head></li>
+
+<li>Making changes for all Collections vs changes per collection
+(findaidclass.cfg vs subclass)</li>
+
+<li>Subclassing FindaidClass</li>
+<li>Collection specific xsl</li>
+</ul>
+
+
+<h3><a name="Trouble" id="Trouble"></a>General troubleshooting techniques</h3>
+
+work in progress
+Should focus on things particular to findaid class since troubleshooting also on Friday?
+
+
+
+<ul>
+<li>running extra.srch queries in xpat</li>
+<li>debugging switches</li>
+<li>xsltwrite and oxygen</li>
+<li>perl debugger</li>
+
+<li></li>
+<li></li>
+</ul>
+
+
+  </body>
+</html>

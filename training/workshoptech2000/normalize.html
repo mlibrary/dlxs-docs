@@ -1,0 +1,65 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+   <meta name="GENERATOR" content="Mozilla/4.73 [en] (Win98; U) [Netscape]">
+   <title>Normalization</title>
+<link rel="stylesheet" href="styles.css">
+<style type="text/css">
+<!--
+ul {  line-height: 125%}
+-->
+</style>
+</head>
+<body class="mainpalette">
+
+<h2>
+Normalization of Data</h2>
+You get a lot of benefit from normalization of SGML:
+<ul>
+<li>
+tag names, attribute names, and some attribute value types are normalized
+into upper case</li>
+
+<li>
+record ends are normalized in a consistent fashion based on element content
+models</li>
+
+<li>
+optional or minimized tags are made explicit (makes programmatic parsing
+much easier)</li>
+
+<li>
+most normalizers put attributes in the order in which they are declared
+in the DTD (though this is not part of the formal definition of normalization)</li>
+</ul>
+Our favorite normalizer is <a href="http://www.jclark.com/sp/sgmlnorm.htm" target="external">sgmlnorm</a>
+from James Clark's SP.
+<p><b>command</b>: <i>sgmlnorm doctype_file sgml_file > output_sgml_file</i>
+<p>Here is an <a href="normalize-ex.html">example</a> of how normalization
+might change an sgml document and some detail on how this eases parsing.
+<p>
+<hr width="75%">
+<p>Do look at <a href="http://www.jclark.com" target="external">all of
+James Clark's SGML/XML tools</a>.
+<center>
+<p>
+<hr WIDTH="100%"></center>
+
+<h3>
+Normalization: Hands On</h3>
+To get more of a feel for the process we'll use the bosnia Makefile to
+do the necessary normalization (<a href="http://www.jclark.com/sp/sgmlnorm.htm" target="external">sgmlnorm</a>)
+step.&nbsp; But before we can normalize the data it must be transformed.&nbsp;
+The &lt;PB> (pagebreak) tags are processed and their attributes
+<br>and values are changed to conform to the expectations of the Page Viewer.&nbsp;
+After the &lt;PB> tags have been "munged" we will also use the Makefile
+to check for valid sgml before normalizing.&nbsp;&nbsp; This runs <a href="http://www.jclark.com/sp/nsgmls.htm" target="external">nsgmls</a>,
+James Clark's parser.
+<br><b></b>&nbsp;<b></b>
+<p><b><font face="Courier New,Courier">% cd $HOME/dlxs/idx/b/bosnia</font></b>
+<br><b><font face="Courier New,Courier">% make noded</font></b>
+<br><b><font face="Courier New,Courier">% make validate</font></b>
+<br><b><font face="Courier New,Courier">% make norm</font></b>
+</body>
+</html>

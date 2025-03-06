@@ -1,0 +1,194 @@
+<HTML>
+<TITLE>SGML Server Program -- Requirements</TITLE>
+<BODY BGCOLOR=#FFFFFF>
+<H2>SGML Server Program -- Requirements</H2>
+   We will provide for each collection:
+<OL>
+<LI>a normalized version of the SGML (not applicable for OED)
+<LI>a built index
+<LI>region files
+<LI>perl5 middleware programs and libraries for search and display
+<LI>filter to HTML
+<LI>HTML files
+</OL>
+
+Legal steps (in all cases, for each institution involved if for multiple institutions)
+<OL>
+<LI>For each participating institution, original signed SGML Server Program 
+	document to the <A HREF="http://web500gw.itd.umich.edu:8888/So%3dUniversity%20of%20Michigan%2c%20c%3dUS?S=sharyn.sivyer">Sharyn Sivyer at DRDA</A> and a copy to John Price-Wilkin (302 Hatcher North, Ann Arbor, MI 48109-1205).
+<LI>Copy of OED tape license, if applicable
+<LI>Letter(s) from Chadwyck-Healey confirming purchase of collections
+	   (Stephen Rhind-Tutt can provide)
+</OL>
+
+   Technical steps
+<OL>
+<LI>path to pat50 (or symlinked version)
+<LI>path to perl5 (or symlinked version)
+<LI>name of CGI bin and lib directories where you plan to keep the
+     middleware -- both as seen by the web client, and as it exists
+     physically in the filesystem.
+<LI>designate a place for the Greek GIFs and include that path (as seen 
+     by the web client).  For example:<BR>
+	   <CODE>/usr/local/etc/httpd/icons/greek</CODE><BR>
+     but we'll probably be making more GIFs later on, so you may want to use a
+     more generic name.
+<LI>directory/path for data dictionary, sgml, index, and region files for
+   each collection.  There is no advantage to separating index and SGML files,
+   but should you need to, we can support this.  For example:
+<PRE>
+	   /txt1/epd/EPD.sgm
+	   /idx1/epd/EPD.idx
+	   /rgn1/epd/EPD.rgn
+</PRE>
+	   if you like, or
+<PRE>
+	   /ch1/epd/EPD.sgm
+		   EPD.idx
+		   EPD.rgn
+</PRE>
+   instead.  
+</OL>
+
+
+<H3>File sizes (approx. within 10Mb) for <em>PAT50 IMPLEMENTATIONS</em></H3>
+
+<p>OT60 implementations do not break down as easily into discrete
+index and region files, but the average size of an OT60 collection is
+about the same within 10% of total file size.</p>
+
+<DL>
+<dt><strong>PLD</strong></dt>
+<DD>sgml:  1.05GB</DD>
+<DD>index:  640Mb</DD>
+<DD>region: 250Mb</DD>
+
+<dt><strong>EVD</strong></dt>
+<DD>sgml:   350Mb</DD>
+<DD>index:  280Mb</DD>
+<DD>region: 480Mb</DD>
+
+<dt><strong>EPD</strong></dt>
+<DD>sgml:   870Mb</DD>
+<DD>index:  710Mb</DD>
+<DD>region: 1.2Gb </DD>
+
+<dt><strong>DAAP</strong></dt>
+<DD>sgml:   8Mb</DD>
+<DD>index:  7Mb</DD>
+<DD>region: 1Mb</DD>
+
+<dt><strong>OED</strong></dt>
+<DD>text:  570Mb</DD>
+<DD>index:  475Mb</DD>
+<DD>region:  200Mb</DD>
+
+<dt><strong>AMPO</strong></dt>
+<dd>sgml: 150Mb</dd>
+<dd>index: 130Mb</dd>
+<dd>region: 200Mb</dd>
+
+<dt><strong>American Heritage Dictionary</strong></dt>
+<dd>sgml: 70mb</dd>
+<dd>index: 50mb</dd>
+<dd>region: 60mb</dd>
+
+<dt><strong>Bible in English</strong></dt>
+<dd>sgml: 140mb</dd>
+<dd>index: 110mb</dd>
+<dd>region: 150mb</dd>
+
+<dt><strong>Editions and Adaptations of Shakespeare</strong></dt>
+<dd>sgml: 230mb</dd>
+<dd>index: 175mb</dd>
+<dd>region: 290mb</dd>
+
+<dt><strong>Encyclopedia Americana</strong></dt>
+<dd>sgml: 185mb</dd>
+<dd>index: 120mb</dd>
+<dd>region: 50mb</dd>
+
+<dt><strong>Encyclopedia of Science and Technology</strong></dt>
+<dd>sgml: 70mb</dd>
+<dd>index: 45mb</dd>
+<dd>region: 2mb</dd>
+
+<dt><strong>English Prose Drama</strong></dt>
+<dd>sgml: 130mb</dd>
+<dd>index: 100mb</dd>
+<dd>region: 170mb</dd>
+
+<dt><strong>Goethes Werke</strong></dt>
+<dd>sgml: 140mb</dd>
+<dd>index: 100mb</dd>
+<dd>region: 220mb</dd>
+
+<dt><strong>Information Please Almanac</strong></dt>
+<dd>sgml: 11mb</dd>
+<dd>index: 8mb</dd>
+<dd>region: 25mb</dd>
+
+<dt><strong>Johnson's Dictionary</strong></dt>
+<dd>sgml: 105mb</dd>
+<dd>index: 75mb</dd>
+<dd>region: 165mb</dd>
+
+<dt><strong>Nietzsches Werke</strong></dt>
+<dd>sgml: 185mb</dd>
+<dd>index: 125mb</dd>
+<dd>region: 100mb</dd>
+
+<dt><strong>Old English Corpus</strong></dt>
+<dd>sgml: 40mb</dd>
+<dd>index: 150mb</dd>
+<dd>region: 30mb</dd>
+
+<dt><strong>Past Masters</strong></dt>
+<dd>sgml: 100mb</dd>
+<dd>index: 70mb</dd>
+<dd>region: 50mb</dd>
+
+<dt><strong>Physician's GenRx</strong></dt>
+<dd>sgml: 60mb</dd>
+<dd>index: 40mb</dd>
+<dd>region: 40mb</dd>
+
+<dt><strong>Roget's Thesarus</strong></dt>
+<dd>sgml: 2mb</dd>
+<dd>index: 1mb</dd>
+<dd>region: .5mb</dd>
+
+</DL>
+
+
+
+<P>We can fit just about everything you'll get on one 5GB 8mm tape 
+(blocking factor of 0), but we can also do lower density 8mm tapes.
+If you can set up a temporary account on the machine for us (htisetup),
+we transfer via rcp/ftp and help diagnose configuration problems
+more effectively.
+
+
+<H3>OED special information</H3>
+If you're using Paul Pomes's ox2 or something like it with a previous version of 
+OT/PAT, you'll probably want to keep a parallel version of your old OED 
+resources until you can figure out how to have ox2 talk to the new index 
+(it's just differences in naming conventions), or
+until you can wean users from the old program.  At Michigan, we have
+discontinued our telnet- and non-Web client-based access, as it was no longer being used.
+
+<P>The middleware and data dictionaries are of inconsequential size --
+somewhere less than 1500 lines of perl code for each piece of
+middleware, around 100kb of perl libraries; something like 70-100kb
+for each data dictionary.
+
+<HR>
+<P>1998-01-22, nigelk@umich.edu
+  <script src="http://www.google-analytics.com/urchin.js" type="text/javascript">
+  </script>
+  <script type="text/javascript">
+  _uacct = "UA-954893-5";
+  urchinTracker();
+  </script>
+  </BODY>
+</HTML>

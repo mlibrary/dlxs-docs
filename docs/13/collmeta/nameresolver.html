@@ -1,0 +1,31 @@
+<html>
+<head>
+<title>nameresolver: For Building Persistent URLs</title>
+<link href="../dlxsdocs.css" rel="stylesheet" type="text/css">
+</head>
+<body>
+<div class="pageTitle">nameresolver: For Building Persistent URLs</div>
+<p><tt>nameresolver</tt> is a CGI program that allows lengthy URLs-- e.g., those with multiple CGI parameters-- to be translated to a short URL for permanence. In the case of DLPS, URLs such as:</p>
+<ul>
+<li>http://www.hti.umich.edu/cgi/t/text/text-idx?c=moa;idno=1462339.1913.002</li>
+</ul>
+<p>Get translated to:</p>
+<ul>
+<li>http://name.umdl.umich.edu/1462339.1913.002</li>
+</ul>
+
+<p>This provides a bookmarkable URL for incorporation into DLXS templates and other web pages.</p>
+
+<p>The program works by parsing the <tt>ID</tt> attribute of the <tt>A</tt> field in Bib Class and appending the value of that attribute to the <tt>http://name.umdl.umich.edu/</tt> prefix. The record associated with the <tt>A</tt> field is what the user sees when they link to the short, persistent, nameresolver URL, e.g., <a href="http://name.umdl.umich.edu/1462339.1913.002">http://name.umdl.umich.edu/1462339.1913.002</a></p>
+
+<p>To use the program:
+
+<ol>
+<li>Create Bib Class records with appropriate <tt>ID</tt> attributes.</li> <li>Create a new group in collmgr with the ID of <tt>bibperm</tt> with webdir set to <tt>/b/bibperm</tt>.</li>
+<li>Check those Bib Class collections you want to provide nameresolver URLs for and release the group.</li>
+</ol></p>
+
+<p>The program itself lives in /{$DLXSROOT}/cgi/b/bib and is called <tt>bibperm</tt>.</p>
+
+</body>
+</html>

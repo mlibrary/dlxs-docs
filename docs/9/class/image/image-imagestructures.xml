@@ -1,0 +1,1225 @@
+<?xml version="1.0"?>
+
+<!-- SPO Editorial Services                  -->
+<!-- automatically-generated XML header file -->
+
+<?xml-stylesheet href="../../../pre11-dlxsdocs.xsl" type="text/xsl"?>
+<!DOCTYPE DLPSDOC PUBLIC "-//UM-DLPS//DTD DLPS Publications//EN" "http://docs.umdl.umich.edu/dlps/docs/dlpsdocs.dtd">
+<DLPSDOC>
+<TITLE>Image Class - Mapping Image Structures</TITLE>
+<HEADER>
+<JOURNAL>DLXS Documentation</JOURNAL>
+<PUBDATE>2002-07-03 17:18:41 EDT</PUBDATE>
+<AUTH1>Weise, John</AUTH1>
+<AUTH2></AUTH2>
+<DOCTITLE>Image Class - Mapping Image Structures</DOCTITLE>
+<VOL>class</VOL>
+<ISS>image</ISS>
+<FILE>dlxsdocs-image-imagestructures</FILE>
+</HEADER>
+
+
+
+
+<BODY>
+<BHEAD>Image Class - Mapping Image Structures</BHEAD>
+<DIV1 ID="main">
+<P>Most often each record of a database has a single digital image associated 
+  with it. In such situations, configuration is relatively simple and described 
+  fully in the <A HREF="image-datatransform.xml">Image Class Data Transformation</A> 
+  document. The instructions in this document are for less common situations, 
+  where a record has multiple images associated with it; for example, several 
+  views of an sculpture. Each of these views might be of equal standing, or perhaps 
+  there is one that alone does a reasonable job of summarizing the object, while 
+  the others provide valuable details difficult to see in the summary. These 
+  are basic examples of structural configurations for images. Previous to version 
+  1 of the Image Class, only basic structural configurations were possible. It 
+  is now possible to represent in a single record a highly complex structure of 
+  images.</P>
+
+<P>The key factors for the accurate representation of image
+structures in the image class are:</P>
+
+<UL>
+   <LI>The representation of image filenames and associated image
+   captions within fields.</LI>
+   
+   <LI>Appropriate mapping of the fields for transformation to
+   SGML.</LI>
+</UL>
+
+<P>A this time, complex structures apply to entire collections and cannot be defined at the record level.</P>
+
+<P>Please also read <A HREF="image-datatransform.xml">Image Class Data Transformation</A>.</P>
+
+<DIV2 ID="definitions">
+<H2>Definitions</H2>
+
+<P>An <B>image filename field</B> is a field of a database that
+contains image filenames and nothing else. An image filename field
+may have any number of repetitions, with an image filename in
+each.</P>
+
+<P>An <B>image caption field</B> is a field of a database that
+contains descriptive text that typically describes the image in a
+very specific way. For example, "View of steeple from the north." A
+record with multiple image filenames will often have a corresponding
+caption for each, though this is not always the case. </P>
+
+<P>A record with an image filename field that has 5 repetitions will
+often have a <B>corresponding</B> image caption field with 5
+repetitions. The values in each are synchronized.</P>
+
+<P>Note that in these examples the actual names of the image files
+could be anything logical.</P>
+
+<TABLE BORDER="1">
+<TBODY>
+   <TR>
+      <TH>
+         <P >Image Filename Field</P>
+      </TH>
+      <TD>
+         <P>image01.tif</P>
+      </TD>
+      <TD>
+         <P>image02.tif</P>
+      </TD>
+      <TD>
+         <P>image03.tif</P>
+      </TD>
+      <TD>
+         <P>image04.tif</P>
+      </TD>
+      <TD>
+         <P>image05.tif</P>
+      </TD>
+   </TR>
+   <TR>
+      <TH>
+         <P >Image Caption Field</P>
+      </TH>
+      <TD>
+         <P>View from the north</P>
+      </TD>
+      <TD>
+         <P>View from the south</P>
+      </TD>
+      <TD>
+         <P>View from the east</P>
+      </TD>
+      <TD>
+         <P>View from the west</P>
+      </TD>
+      <TD>
+         <P>View from the sky</P>
+      </TD>
+   </TR>
+</TBODY>
+</TABLE>
+
+
+<P>A single record may also have multiple image filename fields, and
+multiple image caption fields. Together they might represent a
+hierarchical structure.</P>
+
+<TABLE BORDER="1">
+<TBODY>
+   <TR>
+      <TD>
+         <TABLE BORDER="1">
+         <TBODY>
+            <TR>
+               <TH>
+                  <P >Image Filename Field 1</P>
+               </TH>
+               <TD>
+                  <P>image01.tif</P>
+               </TD>
+            </TR>
+            <TR>
+               <TH>
+                  <P >Image Caption Field 1</P>
+               </TH>
+               <TD>
+                  <P>Front view of sculpture (overview)</P>
+               </TD>
+            </TR>
+	    </TBODY>
+         </TABLE>
+         <TABLE BORDER="1">
+	    <TBODY>
+            <TR>
+               <TH>
+                  <P >Image Filename Field 2</P>
+               </TH>
+               <TD>
+                  <P>imageF.tif</P>
+               </TD>
+               <TD>
+                  <P>imageB.tif</P>
+               </TD>
+               <TD>
+                  <P>imageR.tif</P>
+               </TD>
+               <TD>
+                  <P>imageL.tif</P>
+               </TD>
+            </TR>
+            <TR>
+               <TH>
+                  <P>Image Caption Field 2</P>
+               </TH>
+               <TD>
+                  <P>Front view of sculpture (detail)</P>
+               </TD>
+               <TD>
+                  <P>Back of sculpture</P>
+               </TD>
+               <TD>
+                  <P>Right side of sculpture</P>
+               </TD>
+               <TD>
+                  <P>Left side of Sculpture</P>
+               </TD>
+            </TR>
+	    </TBODY>
+         </TABLE>
+
+      </TD>
+   </TR>
+</TBODY>
+</TABLE>
+
+
+<P>To get an idea of a more complicated example, look at the
+following example from the <A HREF="http://images.umdl.umich.edu/cgi/i/image/image-idx?view=entry;subview=detail;cc=apis;entryid=X-1637;viewid=1">Advanced
+Papyrological Information System</A>, deployed in the Image Class at
+the University of Michigan. <B>Be sure to scroll through the entire
+page to see how the structure is displayed with the thumbnail
+images.</B></P>
+
+<P><B>Administrative metadata field mappings</B> are used to identify
+which fields are image filename and image caption fields for the
+purpose of transforming data to the Image Class SGML DTD. Previous to
+version 1 of the Image Class, the only administrative metadata field
+mappings for images and captions were <B>IS.fn</B> (filename field
+mapping) and <B>IS.vi</B> (view/caption field mapping). Functionally
+these mappings still exist, though they have been changed to <B>IC.fn</B>
+and <B>IC.vi</B>. Additionally, there is now a complex set of mappings that
+can be used to represent complex structures. Generically the new
+mappings are referred to as <B>IC.fn-st</B> and <B>IC.vi-st</B> (the
+"st" is for "structured).</P>
+
+<P>A <B>structure</B> is a group of image filename fields and image
+caption fields (and therefore images and captions) that together make
+up a structure. A record can have more than one structure. This
+<A HREF="http://images.umdl.umich.edu/cgi/i/image/image-idx?lasttype=boolean;view=entry;subview=detail;cc=apis;entryid=X-2544;viewid=1;sstrt=1521;hits=2083;q1=bmp;op2=And;op3=And;rgn1=All+Categories;rgn2=All+Categories;rgn3=All+Categories;c=apis;thsz=12;txsz=100;slsz=1">papyrus
+example</A> has two structures. The first structure ties all of the
+front views together, and the second ties all of the back views
+together. This causes the structural display online of thumbnail
+images to flow from front summary images to front detail to back
+summary to back detail. This flow can be changed by assigning the
+structural IDs differently.</P>
+</DIV2>
+<DIV2 ID="rules">
+<H2>Rules</H2>
+
+<OL>
+   <LI>A record may have any number of image filename fields, and the
+   fields may have repetitions.</LI>
+   
+   <LI>Each image filename field must be mapped to <B>only one</B>
+   administrative metadata image filename mapping (IC.fn,
+   IC.fn-st).</LI>
+   
+   <LI>A record may have any number of image caption fields, and the
+   fields may have repetitions.</LI>
+   
+   <LI>Each image caption field may be mapped with any number of
+   administrative metadata image caption mappings (IC.vi,
+   IC.vi-st).</LI>
+   
+   <LI>Each image caption field mapped to IC.vi will be associated
+   with all image filename fields mapped to IC.fn (but not fields
+   mapped to IC.fn-st).</LI>
+   
+   <LI>Fields mapped to IC.vi or IC.vi-st may have one or more
+   repetitions, which may be independent of the number of repetitions
+   in the associated IC.fn or IC.fn-st mapped field. </LI>
+   
+   <LI>If the image filename field has repetitions but the
+   corresponding image caption field does not, then the single value
+   of the image caption field is associated with each of the
+   repetitions of the image filename field.</LI>
+   
+   <LI>Structures can only be specified at the collection level. It
+   is not currently possible to have the structure change per
+   record.</LI>
+</OL>
+</DIV2>
+
+<DIV2 ID="syntax">
+<H2>Syntax</H2>
+
+<P>Simple situations (one image per record) can be handled with a simple 
+  mapping of the image filename field to "IC.fn" and the caption field to "IC.vi" 
+  <A HREF="image-datatransform.xml#RecordNumber4">as described</A> in the transformation 
+  documentation.</P>
+
+<P>More complex situations rely on the structural mappings so far
+referred to as IC.fn-st and IC.vi-st. These are not the actual
+mappings, they are only generic and simplified representations to aid
+discussion. The actual mappings consist of a base (IC.fn and IC.vi)
+and four attributes. <B>When structural mappings are used, all four
+attributes are required to have values.</B></P>
+
+<P><B>The base:</B>&#0160;IC.fn and IC.vi</P>
+
+<P><B>Type Attribute</B></P>
+
+<TABLE BORDER="1">
+<TBODY>
+   <TR>
+      <TH>
+         <P>Type Attribute Value</P>
+      </TH>
+      <TH>
+         <P>Description</P>
+      </TH>
+   </TR>
+   <TR>
+      <TD>
+         <P>type="summ"</P>
+      </TD>
+      <TD>
+         <P>For fields that represent images that summarize all the
+         images of the record.</P>
+      </TD>
+   </TR>
+   <TR>
+      <TD>
+         <P>type="det"</P>
+      </TD>
+      <TD>
+         <P>For fields that represent images that provide greater
+         detail or extended view than what is depicted in the
+         summary images.</P>
+      </TD>
+   </TR>
+</TBODY>
+</TABLE>
+
+
+<P><B>Face Attribute</B></P>
+
+<TABLE BORDER="1">
+<TBODY>
+   <TR>
+      <TH>
+         <P>Face Attribute Value</P>
+      </TH>
+      <TH>
+         <P>Description</P>
+      </TH>
+   </TR>
+   <TR>
+      <TD>
+         <P>face="front"</P>
+      </TD>
+      <TD>
+         <P>For fields that represent images that provide views of
+         the front.</P>
+      </TD>
+   </TR>
+   <TR>
+      <TD>
+         <P>face=" back"</P>
+      </TD>
+      <TD>
+         <P>For fields that represent images that provide views of
+         the back.</P>
+      </TD>
+   </TR>
+   <TR>
+      <TD>
+         <P>face=" right"</P>
+      </TD>
+      <TD>
+         <P>For fields that represent images that provide views of
+         the right.</P>
+      </TD>
+   </TR>
+   <TR>
+      <TD>
+         <P>face=" left"</P>
+      </TD>
+      <TD>
+         <P>For fields that represent images that provide views of
+         the left.</P>
+      </TD>
+   </TR>
+   <TR>
+      <TD>
+         <P>face=" top"</P>
+      </TD>
+      <TD>
+         <P>For fields that represent images that provide views of
+         the top.</P>
+      </TD>
+   </TR>
+   <TR>
+      <TD>
+         <P>face=" bottom"</P>
+      </TD>
+      <TD>
+         <P>For fields that represent images that provide views of
+         the bottom.</P>
+      </TD>
+   </TR>
+</TBODY></TABLE>
+
+
+<P><B>Structural ID (STID) Attribute</B></P>
+
+<P>stid=1</P>
+
+<P>Each structure must be given a numeric ID. Be sure to read the
+definition of structure given above. Structural IDs can be assigned
+somewhat arbitrarily, though there needs to be at least one.</P>
+
+<P><B>Y Attribute</B></P>
+
+<P>y=1</P>
+
+<P>Sometimes images of a record are meant to be combined in the structure of a two dimensional matrix, which can also be thought of as a table or tiles. The Y attribute, together with the unspecified X attribute, allow for a matrix of images to be represented in the SGML.</P>
+
+<P>Databases typically only offer the ability to have field repetitions in one dimension. That is, a 1xN field of repetitions can be built. To simulate a two dimensional matrix involves working with multiple repeating fields where each repetition represents a column (X) and each field a row (Y).</P>
+
+<P>It is necessary to specify the Y attribute in the configuration file, but it is not necessary to specify the X attribute which is calculuated automatically at the time of transformation depending on the number of repetitions there are in a record.</P> 
+
+<P>A good example is
+<A HREF="http://images.umdl.umich.edu/cgi/i/image/image-idx?view=entry;subview=detail;cc=apis;entryid=X-1637;viewid=1">this papyrus
+example</A>.</P>
+
+
+<TABLE BORDER="1">
+<TBODY>
+   <TR>
+      <TH COLSPAN="2">
+         <P>These two discrete fields can be combined to
+         form a two dimensional matrix. </P>
+      </TH>
+   </TR>
+   <TR>
+      <TD>
+         <P>Image Filename Field 1</P>
+      </TD>
+      <TD>
+         <TABLE BORDER="1">
+<TBODY>         
+   <TR>
+               <TD>
+                  <P>X="1, Y=1"</P>
+               </TD>
+               <TD>
+                  <P>X="2, Y=1"</P>
+               </TD>
+            </TR>
+</TBODY>
+         </TABLE>
+        
+      </TD>
+   </TR>
+   <TR>
+      <TD>
+         <P>Image Filename Field 2</P>
+      </TD>
+      <TD>
+         <TABLE BORDER="1">
+<TBODY>         
+   <TR>
+               <TD>
+                  <P>X="1, Y=2"</P>
+               </TD>
+               <TD>
+                  <P>X="2, Y=2"</P>
+               </TD>
+            </TR>
+</TBODY>
+         </TABLE>
+        
+      </TD>
+   </TR>
+</TBODY>
+</TABLE>
+
+
+<P><B>Combining the Base with the Attributes</B></P>
+
+<P>All attributes are required in all cases and the components must
+be joined with a period (".") as demonstrated below.</P>
+
+<P>For an image filename field: 
+<BR/>IC.fn-type=summ.face=front.stid=1.y=1
+</P><P>For the caption field that corresponds with the above filename field: 
+<BR/>IC.vi-type=summ.face=front.stid=1.y=1</P>
+</DIV2>
+<DIV2>
+<H2>Examples</H2>
+<DIV3 ID="bhl">
+<H3>University of Michigan, <A HREF="http://images.umdl.umich.edu/b/bhl/">Bentley
+Historical Library</A>.</H3>
+
+<P>View an <A HREF="http://images.umdl.umich.edu/cgi/i/image/image-idx?lasttype=simple;view=entry;subview=detail;cc=bhl;entryid=X-bl000037;viewid=1;sstrt=604;hits=1152;q1=Bentley;rgn1=All+Categories;c=bhl;med=1;thsz=12;txsz=50;slsz=1">example record</A> online.</P>
+
+ <TABLE BORDER="1">
+<TBODY>
+	    <TR>
+      <TD>
+         <P>Image Filename Fields per Record</P>
+      </TD>
+      <TD>
+         <P>1</P>
+      </TD>
+   </TR>
+   <TR>
+      <TD>
+         <P>Image Filename Field Repetitions</P>
+      </TD>
+      <TD>
+         <P>1</P>
+      </TD>
+   </TR>
+   <TR>
+      <TD>
+         <P>Image Caption Fields per Record</P>
+      </TD>
+      <TD>
+         <P>1</P>
+      </TD>
+   </TR>
+   <TR>
+      <TD>
+         <P>Image Caption Field Repetitions</P>
+      </TD>
+      <TD>
+         <P>1</P>
+      </TD>
+   </TR>
+</TBODY>
+</TABLE>
+
+
+<TABLE BORDER="1">
+<TBODY>
+   <TR>
+      <TH>
+         <P>Field Name</P>
+      </TH>
+      <TH>
+         <P>Field Type</P>
+      </TH>
+      <TH>
+         <P>Administrative Metadata Mapping</P>
+      </TH>
+   </TR>
+   <TR>
+      <TD>
+         <P>Bentley Item Number</P>
+      </TD>
+      <TD>
+         <P>Image Filename Field</P>
+      </TD>
+      <TD>
+         <P>IC.fn</P>
+      </TD>
+   </TR>
+   <TR>
+      <TD>
+         <P>Image title</P>
+      </TD>
+      <TD>
+         <P>Image Caption Field</P>
+      </TD>
+      <TD>
+         <P>IC.vi</P>
+      </TD>
+   </TR>
+</TBODY>
+</TABLE>
+
+</DIV3>
+<DIV3 ID="musart">
+<H3>University of Michigan, <A HREF="http://images.umdl.umich.edu/m/musart/">Museum
+of Art</A>.</H3>
+
+<P>View an <A HREF="http://images.umdl.umich.edu/cgi/i/image/image-idx?lasttype=simple;view=entry;subview=detail;cc=musart;entryid=X-1942.6;viewid=12;sstrt=1;hits=1;q1=Processional+Cross;rgn1=All+Categories;c=musart;thsz=12;txsz=50;slsz=1"> example record</A> online.</P>
+
+
+ <TABLE BORDER="1">
+<TBODY>
+   <TR>
+      <TD>
+         <P>Image Filename Fields per Record</P>
+      </TD>
+      <TD>
+         <P>2</P>
+      </TD>
+   </TR>
+   <TR>
+      <TD>
+         <P>Image Filename Field Repetitions (Field "ShortName")</P>
+      </TD>
+      <TD>
+         <P>1</P>
+      </TD>
+   </TR>
+   <TR>
+      <TD>
+         <P>Image Filename Field Repetitions (Field
+         "RepeatingImages")</P>
+      </TD>
+      <TD>
+         <P>20</P>
+      </TD>
+   </TR>
+   <TR>
+      <TD>
+         <P>Image Caption Fields per Record</P>
+      </TD>
+      <TD>
+         <P>3</P>
+      </TD>
+   </TR>
+   <TR>
+      <TD>
+         <P>Image Caption Field Repetitions (Field "ShortName")</P>
+      </TD>
+      <TD>
+         <P>1</P>
+      </TD>
+   </TR>
+   <TR>
+      <TD>
+         <P>Image Caption Field Repetitions (Field
+         "RepeatingImages")</P>
+      </TD>
+      <TD>
+         <P>20</P>
+      </TD>
+   </TR>
+   <TR>
+      <TD>
+         <P>Image Caption Field Repetitions (Field
+         "Title")</P>
+      </TD>
+      <TD>
+         <P>1</P>
+      </TD>
+</TR>
+</TBODY>
+</TABLE>
+
+
+
+
+<TABLE BORDER="1">
+<TBODY>
+   <TR>
+      <TH>
+         <P>Field Name</P>
+      </TH>
+      <TH>
+         <P>Field Type</P>
+      </TH>
+      <TH>
+         <P>Administrative Metadata Mapping</P>
+      </TH>
+   </TR>
+   <TR>
+      <TD>
+         <P>ShortName</P>
+      </TD>
+      <TD>
+         <P>Image Filename Field</P>
+      </TD>
+      <TD>
+         <P>IC.fn-type="summ.face=front.stid=1.y=1"<BR/>
+         IC.vi-type="summ.face=front.stid=1.y=1"</P>
+      </TD>
+   </TR>
+   <TR>
+      <TD>
+         <P>RepeatingImages</P>
+      </TD>
+      <TD>
+         <P>Image Caption Field</P>
+      </TD>
+      <TD>
+         <P>IC.fn-type="det.face=front.stid=2.y=1"<BR/>
+         IC.vi-type="det.face=front.stid=2.y=1"</P>
+      </TD>
+   </TR>
+   <TR>
+      <TD>
+         <P>Title</P>
+      </TD>
+      <TD>
+         <P>Image Caption Field</P>
+      </TD>
+      <TD>
+         <P>IC.vi-type="det.face=front.stid=1.y=1"<BR/>
+         IC.vi-type="summ.face=front.stid=2.y=1"</P>
+      </TD>
+   </TR>
+</TBODY>
+</TABLE>
+
+
+</DIV3>
+<DIV3 ID="apis">
+<H3>University of Michigan, <A HREF="http://images.umdl.umich.edu/a/apis/">Advanced Papyrological Information System</A></H3>
+
+<P>View the <A HREF="http://images.umdl.umich.edu/cgi/i/image/image-idx?lasttype=boolean;view=entry;subview=detail;cc=apis;entryid=X-2544;viewid=1;sstrt=1521;hits=2083;q1=bmp;op2=And;op3=And;rgn1=All+Categories;rgn2=All+Categories;rgn3=All+Categories;c=apis;thsz=12;txsz=100;slsz=1">example record</A> online. Note that the apis structure has the potential to have a large number of images, but this example happens to only have 6.</P>
+
+
+<TABLE BORDER="1">
+<TBODY>
+   <TR>
+      <TD>
+         <P>Image Filename Fields per Record</P>
+      </TD>
+      <TD>
+         <P>21</P>
+      </TD>
+   </TR>
+   <TR>
+      <TD>
+         <P>Image Filename Field Repetitions (Field "Full SizeBack
+         R1")</P>
+      </TD>
+      <TD>
+         <P>2</P>
+      </TD>
+   </TR>
+   <TR>
+      <TD>
+         <P>Image Filename Field Repetitions (Field "Full SizeBack
+         R2")</P>
+      </TD>
+      <TD>
+         <P>2</P>
+      </TD>
+   </TR>
+   <TR>
+      <TD>
+         <P>Image Filename Field Repetitions (Field "Full SizeFront
+         R1")</P>
+      </TD>
+      <TD>
+         <P>2</P>
+      </TD>
+   </TR>
+   <TR>
+      <TD>
+         <P>Image Filename Field Repetitions (Field "Full SizeFront
+         R1")</P>
+      </TD>
+      <TD>
+         <P>2</P>
+      </TD>
+   </TR>
+   <TR>
+      <TD>
+         <P>Image Filename Field Repetitions (Field "_600DPIBack
+         R1")</P>
+      </TD>
+      <TD>
+         <P>8</P>
+      </TD>
+   </TR>
+   <TR>
+      <TD>
+         <P>Image Filename Field Repetitions (Field "_600DPIBack
+         R2")</P>
+      </TD>
+      <TD>
+         <P>8</P>
+      </TD>
+   </TR>
+   <TR>
+      <TD>
+         <P>Image Filename Field Repetitions (Field "_600DPIBack
+         R3")</P>
+      </TD>
+      <TD>
+         <P>8</P>
+      </TD>
+   </TR>
+   <TR>
+      <TD>
+         <P>Image Filename Field Repetitions (Field "_600DPIBack
+         R4")</P>
+      </TD>
+      <TD>
+         <P>8</P>
+      </TD>
+   </TR>
+   <TR>
+      <TD>
+         <P>Image Filename Field Repetitions (Field "_600DPIBack
+         R5")</P>
+      </TD>
+      <TD>
+         <P>8</P>
+      </TD>
+   </TR>
+   <TR>
+      <TD>
+         <P>Image Filename Field Repetitions (Field "_600DPIBack
+         R6")</P>
+      </TD>
+      <TD>
+         <P>8</P>
+      </TD>
+   </TR>
+   <TR>
+      <TD>
+         <P>Image Filename Field Repetitions (Field "_600DPIBack
+         R7")</P>
+      </TD>
+      <TD>
+         <P>8</P>
+      </TD>
+   </TR>
+   <TR>
+      <TD>
+         <P>Image Filename Field Repetitions (Field "_600DPIBack
+         R8")</P>
+      </TD>
+      <TD>
+         <P>8</P>
+      </TD>
+   </TR>
+   <TR>
+      <TD>
+         <P>Image Filename Field Repetitions (Field "_600DPIFront
+         R1")</P>
+      </TD>
+      <TD>
+         <P>8</P>
+      </TD>
+   </TR>
+   <TR>
+      <TD>
+         <P>Image Filename Field Repetitions (Field "_600DPIFront
+         R2")</P>
+      </TD>
+      <TD>
+         <P>8</P>
+      </TD>
+   </TR>
+   <TR>
+      <TD>
+         <P>Image Filename Field Repetitions (Field "_600DPIFront
+         R3")</P>
+      </TD>
+      <TD>
+         <P>8</P>
+      </TD>
+   </TR>
+   <TR>
+      <TD>
+         <P>Image Filename Field Repetitions (Field "_600DPIFront
+         R4")</P>
+      </TD>
+      <TD>
+         <P>8</P>
+      </TD>
+   </TR>
+   <TR>
+      <TD>
+         <P>Image Filename Field Repetitions (Field "_600DPIFront
+         R5")</P>
+      </TD>
+      <TD>
+         <P>8</P>
+      </TD>
+   </TR>
+   <TR>
+      <TD>
+         <P>Image Filename Field Repetitions (Field "_600DPIFront
+         R6")</P>
+      </TD>
+      <TD>
+         <P>8</P>
+      </TD>
+   </TR>
+   <TR>
+      <TD>
+         <P>Image Filename Field Repetitions (Field "_600DPIFront
+         R7")</P>
+      </TD>
+      <TD>
+         <P>8</P>
+      </TD>
+   </TR>
+   <TR>
+      <TD>
+         <P>Image Filename Field Repetitions (Field "_600DPIFront
+         R8")</P>
+      </TD>
+      <TD>
+         <P>8</P>
+      </TD>
+   </TR>
+   <TR>
+      <TD>
+         <P>Image Filename Field Repetitions (Field "INV NO")</P>
+      </TD>
+      <TD>
+         <P>1</P>
+      </TD>
+   </TR>
+</TBODY>
+</TABLE>
+
+
+<TABLE BORDER="1">
+ <TBODY>  <TR>
+      <TH>
+         <P>Field Name</P>
+      </TH>
+      <TH>
+         <P>Field Type</P>
+      </TH>
+      <TH>
+         <P>Administrative Metadata Mapping</P>
+      </TH>
+   </TR>
+   <TR>
+      <TD>
+         <P>Image Filename Field Repetitions (Field "Full SizeBack
+         R1")</P>
+      </TD>
+      <TD>
+         <P>Summary Image Filename Field<BR/>
+         Summary Image Caption Field<BR/>
+         (Back of Item Summary, Row 1 of 2)</P>
+      </TD>
+      <TD>
+         <P>IC.fn-type=summ.face=back.stid=2.y=1
+         IC.vi-type=summ.face=back.stid=2.y=1</P>
+      </TD>
+   </TR>
+   <TR>
+      <TD>
+         <P>Image Filename Field Repetitions (Field "Full SizeBack
+         R2")</P>
+      </TD>
+      <TD>
+         <P>Summary Image Filename Field<BR/>
+         Summary Image Caption Field<BR/>
+         (Back of Item Summary, Row 2 of 2)</P>
+      </TD>
+      <TD>
+         <P>IC.fn-type=summ.face=back.stid=2.y=2
+         IC.vi-type=summ.face=back.stid=2.y=2</P>
+      </TD>
+   </TR>
+   <TR>
+      <TD>
+         <P>Image Filename Field Repetitions (Field "Full SizeFront
+         R1")</P>
+      </TD>
+      <TD>
+         <P>Summary Image Filename Field<BR/>
+         Summary Image Caption Field<BR/>
+         (Front of Item Summary, Row 1 of 2)</P>
+      </TD>
+      <TD>
+         <P>IC.fn-type=summ.face=front.stid=1.y=1
+         IC.vi-type=summ.face=front.stid=1.y=1</P>
+      </TD>
+   </TR>
+   <TR>
+      <TD>
+         <P>Image Filename Field Repetitions (Field "Full SizeFront
+         R2")</P>
+      </TD>
+      <TD>
+         <P>Summary Image Filename Field<BR/>
+         Summary Image Caption Field<BR/>
+         (Front of Item Summary, Row 2 of 2)</P>
+      </TD>
+      <TD>
+         <P>IC.fn-type=summ.face=front.stid=1.y=2
+         IC.vi-type=summ.face=front.stid=1.y=2</P>
+      </TD>
+   </TR>
+   <TR>
+      <TD>
+         <P>Image Filename Field Repetitions (Field "_600DPIBack
+         R1")</P>
+      </TD>
+      <TD>
+         <P>Detail Image Filename Field<BR/>
+         Detail Image Caption Field<BR/>
+         (Back of Item Detail, Row 1 of 8)</P>
+      </TD>
+      <TD>
+         <P>IC.fn-type=det.face=back.stid=2.y=1
+         IC.vi-type=det.face=back.stid=2.y=1</P>
+      </TD>
+   </TR>
+   <TR>
+      <TD>
+         <P>Image Filename Field Repetitions (Field "_600DPIBack
+         R2")</P>
+      </TD>
+      <TD>
+         <P>Detail Image Filename Field<BR/>
+         Detail Image Caption Field<BR/>
+         (Back of Item Detail, Row 2 of 8)</P>
+      </TD>
+      <TD>
+         <P>IC.fn-type=det.face=back.stid=2.y=2
+         IC.vi-type=det.face=back.stid=2.y=2</P>
+      </TD>
+   </TR>
+   <TR>
+      <TD>
+         <P>Image Filename Field Repetitions (Field "_600DPIBack
+         R3")</P>
+      </TD>
+      <TD>
+         <P>Detail Image Filename Field<BR/>
+         Detail Image Caption Field<BR/>
+         (Back of Item Detail, Row 3 of 8)</P>
+      </TD>
+      <TD>
+         <P>IC.fn-type=det.face=back.stid=2.y=3
+         IC.vi-type=det.face=back.stid=2.y=3</P>
+      </TD>
+   </TR>
+   <TR>
+      <TD>
+         <P>Image Filename Field Repetitions (Field "_600DPIBack
+         R4")</P>
+      </TD>
+      <TD>
+         <P>Detail Image Filename Field<BR/>
+         Detail Image Caption Field<BR/>
+         (Back of Item Detail, Row 4 of 8)</P>
+      </TD>
+      <TD>
+         <P>IC.fn-type=det.face=back.stid=2.y=4
+         IC.vi-type=det.face=back.stid=2.y=4</P>
+      </TD>
+   </TR>
+   <TR>
+      <TD>
+         <P>Image Filename Field Repetitions (Field "_600DPIBack
+         R5")</P>
+      </TD>
+      <TD>
+         <P>Detail Image Filename Field<BR/>
+         Detail Image Caption Field<BR/>
+         (Back of Item Detail, Row 5 of 8)</P>
+      </TD>
+      <TD>
+         <P>IC.fn-type=det.face=back.stid=2.y=5
+         IC.vi-type=det.face=back.stid=2.y=5</P>
+      </TD>
+   </TR>
+   <TR>
+      <TD>
+         <P>Image Filename Field Repetitions (Field "_600DPIBack
+         R6")</P>
+      </TD>
+      <TD>
+         <P>Detail Image Filename Field<BR/>
+         Detail Image Caption Field<BR/>
+         (Back of Item Detail, Row 6 of 8)</P>
+      </TD>
+      <TD>
+         <P>IC.fn-type=det.face=back.stid=2.y=6
+         IC.vi-type=det.face=back.stid=2.y=6</P>
+      </TD>
+   </TR>
+   <TR>
+      <TD>
+         <P>Image Filename Field Repetitions (Field "_600DPIBack
+         R7")</P>
+      </TD>
+      <TD>
+         <P>Detail Image Filename Field<BR/>
+         Detail Image Caption Field<BR/>
+         (Back of Item Detail, Row 7 of 8)</P>
+      </TD>
+      <TD>
+         <P>IC.fn-type=det.face=back.stid=2.y=7
+         IC.vi-type=det.face=back.stid=2.y=7</P>
+      </TD>
+   </TR>
+   <TR>
+      <TD>
+         <P>Image Filename Field Repetitions (Field "_600DPIBack
+         R8")</P>
+      </TD>
+      <TD>
+         <P>Detail Image Filename Field<BR/>
+         Detail Image Caption Field<BR/>
+         (Back of Item Detail, Row 8 of 8)</P>
+      </TD>
+      <TD>
+         <P>IC.fn-type=det.face=back.stid=2.y=8
+         IC.vi-type=det.face=back.stid=2.y=8</P>
+      </TD>
+   </TR>
+   <TR>
+      <TD>
+         <P>Image Filename Field Repetitions (Field "_600DPIFront
+         R1")</P>
+      </TD>
+      <TD>
+         <P>Detail Image Filename Field<BR/>
+         Detail Image Caption Field<BR/>
+         (Front of Item Detail, Row 1 of 8)</P>
+      </TD>
+      <TD>
+         <P>IC.fn-type=det.face=front.stid=1.y=1
+         IC.vi-type=det.face=front.stid=1.y=1</P>
+      </TD>
+   </TR>
+   <TR>
+      <TD>
+         <P>Image Filename Field Repetitions (Field "_600DPIFront
+         R2")</P>
+      </TD>
+      <TD>
+         <P>Detail Image Filename Field<BR/>
+         Detail Image Caption Field<BR/>
+         (Front of Item Detail, Row 2 of 8)</P>
+      </TD>
+      <TD>
+         <P>IC.fn-type=det.face=front.stid=1.y=2
+         IC.vi-type=det.face=front.stid=1.y=2</P>
+      </TD>
+   </TR>
+   <TR>
+      <TD>
+         <P>Image Filename Field Repetitions (Field "_600DPIFront
+         R3")</P>
+      </TD>
+      <TD>
+         <P>Detail Image Filename Field<BR/>
+         Detail Image Caption Field<BR/>
+         (Front of Item Detail, Row 3 of 8)</P>
+      </TD>
+      <TD>
+         <P>IC.fn-type=det.face=front.stid=1.y=3
+         IC.vi-type=det.face=front.stid=1.y=3</P>
+      </TD>
+   </TR>
+   <TR>
+      <TD>
+         <P>Image Filename Field Repetitions (Field "_600DPIFront
+         R4")</P>
+      </TD>
+      <TD>
+         <P>Detail Image Filename Field<BR/>
+         Detail Image Caption Field<BR/>
+         (Front of Item Detail, Row 4 of 8)</P>
+      </TD>
+      <TD>
+         <P>IC.fn-type=det.face=front.stid=1.y=4
+         IC.vi-type=det.face=front.stid=1.y=4</P>
+      </TD>
+   </TR>
+   <TR>
+      <TD>
+         <P>Image Filename Field Repetitions (Field "_600DPIFront
+         R5")</P>
+      </TD>
+      <TD>
+         <P>Detail Image Filename Field<BR/>
+         Detail Image Caption Field<BR/>
+         (Front of Item Detail, Row 5 of 8)</P>
+      </TD>
+      <TD>
+         <P>IC.fn-type=det.face=front.stid=1.y=5
+         IC.vi-type=det.face=front.stid=1.y=5</P>
+      </TD>
+   </TR>
+   <TR>
+      <TD>
+         <P>Image Filename Field Repetitions (Field "_600DPIFront
+         R6")</P>
+      </TD>
+      <TD>
+         <P>Detail Image Filename Field<BR/>
+         Detail Image Caption Field<BR/>
+         (Front of Item Detail, Row 6 of 8)</P>
+      </TD>
+      <TD>
+         <P>IC.fn-type=det.face=front.stid=1.y=6
+         IC.vi-type=det.face=front.stid=1.y=6</P>
+      </TD>
+   </TR>
+   <TR>
+      <TD>
+         <P>Image Filename Field Repetitions (Field "_600DPIFront
+         R7")</P>
+      </TD>
+      <TD>
+         <P>Detail Image Filename Field<BR/>
+         Detail Image Caption Field<BR/>
+         (Front of Item Detail, Row 7 of 8)</P>
+      </TD>
+      <TD>
+         <P>IC.fn-type=det.face=front.stid=1.y=7
+         IC.vi-type=det.face=front.stid=1.y=7</P>
+      </TD>
+   </TR>
+   <TR>
+      <TD>
+         <P>Image Filename Field Repetitions (Field "_600DPIFront
+         R8")</P>
+      </TD>
+      <TD>
+         <P>Detail Image Filename Field<BR/>
+         Detail Image Caption Field<BR/>
+         (Front of Item Detail, Row 8 of 8)</P>
+      </TD>
+      <TD>
+         <P>IC.fn-type=det.face=front.stid=1.y=8
+         IC.vi-type=det.face=front.stid=1.y=8</P>
+      </TD>
+   </TR>
+   <TR>
+      <TD>
+         <P>Image Filename Field Repetitions (Field "INV NO")</P>
+      </TD>
+      <TD>
+         <P>Image Caption Field</P>
+      </TD>
+      <TD>
+         <P>IC.vi-type=summ.face=back.stid=2.y=1
+         IC.vi-type=summ.face=back.stid=2.y=2
+         IC.vi-type=summ.face=front.stid=1.y=1
+         IC.vi-type=summ.face=front.stid=1.y=2</P>
+      </TD>
+   </TR>
+</TBODY>
+</TABLE>
+
+</DIV3>
+</DIV2>
+
+
+<P>dlxs-help@umich.edu</P>
+</DIV1>
+</BODY>
+</DLPSDOC>

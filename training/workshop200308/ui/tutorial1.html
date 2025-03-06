@@ -1,0 +1,325 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>Editing DLXS in MM Dreamweaver</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+<link rel="stylesheet" href="../styles.css" type="text/css">
+</head>
+<body bgcolor="#FFFFFF" leftmargin="10" topmargin="10" marginwidth="10" marginheight="10" class="mainpalette">
+<h1>  Editing DLXS templates <br />
+in Macromedia Dreamweaver MX</h1>
+<br />
+<UL>
+  <LI><a href="#settingup">Setting up Dreamweaver for DLXS templates
+    </a>
+    <UL>
+      <LI><a href="#configuredmx">Configuring Dreamweaver to open DLXS template files
+          </a>
+        <UL>
+            <LI><a href="#doctype">Create a DLXS document type entry in the DW document type definition
+                file</a></LI>
+            <LI><a href="#extensions">Add the tpl extension to the extensions.txt file</a></LI>
+            <LI><a href="#localizedstring">Define a localized string for the DLXS template document type</a></LI>
+        </UL>
+      </LI>
+      <LI><a href="#renderpis">Configure Dreamweaver to render DLXS PIs
+        </a>
+        <UL>
+          <LI><a href="#tagspec">Define a tag specification for the PI tag in Tags.xml</a></LI>
+          <LI><a href="#icon">Create an icon to substitute for a PI in design view</a></LI>
+        </UL>
+      </LI>
+    </UL>
+  </LI>
+  <LI><a href="#editingtemplate">Editing a template file in Dreamweaver</a>
+    <UL>
+      <LI><a href="#viewingsearch">Viewing search.tpl in design view</a></LI>
+    </UL>
+  </LI>
+</UL>
+<hr size="1" width="90%" />
+<P>&nbsp;</P>
+<P><a name="settingup" id="settingup"></a></P>
+<h2>Setting up Dreamweaver for DLXS templates</h2>
+<P>Macromedia Dreamweaver MX (DMX) is built on a fairly robust extensibility
+  model that uses XML and TXT configuration files for defining everything from
+  allowed
+  document types to markup colors, and also provides APIs for developing custom
+  behavior modules, &quot;extensions,&quot; that can be added to the default tools set
+  for the application. The pull-down menu behavior included in the navigation
+  bar
+  for release 10 was created by just such an &quot;extension&quot; created by the firm
+  <a href="http://projectseven.com/" target="external">Project Seven</a>.&nbsp;Taking
+  advantage of that model allows us to configure Dreamweaver so that DLXS template
+  files with .tpl extensions and unique PI markup can be opened
+  and edited easily. Directions for setting the proper configurations are included
+  in the sections below.</P>
+<P>(<strong>Note</strong>: Much of what is discussed below mirrors directions
+  given in the DMX help &quot;book&quot; <strong>Extending Dreamweaver MX</strong>,
+  in the <strong>Overview</strong> chapter, under sub-heading
+  &quot;Extensible document types in Dreamweaver.&quot;)</P>
+<P>&nbsp;</P>
+<h3><a name="configuredmx" id="configuredmx"></a>Configuring Dreamweaver to open DLXS template files</h3>
+<h4><a name="doctype" id="doctype"></a>Create a DLXS document type entry in the DW document type definition file</h4>
+<P>Dreamweaver can be configured to recognize custom file types, and to render their
+appearance in ways unique to that document type.  </P>
+<P>To open a DLXS template file
+    with extension .tpl, we first need to define the document type to DMX. Document
+  types are defined in the MMDocumentTypes.xml file, located in the DMX folder
+  in the </P>
+<P>/Configuration/DocumentTypes/&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;path.</P>
+<P>To add the a DLXS document &quot;type&quot; open MMDocumentTypes.xml
+  in a text editor and create a new <code>documenttype</code> element like this
+  (or simply replace your current MMDocumentTypes.xml file with this <a href="MMDocumentTypes.xml">pre-edited version</a> .  Right- or ctrl-click the link to save it to your computer.  ):</P>
+<blockquote>
+  <P><code> &lt;documenttype id=&quot;TPL&quot; internaltype=&quot;HTML&quot; winfileextension=&quot;tpl&quot; macfileextension=&quot;tpl&quot; file=&quot;Default.html&quot; writebyteordermark=&quot;false&quot;&gt;<br />
+&lt;TITLE&gt;<br />
+&lt;MMString:loadString id=&quot;mmdocumenttypes_64&quot; /&gt;<br />
+&lt;/TITLE&gt;<br />
+&lt;description&gt;<br />
+&lt;MMString:loadString id=&quot;mmdocumenttypes_65&quot; /&gt;<br />
+&lt;/description&gt;<br />
+&lt;/documenttype&gt;</code></P>
+</blockquote>
+The <code>internaltype=&quot;HTML&quot;</code> attribute value tells DMX to treat
+tpl files just like HTML files, so that HTML elements in the template files will
+be rendered properly in the editor design view. The DMX help documentation gives
+a full, detailed explanation of the structure of this file.  
+<P>&nbsp;</P>
+<P>
+<h4><a name="extensions" id="extensions"></a>Add the tpl extension to the extensions.txt file</h4>
+Now that there is a document type definition for a DLXS template file, we need
+to edit the extensions.txt file, which is the file DMX uses to verify all allowed
+file extensions. The extensions.txt file is located in the users configuration
+folder ... </p>
+<blockquote>
+  <P><br />
+    For Windows 2000 and Windows XP platforms: <br />
+&lt;
+    drive&gt;:\Documents and Settings\&lt;username&gt;\ &not;Application Data\Macromedia\Dreamweaver
+  MX\Configuration </P>
+  <P><br />
+    For Windows NT platforms: <br />
+&lt;
+    drive&gt;:\WinNT\profiles\&lt;username&gt;\ &not;Application Data\Macromedia\Dreamweaver
+  MX\Configuration </P>
+  <P><br />
+    For Mac OS X platforms: <br />
+&lt;
+    drive&gt;:Users:&lt;username&gt;:Library:Application Support: &not;Macromedia:Dreamweaver
+    MX:Configuration </P>
+</blockquote>
+<P>Open the file, and add an entry for tpl files by creating a new line (i.e.,
+  at the bottom) and inserting</P>
+<P><code>TPL:DLXS Template Files</code></P>
+<P>(or simply replace your current extensions.txt file with this <a href="extensions.txt">pre-edited version</a> .  Right- or ctrl-click the link to save it to your computer.  )</P>
+<P>&nbsp;</P>
+
+  <h4><a name="localizedstring" id="localizedstring"></a>Define a localized string for the DLXS template document type</h4>
+
+<P>In the document type definition shown above, the content of the <code>TITLE</code> and
+  <code>DESCRIPTION</code> elements was provided by an <code>MMString:loadString</code> directive,
+  which simply references a unique string in a separate strings file to insert
+  as the value. (This value is the label that will appear in a &quot;create new document&quot;
+  dialog.) In this case, we referenced for the <code>TITLE</code> and <code>DESCRIPTION</code> elements
+  the strings identified as <code>mmdocumenttypes_64</code> and <code>mmdocumenttypes_65</code>,
+  respectively. To declare those strings, we need to edit the documenttypes.xml
+  file, located in the DMX folder
+  in the </P>
+<P>/Configuration/Strings/&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;path.</P>
+<P>Open the documenttypes.xml
+file and insert ...</P>
+<blockquote>
+  <P><code> &lt;string id=&quot;mmdocumenttypes_64&quot; value=&quot;TPL&quot; /&gt;<br />
+&lt;string id=&quot;mmdocumenttypes_65&quot; value=&quot;&lt;![CDATA[TPL document]]&gt;&quot; /&gt;</code></P>
+</blockquote>
+<P>(or simply replace your current documenttypes.xml file with this <a href="documenttypes.xml">pre-edited version</a> .  Right- or ctrl-click the link to save it to your computer.  )
+</P>
+<P>&nbsp;</P>
+<h3><a name="renderpis" id="renderpis"></a>Configure Dreamweaver to render DLXS PIs
+</h3>
+<P>Completing the steps above assures that DMX will open a .tpl file and attempt
+  to treat it like an HTML file. There still remains the issue of how it should
+  attempt to display the custom PI tags included in template files. DMX provides
+  a mechanism for defining third party tags that we can utilize. Instructions
+  for defining PIs as third parth tags are given in the next two sections.</P>
+
+  <h4><a name="tagspec" id="tagspec"></a>Define a tag specification for the PI tag in Tags.xml</h4>
+  <P>Dreamweaver defines how to process non-HTML tags by referencing the Tags.xml
+    file located in DMX folder
+  in the </P>
+  <P>/Configuration/ThirdPartyTags/&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;path.</P>
+  <P>To add the PI tag, create a tagspec element for it by inserting ...</P>
+  <blockquote>
+    <P><code>&lt;!-- DLXS --&gt;<br />
+&lt;
+    tagspec tag_name=&quot;dlxs&quot; start_string=&quot;&lt;?&quot; end_string=&quot;&gt;&quot; detect_in_attribute=&quot;true&quot; icon=&quot;dlxsicon.gif&quot; icon_width=&quot;17&quot; icon_height=&quot;15&quot;&gt;&lt;/tagspec&gt;</code></P>
+  </blockquote>
+  <P>(or simply replace your current Tags.xml file with this <a href="Tags.xml">pre-edited version</a> .  Right- or ctrl-click the link to save it to your computer.  ). Complete details about the content model of the <code>tagspec </code>element
+  can be found in the document <a href="customizing_dwmx.pdf">Customizing Dreamweaver
+  MX.pdf
+  </a>.
+  </P>
+  <h4><a name="icon" id="icon"></a>Create an icon to substitute for a PI in design view</h4>
+  Notice that the <code>tagspec</code>element include attributes <code>icon</code>, <code>icon_width</code>, and <code>icon_height.</code>If
+  the tag being specified is a string defined type (rather than a conventional
+  HTML-like tag), which PIs are, than the 
+  <table width="50" border="0" align="left" cellpadding="1" cellspacing="0">
+    <tr>
+      <td align="center" valign="middle"><img src="graphics/dlxsicon.gif" width="17" height="15" hspace="25" vspace="25" /></td>
+    </tr>
+    <tr>
+      <td><font size="-1">dlxsicon.gif</font></td>
+    </tr>
+  </table>
+icon specification is required. This
+  is the icon that will appear in place of the PI in the editor design view for
+  intances of teh PI that 
+  
+do not appear within element attributes.  The icon
+  dlxsicon.gif has been created for that purpose.  Simple save the icon to the
+  ThirdPartyTags folder to make it available to DMX.
+  <P>&nbsp;</P>
+<P>&nbsp;</P>
+<P>
+<a name="editingtemplate" id="editingtemplate"></a>
+<h2>Editing a template file in Dreamweaver</h2>
+</p>
+<P>Now that Dreamweaver is configured to open and view template files properly,
+  viewing and editing template files is relatively easy. We'll briefly step through
+  the components of the search.tpl file to demonstrate.</P>
+<P>
+<a name="viewingsearch" id="viewingsearch"></a>
+<h3>Viewing search.tpl in design view</h3>
+</p>
+<P><strong>Figure 1</strong> shows a Basic search page for the American verse
+  collection. This page is created via a combination of 3 main templates: search.tpl,
+  navheader.chnk, and simplesearchform.chnk.</P>
+<P>&nbsp;</P>
+<P>&nbsp;</P>
+<P>&nbsp;</P>
+<P>&nbsp;</P>
+<P>&nbsp;</P>
+<P>&nbsp;</P>
+<P>&nbsp;</P>
+<table border="0" cellpadding="0" cellspacing="2">
+  <tr>
+    <td><img src="graphics/amverse-basic.gif" border="1" /></td>
+  </tr>
+  <tr>
+    <td><b>Figure 1</b>: Basic search page for American Verse.</td>
+  </tr>
+</table>
+<P>&nbsp;</P>
+<P>search.tpl is the container file, and viewing it in DMX, as illustrated in
+  <strong>Figure 2</strong>, gives us a relatively clear sense of how the page parts come together.</P>
+<P>&nbsp;</P>
+<table border="0" cellpadding="0" cellspacing="2">
+  <tr>
+    <td><img src="graphics/search-tpl-dw.gif" width="613" height="343" border="1" /></td>
+  </tr>
+  <tr>
+    <td><b>Figure 2</b>: search.tpl template file as it appears in Dreamweaver
+      design view.</td>
+  </tr>
+</table>
+<P>&nbsp;</P>
+<P>Here you see the search form in skeletal form, with additional PIs providing
+  component HTML markup or dynamic text values indicated via the dlxsicon.gif
+  ( <img src="graphics/dlxsicon.gif" width="17" height="15" />&nbsp;) image.
+  Notice that all image references appear as broken image gifs. This is because
+  the paths in the SRC attribute are relative paths or PI generated paths. (CSS
+  paths are also incorrect, which could cause some HTML to appear differently
+  that it would coming from the server. Notice also that the &quot;Groups
+  Menu,&quot; and
+  the headers for the collection list, which are only used for multiple collection
+  group
+  searching,
+  are displayed
+  by default
+  and matching
+  PIs are used to remove this markup conditionally. The PI's icons for the
+  two sets of matching PIs, <code>&lt;?INCLUDE_GROUPS_SELECTION_NAV&gt;</code> and<code> &lt;?INCLUDE_COLL_LIST_WITH_CHECKBOXES&gt;</code>, are
+  not shown here because they occur outside of <code>TD</code> elements.
+  The other PI's that are displayed as icons are, as they occur form top left
+  to
+  bottom right:</P>
+<UL>
+  <LI> <code>&lt;?CHUNK filename=&quot;navheader.chnk&quot;&gt;</code> - This is a reference
+    to the navheader.chnk file, which provides the entire header/navigation portion
+    of the file.<br />
+  </LI>
+  <LI><code>&lt;?SEARCH_TYPE_TEXT&gt;</code> - This is the text for the page
+    sub-header telling us what kind of search we are at.<br />
+  </LI>
+  <LI><code>&lt;?SEARCH_RESTRICTION&gt;</code> - This provides the item metadata
+    in circumstances when we are searching witin a specific item.<br />
+  </LI>
+  <LI><code>&lt;?CHUNK type=&quot;page&quot;&gt;</code> - This is a rereference
+    to the appropriate search form, depending on which search type was selected.<br />
+  </LI>
+  <LI><code>&lt;?GROUP_IN_FOCUS_NAME&gt;</code> - Inserts the name of the group
+    currently selected. Again, this is for multiple collection searching only.<br />
+  </LI>
+  <LI><code>&lt;?CONTACT type=&quot;text&quot;&gt;</code> - Returns the content
+    of the contacttext field in the colldb.</LI>
+</UL>
+<P>&nbsp;</P>
+<P>We are interested in the two chunk files. <strong>Figure 3</strong> shows the content of simplesearchform.chnk,
+  which is inserted if we are displaying the Basic form shown in <strong>Figure
+  1</strong> above.</P>
+<table border="0" cellpadding="0" cellspacing="2">
+  <tr>
+    <td><img src="graphics/SOURCE/simple-form-chnk-dw.gif" width="541" height="393" border="1" /></td>
+  </tr>
+  <tr>
+    <td><b>Figure 3</b>: simplesearchform.chnk file</td>
+  </tr>
+</table>
+<P>Again we see HTML in skeletal form, with all possible options shown (and again
+  with filtering PI pairs hidden outside of <code>TD</code> elements). Here most
+  of the PI icons represent the individual form elements that will be inserted
+  for the form. But because we have the source file, and access to all the essential
+  layout HTML, we have pretty good control for making changes easily that we
+can confirm &quot;offline.&quot;</P>
+<P>The next component we are interested in is the navheader.chnk file, shown
+  in <strong>Figure 4</strong>.</P>
+<P>&nbsp;</P>
+<table width="570" border="0" cellpadding="0" cellspacing="2">
+  <tr>
+    <td valign="top"><br />
+   <strong>a&nbsp;&nbsp;</strong></td>
+    <td><P><img src="graphics/navhdr-chnk-dw1.gif" width="547" height="81" border="1" /></P>
+    <P>&nbsp;</P></td>
+  </tr>
+  <tr>
+    <td valign="top"><strong><br />
+    b&nbsp;&nbsp;</strong></td>
+    <td><P><img src="graphics/navhdr-chnk-dw2.gif" width="558" height="85" border="1" /></P>
+    <P>&nbsp;</P></td>
+  </tr>
+  <tr>
+    <td valign="top"><strong><br />
+c</strong></td>
+    <td><img src="graphics/navhdr-cknk-dw3.gif" width="558" height="87" border="1" />    </td>
+  </tr>
+  <tr>
+    <td colspan="2"><b>Figure 4</b>: navheader.chnk file shown in design view
+      with <strong>a</strong>) pull-down menu hidden, <strong>b</strong>) pull-down
+      menu layer showing, and <strong>c</strong>) closer layer showing</td>
+  </tr>
+</table>
+<P>Here we have easy access to the HTML content of the pull-down menu (though
+  not really the behavior attached to it), where we can easily change the labels,
+  or CSS style associations for an of the other HTML elements. Or we can even
+  rearrange the table itself to make the menu display vertically. For more detailed
+  information about how the menu behavior works, refer to the fine <a href="http://projectseven.com/tutorials/menuing/mcloser/index.htm" target="external">tutorial</a> provided
+  by Project Seven. The DLXS implementation departs from the Project Seven demo
+  in a few small particulars, mostly in the shape fo the menu and in the use
+  of mostly text anchors, instead of images, to implement it. But the fundamental
+  mechanisms are as described on the <a href="http://projectseven.com/" target="external">Project
+  Seven</a> site.</P>
+<P>&nbsp;</P>
+</body>
+</html>

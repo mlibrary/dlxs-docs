@@ -1,0 +1,131 @@
+<HTML>
+<HEAD>
+<TITLE>Middleware / General</TITLE>
+<META http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<LINK rel="stylesheet" href="../../styles.css">
+</HEAD>
+<BODY class="mainpalette">
+<H2>Middleware / General</H2>
+
+<H3>XPat</H3>
+<UL>
+  <LI>History of the software</LI>
+  <LI>Acquired source code 1999</LI>
+  <LI><A HREF="../xpat/xpatgeneral.html" TARGET="extras">XPat / Query Language</A> 
+    (query-gen.html)</LI>
+</UL>
+<H3>Perl CGI scripts</H3>
+<UL>
+  <LI>BibClass (bib-idx) 
+    <UL>
+      <LI>Simplest data of all the classes. The bibliographic record is the full 
+        item to be delivered.</LI>
+      <LI>simple searches</LI>
+      <LI>BookBag, SearchHistory, sessions</LI>
+    </UL>
+  </LI>
+  <LI>ImageClass (image-idx) 
+    <UL>
+      <LI>SGML encoded textual metadata about images</LI>
+      <LI> The textual metadata is searched, and metadata and images are retrieved.</LI>
+      <LI>Retrieve text data and thumbnails</LI>
+      <LI>If authorized, look at higher resolution versions of the images (MrSid)</LI>
+      <LI>BookBag/Portfolio, SearchHistory, sessions</LI>
+    </UL>
+  </LI>
+  <LI>TextClass (text-idx) 
+    <UL>
+      <LI>Most complex text data </LI>
+      <LI>Cross-collection / cross-machine searching</LI>
+      <LI>Retrieval of matches, HTML with navigation around large amounts SGML 
+      </LI>
+      <LI>BookBag, SearchHistory, Sessions</LI>
+      <LI>&quot;Search within Bookbag&quot; and &quot;Search within this text&quot;</LI>
+      <LI>Pageviewer (pageviewer-idx): for collections that have page images</LI>
+      <LI>Wordwheel (ww2-idx): a concordance of words appearing in certain fields 
+        in a text based collection </LI>
+    </UL>
+  </LI>
+  <LI>Finding Aids (findaid-idx) (moving towards being a class) 
+    <UL>
+      <LI>data: EAD encoded archival library finding aids</LI>
+    </UL>
+  </LI>
+</UL>
+<H3>Library Modules and Objects</H3>
+<UL>
+  <LI> Standard Perl Distribution 
+    <UL>
+      <LI>CGI</LI>
+      <LI>IPC::Open3 (allows forking off of process; used for forking XPat so 
+        that the cgi can talk to XPat during its running)</LI>
+    </UL>
+  </LI>
+  <LI>Additional Perl modules 
+    <UL>
+      <LI>DBI (database interface)</LI>
+      <LI>Apache::Session (used to store data between runs of the CGI)</LI>
+    </UL>
+  </LI>
+  <LI>DLPS related 
+    <UL>
+      <LI>OO 
+        <UL>
+          <LI>XPat, XPatSearchSet, XPatResult, XPatResultSet<BR>
+            XPat is an object that encapsulates the cgi&#146;s communication with 
+            a running XPat process<BR>
+            searches can be individually created and results retrieved OR<BR>
+            they can be packaged into sets and sent as a whole to be run as queries 
+            against XPat one after another and the results packaged into result 
+            sets</LI>
+          <LI>Bookbag / Portfolio / Personal Collection<BR>
+            user can add individual items (bib records, images, books, etc.) into 
+            this set of items.<BR>
+            In Text and Image, can run searches against this set.</LI>
+          <LI>DlpsSession<BR>
+            Since Apache::Session uses Perl tied hashes to access data, and we 
+            prefered a more consistent OO approach and syntax, we wrapped the 
+            Apache::Session object with our own object. Access to data is therefore 
+            the usual Perl OO -&gt; syntax</LI>
+          <LI>QueryFactory, TerminologyMapper<BR>
+            Maps are used to map certain terms to XPat regions (so the word &#147;title&#148; 
+            may map to &#147;region TITLE within ...&#148;.<BR>
+            The QueryFactory takes the CGI object and the TermMapper and creates 
+            a well-formed XPat query.<BR>
+            These are older object modules that need rewriting.</LI>
+          <LI>ProcIns<BR>
+            used in conjunction with HTML templates (html files with parts that 
+            will be filled in with the running of the cgi)<BR>
+            Processing Instructions in the form of &lt;?INSTRUCTION opt-params&gt; 
+            can be inserted in HTML. When the cgi program parses the HTML template, 
+            the PI will be replaced with some html packaged data or image or...</LI>
+          <LI>Classes (TextClass, BibClass, ImageClass)<BR>
+            Each of the document classes has its own Perl class module that encapsulates 
+            much of its information and behavior.</LI>
+          <LI>PageViewer<BR>
+            This object encapsulates the page data in all the PB tags of a page-image 
+            based SGML document.</LI>
+          <LI>WordWheel<BR>
+            This object encapsulates a part of the data retrieved during a wordwheel 
+            search</LI>
+          <LI>CollsInfo.pm, GroupsInfo.pm<BR>
+            During the beginning of the running of a cgi, info about collections 
+            and groups of collections are read into these objects so that it can 
+            be easily accessed during the rest of the cgi&#146;s run</LI>
+        </UL>
+      </LI>
+      <LI>non OO
+        <UL>
+          <LI>DBUtils<BR>
+            various subroutines to handle routine DBI work<BR>
+            &amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;</LI>
+          <LI>DlpsUtils</LI>
+          <LI>DevUtils</LI>
+          <LI>TextClassUtils</LI>
+        </UL>
+      </LI>
+    </UL>
+  </LI>
+</UL>
+</BODY>
+</HTML>

@@ -1,0 +1,96 @@
+<!DOCTYPE HTML PUBLIC "-//SoftQuad Software//DTD XMetaL 2.0::19990601::extensions to HTML 4.0//EN">
+<HTML>
+  <head>
+	 <TITLE>Findaid Class Collection Implementation</TITLE>
+	 <meta HTTP-EQUIV="Content-Type" content="text/html; charset=iso-8859-1">
+
+	 <LINK REL="stylesheet" HREF="../styles.css" TYPE="TEXT/CSS">
+  </head>
+
+  <BODY BGCOLOR="#ffffcc" CLASS="mainpalette">
+
+   <P>&nbsp;</P>
+   <P><strong>Fabricated Regions in FindaidClass </strong></P>
+   <P>&quot;Fabricated&quot; is a term we use to describe what are essentially virtual
+      regions in an XPat indexed text.</P>
+   <P>See a <A HREF="../xpat/fabregions.html">basic description of what a fabricated
+   region is and how they are created</A>. </P>
+   <P>In Finding Aids, we use fabricated regions for certain uninteresting regions
+      simply so that some code can be shared. For example, the fabricated region
+      &quot;main&quot; is set to refer to <SPAN CLASS="unixcommand">&lt;ead&gt;</SPAN> in FindaidClass with:</P>
+   <PRE CLASS="unixcommand">(region ead); {exportfile "/l1/idx/b/bhlead/main.rgn"}; export; ~sync "main";
+</PRE>
+   <P>whereas in TextClass
+         &quot;main&quot; can refer to <SPAN CLASS="unixcommand">&lt;TEXT&gt;</SPAN>. Therfore, both FindaidClass
+         and TextClass can share the Perl code, in a higher level subclass, that
+         creates searches for &quot;main&quot;. </P>
+   <P>More interesting and more specific to FindaidClass are some of those listed
+      below, which are taken from the Bentley Historical Library's <SPAN CLASS="unixcommand">bhl.extra.srch</SPAN> file.
+      (See the whole file <A HREF="bhl.extra.srch.txt">here</A>). You can see
+      the creation of generic regions like &quot;c0xhead&quot;, everything from a <SPAN CLASS="unixcommand">&lt;c0x&gt;</SPAN>      open
+      tag to the following closing <SPAN CLASS="unixcommand">&lt;/did&gt;</SPAN> tag. </P>
+   <P>Another interesting fabricated region is the add. This used to be <SPAN CLASS="unixcommand">&lt;ADD&gt;</SPAN>      in
+      the EAD 1.0 DTD, but now, is created based on the ead2002 DTD's <SPAN CLASS="unixcommand">&lt;descgrp&gt;</SPAN>      tag which contains a <SPAN CLASS="unixcommand">type</SPAN> attribute of <SPAN CLASS="unixcommand">add</SPAN>. </P>
+   <P>One of the main reasons these are used is in the creation and display of
+      the &quot;outline&quot; view. The <SPAN CLASS="unixcommand">FindaidClass.pm</SPAN>'s
+      <SPAN CLASS="unixcommand">_initialize</SPAN> method sets a hash called
+      &quot;tocheads&quot; whose elements correspond to most of these fabricated regions.
+      In this way, the CGI can have a shorthand way of asking XPAT to return
+      these regions, XPAT can have binary indexes ready to use for fast retrieval.</P>
+   <HR WIDTH="75%">
+   <P>&nbsp;</P>
+   <PRE CLASS="unixcommand">(((region "&lt;c01".."&lt;/did>" + region "&lt;c02".."&lt;/did>" + region "&lt;c03".."&lt;/did>" +
+    region "&lt;c04".."&lt;/did>" + region "&lt;c05".."&lt;/did>" + region "&lt;c06".."&lt;/did>" +
+    region "&lt;c07".."&lt;/did>" + region "&lt;c08".."&lt;/did>" + region "&lt;c09".."&lt;/did>")
+    not incl ("level=file" + "level=item")) incl "level="); {exportfile "/l1/idx/b/bhlead/c0xhead.rgn"};
+    export; ~sync "c0xhead";
+
+((region "&lt;origination".."&lt;/unittitle>") within ((region did within region
+    archdesc) not within region dsc)); {exportfile "/l1/idx/b/bhlead/maintitle.rgn"};
+    export; ~sync "maintitle";
+
+(region "abstract" within ((region did within region archdesc) not within region "c01"));
+    {exportfile "/l1/idx/b/bhlead/mainabstract.rgn"}; export; ~sync "mainabstract";
+
+(region "eadid"); {exportfile "/l1/idx/b/bhlead/callnum.rgn"}; export; ~sync "callnum";
+
+(region "dsc-T"); {exportfile "/l1/idx/b/bhlead/contentslist-t.rgn"}; export;
+~sync "contentslist-t";
+
+(region dsc); {exportfile "/l1/idx/b/bhlead/contentslist.rgn"}; export; ~sync "contentslist";
+
+admininfot = (region "descgrp-T" incl (region "A-type" incl "admin")); 
+	{exportfile "/l1/idx/b/bhlead/admininfo-t.rgn"};
+	export; ~sync "admininfo-t";
+
+(region "descgrp" incl *admininfot); {exportfile "/l1/idx/b/bhlead/admininfo.rgn"};
+	export; ~sync "admininfo";
+
+addt = (region "descgrp-T" incl (region "A-type" incl "add")); 
+	{exportfile "/l1/idx/b/bhlead/add-t.rgn"};
+	export; ~sync "add-t";
+
+(region "descgrp" incl *addt); {exportfile "/l1/idx/b/bhlead/add.rgn"}; export;
+	~sync "add";
+
+region "controlaccess-T" ^ region "controlaccess"; 
+	{exportfile "/l1/idx/b/bhlead/controlaccess-t.rgn"};
+	export; ~sync "controlaccess-t";
+
+(region "controlaccess"); {exportfile "/l1/idx/b/bhlead/controlaccess.rgn"};
+	export; ~sync "controlaccess";
+
+(region "subject" + region "occupation" + region "corpname" + region "famname" +
+	region "name" + region "persname" + region "geogname"); 
+	{exportfile "/l1/idx/b/bhlead/subjects.rgn"};
+	export; ~sync "subjects";
+
+(region "corpname" + region "famname" + region "name" + region "persname"); 
+	{exportfile "/l1/idx/b/bhlead/names.rgn"};
+	export; ~sync "names";
+
+(region geogname); {exportfile "/l1/idx/b/bhlead/places.rgn"}; export; ~sync "places";
+
+</PRE>
+  </BODY>
+</HTML>

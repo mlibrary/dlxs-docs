@@ -1,0 +1,634 @@
+<HTML>
+<HEAD>
+   <TITLE>image class colldb</TITLE>
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<H2>Image Class Collection Database (colldb) Column Definitions</H2>
+
+<P><TABLE BORDER=1 BGCOLOR="#E0E0E0" CELLSPACING=1 CELLPADDING=3>
+   <TR BGCOLOR="#000000">
+      <TD WIDTH=138>
+         <P><FONT SIZE="-1" FACE="Arial" COLOR="#FFFFFF"><B>colldb
+         column name</B></FONT></P>
+      </TD>
+      <TD WIDTH=80>
+         <P><FONT SIZE="-1" FACE="Arial" COLOR="#FFFFFF"><B>type</B></FONT></P>
+      </TD>
+      <TD WIDTH=71>
+         <P><FONT SIZE="-1" FACE="Arial" COLOR="#FFFFFF"><B>repeatable</B></FONT></P>
+      </TD>
+      <TD WIDTH=83>
+         <P><FONT SIZE="-1" FACE="Arial" COLOR="#FFFFFF"><B>example</B></FONT></P>
+      </TD>
+      <TD>
+         <P><FONT SIZE="-1" FACE="Arial" COLOR="#FFFFFF"><B>description</B></FONT></P>
+      </TD>
+      <TD>
+         <P><FONT SIZE="-1" FACE="Arial" COLOR="#FFFFFF"><B>related
+         global variable in imageclass.cfg</B></FONT></P>
+      </TD>
+   </TR>
+   <TR BGCOLOR="#FFFFFF">
+      <TD WIDTH=138 BGCOLOR="#000099">
+         <P><FONT SIZE="-1" FACE="Arial" COLOR="#FFFFFF"><B>collid</B></FONT></P>
+      </TD>
+      <TD WIDTH=80>
+         <P><FONT SIZE="-1" FACE="Arial">string</FONT></P>
+      </TD>
+      <TD WIDTH=71>
+         <P><FONT SIZE="-1" FACE="Arial">no</FONT></P>
+      </TD>
+      <TD WIDTH=83>
+         <P><FONT SIZE="-1" FACE="Arial">bhl</FONT></P>
+      </TD>
+      <TD>
+         <P><FONT SIZE="-1" FACE="Arial">the collection id</FONT></P>
+      </TD>
+      <TD>
+         <P><FONT SIZE="-1" FACE="Arial">n/a</FONT></P>
+      </TD>
+   </TR>
+   <TR>
+      <TD WIDTH=138 BGCOLOR="#000099">
+         <P><FONT SIZE="-1" FACE="Arial" COLOR="#FFFFFF"><B>collname</B></FONT></P>
+      </TD>
+      <TD WIDTH=80>
+         <P><FONT SIZE="-1" FACE="Arial">string</FONT></P>
+      </TD>
+      <TD WIDTH=71>
+         <P><FONT SIZE="-1" FACE="Arial">no</FONT></P>
+      </TD>
+      <TD WIDTH=83>
+         <P><FONT SIZE="-1" FACE="Arial">Bentley Historical Library
+         University of Michigan</FONT></P>
+      </TD>
+      <TD>
+         <P><FONT SIZE="-1" FACE="Arial">long form of the collection
+         name. used in the search form's list of
+         collections.</FONT></P>
+      </TD>
+      <TD>
+         <P><FONT SIZE="-1" FACE="Arial">n/a</FONT></P>
+      </TD>
+   </TR>
+   <TR BGCOLOR="#FFFFFF">
+      <TD WIDTH=138 BGCOLOR="#000099">
+         <P><FONT SIZE="-1" FACE="Arial" COLOR="#FFFFFF"><B>host</B></FONT></P>
+      </TD>
+      <TD WIDTH=80>
+         <P><FONT SIZE="-1" FACE="Arial">domain name</FONT></P>
+      </TD>
+      <TD WIDTH=71>
+         <P><FONT SIZE="-1" FACE="Arial">no</FONT></P>
+      </TD>
+      <TD WIDTH=83>
+         <P><FONT SIZE="-1" FACE="Arial">fizzie.umdl.umich.edu</FONT></P>
+      </TD>
+      <TD>
+         <P><FONT SIZE="-1" FACE="Arial">domain name of server
+         hosting xpat index</FONT></P>
+      </TD>
+      <TD>
+         <P><FONT SIZE="-1" FACE="Arial">n/a</FONT></P>
+      </TD>
+   </TR>
+   <TR>
+      <TD WIDTH=138 BGCOLOR="#000099">
+         <P><FONT SIZE="-1" FACE="Arial" COLOR="#FFFFFF"><B>webdir</B></FONT></P>
+      </TD>
+      <TD WIDTH=80>
+         <P><FONT SIZE="-1" FACE="Arial">c/coll</FONT></P>
+      </TD>
+      <TD WIDTH=71>
+         <P><FONT SIZE="-1" FACE="Arial">no</FONT></P>
+      </TD>
+      <TD WIDTH=83>
+         <P><FONT SIZE="-1" FACE="Arial">b/bhl</FONT></P>
+      </TD>
+      <TD>
+         <P><FONT SIZE="-1" FACE="Arial">collection specific portion
+         of the web path where collection specific templates, etc.
+         may be stored.</FONT></P>
+      </TD>
+      <TD>
+         <P><FONT SIZE="-1" FACE="Arial">see %gPathHash and
+         %gUrlHash</FONT></P>
+      </TD>
+   </TR>
+   <TR BGCOLOR="#FFFFFF">
+      <TD WIDTH=138 BGCOLOR="#000099">
+         <P><FONT SIZE="-1" FACE="Arial" COLOR="#FFFFFF"><B>briefcollname</B></FONT></P>
+      </TD>
+      <TD WIDTH=80>
+         <P><FONT SIZE="-1" FACE="Arial">string</FONT></P>
+      </TD>
+      <TD WIDTH=71>
+         <P><FONT SIZE="-1" FACE="Arial">no</FONT></P>
+      </TD>
+      <TD WIDTH=83>
+         <P><FONT SIZE="-1" FACE="Arial">UM Bentley</FONT></P>
+      </TD>
+      <TD>
+         <P><FONT SIZE="-1" FACE="Arial">short form of the collection
+         name. used in the thumbnail results view for cross
+         collection searches under each thumbnail.</FONT></P>
+      </TD>
+      <TD>
+         <P><FONT SIZE="-1" FACE="Arial">n/a</FONT></P>
+      </TD>
+   </TR>
+   <TR>
+      <TD WIDTH=138 BGCOLOR="#000099">
+         <P><FONT SIZE="-1" FACE="Arial" COLOR="#FFFFFF"><B>banner</B></FONT></P>
+      </TD>
+      <TD WIDTH=80>
+         <P><FONT SIZE="-1" FACE="Arial">text:string<BR>
+         or<BR>
+         image:url</FONT></P>
+      </TD>
+      <TD WIDTH=71>
+         <P><FONT SIZE="-1" FACE="Arial">no</FONT></P>
+      </TD>
+      <TD WIDTH=83>
+         <P><FONT SIZE="-1" FACE="Arial">text:Bentley Historical
+         Library</FONT></P>
+      </TD>
+      <TD>
+         <P><FONT SIZE="-1" FACE="Arial">text or image file url to
+         display in the header of collection specific
+         searches.</FONT></P>
+      </TD>
+      <TD>
+         <P><FONT SIZE="-1" FACE="Arial">$gBanner</FONT></P>
+      </TD>
+   </TR>
+   <TR BGCOLOR="#FFFFFF">
+      <TD WIDTH=138 BGCOLOR="#000099">
+         <P><FONT SIZE="-1" FACE="Arial" COLOR="#FFFFFF"><B>dfltresflds</B></FONT></P>
+      </TD>
+      <TD WIDTH=80>
+         <P><FONT SIZE="-1" FACE="Arial">category
+         abbreviations</FONT></P>
+      </TD>
+      <TD WIDTH=71>
+         <P><FONT SIZE="-1" FACE="Arial">yes</FONT></P>
+      </TD>
+      <TD WIDTH=83>
+         <P><FONT SIZE="-1" FACE="Arial">bhl.fn|bhl.it|bhl.ca</FONT></P>
+      </TD>
+      <TD>
+         <P><FONT SIZE="-1" FACE="Arial">category (field)
+         abbreviations for the categories to be displayed with each
+         search result.</FONT></P>
+      </TD>
+      <TD>
+         <P><FONT SIZE="-1" FACE="Arial">n/a</FONT></P>
+      </TD>
+   </TR>
+   <TR>
+      <TD WIDTH=138 BGCOLOR="#000099">
+         <P><FONT SIZE="-1" FACE="Arial" COLOR="#FFFFFF"><B>resfldtrim</B></FONT></P>
+      </TD>
+      <TD WIDTH=80>
+         <P><FONT SIZE="-1" FACE="Arial">integer</FONT></P>
+      </TD>
+      <TD WIDTH=71>
+         <P><FONT SIZE="-1" FACE="Arial">no</FONT></P>
+      </TD>
+      <TD WIDTH=83>
+         <P><FONT SIZE="-1" FACE="Arial">50</FONT></P>
+      </TD>
+      <TD>
+         <P><FONT SIZE="-1" FACE="Arial">maximum length for each of
+         the defltresflds. longer values will be trimmed to the
+         specified length and appended with elipsis.</FONT></P>
+      </TD>
+      <TD>
+         <P><FONT SIZE="-1" FACE="Arial">n/a</FONT></P>
+      </TD>
+   </TR>
+   <TR BGCOLOR="#FFFFFF">
+      <TD WIDTH=138 BGCOLOR="#000099">
+         <P><FONT SIZE="-1" FACE="Arial" COLOR="#FFFFFF"><B>dfltentryflds</B></FONT></P>
+      </TD>
+      <TD WIDTH=80>
+         <P><FONT SIZE="-1" FACE="Arial">category abbreviations<BR>
+         or<BR>
+         "default"</FONT></P>
+      </TD>
+      <TD WIDTH=71>
+         <P><FONT SIZE="-1" FACE="Arial">yes</FONT></P>
+      </TD>
+      <TD WIDTH=83>
+         <P><FONT SIZE="-1" FACE="Arial">bhl.it|bhl.da|bhl.tis|bhl.cr|bhl.ca|bhl.no|bhl.su|bhl.g|bhl.ct|bhl.cc|bhl.lo|bhl.fn|bhl.ne</FONT></P>
+      </TD>
+      <TD>
+         <P><FONT SIZE="-1" FACE="Arial">category
+         (field)&nbsp;abbreviations for the categories to be
+         displayed in the entry (full record) view. set to "default"
+         to display all categories.</FONT></P>
+      </TD>
+      <TD>
+         <P><FONT SIZE="-1" FACE="Arial">n/a</FONT></P>
+      </TD>
+   </TR>
+   <TR>
+      <TD WIDTH=138 BGCOLOR="#000099">
+         <P><FONT SIZE="-1" FACE="Arial" COLOR="#FFFFFF"><B>dfltresentryflds</B></FONT></P>
+      </TD>
+      <TD WIDTH=80>
+         <P><FONT SIZE="-1" FACE="Arial">category abbreviations<BR>
+         or<BR>
+         "default"</FONT></P>
+      </TD>
+      <TD WIDTH=71>
+         <P><FONT SIZE="-1" FACE="Arial">yes</FONT></P>
+      </TD>
+      <TD WIDTH=83>
+         <P><FONT SIZE="-1" FACE="Arial">bhl.it|bhl.da|bhl.tis|bhl.cr|bhl.ca|bhl.no</FONT></P>
+      </TD>
+      <TD>
+         <P><FONT SIZE="-1" FACE="Arial">category
+         (field)&nbsp;abbreviations for the categories to be
+         displayed in the thumbfull (thumbnail results with full
+         records) view. set to "default" to display all
+         categories.</FONT></P>
+      </TD>
+      <TD>
+         <P><FONT SIZE="-1" FACE="Arial">n/a</FONT></P>
+      </TD>
+   </TR>
+   <TR BGCOLOR="#FFFFFF">
+      <TD WIDTH=138 BGCOLOR="#000099">
+         <P><FONT SIZE="-1" FACE="Arial" COLOR="#FFFFFF"><B>dfltsrchflds</B></FONT></P>
+      </TD>
+      <TD WIDTH=80>
+         <P><FONT SIZE="-1" FACE="Arial">category
+         abbreviations</FONT></P>
+      </TD>
+      <TD WIDTH=71>
+         <P><FONT SIZE="-1" FACE="Arial">yes</FONT></P>
+      </TD>
+      <TD WIDTH=83>
+         <P><FONT SIZE="-1" FACE="Arial">bhl.it|bhl.da|bhl.tis|bhl.cr|bhl.ca|bhl.no|bhl.su|bhl.g|bhl.ct|bhl.cc|bhl.lo|bhl.fn|bhl.ne</FONT></P>
+      </TD>
+      <TD>
+         <P><FONT SIZE="-1" FACE="Arial">category (field)
+         abbreviations for the categories to be displayed in the
+         search form when only one collection is being
+         searched.</FONT></P>
+      </TD>
+      <TD>
+         <P><FONT SIZE="-1" FACE="Arial">n/a</FONT></P>
+      </TD>
+   </TR>
+   <TR>
+      <TD WIDTH=138 BGCOLOR="#000099">
+         <P><FONT SIZE="-1" FACE="Arial" COLOR="#FFFFFF"><B>numqs</B></FONT></P>
+      </TD>
+      <TD WIDTH=80>
+         <P><FONT SIZE="-1" FACE="Arial">integer</FONT></P>
+      </TD>
+      <TD WIDTH=71>
+         <P><FONT SIZE="-1" FACE="Arial">no</FONT></P>
+      </TD>
+      <TD WIDTH=83>
+         <P><FONT SIZE="-1" FACE="Arial">3</FONT></P>
+      </TD>
+      <TD>
+         <P><FONT SIZE="-1" FACE="Arial">number of text entry boxes
+         to display in a collection specific search form.</FONT></P>
+      </TD>
+      <TD>
+         <P><FONT SIZE="-1" FACE="Arial">$gXCnumqs</FONT></P>
+      </TD>
+   </TR>
+   <TR BGCOLOR="#FFFFFF">
+      <TD WIDTH=138 BGCOLOR="#000099">
+         <P><FONT SIZE="-1" FACE="Arial" COLOR="#FFFFFF"><B>resultsviews</B></FONT></P>
+      </TD>
+      <TD WIDTH=80>
+         <P><FONT SIZE="-1" FACE="Arial">string</FONT></P>
+      </TD>
+      <TD WIDTH=71>
+         <P><FONT SIZE="-1" FACE="Arial">yes</FONT></P>
+      </TD>
+      <TD WIDTH=83>
+         <P><FONT SIZE="-1" FACE="Arial">thumbnail|thumbfull|reslist</FONT></P>
+      </TD>
+      <TD>
+         <P><FONT SIZE="-1" FACE="Arial">list of view options used to
+         build the view menu in the search form. display text for
+         each is set in the imageclass.cfg global variable
+         $gViewLabels.</FONT></P>
+      </TD>
+      <TD>
+         <P><FONT SIZE="-1" FACE="Arial">%gResultsViews</FONT></P>
+      </TD>
+   </TR>
+   <TR>
+      <TD WIDTH=138 BGCOLOR="#000099">
+         <P><FONT SIZE="-1" FACE="Arial" COLOR="#FFFFFF"><B>resultsviewsdefault</B></FONT></P>
+      </TD>
+      <TD WIDTH=80>
+         <P><FONT SIZE="-1" FACE="Arial">string</FONT></P>
+      </TD>
+      <TD WIDTH=71>
+         <P><FONT SIZE="-1" FACE="Arial">no</FONT></P>
+      </TD>
+      <TD WIDTH=83>
+         <P><FONT SIZE="-1" FACE="Arial">thumbnail</FONT></P>
+      </TD>
+      <TD>
+         <P><FONT SIZE="-1" FACE="Arial">default selected view of the
+         view menu in the search form.</FONT></P>
+      </TD>
+      <TD>
+         <P><FONT SIZE="-1" FACE="Arial">%gResultsViews</FONT></P>
+      </TD>
+   </TR>
+   <TR BGCOLOR="#FFFFFF">
+      <TD WIDTH=138 BGCOLOR="#000099">
+         <P><FONT SIZE="-1" FACE="Arial" COLOR="#FFFFFF"><B>relviewmenu</B></FONT></P>
+      </TD>
+      <TD WIDTH=80>
+         <P><FONT SIZE="-1" FACE="Arial">"on"<BR>
+         or<BR>
+         "off"</FONT></P>
+      </TD>
+      <TD WIDTH=71>
+         <P><FONT SIZE="-1" FACE="Arial">no</FONT></P>
+      </TD>
+      <TD WIDTH=83>
+         <P><FONT SIZE="-1" FACE="Arial">off</FONT></P>
+      </TD>
+      <TD>
+         <P><FONT SIZE="-1" FACE="Arial">related views typically have
+         their own display in an entry view, however a menu of
+         related views may also be displayed. typically used for
+         "page flipping". a value of "on" turns this feature on for
+         the collection.</FONT></P>
+      </TD>
+      <TD>
+         <P><FONT SIZE="-1" FACE="Arial">n/a</FONT></P>
+      </TD>
+   </TR>
+   <TR>
+      <TD WIDTH=138 BGCOLOR="#000099">
+         <P><FONT SIZE="-1" FACE="Arial" COLOR="#FFFFFF"><B>relviewmenuinstruct</B></FONT></P>
+      </TD>
+      <TD WIDTH=80>
+         <P><FONT SIZE="-1" FACE="Arial">string<BR>
+         or<BR>
+         "default"</FONT></P>
+      </TD>
+      <TD WIDTH=71>
+         <P><FONT SIZE="-1" FACE="Arial">no</FONT></P>
+      </TD>
+      <TD WIDTH=83>
+         <P><FONT SIZE="-1" FACE="Arial">go to</FONT></P>
+      </TD>
+      <TD>
+         <P><FONT SIZE="-1" FACE="Arial">optional string of
+         instructional text to prefix the related views menu
+         with.</FONT></P>
+      </TD>
+      <TD>
+         <P><FONT SIZE="-1" FACE="Arial">n/a</FONT></P>
+      </TD>
+   </TR>
+   <TR BGCOLOR="#FFFFFF">
+      <TD WIDTH=138 BGCOLOR="#000099">
+         <P><FONT SIZE="-1" FACE="Arial" COLOR="#FFFFFF"><B>relviewmenuprefx</B></FONT></P>
+      </TD>
+      <TD WIDTH=80>
+         <P><FONT SIZE="-1" FACE="Arial">string<BR>
+         or<BR>
+         "default"</FONT></P>
+      </TD>
+      <TD WIDTH=71>
+         <P><FONT SIZE="-1" FACE="Arial">no</FONT></P>
+      </TD>
+      <TD WIDTH=83>
+         <P><FONT SIZE="-1" FACE="Arial">page</FONT></P>
+      </TD>
+      <TD>
+         <P><FONT SIZE="-1" FACE="Arial">optional string to prefix
+         each option value of the related views menu with.</FONT></P>
+      </TD>
+      <TD>
+         <P><FONT SIZE="-1" FACE="Arial">n/a</FONT></P>
+      </TD>
+   </TR>
+   <TR>
+      <TD WIDTH=138 BGCOLOR="#000099">
+         <P><FONT SIZE="-1" FACE="Arial" COLOR="#FFFFFF"><B>relviewmenuvals</B></FONT></P>
+      </TD>
+      <TD WIDTH=80>
+         <P><FONT SIZE="-1" FACE="Arial">"viewid", "isentryid",
+         "stid", "face", "stty", "x", "y", "mt", "ms", "m"<BR>
+         or<BR>
+         default</FONT></P>
+      </TD>
+      <TD WIDTH=71>
+         <P><FONT SIZE="-1" FACE="Arial">no</FONT></P>
+      </TD>
+      <TD WIDTH=83>
+         <P><FONT SIZE="-1" FACE="Arial">viewid</FONT></P>
+      </TD>
+      <TD>
+         <P><FONT SIZE="-1" FACE="Arial">the ISTRUCT element
+         attribute value to use for option values in the related
+         views menu. value "default" uses ISTRUCT attribute
+         "CAPTIONS". "viewid" and "captions" are the most logical
+         values here. Look at the Image Class DTD or some Image Class
+         SGML&nbsp;to see ISTRUCT&nbsp;attributes values.</FONT></P>
+      </TD>
+      <TD>
+         <P><FONT SIZE="-1" FACE="Arial">n/a</FONT></P>
+      </TD>
+   </TR>
+   <TR BGCOLOR="#FFFFFF">
+      <TD WIDTH=138 BGCOLOR="#000099">
+         <P><FONT SIZE="-1" FACE="Arial" COLOR="#FFFFFF"><B>mediaonly</B></FONT></P>
+      </TD>
+      <TD WIDTH=80>
+         <P><FONT SIZE="-1" FACE="Arial">"on", "off", "on hidden",
+         "off hidden"</FONT></P>
+      </TD>
+      <TD WIDTH=71>
+         <P><FONT SIZE="-1" FACE="Arial">no</FONT></P>
+      </TD>
+      <TD WIDTH=83>
+         <P><FONT SIZE="-1" FACE="Arial">"on"</FONT></P>
+      </TD>
+      <TD>
+         <P><FONT SIZE="-1" FACE="Arial">determines whether the
+         search form has a visible or hidden form element for
+         restricting the search to records with image files.
+         "on"&nbsp;displays the form element and it is checked by
+         default. "off hidden"&nbsp;includes the form element as a
+         hidden input with a value of "0". Can you figure out how the
+         other two values behave?</FONT></P>
+      </TD>
+      <TD>
+         <P><FONT SIZE="-1" FACE="Arial">$gMediaOnlyDefault</FONT></P>
+      </TD>
+   </TR>
+   <TR>
+      <TD WIDTH=138 BGCOLOR="#000099">
+         <P><FONT SIZE="-1" FACE="Arial" COLOR="#FFFFFF"><B>entrydivs</B></FONT></P>
+      </TD>
+      <TD WIDTH=80>
+         <P><FONT SIZE="-1" FACE="Arial">string</FONT></P>
+      </TD>
+      <TD WIDTH=71>
+         <P><FONT SIZE="-1" FACE="Arial">yes</FONT></P>
+      </TD>
+      <TD WIDTH=83>
+         <P><FONT SIZE="-1" FACE="Arial">full image|description|other
+         views</FONT></P>
+      </TD>
+      <TD>
+         <P><FONT SIZE="-1" FACE="Arial">the view options to present
+         to the user in the entry view display. Further configurable
+         in the template by adding or removing divs.</FONT></P>
+      </TD>
+      <TD>
+         <P><FONT SIZE="-1" FACE="Arial">n/a</FONT></P>
+      </TD>
+   </TR>
+   <TR BGCOLOR="#FFFFFF">
+      <TD WIDTH=138 BGCOLOR="#000099">
+         <P><FONT SIZE="-1" FACE="Arial" COLOR="#FFFFFF"><B>entrydivsdefault</B></FONT></P>
+      </TD>
+      <TD WIDTH=80>
+         <P><FONT SIZE="-1" FACE="Arial">string</FONT></P>
+      </TD>
+      <TD WIDTH=71>
+         <P><FONT SIZE="-1" FACE="Arial">no</FONT></P>
+      </TD>
+      <TD WIDTH=83>
+         <P><FONT SIZE="-1" FACE="Arial">full image</FONT></P>
+      </TD>
+      <TD>
+         <P><FONT SIZE="-1" FACE="Arial">the view option of the entry
+         view display selected by default.</FONT></P>
+      </TD>
+      <TD>
+         <P><FONT SIZE="-1" FACE="Arial">n/a</FONT></P>
+      </TD>
+   </TR>
+   <TR>
+      <TD WIDTH=138 BGCOLOR="#000099">
+         <P><FONT SIZE="-1" FACE="Arial" COLOR="#FFFFFF"><B>dddir</B></FONT></P>
+      </TD>
+      <TD WIDTH=80>
+         <P><FONT SIZE="-1" FACE="Arial">/c/coll</FONT></P>
+      </TD>
+      <TD WIDTH=71>
+         <P><FONT SIZE="-1" FACE="Arial">no</FONT></P>
+      </TD>
+      <TD WIDTH=83>
+         <P><FONT SIZE="-1" FACE="Arial">/b/bhl</FONT></P>
+      </TD>
+      <TD>
+         <P><FONT SIZE="-1" FACE="Arial">subdirectory of XPAT index.
+         the middleware prepends this with /DLXSROOT/idx. </FONT></P>
+      </TD>
+      <TD>
+         <P><FONT SIZE="-1" FACE="Arial">n/a</FONT></P>
+      </TD>
+   </TR>
+   <TR BGCOLOR="#FFFFFF">
+      <TD WIDTH=138 BGCOLOR="#000099">
+         <P><FONT SIZE="-1" FACE="Arial" COLOR="#FFFFFF"><B>dd</B></FONT></P>
+      </TD>
+      <TD WIDTH=80>
+         <P><FONT SIZE="-1" FACE="Arial">filename</FONT></P>
+      </TD>
+      <TD WIDTH=71>
+         <P><FONT SIZE="-1" FACE="Arial">no</FONT></P>
+      </TD>
+      <TD WIDTH=83>
+         <P><FONT SIZE="-1" FACE="Arial">image.dd</FONT></P>
+      </TD>
+      <TD>
+         <P><FONT SIZE="-1" FACE="Arial">the name of the XPAT&nbsp;dd
+         file. </FONT></P>
+      </TD>
+      <TD>
+         <P><FONT SIZE="-1" FACE="Arial">n/a</FONT></P>
+      </TD>
+   </TR>
+   <TR>
+      <TD WIDTH=138 BGCOLOR="#000099">
+         <P><FONT SIZE="-1" FACE="Arial" COLOR="#FFFFFF"><B>map</B></FONT></P>
+      </TD>
+      <TD WIDTH=80>
+         <P><FONT SIZE="-1" FACE="Arial">default<BR>
+         or<BR>
+         path</FONT></P>
+      </TD>
+      <TD WIDTH=71>
+         <P><FONT SIZE="-1" FACE="Arial">no</FONT></P>
+      </TD>
+      <TD WIDTH=83>
+         <P><FONT SIZE="-1" FACE="Arial">default</FONT></P>
+      </TD>
+      <TD>
+         <P><FONT SIZE="-1" FACE="Arial">the full path to the map
+         file. the map file is used by middleware in the process of
+         building XPAT queries. with Image Class it is unlikely that
+         a different map will be needed, so stick to
+         "default."</FONT></P>
+      </TD>
+      <TD>
+         <P><FONT SIZE="-1" FACE="Arial">n/a</FONT></P>
+      </TD>
+   </TR>
+   <TR BGCOLOR="#FFFFFF">
+      <TD WIDTH=138 BGCOLOR="#000099">
+         <P><FONT SIZE="-1" FACE="Arial" COLOR="#FFFFFF"><B>xpatexec</B></FONT></P>
+      </TD>
+      <TD WIDTH=80>
+         <P><FONT SIZE="-1" FACE="Arial">path</FONT></P>
+      </TD>
+      <TD WIDTH=71>
+         <P><FONT SIZE="-1" FACE="Arial">no</FONT></P>
+      </TD>
+      <TD WIDTH=83>
+         <P><FONT SIZE="-1" FACE="Arial">/l/local/xpat/bin/xpat</FONT></P>
+      </TD>
+      <TD>
+         <P><FONT SIZE="-1" FACE="Arial">the path to the
+         XPAT&nbsp;binary.</FONT></P>
+      </TD>
+      <TD>
+         <P><FONT SIZE="-1" FACE="Arial">n/a</FONT></P>
+      </TD>
+   </TR>
+   <TR>
+      <TD WIDTH=138 BGCOLOR="#000099">
+         <P><FONT SIZE="-1" FACE="Arial" COLOR="#FFFFFF"><B>port</B></FONT></P>
+      </TD>
+      <TD WIDTH=80>
+         <P><FONT SIZE="-1" FACE="Arial">port number</FONT></P>
+      </TD>
+      <TD WIDTH=71>
+         <P><FONT SIZE="-1" FACE="Arial">no</FONT></P>
+      </TD>
+      <TD WIDTH=83>
+         <P><FONT SIZE="-1" FACE="Arial">619</FONT></P>
+      </TD>
+      <TD>
+         <P><FONT SIZE="-1" FACE="Arial">the port </FONT></P>
+      </TD>
+      <TD>
+         <P><FONT SIZE="-1" FACE="Arial">n/a</FONT></P>
+      </TD>
+   </TR>
+</TABLE>
+</P>
+</BODY>
+</HTML>

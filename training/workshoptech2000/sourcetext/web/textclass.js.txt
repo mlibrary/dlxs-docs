@@ -1,0 +1,29 @@
+// checkAllRecords.
+// take a FORM object as an argument, and set all the checkbox objects
+// in that form to "checked", return false
+
+function checkAllRecords(theform)
+{
+
+  var ele = "";
+
+  for (var i = 0; i < theform.elements.length; i++)
+  {
+    ele = theform.elements[i];
+
+    if (ele.type == "checkbox")
+    {
+      ele.checked = true;
+    }
+  }
+
+  return false;
+}
+
+function saveRecordsToBookbag(theform)
+{
+  theform.submit();
+
+  return false;
+}
+

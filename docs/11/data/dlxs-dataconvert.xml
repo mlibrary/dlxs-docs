@@ -1,0 +1,34 @@
+<?xml version="1.0"?>
+
+<!-- SPO Editorial Services                  -->
+<!-- automatically-generated XML header file -->
+
+<?xml-stylesheet href="../../pre11-dlxsdocs.xsl" type="text/xsl"?>
+<!DOCTYPE DLPSDOC PUBLIC "-//UM-DLPS//DTD DLPS Publications//EN" "http://docs.umdl.umich.edu/dlps/docs/dlpsdocs.dtd">
+<DLPSDOC>
+<TITLE>Converting Data for DLXS Implementations</TITLE>
+<HEADER>
+<JOURNAL>DLXS Documentation</JOURNAL>
+<PUBDATE>2002-07-08 12:13:33 EDT</PUBDATE>
+<AUTH1>Powell, Chris</AUTH1>
+<AUTH2></AUTH2>
+<DOCTITLE>Converting Data for DLXS Implementations</DOCTITLE>
+<VOL>data</VOL>
+<ISS></ISS>
+<FILE>dlxsdocs-dlxs-dataconvert</FILE>
+</HEADER>
+<BODY>
+<BHEAD>Converting Data for DLXS Implementations</BHEAD>
+<DIV1>
+<P>Three of the DLXS classes require that materials be converted to class-specific DTDs -- Text Class, Image Class, and Bib Class. DLXS does not formally support mechanisms for the conversion of data to encoding formats/DTDs supported by DLXS, as each case of conversion is specific to your material and cannot readily be generalized.  Nevertheless, we do provide here some class-specific documentation on strategies, tools, and methods we have found helpful for data conversion.</P>
+<UL>
+<LI><A HREF="../class/text/tc-convert.xml">Converting Data for Text Class</A></LI>
+<LI><A HREF="../class/image/image-datatransform.xml">Converting Data for Image Class</A></LI>
+<LI><A HREF="../class/bib/bib-transforming.xml">Converting Data for Bib Class</A></LI>
+</UL>
+<P><B>General information</B> </P>
+<P>In some cases, DLXS-conformant data must be further modified (e.g., the insertion of "nodes" in Text Class) to work effectively with DLXS, and this process of <A HREF="dlxs-dataprep.xml">data preparation</A>, along with suggested directory structuring,  is covered in DLXS documentation.  Also, documentation for <A HREF="dlxs-indexing.xml">indexing</A> with the XPAT search engine once data has been converted and prepared is provided.</P><P>For Image Class and Bib Class, the documents linked above provide a fairly straightforward strategy and some tools for converting the fielded data typical in these classes.  </P><P>For Text Class, DLPS does not have any preferred methods or quick and easy tools for for the conversion process. Only you, looking at your texts and your
+encoding practices, can do the intellectual work required to convert the texts to support the necessary <A HREF="../class/text/tc-docstruct.xml">Text Class data structure</A>. You should do this with the tools you are most comfortable
+using, whether they be macros in your favorite editor, perl scripts if you have strong programming skills, OmniMark if you like that, or XSLT if your source files are or can be converted to XML. The Text Class document linked above describes a fairly detailed XSLT strategy, which uses freely-available or ubiquitous tools.</P></DIV1>
+</BODY>
+</DLPSDOC>

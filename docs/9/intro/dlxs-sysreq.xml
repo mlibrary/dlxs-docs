@@ -1,0 +1,113 @@
+<?xml version="1.0"?>
+
+<!-- SPO Editorial Services                  -->
+<!-- automatically-generated XML header file -->
+
+<?xml-stylesheet href="../../pre11-dlxsdocs.xsl" type="text/xsl"?>
+<!DOCTYPE DLPSDOC PUBLIC "-//UM-DLPS//DTD DLPS Publications//EN" "http://docs.umdl.umich.edu/dlps/docs/dlpsdocs.dtd">
+<DLPSDOC>
+<TITLE>DLXS System Requirements</TITLE>
+<HEADER>
+<JOURNAL>DLXS Documentation</JOURNAL>
+<PUBDATE>2002-07-03 16:33:38 EDT</PUBDATE>
+<AUTH1>Snavely, Cory</AUTH1>
+<AUTH2></AUTH2>
+<DOCTITLE>DLXS System Requirements</DOCTITLE>
+<VOL>intro</VOL>
+<ISS></ISS>
+<FILE>dlxsdocs-dlxs-sysreq</FILE>
+</HEADER>
+
+
+
+
+
+
+<BODY>
+  <BHEAD>DLXS System Requirements</BHEAD>
+  <DIV1>
+      <OL>
+	<LI><B>Supported platforms</B> 
+	  <OL>
+	    <LI><I>Platforms in active development.</I> We currently develop and/or deploy 
+	      live material on these platforms:
+	      <OL>
+		<LI>Solaris SPARC 2.6 or higher</LI>
+		<LI>Red Hat Linux Intel 7.2 or higher</LI>
+	      </OL>
+	    </LI>
+	    <LI><I>Platforms with historical support.</I> We maintain an XPAT build environment 
+	      for these platform, and make every effort to ensure portable middleware, 
+	      but do not actually deploy live material on these platforms:
+	      <OL>
+		<LI>IBM AIX PowerPC 3.2 or higher</LI>
+	      </OL>
+	    </LI>
+	  </OL>
+	</LI>
+	<LI><B>Required components</B> 
+	  <OL>
+	    <LI>root access (to change aspects of the environment, e.g., directory and file permissions)</LI>
+	    <LI><A HREF="http://www.perl.com/" TARGET="external">Perl 5.6.1</A> or higher</LI>
+	    <LI>The following <A HREF="http://www.cpan.org/modules" TARGET="external">Perl modules</A> (where
+                versions are given, DLXS requires that version or higher):</LI>
+	    <OL>
+<LI>Apache::Session 1.54</LI>
+<LI>CGI 2.81</LI>
+<LI>Carp</LI>
+<LI>Cwd 2.04</LI>
+<LI>DBD::CSV 0.2002</LI>
+<LI>DBD::mysql 2.1017 <I>(required only if you plan to use MySQL as your database server)</I></LI>
+<LI>DBI 1.21</LI>
+<LI>Exporter 5.562</LI>
+<LI>File::Basename 2.6</LI>
+<LI>File::Copy 2.03</LI>
+<LI>File::Find</LI>
+<LI>File::Path 1.0404</LI>
+<LI>FileHandle 2.00</LI>
+<LI>Getopt::Std 1.02</LI>
+<LI>HTML::Parser 3.26</LI>
+<LI>HTML::Template 2.5</LI>
+<LI>IPC::Open3 1.0103</LI>
+<LI>LWP::Simple 1.35</LI>
+<LI>Mail::Mailer 1.44</LI>
+<LI>Mail::Send 1.44</LI>
+<LI>MIME::Base64 2.12</LI>
+<LI>Net::hostent</LI>
+<LI>POSIX 1.03</LI>
+<LI>Socket 1.72</LI>
+<LI>SQL::Statement 0.1021</LI>
+<LI>Storable 2.00</LI>
+<LI>Symbol 1.02</LI>
+<LI>Text::CSV_XS 0.23</LI>
+<LI>Tie::DBI 0.91</LI>
+<LI>URI 1.19</LI>
+	    </OL>
+	    <LI>A web server that supports Apache sessions. We recommend Apache 1.3.26 or higher.</LI>
+	  </OL>
+	</LI>
+	<LI><B>Optional components</B> 
+	  <OL>
+	    <LI>For page image viewing 
+	      <OL>
+		<LI><A HREF="http://c42pdf.ffii.org/" TARGET="external">c42pdf</A> for displaying TIFF images in PDF format (free)</LI>
+		<LI><A HREF="http://www.dlxs.org/products/products.html" TARGET="external">tif2web</A> for displaying TIFF images
+		  in GIF and/or PNG format (free)</LI>
+	      </OL>
+	    </LI>
+	    <LI>For <A HREF="http://www.lizardtech.com/" TARGET="external">MrSID</A>-compressed continuous tone image viewing
+	      <OL>
+		<LI>a MrSID encoding product such as MrSIDGeo that supports batch encoding of images (not free)</LI>
+		<LI><A HREF="http://www.dlxs.org/products/products.html" TARGET="external">mrsid_retrieve</A> for displaying
+		  MrSID-encoded images in JPEG format (free)</LI>
+	      </OL>
+	    </LI>
+	  </OL>
+	</LI>
+      </OL>
+      <P>We appreciate hearing from you if you encounter other system requirements. 
+	Please <A HREF="mailto:csnavely@umich.edu?subject=dlxs system requirements">contact the author</A> for
+	additions and suggestions.</P>
+    </DIV1>
+  </BODY>
+</DLPSDOC>

@@ -1,0 +1,1230 @@
+#!/l/local/bin/perl
+
+
+############################################################
+##
+## incoming CGI parameters:
+##   c          collection id (not used right now, but could be to find, say,
+##              machine on which page image files are located)
+##   idno       idno of item (could look like a notis id, but eventually,
+##              not necessarily). Since directories in which image files and
+##              pageview.dat files live are constructed from the idno, this
+##              should be all that's needed to find a page image and pageview.dat.
+##   seq        sequence number of page (from PB tag)
+##  
+## possible other parameters
+##   frm        this tells this script which frame it is filling
+##              ''     means frameset html page
+##              'nav'  means upper nav frame html page
+##              'main' means lower main content html page (which might hold a gif or a pdf )
+##   xc         this is set to 1 if we are coming from a cross-collection/generic
+##              textclass situation
+##   size       percent size of view
+##   view       pdf or image or text or (thumbnails)
+##
+############################################################
+#
+#  in $ENV{'DLXSROOT'} . /t/text is makepageviewdata.pl that creates a tab-delimited file 
+#  from SGML info that is placed
+#  in the directory with the image files so that this code can retrieve info therefrom.
+#  The file, named "pageview.dat" contains for each page
+#      the tif file name, the sequence number, the page number, the OCR confidence value, etc.
+#      (and perhaps in the future, other things like number of chars, words, etc.
+#       in ocr text(?) or anything we want)
+#
+#  This allows us to
+#      get next and previous page info
+#      build a table of features for the html's header's pulldown (which umr doesn't currently have)
+#      tell user of confid info if we feel like it
+#
+############################################################
+
+BEGIN 
+{
+    # this allows us to temporarily get to the GetDevUsernameFromScript
+    # routine with which we can expand a development path for INC
+    # This is so that, in a browser, using the regular script name gets
+    # "checked in" behavior, while using the symlinked blah-idx-uniqname
+    # script in the URL gets us working code behavior.
+    require $ENV{'DLXSROOT'} . '/lib/DevUtils.pm';
+    my ( $userpath ) = &GetDevUsernameFromScript;
+    
+    unshift ( @INC, $ENV{'DLXSROOT'} . '/lib' . $userpath . '/' );
+}
+
+# ----------------------------------------------------------------------
+# remove in production
+use strict;
+
+
+# this is commented out until we can get mod_perl and auth to work simultaneously
+# use CGI::Apache qw( :standard :html3 escape unescape escapeHTML );    
+use CGI qw( :standard :html3 escape unescape escapeHTML );    
+
+# ----------  DLPS related ----------
+
+use CollsInfo;
+use DlpsSession;
+use Bookbag;
+use ProcIns;
+use TextClass;
+use PageView;
+
+use DlpsUtils qw( :DEFAULT );
+use TextClassUtils;
+
+
+# **********************************************************************
+#                           MAIN
+# **********************************************************************
+use vars qw( $gCgi $gCollDbName
+             $gScriptDir
+             @gRequestedColls @gAuthzdColls
+             %gHtmlTemplates
+             $gRequestingHost
+             $gCio 
+             $gBbo
+             $gDso $gSessionId 
+             $gHtmlDocRoot
+             $gGifConvertDir
+             $gHtmlDir
+             %gERRORS
+
+             $gBin
+             $gTextClassCgi
+           );
+
+
+# in mod_perl, need to explicitly wipe out all globals
+&InitializeGlobals;
+
+
+# configuration information for this program
+require './pageviewer-idx.cfg'; 
+
+$gRequestingHost = &FindHostName(); # get host name in case need to find other machine
+$gCgi = new CGI;                    # create the classic CGI object, get all URL parameters
+&CleanCgiParameters( $gCgi );       # remove all undef or empty URL parameters
+&LocallyCleanCgiParameters ( $gCgi );
+
+# set environment var so that all modules can access it
+if ( $gCgi->param('debug') )
+{    &DlpsUtils::SetupHtmlDebugging( $gCgi->param( 'debug' ) );   }
+
+# ----------------------------------------------------------------------
+# determine what is authorized and what is requested
+# ----------------------------------------------------------------------
+$ENV{'AUTHZD_COLL'} = ( 'daap20:yeats:bosnia:gandf:teso:ampo20' );
+my @gAuthzdColls = split ( /:/, $ENV{'AUTHZD_COLL'} );
+# ----------------------------------------------------------------------
+
+#my @gAuthColls = &DlpsUtils::GetAuthListFromENV( );
+
+
+@gRequestedColls = &CollectionResolution ( $gCgi, \@gAuthzdColls );         
+
+$gDso = &StartSession ( $gCgi );                          # set get or create session
+$gSessionId = $gDso->GetSessionId( );
+
+$gDso->UpdateSessionColls( $gCollDbName, 
+                           \@gAuthzdColls, 
+                           \@gRequestedColls ); # attach collection info to session
+
+$gCio = $gDso->GetCollsInfoObject;              # bring in session's CollsInfo obj as global
+$gCio->AddTextClassObjects( );                  # add TextClass objects to CollsInfo object
+
+## --------------------------------------------------
+## main work here in ServePage
+my $pageRef = &ServePage ( $gCgi, $gCio, $gDso, $gRequestingHost );
+
+# output the page
+if ( ( $gCgi->param( 'view' ) eq 'pdf' ) &&
+     ( $gCgi->param( 'frm' )  eq 'main' ) )
+{
+    &DlpsUtils::OutputMimeTypedPage ( $pageRef,
+                                      'application/pdf',
+                                      'now');
+}
+else
+{    &DlpsUtils::OutputHtmlPage( $pageRef );   } 
+
+# REMEMBER to add cgi to session for search history's sake
+$gDso->Close( );                                   # other clean up here? Apache::clean... ?
+
+# this is commented out until we can get mod_perl and auth to work simultaneously
+#&Apache::exit();   
+
+exit;
+
+## --------------------------------------------------
+##        end of MAIN
+## --------------------------------------------------
+
+
+## --------------------------------------------------
+#      SUBROUTINES
+## --------------------------------------------------
+
+# ----------------------------------------------------------------------
+# NAME         : InitializeGlobals
+# PURPOSE      : under mod_perl, all instances of this cgi run under
+#                one perl process. To avoid one stepping on the other,
+#                wipe out all globals
+# CALLED BY    : main
+# CALLS        : NONE
+# INPUT        : NONE
+# RETURNS      : NONE
+# GLOBALS      : all globals
+# SIDE-EFFECTS : 
+# NOTES        : 
+# ----------------------------------------------------------------------
+
+sub InitializeGlobals
+{
+    $gCgi            = '';
+    $gCollDbName     = '';
+    %gHtmlTemplates  = ();
+    @gRequestedColls = ();
+    @gAuthzdColls    = ();
+    $gRequestingHost = '';
+    $gCio            = '';
+    $gDso            = '';
+    $gSessionId      = '';
+    $gHtmlDocRoot    = '';
+    %gERRORS         = ();
+
+    $gBin = $ENV{'SCRIPT_NAME'};
+}
+
+# ----------------------------------------------------------------------
+# NAME         : LocallyCleanCgiParameters
+# PURPOSE      : For now, strip leading zeros so we are internally consistent
+#                when building links and the PaveView object.  This decouples
+#                us from the format of the data in pageview.dat.
+# CALLED BY    : main
+# CALLS        : NONE
+# INPUT        : CGI object
+# RETURNS      : NONE
+# GLOBALS      : NONE
+# SIDE-EFFECTS : modifies CGI object
+# NOTES        : 
+# ----------------------------------------------------------------------
+
+sub LocallyCleanCgiParameters
+{
+    my $cgi = shift;
+    
+    # remove leading zeroes
+    my $seq = $cgi->param( 'seq' );
+    $seq =~ s,^0+,,;
+
+    $cgi->param( 'seq', $seq );
+}
+
+# ----------------------------------------------------------------------
+# NAME         : ServePage
+# PURPOSE      : 
+#                
+# CALLED BY    : 
+# CALLS        : 
+# INPUT        : 
+# RETURNS      : 
+# GLOBALS      : 
+# SIDE-EFFECTS : 
+# NOTES        : 
+# ----------------------------------------------------------------------
+
+sub ServePage 
+{
+    my ( $cgi, $cio, $dso, $requestingHost ) = @_;
+    my ( $c, $idno ) ;
+
+
+#   , $seq, $size, $view, $xc );
+    
+    $c    = $cgi->param( 'c' );
+    $idno = $cgi->param( 'idno' );
+#    $seq  = $cgi->param( 'seq' );
+#    $size = $cgi->param( 'size' );
+#    $view = $cgi->param( 'view' );
+#    $xc   = $cgi->param( 'xc' );
+    
+    ## ------------------------------------------------------------
+    ## First, get array of dlpsids for this one idno
+    ## this is currently implemented by using the XPat index to find
+    ## matching IDNOs. In the future, we may use a DBM or DBI database, or even
+    ## ultimately the grand "metadata database"
+    my @dlpsIds       = &GetDlpsIds( $cio, $c, $idno, $requestingHost );      
+    my $dlpsIdsNumber = scalar( @dlpsIds );     ##  number of dlpsids for this one notisid
+
+    my $htmlPageRef = '';
+
+    ## if only one dlpsid exists for this requested idno 
+    if ( $dlpsIdsNumber == 1 )
+    { 
+        $idno = shift( @dlpsIds );     
+        $htmlPageRef = &DisplayPageForIdno( $c, $idno, $cgi, $cio, $dso );
+    }
+
+    ## if multiple dlpsids exist for this requested idno
+    elsif ( $dlpsIdsNumber > 1 )
+    {     $htmlPageRef = &ServePicklistPage( \@dlpsIds, $cgi, $cio, $dso );    }   
+
+    else
+    {     &errorBail( qq{No data for requested idno: $idno.} );    }   
+
+    return $htmlPageRef;
+}
+
+# ----------------------------------------------------------------------
+# NAME         : GetDlpsIds
+# PURPOSE      : find all the items that have IDNOs that match the requested IDNO
+# CALLED BY    : ServePage
+# CALLS        : 
+# INPUT        : 
+# RETURNS      : array with all the matching DLPSIDs
+# GLOBALS      : 
+# SIDE-EFFECTS : 
+# NOTES        : Currently, 2000-06-07 12:27:31 EDT, implemented by using the 
+#                already available XPat index on the SGML to find items with
+#                matching IDNOs. However, in the future, we may use a DBI or DBM
+#                or even, ultimately, the "metadata database"
+#                Note that first we try to match the idno to a full "abc1234.0001.001" form,
+#                in which case, no XPat search or lookup is necessary. However,
+#                if that doesn't match, we only have the first "abc1234" characters
+#                and need to find all the IDNOs that begin with that string.
+# ----------------------------------------------------------------------
+
+sub GetDlpsIds
+{
+    my ( $cio, $c, $idno, $requestingHost )= @_;
+
+    # full DLPSID format
+    if ( $idno =~ m,^[a-z]{3}[0-9]{4}\..{4}\..{3}$, )
+    {
+        return ( $idno );
+    }
+    
+    #    this orginally for UMR...
+    ## this strange construction needed because some ids are not simply
+    ## xyz1234 but rather xyz1234ab. Ugh.
+    #    if ( $idno =~ m,^[a-z]{3}[0-9]{4}([^\.])?$, )
+
+    else
+# !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+# this is what it should be; plain "else" is for testingon bosnia till I get gandf
+#    elsif ( $idno =~ m,^[a-z]{3}[0-9]{4}$, )
+# !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+    {
+        ## ***** need to return an array, even if only of one thing ... 
+        my @idnos = ();
+        my $tco = $cio->GetTextClassObjByCollId( $c );
+        $tco->StartXPatProcess( $gRequestingHost );
+        
+        # if this collection is valid for searching
+        if ( $tco->GetStatus() )
+        {
+            # get XPatResultSet object
+            my $xpat = $tco->GetXPatObject( );
+            my $query = qq{pr.region."IDNO" (region "IDNO" incl "$idno")};
+            
+            my $results = $xpat->GetSimpleResultsFromQuery( $query );
+
+            # clean up results to get array of IDNOs to send back
+            &TextClassUtils::StripAllRSetCruft( \$results );
+            $results =~ s,<IDNO[^>]*?>,,gs;
+            $results =~ s,$,,;
+            @idnos = split ( /<\/IDNO>/, $results );
+        }
+        
+        return @idnos;
+    }
+}
+
+# ----------------------------------------------------------------------
+# NAME         : DisplayPageForIdno
+# PURPOSE      : 
+#                
+# CALLED BY    : 
+# CALLS        : 
+# INPUT        : 
+# RETURNS      : 
+# GLOBALS      : 
+# SIDE-EFFECTS : 
+# NOTES        : 
+# ----------------------------------------------------------------------
+
+sub DisplayPageForIdno
+{
+    my ( $c, $idno, $cgi, $cio, $dso ) = @_;
+    my $htmlPageRef = '';
+    
+    # get collection's host and obj base directory
+    my $baseObjDir = $cio->GetCollKeyInfo( $c, 'objdir' );
+        
+    ## save variables:  $currAbsSeq, $currPageNum, $currConfid, %featurePageTableRef, @thumbnailArray
+    my $pvo = new PageView ( $idno, $baseObjDir );
+        
+    # make sure we have a reasonable view, size, and seq
+    &SetPageViewDefaults( $cgi, $pvo )  ;
+
+    ## --------------------------------------------------
+    ## if this is only the frameset page, no need
+    if ( !( $cgi->param( 'frm' ) ) ) 
+    {
+	$htmlPageRef = &ServeFramesetOnly( $cgi, $cio, $dso );
+    } 
+
+    ## if this is either the nav frame or the main image frame, need a PageView object
+    else
+    {
+        # if frm is requesting the nav frame...
+        if ( $cgi->param( 'frm' ) eq 'nav' ) 
+        {
+            $htmlPageRef = &ServeNavFrameOnly( $cgi, $cio, $dso, $pvo );
+        }
+        
+        # if frm is requesting the main content frame
+        elsif ( $cgi->param( 'frm' ) eq 'main' )
+        {
+            $htmlPageRef = &ServeMainFrameOnly( $cgi, $cio, $dso, $pvo );
+        }
+        
+        else  
+        {     }
+        
+    }
+    
+    return $htmlPageRef;
+
+}
+
+
+# ************************************************************
+#   Name    : ServePicklistPage
+#   Input   : reference to list of dlpsids
+#   Returns : NONE
+#   Other   : gets picklist html page template
+#             outputs to STDOUT the picklist web page
+# ************************************************************
+
+sub ServePicklistPage
+{
+    my ( $idsArrayRef, $cgi, $cio, $dso ) = @_;
+    ## get template page
+    my $htmlPage = &GetHtmlTemplateText( $gHtmlTemplates{'picklist'} );        
+
+    # take care of general substitutions in the page
+    &TextClassUtils::HandleGeneralProcIns ( \$htmlPage, $cgi, $cio, 
+                                            $gHtmlDocRoot, $dso   
+                                          );
+
+    # build re-authorization link
+    &TextClassUtils::HandleReAuthLink ( \$htmlPage, $cgi );
+    
+    # set up ProcIns object
+    my $c = $cgi->param( 'c' );    
+    my $tco = $cio->GetTextClassObjByCollId( $c );
+    my $pio = $tco->{'pio'};
+
+    $pio->AddPI( 'PICKLIST', \&BuildPicklist, [ $cgi, $idsArrayRef ] );
+    $pio->AddPI( 'TEXTCLASS_CGI', undef, [ $gScriptDir ] );
+    
+
+    $pio->ProcessPIs( \$htmlPage );
+
+    return ( \$htmlPage );
+}
+
+
+# ----------------------------------------------------------------------
+# NAME         : BuildPicklist
+# PURPOSE      : 
+#                
+# CALLED BY    : 
+# CALLS        : 
+# INPUT        : 
+# RETURNS      : 
+# GLOBALS      : 
+# SIDE-EFFECTS : 
+# NOTES        : 
+# ----------------------------------------------------------------------
+
+sub BuildPicklist
+{
+    my ( $cgi, $idsArrayRef ) = @_;
+    
+    ## make copy of CGI object we can alter
+    my $tempCgi = new CGI( $cgi );
+
+    ## create picklist html text
+    my $picklist = '';
+    foreach my $id ( @$idsArrayRef )
+    {
+        ## create a displayable number rather than showing user the dlpsid
+        my $displayId = $id;
+#        $displayId =~ s,^[^\.]+\.([^\.]*?)\..*$,$1,;
+#        $displayId =~ s,^0+,,;
+
+        $tempCgi->param( 'idno' , $id );
+
+        my $link = $tempCgi->url(-full=>1) . '?' . $tempCgi->query_string ;
+        
+        $picklist .= qq{<a href="../$link">$displayId</a><br>\n};
+    }
+
+    return $picklist;
+
+}
+
+# ----------------------------------------------------------------------
+# NAME         : 
+# PURPOSE      : 
+#                
+# CALLED BY    : 
+# CALLS        : 
+# INPUT        : 
+# RETURNS      : 
+# GLOBALS      : 
+# SIDE-EFFECTS : 
+# NOTES        : 
+# ----------------------------------------------------------------------
+
+sub ServeNavFrameOnly
+{
+    my ( $cgi, $cio, $dso, $pvo ) = @_;
+
+    ## get template page
+    my $htmlPage = &GetHtmlTemplateText( $gHtmlTemplates{'nav'} );
+
+    # take care of general substitutions in the page
+    &TextClassUtils::HandleGeneralProcIns ( \$htmlPage, $cgi, $cio, 
+                                            $gHtmlDocRoot, $dso   
+                                          );
+
+    # build re-authorization link
+    &TextClassUtils::HandleReAuthLink ( \$htmlPage, $cgi );
+
+    # set up ProcIns object
+    my $c = $cgi->param( 'c' );    
+    my $tco = $cio->GetTextClassObjByCollId( $c );
+    my $pio = $tco->{'pio'};
+
+    # --------------------------------------------------
+    $pio->AddPI( 'VIEWFORM_HIDDEN_VARS', \&BuildViewFormHiddenVars, [ $cgi ] );
+
+    # --------------------------------------------------
+    $pio->AddPI( 'RETURN_TO_RESULTS', \&TextClassUtils::_BuildReturnToResultsLink, [ $dso ] );
+
+    # --------------------------------------------------
+    $pio->AddPI( 'PREV_PAGE_LINK', \&BuildPrevPageLink, [ $cgi, $pvo ] );
+
+    # --------------------------------------------------
+    $pio->AddPI( 'NEXT_PAGE_LINK', \&BuildNextPageLink, [ $cgi, $pvo ] );
+
+    # --------------------------------------------------
+    my $view  =  $cgi->param('view') || $pvo->GetDefaultView();
+#    my @views =  $pvo->GetViewsAsArray();
+    my %viewHash =  $pvo->GetViewsHash();
+    my @viewValuesArray = sort ( keys ( %viewHash ) );
+    $pio->AddPI( 'VIEW_SELECT',
+                 \&BuildPullDown,
+                 [ $cgi, 'view', \@viewValuesArray, $view, \%viewHash ] );
+
+    # --------------------------------------------------
+    my $size            =  $cgi->param('size') || $pvo->GetDefaultSize();
+    my %sizeHash        =  $pvo->GetSizesHash();
+    my @sizeValuesArray = sort ( keys ( %sizeHash ) );
+    $pio->AddPI( 'SIZE_SELECT',
+                 \&BuildPullDown,
+                 [ $cgi, 'size', \@sizeValuesArray, $size, \%sizeHash ] );
+
+    # --------------------------------------------------
+    my $seq = $cgi->param('seq');
+    my ( $pageValuesArrayRef, $pageLabelsHashRef ) = $pvo->GetPageInfo();
+        $pio->AddPI( 'PAGE_SELECT',
+                 \&BuildPullDown,
+                 [ $cgi, 'seq', $pageValuesArrayRef, $seq, $pageLabelsHashRef ] );
+
+
+    # --------------------------------------------------
+    #   send off the ProcIns object for filtering
+    $pio->ProcessPIs( \$htmlPage );
+
+    return ( \$htmlPage );
+}
+
+
+# ----------------------------------------------------------------------
+# NAME         : ServeMainFrameOnly
+# PURPOSE      : 
+#                
+# CALLED BY    : 
+# CALLS        : 
+# INPUT        : 
+# RETURNS      : 
+# GLOBALS      : 
+# SIDE-EFFECTS : 
+# NOTES        : 
+# ----------------------------------------------------------------------
+
+sub ServeMainFrameOnly
+{
+    my ( $cgi, $cio, $dso, $pvo ) = @_;
+
+    my $outputString = '';
+    
+    # if this is a pdf view, we don't want to use the template for 
+    # the main frame, we just want to send "application/pdf"
+    # header and data
+    if ( $cgi->param( 'view' ) eq 'pdf' )
+    {
+        $outputString = &GetPdf ( $cgi, $pvo, $gGifConvertDir );
+    }
+
+    # otherwise, wanting image or text view
+    else
+    {
+        ## get template page
+        $outputString = &GetHtmlTemplateText( $gHtmlTemplates{'main'} );
+        
+#        # take care of general substitutions in the page
+#        &TextClassUtils::HandleGeneralProcIns ( \$outputString, $cgi, $cio, 
+#                                                $gHtmlDocRoot, $dso   
+#                                              );
+#
+#        # build re-authorization link
+#        &TextClassUtils::HandleReAuthLink ( \$htmlPage, $cgi );
+
+        # set up ProcIns object since we'll be using an html template
+        my $c = $cgi->param( 'c' );    
+        my $tco = $cio->GetTextClassObjByCollId( $c );
+        my $pio = $tco->{'pio'};
+        
+        # see if we need a page image or the text
+        
+        if ( $cgi->param( 'view' ) eq 'image' )
+        {
+            # PI will substitute in <img src=  ../text but will also have PageView module
+            # create the gif and deposit in right web space directory so it be available to html ><img src=../...> tag.
+            $pio->AddPI( 'PAGE_IMAGE_OR_TEXT',
+                         \&CreateImageForPage,
+                         [ $cgi, $pvo ] );
+        }
+        elsif (  $cgi->param( 'view' ) eq 'text' )
+        {
+            $pio->AddPI( 'PAGE_IMAGE_OR_TEXT',
+                         \&GetTextForPage,
+                         [  ] );        
+        }
+        
+        # --------------------------------------------------
+        #   send off the ProcIns object for filtering
+        $pio->ProcessPIs( \$outputString );
+    }
+    return ( \$outputString );
+}
+
+
+# ----------------------------------------------------------------------
+# NAME         : 
+# PURPOSE      : 
+#                
+# CALLED BY    : 
+# CALLS        : 
+# INPUT        : 
+# RETURNS      : 
+# GLOBALS      : 
+# SIDE-EFFECTS : 
+# NOTES        : 
+# ----------------------------------------------------------------------
+sub CreateImageForPage
+{
+    my ( $cgi, $pvo ) = @_;
+    my $seq = $cgi->param( 'seq' );
+
+    my $view = $cgi->param( 'view' );
+    my $size = $cgi->param( 'size' );
+    my $idno = $cgi->param( 'idno' );
+    
+    my $gifFileName = $pvo->CreateGifFile( $idno, $seq, $view, $size, $gGifConvertDir );
+
+    $gifFileName =~ s,^$gHtmlDir,$gHtmlDocRoot,;
+    
+    my $imgTag = $cgi->img ( {src => $gifFileName} );
+
+    return $imgTag;
+}
+
+# ----------------------------------------------------------------------
+# NAME         : GetPdf
+# PURPOSE      : 
+#                
+# CALLED BY    : 
+# CALLS        : 
+# INPUT        : 
+# RETURNS      : 
+# GLOBALS      : 
+# SIDE-EFFECTS : 
+# NOTES        : 
+# ----------------------------------------------------------------------
+
+sub GetPdf
+{
+    my ( $cgi, $pvo, $gifConvertDir ) = @_;
+    
+    my $pdfFileName = $pvo->CreatePdfFile( 
+                                          $cgi->param( 'idno' ), 
+                                          $cgi->param( 'seq' ),
+                                          $cgi->param( 'view' ),
+                                          $cgi->param( 'size' ),
+                                          $gifConvertDir
+                                         );
+
+    
+    my $outputString = '';
+
+    open (PDFFILE, "<$pdfFileName") || die qq{$pdfFileName: $!\n};
+    my $origSeparator = $/;
+    
+    undef ($/);
+    
+    $outputString = <pdffile>;
+    
+    $/ = $origSeparator;
+    
+
+#    while (<pdffile>) 
+#    {     $outputString .= $_;    }
+#    close (PDFFILE);
+
+
+#    print "Content-type: application/pdf\n\n";
+#    print "tifFile: $tiffFileName\n";
+#    print "pdfFile: $pdfFileName\n";
+#    print "$outputString";
+#    print "command:\n\n";
+    
+#    exit;
+    
+
+    return $outputString ;
+}
+
+### &&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&
+
+
+sub GetTextForPage
+{
+}
+
+
+# ----------------------------------------------------------------------
+# NAME         : 
+# PURPOSE      : 
+#                
+# CALLED BY    : 
+# CALLS        : 
+# INPUT        : 
+# RETURNS      : 
+# GLOBALS      : 
+# SIDE-EFFECTS : 
+# NOTES        : 
+# ----------------------------------------------------------------------
+
+sub BuildViewFormHiddenVars
+{
+    my $cgi  = shift;
+
+    my $s = '';
+    
+     $s .= $cgi->hidden( 'sid' ) . "\n" ;
+     $s .= $cgi->hidden( 'c' ) . "\n";
+     $s .= $cgi->hidden( 'idno' ) . "\n" ;
+     $s .= $cgi->hidden( 'seq' ) . "\n" ;
+     $s .= $cgi->hidden( 'xc' ) . "\n" ;
+    
+    return $s;
+}
+
+# ----------------------------------------------------------------------
+# NAME         : 
+# PURPOSE      : 
+#                
+# CALLED BY    : 
+# CALLS        : 
+# INPUT        : 
+# RETURNS      : 
+# GLOBALS      : 
+# SIDE-EFFECTS : 
+# NOTES        : 
+# ----------------------------------------------------------------------
+
+sub BuildPrevPageLink
+{
+    my ( $cgi, $pvo ) = @_;
+    my $s = '';
+
+    # get previous page from pvo
+    my $tempCgi = new CGI( $cgi );
+    # make this a top level link by removing the frame parameter
+    $tempCgi->delete( 'frm' );
+
+    my $prevPage = $tempCgi->param( 'seq' ) - 1;
+    # if less than one, set to one
+    $prevPage = ( $prevPage >= 1 ) ? $prevPage : 1;
+    $tempCgi->param( 'seq', $prevPage );
+    
+    $s .= qq{<a href=../%5C%22%7D .
+      $tempCgi->self_url .
+        qq{\">Previous Page</a>\n};
+    
+
+    return $s;
+}
+
+sub BuildNextPageLink
+{
+    my ( $cgi, $pvo ) = @_;
+    my $s = '';
+
+    # get previous page from pvo
+    my $tempCgi = new CGI( $cgi );
+
+    # make this a top level link by removing the frame parameter
+    $tempCgi->delete( 'frm' );
+    
+    my $nextPage = $tempCgi->param( 'seq' ) + 1;
+    # if greater than last page set to last page
+    
+    $nextPage = ( $nextPage > $pvo->GetLastPageSeq() ) ? $pvo->GetLastPageSeq() : $nextPage;
+    $tempCgi->param( 'seq', $nextPage );
+    
+    $s .= qq{<a href=../%5C%22%7D .
+      $tempCgi->self_url .
+        qq{\">Next Page</a>\n};
+    
+
+    return $s;
+}
+
+
+# ----------------------------------------------------------------------
+# NAME         : 
+# PURPOSE      : 
+#                
+# CALLED BY    : 
+# CALLS        : 
+# INPUT        : 
+# RETURNS      : 
+# GLOBALS      : 
+# SIDE-EFFECTS : 
+# NOTES        : 
+# ----------------------------------------------------------------------
+
+
+sub ServeFramesetOnly
+ {
+    my ( $cgi, $cio, $dso ) = @_;
+    ## get template page
+    my $htmlPage = &GetHtmlTemplateText( $gHtmlTemplates{'frameset'} );        
+
+#    # take care of general substitutions in the page
+#    &TextClassUtils::HandleGeneralProcIns ( \$htmlPage, $cgi, $cio, 
+#                                            $gHtmlDocRoot, $dso   
+#                                          );
+#
+#    # build re-authorization link
+#    &TextClassUtils::HandleReAuthLink ( \$htmlPage, $cgi );
+
+    # set up ProcIns object
+    my $c = $cgi->param( 'c' );    
+    my $tco = $cio->GetTextClassObjByCollId( $c );
+    my $pio = $tco->{'pio'};
+
+    $pio->AddPI( 'NAV_FRAME_SRC', \&CreateNavFrameSrc, [ $cgi ] );
+    $pio->AddPI( 'MAIN_FRAME_SRC', \&CreateMainFrameSrc, [ $cgi ] );
+    
+
+    $pio->ProcessPIs( \$htmlPage );
+
+    return ( \$htmlPage );
+}
+
+# ----------------------------------------------------------------------
+# NAME         : 
+# PURPOSE      : 
+#                
+# CALLED BY    : 
+# CALLS        : 
+# INPUT        : 
+# RETURNS      : 
+# GLOBALS      : 
+# SIDE-EFFECTS : 
+# NOTES        : 
+# ----------------------------------------------------------------------
+
+sub CreateNavFrameSrc
+{
+    my $cgi = shift;
+    
+    my $tempCgi = new CGI( $cgi );
+    
+    $tempCgi->param( 'frm', 'nav' );
+    
+    return ( $tempCgi->self_url );
+    
+}
+
+
+# ----------------------------------------------------------------------
+# NAME         : 
+# PURPOSE      : 
+#                
+# CALLED BY    : 
+# CALLS        : 
+# INPUT        : 
+# RETURNS      : 
+# GLOBALS      : 
+# SIDE-EFFECTS : 
+# NOTES        : 
+# ----------------------------------------------------------------------
+
+sub CreateMainFrameSrc
+{
+    my $cgi = shift;
+    
+    my $tempCgi = new CGI( $cgi );
+    
+    $tempCgi->param( 'frm', 'main' );
+    
+    return ( $tempCgi->self_url );
+    
+}
+
+
+# ----------------------------------------------------------------------
+# NAME         : 
+# PURPOSE      : 
+#                
+# CALLED BY    : 
+# CALLS        : 
+# INPUT        : 
+# RETURNS      : 
+# GLOBALS      : 
+# SIDE-EFFECTS : 
+# NOTES        : 
+# ----------------------------------------------------------------------
+
+sub SetPageViewDefaults
+{
+    my ( $cgi, $pvo ) = @_;
+    
+    my $view = $cgi->param( 'view' );
+    if ( ! defined ( $view ) )
+    {
+        $view = $pvo->GetDefaultView();
+        $cgi->param( 'view', $view );
+    }
+
+    my $size = $cgi->param( 'size' );
+    if ( ! defined ( $size ) )
+    {
+        $size = $pvo->GetDefaultSize();
+        $cgi->param( 'size', $size );
+    }
+
+#    my $seq = $cgi->param( 'seq' );
+#    if ( ! defined ( $seq ) )
+#    {
+#        $seq = $pvo->GetDefaultSeq();
+#        $cgi->param( 'seq', $seq );
+#    }
+
+    $cgi->param( 'idno' , lc ( $cgi->param( 'idno' ) ) );
+
+    if ( ! defined ( $cgi->param( 'seq' ) ) )
+    {
+        $cgi->param( 'seq', '1');
+    }
+}
+
+
+
+__END__;
+
+
+
+    
+        
+        ## if this is a search by page number (from the nav bar: pull-down
+        ## should have seq as value while label is page number ),
+        ## construct $gTif so that the rest can happen
+        if ( $seq ) 
+        {
+            # remove leading zeroes
+            $seq =~ s,^0+,,;
+            
+            my $tifFile = $pvo->GetPageInfoBySeqAndKey( $seq, 'filename' );
+            
+            ## ***** if we got to the end without finding a match with user's input, redo current url *****
+            if ( $newTif eq '' || !defined($newTif) ) 
+            {
+                my $s =  $cgi->redirect( $cgi->self_url );
+                print $s;
+                exit;
+            }
+            
+            else
+            {   $tifFile = $cgi->escape( $tifFile );}
+        }
+        
+    }
+    
+}
+
+
+
+# **********************************************************************
+#   Name    : CreatePdfFileForAllPages
+#   Input   : NONE
+#   Returns : pdf file name
+#   Notes   : uses global vars, uses Acrobat distiller
+# **********************************************************************
+
+sub CreatePdfFileForAllPages
+{
+    my $tifFileDir = $gObjRootDir . &ExpandNotisIdToPath( $idno );
+    my $gifDestDir = $gWebDir . $gPageCacheDir . $idno;
+
+    ## ***** pdf file name based on whole notis id
+    my $pdfFileName = $gifDestDir . '/' . $idno . '.pdf' ;   
+
+
+    ## ***** check to see if directory path exists *****
+    if (! -e $gifDestDir )
+    {    `/bin/mkdir -m 2775 -p $gifDestDir`;   }
+
+    my ( $tifFile, $urlsString );
+    my ( $line, @tifFiles, $tifFileName, $tifFile );
+
+    if ( ! -e "$pdfFileName" ||
+         (@pdfstat=stat("$pdfFileName"))[9] < (stat($tifFile))[9]
+         || $pdfstat[7] == 0 )  
+    {
+
+        foreach $line ( @$gPageviewDataLinesRef ) 
+        { 
+            my @lineArray = split ( /\t/, $line ) ;
+            $tifFileName = shift ( @lineArray );
+            $tifFile     = $tifFileDir . $tifFileName;
+            
+            $urlsString .= qq{file://$tifFile\n};
+        }
+ 
+        my $tempUrlListFile = '/tmp/' . "$$";
+
+        ## ***** we definitely need the newline for the printps command *****
+        &PrintStringToFile ( $urlsString . "\n" , $tempUrlListFile );
+    
+        my $command = qq{$gPrintps $tempUrlListFile | $gDistiller > $pdfFileName};
+
+        `$command 2> /tmp/blah`;
+
+        unlink ($tempUrlListFile);
+    }
+    $pdfFileName =~ s,$gWebDir,/,;
+
+    return     $pdfFileName ;
+}
+
+
+
+# ************************************************************
+
+1;      # ***** true value needed when loading
+
+
+
+
+__END__;
+
+
+# ************************************************************
+#   Name    : CreatePageInfo
+#   Input   : NONE
+#   Returns : string
+#   Notes   : uses global
+# ************************************************************
+
+#sub CreatePageInfo 
+#{
+#    return ( qq{<strong>Image $gCurrAbsSeq of $gLastPageSeq</strong>} );
+#}
+
+
+# ************************************************************
+#   Name    : CreateNextPageSrc
+#   Input   : NONE
+#   Returns : string which is the value of an href (for moving to the next page
+#   Notes   : uses global
+# ************************************************************
+
+# sub CreateNextPageSrc
+# {
+#     my @pageArray = @$gPageviewDataLinesRef;
+#     my ( $filename, $pagenum );
+
+#     ## ***** if we're not already on the first page, make a previous page nav button *****
+#     if  ( $gCurrPageIndex < $#pageArray ) 
+#     {
+#         ($filename) = split (/\t/, $pageArray[ $gCurrPageIndex+1 ]);
+#         $pagenum = $gCurrAbsSeq + 1
+#     }
+#     else 
+#     {
+#         $filename = $gTif;
+#         $pagenum  = $gCurrAbsSeq;
+#     }
+    
+#     return ( qq{$gBin?id=$idno\&tif=$filename\&coll=$gColl\&view=$gView\&pagenum=$pagenum} );
+# }
+
+
+
+# **********************************************************************
+# Name    : GetTextFile
+# Input   : NONE
+# Returns : string of text (eventually should be SGML, returned to a filtering subroutine)
+# Notes   : This routine is not used here in umr since we are only showing pages and never text
+#           However, when we do in the future or if this code is used as a basis for other
+#           pageviewers, note that as of 1/2000 we are no longer using the ocr-ed text when
+#           showing a text view; we will be using the sgml in whatever level of encoding it has.
+# **********************************************************************
+
+#  sub GetTextFile
+#  {
+#      ## ***** if not an encoded text, continue and get the ocr text *****
+#      my $s = '';
+
+#      my $textFile = $gTif;
+#      $textFile =~ s,tif$,txt,;
+
+#      my $ocrTextFile = $gObjRootDir . &ExpandNotisIdToPath( $idno ) . $textFile;
+
+#      open ( OCRFILE , "<$ocrTextFile" ) || &bail (qq{Can\'t open file: }. $ocrTextFile . $!);
+
+#      $s .= qq{<h3>Text of page:</h3>};
+#      $s .= qq{<pre>\n};
+#      while ( <ocrfile> ) {
+#  	$s .= $_ ;
+#      }
+#      $s .= qq{</pre>\n};
+
+#      return $s;
+#  }
+
+
+
+
+# ************************************************************
+#   Name    : CreatePrevPageSrc
+#   Input   : NONE
+#   Returns : string
+#   Notes   : uses global
+# ************************************************************
+
+# sub CreatePrevPageSrc
+# {
+#     my @pageArray = @$gPageviewDataLinesRef;
+#     my ( $filename , $pagenum );
+
+#     ## ***** if we're not already on the first page, make a previous page nav button *****
+#     if  ( $gCurrPageIndex > 0 ) 
+#     {
+#         ($filename) = split (/\t/, $pageArray[ $gCurrPageIndex - 1 ]);
+#         $pagenum = $gCurrAbsSeq - 1;
+#     }
+#     else 
+#     {
+#         $filename = $gTif;
+#         $pagenum = $gCurrAbsSeq;
+#     }
+
+#     return ( qq{$gBin?id=$idno\&tif=$filename\&coll=$gColl\&view=$gView\&pagenum=$pagenum} );
+# }
+
+
+
+# **********************************************************************
+#  Name    : CreateMainPage
+#  Input   : NONE 
+#  Returns : string with img src
+#  Notes   : TEXT and THUMBNAIL VIEWS NOT INCLUDED YET IN UMR, 1/2000
+# **********************************************************************
+
+# sub CreateMainPage 
+# {
+#     my $s = '';
+
+# #    if ( $gView eq 'text' ) 
+# #    {   $s .= &GetTextFile;   }
+# #    elsif ( $gView eq 'thumbnail' ) 
+# #    {   $s = &CreateThumbnailTable;   }
+
+
+#     if ( exists ( $gViewToDpiHash{ $gView } ) )
+#     {         
+# 	## ***** convert tif to gif *****
+# 	my $gif = &CreateImageFile;
+	
+# 	$s .= qq{<img src=../%5C%22$gif%5C%22 alt="Image of the page">\n};
+#     }
+
+#     return $s;
+# }
+
+#  --------------------------------------------------
+#
+#
+# --------------------------------------------------
+
+# sub BuildNavLink
+# { 
+#     my ( $cgi, $pvo ) = @_;
+    
+# #     ## ***** set up some local variables *****
+# #     my $TITLE          = $title;
+
+# #     my $PREVPAGESRC    = &CreatePrevPageSrc;
+# #     my $NEXTPAGESRC    = &CreateNextPageSrc;
+
+# #     my $VIEW_FORM_HIDDEN_VARS = &BuildViewFormHiddenVars;
+# #     my $VIEW_OPTIONS          = &BuildViewOptions;
+
+# #     my $SEQ_FORM_HIDDEN_VARS = &BuildSeqFormHiddenVars;
+# #     my $SEQ_OPTIONS          = &BuildSeqOptions;
+
+# #     ## ***** make substitutions in template *****
+# #     $htmlPage =~ s,\$TITLE,$TITLE,g;
+# #     $htmlPage =~ s,\$BIN,$gBin,g;
+
+# #     $htmlPage =~ s,\$PREVPAGESRC,$PREVPAGESRC,g;
+# #     $htmlPage =~ s,\$NEXTPAGESRC,$NEXTPAGESRC,g;
+# #     $htmlPage =~ s,\$VIEW_FORM_HIDDEN_VARS,$VIEW_FORM_HIDDEN_VARS,g;
+# #     $htmlPage =~ s,\$VIEW_OPTIONS,$VIEW_OPTIONS,g;
+
+# #     $htmlPage =~ s,\$SEQ_FORM_HIDDEN_VARS,$SEQ_FORM_HIDDEN_VARS,g;
+# #     $htmlPage =~ s,\$SEQ_OPTIONS,$SEQ_OPTIONS,g;
+
+# #     $htmlPage =~ s,\$GOTOPAGENAV,$GOTOPAGENAV,g;
+
+
+# # ## ***** for later when we do searching *****
+# # #    my $SEARCHNAVBAR   = &BuildSearchNavBar;
+# # #    $htmlPage =~ s,\$SEARCHNAVBAR,$SEARCHNAVBAR,g;
+
+
+# #     return $htmlPage;    
+# }
+

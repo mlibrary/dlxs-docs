@@ -1,0 +1,195 @@
+<?xml version="1.0"?>
+
+<!-- SPO Editorial Services                  -->
+<!-- automatically-generated XML header file -->
+
+<?xml-stylesheet href="../../../pre11-dlxsdocs.xsl" type="text/xsl"?>
+<!DOCTYPE DLPSDOC PUBLIC "-//UM-DLPS//DTD DLPS Publications//EN" "http://docs.umdl.umich.edu/dlps/docs/dlpsdocs.dtd">
+<DLPSDOC>
+<TITLE>Specifying Individual Collection Characteristics</TITLE>
+<HEADER>
+<JOURNAL>DLXS Documentation</JOURNAL>
+<PUBDATE>2002-07-08 11:46:20 EDT</PUBDATE>
+<AUTH1>Stoeffler, Matt</AUTH1>
+<AUTH2></AUTH2>
+<DOCTITLE>Specifying Individual Collection Characteristics</DOCTITLE>
+<VOL>class</VOL>
+<ISS>text</ISS>
+<FILE>dlxsdocs-tc-ind-coll-chars</FILE>
+</HEADER>
+<BODY>
+    <BHEAD>Specifying Individual Collection Characteristics</BHEAD>
+
+<DIV1 ID="contents">
+<DL>
+
+  <DT><A HREF="#css">CSS files</A></DT>
+      <DT><A HREF="#graphics">Graphics</A></DT>
+      <DT><A HREF="#hdr">Header Characteristics</A></DT>
+      <DD><A HREF="#background">Background colors and graphics</A></DD>
+      <DD><A HREF="#hdrcollname">Title name or graphic</A></DD>
+      <DD><A HREF="#hdrtabs">Navigation tabs and fonts</A></DD>
+  
+</DL>
+<BR/>
+</DIV1>
+<DIV1 ID="main">
+      <DIV2 ID="css">
+	<H2>CSS files</H2>
+  <P>Text class templates utilize two CSS files for controlling most font and color 
+  characteristics: textclass.css and textclass-specific.css. textclass.css is 
+  stored in the <CODE>$DLXSROOT/t/text/</CODE> 
+  path and contains all the default style declarations. textclass-specific.css 
+  is created for each individual collection and stored at the <CODE>$DLXSROOT/c/collid/</CODE> 
+  path. References to both stylesheets are as follows:</P>
+<BLOCKQUOTE>
+  <P> &lt;link rel=&quot;stylesheet&quot; href=&quot;&lt;?DOC_ROOT&gt;textclass.css&quot; 
+    type=&quot;text/css&quot;&gt;<BR/>
+    &lt;link rel=&quot;stylesheet&quot; href=&quot;&lt;?DOC_ROOT mode=&quot;single&quot;&gt;textclass-specific.css&quot; 
+    type=&quot;text/css&quot;&gt; </P>
+</BLOCKQUOTE>
+  <P>The &lt;?DOC_ROOT&gt; processing instruction resolves to the relevant path 
+    for each stylesheet. Because textclass-specific.css is referenced after textclass.css, 
+    any style declarations that appear in textclass-specific.css will effectively 
+    override matching declarations in textclass.css. This is how fonts and background 
+    colors are varied for each collection. (See the <A HREF="tc-textclass-css.xml">full 
+    text of textclass.css</A>)</P>
+<BR/>
+      </DIV2>
+      <DIV2 ID="graphics">
+ <H2>Graphics</H2>
+  
+<P>Default text class templates employ a variety of relatively generic graphics 
+  that can be referenced by all collection instances. A <A HREF="tc-graphics.xml">table 
+  of shared files</A> shows those files that are stored in the <CODE>$DLXSROOT/t/text/graphics/</CODE> 
+  directory. Any alternative graphics by identical names may be stored in individual 
+  collection <CODE>graphics</CODE> directories to replace the default class graphics 
+  for that particular collection. Any files not stored in collection graphics 
+  directories, but referenced in the templates, will be referenced from the class 
+  graphics directory as a fallback mechanism. Graphics files that are likely to 
+  be unique to each collections are discussed in the section on <A HREF="#background">header 
+  background colors and graphics</A>. </P>
+<BR/>
+</DIV2>
+      <DIV2 ID="hdr">
+  <H2>Header Characteristics</H2>
+  <P>The header of each page template includes that area in the top 75 pixels of 
+  the page containing those elements associated with unique collection identity: 
+  main collection title, global links, if any, and the main navigation bar. The 
+  templates accomodate inclusion of background colors or graphics to provide some 
+  flexibility in creating unique appearances for different collections. </P>
+	<DIV3 ID="background">
+	<H3>Background colors and graphics</H3>
+  <P>Main background color for template headers is provided at three different levels: 
+  default background colors for table cells specified in the<CODE> 
+  bgcolor</CODE> attribute, style declarations in the textclass-specific.css stylesheet, 
+  and table cell background graphics referenced by the <CODE>background</CODE> 
+  attribute. <B>Figure 1</B> illustrates how these characteristics are specified 
+  in<CODE> td</CODE> opening tags in the <A HREF="http://ets.umdl.umich.edu/v/voltaire">Voltaire 
+  &#x00e9;lectroniqu</A>e collection.</P>
+<TABLE BORDER="0" CELLSPACING="2" CELLPADDING="0">
+  <TR>
+      <TD><IMG SRC="graphics/text-hdr-layout.gif" WIDTH="633" HEIGHT="91" BORDER="1"/></TD>
+  </TR>
+  <TR>
+    <TD><B>Figure 1</B>: Header cell color and graphics.</TD>
+  </TR>
+</TABLE>
+<P>The two top cells each have CSS class associations and background graphic references 
+  to files in the local collection graphics directory. The <CODE>hdrcolor</CODE> 
+  style is set locally in the textclass-specific.css style sheet as</P>
+<BLOCKQUOTE>
+  <P><CODE>.hdrcolor { background-color: #FFFFF1 
+    } </CODE></P>
+</BLOCKQUOTE>
+<P>The background graphics files, hdr-bg1.gif and hdr-bg2.gif, are, in fact, laying 
+  &quot;over&quot; the background color specified by the CSS style--the order 
+  of precedence for CSS capable browsers is<CODE> 
+  background</CODE>, <CODE>class</CODE>, <CODE>bgcolor</CODE>--but 
+  you see the CSS style colors because the gifs are transparent. The lower cell 
+  has a <CODE>bgcolor</CODE> value and a CSS 
+  style, <CODE>navcolor</CODE>, set again in 
+  the local textclass-specific.css as</P>
+<BLOCKQUOTE> 
+  <P><CODE>.navcolor { background-color: #F3E098 
+    } </CODE></P>
+	  </BLOCKQUOTE>
+	<BR/>
+	  <P><B>Figure 2</B> illustrates the appearance of another header based on the same 
+  template using non-transparent background gifs that integrate with the collection 
+  title gif and the CSS style for <CODE>navcolor.</CODE></P>
+<TABLE WIDTH="75%" BORDER="0" CELLSPACING="2" CELLPADDING="0">
+	      <TR> 
+		<TD><IMG SRC="graphics/umr-hdr.gif" WIDTH="625" HEIGHT="78" BORDER="1"/></TD>
+	      </TR>
+	      <TR>
+		<TD>
+      <TABLE WIDTH="100%" BORDER="0" CELLSPACING="0" CELLPADDING="10">
+		      <TR>
+			<TD VALIGN="top">
+              <P><IMG SRC="graphics/umtr-combined.gif" WIDTH="333" HEIGHT="51" BORDER="1"/></P>
+            <P>collection title gif</P>
+          </TD>
+			
+          <TD CLASS="stuff"><IMG SRC="graphics/bgmat.gif" WIDTH="100" HEIGHT="91" STYLE="left-margin: 5px; right-margin: 5px" BORDER="1"/>hdr-bg1.gif 
+            and hdr-bg2.gif provide background.</TD>
+		      </TR>
+		  </TABLE>
+    </TD>
+	      </TR>
+	      <TR> 
+		<TD><B>Figure 2:</B> component files for a header portion of UM Technical 
+      Reports templates.</TD>
+	      </TR>
+	  </TABLE>
+<BR/><BR/>
+	</DIV3>
+	<DIV3 ID="hdrcollname">
+	  <H3>Title name or graphic</H3>
+  <P>Collection title name is provided in the templates via the<CODE> 
+  &lt;?TITLE mode=&quot;complex&quot;&gt;</CODE> processing instruction. The PI 
+  will resolve to a text string or a graphic file as specified in the DLXS Collection Manager database.   When rendered as text, titles are wrapped in H3 tags with CSS 
+  style <CODE>topheadlink</CODE> so that collection 
+  title font can be specified.</P>
+<BR/>
+	</DIV3>  
+	<DIV3 ID="hdrtabs">
+	  <H3>Navigation fonts and tabs</H3>
+	  <P>Color for navigation tabs is controlled by CSS styles, as are the border colors 
+  that surround and underline the tabs. Tab color is, in the &quot;backgrounded&quot; 
+  state, set by the <CODE>navcolor</CODE> style. 
+  The tab &quot;foreground&quot; state color is specified with the <CODE>navhicolor</CODE> 
+  style. Border and underline colors are set with<CODE> 
+  navdivision</CODE> and <CODE>navhrcolor</CODE> 
+  styles respectively. </P>
+	  <P>Font settings for tabs are also CSS controlled. Relative style declarations 
+  for fonts are as below:</P>
+	  <BLOCKQUOTE>
+	    <P><CODE>/* nav bar fonts */<BR/>
+    .navlinks { font-family: Arial, Helvetica, sans-serif; <BR/>
+    font-size: 12px; <BR/>
+    font-weight: bold; <BR/>
+    color: #666666; <BR/>
+    text-decoration: none<BR/>
+    }</CODE></P>
+  <P><CODE><BR/>
+    /* label font for up tabs */<BR/>
+    .navhilinks { font-family: Arial, Helvetica, sans-serif; <BR/>
+    font-size: 12px; <BR/>
+    font-weight: bold; <BR/>
+    text-decoration: none <BR/>
+    }</CODE></P>
+  <P><CODE>/* nav link characteristics */<BR/>
+    A:hover { text-decoration: underline }<BR/>
+    A.nav { color: #FFFFFF; <BR/>
+    text-decoration: none <BR/>
+    }<BR/>
+    <BR/>
+    A.nav:hover { color : #FFCC33; <BR/>
+    text-decoration: underline <BR/>
+    }</CODE></P>
+	  </BLOCKQUOTE></DIV3>
+      </DIV2>
+    </DIV1>
+  </BODY>
+</DLPSDOC>

@@ -1,0 +1,235 @@
+<?xml version="1.0"?>
+
+<!-- SPO Editorial Services                  -->
+<!-- automatically-generated XML header file -->
+
+<?xml-stylesheet href="../../../pre11-dlxsdocs.xsl" type="text/xsl"?>
+<!DOCTYPE DLPSDOC PUBLIC "-//UM-DLPS//DTD DLPS Publications//EN" "http://docs.umdl.umich.edu/dlps/docs/dlpsdocs.dtd">
+<DLPSDOC>
+<TITLE>Guidelines for Mapping to Core Categories for Image Services</TITLE>
+<HEADER>
+<JOURNAL>DLXS Documentation</JOURNAL>
+<PUBDATE>2002-07-03 17:11:04 EDT</PUBDATE>
+<AUTH1>Weise, John</AUTH1>
+<AUTH2></AUTH2>
+<DOCTITLE>Guidelines for Mapping to Core Categories for Image Services</DOCTITLE>
+<VOL>class</VOL>
+<ISS>image</ISS>
+<FILE>dlxsdocs-image-dc-guidelines</FILE>
+</HEADER>
+
+
+
+
+<BODY>
+<BHEAD>Guidelines for Mapping to Core Categories for Image Services</BHEAD>
+<DIV1 ID="main">
+
+<P><A HREF="mailto:dlxs-help@umich.edu">dlxs-help@umich.edu</A>
+</P>
+
+<P>
+<B>Disclaimer:</B> <I>The
+   guidelines in this document are somewhat specific to deployment of
+   collections in the Image Services access system at the University
+   of Michigan Digital Library Production Service and should not be
+   considered as a generally applicable interpretation of the Dublin
+   Core.</I></P>
+
+<P>Image Services uses a somewhat simplified implementation of Dublin
+Core. While the <A HREF="http://purl.oclc.org/dc/">Dublin Core
+documentation</A> is informative, the following table may be most
+useful when preparing data for Image Services.</P>
+
+<P>Keep in mind that databases often have a mix of fields, some that
+describe the subject matter, and some that describe the physical
+item. In the case of a photograph of architecture, is the photograph
+the item or is the architecture the item?&#0160;The answer to this
+varies depending on the database (and the curatorial decisions that
+went into creating the database). At any rate, it is issues like
+this that make the mapping process interesting and challenging.</P>
+
+<P>Again, the goal is to map database/collection specific fields to
+the more general Dublin Core fields in order to make searching across
+all Image Services databases possible. The collection specific fields
+will also be searchable directly in a collection specific search. You
+may find that it helps to <A HREF="http://images.umdl.umich.edu/">try
+some of the other collections</A> that are online to see how they are
+mapped. Mappings are viewable by looking at a <A HREF="http://images.umdl.umich.edu/cgi/i/image/image-idx?type=detail;cc=bhl;entryid=X-bl000308;viewid=1;sstrt=5;hits=27;q1=huron;cat1=All%20Categories;cross=1;thsz=12;txsz=50;slsz=1;med=1;c=bhl">detailed
+record in the cross collection search</A>. It is also useful to look
+at <A HREF="http://images.umdl.umich.edu/cgi/i/image/image-idx?type=detail;cc=bhl;entryid=X-bl000308;viewid=1;sstrt=1;hits=1;q1=5635;cat1=All%20Categories;thsz=12;txsz=50;slsz=1;med=1;c=bhl">detailed
+records in the collection specific search</A> to pick up nuances of
+each collection.</P>
+
+<TABLE BORDER="1">
+<TBODY>
+   <TR>
+      <TD>
+         <P><B>Core Category/Field Name</B></P>
+      </TD>
+      <TD>
+         <P><B>Types of Collection Specific Fields Commonly
+         Mapped</B></P>
+      </TD>
+   </TR>
+   <TR>
+      <TD>
+         <P>Creator</P>
+      </TD>
+      <TD>
+         <UL>
+            <LI>Name of artist, architect, photographer, creator,
+            etc.</LI>
+            
+            <LI>Tombstone information for artist, architect,
+            photographer, creator, etc.</LI>
+            
+            <LI>Nationality of artist, architect, photographer,
+            creator, etc.</LI>
+         </UL>
+      </TD>
+   </TR>
+   <TR>
+      <TD>
+         <P>Title</P>
+      </TD>
+      <TD>
+         <UL>
+            <LI>Titles, subtitles, project names.</LI>
+            
+            <LI>When there is not a formal title, captions, location
+            for architecture, and similar fields are sometimes
+            mapped to Title.</LI>
+         </UL>
+      </TD>
+   </TR>
+   <TR>
+      <TD>
+         <P>Description</P>
+      </TD>
+      <TD>
+         <UL>
+            <LI>Fields that provide <B>physical</B> description of
+            the item, such as medium, type, and dimensions.</LI>
+            
+            <LI>Fields that describe the site or project
+            history.</LI>
+         </UL>
+      </TD>
+   </TR>
+   <TR>
+      <TD>
+         <P>Subject</P>
+      </TD>
+      <TD>
+         <UL>
+            <LI>Keywords.</LI>
+            
+            <LI>Subject Terms.</LI>
+            
+            <LI>Other fields that describe the subject matter. What
+            it is of, and what it is about.</LI>
+         </UL>
+      </TD>
+   </TR>
+   <TR>
+      <TD>
+         <P>Date</P>
+      </TD>
+      <TD>
+         <UL>
+            <LI>Creation date (or date range)&#0160;that the item was
+            created.</LI>
+            
+            <LI>Date period (e.g., renaissance).</LI>
+         </UL>
+      </TD>
+   </TR>
+   <TR>
+      <TD>
+         <P>Rights</P>
+      </TD>
+      <TD>
+         <UL>
+            <LI>Copyright</LI>
+            
+            <LI>Contact Info (for acquiring permission to use)</LI>
+         </UL>
+      </TD>
+   </TR>
+   <TR>
+      <TD>
+         <P>Source</P>
+      </TD>
+      <TD>
+         <UL>
+            <LI>Source. For example, if the image was copied from a
+            book, it would be the bibliographic citation. If the
+            image was acquired from a vendor, it would be the name of
+            the vendor.</LI>
+         </UL>
+      </TD>
+   </TR>
+   <TR>
+      <TD>
+         <P>Publisher</P>
+      </TD>
+      <TD>
+         <UL>
+            <LI>The entity responsible for making the item available
+            online. In Image Services, this is most commonly your
+            organization (e.g., Bentley Historical Library, UM Museum
+            of Art, etc.).</LI>
+         </UL>
+      </TD>
+   </TR>
+   <TR>
+      <TD>
+         <P><B>Other Categories/Field Names</B></P>
+      </TD>
+      <TD>
+         <P></P>
+      </TD>
+   </TR>
+   <TR>
+      <TD>
+         <P>Miscellaneous (not a Core field)</P>
+      </TD>
+      <TD>
+         <UL>
+            <LI>Any field that simply does not map well to the above
+            options should probably be mapped to Miscellaneous. This
+            allows the miscellaneous fields to also be displayed in
+            cross collection searches.</LI>
+            
+            <LI>There may be fields that simply should not be mapped
+            to any core fields. It should be questioned whether or
+            not these fields should be going online at all. If they
+            should, then it is OK to not map them.</LI>
+         </UL>
+      </TD>
+   </TR>
+   <TR>
+      <TD>
+         <P>Main Entry</P>
+      </TD>
+      <TD>
+         <UL>
+            <LI>Title and Creator and Date.</LI>
+            
+            <LI>It is <B>mandatory</B> that one or more fields be
+            mapped to Main Entry and that at least one of the fields
+            always contains data values. The Main Entry fields are
+            used for displaying search results to the user in a cross
+            collection search.</LI>
+         </UL>
+      </TD>
+   </TR>
+</TBODY>
+</TABLE>
+
+
+
+</DIV1>
+</BODY>
+</DLPSDOC>

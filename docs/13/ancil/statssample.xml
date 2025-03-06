@@ -1,0 +1,135 @@
+<?xml version="1.0"?>
+<!DOCTYPE class_definition SYSTEM "stats-config.dtd">
+
+<class_definition>
+
+  <!-- There can be many resources/collections within this class that this definition applies to. But the resource name and identifier would be different. -->
+
+  <!-- This is the class identifier. -->
+  <identifier>/cgi/t/text/(text-idx|ww2-idx|pageviewer-idx)</identifier>
+
+  <!-- This means there had better be a Stats::Map::Title::colldb module. -->
+  <title_mapping_module>colldb</title_mapping_module> <!-- Any 'title_mapping_module' elements that are children of 'resource_definition' elements will trump this element's value for that particular resource. -->
+
+  <!-- These are the resource identifiers. -->
+
+  <!-- A regexp like \Wcc=moa\W would normally return false if the cc=moa is at the very end of the URL, but the code temporarily appends a \W character to the end of the URL before doing the regular expression matching so that \Wcc=moa\W will match something like "cc=moa;foo" as well as if "cc=moa" is at the very end of the URL string. -->
+  <resource_definition name='Making of America monographs' id='moa'>
+    <or>
+      <and>\Wcc=moa\W</and>
+    </or>
+    <or>
+      <and>\Wc=moa\W</and>
+      <not>\Wcc=</not>
+    </or>
+  </resource_definition>
+
+  <resource_definition name='American Verse Project' id='amverse'>
+    <or>
+      <and>\Wcc=amverse\W</and>
+    </or>
+    <or>
+      <and>\Wc=amverse\W</and>
+      <not>\Wcc=</not>
+    </or>
+  </resource_definition>
+
+  <!-- 'type' attribute is classification of hit type for reporting purposes, such as "search" or "browse" or just "hit". -->
+  <!-- 'subtype' attribute is subclassification, such as "simple" for type "search". -->
+
+  <!-- <and> element is the actual regular expression to look for in the URL. Multiple <and> elements would mean that there are multiple strings to look for in the URL - the values will be AND'ed.-->
+
+  <!-- <or> element means that there could be multiple sets of strings that would signify the same thing. The or values will be OR'ed. -->
+
+  <hit_types>
+
+    <!-- Search definitions -->
+    <hit type="search" subtype="simple">
+      <or>
+        <and>type=simple</and>
+      </or>
+      <counter report="br5"/>
+    </hit>
+    <hit type="search" subtype="bool">
+      <or>
+        <and>type=boolean</and>
+      </or>
+      <counter report="br5"/>
+    </hit>
+    <hit type="search" subtype="prox">
+      <or>
+        <and>type=proximity</and>
+      </or>
+      <counter report="br5"/>
+    </hit>
+    <hit type="search" subtype="bibl">
+      <or>
+        <and>type=bib</and>
+      </or>
+      <counter report="br5"/>
+    </hit>
+
+    <!-- Browse definitions -->
+    <hit type="browse" subtype="creator">
+      <or>
+        <and>pagename=browseentries</and>
+      </or>
+      <or>
+        <and>browse</and>
+      </or>
+    </hit>
+    <hit type="browse" subtype="word wheel">
+      <or>
+        <and>page=wwfull</and>
+      </or>
+    </hit>
+    <hit type="browse" subtype="other">
+      <or>
+        <and>browsejournals</and>
+        <and>journals</and>
+      </or>
+      <or>
+        <and>datebrowse</and>
+      </or>
+    </hit>
+
+    <hit type="view" subtype="t.o.c.">
+      <or>
+        <and>view=header</and>
+      </or>
+      <or>
+        <and>view=toc</and>
+      </or>
+      <counter report="br2"/>
+    </hit>
+    <hit type="view" subtype="text">
+      <or>
+        <and>view=text</and>
+        <not>page=.*nav</not>
+        <and>idno=</and>
+      </or>
+      <counter report="br1"/>
+      <counter report="br2"/>
+    </hit>
+    <hit type="view" subtype="pg/img">
+      <or>
+        <and>seq=</and>
+        <and>idno=</and>
+        <not>view=text</not>
+        <not>page=.*nav</not>
+      </or>
+      <counter report="br2"/>
+    </hit>
+
+  </hit_types>
+
+  <!-- This is the title-level identifier.  Optional, but required for COUNTER reports.  -->
+  <!-- Make sure the title ID is in parens () so that we can get it with $1. -->
+  <title>idno=(.*?)[;|\&amp;]</title>
+
+  <!-- This is the section-level identifier. -->
+  <!-- Required for COUNTER BR2. -->
+  <!-- The third and final level of granularity is the <section>, such as an article within a journal or a page or chapter within a book. -->
+  <section>seq=(\d+)</section>
+
+</class_definition>

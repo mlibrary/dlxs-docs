@@ -1,0 +1,35 @@
+<?xml version="1.0"?>
+
+<!-- SPO Editorial Services                  -->
+<!-- automatically-generated XML header file -->
+
+<?xml-stylesheet href="../../../pre11-dlxsdocs.xsl" type="text/xsl"?>
+<!DOCTYPE DLPSDOC PUBLIC "-//UM-DLPS//DTD DLPS Publications//EN" "http://docs.umdl.umich.edu/dlps/docs/dlpsdocs.dtd">
+<DLPSDOC>
+<TITLE>Adding Collections to <TT>collmgr</TT>, Bibliographic Class</TITLE>
+<HEADER>
+<JOURNAL>DLXS Documentation</JOURNAL>
+<PUBDATE>2002-07-08 12:57:52 EDT</PUBDATE>
+<AUTH1>Hagedorn, Kat</AUTH1>
+<AUTH2></AUTH2>
+<DOCTITLE>Adding Collections to <TT>collmgr</TT>, Bibliographic Class</DOCTITLE>
+<VOL>class</VOL>
+<ISS>bib</ISS>
+<FILE>dlxsdocs-bib-colldb</FILE>
+</HEADER>
+
+
+
+<BODY>
+<BHEAD>Adding Collections to <TT>collmgr</TT>, Bibliographic Class</BHEAD>
+<DIV1 ID="overview">
+<P>The <A HREF="../../collmeta/dlxs-colldatabases.xml">collection database</A> for Bibliographic Class and all other classes is managed through the <A HREF="../../collmeta/dlxs-collmgr.xml">collmgr</A> program. The collmgr application mediates access to creating and updating the metadata, and has online, in-context documentation, for example, the DLPS implementation of <A HREF="http://docs.dlxs.org/collmeta/dlxs-collmgr-fields.xml">collmgr documentation</A>. This documentation notes fields that are "required," as well as the types of values that each field supports.  In those cases where a field uses the reserved keyword "default," a system-supplied default value or function is used. For example, in Bibliographic Class, if "default" is used for <TT>short filter</TT>, records will be displayed according to the rules used in the default Bibliographic Class short filter.</P>
+</DIV1>
+
+<DIV1 ID="related"><H1>Related Information</H1>
+<P>You <B>must</B> also create templates for the new collection.  For more information on creating and altering templates, please see <A HREF="bib-templates.xml">Creating and Editing HTML/Template Files</A>.</P>
+<P>You <B>may</B> also add new fields, not previously defined.  For more information on adding new searchable fields, please see <A HREF="bib-maps.xml">Adding New Searchable Fields</A>.</P>
+<P>You <B>may</B> also wish to create special filtering routines for the new collection.  For more information on creating and editing filters, please see <A HREF="bib-filters.xml">Creating and Editing Filtering Routines</A>.</P>
+</DIV1>
+</BODY>
+</DLPSDOC>

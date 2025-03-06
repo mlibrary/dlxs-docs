@@ -1,0 +1,74 @@
+<!DOCTYPE html
+	PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+	 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en-US" xml:lang="en-US">
+<head>
+<title>DLPS Failure Page</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+</head>
+<body bgcolor="#FFFFFF">
+<p><strong>Assertion failure report</strong> (on clamato.umdl.umich.edu)</p>
+<p><b>Message:</b> LocalIdResolver(moajrnl): No idnos match the query:<br />
+<pre>pr.region."id" ((region id) incl (("bac8387.0000001.001 " + "bac8387.0000001.001<")))</pre><br />
+
+</p>
+<p><b>Error code:</b> 1185292515</p>
+<p><b>URL History (oldest first):</b>
+
+<p>u:<a href="http://pfarber.dev.umdl.umich.edu/cgi/t/text/text-idx?c=moajrnl;idno=bac8387.0000001.001">http://pfarber.dev.umdl.umich.edu/cgi/t/text/text-idx?c=moajrnl;idno=bac8387.0000001.001 </a><br/>t:2007-07-24 11:55:13 <br/>r:<a href=""> </a></p>
+
+<p><b>Stack trace (sid="3c2b70ffe5d69dcc669a0259b39fa74e"):</b></p>
+<ul>
+<li>DlpsUtils::ASSERT called from line 140 in package TextClass in file /l1/dev/pfarber/cgi/t/text/DlpsLocalUtils.pm.</li>
+<li>Called by TextClass::LocalIdResolver from line 249 in package TextClass in file TextClass.pm.</li>
+<li>Called by TextClass::ClassCheckIdMatches from line 293 in package TextApp in file /l1/dev/pfarber/cgi/t/text/TextApp.pm.</li>
+<li>Called by TextApp::CheckIdMatches from line 92 in package TextApp in file /l1/dev/pfarber/cgi/t/text/TextApp.pm.</li>
+<li>Called by TextApp::_initialize from line 83 in package DLXSApp in file /l1/dev/pfarber/lib/DLXSApp.pm.</li>
+<li>Called by DLXSApp::new from line 291 in package ObjectFactory in file /l1/dev/pfarber/lib/ObjectFactory.pm.</li>
+<li>Called by (eval) from line 285 in package ObjectFactory in file /l1/dev/pfarber/lib/ObjectFactory.pm.</li>
+
+<li>Called by ObjectFactory::CreateObjectForXColl from line 154 in package main in file /l1/dev/pfarber/cgi/t/text/text-idx.</li>
+<li>Called by main::CreateTextApp from line 116 in package main in file /l1/dev/pfarber/cgi/t/text/text-idx.</li>
+</ul>
+<font color="red"><h2>ENVIRONMENT VARIABLES</h2></font><b>AUTHZD_COLL</b>&nbsp;&nbsp;:aacren:aaper:aaref:acls:amjewess:ampo:ampo20:amverse:besgt:blaketc:bldemo:bosnia:busadwp:bwrp:civilwar1:cjfs:cjs:clacan:clachin:clacypr:claegyp:claind:clairaq:claisra:clajama:cme:conraditc:crossc:daap:daap20:dencos:dentalj:did:ecco:eccodemo:ecf:eebo:eebodemo:endc:epd:eprosed:epv1:epv2:evans:evansdemo:faber:fishery:forfran:foroman:foruk:fung1tc:gandf:gefame:genpub:globalpublics:homeop:icmc:jep:jii:labadie:latin:lincoln:machyn:mfr:mfs:mfsfront:micounty:millaw:moa:moaatxt:moajrnl:mqr:mqrarchive:nal:ncf:ncosw:nietzsche:passages:philamer:pmast:polar:postid:ppotpus:railroad:roper:sampletc:sampletc_utf8:spobooks:teso:tmr:umhistmath:umregproc:umsurvey:usfcts:usfexec:usfleg:ussak:ussal:ussar:ussaz:ussca:ussco:ussct:ussdc:ussde:ussfl:ussga:usshi:ussia:ussid:ussil:ussin:ussmi:ussnd:voltaire:wdi:womv:yeats::<br />
+<b>DEBUG</b>&nbsp;&nbsp;<br />
+<b>DLPS_DEV</b>&nbsp;&nbsp;pfarber<br />
+<b>DLXSDATAROOT</b>&nbsp;&nbsp;/l1<br />
+
+<b>DLXSROOT</b>&nbsp;&nbsp;/l1/dev/pfarber<br />
+<b>DOCUMENT_ROOT</b>&nbsp;&nbsp;/l1/dev/pfarber/web<br />
+<b>GATEWAY_INTERFACE</b>&nbsp;&nbsp;CGI/1.1<br />
+<b>HTTP_ACCEPT</b>&nbsp;&nbsp;text/xml,application/xml,application/xhtml+xml,text/html;q=0.9,text/plain;q=0.8,image/png,*/*;q=0.5<br />
+<b>HTTP_ACCEPT_CHARSET</b>&nbsp;&nbsp;UTF-8,*<br />
+<b>HTTP_ACCEPT_ENCODING</b>&nbsp;&nbsp;gzip,deflate<br />
+
+<b>HTTP_ACCEPT_LANGUAGE</b>&nbsp;&nbsp;en-us,en;q=0.5<br />
+<b>HTTP_CONNECTION</b>&nbsp;&nbsp;keep-alive<br />
+<b>HTTP_COOKIE</b>&nbsp;&nbsp;__utma=142407478.221494709.1184695880.1184695880.1184705599.2; __utmz=142407478.1184705599.2.2.utmccn=(referral)|utmcsr=dlxs.org|utmcct=/docs/13/intro/dirstruct.html|utmcmd=referral; __utmz=66274543.1184682507.1.1.utmccn=(direct)|utmcsr=(direct)|utmcmd=(none); __utma=66274543.2062030518.1184682507.1184682507.1184685842.2; DLXSsid=3c2b70ffe5d69dcc669a0259b39fa74e; __utma=7269686.246477696.1185291639.1185291639.1185291639.1; __utmb=7269686; __utmc=7269686; __utmz=7269686.1185291639.1.1.utmccn=(direct)|utmcsr=(direct)|utmcmd=(none)<br />
+<b>HTTP_HOST</b>&nbsp;&nbsp;pfarber.dev.umdl.umich.edu<br />
+<b>HTTP_KEEP_ALIVE</b>&nbsp;&nbsp;300<br />
+<b>HTTP_USER_AGENT</b>&nbsp;&nbsp;Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.8.1.4) Gecko/20070508 Firefox/2.0.0.4 (Debian-2.0.0.4-0etch1)<br />
+
+<b>PATH</b>&nbsp;&nbsp;/usr/kerberos/sbin:/usr/kerberos/bin:/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin:/usr/X11R6/bin:/root/bin<br />
+<b>PUBLIC_COLL</b>&nbsp;&nbsp;:acls:::::<br />
+<b>QUERY_STRING</b>&nbsp;&nbsp;c=moajrnl&amp;idno=bac8387.0000001.001<br />
+<b>REMOTE_ADDR</b>&nbsp;&nbsp;141.211.43.163<br />
+<b>REMOTE_PORT</b>&nbsp;&nbsp;38626<br />
+<b>REMOTE_USER</b>&nbsp;&nbsp;pfarber<br />
+
+<b>REQUEST_METHOD</b>&nbsp;&nbsp;GET<br />
+<b>REQUEST_URI</b>&nbsp;&nbsp;/cgi/t/text/text-idx?c=moajrnl&amp;idno=bac8387.0000001.001<br />
+<b>SCRIPT_FILENAME</b>&nbsp;&nbsp;/l1/dev/pfarber/cgi/t/text/text-idx<br />
+<b>SCRIPT_NAME</b>&nbsp;&nbsp;/cgi/t/text/text-idx<br />
+<b>SERVER_ADDR</b>&nbsp;&nbsp;141.211.175.37<br />
+<b>SERVER_ADMIN</b>&nbsp;&nbsp;dlps-sysadmin@umich.edu<br />
+
+<b>SERVER_NAME</b>&nbsp;&nbsp;pfarber.dev.umdl.umich.edu<br />
+<b>SERVER_PORT</b>&nbsp;&nbsp;80<br />
+<b>SERVER_PROTOCOL</b>&nbsp;&nbsp;HTTP/1.1<br />
+<b>SERVER_SIGNATURE</b>&nbsp;&nbsp;&lt;ADDRESS&gt;Apache/1.3.27 Server at pfarber.dev.umdl.umich.edu Port 80&lt;/ADDRESS&gt;
+<br />
+<b>SERVER_SOFTWARE</b>&nbsp;&nbsp;Apache/1.3.27 (Unix)<br />
+
+</body>
+</html>

@@ -1,0 +1,49 @@
+<HTML>
+<HEAD>
+<TITLE>Collection Manager</TITLE>
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+<LINK REL="stylesheet" HREF="../styles.css" TYPE="text/css">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF" CLASS="mainpalette" >
+<H3> Collection Manager (collmgr)<BR>
+            </H3>
+            
+<P><B>collmgr</B> is a CGI program that functions as an interface to the <A HREF="databases.html">collection 
+  and group databases</A>. This information is that which had been kept in the 
+  groups and colldb tab-delimited files prior to the CDROM #8 release of DLXS. 
+  Using collmgr, you can maintain this information in either a CSV database or 
+  a MySQL database. </P>
+            <UL>
+              <LI>collmgr running under CSV
+                <UL>
+                  <LI>CSV files are actual text files, but interface lets them 
+                    behave as a database (<I>It is important <B>not</B> to hand 
+                    edit the text files outside of collmgr</I>)</LI>
+                  <LI>need to reside on the same machine as the middleware
+                  </LI>
+                </UL>
+              </LI>
+              <LI>collmgr running under <A HREF="http://www.mysql.com" TARGET="external">MySQL</A> 
+                <UL>
+                  <LI>must install and maintain a MySQL database</LI>
+                  <LI>can be a networked database</LI>
+                </UL>
+              </LI>
+              <LI><B>Workshop Note: </B><I>workshop setup vs. our DLPS development 
+                setup</I> (this will make more sense after seeing how collmgr 
+                interacts with the Middleware and after working through the installation 
+                process) 
+                <UL>
+                  
+      <LI>workshop is in a production environment (no DLPS_DEV set)</LI>
+                  <LI> no user rows, only release and production rows; therefore, 
+                    no checkin checkout</LI>
+                  <LI>'release to production' option always visible</LI>
+                </UL>
+              </LI>
+            </UL>
+            <P><B>Link to <A HREF="collmgrdetails.html">details on the 
+              use of collmgr</A></B></P>
+  
+</BODY>
+</HTML>

@@ -1,0 +1,38 @@
+<?xml version="1.0"?>
+
+<!-- SPO Editorial Services                  -->
+<!-- automatically-generated XML header file -->
+
+<?xml-stylesheet href="../../../pre11-dlxsdocs.xsl" type="text/xsl"?>
+<!DOCTYPE DLPSDOC PUBLIC "-//UM-DLPS//DTD DLPS Publications//EN" "http://docs.umdl.umich.edu/dlps/docs/dlpsdocs.dtd">
+<DLPSDOC>
+<TITLE>Encoding Supported in Finding Aids "Class"</TITLE>
+<HEADER>
+<JOURNAL>DLXS Documentation</JOURNAL>
+<PUBDATE>2002-06-20 17:23:04 EDT</PUBDATE>
+<AUTH1>Powell, Chris</AUTH1>
+<AUTH2></AUTH2>
+<DOCTITLE>Encoding Supported in Finding Aids "Class"</DOCTITLE>
+<VOL>class</VOL>
+<ISS>findaid</ISS>
+<FILE>dlxsdocs-findaid-encoding</FILE>
+</HEADER>
+<BODY><BHEAD>Encoding Supported in Finding Aids "Class"</BHEAD><DIV1><H1>General practices</H1><P>Because the finding aids system is not yet truly a class, it has not been generalized to work with a wide range of EAD encoding practices.  Even as it becomes more generalized, however, the greater the consistency in your practice, the better the results you will get from any system.  The following practices have been followed by the Bentley Historical Library, are included in the EAD templates that the Society of American Archivists (SAA) distributes, and are the basis of the functioning of the current finding aids system.</P><UL>
+<LI>The system is designed to work with finding aids encoded using the <A HREF="ftp://ftp.loc.gov/pub/ead/ead.dtd">EAD 1.0 DTD</A> following the <A HREF="http://lcweb.loc.gov/ead/ag/aghome.html">EAD Application Guidelines, version 1.0</A>.</LI>
+
+<LI>The system does not make use of the tabular model (DENTRY, DROW). Regular TABLEs, however, are handled.</LI>
+
+<LI>The contents of the EADID element cannot be the full formal public identifier plus system identifier -- it must only be a unique local ID.  That is, instead of  <BR/><TT>&lt;EADID TYPE="SGML catalog"&gt;PUBLIC "-//American Institute of 
+Physics::Center for History of Physics//TEXT
+(US::IEN::Series 11/3/21/4::Robert J. Cashman Papers)//EN" 
+"19990055.sgm"&lt;/EADID&gt;</TT><BR/>you would have<BR/><TT>&lt;EADID&gt;19990055.sgm&lt;/EADID&gt; </TT>(the extension is not important -- it can appear or not -- but the value and the filename must be unique).</LI><LI>The system is optimized for a finding aid with one DSC of the TYPE=COMBINED as advocated in <A HREF="http://lcweb.loc.gov/ead/ag/agcre4.html#sec1e">section 3.5.2.5</A> of the EAD Application Guidelines, which will display as the Contents List.  Multiple DSCs should result in multiple Contents Lists; the TYPE attribute value will display if it is anything other than "COMBINED".  Linking from the navigation frame  to these sections may be erratic, however, because it is designed to create a link to only one Contents List.</LI>
+
+<LI>The system requires numbered component elements -- C01, C02, etc. -- as documented in <A HREF="http://lcweb.loc.gov/ead/ag/agcre4.html#sec1b">section 3.5.2.2</A> of the EAD Application Guidelines.  It does not handle nested unnumbered Cs.</LI>
+
+<LI>The system relies on an external CONTROLACCESS wrapper.  All finding aids must have a parent CONTROLACCESS in the ARCHDESC as described in <A HREF="http://lcweb.loc.gov/ead/ag/agcre5.html#sec1">section 3.5.3</A> and illustrated in the final example of <A HREF="http://lcweb.loc.gov/ead/ag/agcre5.html#sec1a">section 3.5.3.1</A>.</LI>
+
+<LI>The filtering of the EADHEADER AUTHOR is based on the contents of that element.  The text string "Finding aid prepared by:&lt;lb&gt;" is the first piece of content in the finding aids used to develop the system, in accordance with the practice of entering a prose description, rather than bare names, illustrated in <A HREF="http://lcweb.loc.gov/ead/ag/agcre6.html#sec1ae">section 3.6.1.5</A>.</LI>
+
+<LI>When concatenating finding aids for indexing, remove all new lines.  This is necessary because the filtering of the container list fails if it encounters new line characters.  Otherwise, you will need to change the filtering portions of the middleware to account for possible spacing characters, and it is most expedient to simply remove them from the file (with a perl script, etc.).  The script <TT>catsourcefiles.pl</TT> included with the sample collection does this.</LI>
+
+</UL></DIV1></BODY></DLPSDOC>

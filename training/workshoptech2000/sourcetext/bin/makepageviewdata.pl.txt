@@ -1,0 +1,163 @@
+#!/l/local/bin/perl
+
+use File::Find;
+#use strict;
+
+
+
+## ----- globals -----
+my %gSgmlDirs;
+my $gTopSgmlDir;
+
+## ----- this is the usage  $0  top_sgml_directory_name 
+
+&CheckUsage;
+find ( \&wanted, $gTopSgmlDir );
+
+# &PrintDirs;
+#  exit;
+
+&ProcessDirs;
+exit;
+
+##################################################
+sub wanted 
+{
+    ## ----- grab only those dirs that contain "blah.sgm" files -----
+    if ( $_ =~ m,\.sgm$, )
+    {
+        $gSgmlDirs{$File::Find::dir} = 1;
+    }
+}
+
+##################################################
+sub PrintDirs
+{
+    foreach my $dir (keys %gSgmlDirs)
+    {
+        print "$dir\n";
+    }
+}
+
+##################################################
+sub ProcessDirs
+{
+    foreach my $sgmlDir (keys %gSgmlDirs)
+    {
+        ## ----- get all sgm files in this directory -----
+        print STDOUT "Working on sgml files in directory: $sgmlDir\n";
+
+        opendir ( DIR, $sgmlDir );
+        my @files = grep ( /\.sgm$/, readdir (DIR) );
+        closedir ( DIR );
+
+        ## ----- read in data from each file and create array of PB tags -----
+        my $sgmlFile;
+        my @pbTags; 
+        foreach $sgmlFile ( @files )
+        {
+            ## ----- create directory in which to place the pageview.dat file -----
+            my $pageviewDatDir = $sgmlDir ;
+
+
+            if ( -e "$pageviewDatDir" && -d "$pageviewDatDir" )
+            {
+     
+#                print "$pageviewDatDir/pageview.dat\n";
+#                exit;
+           
+                ## ----- open output file and print header -----
+                open ( OUTFILE , ">$pageviewDatDir/pageview.dat" ) or die;
+                print OUTFILE "\#\# File:        $pageviewDatDir/pageview.dat\n";
+                print OUTFILE "\#\# Created:     " . `date` ;
+                print OUTFILE "\#\#\n";
+                print OUTFILE "\#filename\tseq\tpagenum\tconfid\tfeature\n";
+                
+                print STDOUT "Working on file: $sgmlDir/$sgmlFile\n";
+                
+
+                open (FILE, "<$sgmlDir/$sgmlFile");
+                my $fileText = join ( '' , <FILE> );
+                close FILE;
+                
+                @pbTags = ( $fileText =~ m,<PB [^>]*?>,g );
+                
+                &ParsePbTags (\@pbTags );
+            }
+        }
+        
+        close (OUTFILE);
+    }
+}
+
+##################################################
+sub ParsePbTags
+{
+    my $aRef   = shift;
+
+    my %pbHash; 
+    my $tag;
+
+    foreach $tag ( @$aRef )
+    {
+        ##    <PB REF="IMG00001" SEQ="0001" RES="600dpi" FMT="TIFF5.0" FTR="PNT" CFN="" N="A">
+	#           Note: CFN attr is optional
+        $tag =~ m,<PB REF=\"([^\"]*?)\" SEQ=\"([^\"]*?)\" RES=\"([^\"]*?)\" FMT=\"([^\"]*?)\" FTR=\"([^\"]*?)\"( CNF=\"([^\"]*?)\")? N=\"([^\"]*?)\">, ;
+        my $filename = $1;
+
+        my $seq      = $2;
+        my $ftr      = $5;
+        my $cnf      = $7;
+        my $pagenum  = $8;
+
+        ## ----- grab only the first three letters of the feature -----
+        $ftr =~ s,^(...).*,$1,;
+
+        ## ----- pad the pagenum -----
+        my $pad = '0' x (8-(length($pagenum)));
+        $pagenum = $pad . $pagenum;
+
+        $pbHash{$seq} = [$filename, $seq, $pagenum, $cnf, $ftr];
+        
+    }
+
+    my $pb;
+    foreach $pb (sort sortnumeric ( keys %pbHash ))
+    {
+        my ( $filename, $seq, $pagenum, $cnf, $ftr ) = @ {$pbHash{$pb}};
+
+        print STDOUT "Working on PB tag for sequence: $seq\n";
+        
+        print OUTFILE join ("\t", $filename, $seq, $pagenum, $cnf, $ftr) . "\n";
+    }
+
+}
+
+##################################################
+sub sortnumeric {
+    $a <=> $b;
+}
+
+##################################################
+sub CheckUsage
+{
+    if ( $#ARGV != 0 )
+    {
+        print "Usage:\n";
+        print "    $0  top_sgml_directory_name\n";
+        exit;
+    }
+    else
+    {
+        $gTopSgmlDir = $ARGV[0];
+        $gTopSgmlDir =~ s,/?$,/,;
+
+#        $gOcrRoot    = $ARGV[1];
+#        $gOcrRoot    =~ s,/?$,/,;
+    }
+}
+
+__END__;
+
+
+

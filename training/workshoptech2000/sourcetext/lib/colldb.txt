@@ -1,0 +1,5 @@
+collid	collname	subclass	subclassModule	qtytexts	homesite	host	webdir	objdir	dd	wwdd	map	patexec	port	lel	termsearch	regionsearch	wwrealms	wwrealmsenglish	genres	genders	periods	languages	locale
+bosnia	Bosnia Travel Books	monographs	BosniaTC.pm	4	http://dev.umdl.umich.edu	dev.umdl.umich.edu	/b/bosnia	/disks/l1/home/pagliere/dlxs/obj	/disks/l1/home/pagliere/dlxs/idx/b/bosnia/bosnia.dd	/disks/l1/home/pagliere/dlxs/idx/b/bosnia/WW/bosnia.ww.dd	/disks/l1/home/pagliere/dlxs/obj/lib/maps/bosnia.map	/l/local/otsearch/bin/pat50	619	4	full text	work|chapter|paragraph	author|title|full text	Author|Title|Full Text	prose		1800-1900	English|French	fr
+
+teso	Teatro Espa&ntilde;ol del Siglo de Oro	monographs	TesoTC.pm	49	http://dlps1.umdl.umich.edu	dlps1.umdl.umich.edu	/t/teso	/l1/obj	/l1/idx/t/teso/teso.dd	/l1/idx/t/teso/WW/teso.ww.dd	/l1/obj/lib/maps/teso.map	/l/local/otsearch/bin/pat50	619	4	full text|speeches|acts|scenes|section and work titles	speeches|acts|scenes|work	author|title|full text	Author|Title|Full Text	drama		1600-1700	Spanish	es
+

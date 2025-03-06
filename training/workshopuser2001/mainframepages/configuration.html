@@ -1,0 +1,50 @@
+<HTML>
+<HEAD>
+<TITLE>The Big Picture</TITLE>
+<META http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<LINK rel="stylesheet" href="../styles.css">
+</HEAD>
+<BODY class="mainpalette">
+<H2>The Big Picture</H2>
+<P>An overview of how XPat and the DLXS Middleware work together to handle the 
+  retrieval and deliver of SGML data. See the <A HREF="../extras/barnapkinoverview.html" TARGET="extras">Bar 
+  Napkin Overview</A>. </P>
+
+<UL>
+  <LI>Data Preparation</LI>
+  <LI>Middleware: translates user input into XPat query, retrieves SGML and delivers 
+    results wrapped in HTML</LI>
+</UL>
+
+
+  
+<H3>Architecture</H3>
+<UL>
+  <LI>See <A HREF="http://www.hti.umich.edu/index-all.html" TARGET="extras">http://www.hti.umich.edu/index-all.html</A></LI>
+</UL>
+<H3>Middleware Functionality:</H3>
+  <UL>
+    <LI>cross collection searching 
+      <UL>
+        <LI>collection restrictions via categories in TextClass</LI>
+        <LI>groups in Bib and soon in others</LI>
+      </UL>
+    </LI>
+    <LI>cross machine searching</LI>
+    <LI>not cross class searching</LI>
+    <LI>results are not by default entire sections or works, but hits with navigation</LI>
+  </UL>
+<H3>Other </H3>
+<UL>
+    <LI>Server (we use Apache)</LI>
+    <LI>Authentication/Authorization 
+      <UL>
+        <LI>DLPS Apache module</LI>
+        <LI>Middleware only requires that a list of auth colls are put in the 
+          environment</LI>
+      </UL>
+    </LI>
+    <LI>xpat daemons to allow cross machine access between Middleware and Xpat</LI>
+  </UL>
+</BODY>
+</HTML>

@@ -1,0 +1,531 @@
+%PDF-1.2 
+%’“¦²
+ 
+12 0 obj
+<<
+/Length 13 0 R
+>>
+stream
+BT
+291.36 42.96  TD
+0 0 0 rg 
+/F0 12  Tf
+0  Tc 0  Tw (1) Tj
+-138.96 690.72  TD /F1 12  Tf
+(NON-EXCLUSIVE SOFTWARE LICENSE AGREEMENT) Tj
+-98.16 -26.4  TD /F2 10.08  Tf
+0.0051  Tc 0.0021  Tw (Program:  ) Tj
+47.28 0  TD /F1 10.08  Tf
+0.0168  Tc 0  Tw (XPAT) Tj
+-47.28 -22.8  TD /F2 10.08  Tf
+0.0047  Tc 0.0025  Tw (Organization obtaining License \("LICENSEE"\): ) Tj
+0 -22.56  TD 0.0051  Tc 0.0021  Tw (LICENSEE Business Contact Person:  ) Tj
+173.52 0  TD 0.0062  Tc 0  Tw (________________________________) Tj
+176.64 0  TD (_____________________) Tj
+-350.16 -22.56  TD 0.0045  Tc 0.0027  Tw (Business Address:) Tj
+126 0  TD 0  Tc 0.0072  Tw ( ) Tj
+3.36 0  TD 0.0062  Tc 0  Tw (________________________________) Tj
+176.64 0  TD (_____________________________) Tj
+-180 -22.56  TD 0  Tc 0.0072  Tw ( ) Tj
+3.36 0  TD 0.0062  Tc 0  Tw (________________________________) Tj
+176.64 0  TD (_____________________________) Tj
+-306 -22.56  TD 0.0051  Tc 0.0021  Tw (Business Phone:) Tj
+129.36 0  TD 0.0062  Tc 0  Tw (________________________________) Tj
+176.64 0  TD (_____________________________) Tj
+-306 -33.84  TD 0.0046  Tc 0.0026  Tw (This Agreement is made by and between The Regents of The University of Michigan, a constitutional) Tj
+0 -11.28  TD 0.0051  Tc 0.0021  Tw (corporation of the State of Michigan, \("MICHIGAN"\) and LICENSEE.) Tj
+214.56 -22.56  TD 0.0049  Tc 0  Tw (BACKGROUND) Tj
+-214.56 -22.56  TD 0.0067  Tc (1.) Tj
+27.12 0  TD 0.0044  Tc 0.0028  Tw (The University of Michigan through its University Library has developed a proprietary computer program) Tj
+0 -11.28  TD 0.0049  Tc 0.0023  Tw (and related documentation, known as XPAT, for use by trained individuals as an SGML-aware search) Tj
+T* 0.0051  Tc 0.0021  Tw (engine to help handle large and highly structured documents and metadata, \(this program and) Tj
+T* 0.0047  Tc 0.0025  Tw (documentation, as well as any updates which may at MICHIGAN) Tj
+-3.8376  Tc 0  Tw (\222) Tj
+0.0048  Tc 0.0024  Tw (S sole discretion be provided to) Tj
+T* 0.005  Tc 0.0022  Tw (LICENSEE from time to time, are referred to in this Agreement as "PROGRAM"\); and) Tj
+-27.12 -22.56  TD 0.0067  Tc 0  Tw (2.) Tj
+27.12 0  TD 0.0048  Tc 0.0024  Tw (LICENSEE desires to obtain and MICHIGAN, consistent with its mission of education and research,) Tj
+0 -11.28  TD 0.005  Tc 0.0022  Tw (desires to grant a license to use the PROGRAM subject to the terms and conditions set forth below.) Tj
+-27.12 -22.56  TD 0.0049  Tc 0.0023  Tw (The parties therefore agree as follows:) Tj
+0 -22.56  TD 0.0072  Tc 0  Tw (I.) Tj
+36 0  TD 0.0056  Tc (LICENSE) Tj
+0 -11.28  TD 0.0052  Tc 0.002  Tw (MICHIGAN hereby grants to LICENSEE a non-exclusive, non-transferable right to use the PROGRAM) Tj
+T* 0.005  Tc 0.0022  Tw (on the number of servers indicated in Section III, in executable form only and subject to the terms and) Tj
+T* 0.0049  Tc 0.0023  Tw (conditions of this Agreement.) Tj
+-36 -22.56  TD 0.0072  Tc 0  Tw (II.) Tj
+36 0  TD 0.0048  Tc 0.0024  Tw (LIMITATION OF LICENSE AND RESTRICTIONS) Tj
+0 -11.28  TD 0.007  Tc 0  Tw (A.) Tj
+18 0  TD 0.0051  Tc 0.0021  Tw (LICENSEE shall not use, print, copy, translate, reverse engineer, ) Tj
+292.08 0  TD 0.004  Tc 0.0032  Tw (decompile, disassemble, modify,) Tj
+-292.08 -11.28  TD 0.0044  Tc 0.0028  Tw (create derivative works of or publicly display the PROGRAM, in whole or in part, unless expressly) Tj
+0 -11.28  TD 0.0049  Tc 0.0023  Tw (authorized by this Agreement.) Tj
+-18 -22.56  TD 0.007  Tc 0  Tw (B.) Tj
+9.6 0  TD 0  Tc 0.0072  Tw ( ) Tj
+8.4 0  TD 0.005  Tc 0.0022  Tw (LICENSEE agrees that it shall use the PROGRAM only for LICENSEE'S sole and exclusive use,) Tj
+0 -11.28  TD 0.0047  Tc 0.0025  Tw (and shall not disclose, sell, license, or otherwise distribute the PROGRAM to any third party without) Tj
+T* 0.0051  Tc 0.0021  Tw (the prior written consent of MICHIGAN.  LICENSEE shall not assign this Agreement, and any) Tj
+T* 0.0051  Tc 0.0021  Tw (attempt by LICENSEE to assign it shall be void from the beginning.  LICENSEE agrees to secure) Tj
+T* 0.005  Tc 0.0022  Tw (and protect the PROGRAM and any copies in a manner consistent with the maintenance of) Tj
+T* 0.005  Tc 0.0022  Tw (MICHIGAN'S rights in the PROGRAM and to take appropriate action by instruction or agreement) Tj
+T* 0.0048  Tc 0.0024  Tw (with its employees who are permitted access to the PROGRAM in order to satisfy LICENSEE'S) Tj
+T* 0.005  Tc 0.0022  Tw (obligations under this Agreement.  LICENSEE is authorized to make one copy of the PROGRAM for) Tj
+T* 0.0044  Tc 0.0028  Tw (backup purposes only.) Tj
+ET
+endstream
+endobj
+13 0 obj
+4575
+endobj
+4 0 obj
+<<
+/Type /Page
+/Parent 5 0 R
+/Resources <<
+/Font <<
+/F0 6 0 R 
+/F1 8 0 R 
+/F2 10 0 R 
+>>
+/ProcSet 2 0 R
+>>
+/Contents 12 0 R
+>>
+endobj
+15 0 obj
+<<
+/Length 16 0 R
+>>
+stream
+BT
+291.36 42.96  TD
+0 0 0 rg 
+/F0 12  Tf
+0  Tc 0  Tw (2) Tj
+-237.12 681.6  TD /F2 10.08  Tf
+0.0072  Tc (III.) Tj
+36 0  TD 0.0049  Tc (CONSIDERATION) Tj
+18 -11.28  TD 0.0048  Tc 0.0024  Tw (LICENSEE agrees to pay to MICHIGAN the following license royalties upon execution of this License) Tj
+0 -11.28  TD 0.0057  Tc 0  Tw (Agreement:) Tj
+0 -22.56  TD 0.0062  Tc (1) Tj
+5.52 5.04  TD /F2 6.48  Tf
+0.1744  Tc (st) Tj
+5.28 -5.04  TD /F2 10.08  Tf
+0.0049  Tc 0.0023  Tw ( copy of PROGRAM to be run on a single server) Tj
+-10.8 -11.28  TD 0.0051  Tc 0.0021  Tw (Subsequent copies of PROGRAM, $12,000 each per single server) Tj
+0 -11.28  TD 0.0057  Tc 0.0015  Tw (Support per year, $5,000) Tj
+282.72 -11.28  TD 0.0045  Tc 0  Tw (Handling) Tj
+-79.44 -22.56  TD 0.0051  Tc 0.0021  Tw (TOTAL LICENSING FEES) Tj
+133.44 56.4  TD 0.0062  Tc 0  Tw ($) Tj
+9.12 0  TD (__________________) Tj
+-9.12 -11.28  TD ($) Tj
+9.12 0  TD (__________________) Tj
+-9.12 -11.28  TD ($) Tj
+9.12 0  TD (__________________) Tj
+-9.12 -11.28  TD 0.0064  Tc 0.0008  Tw ($                         30.00) Tj
+3.6 -22.56  TD 0.0062  Tc 0  Tw (___________________) Tj
+-340.32 -33.84  TD 0.005  Tc 0.0022  Tw (Support shall be limited to 40 hours within 12 months of date ) Tj
+272.88 0  TD 0.0053  Tc 0  Tw (PROGRAM) Tj
+-3.8376  Tc (\222) Tj
+0.0046  Tc 0.0026  Tw (s delivery and provided) Tj
+-272.88 -11.28  TD 0.0049  Tc 0.0023  Tw (primarily via email to a representative identified by LICENSEE to evaluate reports of apparent bugs) Tj
+0 -11.28  TD 0.0049  Tc 0.0023  Tw (and consultation on how to integrate and run the PROGRAM. The University will make a reasonable) Tj
+T* 0.0043  Tc 0.0029  Tw (effort to provide timely responses consistent with its academic and research missions.) Tj
+0 -22.56  TD 0.0044  Tc 0.0028  Tw (Payment shall be made by approved credit card, electronic bank transfer, or check in U.S. currency,) Tj
+0 -11.28  TD 0.0048  Tc 0.0024  Tw (paid to the order of "The Regents of The University of Michigan", and sent to the Technology) Tj
+T* 0.0055  Tc 0.0017  Tw (Management Office, Wolverine Tower, Room 2071, 3003 S. State Street, Ann Arbor, MI  48109-1280,) Tj
+T* 0.0059  Tc 0  Tw (USA.) Tj
+-54 -22.56  TD 0.007  Tc (IV.) Tj
+36 0  TD 0.0045  Tc 0.0027  Tw (TITLE AND OWNERSHIP) Tj
+0 -11.28  TD 0.007  Tc 0  Tw (A.) Tj
+18 0  TD 0.005  Tc 0.0022  Tw (No ownership rights of MICHIGAN in the PROGRAM are conferred upon LICENSEE by this) Tj
+0 -11.28  TD 0.0057  Tc 0  Tw (Agreement.) Tj
+-18 -22.56  TD 0.007  Tc (B.) Tj
+18 0  TD 0.005  Tc 0.0022  Tw (LICENSEE acknowledges MICHIGAN'S proprietary rights in the PROGRAM and agrees to reprod) Tj
+433.68 0  TD 0.0034  Tc 0.0038  Tw (uce all) Tj
+-433.68 -11.28  TD 0.0047  Tc 0.0025  Tw (copyright notices supplied by MICHIGAN on all copies of the PROGRAM, and on all PROGRAM) Tj
+0 -11.28  TD 0.0054  Tc 0.0018  Tw (outputs and copies of PROGRAM outputs.) Tj
+-54 -22.56  TD 0.007  Tc 0  Tw (V.) Tj
+36 0  TD 0.0049  Tc 0.0023  Tw (DISCLAIMER OF WARRANTY AND LIMITATION OF LIABILITY) Tj
+0 -11.52  TD 0.007  Tc 0  Tw (A.) Tj
+18 0  TD 0.0034  Tc (THE) Tj
+20.16 0  TD /F1 10.08  Tf
+0.0151  Tc 0.0425  Tw ( PROGRAM) Tj
+55.2 0  TD /F2 10.08  Tf
+0.0046  Tc 0.0026  Tw ( IS PROVIDED "AS IS" WITHOUT WARRANTY OF ANY KIND, EITHER) Tj
+-75.36 -11.52  TD 0.0049  Tc 0.0023  Tw (EXPRESS OR IMPLIED, INCLUDING WITHOUT LIMITATION THE IMPLIED WARRANTIES OF) Tj
+0 -11.52  TD 0.0048  Tc 0.0024  Tw (MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE.  ) Tj
+325.2 0  TD /F1 10.08  Tf
+0.0552  Tc 0  Tw (MICHIGAN) Tj
+50.64 0  TD /F2 10.08  Tf
+0.0049  Tc 0.0023  Tw ( DOES NOT) Tj
+-375.84 -11.76  TD 0.0037  Tc 0.0035  Tw (WARRANT THAT THE FUNCTIONS CONTAINED IN THE ) Tj
+266.4 0  TD /F1 10.08  Tf
+0.0151  Tc 0  Tw (PROGRAM) Tj
+52.32 0  TD /F2 10.08  Tf
+0.0046  Tc 0.0026  Tw ( WILL MEET ) Tj
+60.72 0  TD /F1 10.08  Tf
+0.0451  Tc 0  Tw (LICENSEE'S) Tj
+-379.44 -11.52  TD /F2 10.08  Tf
+0.0045  Tc 0.0027  Tw (REQUIREMENTS OR THAT OPERATION WILL BE UNINTERRUPTED OR ERROR FREE.) Tj
+0 -11.28  TD 0.0045  Tc 0.0027  Tw (MICHIGAN shall not be liable for special, indirect, incidental, or consequential damages with respect) Tj
+T* 0.0048  Tc 0.0024  Tw (to any claim on account of or arising from this Agreement or use of the PROGRAM, even if) Tj
+T* 0.0047  Tc 0.0025  Tw (MICHIGAN has been or is hereafter advised of the possibility of such damages.  Because some) Tj
+T* 0.0042  Tc 0.003  Tw (states do not allow certain exclusions or limitations on implied warranties or of liability for) Tj
+T* 0.005  Tc 0.0022  Tw (consequential or incidental damages, the above exclusions may not apply to LICENSEE.  In no) Tj
+T* 0.0051  Tc 0.0021  Tw (event, however, will MICHIGAN be liable to LICENSEE, under any theory of recovery, in an amount) Tj
+T* 0.0049  Tc 0.0023  Tw (in excess of the license fee paid by LICENSEE under this Agreement.) Tj
+-18 -22.56  TD 0.007  Tc 0  Tw (B.) Tj
+18 0  TD 0.005  Tc 0.0022  Tw (Except as expressly defined elsewhere in this Agreement, MICHIGAN has no obligation to provide) Tj
+0 -11.28  TD 0.0052  Tc 0.002  Tw (to  LICENSEE any maintenance, support, or update services.) Tj
+-18 -22.56  TD 0.005  Tc 0  Tw (C.) Tj
+18 0  TD 0.0049  Tc 0.0023  Tw (If the physical CD provided hereunder contains any defects upon receipt by LICENSEE, LICENSEE) Tj
+0 -11.28  TD 0.0046  Tc 0.0026  Tw (shall have thirty \(30\) days in which to return said defective CD and MICHIGAN shall provide a) Tj
+T* 0.0048  Tc 0.0024  Tw (replacement diskette free of charge.) Tj
+-54 -22.56  TD 0.007  Tc 0  Tw (VI.) Tj
+36 0  TD 0.0046  Tc 0.0026  Tw (WARRANTY OF LICENSEE) Tj
+0 -11.28  TD 0.0049  Tc 0.0023  Tw (LICENSEE warrants and represents that a competent System Administrator will install the PROGRAM,) Tj
+T* 0.0046  Tc 0.0026  Tw (and that the System Administrator will carefully review all documentation included with the PROGRAM) Tj
+T* 0.0046  Tc 0.0026  Tw (prior to installation.) Tj
+-36 -22.56  TD 0.0071  Tc 0  Tw (VII.) Tj
+36 0  TD 0.0044  Tc (TERMINATION) Tj
+0 -11.28  TD 0.005  Tc 0.0022  Tw (If LICENSEE at any time fails to abide by the terms of this Agreement, MICHIGAN shall have the right) Tj
+T* 0.0048  Tc 0.0024  Tw (to immediately terminate the license granted herein, require the return or destruction of all copies of the) Tj
+T* 0.0048  Tc 0.0024  Tw (PROGRAM from LICENSEE and certification in writing as to such return or destruction, and pursue any) Tj
+ET
+endstream
+endobj
+16 0 obj
+6385
+endobj
+14 0 obj
+<<
+/Type /Page
+/Parent 5 0 R
+/Resources <<
+/Font <<
+/F0 6 0 R 
+/F1 8 0 R 
+/F2 10 0 R 
+>>
+/ProcSet 2 0 R
+>>
+/Contents 15 0 R
+>>
+endobj
+18 0 obj
+<<
+/Length 19 0 R
+>>
+stream
+BT
+291.36 42.96  TD
+0 0 0 rg 
+/F0 12  Tf
+0  Tc 0  Tw (3) Tj
+-201.12 692.88  TD /F2 10.08  Tf
+0.0048  Tc 0.0024  Tw (other legal or equitable remedies available.) Tj
+-36 -22.56  TD 0.0071  Tc 0  Tw (VIII.) Tj
+36 0  TD 0.0056  Tc (MISCELLANEOUS) Tj
+0 -11.28  TD 0.007  Tc (A.) Tj
+18 0  TD 0.0046  Tc 0.0026  Tw (This Agreement shall be construed in accordance with the laws of the State of Michi) Tj
+373.2 0  TD 0.0059  Tc 0.0013  Tw (gan.  Should) Tj
+-373.2 -11.28  TD 0.005  Tc 0.0022  Tw (LICENSEE for any reason bring a claim, demand, or other action against MICHIGAN, its agents or) Tj
+0 -11.28  TD 0.005  Tc 0.0022  Tw (employees, arising out of this Agreement or the PROGRAM licensed herein, LICENSEE agrees to) Tj
+T* 0.0039  Tc 0.0033  Tw (bring said claim only in the Michigan Court of Claims.) Tj
+-18 -22.56  TD 0.005  Tc 0  Tw (C.) Tj
+10.08 0  TD 0  Tc 0.0072  Tw ( ) Tj
+7.92 0  TD 0.0047  Tc 0.0025  Tw (THIS AGREEMENT REPRESENTS THE COMPLETE AND EXCLUSIVE STATEMENT OF THE) Tj
+0 -11.52  TD 0.0046  Tc 0.0026  Tw (AGREEMENT BETWEEN ) Tj
+120 0  TD /F1 10.08  Tf
+0.0552  Tc 0  Tw (MICHIGAN) Tj
+50.64 0  TD /F2 10.08  Tf
+0.0042  Tc 0.003  Tw ( AND ) Tj
+26.88 0  TD /F1 10.08  Tf
+0.0504  Tc 0.0072  Tw (LICENSEE ) Tj
+53.28 0  TD /F2 10.08  Tf
+0.0054  Tc 0.0018  Tw (AND SUPERSEDES ALL PRIOR) Tj
+-250.8 -11.52  TD 0.0051  Tc 0.0021  Tw (AGREEMENTS, PROPOSALS, REPRESENTATIONS AND OTHER COMMUNICATIONS,) Tj
+0 -11.52  TD 0.0042  Tc 0.003  Tw (VERBAL OR WRITTEN, BETWEEN THEM WITH RESPECT TO USE OF THE ) Tj
+357.84 0  TD /F1 10.08  Tf
+0.0151  Tc 0  Tw (PROGRAM) Tj
+52.32 0  TD /F2 10.08  Tf
+0.0049  Tc 0.0023  Tw (.  THIS) Tj
+-410.16 -11.52  TD 0.0046  Tc 0.0026  Tw (AGREEMENT MAY BE MODIFIED ONLY WITH THE MUTUAL WRITTEN APPROVAL OF) Tj
+0 -11.28  TD 0.0047  Tc 0.0025  Tw (AUTHORIZED REPRESENTATIVES OF THE PARTIES.) Tj
+-18 -22.56  TD 0.005  Tc 0  Tw (D.) Tj
+10.08 0  TD 0  Tc 0.0072  Tw ( ) Tj
+7.92 0  TD 0.0047  Tc 0.0025  Tw (The terms and conditions of this Agreement shall prevail notwithstanding any different, conflicting,) Tj
+0 -11.28  TD 0.0046  Tc 0.0026  Tw (or additional terms or ) Tj
+97.68 0  TD 0.0046  Tc 0.0026  Tw (conditions which may appear in any purchase order or other document) Tj
+-97.68 -11.28  TD 0.005  Tc 0.0022  Tw (submitted by LICENSEE.  LICENSEE agrees that such additional or inconsistent terms are deemed) Tj
+0 -11.28  TD 0.0047  Tc 0.0025  Tw (rejected by MICHIGAN.) Tj
+-18 -22.56  TD 0.005  Tc 0  Tw (D.) Tj
+18 0  TD 0.0049  Tc 0.0023  Tw (Unless otherwise exempt therefrom, LICENSEE agrees that it will be resp) Tj
+327.6 0  TD 0.0043  Tc 0.0029  Tw (onsible for any sales, use) Tj
+-327.6 -11.28  TD 0.0048  Tc 0.0024  Tw (or excise taxes imposed by any governmental unit in this transaction except income taxes.) Tj
+-18 -22.56  TD 0.007  Tc 0  Tw (E.) Tj
+18 0  TD 0.005  Tc 0.0022  Tw (The PROGRAM is subject to the United States Department of Commerce Export Regulations.) Tj
+0 -11.28  TD 0.0064  Tc 0.0008  Tw (Export, ) Tj
+35.04 0  TD 0.005  Tc 0.0022  Tw (reexport, diversion, duplication, or other transfer of the PROGRAM is prohibited unless done) Tj
+-35.04 -11.28  TD 0.0043  Tc 0.0029  Tw (in full compliance with those Regulations.) Tj
+-18 -22.56  TD 0.0038  Tc 0  Tw (F.) Tj
+18 0  TD 0.0046  Tc 0.0026  Tw (MICHIGAN and LICENSEE agree that any xerographically or electronically reproduced copy of this) Tj
+0 -11.28  TD 0.0046  Tc 0.0026  Tw (fully-executed agreement shall have the same legal force and effect as any copy bearing original) Tj
+T* 0.0051  Tc 0.0021  Tw (signatures of the parties.) Tj
+-54 -22.56  TD 0.0077  Tc 0  Tw (IX.) Tj
+36 0  TD 0.0052  Tc 0.002  Tw (Where LICENSEE is the United States Federal Government or an Agency thereof, or any agent acting) Tj
+0 -11.28  TD 0.0048  Tc 0.0024  Tw (for or on behalf of the Government in licensing the PROGRAM, the following restriction shall apply:) Tj
+-18 -22.56  TD 0.0043  Tc 0.0029  Tw (UNITED STATES GOVERNMENT RESTRICTED RIGHTS) Tj
+0 -22.56  TD 0.0048  Tc 0.0024  Tw (THE PROGRAM and any associated documentation ) Tj
+235.68 0  TD 0.0045  Tc 0.0027  Tw (is provided with RESTRICTED RIGHTS.  Use,) Tj
+-235.68 -11.28  TD 0.0042  Tc 0.003  Tw (duplication or disclosure by the Government is subject to restrictions as set forth in subdivision \(c\)\(1\)\(ii\) of) Tj
+0 -11.28  TD 0.0049  Tc 0.0023  Tw (the Rights in Technical Data and Computer Software clause at 252.227-7013.  Contractor/manufacturer is) Tj
+T* 0.0049  Tc 0.0023  Tw (The University of Michigan, Ann Arbor, MI 48109.) Tj
+0 -33.84  TD 0.0047  Tc 0.0025  Tw (UNDERSTOOD, ACCEPTED AND AGREED TO:) Tj
+0 -22.56  TD 0.0051  Tc 0.0021  Tw (FOR LICENSEE) Tj
+257.76 0  TD 0.0041  Tc 0.0031  Tw (FOR THE REGENTS OF) Tj
+0 -11.28  TD 0.0047  Tc 0.0025  Tw (THE UNIVERSITY OF MICHIGAN) Tj
+-257.76 -22.56  TD 0.0034  Tc 0  Tw (By) Tj
+12 0  TD 0.0062  Tc (________________________________) Tj
+176.64 0  TD (______) Tj
+-143.04 -11.28  TD 0.005  Tc 0.0022  Tw (\(authorized representative\)) Tj
+-45.6 -22.56  TD 0.004  Tc 0.0032  Tw (Typed Name) Tj
+61.68 0  TD 0.0062  Tc 0  Tw (_____________________________) Tj
+-61.68 -22.56  TD 0.0032  Tc (Title) Tj
+23.04 0  TD 0.0062  Tc (________________________________) Tj
+176.64 0  TD (____) Tj
+-199.68 -22.56  TD 0.0056  Tc (Date) Tj
+23.04 0  TD 0.0062  Tc (________________________________) Tj
+176.64 0  TD (____) Tj
+58.56 78.96  TD 0.0034  Tc (By) Tj
+13.2 0  TD 0.0062  Tc (________________________________) Tj
+176.64 0  TD (______) Tj
+-117.36 -11.28  TD 0.005  Tc 0.0022  Tw (\(authorized representative\)) Tj
+-72.48 -22.56  TD 0.004  Tc 0.0032  Tw (Typed Name) Tj
+62.88 0  TD 0.0062  Tc 0  Tw (_____________________________) Tj
+-62.88 -22.56  TD 0.0032  Tc (Title) Tj
+24.24 0  TD 0.0062  Tc (________________________________) Tj
+176.64 0  TD (____) Tj
+-200.88 -22.56  TD 0.0056  Tc (Date) Tj
+24.24 0  TD 0.0062  Tc (________________________________) Tj
+176.64 0  TD (____) Tj
+-61.92 -67.68  TD 0.0058  Tc (XPAT-#1776-6/00) Tj
+ET
+endstream
+endobj
+19 0 obj
+5941
+endobj
+17 0 obj
+<<
+/Type /Page
+/Parent 5 0 R
+/Resources <<
+/Font <<
+/F0 6 0 R 
+/F1 8 0 R 
+/F2 10 0 R 
+>>
+/ProcSet 2 0 R
+>>
+/Contents 18 0 R
+>>
+endobj
+6 0 obj
+<<
+/Type /Font
+/Subtype /TrueType
+/Name /F0
+/BaseFont /TimesNewRoman
+/FirstChar 32
+/LastChar 255
+/Widths [ 260 320 400 500 500 840 760 160 340 340 500 560 260 340 260 280 
+500 500 500 500 500 500 500 500 500 500 280 260 560 560 560 420 
+900 700 660 660 720 620 540 720 720 340 380 700 600 880 720 720 
+560 720 660 560 620 720 720 920 720 720 600 340 280 340 460 500 
+320 440 480 440 500 440 300 500 480 240 240 500 240 740 480 520 
+500 500 340 380 300 500 480 720 480 460 440 480 200 480 540 780 
+560 780 560 560 560 560 560 560 560 560 560 560 560 780 560 780 
+780 560 560 560 560 560 560 560 560 560 560 560 560 780 560 560 
+260 320 500 500 500 500 200 500 320 760 260 480 560 340 760 500 
+380 540 300 280 300 580 440 260 300 300 320 480 760 760 760 400 
+700 700 700 700 700 700 900 660 620 620 620 620 340 340 340 340 
+720 720 720 720 720 720 720 560 720 720 720 720 720 720 560 520 
+440 440 440 440 440 440 660 440 440 440 440 440 240 240 240 240 
+500 480 520 520 520 520 520 540 500 500 500 500 500 460 500 460 
+]
+/Encoding /WinAnsiEncoding
+/FontDescriptor 7 0 R
+>>
+endobj
+7 0 obj
+<<
+/Type /FontDescriptor
+/FontName /TimesNewRoman
+/Flags 34
+/FontBBox [ -250 -216 1104 1040 ]
+/MissingWidth 340
+/StemV 73
+/StemH 73
+/ItalicAngle 0
+/CapHeight 891
+/XHeight 446
+/Ascent 891
+/Descent -216
+/Leading 149
+/MaxWidth 920
+/AvgWidth 401
+>>
+endobj
+8 0 obj
+<<
+/Type /Font
+/Subtype /TrueType
+/Name /F1
+/BaseFont /Arial,Bold
+/FirstChar 32
+/LastChar 255
+/Widths [ 280 300 480 560 560 840 720 240 340 340 380 580 280 340 280 280 
+560 560 560 560 560 560 560 560 560 560 340 340 580 580 580 620 
+980 700 720 720 720 660 620 780 720 260 560 720 620 820 720 780 
+660 780 720 660 640 720 660 940 660 660 620 340 280 340 580 560 
+340 560 620 560 620 560 340 620 600 280 280 560 280 880 600 620 
+620 620 380 560 340 600 540 780 560 540 500 380 280 380 580 760 
+580 760 580 580 580 580 580 580 580 580 580 580 580 760 580 760 
+760 580 580 580 580 580 580 580 580 580 580 580 580 760 580 580 
+280 340 560 560 560 560 280 560 340 740 380 560 580 340 740 560 
+400 540 340 340 340 580 560 280 320 340 360 560 840 840 840 620 
+700 700 700 700 700 700 1000 720 660 660 660 660 260 260 260 260 
+720 720 780 780 780 780 780 580 780 720 720 720 720 660 660 620 
+560 560 560 560 560 560 880 560 560 560 560 560 280 280 280 280 
+620 600 620 620 620 620 620 540 620 600 600 600 600 540 620 540 
+]
+/Encoding /WinAnsiEncoding
+/FontDescriptor 9 0 R
+>>
+endobj
+9 0 obj
+<<
+/Type /FontDescriptor
+/FontName /Arial,Bold
+/Flags 16416
+/FontBBox [ -250 -212 1200 1055 ]
+/MissingWidth 340
+/StemV 153
+/StemH 153
+/ItalicAngle 0
+/CapHeight 905
+/XHeight 453
+/Ascent 905
+/Descent -212
+/Leading 150
+/MaxWidth 1000
+/AvgWidth 479
+>>
+endobj
+10 0 obj
+<<
+/Type /Font
+/Subtype /TrueType
+/Name /F2
+/BaseFont /Arial
+/FirstChar 32
+/LastChar 255
+/Widths [ 285 333 357 547 547 880 666 190 333 333 380 595 285 333 285 285 
+547 547 547 547 547 547 547 547 547 547 285 285 595 595 595 547 
+1023 666 666 714 714 666 619 785 714 285 500 666 547 833 714 785 
+666 785 714 666 619 714 666 1000 642 666 619 285 285 285 452 547 
+333 547 547 500 547 547 309 547 547 238 238 500 238 857 547 547 
+547 547 333 476 285 547 547 690 523 500 500 333 261 333 595 761 
+595 761 595 595 595 595 595 595 595 595 595 595 595 761 595 761 
+761 595 595 595 595 595 595 595 595 595 595 595 595 761 595 595 
+285 333 547 547 547 547 261 547 333 738 380 547 595 333 738 547 
+404 547 333 333 333 571 547 285 333 333 357 547 833 833 833 619 
+666 666 666 666 666 666 1000 714 666 666 666 666 285 285 285 285 
+714 714 785 785 785 785 785 595 785 714 714 714 714 666 666 619 
+547 547 547 547 547 547 880 500 547 547 547 547 285 285 285 285 
+547 547 547 547 547 547 547 547 619 547 547 547 547 500 547 500 
+]
+/Encoding /WinAnsiEncoding
+/FontDescriptor 11 0 R
+>>
+endobj
+11 0 obj
+<<
+/Type /FontDescriptor
+/FontName /Arial
+/Flags 32
+/FontBBox [ -250 -212 1229 1055 ]
+/MissingWidth 286
+/StemV 80
+/StemH 80
+/ItalicAngle 0
+/CapHeight 905
+/XHeight 453
+/Ascent 905
+/Descent -212
+/Leading 150
+/MaxWidth 1024
+/AvgWidth 441
+>>
+endobj
+2 0 obj
+[ /PDF /Text  ]
+endobj
+5 0 obj
+<<
+/Kids [4 0 R 14 0 R 17 0 R ]
+/Count 3
+/Type /Pages
+/MediaBox [ 0 0 612 792 ]
+>>
+endobj
+1 0 obj
+<<
+/Creator ()
+/CreationDate (D:20000613082238)
+/Title (DLXS License.PDF)
+/Author (mstoef)
+/Producer (Acrobat PDFWriter 3.02 for Windows NT)
+/Keywords ()
+/Subject ()
+>>
+endobj
+3 0 obj
+<<
+/Pages 5 0 R
+/Type /Catalog
+>>
+endobj
+xref
+0 20
+0000000000 65535 f 
+0000021735 00000 n 
+0000021606 00000 n 
+0000021919 00000 n 
+0000004670 00000 n 
+0000021637 00000 n 
+0000017576 00000 n 
+0000018662 00000 n 
+0000018922 00000 n 
+0000020006 00000 n 
+0000020269 00000 n 
+0000021352 00000 n 
+0000000019 00000 n 
+0000004649 00000 n 
+0000011273 00000 n 
+0000004812 00000 n 
+0000011252 00000 n 
+0000017433 00000 n 
+0000011416 00000 n 
+0000017412 00000 n 
+trailer
+<<
+/Size 20
+/Root 3 0 R
+/Info 1 0 R
+/ID [<02ba57e6048d2231633798c8efb3e369><02ba57e6048d2231633798c8efb3e369>]
+>>
+startxref
+21968
+%%EOF

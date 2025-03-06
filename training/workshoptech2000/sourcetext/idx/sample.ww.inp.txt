@@ -1,0 +1,8 @@
+<!DOCTYPE WW SYSTEM "/l1/obj/lib/sgml/wordwheel.dtd" [
+
+
+<!ENTITY % entrefs SYSTEM "/l1/idx/c/coll/charents.frag">
+%entrefs;
+
+]>
+

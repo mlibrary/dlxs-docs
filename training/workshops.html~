@@ -1,0 +1,80 @@
+ 
+<html>
+<!-- #BeginTemplate "/Templates/training-sublevel-tmp.dwt" --> 
+<head>
+<!-- #BeginEditable "doctitle" --> 
+<title>DLXS training</title>
+<!-- #EndEditable --> 
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<link rel="stylesheet" href="../dlxs.css">
+</head>
+<body bgcolor="#FFFFFF" leftmargin="0" topmargin="0" marginwidth="0" marginheight="0" background="../images/dlxs2ndlvlbkgnd.gif" onLoad="">
+<table border="0" cellspacing="0" cellpadding="0" width="585">
+  <tr> 
+    <td rowspan="2" width="123" valign="top" height="43"><a href="../index.html"><img src="../images/dlxslogo_01.gif" width="123" height="43" border="0"></a></td>
+    <td colspan="4" height="20"><img src="../images/dlxstopspace_02.gif" width="462" height="20" name="Image1"></td>
+  </tr>
+  <tr> 
+    <td height="23"><!-- #BeginEditable "aboutmenuhead" --><a href="../aboutdlxs.html"><img src="../images/dlxsabout_03.gif" width="97" height="23" border="0"></a><!-- #EndEditable --></td>
+    <td height="23"><!-- #BeginEditable "productmenuhead" --><a href="../products/products.html"><img border="0" src="../images/dlxsproducts_04.gif" width="122" height="23"></a><!-- #EndEditable --></td>
+    <td height="23"><!-- #BeginEditable "techinfomenuhead" --><a href="../requirements.html"><img border="0" src="../images/tech_05.gif" width="110" height="23"></a><!-- #EndEditable --></td>
+    <td height="23"><!-- #BeginEditable "trainingmenuhead" --><img name="training" border="0" src="../images/train_06-over.gif" width="133" height="23"><!-- #EndEditable --></td>
+  </tr>
+  <tr> 
+    <td width="123"><img src="../images/dlxsnavspace_07.gif" width="123" height="88"></td>
+    <td valign="top"><!-- #BeginEditable "aboutmenuitems" --> <!-- #EndEditable --></td>
+    <td valign="top"><!-- #BeginEditable "productsmenuitems" --><!-- #EndEditable --></td>
+    <td valign="top"><!-- #BeginEditable "techinfomenuitems" --><!-- #EndEditable --></td>
+    <td valign="top"><!-- #BeginEditable "trainmenuitems" --><img src="../images/wrkshp_11-over.gif" width="133" height="35"><!-- #EndEditable --></td>
+  </tr>
+</table>
+<table width="585" border="0" cellspacing="0" cellpadding="0">
+  <tr> 
+    <td width="58"><img src="../images/dlxsleftheadspace_22.gif" width="58" height="481"></td>
+    <td width="82"><!-- #BeginEditable "marginheadertxt" --><img src="../images/newtrnghd_main_23.gif" width="82" height="481"><!-- #EndEditable --></td>
+    <td valign="top" align="left"> <!-- all text content goes inside the div block  --> 
+      <div class="indentblock"> <!-- #BeginEditable "pagebodytext" -->
+        <h3>UM DLXS - Workshops</h3>
+<p class="normaltext">As a part of UM DLXS, the University of Michigan 
+          offers inexpensive summer workshops for participants, guiding programmers 
+          and digital collection managers in the application of the UM DLXS code 
+          base in putting collections online. Current plans (based on previous 
+          demand) are to offer these workshops at no charge, with transportation, 
+          food, and lodging being handled by the participants. We are able to 
+          accommodate one representative from each member institution for each 
+          workshop, but will consider special requests for more than one representative 
+          on a space-available basis. We will initially offer two workshops each 
+          year, both tentatively scheduled in summer. One workshop is geared to 
+          the needs of programmers; one workshop is geared to the needs of managers 
+          of digital collections. Each requires a high level of technical skills. 
+          More workshops will be offered based on demand.</p>       
+
+ <ul>
+          
+          <li>2000 Workshops 
+            <ul>
+              <li><a href="http://www.umdl.umich.edu/dlxs/training/workshop-user-2000.html">Text 
+                Encoding and User Support Workshop</a>, August 1-5, 2000</li>
+              <li><a href="http://www.umdl.umich.edu/dlxs/training/workshoptech2000/">Technical/Programming 
+                Workshop</a>, August 8-12, 2000<br>
+                <br>
+              </li>
+            </ul>
+          </li>
+          <li>1999 Workshops 
+            <ul>
+              <li><a href="http://www.hti.umich.edu/misc/ssp/workshops/1999-text.html">Text 
+                Encoding and User Support Workshop</a>, July 28-31, 1999</li>
+              <li><a href="http://dev.hti.umich.edu/~pagliere/sspworkshop/">Technical/Programming 
+                Workshop</a>, August 11-16, 1999</li>
+            </ul>
+          </li>
+        </ul>
+        <p class="normaltext">&nbsp;</p>
+        <!-- #EndEditable --> </div>
+    </td>
+  </tr>
+</table>
+</body>
+<!-- #EndTemplate -->
+</html>

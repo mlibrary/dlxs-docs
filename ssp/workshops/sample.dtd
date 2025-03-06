@@ -1,0 +1,474 @@
+<!-- <!DOCTYPE text SYSTEM "sample.dtd" [ -->
+<!--  This is based on the TEI Lite DTD version 1.6, generated 25 June 1995.  It is a severely stripped-down version for demonstration purposes. 
+--> 
+
+<!ENTITY % 	end		"byline | closer | epigraph | salute | signed | trailer">
+
+<!ENTITY % 	begin		"argument | byline | docAuthor | docDate | epigraph | head | opener | salute | signed">
+
+
+<!ELEMENT argument - - ((head)?, (bibl | l | lg | p | sp | q | list | note | stage | lb | pb | milestone)*)>
+
+<!ATTLIST argument 
+     id ID #IMPLIED 
+     n CDATA #IMPLIED 
+     rend CDATA #IMPLIED >
+
+<!ELEMENT author  - - (#PCDATA | hi | lb | pb | milestone)*>
+
+<!ATTLIST author 
+     id ID #IMPLIED 
+     n CDATA #IMPLIED 
+     rend CDATA #IMPLIED >
+
+<!ELEMENT back  - - ((titlePage)*, ((div1), (div1 | titlePage))*)>
+
+<!ATTLIST back 
+     id ID #IMPLIED 
+     n CDATA #IMPLIED 
+     rend CDATA #IMPLIED >
+
+<!ELEMENT bibl  - - (#PCDATA | hi | title | author | edition | editor | 
+imprint | note | publisher | pubPlace | lb | pb | milestone)*>
+
+<!ATTLIST bibl 
+     id ID #IMPLIED 
+     n CDATA #IMPLIED 
+     rend CDATA #IMPLIED >
+
+<!ELEMENT body  - - ((%begin; | lb | pb | milestone)*,  ((div1)+ | (bibl | l | lg | p | sp | q | list | note | stage)+), (%end; | lb | pb | milestone)*)>
+
+<!ATTLIST body 
+     id ID #IMPLIED 
+     n CDATA #IMPLIED 
+     rend CDATA #IMPLIED >
+
+<!ELEMENT byline  - - (#PCDATA | hi | lb | pb | milestone | docAuthor)*>
+
+<!ATTLIST byline 
+     id ID #IMPLIED 
+     n CDATA #IMPLIED 
+     rend CDATA #IMPLIED >
+
+
+<!ELEMENT closer  - - (signed | salute | (#PCDATA | hi | title | lb | pb | milestone)*)*>
+
+<!ATTLIST closer 
+     id ID #IMPLIED 
+     n CDATA #IMPLIED 
+     rend CDATA #IMPLIED >
+
+<!ELEMENT cell  - - (#PCDATA | hi | title | note | figure | stage | table | lb | pb | milestone)*>
+
+<!ATTLIST cell 
+     id ID #IMPLIED 
+     n CDATA #IMPLIED 
+     rend CDATA #IMPLIED 
+     role CDATA "data" 
+     rows NUMBER "1" 
+     cols NUMBER "1" >
+
+<!ELEMENT date  - - (#PCDATA | hi | lb | pb | milestone)*>
+
+<!ATTLIST date 
+     id ID #IMPLIED 
+     n CDATA #IMPLIED 
+     rend CDATA #IMPLIED >
+
+<!ELEMENT div1  - - ((%begin; | lb | pb | milestone)*, ((div2)+ | (bibl | l | lg | p | sp | q |  list | note | stage | table)+), (%end; | lb | pb | milestone)*)>
+
+<!ATTLIST div1 
+     id ID #IMPLIED 
+     n CDATA #IMPLIED 
+     rend CDATA #IMPLIED 
+     type CDATA #CURRENT >
+
+
+<!ELEMENT div2  - - ((%begin; | lb | pb | milestone)*, ((div3)+ | (bibl | l | lg | p | sp | q |  list | note | stage | table)+), (%end; | lb | pb | milestone)*)>
+
+<!ATTLIST div2 
+     id ID #IMPLIED 
+     n CDATA #IMPLIED 
+     rend CDATA #IMPLIED 
+     type CDATA #CURRENT >
+
+
+<!ELEMENT div3  - - ((%begin; | lb | pb | milestone)*, ((div4)+ | (bibl | l |
+ lg | p | sp | q |  list | note | stage | table)+), (%end; | lb | pb | milestone)*)>
+
+<!ATTLIST div3 
+     id ID #IMPLIED 
+     n CDATA #IMPLIED 
+     rend CDATA #IMPLIED 
+     type CDATA #CURRENT >
+
+<!ELEMENT div4  - - ((%begin; | lb | pb | milestone)*, ((div5)+ | (bibl | l | lg | p | sp | q |  list | note | stage | table)+), (%end; | lb | pb | milestone)*)>
+
+
+<!ATTLIST div4 
+     id ID #IMPLIED 
+     n CDATA #IMPLIED 
+     rend CDATA #IMPLIED 
+     type CDATA #CURRENT >
+
+<!ELEMENT div5  - - ((%begin; | lb | pb | milestone)*, ((div6)+ | (bibl | l | lg | p | sp | q |  list | note | stage | table)+), (%end; | lb | pb | milestone)*)>
+
+<!ATTLIST div5 
+     id ID #IMPLIED 
+     n CDATA #IMPLIED 
+     rend CDATA #IMPLIED 
+     type CDATA #CURRENT >
+
+<!ELEMENT div6  - - ((%begin; | lb | pb | milestone)*, ((div7)+ | (bibl | l | lg | p | sp | q |  list | note | stage | table)+), (%end; | lb | pb | milestone)*)>
+
+<!ATTLIST div6 
+     id ID #IMPLIED 
+     n CDATA #IMPLIED 
+     rend CDATA #IMPLIED 
+     type CDATA #CURRENT >
+
+<!ELEMENT div7  - - ((%begin; | lb | pb | milestone)*, (bibl | l | lg | p | sp | q |  list | note | stage | table)+, (%end; | lb | pb | milestone)*)>
+
+<!ATTLIST div7 
+     id ID #IMPLIED 
+     n CDATA #IMPLIED 
+     rend CDATA #IMPLIED 
+     type CDATA #CURRENT >
+
+<!ELEMENT docAuthor  - - (#PCDATA | hi | lb | pb | milestone)*>
+
+<!ATTLIST docAuthor 
+     id ID #IMPLIED 
+     n CDATA #IMPLIED 
+     rend CDATA #IMPLIED >
+
+<!ELEMENT docDate  - - (#PCDATA | hi | lb | pb | milestone)*>
+
+<!ATTLIST docDate 
+     id ID #IMPLIED 
+     n CDATA #IMPLIED 
+     rend CDATA #IMPLIED >
+
+<!ELEMENT docEdition  - - (#PCDATA | hi | lb | pb | milestone)*>
+
+<!ATTLIST docEdition 
+     id ID #IMPLIED 
+     n CDATA #IMPLIED 
+     rend CDATA #IMPLIED >
+
+<!ELEMENT docImprint  - - ((#PCDATA | hi | lb | pb | milestone)* | pubPlace | 
+docDate | publisher)*>
+
+<!ATTLIST docImprint 
+     id ID #IMPLIED 
+     n CDATA #IMPLIED 
+     rend CDATA #IMPLIED >
+
+<!ELEMENT docTitle  - - ((titlePart)+ | (lb | pb | milestone)*)>
+
+<!ATTLIST docTitle 
+     id ID #IMPLIED 
+     n CDATA #IMPLIED 
+     rend CDATA #IMPLIED >
+
+<!ELEMENT edition  - - (#PCDATA | hi | lb | pb | milestone)*>
+
+<!ATTLIST edition
+     id ID #IMPLIED 
+     n CDATA #IMPLIED 
+     rend CDATA #IMPLIED >
+
+<!ELEMENT editor  - - (#PCDATA | hi | lb | pb | milestone)*>
+
+<!ATTLIST editor 
+     id ID #IMPLIED 
+     n CDATA #IMPLIED 
+     rend CDATA #IMPLIED >
+
+<!ELEMENT epigraph - - (bibl | q | lb | pb | milestone)*>
+
+<!ATTLIST epigraph 
+     id ID #IMPLIED 
+     n CDATA #IMPLIED 
+     rend CDATA #IMPLIED >
+
+<!ELEMENT figure - - ((head)?, (p | lb | pb | milestone)*)>
+
+<!ATTLIST figure 
+     id ID #IMPLIED 
+     n CDATA #IMPLIED 
+     rend CDATA #IMPLIED 
+     entity ENTITY #IMPLIED >
+
+<!ELEMENT front  - - (titlePage | div1 |  lb | pb | milestone)*>
+
+<!ATTLIST front 
+     id ID #IMPLIED 
+     n CDATA #IMPLIED 
+     rend CDATA #IMPLIED >
+
+<!ELEMENT head  - - (#PCDATA | hi | title | bibl | q | list | note | figure | stage | table | lb | pb | milestone)*>
+
+<!ATTLIST head 
+     id ID #IMPLIED 
+     n CDATA #IMPLIED 
+     rend CDATA #IMPLIED 
+     type CDATA #IMPLIED>
+
+<!ELEMENT hi - - (#PCDATA | lb | pb | milestone)*>
+
+<!ATTLIST hi 
+     id ID #IMPLIED 
+     n CDATA #IMPLIED 
+     rend CDATA #IMPLIED >
+
+<!ELEMENT imprint  - - (pubPlace | publisher | date)*>
+
+<!ATTLIST imprint 
+     id ID #IMPLIED 
+     n CDATA #IMPLIED 
+     rend CDATA #IMPLIED >
+
+<!ELEMENT item  - - (#PCDATA | ref | hi | lb | pb | milestone)*>
+
+<!ATTLIST item 
+     id ID #IMPLIED 
+     rend CDATA #IMPLIED 
+     n CDATA #IMPLIED >
+
+<!ELEMENT l  - - (#PCDATA | hi | q |  list | note | figure | stage | table | lb | pb | milestone)*>
+
+<!ATTLIST l 
+     id ID #IMPLIED 
+     n CDATA #IMPLIED 
+     rend CDATA #IMPLIED 
+     part (Y | N | I | M | F) "N" >
+
+<!ELEMENT label  - - (#PCDATA | ref | hi | lb | pb | milestone)*>
+
+<!ATTLIST label 
+     id ID #IMPLIED 
+     rend CDATA #IMPLIED 
+     n CDATA #IMPLIED >
+
+<!ELEMENT lb  - O EMPTY>
+
+<!ATTLIST lb 
+     id ID #IMPLIED 
+     rend CDATA #IMPLIED 
+     n CDATA #IMPLIED >
+
+<!ELEMENT lg  - - ((argument | byline | docAuthor | docDate | epigraph
+| head | opener | salute | signed)*, (l | lg)+, (%end;)*)>
+
+<!ATTLIST lg 
+     id ID #IMPLIED 
+     n CDATA #IMPLIED 
+     rend CDATA #IMPLIED 
+     type CDATA #CURRENT >
+
+<!ELEMENT list - - ((head)?, ((label)?, (item)+))>
+
+<!ATTLIST list 
+     n CDATA #IMPLIED 
+     rend CDATA #IMPLIED >
+
+<!ELEMENT milestone  - O EMPTY>
+
+<!ATTLIST milestone 
+     id ID #IMPLIED 
+     rend CDATA #IMPLIED 
+     n CDATA #IMPLIED 
+     unit CDATA #REQUIRED >
+
+<!ELEMENT note  - - (#PCDATA | hi | title | bibl | q | list | note | figure | p | l | stage | table | lb | pb | milestone)*>
+
+<!ATTLIST note 
+     id ID #IMPLIED 
+     rend CDATA #IMPLIED 
+     n CDATA #IMPLIED >
+
+<!ELEMENT opener  - - (signed | salute | (#PCDATA | hi | title | lb | pb | milestone)*)*>
+
+<!ATTLIST opener 
+     id ID #IMPLIED 
+     n CDATA #IMPLIED 
+     rend CDATA #IMPLIED >
+
+<!ELEMENT p  - - (#PCDATA | hi | title | bibl | q  | list |  note | 
+figure | stage | table | lb | pb | milestone)*>
+
+<!ATTLIST p 
+     id ID #IMPLIED 
+     n CDATA #IMPLIED 
+     rend CDATA #IMPLIED ><!ELEMENT pb  - O EMPTY>
+
+<!ATTLIST pb 
+     id ID #IMPLIED 
+     rend CDATA #IMPLIED 
+     n CDATA #IMPLIED >
+
+<!ELEMENT publisher  - - (#PCDATA | hi | lb | pb | milestone)*>
+
+<!ATTLIST publisher 
+     id ID #IMPLIED 
+     n CDATA #IMPLIED 
+     rend CDATA #IMPLIED >
+
+<!ELEMENT pubPlace - -  (#PCDATA | hi | lb | pb | milestone)*>
+
+<!ATTLIST pubPlace 
+     id ID #IMPLIED 
+     n CDATA #IMPLIED 
+     rend CDATA #IMPLIED >
+
+<!ELEMENT q - - (#PCDATA | hi | title | bibl | q | list | note | figure | l | p | lg | stage | table | text | lb | pb | milestone)*>
+
+<!ATTLIST q 
+     id ID #IMPLIED 
+     n CDATA #IMPLIED 
+     rend CDATA #IMPLIED >
+
+<!ELEMENT ref  - - (#PCDATA | hi | lb | pb | milestone)*>
+
+<!ATTLIST ref
+     id ID #IMPLIED 
+     rend CDATA #IMPLIED 
+     n CDATA #IMPLIED >
+
+<!ELEMENT row  - - ((cell | table | lb | pb | milestone)+)>
+
+<!ATTLIST row 
+     id ID #IMPLIED 
+     n CDATA #IMPLIED 
+     rend CDATA #IMPLIED 
+     role CDATA "data" >
+
+<!ELEMENT salute  - - (#PCDATA | hi | title | lb | pb | milestone)*>
+
+<!ATTLIST salute 
+     id ID #IMPLIED 
+     n CDATA #IMPLIED 
+     rend CDATA #IMPLIED >
+
+<!ELEMENT signed  - - (#PCDATA | hi | title | lb | pb | milestone)*>
+
+<!ATTLIST signed 
+     id ID #IMPLIED 
+     n CDATA #IMPLIED 
+     rend CDATA #IMPLIED >
+
+<!ELEMENT sp  - - (((speaker)?, (p | l | lg | stage)+) | (lb | pb | milestone)*)>
+
+<!ATTLIST sp 
+     id ID #IMPLIED 
+     n CDATA #IMPLIED 
+     rend CDATA #IMPLIED 
+     who IDREFS #IMPLIED >
+
+<!ELEMENT speaker  - - (#PCDATA | hi | lb | pb | milestone)*>
+
+<!ATTLIST speaker 
+     id ID #IMPLIED 
+     n CDATA #IMPLIED 
+     rend CDATA #IMPLIED >
+
+<!ELEMENT stage - - (#PCDATA | hi | lb | pb | milestone)*>
+
+<!ATTLIST stage 
+     id ID #IMPLIED 
+     n CDATA #IMPLIED 
+     rend CDATA #IMPLIED >
+
+<!ELEMENT table - - (((head)*, (row)+) | (lb | pb | milestone)*)>
+
+<!ATTLIST table 
+     id ID #IMPLIED 
+     n CDATA #IMPLIED 
+     rend CDATA #IMPLIED 
+     rows NUMBER #IMPLIED 
+     cols NUMBER #IMPLIED >
+
+<!ELEMENT text - - ((front)?, (body), (back)?)>
+
+<!ATTLIST text 
+     id ID #IMPLIED 
+     n CDATA #IMPLIED 
+     rend CDATA #IMPLIED >
+
+<!ELEMENT title  - - (#PCDATA | hi | lb | pb | milestone)*>
+
+<!ATTLIST title 
+     id ID #IMPLIED 
+     n CDATA #IMPLIED 
+     rend CDATA #IMPLIED >
+
+<!ELEMENT titlePage  - - (byline | docAuthor | docDate | docEdition | docImprint | docTitle | epigraph | lb | pb | milestone)+>
+
+<!ATTLIST titlePage 
+     id ID #IMPLIED 
+     n CDATA #IMPLIED 
+     rend CDATA #IMPLIED >
+
+<!ELEMENT titlePart - - (#PCDATA | hi | lb | pb | milestone | list)*>
+
+<!ATTLIST titlePart
+     id ID #IMPLIED
+     n CDATA #IMPLIED
+     rend CDATA #IMPLIED>
+
+<!ELEMENT trailer  - - (#PCDATA | hi | lb | pb | milestone)*>
+
+<!ATTLIST trailer 
+     id ID #IMPLIED 
+     n CDATA #IMPLIED 
+     rend CDATA #IMPLIED >
+
+
+<!-- Entity sets and Notations -->
+
+<!ENTITY % ISOgrk1 PUBLIC
+       "ISO 8879:1986//ENTITIES Greek Letters//EN">
+%ISOgrk1;
+
+<!ENTITY % TEIgrk PUBLIC
+	"-//TEI TR1 W4:1992//ENTITIES Extra Classical Greek Letters//EN">
+%TEIgrk;
+
+<!ENTITY % ISOlat1 PUBLIC "ISO 8879-1986//ENTITIES Added Latin 1//EN">
+%ISOlat1; 
+
+<!ENTITY % ISOlat2 PUBLIC "ISO 8879-1986//ENTITIES Added Latin 2//EN">
+%ISOlat2; 
+
+<!ENTITY % ISOnum  
+  PUBLIC   "ISO 8879-1986//ENTITIES Numeric and Special Graphic//EN">
+%ISOnum;
+
+<!ENTITY % ISOpub  PUBLIC "ISO 8879-1986//ENTITIES Publishing//EN">
+%ISOpub; 
+
+<!NOTATION cgm PUBLIC
+  'ISO 8632:1987//NOTATION Computer Graphics Metafile//EN' >
+
+<!NOTATION cgmchar PUBLIC
+  'ISO 8632-2:1987//NOTATIOle//EN' >
+
+<!NOTATION cgmchar PUBLIC
+  'ISO 8632-2:1987//NOTATION CGM Character Encoding//EN' >
+
+<!NOTATION jpeg PUBLIC
+  'ISO DIS 10918//NOTATION JPEG Graphics Format//EN' >
+
+<!NOTATION tiff PUBLIC
+  '-//Aldus Corporation//NOTATION Tagged Image File Format//EN' >
+
+<!NOTATION gif PUBLIC
+  '-//Compuserve Information Service//NOTATION Graphics Interchange Format//EN' >
+
+<!NOTATION sgml PUBLIC
+  'ISO 8879:1986//NOTATION Standard Generalized Markupml PUBLIC
+  'ISO 8879:1986//NOTATION Standard Generalized Markup Language//EN' >
+
+<!NOTATION wsd  PUBLIC
+  '-//TEI P3-1994//NOTATION Writing System Declaration//EN' >

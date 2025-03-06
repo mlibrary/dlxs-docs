@@ -1,0 +1,539 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+   <meta name="GENERATOR" content="Mozilla/4.72 [en] (WinNT; I) [Netscape]">
+   <title>Query Language Details</title>
+<link rel="stylesheet" href="styles.css">
+<style type="text/css">
+
+</style>
+</head>
+<body class="mainpalette">
+
+<h3>
+Query Language Details</h3>
+Some documentation can be found at: <a href="http://www.hti.umich.edu/sgml/pat/pat50manual.html" target="external">http://www.hti.umich.edu/sgml/pat/pat50manual.html</a>
+<p>Some additional material from <a href="query-det-extra.html">past workshops</a>
+concerning Query Language is available.
+<p>We're going to start out in user mode, and shift into what's called
+<tt>{quieton}</tt>
+and <tt>{quieton raw}</tt> once some basic concepts have been demonstrated.
+In the first few sections, I'm going to non-chalantly introduce items that
+I won't fully explain until the section on operators and relationships.
+<p>We're going to start with just the regions that the <a href="http://www.umdl.umich.edu/dlxs/training/workshoptech2000/rgnindexing.html" target="mainFrame"><tt>sgmlrgn</tt>
+step</a> gives us, because the stunts we learn here will make the <a href="http://www.umdl.umich.edu/dlxs/training/workshoptech2000/fabregions.html" target="mainFrame">fabricated
+regions step</a> a lot easier to think about.
+<br><a NAME="Invoking"></a>
+<hr width="50%">
+<h4>
+Invoking <tt>pat50</tt></h4>
+We've come all this way to in the end type a command like:
+<blockquote><b><font face="Courier New,Courier">% pat50 /l1/idx/b/bosnia.bosnia.dd</font></b></blockquote>
+
+<hr width="50%">
+<br><a NAME="Points"></a>
+<h4>
+Identifying Points</h4>
+In XPat a point is some unique <i>byte</i> offset in the full text under
+consideration, corresponding to those places where XPat was told to begin
+sistrings. We get a set (see below for a more formal discussion of sets)
+of points by performing a search for a string or a particular offset:
+<blockquote><font face="Courier New,Courier">>> "mulberry"</font>
+<br><font face="Courier New,Courier">>> "mulberry "</font>
+<br><font face="Courier New,Courier">>> mulberry</font>
+<br><font face="Courier New,Courier">>> [118312]</font></blockquote>
+The first finds all sistrings that begin with <font face="Courier New,Courier">mulberry</font>,
+the second finds those that are <font face="Courier New,Courier">"mulberry"</font>
+exactly, third finds the byte offset for the byte <font face="Courier New,Courier">118312</font>,
+and the fourth is the same as the first.
+<p>Searching for something that doesn't exist in the database gets you
+zero results, or a point set with zero members:
+<blockquote>
+<pre><font face="Courier New,Courier">>> "syzygy"
+&nbsp; 4: no match</font></pre>
+</blockquote>
+<a NAME="history"></a>NOTE: XPat supports the <font face="Courier New,Courier">history</font>
+command, through which you could get a list of all sets created in the
+session, and the command that created them.
+<p><font face="Courier New,Courier">&nbsp;&nbsp;&nbsp; >> history</font>
+<br>
+<hr width="50%"><a NAME="Regions"></a>
+<h4>
+Identifying Regions</h4>
+A region in pat50 is a span of text comprising zero or more bytes. <tt>sgmlrgn50</tt>
+wants to create some for us by default (please see the <a href="http://www.umdl.umich.edu/dlxs/training/workshoptech2000/rgnindexing.html" target="mainFrame">sgmlrgn
+step</a> discussion), creates DTD-determined regions in the <a href="http://www.umdl.umich.edu/dlxs/training/workshoptech2000/rgnindexing.html" target="mainFrame">sgmlrgn
+step</a>, and permits the <a href="http://www.umdl.umich.edu/dlxs/training/workshoptech2000/fabregions.html" target="mainFrame">creation
+of new "fabricated" regions</a>.
+<p>The <font face="Courier New,Courier">{ddinfo regionnames} </font>command
+will list all the currently-defined regions, and from this list we can
+find out about particular regions:
+<blockquote>
+<pre><font face="Courier New,Courier">>> region DIV1
+&nbsp; 1: 113 matches
+>> region "A-NODE"
+&nbsp; 2: 125 matches</font></pre>
+</blockquote>
+That is, the <tt>region</tt> command followed by the name of some region
+(remembering that regions with non-alphanumerics in its name must be double-quoted)
+evaluates to the number of members in that region. There are 113 DIV1 regions
+and 125 A-NODE regions above.
+<p>We'll say more about the definitions of regions like A-NODE and DIV-T
+in the <a href="http://www.umdl.umich.edu/dlxs/training/workshoptech2000/rgnindexing.html" target="mainFrame">sgmlrgn
+step</a> discussion.
+<p>Looking for a region that is not defined gets you a result set of "-1"
+and an error message.
+<p>See about <tt><a href="#ERROR">ERROR</a></tt> .
+<br>
+<hr width="50%"><a NAME="Sets"></a>
+<h4>
+Identifying Sets (Numbered and Named Sets)</h4>
+Any collection of zero or more points or regions can be grouped together
+in a set, sets can be combined or split with pat50's boolean operators,
+all sets created during a session have unique number identifier, one can
+give them names, sets can be printed out, saved, exported and imported.
+I gloss over some operators and commands here until the next section.
+<blockquote>
+<pre><font face="Courier New,Courier">>> "long "
+&nbsp; <b>1</b>: 352 matches
+>> region "DIV1" incl "long "
+&nbsp; <b>2</b>: 76 matches
+>> "help "
+&nbsp; <b>3</b>: 100 matches
+>> <b>2</b> + <b>3
+</b>&nbsp; <b>4</b>: 176 matches
+>> region "TEXT" incl 1
+&nbsp; <b>5</b>: 4 matches
+>> <b>vsearch</b> = "vardar "
+&nbsp; <b>6</b>: <b>vsearch</b> = 10 matches
+>> <b>vsearchnext</b> = <b>6
+</b>&nbsp; <b>7</b>: <b>vsearchnext = 10 matches
+</b>>> pr <b>*vsearchnext</b></font></pre>
+
+<pre><font face="Courier New,Courier">&nbsp; 1886962, ..l crosses the Vardar, and to this end a bridge is in process of ..
+&nbsp; 2058198, ..fall into the Vardar (Axius); and two&amp;mdash;the Lab and the Sitn..
+&nbsp;&nbsp; 683365, .. r&eacute;gion o&ugrave; le Vardar et la Morava prennent leur source, que pass..
+&nbsp; 1818056, ..s; and on the Vardar Gate and Arch of Constantine&lt;NOTE>"The Egna..
+&nbsp; 2023056, .. of the river Vardar. Our host was a grumbling old man, who asto..
+&nbsp; 1902124, ..side into the Vardar plain. The plain in its purple distance mel.
+&nbsp;
+>></font></pre>
+</blockquote>
+The <b>vsearchnext</b> = <b>6</b> line os interesting: 6 is a number, it
+might be a character you want to search for. So is XPat definitely looking
+for a numbered set in this session, or the number 6? Another reason to
+always put search terms in quotes. Try a command like <b>vearchnext</b><tt>
+= 243</tt> where the 243 is a number that is larger than the set number
+for the last-created set...
+<p>There are additionally two special commands to create subsets of sets:
+<dl>
+<dt>
+<tt>subset.X.Y A</tt></dt>
+
+<dd>
+Make a new set that consists of Y members of A, starting at the Xth member
+of A. Members of A start numbering at 1.</dd>
+
+<dd>
+This command is used to get result content in slices.</dd>
+
+<dt>
+<tt>sample.X A</tt></dt>
+
+<dd>
+Make a new set that consists of X members of A, selected from A of size
+Y such that each <sup>Y</sup>/<sub>X</sub>th is in the new set.</dd>
+</dl>
+How does XPat know which member of a set is the "first", "second", and
+so on. This is set with the <b>(s<tt>ortorder}</tt></b> setting.&nbsp;
+TextClass uses only: <tt>{sortorder occur}</tt>, which is to say that results
+are returned in the byte order in which they occur in the source text:
+the byte offset of a member of a set is &lt;= the byte offset of the next
+member, if any. TextClass as it stands orders results for display to the
+user by occurance order, and any ordering other than that is accomplished
+outside XPat. Not to say that the other
+<tt>{sortorder}</tt> settings shouldn't
+be used, just that nothing designed so far does. See <tt><a href="#settings">{settings}</a></tt>
+below more on the different settings.
+<p>
+<hr width="50%"><a NAME="Operators"></a>
+<h4>
+Operators and Relations</h4>
+After tantalizing with various operators, weI'll now actually define the
+ones we use most in the form in which they trpically occur.&nbsp; You may
+wish to refer to nn even more detailed discussion.
+<dl>
+<dt>
+<b><tt>A ^ B</tt></b></dt>
+
+<dd>
+the "and" or "intersection" operator: A and B are two sets, or expressions
+that evaluate to sets, and the resulting set includes those points or regions
+in both A and B that have the exact same start offsets.</dd>
+
+<dt>
+<b><tt>A + B + C + ...</tt></b></dt>
+
+<dd>
+the "or" or "union" operator: A, B, C... are sets, the resulting set is
+a point set if at least one of the sets being combined is a point set,
+consisting of the start offsets of all the points or regions in the original
+sets. If <i>all</i> the sets being combined are region sets, then regions
+that nest inside other listed regions (either entirely or at their start
+byte offset) will be removed from the resultant set.</dd>
+
+<dd>
+We saw an earlier example of the "+" operator.</dd>
+
+<dt>
+<b><tt>A incl B</tt></b></dt>
+
+<br><b><tt>A not incl B</tt></b>
+<dd>
+A is a region set, B is either point or region, the result is a region
+set of all members of A that contain at least one member of B, containment
+meaning that a given B has a start offset within the inclusive range of
+a given A's start and end offsets.</dd>
+
+<dt>
+<b><tt>A within B</tt></b></dt>
+
+<br><b><tt>A not within B</tt></b>
+<dd>
+In many ways the complement to incl: A is a point or region set, B is a
+region set, the resulting set is all members of A that are contained (by
+the start offset rule as under incl) in any B. This also takes the not
+operator to return all A's that are not within any B.</dd>
+
+<dt>
+<b><tt>A near B</tt></b></dt>
+
+<dd>
+A and B are either points or regions, and # is either explicitly stated,
+or taken from the <tt>{proximity}</tt> setting (see about <tt><a href="#settings">{settings}</a></tt>
+below). The result is all A's whose start offsets are within the specified
+number of bytes of the start offset of any B. The not form returns all
+A's whose start offsets are not within the specified number of bytes from
+the start offset of any B. The nearest B might be earlier or later in the
+source file.</dd>
+
+<dt>
+<b><tt>A fby B</tt></b></dt>
+
+<dd>
+This is just as the near operator, save that an A must be followed within
+the specified number of bytes by a B to be in the result set. This also
+takes the not operator.</dd>
+
+<dt>
+<b>not</b></dt>
+
+<dd>
+This reverses the sense of the expression it modifies, usable with <b>incl</b>,
+<b>within</b>,
+<b>near</b>,
+and <b>fby</b>.</dd>
+</dl>
+
+<hr width="50%"><a NAME="UsingOps"></a>
+<h4>
+Using the Operators to Make Sets of Interest</h4>
+Now that we have our basic concepts and operators, let's get in there and
+do some searching and <i>document analysis</i>: the process by which we
+figure out what is there and <b>how the DTD was applied to this SGML</b>,
+and <b>what of it we can use</b>. When developing an online system, this
+is the most important step. Some important commands will be introduced
+in this experimentation.
+<p>What a <i>set of interest</i> is is entirely up to the user, and the
+notion of user ranges from developers to content specialists to the patrons
+floating around out there. I'm going to walk through some increasingly
+complicated possible sets of interest here.
+<p>We ignore in this section the matter of displaying retrieved results.
+That comes in a later section.
+<dl>
+<dt>
+<i>find all the words that start with "diff", and find all the words that
+are "different" exactly</i></dt>
+
+<pre>>> "diff"&nbsp;
+&nbsp; 8: 354 matches
+>> "different "
+&nbsp; 9: 134 matches
+>></pre>
+
+<pre><i>find all the "gate" follows "vardar"</i></pre>
+>> "vardar " fby "gate "
+<br>&nbsp; 1: one match
+<br>>>
+<p>Now some actual examples from the TextClass implementation.&nbsp; This
+query is actually the basis for the fabricated region called <b><i>mainauthor
+</i></b>in
+Bosnia<b><i> </i></b>and illustrates<b> within:</b>
+<p>>><tt> ((region AUTHOR within (region TITLESTMT within region FILEDESC))
+not within (region SOURCEDESC))</tt>
+<br><tt>&nbsp; 17: 4 matches</tt>
+<p>The motivation here depends on knowing that the AUTHOR element appears
+within the TITLESTMT and that the TITLESTMT element appears within both
+the FILEDESC and indirectly within the SOURCEDESC element:
+<p><tt>&lt;!ELEMENT fileDesc - - (titleStmt, ..., (sourceDesc)+)></tt>
+<br><tt>&lt;!ELEMENT titleStmt - - ((title)+, (author | editor | respStmt)*)></tt>
+<br><tt>&lt;!ELEMENT sourceDesc - - (p | bibl | biblFull)+></tt>
+<br><tt>&lt;!ELEMENT biblFull - - (titleStmt, ..., (sourceDesc)*)></tt>
+<p>Here is a simplified query using intersection (<b>^</b>) to fetch the
+regions that are notes in Bosnia
+<br>sgml.&nbsp; The full-blown form is the union of DIV2 and P tags in
+addition ot DIV1 tags.
+<p><tt>>> (region "DIV1-T" incl "NODE=aas7611.0001.001:11")</tt>
+<br><tt>&nbsp;<b>1</b>: one match</tt>
+<br><tt>>> region DIV1 ^ 1</tt>
+<br><tt>&nbsp;<b>2</b>: 7 matches</tt>
+<p>So we have the DIV1 regions which correspond exactly with DIV1 tags
+containing the "id" attribute, which is how notes are marked up in Yeats.
+<p>Suppose we constructed a query which has returned a PSet consisting
+of hits on a term the user has entered to search on and now we would line
+to display the immediate context of the hit and also a title from an&nbsp;
+enclosing division:
+<p>The query for the user's search is simply:
+<p><tt>>> <b>firstsearch</b> = ("Branivoj " + "Branivoj&lt;")</tt>
+<br><tt>&nbsp; <b>2</b>:&nbsp; firstsearch = one match</tt>
+<p>To get an division title for the hit we need to build up regions based
+on the hit:
+<p><tt>>> <b>slicesearch</b> = subset.1.25 *<b>firstsearch</b></tt>
+<br><tt>&nbsp; <b>3</b>: slicesearch = one match</tt>
+<br><tt>>> <b>mainslicesearch</b> = (region DLPSTEXTCLASS incl *<b>slicesearch</b>)</tt>
+<br><tt>&nbsp; <b>4</b>: mainslicesearch = one match</tt>
+<br><tt>>> <b>mainheader</b> = (region HEADER within *<b>mainslicesearch</b>)</tt>
+<br><tt>&nbsp; <b>5</b>: mainheader = one match</tt>
+<p>Finally to view the content of the region we have constructed we do:
+<p><tt>>> pr.region.mainheader (region <b>mainheader</b>)</tt>
+<p>The next section discusses the <b>pr</b> command which is the heart
+of viewing sets. Of course, we are not finished at this point.&nbsp; Getting
+the data back from XPat is just one step.&nbsp; It is followed by filtering&nbsp;
+operations (perl substitutions using regular expressions) to remove other
+tags that may be mucking up our content and to change the appearance tof
+the content e.g. highlighting hits, etc.</dl>
+
+<hr width="50%"><a NAME="Viewing"></a>
+<h4>
+Viewing the Sets We've Constructed</h4>
+Now what we've all been waiting for, we have some results or sets of interest,
+and we want to look at them. The two commands for viewing results are <b><tt>pr</tt></b>
+and <tt>save</tt>. In a sense, they are really the same command: <tt>pr</tt>
+displays to STDOUT, <tt>save</tt> displays to <tt>{savefile}</tt>. Since
+they behave the same way, I will use <tt>pr</tt> in my examples.
+<blockquote><b>NOTE:</b> <tt>save</tt> <i>appends</i> to the current <tt>{savefile}</tt>.</blockquote>
+The kind of text for each result that XPat returns with <tt>pr</tt> and
+<tt>save</tt>
+is determined by the current <tt>{quieton}</tt> setting (which see, below
+under <tt><a href="#settings">{settings}</a></tt>). There is a big difference
+between the normal user-sitting-at-the-pat-terminal interaction mode, and
+the machine-readable modes.
+<br>&nbsp;
+<dl>
+<dt>
+<b><tt>pr (point-set)</tt></b></dt>
+
+<dd>
+This prints out up to <tt>{ordersize}</tt> (see <tt><a href="#settings">{settings}</a></tt>
+below) members of the point-set, starting with the first, according to
+the current <tt>{sortorder}</tt> setting.</dd>
+
+<dt>
+<b><tt>pr.X shift.-Y (point-set)</tt></b></dt>
+
+<dd>
+For the first results in (point-set), a string X bytes wide, offset to
+the left of the matching point Y bytes. X and Y overide the <tt>{settings}</tt>
+of <tt>{printlength}</tt> and <tt>{leftcontext}</tt> respectively, which
+see below.</dd>
+
+<dt>
+<b><tt>pr.region."region-name" (region-set of type "region-name")</tt></b></dt>
+
+<dd>
+prints the entire span of the members in (region-set). This is a bit of
+a pain; to have to tell pat50 the "format" of the region you would like
+to see, when it should already know!</dd>
+
+<dt>
+<tt>pr</tt></dt>
+
+<br><tt>pr %</tt>
+<br><tt>pr.X shift.-Y</tt>
+<dd>
+All these are variations on "print the last set created".</dd>
+</dl>
+
+<hr width="50%">
+<h4>
+<a NAME="settings"></a><tt>{settings}</tt></h4>
+These are settings that control certain behaviors of pat50 during a search
+session. There is only one setting that our programs use explicitly as
+a set options command, the <tt>{quieton}</tt> command. The other settings
+that are used by TextClass search strategies are made explicit through
+the commands in which they are relevant, and aren't ever set with a set
+options type command. I list here the <tt>{quieton}</tt> variants used
+in TextClass, and then those <tt>{settings}</tt> explicitly used in commands
+but not set per se. There are other <tt>{settings}</tt> that we don't use.
+<dl>
+<dt>
+<b><tt>{quieton}</tt></b></dt>
+
+<br><b><tt>{quieton raw}</tt></b>
+<br><b><tt>{quietoff}</tt></b>
+<dd>
+<tt>{quieton}</tt> and <tt>{quieton raw}</tt> change the interaction mode
+of pat50 from whatever it was to one of the quieton modes.&nbsp; The <tt>{quieton}</tt>
+modes have no user command prompt; multiple commands are separated with
+a ;, and zero or more ;-separated commands are sent to pat50 with a newline.
+pat50 returns information about sets and prints out results delimited by
+special tags:</dd>
+
+<dl>
+<dt>
+<tt>SSize</tt></dt>
+
+<dd>
+SSize tags surround a number, meaning that the set created by the search
+corresponding to this SSize has number-many members.</dd>
+
+<dt>
+<tt>RSet</tt></dt>
+
+<dd>
+When a region set is printed, all the members of the set printed are surrounded
+by a pair of of <tt>RSet</tt> tags. In <tt>{quieton}</tt> mode, each result
+from the region set consists of two tags:</dd>
+
+<blockquote><tt>&lt;Start>#&lt;/Start>&lt;End>#&lt;/End></tt></blockquote>
+refering to the start and end byte offsets for that particular result.
+It is the responsibility of the programmer to already know or be able to
+handle how many results there are in this <tt>RSet</tt> (like, knowing
+what search generated the set). In <tt>{quieton raw}</tt> mode we get more
+information about each region result:
+<blockquote><tt>&lt;Start>#&lt;/Start>&lt;End>#&lt;/End>&lt;Raw>&lt;Size>#&lt;/Size>blah
+blah blah&lt;/Raw></tt></blockquote>
+Start and End are byte offsets as before, but Size is the byte length of
+the text delimited by the close Size tag and the close Raw tag.
+<dt>
+<tt>PSet</tt></dt>
+
+<dd>
+When a point set is printed, all the members of the set printed are surrounded
+by a pair of <tt>PSet</tt> tags. In <tt>{quieton}</tt> mode, each result
+from the point set consists of one tag:</dd>
+
+<blockquote>&lt;Start>#&lt;/Start></blockquote>
+Where the surrounded number refers to a byte offset of the point. In <tt>{quieton
+raw}</tt> mode, we get some more information:
+<blockquote><tt>&lt;Start>#&lt;/Start>&lt;Raw>&lt;Size>#&lt;/Size>flug
+flug fluggy!&lt;/Raw></tt></blockquote>
+Start is a byte offset, Size is a byte size, and the text of the point
+is delimited by the close Size and close Raw. The dimensions of the text
+printed depends on the combinations of the <tt>{printlength}</tt> and <tt>{leftcontext}</tt>
+settings, or their explicit definition with the <tt>pr</tt> command involved.
+<dt>
+<a NAME="ERROR"></a><tt>Error</tt></dt>
+
+<dd>
+If some kind of non-fatal error occured during a search, pat50 will, in
+lieu of any of the preceding tags, send an error tag with some hopefully
+helpful error message in it. The SSP CGI platform captures this, but doesn't
+always do a great job of letting the programmer/user know, and the SSP
+CGI platform always considers this fatal (ie, the CGI script tries to bail
+out with a message whenever it gets this from pat50).</dd>
+</dl>
+<tt>{quietoff}</tt> is used to bring the interaction back into the normal
+user interaction mode.
+<br>&nbsp;
+<dt>
+<tt>{printlength #}</tt></dt>
+
+<dd>
+This setting controls the default print window size for point sets, how
+many total bytes are printed when a point set result is printed. See the
+discussion of <tt>pr</tt> above. Default is 64.</dd>
+
+<br>&nbsp;
+<dt>
+<tt>{leftcontext #}</tt></dt>
+
+<dd>
+This setting controls how many characters before the matching text will
+be printed when a point set is printed. If there are 100 characters of
+<tt>{printlength}</tt>,
+and 14 of <tt>{leftcontext}</tt>, then the point where the matching text
+starts will be the 15th character. See the discussion of <tt>pr</tt> above.
+Default is 14</dd>
+
+<br>&nbsp;
+<dt>
+<tt>{sortorder &lt;order>}</tt></dt>
+
+<dd>
+This determines in what order a given set of results is sorted by pat50.
+I always use <tt>{sortorder occur}</tt>, but there are other modes.</dd>
+
+<br>&nbsp;
+<dt>
+<tt>{savefile "file"}</tt></dt>
+
+<dd>
+Changes the default save file name.</dd>
+
+<br>&nbsp;
+<dt>
+<tt>{exportfile "file"}</tt></dt>
+
+<dd>
+changes the default export file name.</dd>
+</dl>
+
+<hr width="50%">
+<h4>
+Miscellaneous and Useful Commands</h4>
+
+<dl>
+<dt>
+<tt>{ddinfo regionnames}</tt></dt>
+
+<dd>
+Lists all the currently-defined regions. A very useful command for document
+analysis</dd>
+
+<br>&nbsp;
+<dt>
+<tt>history</tt></dt>
+
+<dd>
+List of results sets from previously issued searches.</dd>
+
+<br>&nbsp;
+<dt>
+<tt>~sync "<i>string</i>"</tt></dt>
+
+<dd>
+A fabulously useful command, basically an echo sort of command. We use
+this in the TextClass perl modules to signal when pat50 is done sending
+results. In any of the <tt>{quieton}</tt> modes, this returns:</dd>
+
+<blockquote><tt>&lt;Sync><i>string</i>&lt;/Sync></tt></blockquote>
+
+<dt>
+<tt>~qnum</tt></dt>
+
+<dd>
+Returns the number pat50 will assign to the next-created set. This is useful
+when you're making a lot of sets that don't have names, and you need to
+keep track of what you have (though our usual strategy is to explicitly
+name things...). In any of the <tt>{quieton}</tt> modes, this returns:</dd>
+
+<blockquote><tt>&lt;Qnum><i>#</i>&lt;/Qnum></tt></blockquote>
+
+<dd>
+</dd>
+</dl>
+
+</body>
+</html>

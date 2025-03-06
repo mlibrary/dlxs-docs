@@ -1,0 +1,96 @@
+<?xml version="1.0"?>
+
+<!-- SPO Editorial Services                  -->
+<!-- automatically-generated XML header file -->
+
+<?xml-stylesheet href="../../../pre11-dlxsdocs.xsl" type="text/xsl"?>
+<!DOCTYPE DLPSDOC PUBLIC "-//UM-DLPS//DTD DLPS Publications//EN" "http://docs.umdl.umich.edu/dlps/docs/dlpsdocs.dtd">
+<DLPSDOC>
+<TITLE>Image  Class</TITLE>
+<HEADER>
+<JOURNAL>DLXS Documentation</JOURNAL>
+<PUBDATE>2003-12-01 10:34:27 EST</PUBDATE>
+<AUTH1>Weise, John</AUTH1>
+<AUTH2></AUTH2>
+<DOCTITLE>Image  Class</DOCTITLE>
+<VOL>class</VOL>
+<ISS>image</ISS>
+<FILE>dlxsdocs-image-index</FILE>
+</HEADER>
+<BODY>
+<BHEAD>Guide to Image Class Documentation</BHEAD>
+<DIV1 ID="main">
+
+
+
+
+
+
+
+<P>See <B><A HREF="../../intro/dlxsintro-index.xml">DLXS, Getting
+Started</A></B> for installation of DLXS, including sample data.</P>
+
+
+<P>Image Class offers two options for metadata indexing and
+searching.</P>
+
+<P><STRONG>Option 1, <A HREF="http://www.mysql.org">MySQL</A></STRONG>, is the preferred choice because MySQL is free, and
+because loading data is straight forward.<BR />
+
+<STRONG>Option 2, <A HREF="http://www.dlxs.org/products/xpat.html">XPAT</A></STRONG>, was
+previously the only choice. There is a license fee associated with
+XPat, and preparing the data as SGML is complex.</P>
+
+<P>It is recomended that existing image collections be migrated from XPAT to
+MySQL. New collections should use MySQL from the start.</P>
+
+
+<TABLE BORDER="2" CELLPADDING="10" CELLSPACING="0"><TBODY>
+<TR><TD>topic / engine</TD><TD WIDTH="275" ALIGN="MIDDLE"><strong>MySQL</strong></TD><TD WIDTH="275" ALIGN="MIDDLE"><strong>XPAT/SGML</strong></TD></TR>
+
+<TR><TD><STRONG>Media</STRONG></TD><TD  COLSPAN="2" ALIGN="MIDDLE"><A
+								      HREF="image-imageloading.xml">Loading Image Files</A><BR /><A HREF="image-jpeg2000.xml">Image Class and JPEG2000</A></TD></TR>
+
+<TR><TD><STRONG>Migration</STRONG></TD><TD ALIGN="MIDDLE"><A HREF="image-xpat2mysql.xml">XPat/SGML to
+MySQL</A></TD><TD ALIGN="MIDDLE"><A HREF="image-migration.xml">Migration to DLXS 11</A></TD></TR>
+
+<TR><TD><STRONG>Metadata</STRONG></TD><TD ALIGN="MIDDLE"><A HREF="image-mysql.xml">Image Class Data Loading: MySQL</A></TD><TD ALIGN="MIDDLE"><A HREF="image-datatransform.xml">Data Transformation</A><BR /><A HREF="image-indexbuild.xml">Image Class Index Building</A><BR /><A HREF="image-charconversion.xml">Image Class Character Set Conversion</A><BR /><A HREF="image-dtd.xml">DTD Description</A></TD></TR>
+<TR><TD><STRONG>Advanced</STRONG></TD><TD ALIGN="MIDDLE"><A HREF="image-mediatable.xml">Media Table</A></TD><TD ALIGN="MIDDLE"><A HREF="image-imagestructures.xml">Mapping Image Structures</A></TD></TR>
+<TR><TD><STRONG>General</STRONG></TD><TD ALIGN="MIDDLE" COLSPAN="2"><A HREF="image-imagefilenaming.xml">Image File Naming</A><BR /><A HREF="image-datareqs.xml">Data Requirements</A><BR /><A HREF="image-accesstable.xml">Access Control</A></TD></TR>
+<TR><TD><STRONG>Interface</STRONG></TD><TD ALIGN="MIDDLE" COLSPAN="2"><A HREF="../../ui/dlxs-templates.xml">Templates</A><BR /><A HREF="image-colldb.xml">Collmgr/Collection Database</A><BR /><A HREF="image-pi.xml">Processing Instructions</A></TD></TR>
+</TBODY></TABLE>
+
+
+<P>Perhaps the best way to familiarize yourself with collection
+deployment in Image Class is to step through the <STRONG>tutorial-like documentation</STRONG> that is used
+in the workshop.<BR /><STRONG>Start <A HREF="http://www.dlxs.org/training/workshops.html">here</A></STRONG> and follow the links to the Image Class
+section of the most recently taught workshop.
+</P>
+
+
+<P><B><FONT COLOR="RED">Easily Overlooked</FONT></B></P>
+<UL>
+<LI>The amount of time it takes for thumbnail images to display in the browser can be reduced dramatically by creating a symlink for each collection like this....  <BR/>
+<CODE>cd $DLXSROOT/web/c/coll<BR/>ln -s $DLXSROOT/img/c/coll/index thumb</CODE><BR/>
+<BR/>
+The only drawback to this approach is that it bypasses the cgi and authentication <B>for thumbnails</B> by essentially putting them under the web document root. If thumbnail security is important, don't create the symlink.
+</LI>
+</UL>
+
+<P><FONT COLOR="RED"><B>A Common Problem</B></FONT></P>
+<UL>
+<LI>If you get a division by zero error from the Image Class CGI when trying to view a full size image, double check the installation of mrsid_retrieve. Most likeley, it is not installed properly.</LI>
+</UL> 
+
+<P>In the past, documentation specific to Image Services at the
+University of Michigan was included here as well. It is now available
+<A HREF="http://images.umdl.umich.edu/i/imageservices">elsewhere</A>. </P>
+
+
+
+
+
+<P> </P>
+</DIV1>
+</BODY>
+</DLPSDOC>

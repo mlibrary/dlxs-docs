@@ -1,0 +1,160 @@
+<html>
+<head>
+<title>XPAT database search engine (man page)</title>
+
+
+
+ </head>         <BODY>
+<table class="updateTable" CELLSPACING="3" CELLPADDING="3" border="1">
+<tr>
+<td>Last updated</td>
+<td>2003-09-03 17:30:55 EDT</td>
+</tr>
+<tr>
+<td>Doc Title</td>
+<td>XPAT database search engine (man page)</td>
+</tr>
+<tr>
+<td>Author 1</td>
+<td>Farber, Phillip</td>
+</tr>
+<tr>
+<td>CVS Revision</td>
+<td>$Revision: 1.8 $</td>
+</tr>
+</table>
+
+<DIV CLASS="pageTitle">XPAT database search engine (man page)</div>
+    
+    <a href="#lbAB">Index</A>
+    <P>
+    <B>xpat</B> - XPAT database search engine
+      </P>
+      <A NAME="lbAC"></A>
+        <H2>SYNOPSIS</H2>
+        <P><B>xpat, xpatu</B>
+          [
+          -v
+          ][
+          -m
+          <I>memory</I>
+          <B>k</B> | <B>K</B>
+          |
+          <B>m</B> | <B>M</B>
+          ] [
+          -h
+          <I>historysize</I> 
+          ] 
+          [
+          -q
+          ] 
+          [
+          -e
+          ] 
+          [ <B>-label</B> <I>label_name</I> ]
+          [
+          -I
+          <I>index_name</I>]
+          <I>data_dictionary</I>
+        </P>
+        <P>
+        </P>
+      
+      <A NAME="lbAD"></A>
+        <H2>DESCRIPTION</H2>
+        <P><B>xpat</B> reads database queries from the standard input and produces
+          results on the standard output.  The query
+          expressions must be in the form of XPat Command Language commands
+          (refer to the <I>XPat Reference Manual and Tutorial</I> for a description of this language).
+          <B>xpat</B> searches for word prefixes, words, phrases or ranges of any of these.
+          <B>xpat</B> supports many different operations for combining the results of 
+          searches.  In addition, <B>xpat</B> supports structural operations which allow
+          queries to be restricted to specific user-defined regions in the
+          database.  These `region' operations also support inclusion operations
+          on query results.
+        </P>
+        <P><B>xpat</B> uses several indices to perform the queries
+          on the text database.  Refer to the <I>Database Administration Guide</I> for more details on these 
+          indices and the methods to build them.
+        </P>
+        <P>The central component of a text database is the Data Dictionary file, which
+          specifies the text and index files that make up the database.  Users search
+          a particular database by passing that database's Data Dictionary as the <I>data_dictionary</I> argument
+          to <B>xpat</B>.
+        </P>
+        <P>The Unicode enabled version of <B>xpat</B> is <B>xpatu</B>.  The  same  command  line options  are supported.  <B>xpatu</B> uses the main index produced by <B>xpatbldu</B> to perform queries on Unicode UTF-8 encoded data.  <B>xpatu</B> can query data from  the Basic Multilingual Plane (Plane 0), i.e., UCS code point values up to #FFFF.
+</P>
+      
+      <A NAME="lbAE"></A>
+        <H2>OPTIONS</H2>
+        <P><DL>
+          <DT><B>-v</B></DT><DD>
+            Specify verbose mode.  This option tells <B>xpat</B> to produce some
+            additional messages concerning the execution.</DD><DT><B>-m</B> <I>memory</I> [ <B>k</B> | <B>K</B> | <B>m</B> | <B>M</B> ]</DT><DD>Specify the memory.  This option tells <B>xpat</B> to use <I>memory</I>
+            <B>k</B>ilobytes or <B>m</B>egabytes for index and text caching.</DD><DT><B>-h</B> <I>historysize</I></DT><DD>
+            Specify the history size.  This option sets the history list size.
+            <B>xpat</B> defaults to having a maximum history of 300 queries.  This means that <B>xpat</B>
+            will only remember the latest 300 queries entered.
+            Use this option to increase the number of queries in the history list.
+          </DD><DT><B>-q</B></DT><DD>
+            Specify quiet mode.  This option tells <B>xpat</B> to output results in a
+            tagged ASCII, machine readable format that other programs can process
+            more easily.  See the <I>Database Administration Guide</I> and the <I>XPat Reference Manual and Tutorial</I> for further details.
+          </DD><DT><B>-e</B></DT><DD>
+            Specify echo mode.  This option tells <B>xpat</B> to echo the input to
+            standard output.  This option is useful to echo the output to a
+            log file when reading input from a script file.
+          </DD><DT><B>-label</B> <I>label_name</I></DT><DD>
+            Specify the label.  This option assigns <I>label_name</I> to the
+            database for the current session of <B>xpat</B>.
+          </DD><DT><B>-I</B><I> index_name</I></DT><DD>
+            Specify the index name.  This option tells <B>xpat</B> to use the
+            index with the name <I>index_name</I>
+            in the <I>data_dictionary</I> for string searches.  By default, <B>xpat</B> uses
+            the first index in the <I>data_dictionary</I>.
+          </DD></DL>
+    </P>
+  
+    <A NAME="lbAF"></A>
+      <H2>EXAMPLE</H2>
+      <P>
+      <PRE>        Digital Library eXtension Service, XPAT, Release 5.3
+        COPYRIGHT (c) 2003 The Regents of the University of Michigan
+        All Rights Reserved&gt;&gt; love
+  1: 462 matches&gt;&gt; hate
+  2: 263 matches&gt;&gt; love near hate
+  3: 47 matches&gt;&gt; pr sample
+       .
+       .
+       .
+&gt;&gt; love fby hate
+  4: 36 matches&gt;&gt; quit
+      </PRE>
+    </P>
+    
+    
+    <A NAME="lbAG"></A>
+      <H2>SEE ALSO</H2>
+      
+      <P>(1), <B>xpatrgn</B>(1), <B><a href="multirgn.1.html">multirgn</A></B>(1), <B><a href="sgmlrgn.1.html">sgmlrgn</A></B>(1), <B><a href="regions.5.html">regions</A></B>(5), <B><a href="data_dict.5.html">data_dictionary</A></B>(5), <B><a href="xpat_export.5.html">xpat_export</A></B>(5)
+      </P>
+      <P>
+      </P>
+    
+    <A NAME="index"></A>
+      <H2>Index</H2>
+      <P>
+      <DL>
+        <DT><a href="#lbAB">NAME</A></DT><DD>
+        </DD><DT><a href="#lbAC">SYNOPSIS</A></DT><DD>
+        </DD><DT><a href="#lbAD">DESCRIPTION</A></DT><DD>
+        </DD><DT><a href="#lbAE">OPTIONS</A></DT><DD>
+        </DD><DT><a href="#lbAF">EXAMPLE</A></DT><DD>
+        </DD><DT><a href="#lbAG">SEE ALSO</A></DT><DD>
+        </DD></DL>
+    </P>
+    
+    
+  </BODY>
+
+</html>

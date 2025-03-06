@@ -1,0 +1,104 @@
+<?xml version="1.0"?>
+
+<!-- SPO Editorial Services                  -->
+<!-- automatically-generated XML header file -->
+
+<?xml-stylesheet href="../../../pre11-dlxsdocs.xsl" type="text/xsl"?>
+<!DOCTYPE DLPSDOC PUBLIC "-//UM-DLPS//DTD DLPS Publications//EN" "http://docs.umdl.umich.edu/dlps/docs/dlpsdocs.dtd">
+<DLPSDOC>
+<TITLE>Text Class Documents -- Structure</TITLE>
+<HEADER>
+<JOURNAL>DLXS Documentation</JOURNAL>
+<PUBDATE>2002-07-08 12:20:59 EDT</PUBDATE>
+<AUTH1>Powell, Chris</AUTH1>
+<AUTH2></AUTH2>
+<DOCTITLE>Text Class Documents -- Structure</DOCTITLE>
+<VOL>class</VOL>
+<ISS>text</ISS>
+<FILE>dlxsdocs-tc-docstruct</FILE>
+</HEADER>
+<BODY>
+		<BHEAD>Text Class Documents -- Structure</BHEAD>
+		<DIV1>
+			<H1>Introduction</H1>
+			<P>This document lays out the elements and attributes required in all Text Class texts.  It is assumed that any texts to be converted to Text Class already validate against another DTD for encoding monographic materials, such as TEI Lite, that represent corresponding structures (chapters, pages, etc.).  Because of the extremely lax content modelling (almost every element is defined to permit ANY of the named elements), the Text Class DTD is useful only  to ensure that the nomenclatures have been changed appropriately.</P>
+		</DIV1>
+		<DIV1>
+			<H1>Basic Requirements</H1>
+			<P>The following elements and attributes are required:</P>
+			<UL>
+				<LI>DLPSTEXTCLASS</LI>
+				<LI>HEADER</LI>
+				<LI>EDITORIALDECL with N attribute according to <A HREF="http://www.indiana.edu/~letrs/tei/">TEI in Libraries recommendations</A> for encoding levels.
+				</LI>
+				<LI>IDNO -- must be unique for each text in a collection, and should not contain spaces</LI>
+				<LI>TEXT</LI>
+				<LI>BODY</LI>
+				<LI>Nested numbered DIVs, with at least one DIV1<UL>
+						<LI>Each DIV must have TYPE and NODE attributes</LI>
+						<LI>All content, such as pagebreaks, should be in DIVs, not between, if at all possible</LI>
+					</UL>
+				</LI>
+				<LI>Nested numbered elements that contain themselves <UL>
+						<LI>For example, NOTE, Q, HI become NOTE1, Q1, H1 containing NOTE2, etc.</LI>
+					</UL>
+				</LI>
+				<LI>NOTE1 and PTR must have N and ID attributes<UL>
+						<LI>default value for N is *; IDs will be automatically assigned for elements without them</LI>
+					</UL>
+				</LI>
+			</UL><P>See the following example document:</P>
+			<P>&lt;DLPSTEXTCLASS&gt;<BR/>
+&lt;HEADER&gt;<BR/>
+&lt;FILEDESC&gt;<BR/>
+&lt;TITLESTMT&gt;<BR/>
+&lt;TITLE TYPE="245"&gt;Some Book&lt;/TITLE&gt;<BR/>
+&lt;AUTHOR&gt;Some Author&lt;/AUTHOR&gt;<BR/>
+&lt;/TITLESTMT&gt;<BR/>
+&lt;EXTENT&gt;1 600dpi TIFF G4 page image&lt;/EXTENT&gt;<BR/>
+&lt;PUBLICATIONSTMT&gt;<BR/>
+&lt;PUBLISHER&gt;Humanities Text Initiative&lt;/PUBLISHER&gt;<BR/>
+&lt;PUBPLACE&gt;University of Michigan&lt;/PUBPLACE&gt;<BR/>
+&lt;IDNO TYPE="dlps"&gt;acw8433.1-01.001&lt;/IDNO&gt;<BR/>
+&lt;AVAILABILITY&gt;<BR/>
+&lt;P&gt;These pages may be freely searched and displayed.  Permission must be received for subsequent distribution in print or electronically.  Please contact umdl-info@umich.edu for more information.&lt;/P&gt;<BR/>
+&lt;/AVAILABILITY&gt;<BR/>
+&lt;/PUBLICATIONSTMT&gt;<BR/>
+&lt;SOURCEDESC&gt;<BR/>
+&lt;BIBL&gt;<BR/>
+&lt;TITLE TYPE="main"&gt;Some Book&lt;/TITLE&gt;<BR/>
+&lt;AUTHOR&gt;Some Author&lt;/AUTHOR&gt;<BR/>
+&lt;PUBLISHER&gt;D. Appleton and Company.&lt;/PUBLISHER&gt;<BR/>
+&lt;PUBPLACE&gt;New York,&lt;/PUBPLACE&gt;<BR/>
+&lt;DATE&gt;Apr 3, 1869&lt;/DATE&gt;<BR/>
+&lt;/BIBL&gt;<BR/>
+&lt;/SOURCEDESC&gt;<BR/>
+&lt;/FILEDESC&gt;<BR/>
+&lt;ENCODINGDESC&gt;<BR/>
+&lt;PROJECTDESC&gt;<BR/>
+&lt;P&gt;Revised with script moajrnltotextclass.pl on 2001-11-21.&lt;/P&gt;<BR/>
+&lt;/PROJECTDESC&gt;<BR/>
+&lt;EDITORIALDECL N="1"&gt;<BR/>
+&lt;P&gt;This electronic text file was created by Optical Character Recognition (OCR). No corrections have been made to the OCR-ed text and no editing has been done to the content of the original document.  Encoding has been done through an automated process using the recommendations for Level 1 of the TEI in Libraries Guidelines.  Digital page images are linked to the text file.&lt;/P&gt;<BR/>
+&lt;/EDITORIALDECL&gt;<BR/>
+&lt;/ENCODINGDESC&gt;<BR/>
+&lt;PROFILEDESC&gt;<BR/>
+&lt;TEXTCLASS&gt;<BR/>
+&lt;KEYWORDS&gt;<BR/>
+&lt;TERM&gt;Equations, Abelian.&lt;/TERM&gt;<BR/>
+&lt;/KEYWORDS&gt;<BR/>
+&lt;/TEXTCLASS&gt;<BR/>
+&lt;/PROFILEDESC&gt;<BR/>
+&lt;/HEADER&gt;<BR/>
+&lt;TEXT&gt;<BR/>
+&lt;BODY&gt;<BR/>
+&lt;DIV1 NODE="acw8433.1-01.001:1"&gt;<BR/>
+&lt;P&gt;<BR/>
+&lt;PB REF="00000001.tif" SEQ="00000001" RES="600dpi" FMT="TIFF6.0" FTR="UNSPEC" CNF="874" N=""/&gt;asdfqwerwerwer &lt;NOTE1 N="*" ID="note0001"&gt;see asdfasdft&lt;/NOTE1&gt;&lt;/P&gt;<BR/>
+&lt;/DIV1&gt;<BR/>
+&lt;/BODY&gt;<BR/>
+&lt;/TEXT&gt;<BR/>
+&lt;/DLPSTEXTCLASS&gt;</P>
+		</DIV1>
+	</BODY>
+</DLPSDOC>

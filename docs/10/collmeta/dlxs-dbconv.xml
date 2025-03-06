@@ -1,0 +1,41 @@
+<?xml version="1.0"?>
+
+<!-- SPO Editorial Services                  -->
+<!-- automatically-generated XML header file -->
+
+<?xml-stylesheet href="../..../pre11-dlxsdocs.xsl" type="text/xsl"?>
+<!DOCTYPE DLPSDOC PUBLIC "-//UM-DLPS//DTD DLPS Publications//EN" "http://docs.umdl.umich.edu/dlps/docs/dlpsdocs.dtd">
+<DLPSDOC>
+<TITLE>dbconv (DB Convert) utility</TITLE>
+<HEADER>
+<JOURNAL>DLXS Documentation</JOURNAL>
+<PUBDATE>2002-06-28 13:20:08 EDT</PUBDATE>
+<AUTH1>Blanco, Jose</AUTH1>
+<AUTH2></AUTH2>
+<DOCTITLE>dbconv (DB Convert) utility</DOCTITLE>
+<VOL>collmeta</VOL>
+<ISS></ISS>
+<FILE>dlxsdocs-dlxs-dbconv</FILE>
+</HEADER>
+<BODY>
+		<BHEAD>dbconv (DB Convert) utility</BHEAD>
+		<DIV1>
+			<P>
+				<B>dbconv</B> is a Perl script designed to merge the data in the pre-CDROM#8  groups and collection tab-delimited files into CSV tables described in the <A HREF="dlxs-collmgr.xml">collmgr documentation</A> section. These new tables are CSV tables that are then accessible by <A HREF="dlxs-collmgr.xml">
+					<B>collmgr</B>
+				</A> and the middleware through the Perl <A HREF="../intro/dlxs-install.xml#reqperlmodules">DBI</A>. The tables will reside in the directory <A HREF="../intro/dlxs-dirstruct.xml#dlxsrootenv">$DLXSROOT</A>/misc/db.  All institutions that have been running DLXS and using colldb and the groups file will need to run <B>dbconv</B> to get their data from the colldb and groups files into the CSV tables that <B>collmgr</B> and the middleware will use. To run it, just enter <TT>dbconv</TT> from the command line in  <A HREF="../intro/dlxs-dirstruct.xml#dlxsrootenv">$DLXSROOT/bin/db.</A>
+			</P>
+			<P>
+				<B>Important Points</B>:</P>
+			<UL>
+				<LI>This program will only need to be run once, when moving to version 8 of DLXS.  This program copies the collection metadata in colldb and groupdb into a MySQL CSV database.</LI>
+				<LI>There are some checks that <B>dbconv</B> performs and that you should be aware of. <UL>
+						<LI>If you have collid's, or groupid's that are the same across classes you will get an error and be asked to restart the <B>dbconv</B> script.</LI>
+						<LI>In Text Class <I>dd</I> is a required field, and must start with "$DLXSROOT", or the script will terminate and ask you to restart.</LI>
+						<LI>In Text Class <I>objdir</I> and <I>wwdd</I> are not required fields, but if they exist, they must start with "$DLXSROOT" or the script will terminate and ask you to restart.</LI>
+					</UL>
+				</LI>
+			</UL>
+		</DIV1>
+	</BODY>
+</DLPSDOC>

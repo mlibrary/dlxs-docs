@@ -1,0 +1,467 @@
+<?xml version="1.0"?>
+
+<!-- SPO Editorial Services                  -->
+<!-- automatically-generated XML header file -->
+
+<?xml-stylesheet href="../../../pre11-dlxsdocs.xsl" type="text/xsl"?>
+<!DOCTYPE DLPSDOC PUBLIC "-//UM-DLPS//DTD DLPS Publications//EN" "http://docs.umdl.umich.edu/dlps/docs/dlpsdocs.dtd">
+<DLPSDOC>
+<TITLE>Preparing Data for Image Services</TITLE>
+<HEADER>
+<JOURNAL>DLXS Documentation</JOURNAL>
+<PUBDATE>2002-07-03 17:14:20 EDT</PUBDATE>
+<AUTH1>Weise, John</AUTH1>
+<AUTH2></AUTH2>
+<DOCTITLE>Preparing Data for Image Services</DOCTITLE>
+<VOL>class</VOL>
+<ISS>image</ISS>
+<FILE>dlxsdocs-image-guidelines-data</FILE>
+</HEADER>
+
+
+
+
+<BODY>
+<BHEAD>Preparing Data for Image Services</BHEAD>
+<DIV1 ID="main">
+
+<P>
+<A HREF="mailto:dlxs-help@umich.edu">dlxs-help@umich.edu</A>
+</P>
+
+<B>Image Services has always
+   tried to make it as easy as possible for you to make your data
+   accessible online. The last thing we want to do is impose a set of
+   rules that complicate the process. Yet, there may be some fairly
+   easy things you can do that would help us out. You may find that
+   some also improve the end product because they have received your
+   specialized input. The fact is, you probably already do most of
+   the things listed below, and  perhaps this will just be a useful
+   check list each time you prepare to give us a data update. </B>
+
+<P>Please feel free to ask for clarification on any of these items by
+sending email to <A HREF="mailto:jweise@umich.edu">jweise@umich.edu</A>.
+Thanks!</P>
+<DIV2 ID="descriptivedata">
+<H2>Part 1: Descriptive Data</H2>
+
+<OL>
+   
+  <LI>First of all, please review the <A HREF="image-datareqs.xml">Image Class 
+    Data Requirements</A>&#0160;document to understand the minimum requirements 
+    for data.</LI>
+   
+   <LI>Data should be in one of the following formats, listed in
+   order of preference:
+   
+   <OL>
+      <LI>Delimited ASCII&#0160;Text File (TAB or comma)</LI>
+      
+      <LI>FileMaker Pro (3.0 or newer)</LI>
+      
+      <LI>Microsoft Excel</LI>
+      
+      <LI>Microsoft Access</LI>
+   </OL>
+   </LI>
+   
+   <LI>Data should be in a "flattened" structure rather than a
+   relational structure. In other words, all data should be contained
+   within a single file, without dependencies on other data files. If
+   you are not sure what it means to flatten data, there is a good
+   chance your data is already flat. Just ask us, we can tell you!
+   
+   <UL>
+      <LI>It is typically easy to flatten a relational database by
+      exporting all of the fields to a new file.</LI>
+   </UL>
+   </LI>
+   
+   <LI>We prefer to only receive the data fields that are to go
+   online. Alternatively, an accurate list of the fields that are to
+   go online could be provided.</LI>
+   
+   <LI>If the data is submitted in a format that does not include
+   field names (e.g., ASCII Text File), then field names should be
+   provided in a separate document (even a written list on paper will
+   do) and in the exact same order they occur in the data file.</LI>
+   
+   <LI>If you would like any field names to appear differently online
+   than they appear in the data file, please provide the appropriate
+   names, paired with the original names. <B>For example</B>, let's
+   say you have a field name in FileMaker Pro called "box_no.", but
+   you would like it to be called "Box Number" online.</LI>
+   
+   <LI>If fields are to be combined or split or otherwise modified by
+   calculation for online use, all calculations should be taken care
+   of prior to sending the data to Image Services.</LI>
+   
+   <LI>It is highly recommended that you include a "Rights"&#0160;field
+   that provides the user with basic copyright information for the
+   image. Often this field can contain the same information for all
+   records. <B>For example</B>, see the <A HREF="http://images.umdl.umich.edu/cgi/i/image/image-idx?view=entry;subview=detail;cc=musart;entryid=X-1862.1;viewid=1">Museum
+   of Art's <I>Rights</I> field</A>.</LI>
+   
+   <LI>There must be a unique record identifier field, and every
+   record must have a unique identifier value (e.g., accession
+   number, serial number). Please clearly identify the field to be
+   used as the unique identifier since sometimes there is more than
+   one field that appears to be a unique identifier.
+   
+   <UL>
+      <LI>Records without a unique identifier will not be put
+      online.</LI>
+      
+      <LI>If more than one record has the same identifier value, the
+      first occurring record will be put online and the others will
+      not.</LI>
+   </UL>
+   </LI>
+   
+   <LI>If the data has associated image files, there should be an
+   image filename field.
+   
+   <UL>
+      <LI>Even though the unique identifier and image filename are
+      often the same, image filenames often need minor adjustments to
+      work in the online access system, so it is best for unique
+      identifiers and image filenames to be kept in separate fields.
+      It is also easier to troubleshoot filenaming problems if the
+      filename field only contains filenames for <B>existing</B>
+      image files, rather than for every unique identifier whether or
+      not a digital image file actually exists. Understandably, this
+      is not always feasible.</LI>
+      
+      <LI>If there are multiple images per record, the image filenames can be in a single repeating field, or in multiple fields. There can even be multiple repeating fields. If there are special relationships among the images of a record, it is worth having a discussion with Image Services to find the best way to enter image filename data.</LI>
+      
+      <LI>Image filenames may be entered in the database with or without filename extensions. It really does not matter (though it did in the past). Image Services prefers, however, that full filename paths not be included in the image filename field.</LI>
+   </UL>
+   </LI>
+   
+   <LI>If the data has associated image files, identify the field
+   that most appropriately acts as a "caption" for the image(s). If
+   there is not a descriptive field that works well as a caption, the
+   image filename field or the unique identifier field may be used
+   (something must be used).
+   
+   <UL>
+      <LI>The "caption" field may be a repeating field in cases where
+      there are multiple images per record. The repetitions of the
+      "caption" field should be synchronized with the repetitions of
+      the image filename.</LI>
+   </UL>
+   </LI>
+   
+   <LI>You may specify the fields that should be selectable by the
+   user for searching. <B>For example</B>, see the <A HREF="http://images.umdl.umich.edu/u/ummu/simple.html">Media
+   Union Library's simple search form</A>. The searchable category
+   list is by choice only a subset of the fields that are available
+   and viewable in the <A HREF="http://images.umdl.umich.edu/cgi/i/image/image-idx?type=detail;cc=ummu;entryid=X-99-0176;viewid=1;sstrt=11;hits=732;q1=house%20;cat1=All%20Categories;thsz=12;txsz=50;slsz=1;med=1;c=ummu">full
+   record</A>.</LI>
+   
+   <LI>You may specify the fields that should be displayed in the
+   search results list. You may also specify the order in which the
+   fields should be displayed. <B>For example</B>, the Bentley
+   Historical Library has chosen to display the Bentley Item Number
+   and the Image Title fields in the <A HREF="http://images.umdl.umich.edu/cgi/i/image/image-idx?type=simple;sstrt=1;q1=Bentley;cat1=All%20Categories;thsz=12;txsz=50;slsz=1;med=1;c=bhl;res=thumbnail">results
+   list</A>. Make sure that at least one of these fields has a value
+   in every single record. You may also specify different fields for
+   each of the results display modes (text only, text with
+   thumbnails, slideshow).</LI>
+   
+   <LI>You may specify the fields, and their order, for the full
+   record (a.k.a., "details") display. <B>For example</B>, the
+   Bentley Historical Library has chosen to display all of their
+   fields in the <A HREF="http://images.umdl.umich.edu/cgi/i/image/image-idx?type=detail;cc=bhl;entryid=X-bl001001;viewid=1;sstrt=1;hits=1012;q1=Bentley;cat1=All%20Categories;thsz=12;txsz=50;slsz=1;med=1;c=bhl">full
+   record display</A>.</LI>
+   
+   <LI>Image Services maps all database specific fields to a set of
+   general fields in order to enable searching across collections.
+   The general fields are <B>based</B> on Dublin Core. You are
+   encouraged to specify the mappings for your database. Optionally,
+   you can let us do it the first time, and then you can suggest
+   modifications for the next time around. <B>For example</B>, the
+   Bentley Historical Library has worked closely with Image Services
+   to appropriately map their fields to the <A HREF="http://purl.oclc.org/dc/">Dublin
+   Core</A>, as witnessed in the <A HREF="http://images.umdl.umich.edu/cgi/i/image/image-idx?type=detail;cc=bhl;entryid=X-bl001001;viewid=1;sstrt=1;hits=270;q1=michigan%20football;cat1=All%20Categories;cross=1;thsz=12;txsz=50;slsz=1;med=1;c=bhl">full
+   record display of a cross-collection search</A>. Once you are
+   happy with the mappings, it is generally not necessary to redo the
+   mappings with each data update unless fields have been added or
+   changes are needed.
+   
+   <UL>
+      <LI>Please see <A HREF="image-dc-guidelines.xml">Guidelines for Mapping 
+        to Core Categories for Image Services</A>.</LI>
+   </UL>
+   </LI>
+   
+   <LI>Please specify the appropriate full title for the database as
+   well as an abbreviation that we can use for efficiency in our
+   system. The abbreviation will also be part of the URL. <B>For
+   example...</B>
+   
+      <TABLE BORDER="1">
+      <TBODY>
+         <TR>
+            <TD>
+               <P><B>Full Title</B></P>
+            </TD>
+            <TD>
+               <P><B>Abbreviation</B></P>
+            </TD>
+            <TD>
+               <P><B>URL</B></P>
+            </TD>
+         </TR>
+         <TR>
+            <TD>
+               <P>Bentley Historical Library</P>
+            </TD>
+            <TD>
+               <P>bhl</P>
+            </TD>
+            <TD>
+               <P><A HREF="http://images.umdl.umich.edu/b/bhl/">http://images.umdl.umich.edu/b/bhl/</A></P>
+            </TD>
+         </TR>
+         <TR>
+            <TD>
+               <P>Media Union Library</P>
+            </TD>
+            <TD>
+               <P>ummu</P>
+            </TD>
+            <TD>
+               <P><A HREF="http://images.umdl.umich.edu/u/ummu/">http://images.umdl.umich.edu/u/ummu/</A></P>
+            </TD>
+         </TR>
+      </TBODY>
+      </TABLE>
+   </LI>
+   
+   <LI>It is often necessary for Image Services to have full administrative access to a
+   data file in order to prepare it for online use. Therefore, it is
+   preferable that the data file not require a password at any
+   level. If a password is required, please remember to provide
+   it.</LI>
+   
+   <LI>If your database uses special characters, it may be necessary
+   to translate them to ISO/IEC
+   8859-1:1998 Latin Alphabet No. 1 compliant characters. This
+   depends, at least, on the operating system and font that was used
+   to enter the data. The ISO&#0160;Latin 1 8-bit characters set
+   includes only a basic set of special characters. We'll be able to
+   tell you if your data has noncompliant characters in it, but often
+   it is impossible for us to know what the characters should look
+   like. Therefore we may come back to you for help. Proactively, you
+   can keep track of each special character that you use and an
+   example of the character within the context of a word from your
+   database. Sometimes it is necessary to "dumb down" characters. For
+   instance, curly quotes are often "dumbed down" to straight quotes
+   when we put a database online.</LI>
+   
+   
+  <LI>Finally, if you would like to gain a better overall understanding of how 
+    the Image Services access system (a.k.a., Image Class) works, please read 
+    <A HREF="image-imageclass.xml">The Image Class</A>.</LI>
+</OL>
+
+</DIV2>
+<DIV2 ID="imagefiles">
+<H2>Part 2: Image Files</H2>
+
+<P>Please remember, these are guidelines, not requirements!</P>
+
+<OL>
+   <LI>Master image files should be supplied in the Tagged Image File
+   Format (TIF), with or without LZW&#0160;compression. JPEG or other
+   types of lossy compression should not be used on the master
+   image.</LI>
+   
+   <LI>Images should be provided on ISO 9660 Level 1 compliant
+   CD-ROMs, <B><I>if possible</I></B> We can also accept image files in many other ways, so if the guidelines here do not suit you, we can talk about it.
+   
+   <UL>
+      <LI>In Level 1 (the lowest common denominator, developed with
+      DOS file naming limitations in mind):
+      
+      <UL>
+         <LI>A filename may not contain more than eight
+         <I>d-characters</I>.<BR/>
+         <B>d-characters are capital A to Z,
+         digits 0 to 9, and the underscore symbol ( _
+         ).</B></LI>
+         
+         <LI>A Filename Extension may not contain more than three
+         <I>d-characters</I>.</LI>
+         
+         <LI>A directory name may not contain more than eight
+         <I>d-characters</I>.</LI>
+         
+         <LI>A cd name (volume name) may not contain more than 32
+         <I>d-characters</I>.</LI>
+      </UL>
+      </LI>
+      
+      <LI>Roxio provides a wonderful <A HREF="http://www.roxio.com/en/support/">CD-ROM&#0160;technical
+      resource</A> online if you would like more information about CD technology. </LI>
+   </UL>
+   </LI>
+   
+   <LI>In general, and especially given the restrictions above, it
+   does not work well to try to use highly descriptive filenames.
+   Filenames based on unique record IDs, accession numbers, or simple
+   serial numbers are often the best. It can be useful to prefix a
+   filename with a character or two that categorizes the image files
+   in some way. For example, the Bentley Historical Library uses the
+   form "BL000001.TIF", where the "BL" simply stands for Bentley
+   Library. Accurate record keeping immediately becomes important
+   just to keep track of the images in a more descriptive
+   fashion.</LI>
+   
+   <LI>Digital images should be calibrated to a display gamma of 2.2.
+   In other words, the image should look best on a computer monitor
+   that has been calibrated to a gamma of 2.2.</LI>
+   
+   <LI>Grayscale image files should have a bit-depth of 8.</LI>
+   
+   <LI>Color image files should have a bit depth of no more than
+   24, which is no more than three 8-bit channels (Red, Green, Blue).
+   There must not be alpha or other types of channels.
+   
+   <UL>
+      <LI>It is good that many scanners initially capture more than
+      24 bits of color because it improves the overall quality of the
+      final image. <B>At this time it is a bad idea to save more than
+      24 bits of color</B> to the master image file because very few
+      imaging applications know how to use the extra data, and the
+      usefulness of the data beyond the initial capture is
+      questionable.</LI>
+   </UL>
+   </LI>
+   
+   <LI>Image Services prefers not to put bitonal images online, though the
+   Digital Library Production Service does for text pages.</LI>
+   
+   <LI>Very high quality, high resolution master image files are
+   desirable. Image Services has advanced methods for putting
+   extremely high resolution images online in a way that enables easy
+   viewing on the web, so file size is not a concern. The goal is to
+   get the best quality image without a) unnecessarily exceeding the
+   detail of the original object, and b) exceeding the optical resolution
+   of the scanning device. Many scanners offer interpolation as a
+   means for achieving resolution beyond the capabilities of the
+   hardware. Interpolation must be avoided. It is extremely difficult
+   to prescribe appropriate resolutions for materials. Each situation
+   is unique. However, the following table offers some guidelines.
+   
+<UL>
+
+<LI><TABLE BORDER="1">
+<TBODY>
+         <TR>
+            <TD>
+               <P><B>Original</B></P>
+            </TD>
+            <TD>
+               <P><B>Resolution (Dots Per Inch)</B></P>
+            </TD>
+         </TR>
+         <TR>
+            <TD>
+               <P>Photographic Print</P>
+            </TD>
+            <TD>
+               <P>400 - 600 DPI</P>
+            </TD>
+         </TR>
+         <TR>
+            <TD>
+               <P>35mm Film</P>
+            </TD>
+            <TD>
+               <P>2700 DPI</P>
+            </TD>
+         </TR>
+         <TR>
+            <TD>
+               <P>4x5 Film</P>
+            </TD>
+            <TD>
+               <P>900 - 1800 DPI</P>
+            </TD>
+         </TR>
+         <TR>
+            <TD>
+               <P>Papyri</P>
+            </TD>
+            <TD>
+               <P>600 DPI</P>
+            </TD>
+         </TR>
+         <TR>
+            <TD>
+               <P>Manuscripts</P>
+            </TD>
+            <TD>
+               <P>400-600 DPI</P>
+            </TD>
+         </TR>
+</TBODY>    
+  </TABLE>
+      </LI>
+   </UL>
+   </LI>
+   
+   <LI>Sharpening of an image is typically an essential and integral
+   part of scanning. At the same time, great care should be taken to
+   not over sharpen an image. An <I>unsharp mask</I> filter is a
+   preferred method of sharpening available in Adobe Photoshop and
+   many other imaging applications.</LI>
+   
+   <LI>If a scan is skewed, it is best to adjust it on the scanner
+   and rescan. Digital deskewing (rotation by small degrees) degrades
+   the image. Rotation by 90, 180, 270 degrees is fine and does not
+   degrade the image.</LI>
+</OL>
+
+</DIV2>
+<DIV2 ID="resources">
+<H2>Resources</H2>
+
+<UL>
+   <LI>The University of Michigan, <A HREF="http://www.umdl.umich.edu/">Digital
+   Library Production Service</A>, <A HREF="http://images.umdl.umich.edu/">Image
+   Services</A> is happy to provide free consultation on best
+   practices for database creation and digital imaging. Please
+   contact <A HREF="mailto:umdl-help@umich.edu">umdl-help@umich.edu</A>.</LI>
+   
+   <LI><A HREF="http://images.umdl.umich.edu/">Image Services</A>
+   provides high quality photographic and digitization services at
+   competitive rates. We have a variety of methods, including 4x5
+   photography and film digitization, flatbed scanning, 35mm film
+   scanning, and direct digital photography. Contact <A HREF="mailto:dlps-digit@umich.edu">dlps-digit@umich.edu</A>
+   for more info.</LI>
+   
+   <LI>Image Services also hosts a wide variety of image databases
+   online, primarily serving the University Library and University of
+   Michigan, and extending to other institutions as well. Contact
+   <A HREF="mailto:umdl-help@umich.edu">umdl-help@umich.edu</A> for more
+   information.</LI>
+   
+   <LI><A HREF="http://www.rlg.org/visguides/">Guides to Quality in
+   Visual Resource Imaging</A>, from the Digital Library Federation
+   and Research Libraries Group.</LI>
+   
+   
+   <LI><A HREF="http://www.rlg.org/preserv/mtip2000.html">Moving
+   Theory Into Practice</A> by Anne R. Kenney and Oya Y. Rieger.</LI>
+
+</UL>
+</DIV2>
+<P>
+
+modified 10/5/2000, jweise@umich.edu</P>
+</DIV1>
+</BODY>
+</DLPSDOC>

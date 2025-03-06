@@ -1,0 +1,51 @@
+<?xml version="1.0"?>
+
+<!-- SPO Editorial Services                  -->
+<!-- automatically-generated XML header file -->
+
+<?xml-stylesheet href="../../pre11-dlxsdocs.xsl" type="text/xsl"?>
+<!DOCTYPE DLPSDOC PUBLIC "-//UM-DLPS//DTD DLPS Publications//EN" "http://docs.umdl.umich.edu/dlps/docs/dlpsdocs.dtd">
+<DLPSDOC>
+<TITLE>The XPAT FAQ</TITLE>
+<HEADER>
+<JOURNAL>DLXS Documentation</JOURNAL>
+<PUBDATE>2002-03-13 14:08:38 EST</PUBDATE>
+<AUTH1>Wilkin, John Price</AUTH1>
+<AUTH2></AUTH2>
+<DOCTITLE>The XPAT FAQ</DOCTITLE>
+<VOL>xpat</VOL>
+<ISS></ISS>
+<FILE>dlxsdocs-xpat-faq</FILE>
+</HEADER>
+
+  
+  <BODY>
+    <BHEAD>XPAT FAQ</BHEAD>
+    <DIV1 ID="main">
+      <DL>
+        <DT>Is XPAT designed to take advantage of multiple processors?</DT>
+        <DD><P>The XPAT server isn't multi-threaded, and so can't take advantage of multi-processor systems in the way that a truly multi-threaded application can.  However, that's not to say that a multi-processor system won't give you a performance advantage in the multi-user environment. That is, parallel XPAT processes for different search requests will be load-balanced across the available CPUs by the operating system. They are <I>not</I> queued, as in a database environment. They are separate independent processes.</P>
+<P>In some quick testing I've confirmed that Solaris migrates running processes to different CPUs (and probably Linux does too), giving further load-balancing.  Thus the performance gain you should expect would be nearly linear with the number of processors ("nearly" because there are shared resources such as memory which would probably prevent a truly linear relationship), although this would only be realized when the number of active users equals or exceeds the number of processors. That is, if there is only one search, it's going to go at full speed on a single processor. However if another comes along, it too will go full-speed on the second processor, independent of the first. Thus the performance gain in that situation over a uniprocessor system would be, from the perspective of the user, approximately double.</P>
+<P>Incidentally, everything we buy for production is quad-CPU. We're overconfigured in some areas and under- in others, and it's all a function of your expected usage and collection size. For multi-user systems in general, though, I personally prefer multiple CPUs. (csnavely, 2001-05-02)</P></DD>
+        
+        <DT>Can I get a free "trial" copy of XPAT?</DT>
+        <DD><P>Yes!  We are pleased to offer a "lite" version of a subset of XPAT tools including the XPAT search engine "xpatl", the indexer "xpatbldl", the region indexer "multirgnl" and SGML parser/indexer "sgmlrgnl".  These will be available free of charge and downloadable from <A HREF="http://www.dlxs.org">www.dlxs.org</A> beginning with DLXS Release 11. The "lite" versions of these tools have a 10 meg limit on the size of the data to be indexed.</P><P>Our contract for the source code and rights for development and distribution restricts us from making the fully functional XPAT available without a license and fees. Therefore, the fully functional toolset including the Unicode enabled XPAT search engine "xpatu" will continue to require a licensing fee.  (pfarber Thu 2003-09-02)</P></DD>
+        <DT><P>I represent a commercial (i.e., not a non-profit) organization, and am interested in acquiring XPAT.  Are you allowed to sell to for-profit organizations?</P></DT>
+        <DD><P>The University of Michigan has been given tentative approval on making XPAT
+available to organizations that do not have non-profit status.  If you are a
+commercial institution interested in licensing the full version of XPAT,
+please contact dlxs-info@umich.edu. (jpwilkin, 2003-09-23)</P></DD>
+      </DL>
+    </DIV1>
+      <BR />
+      <BR />
+      <BR />
+      <BR />
+      <BR />
+      <BR />
+      <BR />
+      <BR />
+  </BODY>
+</DLPSDOC>
+                            
+

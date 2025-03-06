@@ -1,0 +1,181 @@
+
+
+<HTML><HEAD><TITLE>Manpage of XPATFR</TITLE>
+<LINK HREF="../../dlxsdocs.css" REL="stylesheet" TYPE="text/css"> </head><BODY>
+<table class="updateTable" cellspacing="3" cellpadding="3">
+<tr>
+<td>CVS Revision</td>
+<td>$Revision: 1.3 $</td>
+</tr>
+</table>
+
+<H1>XPATFR</H1>
+Section: User Commands  (1)<BR>Updated: November 2000<BR><A HREF="#index">Index</A>
+<A HREF="http://localhost/cgi-bin/man/man2html">Return to Main Contents</A><HR>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<A NAME="lbAB">&nbsp;</A>
+<H2>NAME</H2>
+
+<B>xpatfr</B> - XPAT Fast-Region index builder
+<A NAME="lbAC">&nbsp;</A>
+<H2>SYNOPSIS</H2>
+
+<B>xpatfr</B>
+[
+<B>-v</B>
+
+]
+[
+<B>-m</B><I> memory</I>
+
+<B>k</B>|<B>m</B> ]
+[
+<B>-I</B><I> index_name</I>
+
+]
+[
+<B>-o</B><I> output_name</I>
+
+]
+[
+<B>-r</B><I> region_name</I>
+
+|
+<B>-f</B><I> Fast_Region_file</I>
+
+]
+<B>-D</B>
+
+<I>data_dictionary</I>
+<A NAME="lbAD">&nbsp;</A>
+<H2>DESCRIPTION</H2>
+
+<B>xpatfr</B> builds a Fast-Region index between a Main Index and one or more region
+indices of the the database
+specified by <I>data_dictionary</I>.  A single region can be specified by <I>region_name</I>.
+To specify several regions use the <I>Fast_Region_file</I>.
+The Fast-Region index greatly increases the
+speed of `within' commands in <B>xpat</B>, where the second argument to the
+`within' command is <I>region_name</I> (refer to the <I>XPat Reference Manual and Tutorial</I> for further
+details of the `within' command).  The size of the Fast-Region
+index file can vary widely.  This variation is due to the fact that
+the Fast-Region index is compressed
+and the amount of compression
+depends on the nature of the region for which the Fast-Region
+is built.  However, the size of a
+Fast-Region index file will never exceed 1/32 the size of the Main Index.
+<P>
+
+The <I>region_name</I> parameter, if used, should be the
+region name as it is defined in the <I>data_dictionary</I>.  Note
+that if this name contains any spaces it should be surrounded by
+quotes.
+<P>
+
+Regions listed in the <I>Fast_Region_file</I>, if used, should be
+region names as defined in the <I>data_dictionary</I>. These region names may be prefixed with
+a '*' character. See <B>dbbuild</B> for more information.
+<A NAME="lbAE">&nbsp;</A>
+<H2>OPTIONS</H2>
+
+The following options are available:
+<DL COMPACT>
+<DT><B>-v</B><DD>
+Specify verbose mode.  This option tells <B>xpatfr</B> to print progress
+messages as it builds the index.  By default,
+<B>xpatfr</B> works quietly, only printing a message if it encounters an error
+condition .
+<DT><B>-m</B><I> N</I><B>k</B><DD>
+<DT><B>-m</B><I> N</I><B>m</B><DD>
+memory size - use <I>N</I> <B>k</B>ilobytes or <I>N</I> <B>m</B>egabytes
+of physical
+memory for building the Fast-Region index.
+The minimum amount of memory you must specify is equal to the size of
+the index for the region named <I>region_name</I>, or for the largest
+region specified in <I>Fast_Region_file</I>.  You can
+determine this amount by looking at the `Region'
+section for the region(s) of interest in the <I>data_dictionary</I>.  The
+minimum amount of memory you need to specify, in bytes, is that
+`Region' section's `Count' field, times 4.  Divide this amount by
+1024 to specify the memory in KB, or by 1048576 to specify this memory
+in MB.
+<DT>&nbsp;<DD>
+In general, the more memory you give <B>xpatfr</B>, the faster it will run.
+The maximum amount of memory you can specify is the <I>available
+physical memory</I>.  Because this limitation also applies to <B>xpatbld</B>, the
+amount of memory that is specified to <B>xpatfr</B> is usually the same as that
+specied to <B>xpatbld</B>.  Refer to the <B><A HREF="http://localhost/cgi-bin/man/man2html?1+xpatbld">xpatbld</A></B>(1) man page for a detailed
+explanation of `available physical memory'.
+<DT><B>-I</B> <I>index_name</I><DD>
+Specify the index name.  By default, <B>xpatfr</B> builds the Fast-Region index
+for the first Main Index in the <I>data_dictionary</I>.  The <B>-I</B> option allows
+you to specify an alternate Main Index for <B>xpatfr</B> to build the Fast-Region
+index on (if any others exist).
+<DT><B>-o</B> <I>output_name</I><DD>
+Specify the file name prefix for the Fast-Region index file.
+<B>xpatfr</B> produces one file, with the suffix `<TT>.fri</TT>'.  By default
+<B>xpatfr</B> takes the prefix for that file from the name of the
+region.  However, this default may not be appropriate when the region name
+has spaces or other non-alphanumeric characters in it (such cases produce
+filenames that are cumbersome to deal
+with in Unix).  The <B>-o</B> option allows you to specify an
+alternate filename prefix, such as a short, single word.
+The output_name is used only if the <I>region_name is specified.
+</DL>
+</I><A NAME="lbAF">&nbsp;</A>
+<H2>RESTRICTIONS</H2>
+
+Both the Main Index and the region index for <I>region_name</I>
+must both exist before <B>xpatfr</B> is invoked.
+<A NAME="lbAG">&nbsp;</A>
+<H2>EXAMPLES</H2>
+
+
+xpatfr -m 4m -r Headline -D data.dd
+<BR>
+
+xpatfr -v -m 8m -o /text/MyRegion -I first -r &quot;Issue Date&quot; -D text.dd
+
+<A NAME="lbAH">&nbsp;</A>
+<H2>SEE ALSO</H2>
+
+<B><A HREF="http://localhost/cgi-bin/man/man2html?1+xpat">xpat</A></B>(1), <B><A HREF="http://localhost/cgi-bin/man/man2html?1+xpatwl">xpatwl</A></B>(1), <B><A HREF="http://localhost/cgi-bin/man/man2html?1+xpatbld">xpatbld</A></B>(1), <B><A HREF="http://localhost/cgi-bin/man/man2html?1+dbbuild">dbbuild</A></B>(1)
+<P>
+
+<HR>
+<A NAME="index">&nbsp;</A><H2>Index</H2>
+<DL>
+<DT><A HREF="#lbAB">NAME</A><DD>
+<DT><A HREF="#lbAC">SYNOPSIS</A><DD>
+<DT><A HREF="#lbAD">DESCRIPTION</A><DD>
+<DT><A HREF="#lbAE">OPTIONS</A><DD>
+<DT><A HREF="#lbAF">RESTRICTIONS</A><DD>
+<DT><A HREF="#lbAG">EXAMPLES</A><DD>
+<DT><A HREF="#lbAH">SEE ALSO</A><DD>
+</DL>
+<HR>
+This document was created by
+<A HREF="http://localhost/cgi-bin/man/man2html">man2html</A>,
+using the manual pages.<BR>
+Time: 18:03:38 GMT, March 26, 2001
+</BODY>
+</HTML>

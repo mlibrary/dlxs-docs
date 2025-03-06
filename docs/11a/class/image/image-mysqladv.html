@@ -1,0 +1,64 @@
+<HTML>
+<head>
+<TITLE>Image Class Data Loading: Advanced Topics with MySQL</TITLE>
+
+
+
+
+
+ <LINK HREF="../../dlxsdocs.css" REL="stylesheet" TYPE="text/css"></head>         <BODY>
+<table class="updateTable" CELLSPACING="3" CELLPADDING="3" BORDER="1">
+<TR>
+<td>Last updated</td>
+<td>2003-12-01 11:20:19 EST</td>
+</TR>
+<TR>
+<td>Doc Title</td>
+<td>Image Class Data Loading: Advanced Topics with MySQL</td>
+</TR>
+<TR>
+<td>Author 1</td>
+<td>Weise, John</td>
+</TR>
+<TR>
+<td>CVS Revision</td>
+<td>$Revision: 1.6 $</td>
+</TR>
+</table>
+
+<DIV CLASS="pageTitle">Image Class Data Loading: Advanced Topics with MySQL</DIV>
+       
+
+         
+          <H2> 
+            <A NAME="contents"></A>
+            Contents</H2>
+
+<UL>
+<LI><A HREF="#introduction">Introduction</A></LI>
+</UL>
+
+
+
+
+
+         
+          <H2> 
+            <A NAME="introduction"></A>
+            Introduction</H2>
+
+<P>Data received from a content provider sometimes requires modification prior to import into Image Class. For example, a date field with values in the form DDMMYYY (day, month, year) would be sortable if in the form YYYYMMDD (year, month, day). MySQL has functions for doing the transformation, and it would be nice to integrate the transformation into the loading process for the collection. The load.pl script is equipped to allow this type of alteration to be made by creating a subclass of a module called preload.pm.</P>
+
+<P>Out of the box, preload.pm does very little, but does come into play when descriptive metadata records are loaded from XML generated with FileMaker Pro. The preloadData method calls an external script called smpxml2mysql.pl to load the XML into a simple MySQL table. Control then drops back to load.pl, which in turn calls icdbprep.pl to create Image Class Data and Media Tables from the simple MySQL table.</P>
+
+<P>A subclass of preload.pm can be made to intervene once the simple table has been made and modify the date field as desired before generating the Image Class Data and Media Tables.</P>  
+
+
+
+
+
+
+      
+    </BODY>
+  
+</HTML>

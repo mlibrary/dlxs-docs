@@ -1,0 +1,36 @@
+<html>
+  <head>
+    <title>OAI Harvesting System: OAITransform Data Conditioning</title>
+    <link href="../dlxsdocs.css" rel="stylesheet" type="text/css">
+  </head>
+  <body>
+    <div align="center" class="pageTitle">OAI Harvesting System: OAITransform Data Conditioning</div>
+
+<h2>Transcoding from Latin-1 to UTF-8</h2>
+
+<p>If the character encoding of the harvested data does not pass the Perl Encode::is_utf8 test, the data is assumed to be Latin-1 encoded and is transcoded from Latin-1 (iso-8859-1) to UTF-8. This heuristic is useful in the vast majority of cases. It is important to note it is impossible to determine the encoding if it is not specified or adherence to OAI specifications has lapsed.</p>
+
+<h2>ISO Character Entity Reference (CER) Mapping</h2>
+
+<p>With the exception of the five reserved XML CERs (lt, gt, apos, quot, amp), the ISO Character Entity References from ISOAMSA, ISOAMSB, ISOAMSC ISOAMSN, ISOAMSO, ISOAMSR, ISOCYR1, ISOCYR2, ISOGRK1, ISOGRK2, ISOGRK3, ISOGRK4, ISOLAT1, ISOLAT2, ISOMFRK, ISONUM, ISOPUB, ISOTECH, MMLALIAS, and MMLEXTRA are translated into their corresponding UTF-8 encoded Unicode characters. It is usually an error for CERs from these sets to appear in the XML because they require an internal subset declaration to make the XML valid. This also improves searchability of the records and decreases file size.</p>
+
+<h2>Numeric Character Reference (NCR) Mapping</h2>
+
+<p>Numeric Character References of the form <code>&#xXXXX;</code> where XXXX represents a hexadecimal number of one to 4 hexadecimal digits and <code>&#YYYY;</code> where YYYY represents a decimal number of one to 4 decimal digits are mapped to their equivalent UTF-8 encoded Unicode characters. This is not strictly necessary but improves searchability. The five reserved XML characters, if represented by NCRs, are not mapped.</p>
+
+<h2>Miscellaneous Character Problems</h2>
+
+<ol>
+<li>Some URLs within dc:identifier erroneously have naked &-separated parameters. Naked '&' characters are converted to '&amp;amp;' in this event but the reserved XML character entity references are protected.</li>
+<li>'&' characters erroneously followed by whitespace are converted to '&amp;amp;'.</li>
+<li>Truncated decimal and hexadecimal NCRs (e.g. &amp;#, &amp;#x, &amp;#x2C, etc.) are replaced with the characters following the # or #x portion of the truncated entity (mainly for the purposes of locating the string for a human editor). Entities truncated at the '&', if not followed by whitespace may look like (most likely invalid) CERs, if followed by a ';' within reasonable proximity to the '&'. These are trapped as invalid by the CER mapping.</li>
+<li>UTF-8 encoded Unicode characters with codepoints higher than U+FFFF are converted to the canonical name string representation of the character as defined in UnicodeData.txt. Since NCRs above U+FFFF have previously been converted to UTF-8 encoded characters this trap handles all encoded forms of non-Plane Zero Unicode characters. This is done because XPAT does not support the indexing of codepoints higher that U+FFFF.</li>
+<li>A variety of Windows-1252 characters are converted to their UTF-8 encoded equivalent. Windows-1252 uses the control character range above 0x7f to encode characters like smart quotes. These often inadvertently become part of OAI data sourced from Windows applications.</li>
+<li>Illegal characters per the XML 1.0 standard are replaced by the '?' character. From <a href="http://www.w3.org/TR/2000/REC-xml-20001006">http://www.w3.org/TR/2000/REC-xml-20001006</a> (sec 2.2, extracted 16July2001):<br/>
+<blockquote><font size="-1">
+"Legal characters are tab, carriage return, line feed, and the legal characters of Unicode and ISO/IEC 10646. The versions of these standards cited in A.1 Normative References were current at the time this document was prepared. New characters may be added to these standards by amendments or new editions. Consequently, XML processors must accept any character in the range specified for Char. The use of "compatibility characters", as defined in section 6.8 of Unicode (see also D21 in section 3.6 of Unicode3), is discouraged. Character Range Char ::= #x9 | #xA | #xD | [#x20-#xD7FF] | [#xE000-#xFFFD] | [#x10000-#x10FFFF]."<br/>
+</font></blockquote>
+For this purpose we use a modified version of the <a href="http://www.cs.cornell.edu/people/simeon/software/utf8conditioner/">utf8conditioner</a> written by Simeon Warner at Cornell University (simeon at cs dot cornell dot edu).</li>
+
+  </body>
+</html>

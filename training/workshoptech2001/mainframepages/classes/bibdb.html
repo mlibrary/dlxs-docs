@@ -1,0 +1,44 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+  <head>
+    <title>BibClass colldb and groups Tables</title>
+    <META http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+    <LINK rel="stylesheet" href="../../styles.css">
+  </head>
+  
+  <body class="mainpalette">
+    <center>
+    <h1>BibClass colldb and groups Tables</h1>
+
+      <h2>colldb<h2>
+        
+      <table width="50%">
+          <tr><td align="right">collid </td><td>&nbsp;&nbsp;&nbsp;</td><td> unique key</td></tr>
+          <tr><td align="right">collname </td><td>&nbsp;&nbsp;&nbsp;</td><td> name</td></tr>
+          <tr><td align="right">primarytitle </td><td>&nbsp;&nbsp;&nbsp;</td><td> text or graphic for web page</td></tr>
+          <tr><td align="right">primaryhref </td><td>&nbsp;&nbsp;&nbsp;</td><td> ref to organizational website DLF e.g.</td></tr>
+          <tr><td align="right">secondarytitle </td><td>&nbsp;&nbsp;&nbsp;</td><td> a second level title</td></tr>
+          <tr><td align="right">extendedname </td><td>&nbsp;&nbsp;&nbsp;</td><td> additional verbiage</td></tr>
+          <tr><td align="right">host </td><td>&nbsp;&nbsp;&nbsp;</td><td>  data host (as opposed to machine running the cgi)</td></tr>
+          <tr><td align="right">ignoreon </td><td>&nbsp;&nbsp;&nbsp;</td><td> DLPS use for installation remove this line on certain machines</td></tr>
+          <tr><td align="right">[short,long,download,email]recordfilter </td><td></td></tr>
+          <tr><td align="right">webdir </td><td>&nbsp;&nbsp;&nbsp;</td><td>  path component for collection-specific templates</td></tr>
+          <tr><td align="right">dddir </td><td>&nbsp;&nbsp;&nbsp;</td><td> path component for index e.g. idx/b/bmp</td></tr>
+          <tr><td align="right">dd </td><td>&nbsp;&nbsp;&nbsp;</td><td> name of index (can be a list if more than one index)</td></tr>
+          <tr><td align="right">map </td><td>&nbsp;&nbsp;&nbsp;</td><td> terminology map file or 'default'</td></tr>
+          <tr><td align="right">xpatexec </td><td>&nbsp;&nbsp;&nbsp;</td><td> full path to executable</td></tr>
+          <tr><td align="right">port </td><td>&nbsp;&nbsp;&nbsp;</td><td> for remote XPat operations</td></tr>
+          <tr><td align="right">minmaxyear </td><td>&nbsp;&nbsp;&nbsp;</td><td> date range covered by collection</td></tr>
+          <tr><td align="right">searchregions </td><td>&nbsp;&nbsp;&nbsp;</td><td> exact text to appear in restriction pulldowns</td></tr>
+      </table>
+      
+      <h2>groups</h2>
+      <table width="50%">
+          <tr><td align="right">groupid </td><td>&nbsp;&nbsp;&nbsp;</td><td> unique group identifier</td></tr>
+          <tr><td align="right">groupname </td><td>&nbsp;&nbsp;&nbsp;</td><td> displayable title</td></tr>
+          <tr><td align="right">primarytitle </td><td>&nbsp;&nbsp;&nbsp;</td><td> graphic or text title</td></tr>
+          <tr><td align="right">webdir </td><td>&nbsp;&nbsp;&nbsp;</td><td> for group templates if any collids</td></tr>
+      </table>
+    </center>
+  </body>
+</html>

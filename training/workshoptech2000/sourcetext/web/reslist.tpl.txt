@@ -1,0 +1,143 @@
+<html>
+  <head>
+    <title><?TITLE></title>
+
+    <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+
+    <link rel="stylesheet" href="<?DOC_ROOT>textclass.css">
+
+  </head>
+  
+<!-- -------------------------------------------------- -->
+
+  <body bgcolor="#FFFFFF" marginwidth="0" marginheight="0">
+
+<!-- -------------------------------------------------- -->
+
+    <table width="100%" border="0" cellspacing="0" cellpadding="5" bgcolor="#FFFFFF">
+      <tr> 
+        <td valign="bottom" width="75%"> <a name="top"></a>
+          <h3 class="tophead">
+            <?TITLE>
+          </h3>
+        </td>
+        
+        <td valign="top" width="25%" align="right">
+
+          <?RE_AUTH_LINK>
+<!--
+          <a href="<?BOOKBAG_LINK>">
+            <img src="<?DOC_ROOT>images/bbag.gif" width="83" height="21" vspace="1" border="0">
+          </a>&nbsp;<br>
+          <font class="navinfo" size="2"><?BOOKBAG_ITEMS>&nbsp;&nbsp;&nbsp;</font>&nbsp;
+-->
+        </td>
+      </tr>
+      
+      <tr> 
+        <td colspan="2" align="center" bgcolor="#666699" nowrap> 
+          <p>
+            <font color="#FFFFFF" class="navlinks"><b>
+                <a href="<?REFINE_SEARCH_LINK>" class="nav">refine search</a>
+                |
+                <a href="<?SIMPLE_SEARCH_LINK>" class="nav">simple search</a>
+                |
+                <a href="<?BOOLEAN_SEARCH_LINK>" class="nav">boolean search</a>
+                |
+                <a href="<?PROXIMITY_SEARCH_LINK>" class="nav">proximity search</a>
+<!--
+                |
+                <a href="<?BIB_SEARCH_LINK>" class="nav">bibliography search</a> 
+-->
+                |
+                <a href="<?SEARCH_HISTORY_LINK>" class="nav">search history</a> 
+                |
+                <a href="<?WORDWHEEL_SEARCH_LINK>" class="nav">wordwheel</a>
+                |
+                <a href="<?HELP_LINK>" class="nav">help</a>
+              </b></font>
+          </p>
+        </td>
+      </tr>
+    </table>
+
+    <!-- ------------- GUIDE & RESULTS "FRAMES" -------------------- -->
+    
+    <table width="100%" border="0" cellspacing="0" cellpadding="0">
+      <tr>
+        <!-- ------------- GUIDE "FRAME" -------------------- -->
+        
+        <?GUIDE_FRAME>
+
+        <td width="25%" bgcolor="#E7E7D3" valign="top"> 
+
+          <table width="100%" border="0" cellspacing="0" cellpadding="10">
+            <tr>
+              
+              <td valign="top">
+                <font class="smallheader">Results&nbsp;Guide&nbsp;</font> 
+                
+                <!-- using pixel hard-coded hr width to control entire column/"frame" width -->
+                <hr width="200" align="left">
+                <font class="smalltext"> <b>Query:</b>
+                  
+                  <?SEARCH_IN_NATURAL_LANGUAGE>
+                  
+                  <br>
+                    <b>Results:</b>
+                  
+                  <?XCOLL_TOTALS>
+                  
+                </font> 
+                
+                <hr width="100%">
+                <div class="resultslinks">
+                  <font size="-1" class="smalltext">                  
+                    <?GUIDE_RESULTS_LINKS>
+                  </font>
+                  
+                </div>
+                <hr width="100%">
+              </td>
+              
+            </tr>
+          </table>
+	</td>
+        
+        <?/GUIDE_FRAME>
+
+        <!-- ------------- RECORDS "FRAME" --------------------- -->
+
+        <td width="75%" valign="top">
+          <table width="100%" border="0" cellspacing="0" cellpadding="10">
+
+            <tr valign="top"> 
+              <td>
+                <?RESULTS_FRAME_HEADER>
+                <?SLICE_NAVIGATION_LINKS>
+              </td>
+            </tr>
+
+            <tr valign="top"> 
+              <td>
+                <?RESULTS>
+              </td>
+            </tr>
+
+            <tr>
+              <td>
+                <?SLICE_NAVIGATION_LINKS>
+              </td>
+            </tr>
+
+          </table>
+
+        </td>
+      </tr>
+    </table>
+    
+    <!--
+  <p class="releaseversion">Release Version: $State: Exp $</p>
+    -->
+  </body>
+</html>

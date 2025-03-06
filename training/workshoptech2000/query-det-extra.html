@@ -1,0 +1,349 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+   <meta name="GENERATOR" content="Mozilla/4.73 [en] (Win98; U) [Netscape]">
+   <title>Query Language Details</title>
+<link rel="stylesheet" href="styles.css">
+<style type="text/css">
+
+</style>
+</head>
+<body class="mainpalette">
+
+<h3>
+Query Language Details (Extra)</h3>
+This is some additional, extremely detailed information not covered in
+the 'details' section.
+<p>
+<hr width="50%">
+<h4>
+Special commands that generate point sets:</h4>
+
+<dl><tt>"a".."c"</tt>
+<br><tt>"198"~"199"</tt>
+<dd>
+This is a range searching command, find all "words" that begin with letters
+ranging from a to c for the first example, or all words that begin with
+the numbers ranging from 198 to 199 in the second example.</dd>
+
+<dt>
+<tt>shift.# A</tt></dt>
+
+<dd>
+Make a new point set consisting of all the points that are #bytes to the
+right of all the start byte offsets of set A (a negative number shifts
+to the left). A can be a region or point set, the result set is always
+demoted to a point set.</dd>
+</dl>
+
+<hr width="50%"><a NAME="Operators"></a>
+<h4>
+Operators and Relations:</h4>
+More discussion of the operators in detail concerning the types of sets
+that result
+<br>when the operator is applied to region sets, point sets, or a combination.
+In addition,
+<br>some of the extended forms of the operators are discussed.
+<dl>
+<dt>
+<b><tt>A ^ B</tt></b></dt>
+
+<dd>
+the "and" or "intersection" operator: A and B are two sets, or expressions
+that evaluate to sets, and the resulting set includes those points or regions
+in both A and B that have the exact same start offsets. It makes little
+sense to "and" together two point sets, unless those two point sets contain
+heterogenous members. "and"-ing on two region sets can be spectacularly
+useful. "and"-ing together a point and a region set has the interesting
+property that it seems to inherit "regionness".</dd>
+
+<dt>
+<b><tt>A - B</tt></b></dt>
+
+<dd>
+the "minus" or "difference" operator. A and B are both sets, the resulting
+set is those members of A that do not share the same start offset with
+any member of B. This behaves much the same as the ^ operator in terms
+of how appropriate it is to points or regions.</dd>
+
+<dt>
+<b><tt>A + B + C + ...</tt></b></dt>
+
+<dd>
+the "or" or "union" operator: A, B, C... are sets, the resulting set is
+a point set if at least one of the sets being combined is a point set,
+consisting of the start offsets of all the points or regions in the original
+sets. If <i>all</i> the sets being combined are region sets, then regions
+that nest inside other listed regions (either entirely or at their start
+byte offset) will be removed from the resultant set. If we were to + together
+all the P and B regions in an HTML database, for instance, all the B elements
+nested inside P elements would be removed, leaving just the P's and B's
+not in P. I question the utility of this behavior, and search strategies
+the SSP platform takes will be later seen to avoid this at all costs.</dd>
+
+<dt>
+<b><tt>A incl B</tt></b></dt>
+
+<br><b><tt>A incl.# B</tt></b>
+<br><b><tt>A not incl B</tt></b>
+<dd>
+A is a region set, B is either point or region, the result is a region
+set of all members of A that contain at least one member of B, containment
+meaning that a given B has a start offset within the inclusive range of
+a given A's start and end offsets. The alternative form allows a number
+# of the least number of B's that must be contained in an A. incl can take
+the not operator to return all A's that don't have any B's (without a #
+argument), or all A's that don't have # or more B's.</dd>
+
+<dt>
+<b><tt>A within B</tt></b></dt>
+
+<br><b><tt>A not within B</tt></b>
+<dd>
+In many ways the complement to incl: A is a point or region set, B is a
+region set, the resulting set is all members of A that are contained (by
+the start offset rule as under incl) in any B. This also takes the not
+operator to return all A's that are not within any B.</dd>
+
+<dt>
+<b><tt>A near B</tt></b></dt>
+
+<br><b><tt>A near.# B</tt></b>
+<br><b><tt>A not near B</tt></b>
+<br><b><tt>A not near.# B</tt></b>
+<dd>
+A and B are either points or regions, and # is either explicitly stated,
+or taken from the <tt>{proximity}</tt> setting (see about <tt><a href="#settings">{settings}</a></tt>
+below). The result is all A's whose start offsets are within the specified
+number of bytes of the start offset of any B. The not form returns all
+A's whose start offsets are not within the specified number of bytes from
+the start offset of any B. The nearest B might be earlier or later in the
+source file.</dd>
+
+<dt>
+<b><tt>A fby B</tt></b></dt>
+
+<br><b><tt>A fby.# B</tt></b>
+<br><b><tt>A not fby B</tt></b>
+<br><b><tt>A not fby.# B</tt></b>
+<dd>
+This is just as the near operator, save that an A must be followed within
+the specified number of bytes by a B to be in the result set. This also
+takes the not operator.</dd>
+
+<dt>
+<b>not</b></dt>
+
+<dd>
+This reverses the sense of the expression it modifies, usable with incl,
+within, near, and fby.</dd>
+</dl>
+
+<hr width="50%">
+<h4>
+Using the Operators to Make Sets of Interest</h4>
+Now that we have our basic concepts and operators, let's get in there and
+do some searching and <i>document analysis</i>: the process by which we
+figure out what is there and <b>how the DTD was applied to this SGML</b>,
+and <b>what of it we can use</b>. When developing an online system, this
+is the most important step. Some important commands will be introduced
+in this experimentation.
+<blockquote><b>NOTE:</b> All the search and set identification strategies
+from here on out are heavily influenced by what SSP content-specialists
+and developers have cared about over the years. I will not claim that this
+is the only way to go about searching or retrieving text.</blockquote>
+What a <i>set of interest</i> is is entirely up to the user, and the notion
+of user ranges from developers to content specialists to the patrons floating
+around out there. I'm going to walk through some increasingly complicated
+possible sets of interest here. This will all come back to haunt us when
+we make <a href="http://www.umdl.umich.edu/dlxs/training/workshoptech2000/fabregions.html" target="mainFrame">fabricated
+regions</a>.
+<p>I'm ignoring in this section the matter of displaying retrieved results.
+That comes in a later section.
+<dl>
+<dt>
+<i>find all the words that start with "diff", and find all the words that
+are "different" exactly</i></dt>
+
+<pre>>> "diff"&nbsp;
+&nbsp; 8: 9 matches
+>> "different "
+&nbsp; 9: 3 matches
+>></pre>
+
+<dt>
+<i>find all the "pie" follows "apple" within 20 bytes</i></dt>
+
+<pre>>> "apple " fby.20 "pie "
+&nbsp; 1: 2 matches
+>></pre>
+
+<dt>
+<i>find all the single lines/ stanzas/ poems where "pie" follows "apple"
+within a 20 characters</i> Here we need to have spent some time with the
+DTD documentation to know that lines are L elements, stanzas are STANZA
+elements, and that poems themselves are POEM elements in the sgml</dt>
+
+<pre>>> region L incl ("apple " fby.20 "pie ")
+&nbsp; 2: 2 matches
+>> region STANZA incl ("apple " fby.20 "pie ")
+&nbsp; 3: 2 matches
+>> region POEM incl ("apple " fby.20 "pie ")
+&nbsp; 4: one match
+>></pre>
+
+<dt>
+<i>find all the places where "orange" appears at the end of a line of poetry</i></dt>
+
+<pre>>> "orange&lt;/l>"
+&nbsp; 5: no match
+>> "orange " fby.20 "&lt;/l>"
+&nbsp; 6: 17 matches
+>></pre>
+
+<dt>
+<i>find all stanzas with at least 6 lines</i></dt>
+
+<pre>>> region STANZA incl.6 region L
+&nbsp; 8: 5801 matches
+>></pre>
+
+<dt>
+<i>find all stanzas with exactly 6 lines</i></dt>
+
+<pre>>> region STANZA incl.6 region L
+&nbsp; 8: 5801 matches
+>> region STANZA incl.7 region L
+&nbsp; 9: 5297 matches
+>> 8 - 9
+&nbsp; 10: 504 matches
+>></pre>
+<i>[cruising for sonnets?]</i>
+<dt>
+<i>find six line stanzas with words starting with "the" in them</i></dt>
+
+<pre>>> ((region STANZA incl.6 region L) - (region STANZA incl.7 region L)) incl "the "
+&nbsp; 14: 429 matches
+>></pre>
+<i>[a region set of STANZA regions]</i>
+<dt>
+<i>find all the words starting with "the" that occur in six-line stanzas</i></dt>
+
+<pre>>> "the " within ((region STANZA incl.6 region L) - (region STANZA incl.7 region L))
+&nbsp; 15: 1187 matches
+>></pre>
+<i>[a point set of points where "the" is]</i>
+<dt>
+<i>all the poems that are classified as being written or published between
+1801 and 1850</i> Here we need to have spent time with the DTD documentation
+to know that the CBEL element contains information about publication and
+authorship, and that a given CBEL element lives in a POETGRP element, which
+will contain all the poems by a single poet. We also need to know what
+will show up in the CBEL element (this last bit skips ahead to displaying
+sets).</dt>
+
+<pre>>> region POEM within (region POETGRP incl (region CBEL incl "1801-1850"))
+&nbsp; 19: 675 matches
+>> region POEM within (region POETGRP incl "&lt;CBEL>1801-1850")
+&nbsp; 20: 675 matches
+>></pre>
+<i>[are we absolutely certain that CBEL doesn't ever take attributes?!]</i>
+<dt>
+<i>roughly how many pages of text are there in this database?</i> For Chadwyck-Healeys,
+often an estimate can be obtained from the number of PB (page break) elements
+they use</dt>
+
+<pre>>> region PB
+&nbsp; 22: 5650 matches
+>></pre>
+<i>[is this the only way they mark pages?]</i>
+<dt>
+<i>what typographical renderings are used in this transcription and representation
+of the original text?</i> Here we need to have found out from the DTD documentation
+that the R attribute on a lot of different elements holds rendering information.</dt>
+
+<pre>>> region "A-R"
+&nbsp; 31: 155536 matches
+>></pre>
+see below for printing this out and doing something intelligible with those
+thousands of items
+<dt>
+<i>We want to search in poems by women for instances of "mother"</i> Here,
+we need to find out how (IF!) gender is attached to poems or poets (in
+the example here from DAAP, POEM has a required GENDER attribute, which
+takes "male" or "female" as a value)</dt>
+
+<pre>>> "mother " within (region POEM incl (region "A-GENDER" incl "female"))
+&nbsp; 36: 266 matches
+>> "mother " within (region POEM incl ("gender=female"))
+&nbsp; 37: 266 matches
+>></pre>
+<i>[why does 37 work? what kind of set results here?]</i>
+<dt>
+<i>We want to find stanzas that follow stanzas that use the word "pie"</i></dt>
+
+<p><br>This is a trick question, there is no way, using the commands and
+sgml region relationships given, to express this relationship <i>within
+pat50</i>. Siblinghood, and immediate parent-child relationships cannot
+be conclusively established in pat50. One needs to ask some questions of
+pat50, massage the answers, and then feed them back in as a second layer
+of questions to get at these kinds of relationships.
+<p>One way would be to try something like this:
+<blockquote>
+<pre>>> "&lt;/stanza" within (region STANZA incl "pie ")
+&nbsp; 40: 99 matches
+>>&nbsp;
+
+## print out that point set, add the length of the text
+## "/STANZA>" (8) to each offset, and submit
+## those back to OT as searches such as (assuming that 26644 was a
+## result in the above search set 40):
+
+>> region STANZA ^ [26652]
+&nbsp; 41: one match
+>></pre>
+</blockquote>
+Another way might be something like this:
+<blockquote>
+<pre>>> "&lt;/stanza" within (region STANZA incl "pie ")
+&nbsp; 42: 99 matches
+>> shift.8 42
+&nbsp; 43: 99 matches
+>> region STANZA ^ 43&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp; 44: 81 matches
+>></pre>
+</blockquote>
+Wait just a minute! I thought we said this couldn't be done <i>within pat50</i>!
+Doesn't this give us the exact same thing as the first suggestion: all
+STANZA's that follow a STANZA with "pie*"? Yes, it should give us the same
+thing. I'm going to stick by my claim that there is no way to do this within
+pat50 because the last stunt above (and even the first stunt, now that
+I mention it) depend utterly on:
+<ul>
+<li>
+the knowledge we have about the length of the open tag for STANZA</li>
+
+<li>
+that there is nothing like a PI or PB or some such other intervening nonsense
+sibling</li>
+</ul>
+A better strategy might be to modify the first suggestion to:
+<blockquote><tt>("&lt;/stanza" within (region STANZA incl "pie ")) fby.15
+"&lt;STANZA"</tt></blockquote>
+And home in on the following stanzas that way. Or at least hope that 15
+is a good number.</dl>
+You might note that I almost always invoke the " " at the end of a search
+term. SSP collections as distributed do this. One of the notable DLPS exception
+is <a href="http://moa.umdl.umich.edu/moa/" target="external">Making of
+America</a>, which puts the application of the trailing * in the hands
+of the user (and don't doubt for a moment that we have a validity check
+in MoA that zaps *'s that aren't at the end of an input string...). Note
+that MOA is implemented using OT60, which handles these things a bit differently.
+Other collections using pat50 simply search for, say "pie" and the user
+should expect to get "piedmont" and "piers", etc.
+<p>The more complicated these get, the more we want to be able to look
+at our end results, or look at the building blocks on which complicated
+results are built.
+</body>
+</html>

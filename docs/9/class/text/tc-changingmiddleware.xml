@@ -1,0 +1,76 @@
+<?xml version="1.0"?>
+
+<!-- SPO Editorial Services                  -->
+<!-- automatically-generated XML header file -->
+
+<?xml-stylesheet href="../../../pre11-dlxsdocs.xsl" type="text/xsl"?>
+<!DOCTYPE DLPSDOC PUBLIC "-//UM-DLPS//DTD DLPS Publications//EN" "http://docs.umdl.umich.edu/dlps/docs/dlpsdocs.dtd">
+<DLPSDOC>
+<TITLE>Making Changes to the Text Class Middleware</TITLE>
+<HEADER>
+<JOURNAL>DLXS Documentation</JOURNAL>
+<PUBDATE>2002-03-13 11:54:23 EST</PUBDATE>
+<AUTH1>Pagliere, Alan</AUTH1>
+<AUTH2></AUTH2>
+<DOCTITLE>Making Changes to the Text Class Middleware</DOCTITLE>
+<VOL>class</VOL>
+<ISS>text</ISS>
+<FILE>dlxsdocs-tc-changingmiddleware</FILE>
+</HEADER>
+
+<BODY>
+<BHEAD>Making Changes to the DLXS Text Class Middleware</BHEAD>
+
+<DIV1><H1>OVERVIEW</H1>
+<P>Since there is much generic code in the TextClass middleware, little must
+be done to add a new collection. Following are the basic steps and who is
+usually responsible for them:</P>
+<TABLE BORDER="1">
+<TBODY>
+<TR>
+<TD>Conversion to the delivery DTD</TD>
+<TD>Content Specialist</TD>
+</TR>
+<TR>
+<TD>Indexing and creation of any needed fabricated regions</TD>
+<TD>Content Specialist</TD>
+</TR>
+<TR>
+<TD>Editing of the new collection's mapper file</TD>
+<TD>Content Specialist</TD>
+</TR>
+<TR>
+<TD>Addition to the colldb of appropriate collection specific
+metadata</TD>
+<TD>Content Specialist</TD>
+</TR>
+<TR>
+<TD>Addition of collection to those authorized</TD>
+<TD>System Admin or Programmer</TD>
+</TR></TBODY>
+</TABLE>
+
+<P>This alone should be enough to get the collection online if the
+collection is made to use the TextClass.pm generic module.</P>
+<P>If some
+collection specific characteristics or behavior are required, such as a
+difference in the depth of DIVs, or specific searching or filtering, then
+subclassing of the TextClass module will be necessary, which of course is
+usually done by the Programmer.</P>
+</DIV1>
+<DIV1><H1>SUBCLASSING THE TEXTCLASS</H1>
+<P>It is often a good idea to copy a TextClass subclass module and make
+changes to it. A convention has evolved at DLPS to name subclass modules
+something like <I>Coll</I>TC.pm, where <I>Coll </I>is an identifier for the
+collection. The <TT>_initialize</TT> method
+should call the superclass's method and then override whatever it needs to.
+Often this is nothing more than declaring the hashes that control the depth of
+DIVs and other elements for searching and filtering.</P>
+</DIV1>
+<DIV1><H1>SEARCHING AND FILTERING</H1>
+<P>Sometimes specific searching, but more often, specific filtering is
+necessary. In this case, overriding any methods and subroutines necessary in the
+TextClass.pm superclass module can be done in the CollTC subclass module.</P>
+</DIV1>
+</BODY>
+</DLPSDOC>

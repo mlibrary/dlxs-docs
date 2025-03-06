@@ -1,0 +1,24 @@
+#!/l/local/bin/perl
+
+$extra = shift(@ARGV);
+$dd = shift(@ARGV);
+
+open(EXTRA, "<$extra") || die "couldnt open $extra! $!\n";
+while (<EXTRA>) {
+    $extraline .= $_;
+}
+close(EXTRA);
+
+undef($/);
+
+open(DD, "<$dd") || die "couldnt open $dd for reading! $!\n";
+while (<DD>) {
+    $ddline .= $_;
+}
+close(DD);
+
+$ddline =~ s,</Regions>,$extraline\n</Regions>,;
+
+open(DD, ">$dd") || die "couldnt open $dd for writing! $!\n";
+print DD $ddline;
+close(DD);

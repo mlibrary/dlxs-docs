@@ -1,0 +1,73 @@
+<html>
+<head>
+<title>completeoverride.pl</title>
+</head>
+<body bgcolor="#FFFFFF">
+<pre>
+package TextClass;
+
+
+sub TextFilter
+{
+    my $self = shift;
+    my ( $sRef ) = @_;
+
+    # Make the author BIG, BIG, BIG
+    $$sRef =~ s,(Author\:.*?),&lt;font size=10&gt;$1&lt;/font&gt;,gs;
+
+    return $results;
+}
+
+package SomeSubclass;
+
+use TextClass ();
+
+use vars qw( @ISA );
+@ISA = qw( TextClass );
+
+sub TextFilter
+{
+    my $self = shift;
+    my ( $sRef ) = @_;
+
+    # NO CALL TO SUPER !!
+
+    # Make the author SMALL SMALL SMALL
+    $$sRef =~ s,(Author\:.*?),&lt;font size=2&gt;$1&lt;/font&gt;,gs;
+
+    return $results;
+}
+
+1;
+
+
+
+# **************************************************
+# **************************************************
+# **************************************************
+#
+# In the file text-idx (main program
+#
+# **************************************************
+
+#!/l/local/bin/perl
+
+use TextClass;
+use SomeSubclass;  # if compile time binding
+
+
+require "SomeSubclass.pm"; # if run time binding
+
+
+my $subclassObject = SomeSubclass-&gt;new( $collid );
+
+my $text = 'Author: Phil Farber';
+
+
+$subclassObject-&gt;TextFilter( \$text );
+
+exit;
+
+</pre>
+</body>
+</html>

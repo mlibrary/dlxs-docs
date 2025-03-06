@@ -1,0 +1,128 @@
+<html>
+<head>
+<title>broker20: An OAI-compliant Metadata Server</title>
+
+
+
+ <link href="../dlxsdocs.css" rel="stylesheet" type="text/css">
+</head>         <body>
+<div class="pageTitle">broker20: An OAI-compliant Metadata Server</div>
+		
+			<h1>Overview and Contents</h1>
+			<p>
+				<b>broker20</b> is the CGI program that produces XML responses to OAI verbs as dictated by version 2.0 of the OAI protocol. Setting up broker20 will allow service providers to access and harvest metadata about your collections, for the purpose of aggregating and making this metadata, and consequently the collections, more broadly available to the public.</p>
+			<p>
+				<b>broker20</b> also produces responses to CGM verbs as dictated by the <a href="http://www.library.cornell.edu/mathbooks/">CGM Protocol</a>, a protocol for distributed searching. This protocol was developed by the University of Michigan, Cornell University, and G&#246;ttingen University with support provided by the National Science Foundation. Working from the roots of the DIENST protocol developed at Cornell and the then-emergent OAI protocols, the project team focused on creating a new protocol--dubbed CGM, for "Cornell, G&#246;ttingen, Michigan"--that was consistent with OAI, borrowed from DIENST, and added mechanisms for full text searching. The <i>broker20</i> verbs that support the CGM protocol are intended to be used only at the University of Michigan.</p>
+			<p>
+				<b>Contents</b>:</p>
+			<ul>
+				<li>
+					<a href="#verbs">OAI Verbs</a>
+				</li>
+				<li>
+					<a href="#sets">OAI Sets</a>
+				</li>
+			</ul>
+		
+		
+			<h1>
+				<a name="verbs"/>OAI Verbs</h1>
+			
+				<p>Setting up broker20 involves understanding the six verbs behind the OAI protocol.  To learn more about the OAI protocol, see <a href="http://www.openarchives.org/">http://www.openarchives.org/</a>.</p>
+				<ul>
+					<li>
+						<a href="#identify">Identify</a>
+					</li>
+					<li>
+						<a href="#listsets">ListSets</a>
+					</li>
+					<li>
+						<a href="#listmetadataformats">ListMetadataFormats</a>
+					</li>
+					<li>
+						<a href="#listidentifiers">ListIdentfiers</a>
+					</li>
+					<li>
+						<a href="#getrecord">GetRecord</a>
+					</li>
+					<li>
+						<a href="#listrecords">ListRecords</a>
+					</li>
+				</ul>
+			
+			
+				<h2>
+					<a name="identify"/>Identify</h2>
+<p><b>e.g., http://www.hti.umich.edu/cgi/b/broker20/broker20/?verb=Identify</b></p>
+				<p>This verb identifies the data provider (i.e., you). The response of this verb is created based on the following parameters that reside in $DLXSROOT/cgi/b/broker20/<i>broker20.cfg</i>, and that are configurable when the dlxs middleware is <a href="../installation/index.html">installed</a>:</p>
+				<p>
+					<tt>$gRepositoryID</tt> : for DLPS, the value is <i>lib.umich.edu</i>. Note that this must be a domain name.
+				</p>
+				<p>
+					<tt>$gRepositoryName</tt> : for DLPS, the value is <i>The University of Michigan. University Library. Digital Library Production Service.</i>
+				</p>
+				<p>
+					<tt>$BaseUrl</tt> : for DLPS, the value is <i>http://www.hti.umich.edu/cgi/b/broker20/broker20</i>
+				</p>
+				<p>
+					<tt>$AdminEmail</tt> : for DLPS, the value is <i>dlps-broker@umich.edu</i>
+				</p>
+				<p>
+					<tt>$EarliestDateStamp</tt> : for DLPS, the value is <i>2000-08-17</i>. Enter the ealiest date stamp of the records you are making available.
+				</p>
+				<p>
+					<tt>$DeletedRecord</tt> : for DLPS, the value is <i>NO</i>.  This flag indicates the manner in which the repository supports the notion of deleted records. Legitimate values are no, transient, or persistent. <i>broker20</i> does not support transient or persistent deleted records at this time.  
+				</p>
+				<p>
+					<tt>$Granularity</tt> : for DLPS, the value is <i>YYYY-MM-DD</i>.  This is the resolution of the datestamp for your repository.  The legitimate values are YYYY-MM-DD and YYYY-MM-DDThh:mm:ssZ with meanings as defined in ISO8601.  The default value is the granularity used  in the preparation of bib data.
+				</p>
+				<p>
+					<tt>$SampleID</tt> : for DLPS, the value is <i>oai:lib.umich.edu:YC023</i>, with YC023 being a record id from the oaiall:yeatsbib collection/set. It is a best practice to use a real record id from your repository.
+				</p>
+			
+			
+				<h2>
+					<a name="listsets"/>ListSets</h2>
+<p><b>e.g., http://www.hti.umich.edu/cgi/b/broker20/broker20/?verb=ListSets</b></p>
+				<p>
+				<i>ListSets</i> will list the sets in your repository. broker20 views sets as collections of BibClass data. These collections can be ordered into groups that have OAI access privileges (e.g., for DLPS, oaiall is one of our OAI-accessible groups that contains the majority of our BibClass collections). Create such a group using <i>collmgr</i> (see <a href="../collmeta/collmgr.html">collmgr documentation</a> for specific steps to do this), and set the OAI parameter for that group to be <tt>Y</tt> or <tt>y</tt>. Then select (check) the collections you want in that group, and these collections will show as sets when the ListSets verb is issued to <i>broker20</i>.</p>
+				<p>Because the setSpec values, which broker20 builds using the values collid and groupid, need to be alphanumeric according to the OAI protocol, all groupid and collid values need to be alphanumeric. Here at DLPS we have collids ending in "-bib". <i>broker20</i> will remove the hyphens to make them OAI compliant, and when a set with bib at the end is requested using the OAI protocol, it is translated to "-bib" so we can access it internally. The ramifications of this are that we are limited to not using collids with "bib" suffixes unless they are preceded by a hyphen. For example, a BibClass collid of yeats-bib will be turned into yeatsbib by <i>broker20</i>, but a BibClass collid like yeatsbib should not be created.</p>
+				<p>You may add collection/set descriptions in collmgr -- in the colldescr field -- that will show up as set descriptions when the ListSets verb is issued to <i>broker20</i>.</p> 
+				<p>Set information  is used as an optional input by <i>ListIdentifiers</i> and <i>ListRecords</i>. </p>
+			
+				<h2>
+					<a name="listmetadataformats"/>ListMetadataFormats</h2>
+<p><b>e.g., http://www.hti.umich.edu/cgi/b/broker20/broker20/?verb=ListMetadataFormats&identifier=oai:lib.umich.edu:YC023</b></p>
+				<p>
+				<i>ListMetadataFormats</i> responds with a list of all the formats supported by <i>broker20</i>. Currently, it responds with: <tt>oai_dc</tt> (simple Dublin Core) used alone or with a valid identifier passed in.</p>
+						
+				<h2>
+					<a name="listidentifiers"/>ListIdentifiers</h2>
+<p><b>e.g., http://www.hti.umich.edu/cgi/b/broker20/broker20/?verb=ListIdentifiers&metadataPrefix=oai_dc&set=oaiall:yeatsbib</b></p>
+				<p>This verb will list the identifiers, i.e., the unique record locators, in the repository. If a set is not specified, it will list all the identifiers in groups that have been made OAI enabled. If a set is specified, it will list identifiers for the requested set.</p>
+						
+				<h2>
+					<a name="getrecord"/>GetRecord</h2>
+<p><b>e.g., http://www.hti.umich.edu/cgi/b/broker20/broker20/?verb=GetRecord&metadataPrefix=oai_dc&identifier=oai:lib.umich.edu:YC023</b></p>
+				<p>
+				<i>GetRecord</i> will return a single record for the identifier requested, in the metadata format requested.</p>
+						
+				<h2>
+					<a name="listrecords"/>ListRecords</h2>
+<p><b>e.g., http://www.hti.umich.edu/cgi/b/broker20/broker20/?verb=ListRecords&metadataPrefix=oai_dc&set=oaiall:yeatsbib</b></p>
+				<p>This verb works very much like <i>GetRecord</i>, but instead of returning one record, it returns a list of records based on the input parameters. This is the verb harvesters generally use to harvest your collections.</p>
+				<p>In broker20 there is a routine that converts BibClass data to Dublin Core data for this verb (and the GetRecord verb) and in the case where the BibClass data is bad (missing closing K tag, for example), the record will not be output, but an entry into the ErrorLogFor_broker20 log file in /l1/cgi/b/broker20 will be made. In the log file you will find the time the error took place, the id of the record, and a copy of the record with the problem.</p>
+								
+			<h1>
+				<a name="sets"/>OAI Sets</h1>
+			<p>In order for <i>broker20</i> to work, you need to create a group or groups made up of collections that you wish harvesters to gather. You do this through <a href="../collmeta/collmgr.html"><i>collmgr</i></a>. Be sure to set the OAI parameter to <tt>Y</tt> or <tt>y</tt> for these groups. Most institutions will probably only create one group with the collections they feel a harvester should have access to, but there are cases in which you will want to use different schema to reflect your sets, e.g., topical, geographical, access-related. Create different groups containing different collections to reflect these schema. If this method is taken, please inform harvesters of the different group schemas.</p>
+			<p>To put collections online, you should follow the procedures to get <a href="../class/bib/index.html">BibClass</a> collections online, since <i>broker20</i> works against BibClass collections. Also, remember to add the collection(s) to the AUTH system giving <i>broker20</i> access to them.</p>
+			<p>All searches for data are done with <a href="../xpat/index.html">XPAT</a>.</p>
+			<p>OAI is Unicode compliant. If your institution has character entity references, you will need to add them to the <i>broker20</i> code with the appropriate Unicode values. You will need to add the conversions in the routine <i>ConvertStandardCharEnt</i>.
+			</p>
+			<p>There is another routine, <i>ConvertCollectionChars</i>, that converts Latin-1 characters (x0a1 to x0ff) and a few other characters from ISO-8859-* into their Unicode equivalents. This routine is commented out as we are now providing only Unicode BibClass records in DLPS. You may need to enable conversions in this routine if your records contain any characters from ISO encoding not currently handled by <i>broker20</i>.</p>
+			<p>In instances where a character entity reference does not have an obvious Unicode equivalent, the character entity reference is unchanged in the output. The user interface will simply display this string.</p>
+			<p>When you complete your installation and testing of <i>broker20</i> at your institution, you will want to register your <i>broker20</i> implementation with the OAI website at <a href="http://www.openarchives.org/data/registerasprovider.html">http://www.openarchives.org/data/registerasprovider.html</a>. This site will run your <i>broker20</i> implementation through a series of tests, and once it passes the tests you will be prompted to register. This is the official place to register to let harvesters know you are available for harvesting. You can test your repository first at the <a href="http://re.cs.uct.ac.za/">Repository Explorer</a> which allows you to see the output of your data provider without harvesting yourself.</p>
+	
+	</body>
+</html>

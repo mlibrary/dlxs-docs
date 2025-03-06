@@ -1,0 +1,58 @@
+<html>
+  <head>
+    <meta HTTP-EQUIV="Content-Type" content="text/html; charset=iso-8859-1">
+    <title>UM Provider setup / design</title>
+    <link rel="stylesheet" href="../icstyle/icstyles.css" type="TEXT/CSS">
+    <link rel="stylesheet" href="../styles.css" type="TEXT/CSS">
+    <style type="text/css">
+      <!--
+      .style1 { color: #FF0907; font-weight: bold; }
+      -->
+   </style>
+  </head>
+
+  <body BGCOLOR="#FFFFFF" TEXT="#000000" CLASS="mainpalette"> 
+
+    <h1 class="sectionheader">OAI-PMH 2.0 Verbs</h1>
+
+    <h2 class="sectionheader">Identify</h2>
+
+    <pre>e.g., <a href="http://quod.lib.umich.edu/cgi/o/oai/oai?verb=Identify">http://quod.lib.umich.edu/cgi/o/oai/oai?verb=Identify</a></pre>
+
+    <p>This verb identifies the data provider (i.e., you). The response of this verb is created based on the parameters in the 
+    <span style="font-family: monospace;">$DLXSROOT/lib/oaiGlobals.conf</span> config file.</p>
+
+    <h2 class="sectionheader">ListSets</h2>
+
+    <pre>e.g., <a href="http://quod.lib.umich.edu/cgi/o/oai/oai?verb=ListSets">http://quod.lib.umich.edu/cgi/o/oai/oai?verb=ListSets</a></pre>
+
+    <p>ListSets will list the sets in your repository. This verb is used to retrieve the set structure of a collection, which is useful for selective harvesting. Sets can be organized in any manner you wish, e.g., subject, format, chronology.</p>
+
+    <p>Set information is used as an optional input by ListIdentifiers and ListRecords.</p>
+
+    <h2 class="sectionheader">ListMetadataFormats</h2>
+
+    <pre>e.g., <a href="http://quod.lib.umich.edu/cgi/o/oai/oai?verb=ListMetadataFormats&identifier=oai:quod.lib.umich.edu:MIU01-000053324">http://quod.lib.umich.edu/cgi/o/oai/oai?verb=ListMetadataFormats&identifier=oai:quod.lib.umich.edu:MIU01-000053324</a></pre>
+
+    <p>ListMetadataFormats responds with a list of all the supported formats, e.g., it responds with oai_dc (simple Dublin Core) used alone or with a valid identifier passed in. Other metadata formats are encouraged.
+
+    <h2 class="sectionheader">ListIdentifiers</h2>
+
+    <pre>e.g., <a href="http://quod.lib.umich.edu/cgi/o/oai/oai?verb=ListIdentifiers&metadataPrefix=oai_dc&set=dlps">http://quod.lib.umich.edu/cgi/o/oai/oai?verb=ListIdentifiers&metadataPrefix=oai_dc&set=dlps</a></pre>
+
+    <p>This verb will list the identifiers, i.e., the unique record locators, in the repository. If a set is not specified, it will list all the identifiers in groups that have been OAI enabled. If a set is specified, it will list identifiers for the requested set.</p>
+
+    <h2 class="sectionheader">GetRecord</h2>
+
+    <pre>e.g., <a href="http://quod.lib.umich.edu/cgi/o/oai/oai?verb=GetRecord&metadataPrefix=oai_dc&identifier=oai:quod.lib.umich.edu:MIU01-000053324">http://quod.lib.umich.edu/cgi/o/oai/oai?verb=GetRecord&metadataPrefix=oai_dc&identifier=oai:quod.lib.umich.edu:MIU01-000053324</a></pre>
+
+    <p>GetRecord will return a single record for the identifier requested, in the metadata format requested.</p>
+
+    <h2 class="sectionheader">ListRecords</h2>
+
+    <pre>e.g., <a href="http://quod.lib.umich.edu/cgi/o/oai/oai?verb=ListRecords&metadataPrefix=oai_dc&set=dlps">http://quod.lib.umich.edu/cgi/o/oai/oai?verb=ListRecords&metadataPrefix=oai_dc&set=dlps</a></pre>
+
+    <p>This verb works very much like GetRecord, but instead of returning one record, it returns a list of records based on the input parameters. This is the verb harvesters generally use to harvest your collections.</p>
+
+  </body>
+</html>

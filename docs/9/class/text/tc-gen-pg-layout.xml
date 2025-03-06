@@ -1,0 +1,65 @@
+<?xml version="1.0"?>
+
+<!-- SPO Editorial Services                  -->
+<!-- automatically-generated XML header file -->
+
+<?xml-stylesheet href="../../../pre11-dlxsdocs.xsl" type="text/xsl"?>
+<!DOCTYPE DLPSDOC PUBLIC "-//UM-DLPS//DTD DLPS Publications//EN" "http://docs.umdl.umich.edu/dlps/docs/dlpsdocs.dtd">
+<DLPSDOC>
+<TITLE>Text Class General Page Layout and Color</TITLE>
+<HEADER>
+<JOURNAL>DLXS Documentation</JOURNAL>
+<PUBDATE>2002-07-08 11:48:29 EDT</PUBDATE>
+<AUTH1>Stoeffler, Matt</AUTH1>
+<AUTH2></AUTH2>
+<DOCTITLE>Text Class General Page Layout and Color</DOCTITLE>
+<VOL>class</VOL>
+<ISS>text</ISS>
+<FILE>dlxsdocs-tc-gen-pg-layout</FILE>
+</HEADER>
+<BODY>
+    <BHEAD>Text Class General Page Layout and Color</BHEAD>
+ 
+<DIV1 ID="main"> 
+  
+<P>Default page delivery in Text Class is done via "class-level" templates that are shared 
+  by all instances of the class, though the middleware also supports "collection-specific" 
+  templates for any or all collections to implement collection-specific behavior. All default Text 
+  Class page templates are based on the same layout approach, which relies on 
+  tables (along with transparent spacer gifs) for all positioning and general 
+  color or graphic appearance. General layout is shown in <B>Figure 1</B>, which 
+  shows top-level tables with borders showing, and using the color scheme for 
+  the <A HREF="http://ets.umdl.umich.edu/v/voltaire/">Voltaire &#x00e9;lectroniqu</A>e collection. All table cells for header and 
+  navigation bar content at this level have default values for the <CODE>bgcolor</CODE> 
+  attribute for browsers that are not CSS-capable. Each header and navigation 
+  cell also has a default CSS class value and default background image specified 
+  in the <CODE>background</CODE> attribute. The background colors created by class 
+  and gif allow for flexibility to change appearances for different collections 
+  based on the same template. For more on specifiying individual collection appearance, 
+  see <A HREF="tc-ind-coll-chars.xml">Specifying individual collection characteristics</A>.</P>
+  <TABLE BORDER="0" CELLSPACING="2" CELLPADDING="0">
+    <TR>
+      <TD><IMG SRC="graphics/gen-layout.gif" WIDTH="450" HEIGHT="368"/></TD>
+    </TR>
+    <TR>
+      <TD><B>Figure 1</B>: top-level tables with borders showing.</TD>
+    </TR>
+  </TABLE>
+<BR/>
+  <P><B> Figure 2</B> shows the simple search page for Voltaire &#x00e9;lectronique 
+    as it appears normally. Navigation bar labels, page header (i.e., &quot;Simple 
+    search&quot;), instruction text and footer text are hard coded, and thus identical 
+    across all collections. All other content is specified per collection by processing 
+    instructions which, when precessed by the CGI, are replaced with collection-specific content, usually from the DLXS collection information database. </P>
+  <TABLE BORDER="0" CELLSPACING="2" CELLPADDING="0">
+    <TR>
+      <TD><IMG SRC="graphics/simple-voltaire-450.gif" WIDTH="449" HEIGHT="289" BORDER="1"/></TD>
+    </TR>
+    <TR>
+      <TD><B>Figure 2</B>: simple search page for Voltaire &#x00e9;lectronique.</TD>
+    </TR>
+  </TABLE>
+<BR/><BR/><BR/>
+</DIV1>
+  </BODY>
+</DLPSDOC>

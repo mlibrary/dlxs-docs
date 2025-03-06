@@ -1,0 +1,109 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+<title>Intro Finding Aids</title>
+</head>
+
+<body>
+<ul>
+	    <li>Overview</li>
+	    <li>Comparison with Text Class</li>
+	    <li>Run through with samplefa/workshopfa</li>
+	    <li>Repeat with non-Bentley finding aids</li>
+	    <ul>
+	      <li>Troubleshooting and resolving problems</li>
+          <li>(prep scripts, config files, perl code, XSL) </li>
+          <li>Discussion of tips from other Finding Aids implementors</li>
+	</ul>
+</ul>
+
+	    <p>&nbsp;</p>
+<li><a href="#FindaidEncodingPractices">Findaid Class Encoding Practices and
+	      Processes</a>&nbsp;&nbsp;
+	      <ul>
+	        <li> <a href="#ead2002DTDOverview">EAD 2002
+	          DTD Overview</a></li>
+    
+			 <li><a href="#PracticalEADEncodingIssues">Practical EAD Encoding Issues</a></li>
+	         <li><a href="#DataPrep">Data Preparation</a></li>
+          </ul>
+</li>
+	    <li><a href="#FindaidClassIndexBuildingwithXPAT">Findaid Class Index Building
+		        with XPAT</a>
+           <ul>
+	                  <li><a href="#SetupDirectoriesforXPATIndex">Set Up Directories
+	                        and Files for XPAT Indexing</a> </li>
+	                  <li><a href="#BuildtheXPATIndex">Build the XPAT Index</a> </li>
+	                  <li><a href="#FabRegions">Fabricated Regions in FindaidClass</a></li>
+           </ul>
+        </li>
+	    <li><a href="#FindaidClassCollectiontoWeb">Findaid Class Collection to Web</a>
+      
+           <ul>
+		                       <li><a href="#ReviewtheCollectionDatabaseEntrywithCollMgr">Review
+			                         the Collection Database Entry with CollMgr </a> </li>
+		                       <li><a href="#ReviewtheGroupsDatabaseEntrywithCollMgr">Review
+		                             the Groups Database Entry with CollMgr</a> (we will skip) </li>
+		                       <li><a href="#MakeCollectionmaps">Make Collection Map</a> (we will just use samplefa) </li>
+		                       <li><a href="#SetuptheCollectionsWebDirectory">Set Up
+		                             the Collection's Web Directory</a> </li>
+		                       <li><a href="#TryItOut">Try It Out</a> </li>
+           </ul>
+        </li>
+	    <li><a href="#linking">Linking from Finding Aids Using the ID Resolver</a> (we will skip)</li>
+        <p>&nbsp;</p>
+        <p>&nbsp;</p>
+        <li>Live demo using non-Bentley finding aids</li>
+        <ul>
+          <li>Washington U</li>
+          <li>Getty </li>
+        </ul>
+        <li>data prep (troubleshooting and resolving problems)</li>
+        <li>indexing (troubleshooting and resolving problems)</li>
+        <li>rendering (troubleshooting and resolving problems     </li>
+        </ul>
+<p>Preprocessing and Encoding considerations
+  Data Prep</p>
+<ol>
+	 <li><a href="#DataPrepStep1">validating the  files individually</a> against
+	    the EAD <em>2002</em> DTD<br>
+	    <strong>make validateeach</strong><br>
+	 </li>
+	 <li><a href="#DataPrepStep2">concatenating the files into one larger XML file</a><br>
+       <strong>make prepdocs</strong><br></li>
+	 <li><a href="#DataPrepStep3">validating the concatenated file</a> against the
+	    <em>dlxsead2002</em> DTD:<br>
+	    <strong>make validate</strong><br>
+	 </li>
+<li><a href="#DataPrepStep4">"normalizing" the concatenated file.</a><br>
+	    <strong>make norm</strong><br>
+</li>
+<li><a href="#DataPrepStep5">validating the normalized concatenated file against the
+	    <em>dlxsead2002</em> DTD</a><br>
+	    <strong>make validate</strong><br>
+</li>
+</ol>
+<pre>
+&lt;COLL&gt;<br>&lt;ead&gt;&lt;eadheader&gt;&lt;eadid&gt;1&lt;/eadid&gt;...&lt;/eadheader&gt;... content&lt;/ead&gt;<br>&lt;ead&gt;&lt;eadheader&gt;&lt;eadid&gt;2&lt;/eadid&gt;...&lt;/eadheader&gt;... content&lt;/ead&gt;<br>&lt;ead&gt;&lt;eadheader&gt;&lt;eadid&gt;3&lt;/eadid&gt;...&lt;/eadheader&gt;... content&lt;/ead&gt;<br>&lt;/COLL&gt;
+
+</pre>
+
+<p><strong>WARNING!</strong> &nbsp;&nbsp; If are extra characters or some other problem with the part of the program that strips out the xml declaration and the docytype declearation the file will end up like:</p>
+
+<pre>
+&lt;COLL&gt;<br>baddata&lt;ead&gt;&lt;eadheader&gt;&lt;eadid&gt;1&lt;/eadid&gt;...&lt;/eadheader&gt;... content&lt;/ead&gt;<br>baddata&lt;ead&gt;&lt;eadheader&gt;&lt;eadid&gt;2&lt;/eadid&gt;...&lt;/eadheader&gt;... content&lt;/ead&gt;<br>baddata&lt;ead&gt;&lt;eadheader&gt;&lt;eadid&gt;3&lt;/eadid&gt;...&lt;/eadheader&gt;... content&lt;/ead&gt;<br>&lt;/COLL&gt;</pre>
+<p>Indexing
+     </p>
+     <ol>
+<li><b>make singledd</b> indexes words for texts that
+		have been concatenated into on large file for a collection. This is the
+	 recommended process. </li>
+	 <li><b>make xml</b> indexes the XML structure by
+		reading the DTD. Validates as it indexes. </li>
+	    
+	 <li><b>make post</b> builds and indexes fabricated
+		regions based on the XPAT queries stored in the workshopfa.extra.srch file.</li>
+</ol>
+</body>
+</html>

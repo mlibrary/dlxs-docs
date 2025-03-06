@@ -1,0 +1,919 @@
+<HTML>
+<HEAD>
+<TITLE>Dump of TextClass Object</TITLE>
+<META http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+</HEAD>
+
+<BODY bgcolor="#FFFFFF" text="#000000">
+<P>
+<FONT face="Arial, Helvetica, sans-serif">Following is a dump (from the perl debugger) of an entire TextClass Object after running text-idx's
+SetUpTcosForSearch routine. Embedded in this TCO is an entire QueryFactory object,
+TerminologyMapper object, and five XPat objects (one for each the MoA collection's five indexes).</FONT>
+</P>
+<PRE>
+  DB<3> x $tco 
+0  MoaTC=HASH(0xaaaf08)
+   'cio' => CollsInfo::CITC=HASH(0xa726b4)
+      'authcollcount' => 6
+      'authcommonregionsearchregions' => ARRAY(0x95425c)
+         0  'acts'
+         1  'editorial notes'
+         2  'endorsements'
+         3  'letters'
+         4  'lines'
+         5  'memoranda'
+         6  'pages'
+         7  'paragraphs'
+         8  'poems'
+         9  'proclaimations'
+         10  'scenes'
+         11  'speeches'
+         12  'text by Lincoln'
+         13  'volumes'
+         14  'works'
+      'authcommontermsearchregions' => ARRAY(0x954244)
+         0  'acts'
+         1  'editorial notes'
+         2  'endorsements'
+         3  'first line'
+         4  'full text'
+         5  'letters'
+         6  'memoranda'
+         7  'page'
+         8  'poems'
+         9  'proclaimations'
+         10  'scenes'
+         11  'section and work titles'
+         12  'speeches'
+         13  'subject'
+         14  'text by Lincoln'
+         15  'title'
+         16  'work'
+      'authkey' => 'ampo20amversebiebosniabwrpdaap20eprosedfabergandflatinlincolnmoamoajrnlmqrnietzschepmastshakeRtesovoltaireyeats'
+      'authtextscount' => 10956
+      'colls' => HASH(0xa7269c)
+         'daap20' => HASH(0xb420d0)
+            'bibsearch' => 'title|author|citation'
+            'collname' => 'Database of 20th Century African American Poetry'
+            'dd' => '/l1/idx/d/daap20/daap20.dd'
+            'firstpublished' => ''
+            'gender' => 'male|female'
+            'genre' => 'poetry'
+            'homesite' => 'http://fizzie.umdl.umich.edu'
+            'host' => 'fizzie.umdl.umich.edu'
+            'ignoreon' => 'dlps4.umdl.umich.edu'
+            'language' => 'English'
+            'lel' => 4
+            'locale' => 'c'
+            'map' => 'daap20.map'
+            'objdir' => '/l1/obj'
+            'pageviewport' => 618
+            'patexec' => '/l/local/xpat/bin/xpat'
+            'period' => '1900-'
+            'port' => 619
+            'qtytexts' => 173
+            'rankfile' => ''
+            'regionsearch' => 'poems|lines|works'
+            'requested' => 0
+            'singlegender' => 'mapped'
+            'singlegenre' => ''
+            'singleperiod' => ''
+            'standalonename' => 'text:Database of 20th Century African American Poetry'
+            'subclass' => 'monographs'
+            'subclassModule' => 'Daap20TC'
+            'termsearch' => 'full text|poems|section and work titles|first line'
+            'webdir' => '/d/daap20'
+            'wwdd' => '/l1/idx/d/daap20/WW/daap20.ww.dd'
+            'wwrealms' => 'author|title|full text'
+            'wwrealmsenglish' => 'Author|Title|Full Text'
+         'eprosed' => HASH(0xb39fbc)
+            'bibsearch' => 'title|author|citation'
+            'collname' => 'English Prose Drama'
+            'dd' => '/l1/idx/e/eprosed/eprosed.dd'
+            'firstpublished' => '1540|1965|5'
+            'gender' => 'male'
+            'genre' => 'drama|poetry'
+            'homesite' => 'http://fizzie.umdl.umich.edu'
+            'host' => 'fizzie.umdl.umich.edu'
+            'ignoreon' => 'dlps4.umdl.umich.edu'
+            'language' => 'English'
+            'lel' => 4
+            'locale' => 'c'
+            'map' => 'eprosed.map'
+            'objdir' => '/l1/obj'
+            'pageviewport' => 618
+            'patexec' => '/l/local/xpat/bin/xpat'
+            'period' => '1500-1600|1600-1700|1700-1800|1900-'
+            'port' => 619
+            'qtytexts' => 1653
+            'rankfile' => ''
+            'regionsearch' => 'speeches|acts|scenes|works|poems'
+            'requested' => 0
+            'singlegender' => ''
+            'singlegenre' => 'mapped'
+            'singleperiod' => 'mapped'
+            'standalonename' => 'text:English Prose Drama'
+            'subclass' => 'monographs'
+            'subclassModule' => 'EprosedTC'
+            'termsearch' => 'full text|speeches|acts|scenes|section and work titles'
+            'webdir' => '/e/eprosed'
+            'wwdd' => ''
+            'wwrealms' => 'author|title|full text'
+            'wwrealmsenglish' => 'Author|Title|Full Text'
+         'faber' => HASH(0xb3fa80)
+            'bibsearch' => 'title|author|citation'
+            'collname' => 'Faber Poetry Library'
+            'dd' => '/l1/idx/f/faber/faber.dd'
+            'firstpublished' => '1925|1999|2'
+            'gender' => 'male|female'
+            'genre' => 'poetry'
+            'homesite' => 'http://fizzie.umdl.umich.edu'
+            'host' => 'fizzie.umdl.umich.edu'
+            'ignoreon' => 'dlps4.umdl.umich.edu'
+            'language' => 'English'
+            'lel' => 4
+            'locale' => 'c'
+            'map' => 'faber.map'
+            'objdir' => '/l1/obj'
+            'pageviewport' => 618
+            'patexec' => '/l/local/xpat/bin/xpat'
+            'period' => '1900-'
+            'port' => 619
+            'qtytexts' => 131
+            'rankfile' => ''
+            'regionsearch' => 'poems|lines|works'
+            'requested' => 0
+            'singlegender' => 'mapped'
+            'singlegenre' => ''
+            'singleperiod' => ''
+            'standalonename' => 'text:Faber Poetry Library'
+            'subclass' => 'monographs'
+            'subclassModule' => 'FaberTC'
+            'termsearch' => 'full text|poems|section and work titles|first line'
+            'webdir' => '/f/faber'
+            'wwdd' => ''
+            'wwrealms' => 'author|title|full text'
+            'wwrealmsenglish' => 'Author|Title|Full Text'
+         'gandf' => HASH(0xb42148)
+            'bibsearch' => 'title|citation'
+            'collname' => 'Garden and Forest'
+            'dd' => '/l1/idx/g/gandf/gandf.dd'
+            'firstpublished' => ''
+            'gender' => 'male|female'
+            'genre' => 'article'
+            'homesite' => 'http://dlps4.umdl.umich.edu'
+            'host' => 'dlps4.umdl.umich.edu'
+            'ignoreon' => ''
+            'language' => 'English'
+            'lel' => 1
+            'locale' => 'c'
+            'map' => 'gandf.map'
+            'objdir' => '/l1/obj'
+            'pageviewport' => 618
+            'patexec' => '/l/local/xpat/bin/xpat'
+            'period' => '1800-1900|1900-'
+            'port' => 619
+            'qtytexts' => 524
+            'rankfile' => ''
+            'regionsearch' => 'pages|works'
+            'requested' => 0
+            'singlegender' => ''
+            'singlegenre' => ''
+            'singleperiod' => ''
+            'standalonename' => 'text:Garden and Forest'
+            'subclass' => 'journals without article info'
+            'subclassModule' => 'TextClass'
+            'termsearch' => 'full text|page|work'
+            'webdir' => '/g/gandf'
+            'wwdd' => '/l1/idx/g/gandf/WW/gandf.ww.dd'
+            'wwrealms' => 'full text'
+            'wwrealmsenglish' => 'Full Text'
+         'lincoln' => HASH(0xb39ea8)
+            'bibsearch' => 'title|author|citation'
+            'collname' => 'Collected Works of Abraham Lincoln'
+            'dd' => '/l1/idx/l/lincoln/lincoln.dd'
+            'firstpublished' => ''
+            'gender' => 'male'
+            'genre' => 'prose non-fiction'
+            'homesite' => 'http://fizzie.umdl.umich.edu'
+            'host' => 'fizzie.umdl.umich.edu'
+            'ignoreon' => ''
+            'language' => 'English'
+            'lel' => 4
+            'locale' => 'c'
+            'map' => 'lincoln.map'
+            'objdir' => '/l1/obj'
+            'pageviewport' => 618
+            'patexec' => '/l/local/xpat/bin/xpat'
+            'period' => '1824-1865'
+            'port' => 619
+            'qtytexts' => 8
+            'rankfile' => ''
+            'regionsearch' => 'volumes|paragraphs|text by Lincoln|editorial notes|endorsements|letters|speeches|memoranda|proclaimations'
+            'requested' => 0
+            'singlegender' => ''
+            'singlegenre' => ''
+            'singleperiod' => ''
+            'standalonename' => 'text:Collected Works of Abraham Lincoln'
+            'subclass' => 'monographs'
+            'subclassModule' => 'LincolnTC'
+            'termsearch' => 'full text|text by Lincoln|editorial notes|endorsements|letters|speeches|memoranda|proclaimations'
+            'webdir' => '/l/lincoln'
+            'wwdd' => '/l1/idx/l/lincoln/WW/lincoln.ww.dd'
+            'wwrealms' => 'full text'
+            'wwrealmsenglish' => 'Full Text'
+         'moa' => HASH(0xb3f870)
+            'bibsearch' => 'title|author|citation'
+            'collname' => 'Making of America Books'
+            'dd' => '/l2/idx/m/moa1/moa1.dd|/l2/idx/m/moa2/moa2.dd|/l2/idx/m/moa3/moa3.dd|/l2/idx/m/moa4/moa4.dd|/l2/idx/m/moa5/moa5.dd'
+            'firstpublished' => '1800|1925|5'
+            'gender' => 'male|female'
+            'genre' => 'prose non-fiction|poetry'
+            'homesite' => 'http://dlps4.umdl.umich.edu'
+            'host' => 'dlps4.umdl.umich.edu'
+            'ignoreon' => ''
+            'language' => 'English'
+            'lel' => 1
+            'locale' => 'c'
+            'map' => 'moa.map'
+            'objdir' => '/l1/obj'
+            'object' => MoaTC=HASH(0xaaaf08)
+               -> REUSED_ADDRESS
+            'pageviewport' => 618
+            'patexec' => '/l/local/xpat/bin/xpat'
+            'period' => '1800-1900|1900-'
+            'port' => 619
+            'qtytexts' => 8467
+            'rankfile' => '/l1/obj/t/text/lib/maps/moaranks.pl'
+            'regionsearch' => 'pages|works'
+            'requested' => 1
+            'singlegender' => ''
+            'singlegenre' => ''
+            'singleperiod' => ''
+            'standalonename' => 'graphic:moa-sm-logo.gif'
+            'subclass' => 'mongraphs'
+            'subclassModule' => 'MoaTC'
+            'termsearch' => 'full text|title|subject'
+            'webdir' => '/m/moa'
+            'wwdd' => ''
+            'wwrealms' => 'full text'
+            'wwrealmsenglish' => 'Full Text'
+      'lowestlel' => 1
+      'reqcollcount' => 1
+      'reqcommongenders' => ARRAY(0x9542d4)
+           empty array
+      'reqcommongenres' => ARRAY(0x9542bc)
+           empty array
+      'reqcommonlanguages' => ARRAY(0x954310)
+           empty array
+      'reqcommonperiods' => ARRAY(0x9542f8)
+           empty array
+      'reqcommonregionsearchregions' => ARRAY(0x954298)
+         0  'pages'
+         1  'works'
+      'reqcommontermsearchregions' => ARRAY(0x954280)
+         0  'full text'
+         1  'subject'
+         2  'title'
+      'reqtextscount' => 8467
+   'collid' => 'moa'
+   'currdepth' => 0
+   'divheadrange' => ARRAY(0xb58570)
+      0  1
+      1  2
+      2  3
+      3  4
+   'fisheyethreshold' => 50
+   'headdepths' => HASH(0xb4657c)
+      'div1head' => 1
+      'div2head' => 2
+      'div3head' => 3
+      'div4head' => 4
+      'div5head' => 5
+      'div6head' => 6
+      'div7head' => 7
+      'div8head' => 8
+      'div9head' => 9
+      'mainheader' => 0
+   'lastlabel' => ''
+   'maxdepthitems' => ARRAY(0xb46600)
+      0  'kwic'
+      1  'LG'
+      2  'ACT'
+      3  'SCENE'
+      4  'SPEECH'
+      5  'PARAGRAPH'
+      6  'POEM'
+      7  'LINE'
+   'multipledds' => 1
+   'pio' => ProcIns=HASH(0xb58214)
+        empty hash
+   'printpsetstring' => 'pr.200 shift.-100 '
+   'psetoffset' => 200
+   'queryfactory' => QueryFactory=HASH(0xb5d328)
+      'mappables' => HASH(0xb65dc4)
+         'op\\d+' => 1
+         'rgn\\d*' => 1
+      'mapper' => TerminologyMapper=HASH(0xb581b4)
+         'mapfile' => undef
+         'mapping' => HASH(0xb581f0)
+            'label' => HASH(0xb5828c)
+               'native' => HASH(0xb582c8)
+                  'And' => '^'
+                  'Anywhere' => 'region main'
+                  'Author' => 'region mainauthor'
+                  'Citation' => 'region HEADER'
+                  'DLPSTEXTCLASS' => 'region "DLPSTEXTCLASS"'
+                  'Followed By' => 'fby'
+                  'Full text' => 'region TEXT'
+                  'ID' => 'region id'
+                  'Including' => 'incl'
+                  'Near' => 'near'
+                  'Not' => '-'
+                  'Not Followed By' => 'not fby'
+                  'Not Near' => 'not near'
+                  'Or' => '+'
+                  'Same page' => 'region page'
+                  'Same work' => 'region main'
+                  'Subject' => 'region subject'
+                  'Title' => 'region maintitle'
+                  'Title Keyword' => 'region maintitle'
+                  'Within' => 'within'
+                  'and' => '^'
+                  'author' => 'region mainauthor'
+                  'authorind' => 'region authorindex'
+                  'citation' => 'region HEADER'
+                  'div1header' => 'region div1header'
+                  'followed by' => 'fby'
+                  'full text' => 'region TEXT'
+                  'id' => 'region id'
+                  'idno' => 'region IDNO'
+                  'including' => 'incl'
+                  'mainheader' => 'region mainheader'
+                  'near' => 'near'
+                  'not' => '-'
+                  'not followed by' => 'not fby'
+                  'not near' => 'not near'
+                  'or' => '+'
+                  'page' => 'region page'
+                  'page-t' => 'region "page-t"'
+                  'pages' => 'region page'
+                  'published' => '(region DATE within region SOURCEDESC)'
+                  'published item' => 'region main'
+                  'same page' => 'region page'
+                  'same work' => 'region main'
+                  'subject' => 'region subject'
+                  'subjects' => 'region subject'
+                  'title' => 'region maintitle'
+                  'title keyword' => 'region maintitle'
+                  'titles' => 'region maintitle'
+                  'unique item identifier' => 'region IDNO'
+                  'within' => 'within'
+                  'work' => 'region main'
+                  'works' => 'region main'
+               'nativeregionname' => HASH(0xb585ac)
+                  'Anywhere' => 'main'
+                  'Author' => 'mainauthor'
+                  'Citation' => 'HEADER'
+                  'DLPSTEXTCLASS' => '"DLPSTEXTCLASS"'
+                  'Full text' => 'TEXT'
+                  'ID' => 'id'
+                  'Same page' => 'page'
+                  'Same work' => 'main'
+                  'Subject' => 'subject'
+                  'Title' => 'maintitle'
+                  'Title Keyword' => 'maintitle'
+                  'author' => 'mainauthor'
+                  'authorind' => 'authorindex'
+                  'citation' => 'HEADER'
+                  'div1header' => 'div1header'
+                  'full text' => 'TEXT'
+                  'id' => 'id'
+                  'idno' => 'IDNO'
+                  'mainheader' => 'mainheader'
+                  'page' => 'page'
+                  'page-t' => '"page-t"'
+                  'pages' => 'page'
+                  'published' => 'DATE'
+                  'published item' => 'main'
+                  'same page' => 'page'
+                  'same work' => 'main'
+                  'subject' => 'subject'
+                  'subjects' => 'subject'
+                  'title' => 'maintitle'
+                  'title keyword' => 'maintitle'
+                  'titles' => 'maintitle'
+                  'unique item identifier' => 'IDNO'
+                  'work' => 'main'
+                  'works' => 'main'
+               'synthetic' => HASH(0xb582a4)
+                  'And' => 'AND'
+                  'Anywhere' => 'ITEM'
+                  'Author' => 'AUTHOR'
+                  'Citation' => 'BIBL'
+                  'DLPSTEXTCLASS' => 'DLPSTEXTCLASS'
+                  'Followed By' => 'FOLLOWED BY'
+                  'Full text' => 'MAIN_SEARCHABLE'
+                  'ID' => 'ID'
+                  'Including' => 'INCLUDING'
+                  'Near' => 'NEAR'
+                  'Not' => 'NOT'
+                  'Not Followed By' => 'NOT FOLLOWED BY'
+                  'Not Near' => 'NOT NEAR'
+                  'Or' => 'OR'
+                  'Same page' => 'PAGE'
+                  'Same work' => 'ITEM'
+                  'Subject' => 'SUBJECT'
+                  'Title' => 'TITLE'
+                  'Title Keyword' => 'TITLE'
+                  'Within' => 'CONTAINED WITHIN'
+                  'and' => 'AND'
+                  'author' => 'AUTHOR'
+                  'authorind' => 'authorind'
+                  'citation' => 'BIBL'
+                  'div1header' => 'DIV1HEADER'
+                  'followed by' => 'FOLLOWED BY'
+                  'full text' => 'MAIN_SEARCHABLE'
+                  'id' => 'ID'
+                  'idno' => 'IDNO'
+                  'including' => 'INCLUDING'
+                  'mainheader' => 'MAINHEADER'
+                  'near' => 'NEAR'
+                  'not' => 'NOT'
+                  'not followed by' => 'NOT FOLLOWED BY'
+                  'not near' => 'NOT NEAR'
+                  'or' => 'OR'
+                  'page' => 'PAGE'
+                  'page-t' => 'PAGESTART'
+                  'pages' => 'PAGE'
+                  'published' => 'FIRST_PUBL'
+                  'published item' => 'DATESEARCH'
+                  'same page' => 'PAGE'
+                  'same work' => 'ITEM'
+                  'subject' => 'SUBJECT'
+                  'subjects' => 'SUBJECT'
+                  'title' => 'TITLE'
+                  'title keyword' => 'TITLE'
+                  'titles' => 'TITLE'
+                  'unique item identifier' => 'IDNO'
+                  'within' => 'CONTAINED WITHIN'
+                  'work' => 'ITEM'
+                  'works' => 'ITEM'
+            'native' => HASH(0xb58364)
+               'label' => HASH(0xb5837c)
+                  '(region DATE within region SOURCEDESC)' => HASH(0xb46468)
+                     'published' => 1
+                  '+' => HASH(0xb3bc38)
+                     'Or' => 1
+                     'or' => 1
+                  '-' => HASH(0xb3bcb0)
+                     'Not' => 1
+                     'not' => 1
+                  '^' => HASH(0xb58394)
+                     'And' => 1
+                     'and' => 1
+                  'fby' => HASH(0xb3be90)
+                     'Followed By' => 1
+                     'followed by' => 1
+                  'incl' => HASH(0xb3bda0)
+                     'Including' => 1
+                     'including' => 1
+                  'near' => HASH(0xb3be18)
+                     'Near' => 1
+                     'near' => 1
+                  'not fby' => HASH(0xb3bf80)
+                     'Not Followed By' => 1
+                     'not followed by' => 1
+                  'not near' => HASH(0xb3bf08)
+                     'Not Near' => 1
+                     'not near' => 1
+                  'region "DLPSTEXTCLASS"' => HASH(0xb59388)
+                     'DLPSTEXTCLASS' => 1
+                  'region "page-t"' => HASH(0xb590b8)
+                     'page-t' => 1
+                  'region HEADER' => HASH(0xb45e30)
+                     'Citation' => 1
+                     'citation' => 1
+                  'region IDNO' => HASH(0xb62d88)
+                     'idno' => 1
+                     'unique item identifier' => 1
+                  'region TEXT' => HASH(0xb44c74)
+                     'Full text' => 1
+                     'full text' => 1
+                  'region authorindex' => HASH(0xb45f50)
+                     'authorind' => 1
+                  'region div1header' => HASH(0xb62f74)
+                     'div1header' => 1
+                  'region id' => HASH(0xb62c44)
+                     'ID' => 1
+                     'id' => 1
+                     'unique item identifier' => 1
+                  'region main' => HASH(0xb59190)
+                     'Anywhere' => 1
+                     'Same work' => 1
+                     'published item' => 1
+                     'same work' => 1
+                     'work' => 1
+                     'works' => 1
+                  'region mainauthor' => HASH(0xb44f8c)
+                     'Author' => 1
+                     'author' => 1
+                  'region mainheader' => HASH(0xb62e9c)
+                     'mainheader' => 1
+                  'region maintitle' => HASH(0xb44d94)
+                     'Title' => 1
+                     'Title Keyword' => 1
+                     'title' => 1
+                     'title keyword' => 1
+                     'titles' => 1
+                  'region page' => HASH(0xb586cc)
+                     'Same page' => 1
+                     'page' => 1
+                     'pages' => 1
+                     'same page' => 1
+                  'region subject' => HASH(0xb45cc8)
+                     'Subject' => 1
+                     'subject' => 2
+                     'subjects' => 1
+                  'within' => HASH(0xb3bd28)
+                     'Within' => 1
+                     'within' => 1
+               'nativeregionname' => HASH(0xb586fc)
+                  '(region DATE within region SOURCEDESC)' => 'DATE'
+                  'region "DLPSTEXTCLASS"' => '"DLPSTEXTCLASS"'
+                  'region "page-t"' => '"page-t"'
+                  'region HEADER' => 'HEADER'
+                  'region IDNO' => 'IDNO'
+                  'region TEXT' => 'TEXT'
+                  'region authorindex' => 'authorindex'
+                  'region div1header' => 'div1header'
+                  'region id' => 'id'
+                  'region main' => 'main'
+                  'region mainauthor' => 'mainauthor'
+                  'region mainheader' => 'mainheader'
+                  'region maintitle' => 'maintitle'
+                  'region page' => 'page'
+                  'region subject' => 'subject'
+               'synthetic' => HASH(0xb583b8)
+                  '(region DATE within region SOURCEDESC)' => 'FIRST_PUBL'
+                  '+' => 'OR'
+                  '-' => 'NOT'
+                  '^' => 'AND'
+                  'fby' => 'FOLLOWED BY'
+                  'incl' => 'INCLUDING'
+                  'near' => 'NEAR'
+                  'not fby' => 'NOT FOLLOWED BY'
+                  'not near' => 'NOT NEAR'
+                  'region "DLPSTEXTCLASS"' => 'DLPSTEXTCLASS'
+                  'region "page-t"' => 'PAGESTART'
+                  'region HEADER' => 'BIBL'
+                  'region IDNO' => 'IDNO'
+                  'region TEXT' => 'MAIN_SEARCHABLE'
+                  'region authorindex' => 'authorind'
+                  'region div1header' => 'DIV1HEADER'
+                  'region id' => 'ID'
+                  'region main' => 'DATESEARCH'
+                  'region mainauthor' => 'AUTHOR'
+                  'region mainheader' => 'MAINHEADER'
+                  'region maintitle' => 'TITLE'
+                  'region page' => 'PAGE'
+                  'region subject' => 'SUBJECT'
+                  'within' => 'CONTAINED WITHIN'
+            'nativeregionname' => HASH(0xb58630)
+               'label' => HASH(0xb58648)
+                  '"DLPSTEXTCLASS"' => HASH(0xb5934c)
+                     'DLPSTEXTCLASS' => 1
+                  '"page-t"' => HASH(0xb5907c)
+                     'page-t' => 1
+                  'DATE' => HASH(0xb4642c)
+                     'published' => 1
+                  'HEADER' => HASH(0xb45df4)
+                     'Citation' => 1
+                     'citation' => 1
+                  'IDNO' => HASH(0xb62d4c)
+                     'idno' => 1
+                     'unique item identifier' => 1
+                  'TEXT' => HASH(0xb44c38)
+                     'Full text' => 1
+                     'full text' => 1
+                  'authorindex' => HASH(0xb45f14)
+                     'authorind' => 1
+                  'div1header' => HASH(0xb62f38)
+                     'div1header' => 1
+                  'id' => HASH(0xb45fec)
+                     'ID' => 1
+                     'id' => 1
+                     'unique item identifier' => 1
+                  'main' => HASH(0xb59154)
+                     'Anywhere' => 1
+                     'Same work' => 1
+                     'published item' => 1
+                     'same work' => 1
+                     'work' => 1
+                     'works' => 1
+                  'mainauthor' => HASH(0xb44f50)
+                     'Author' => 1
+                     'author' => 1
+                  'mainheader' => HASH(0xb62e60)
+                     'mainheader' => 1
+                  'maintitle' => HASH(0xb44d58)
+                     'Title' => 1
+                     'Title Keyword' => 1
+                     'title' => 1
+                     'title keyword' => 1
+                     'titles' => 1
+                  'page' => HASH(0xb58660)
+                     'Same page' => 1
+                     'page' => 1
+                     'pages' => 1
+                     'same page' => 1
+                  'subject' => HASH(0xb45c8c)
+                     'Subject' => 1
+                     'subject' => 2
+                     'subjects' => 1
+               'native' => HASH(0xb586a8)
+                  '"DLPSTEXTCLASS"' => 'region "DLPSTEXTCLASS"'
+                  '"page-t"' => 'region "page-t"'
+                  'DATE' => '(region DATE within region SOURCEDESC)'
+                  'HEADER' => 'region HEADER'
+                  'IDNO' => 'region IDNO'
+                  'TEXT' => 'region TEXT'
+                  'authorindex' => 'region authorindex'
+                  'div1header' => 'region div1header'
+                  'id' => 'region id'
+                  'main' => 'region main'
+                  'mainauthor' => 'region mainauthor'
+                  'mainheader' => 'region mainheader'
+                  'maintitle' => 'region maintitle'
+                  'page' => 'region page'
+                  'subject' => 'region subject'
+               'synthetic' => HASH(0xb58684)
+                  '"DLPSTEXTCLASS"' => 'DLPSTEXTCLASS'
+                  '"page-t"' => 'PAGESTART'
+                  'DATE' => 'FIRST_PUBL'
+                  'HEADER' => 'BIBL'
+                  'IDNO' => 'IDNO'
+                  'TEXT' => 'MAIN_SEARCHABLE'
+                  'authorindex' => 'authorind'
+                  'div1header' => 'DIV1HEADER'
+                  'id' => 'ID'
+                  'main' => 'DATESEARCH'
+                  'mainauthor' => 'AUTHOR'
+                  'mainheader' => 'MAINHEADER'
+                  'maintitle' => 'TITLE'
+                  'page' => 'PAGE'
+                  'subject' => 'SUBJECT'
+            'synthetic' => HASH(0xb582ec)
+               'label' => HASH(0xb58304)
+                  'AND' => HASH(0xb5831c)
+                     'And' => 1
+                     'and' => 1
+                  'AUTHOR' => HASH(0xb44f14)
+                     'Author' => 1
+                     'author' => 1
+                  'BIBL' => HASH(0xb45db8)
+                     'Citation' => 1
+                     'citation' => 1
+                  'CONTAINED WITHIN' => HASH(0xb3bcf8)
+                     'Within' => 1
+                     'within' => 1
+                  'DATESEARCH' => HASH(0xb464c8)
+                     'published item' => 1
+                  'DIV1HEADER' => HASH(0xb62efc)
+                     'div1header' => 1
+                  'DLPSTEXTCLASS' => HASH(0xb59310)
+                     'DLPSTEXTCLASS' => 1
+                  'FIRST_PUBL' => HASH(0xb62fd4)
+                     'published' => 1
+                  'FOLLOWED BY' => HASH(0xb3be60)
+                     'Followed By' => 1
+                     'followed by' => 1
+                  'ID' => HASH(0xb45fb0)
+                     'ID' => 1
+                     'id' => 1
+                     'unique item identifier' => 1
+                  'IDNO' => HASH(0xb62d10)
+                     'idno' => 1
+                     'unique item identifier' => 1
+                  'INCLUDING' => HASH(0xb3bd70)
+                     'Including' => 1
+                     'including' => 1
+                  'ITEM' => HASH(0xb59118)
+                     'Anywhere' => 1
+                     'Same work' => 1
+                     'same work' => 1
+                     'work' => 1
+                     'works' => 1
+                  'MAINHEADER' => HASH(0xb62e24)
+                     'mainheader' => 1
+                  'MAIN_SEARCHABLE' => HASH(0xb593e8)
+                     'Full text' => 1
+                     'full text' => 1
+                  'NEAR' => HASH(0xb3bde8)
+                     'Near' => 1
+                     'near' => 1
+                  'NOT' => HASH(0xb3bc80)
+                     'Not' => 1
+                     'not' => 1
+                  'NOT FOLLOWED BY' => HASH(0xb3bf50)
+                     'Not Followed By' => 1
+                     'not followed by' => 1
+                  'NOT NEAR' => HASH(0xb3bed8)
+                     'Not Near' => 1
+                     'not near' => 1
+                  'OR' => HASH(0xb583f4)
+                     'Or' => 1
+                     'or' => 1
+                  'PAGE' => HASH(0xb585dc)
+                     'Same page' => 1
+                     'page' => 1
+                     'pages' => 1
+                     'same page' => 1
+                  'PAGESTART' => HASH(0xb59040)
+                     'page-t' => 1
+                  'SUBJECT' => HASH(0xb45c50)
+                     'Subject' => 1
+                     'subject' => 2
+                     'subjects' => 1
+                  'TITLE' => HASH(0xb44d1c)
+                     'Title' => 1
+                     'Title Keyword' => 1
+                     'title' => 1
+                     'title keyword' => 1
+                     'titles' => 1
+                  'authorind' => HASH(0xb45ed8)
+                     'authorind' => 1
+               'native' => HASH(0xb58340)
+                  'AND' => '^'
+                  'AUTHOR' => 'region mainauthor'
+                  'BIBL' => 'region HEADER'
+                  'CONTAINED WITHIN' => 'within'
+                  'DATESEARCH' => 'region main'
+                  'DIV1HEADER' => 'region div1header'
+                  'DLPSTEXTCLASS' => 'region "DLPSTEXTCLASS"'
+                  'FIRST_PUBL' => '(region DATE within region SOURCEDESC)'
+                  'FOLLOWED BY' => 'fby'
+                  'ID' => 'region id'
+                  'IDNO' => 'region IDNO'
+                  'INCLUDING' => 'incl'
+                  'ITEM' => 'region main'
+                  'MAINHEADER' => 'region mainheader'
+                  'MAIN_SEARCHABLE' => 'region TEXT'
+                  'NEAR' => 'near'
+                  'NOT' => '-'
+                  'NOT FOLLOWED BY' => 'not fby'
+                  'NOT NEAR' => 'not near'
+                  'OR' => '+'
+                  'PAGE' => 'region page'
+                  'PAGESTART' => 'region "page-t"'
+                  'SUBJECT' => 'region subject'
+                  'TITLE' => 'region maintitle'
+                  'authorind' => 'region authorindex'
+               'nativeregionname' => HASH(0xb58600)
+                  'AUTHOR' => 'mainauthor'
+                  'BIBL' => 'HEADER'
+                  'DATESEARCH' => 'main'
+                  'DIV1HEADER' => 'div1header'
+                  'DLPSTEXTCLASS' => '"DLPSTEXTCLASS"'
+                  'FIRST_PUBL' => 'DATE'
+                  'ID' => 'id'
+                  'IDNO' => 'IDNO'
+                  'ITEM' => 'main'
+                  'MAINHEADER' => 'mainheader'
+                  'MAIN_SEARCHABLE' => 'TEXT'
+                  'PAGE' => 'page'
+                  'PAGESTART' => '"page-t"'
+                  'SUBJECT' => 'subject'
+                  'TITLE' => 'maintitle'
+                  'authorind' => 'authorindex'
+         'oneToMany' => HASH(0xb58190)
+            'label' => 1
+      'namespaces' => HASH(0xb9e9f0)
+         'label' => HASH(0xb9ccec)
+            'c' => HASH(0xb9cb40)
+               'bosnia' => 1
+               'moa' => 1
+            'cc' => 'moa'
+            'q1' => 'dog'
+            'sid' => '83deff571ab56a37b27fc4df3134d091'
+            'type' => 'simple'
+            'view' => 'reslist'
+            'xc' => 1
+         'native' => HASH(0xb6ad04)
+            'c' => HASH(0xb9e3ac)
+               'bosnia' => 1
+               'moa' => 1
+            'cc' => 'moa'
+            'q1' => 'dog'
+            'sid' => '83deff571ab56a37b27fc4df3134d091'
+            'type' => 'simple'
+            'view' => 'reslist'
+            'xc' => 1
+         'synthetic' => HASH(0xb9cc50)
+            'c' => HASH(0xb9e2c8)
+               'bosnia' => 1
+               'moa' => 1
+            'cc' => 'moa'
+            'q1' => 'dog'
+            'sid' => '83deff571ab56a37b27fc4df3134d091'
+            'type' => 'simple'
+            'view' => 'reslist'
+            'xc' => 1
+      'truncation' => 'explicit'
+   'resultsets' => HASH(0xb6c4c8)
+      'occurrences' => XPatResultSet=HASH(0xb64c68)
+         'name' => 'occurrences'
+      'reslist' => XPatResultSet=HASH(0xb9e858)
+         'name' => 'reslist'
+   'searchsets' => HASH(0xb65e18)
+      'occurrences' => SearchSet=HASH(0xb695d0)
+         'count' => 0
+         'name' => 'occurrences'
+      'reslist' => SearchSet=HASH(0xb9ca2c)
+         'count' => 0
+         'name' => 'reslist'
+   'shouldmap' => ARRAY(0xb58208)
+      0  'rgn\\d*'
+      1  'op\\d+'
+   'singlegender' => ''
+   'singlegenre' => ''
+   'singleperiod' => ''
+   'sortflag' => undef
+   'sortthreshold' => 1000
+   'status' => 'OK'
+   'termmapper' => TerminologyMapper=HASH(0xb581b4)
+      -> REUSED_ADDRESS
+   'xpat' => ARRAY(0xb9e328)
+      0  XPat=HASH(0xb6c48c)
+         'dd' => '/l2/idx/m/moa1/moa1.dd'
+         'host' => 'dlps4.umdl.umich.edu'
+         'patexec' => '/l/local/xpat/bin/xpat'
+         'patmode' => 'remote'
+         'port' => 619
+         'psetoffset' => 200
+         'rdr' => GLOB(0xb8bc38)
+            -> *Symbol::GEN3
+                  FileHandle({*Symbol::GEN3}) => fileno(9)
+         'separator' => '</Sync>'
+         'status' => 'OK'
+         'wtr' => GLOB(0xb8bc38)
+            -> REUSED_ADDRESS
+      1  XPat=HASH(0xb70b40)
+         'dd' => '/l2/idx/m/moa2/moa2.dd'
+         'host' => 'dlps4.umdl.umich.edu'
+         'patexec' => '/l/local/xpat/bin/xpat'
+         'patmode' => 'remote'
+         'port' => 619
+         'psetoffset' => 200
+         'rdr' => GLOB(0xb6c340)
+            -> *Symbol::GEN4
+                  FileHandle({*Symbol::GEN4}) => fileno(10)
+         'separator' => '</Sync>'
+         'status' => 'OK'
+         'wtr' => GLOB(0xb6c340)
+            -> REUSED_ADDRESS
+      2  XPat=HASH(0xb90c50)
+         'dd' => '/l2/idx/m/moa3/moa3.dd'
+         'host' => 'dlps4.umdl.umich.edu'
+         'patexec' => '/l/local/xpat/bin/xpat'
+         'patmode' => 'remote'
+         'port' => 619
+         'psetoffset' => 200
+         'rdr' => GLOB(0xb69540)
+            -> *Symbol::GEN5
+                  FileHandle({*Symbol::GEN5}) => fileno(11)
+         'separator' => '</Sync>'
+         'status' => 'OK'
+         'wtr' => GLOB(0xb69540)
+            -> REUSED_ADDRESS
+      3  XPat=HASH(0xb9cb70)
+         'dd' => '/l2/idx/m/moa4/moa4.dd'
+         'host' => 'dlps4.umdl.umich.edu'
+         'patexec' => '/l/local/xpat/bin/xpat'
+         'patmode' => 'remote'
+         'port' => 619
+         'psetoffset' => 200
+         'rdr' => GLOB(0xb9ca8c)
+            -> *Symbol::GEN6
+                  FileHandle({*Symbol::GEN6}) => fileno(12)
+         'separator' => '</Sync>'
+         'status' => 'OK'
+         'wtr' => GLOB(0xb9ca8c)
+            -> REUSED_ADDRESS
+      4  XPat=HASH(0xb5d1fc)
+         'dd' => '/l2/idx/m/moa5/moa5.dd'
+         'host' => 'dlps4.umdl.umich.edu'
+         'patexec' => '/l/local/xpat/bin/xpat'
+         'patmode' => 'remote'
+         'port' => 619
+         'psetoffset' => 200
+         'rdr' => GLOB(0xb6a16c)
+            -> *Symbol::GEN7
+                  FileHandle({*Symbol::GEN7}) => fileno(13)
+         'separator' => '</Sync>'
+         'status' => 'OK'
+         'wtr' => GLOB(0xb6a16c)
+            -> REUSED_ADDRESS
+</PRE>
+</BODY>
+</HTML>

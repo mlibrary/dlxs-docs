@@ -1,0 +1,50 @@
+<html>
+<head>
+<title>DLXS Database Migration</title>
+
+
+
+ <link href="../dlxsdocs.css" rel="stylesheet" type="text/css">
+</head>         <body>
+<div class="pageTitle">Database Migration</div>
+    
+    
+      <h1>Database Migration</h1>
+      <ul>
+        
+        <li><a href="#dbcreat">Database creation</a> </li>
+        <li><a href="#dbpop">Database population</a></li>
+        <li><a href="#dbupgrade">Database upgrading</a></li>
+        <li><a href="#dbinstall">Having two databases installed to support two DLXS versions</a> </li>
+      </ul>
+      
+        <h2><a name="dbcreat"></a>Database creation</h2>
+        <p>Database creation is described in the <a href="../installation/index.html#mysqlconfig">MySQL database configuration documentation</a>. </p>
+      
+        <h2><a name="dbpop"></a>Database population</h2>
+        <p>Database population is discussed in the <a href="../installation/index.html">installation documentation</a>.</p>
+
+      
+        <h2><a name="dbupgrade"></a>Database upgrading</h2>
+        <p> If you are installing DLXS for the first time, database upgrading is not an issue. </p>
+        <p> If you have a Release "N" DLXS installation, an upgrade utility called <b><font face="Courier New, Courier, mono">upgrade_N_N+1</font></b> in $DLXSROOT/bin/db can be used to update your version "N" database to version "N+1".  See documentation on database upgrading for <a href="upgrade.html">complete instructions</a>. </p>
+      
+        <h2><a name="dbinstall"></a>Having two database installed to support two DLXS versions</h2>
+        <p> Be aware of the following:
+        <ul>
+          <li>Version 8 of DLXS uses version 1 of the database.</li>
+          <li>Version 9 of DLXS uses version 2 of the database</li>
+          <li>Version 10 of DLXS uses version 3 of the database.</li>
+          <li>Version 11, 11a of DLXS uses version 4 of the database.</li>
+          <li>Version 12, 12a, 12b of DLXS uses version 5 of the database.</li>
+          <li>Version 13 of DLXS uses version 6 of the database.</li>
+        </ul> </P>
+
+        <p>Therefore, if you have version 12 of DLXS and have installed version 13 of DLXS, you will need to get a database version 6 set up to use with your DLXS version 13 installation.</p>
+
+        
+      
+    
+  </body>
+ 
+</html>

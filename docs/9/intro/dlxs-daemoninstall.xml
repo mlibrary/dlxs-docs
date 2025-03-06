@@ -1,0 +1,133 @@
+<?xml version="1.0"?>
+
+<!-- SPO Editorial Services                  -->
+<!-- automatically-generated XML header file -->
+
+<?xml-stylesheet href="../../pre11-dlxsdocs.xsl" type="text/xsl"?>
+<!DOCTYPE DLPSDOC PUBLIC "-//UM-DLPS//DTD DLPS Publications//EN" "http://docs.umdl.umich.edu/dlps/docs/dlpsdocs.dtd">
+<DLPSDOC>
+<TITLE>DLXS daemons: installing and configuring</TITLE>
+<HEADER>
+<JOURNAL>DLXS Documentation</JOURNAL>
+<PUBDATE>2002-07-08 12:19:51 EDT</PUBDATE>
+<AUTH1>Snavely, Cory</AUTH1>
+<AUTH2></AUTH2>
+<DOCTITLE>DLXS daemons: installing and configuring</DOCTITLE>
+<VOL>intro</VOL>
+<ISS></ISS>
+<FILE>dlxsdocs-dlxs-daemoninstall</FILE>
+</HEADER>
+
+
+
+
+
+
+
+
+
+<BODY>
+<BHEAD>DLXS daemon: installing and configuring</BHEAD>
+<DIV1 ID="main">
+<P>DLXS provides network software which allows middleware on one server to transparently search and display content
+hosted on another. This tool, called a daemon, can be used for a variety of purposes:
+<UL>
+<LI>to distribute resources across servers to balance load</LI>
+<LI>to bridge together resources hosted by different departments on separate servers</LI>
+<LI>to locate data on a remote or more tightly-secured server while running middleware on a server where staff have
+login access</LI>
+<LI>(in theory) to provide inter-institutional repositories of content (some institutions are indeed currently
+experimenting with such a model)</LI>
+</UL>
+</P>
+<P>If you don't plan on doing any of these things, you don't need to install this tool. If you think this sounds
+interesting and you might want to do it in the future, you can wait until then to install.</P>
+<P>If you want to use the DLXS daemon, it makes sense to install it last because
+<UL>
+<LI>it has the same <A HREF="dlxs-sysreq.xml">requirements</A> as the DLXS middleware, and</LI>
+<LI>it's not useful until the middleware is up and running anyway.</LI>
+</UL>
+</P>
+</DIV1>
+<DIV1 ID="xpatd">
+<H1>Installing the DLXS daemon</H1>
+<P>The DLXS daemon uses configuration files to store site-specific information. The configuration files
+are in the <CODE>etc</CODE> directory of the dlxsd distribution.</P>
+<OL>
+<LI>Make the following modifications to <CODE>access.conf</CODE> to specify up to 60 access control parameters.
+<OL>
+<LI>Add lines to specify allowable domains.  For example,
+<PRE>  allow .umich.edu</PRE>
+allows access from any machine in the <CODE>umich.edu</CODE> domain, while
+<PRE>  allow .umdl.umich.edu</PRE>
+is more restrictive, allowing access only from the <CODE>umdl.umich.edu</CODE> domain, and
+<PRE>  allow .umich.edu
+  allow .cornell.edu</PRE>
+permits access from machines at both Cornell and Michigan.</LI>
+<LI>Add lines to <I>refuse</I> access from specific domains.  For example,
+<PRE>  deny .hackers.org</PRE></LI>
+</OL>
+</LI>
+<LI>Make the following modifications to <CODE>verbs.conf</CODE> to specify how middleware will invoke utilities
+through the daemon.
+<OL>
+<LI>Adapt the existing lines with the proper paths to DLXS required software for built-in page viewing functions.
+For example,
+<PRE>  TIF2GIF /usr/local/bin/tif2web -G -N $1 -g $2 $3 -o $4 $5
+  TIF2PDF /usr/local/bin/c42pdf  -o $1 REST_OF_ARGS
+  TIF2PNG /usr/local/bin/tif2web -P -N $1 -g $2 $3 -o $4 $5
+  XPAT /usr/local/bin/xpat $1 -q -s $2
+  DELIVERFILE /bin/cp $1 $2</PRE>
+</LI>
+<LI><P>If needed, add lines with new verbs and customized command strings to support extensions you make to DLXS
+middleware. For example,
+<PRE>  HACKME /bin/mailx -s HereYouGo $1 &lt; /etc/passwd</PRE>
+The <I>positional parameter</I> <CODE>$1</CODE> (you can have up to <CODE>$9</CODE>) and the special parameter REST_OF_ARGS
+shown in the previous example above are used to pass arguments from the middleware to the daemon. They are named in the
+order supplied (<CODE>$1</CODE>, <CODE>$2</CODE>, etc.) and are substituted as placed in the command string.</P>
+<P><B>Important note:</B> Clearly, providing the ability for remote execution of commands without authentication makes for
+huge potential security holes. The "HACKME" example configuration, above, is a ridiculously reckless example of the 
+<B>danger this service can
+pose if configured improperly</B>. (It emails an extremely sensitive UNIX file to a random recipient.) The daemon provides
+some protection against this by not allowing certain characters in the arguments (to prevent <I>poisoning</I>), but <B>care should
+be taken</B> that this tool is not used in such a way as to introduce security risks into your environment.</P>
+</LI>
+</OL>
+</LI>
+</OL>
+<P>You can recompile the DLXS daemon if you do not wish to use the binary distribution for your platform, or if you
+are attempting to run DLXS on a platform other than Linux or Solaris. For further instructions on building the DLXS daemon,
+consult the file <CODE>README</CODE> in the <CODE>src</CODE> directory of the DLXS daemon source distribution.</P>
+</DIV1>
+<DIV1 ID="inetd">
+<H1>Configuring the Internet services daemon (inetd) to use the DLXS daemon</H1>
+<OL>
+<LI>Add the line below to the <CODE>/etc/inetd.conf</CODE> (Linux) or <CODE>/etc/inet/inetd.conf</CODE> (Solaris)
+file, as appropriate. For example:
+<PRE>
+   dlxsd     stream tcp nowait nobody /usr/local/dlxsd/bin/dlxsd    /usr/local/dlxsd/bin/dlxsd
+</PRE>
+<P>Notes:
+<UL>
+<LI>The user ("<CODE>nobody</CODE>" in the example above) should be consistent with the userid under which
+the web server runs.</LI>
+<LI>The path to <CODE>dlxsd</CODE> should be consistent with where you have installed the binary.</LI>
+</UL>
+</P>
+</LI>
+<LI>Add the line below to the <CODE>/etc/services</CODE> (Linux) or <CODE>/etc/inet/services</CODE> (Solaris) file,
+as appropriate.  For example:
+<PRE>
+   dlxsd      620/tcp  # dlxsd server daemon
+</PRE>We recommend using port 620, but if you need to use a different port number, you will need to change the value
+in the <CODE>port</CODE> column in your <CODE>colldb</CODE> for each class. For information on the
+<CODE>colldb</CODE>, please see the online help in the
+<A HREF="/collmeta/dlxs-collmgr.xml">Collection Manager</A> utility.</LI>
+<LI>Signal inetd to use the new configuration, typically by issuing the command <CODE>kill -HUP <I>pid</I> </CODE>where
+<I>pid</I> is the process ID of the inetd daemon.</LI>
+</OL>
+</DIV1>
+</BODY>
+</DLPSDOC>
+                            
+

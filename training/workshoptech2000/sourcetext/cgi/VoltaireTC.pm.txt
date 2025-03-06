@@ -1,0 +1,298 @@
+package VoltaireTC;
+
+
+use TextClass ();
+use TextClassUtils ();
+
+# Subclass of TextClass.pm module
+@ISA = qw( TextClass );
+
+## **********************************************************************
+## this is a subclass of TextClass
+## for different search and filtering behavior
+
+# ----------------------------------------------------------------------
+# NAME      : new
+# PURPOSE   : create new VoltaireTC object
+#             
+# CALLED BY : main
+# CALLS     : VoltaireTC->_initialize
+# INPUT     : $collid, $collname, $subclass, $subclassModule, 
+#              $qtytexts, $homesite, $host, $dd, $map, $patexec,
+#              $port, $lel, $termsearch, $regionsearch
+# RETURNS   : NONE
+# NOTES     : 
+# ----------------------------------------------------------------------
+
+sub new 
+{
+    my $class = shift;
+    my $self = {};
+    bless $self, $class;
+    $self->_initialize(@_);
+    return $self;
+}
+
+# ----------------------------------------------------------------------
+# NAME      : _initialize
+# PURPOSE   : create structure for TextClass object
+# CALLED BY : new
+# CALLS     : 
+# INPUT     : see new
+# RETURNS   : 
+# NOTES     : 
+# ----------------------------------------------------------------------
+
+sub _initialize 
+{
+    my $self = shift;
+    $self->SUPER::_initialize( @_ );
+
+    # ************************************************************
+    # 
+    # configuration info ( override from SUPER those only those that need it)
+    # 
+    # ************************************************************
+
+
+}
+
+
+# ----------------------------------------------------------------------
+# NAME         : Filter_PTR_TargetForText
+# PURPOSE      : 
+#                
+# CALLED BY    : SubClass::TextFilter and TextClass::NotesResultsFilter
+# CALLS        : 
+# INPUT        : 
+# RETURNS      : 
+# GLOBALS      : 
+# SIDE-EFFECTS : 
+# NOTES        : Filters either the entire target when filtering results
+#                containing the target or filters just a part of the 
+#                target when the result _is_ the target which is the case
+#                when the note is being displayed in a popup window 
+# ----------------------------------------------------------------------
+
+sub Filter_PTR_TargetForText
+{
+    my $sRef = shift;
+    
+    $$sRef =~ s,<P[^>]*N="[^>]*"[^>]*TYPE="[sev]n">,<p>,gs;
+}
+
+# ----------------------------------------------------------------------
+# NAME         : FilterNoteContentParentForPopup
+# PURPOSE      : 
+#                
+# CALLED BY    : TextClass::NotesResultsFilter
+# CALLS        : 
+# INPUT        : 
+# RETURNS      : 
+# GLOBALS      : 
+# SIDE-EFFECTS : 
+# NOTES        : Returns the part of the parent we wish to display
+#                in a popup so just that part can be filtered in the
+#                more global way by TExtClass::FilterText
+# ----------------------------------------------------------------------
+
+sub FilterNoteContentParentForPopup
+{
+    my $self = shift;
+    my $sRef = shift;
+
+    $$sRef =~ m,<HEAD>(.+?)</HEAD>,;
+    
+    return $1;    
+}
+
+# ----------------------------------------------------------------------
+# NAME         : FilterNoteContentForPopup
+# PURPOSE      : 
+#                
+# CALLED BY    : TextClass::NotesResultsFilter
+# CALLS        : 
+# INPUT        : 
+# RETURNS      : 
+# GLOBALS      : 
+# SIDE-EFFECTS : 
+# NOTES        : Returns the part of the content we wish to display
+#                in a popup so just that part can be filtered in the
+#                more global way by TExtClass::FilterText
+# ----------------------------------------------------------------------
+
+sub FilterNoteContentForPopup
+{
+    my $self = shift;
+    my $sRef = shift;
+    
+    $$sRef =~ m,<P[^>]*>(.+?)</P>,;
+    
+    return $1;
+}
+
+# ----------------------------------------------------------------------
+# NAME         : Filter_PTR_TargetForText
+# PURPOSE      : 
+#                
+# CALLED BY    : SubClass::TextFilter and TextClass::NotesResultsFilter
+# CALLS        : 
+# INPUT        : 
+# RETURNS      : 
+# GLOBALS      : 
+# SIDE-EFFECTS : 
+# NOTES        : Filters either the entire target when filtering results
+#                containing the target or filters just a part of the 
+#                target when the result _is_ the target which is the case
+#                when the note is being displayed in a popup window 
+# ----------------------------------------------------------------------
+
+sub Filter_PTR_TargetForText
+{
+    my $sRef = shift;
+    
+    $$sRef =~ s,<P[^>]*N="[^>]*"[^>]*TYPE="[sev]n">,<p>,gs;
+}
+
+# ----------------------------------------------------------------------
+# NAME         : TextFilter
+# PURPOSE      : 
+#              :  
+# CALLED BY    : ScopedResultsFilter
+# CALLS        : SUPER (and VoltaireTC derived class methods)
+# INPUT        : $sRef (reference to search result string
+# RETURNS      : $results (filtered)
+# GLOBALS      : NONE
+# SIDE-EFFECTS : NONE
+# NOTES        : OVERRIDE the TextClass::TextFilter method to handle
+#              : Notes filtering. Each collection has it's own set of
+#              : tags for notes so we specialize the handling in the 
+#              : sub-class.  Observe also that for constructing collection
+#              : specific searches for note data we do not need the
+#              : sub-class because we use the TermMapper to abstract the
+#              : collection-specific search regions 
+#              :
+#              : Those collections without notes either are not sub-classed
+#              : or do not override the base class TextFilter method. 
+# ----------------------------------------------------------------------
+
+sub TextFilter
+{
+    my $self = shift;
+    my ( $sRef, $collid, $idno, $cgi ) = @_;
+
+    &TextClassUtils::Filter_PTR_NotesForText( $collid, $sRef );
+    Filter_PTR_TargetForText( $sRef );
+    
+    my $results = $self->SUPER::TextFilter( $sRef, $collid, $idno, $cgi );
+
+    return $results;
+}
+
+# ----------------------------------------------------------------------
+# NAME         : BooleanResultsFrameSearches
+# PURPOSE      : adds the set of searches necessary for a generic boolean search
+#                to this TextClass object's SearchSet object
+# CALLED BY    : main
+# CALLS        : SearchSet->AddQuery
+# INPUT        : session id, view, CGI object
+# RETURNS      : NONE
+# SIDE-EFFECTS : adds to SearchSet object
+# NOTES        : OVERRIDE of superclass (TextClass)'s method
+# ----------------------------------------------------------------------
+
+sub BooleanResultsFrameSearches
+{
+    my $self  = shift;
+    my ( $cgi, $sid, $ssetName ) = @_;
+
+    $self->SUPER::BooleanResultsFrameSearches( @_ );
+
+    
+#     # grab SearchSet, QueryFactory and TermMapper objects for this TextClass obj
+     my $sset = $self->GetSearchSet( $ssetName );
+#     my $qf   = $self->GetQueryFactory( );
+     my $tm   = $self->GetTermMapper( );
+
+     my $sliceSearchName       = $sset->GetNamedSearchName( 'slicesearch' ) ;
+#     my $mainSliceName        = $sset->GetNamedSearchName( 'mainslicesearch' ) ;
+#     my $mainHeaderName        = $sset->SetNamedSearchName( 'mainheader', $sid ) ;
+
+# #    my($headerRgn) = $tm->map('MAINHEADER', 'synthetic', 'native');
+#     $sset->AddQuery( $mainHeaderName . $sid,
+#                      qq{pr.region.mainheader \(region mainheader within \*} .
+#                      $mainSliceName . qq{\);}
+#                    );
+
+    # ------------------------------------------------------------
+    # From here, code is essentially copied from original 'gums-idx.config.pl
+    # ------------------------------------------------------------
+
+    # get the current 'rgn' value for use in subsequent searches
+    my $rgn     = $tm->map( $cgi->param('rgn'), 'label', 'synthetic' );
+    my $rgnName = $tm->map( $cgi->param('rgn'), 'label', 'native' );
+
+
+    if ($rgn eq 'SPEECH') 
+    {
+        $sset->AddQuery ( 'acthead' . $sid,
+                          qq{pr.region.acthead \(region acthead within \(region act incl \*} .
+                           $sliceSearchName .
+                          qq{ \)\);}
+                        );
+        
+        $sset->AddQuery ( 'scenehead' . $sid,
+                          qq{pr.region.scenehead \(region scenehead within \(region scene incl \*} .
+                          $sliceSearchName .
+                          qq{ \)\);}
+                        );
+        
+        $sset->AddQuery ( 'speechhead' . $sid,
+                          qq{pr.region."speechhead" \(region "speechhead" within \*} .
+                          $sliceSearchName .
+                          qq{ \);}
+                        );
+    }
+    elsif ($rgn eq 'ACT')
+    {
+        $sset->AddQuery ( 'acthead' . $sid,
+                          qq{pr.region.acthead \(region acthead within \(region act incl \*} .
+                          $sliceSearchName .
+                          qq{ \)\);}
+                        );
+    }
+    elsif ($rgn eq 'SCENE')
+    {
+        $sset->AddQuery ( 'acthead' . $sid,
+                          qq{pr.region.acthead \(region acthead within \(region act incl \*} .
+                          $sliceSearchName .
+                          qq{ \)\);}
+                        );
+        
+        $sset->AddQuery ( 'scenehead' . $sid,
+                          qq{pr.region.scenehead \(region scenehead within *} .
+                          $sliceSearchName .
+                          qq{ \);}
+                        );
+    }
+    elsif ($rgn eq 'PARAGRAPH') 
+    {
+	$sset->AddQuery ( 'P-T' . $sid,
+                          qq{pr.region."P-T" \(region "P-T" within \*} .
+                          $sliceSearchName .
+                          qq{ \);}
+                        );
+    }
+
+    $self->AddScopedHeads ( $ssetName , $sliceSearchName ,  $sid ) ;
+    
+}
+
+## ----------------------------------------------------------------------
+1;
+
+
+
+
+
+

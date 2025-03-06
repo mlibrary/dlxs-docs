@@ -1,0 +1,24 @@
+=== Run-Through with non-Bentley Finding Aids ===
+
+* Live demo using non-Bentley finding aids
+** Washington U
+** Getty
+* data prep (troubleshooting and resolving problems)
+* indexing (troubleshooting and resolving problems)
+* rendering (troubleshooting and resolving problems)
+
+Types of changes to accomodate differing encoding practices and/or interface changes
+
+* Custom preprocessing
+* Add dummy EAD to data
+* Modify prep scripts (Makefile, preparedocs.pl, validateeach.csh)
+* Modify *inp files (DOCTYPE declarations and entities)
+* Modify fabricated regions (*.extra.srch)
+* Modify CollMgr entries
+* Modify findaidclass.cfg
+* Subclass FindaidClass.pm
+* Modify XSL
+* Modify XML templates
+* Modify CSS
+
+[intro3.html Next: Overview of Preprocessing and Encoding Considerations]

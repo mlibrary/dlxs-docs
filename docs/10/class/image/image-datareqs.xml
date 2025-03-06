@@ -1,0 +1,198 @@
+<?xml version="1.0"?>
+
+<!-- SPO Editorial Services                  -->
+<!-- automatically-generated XML header file -->
+
+<?xml-stylesheet href="../../../pre11-dlxsdocs.xsl" type="text/xsl"?>
+<!DOCTYPE DLPSDOC PUBLIC "-//UM-DLPS//DTD DLPS Publications//EN" "http://docs.umdl.umich.edu/dlps/docs/dlpsdocs.dtd">
+<DLPSDOC>
+<TITLE>Image Class Data Requirements</TITLE>
+<HEADER>
+<JOURNAL>DLXS Documentation</JOURNAL>
+<PUBDATE>2002-07-03 17:09:09 EDT</PUBDATE>
+<AUTH1>Weise, John</AUTH1>
+<AUTH2></AUTH2>
+<DOCTITLE>Image Class Data Requirements</DOCTITLE>
+<VOL>class</VOL>
+<ISS>image</ISS>
+<FILE>dlxsdocs-image-datareqs</FILE>
+</HEADER>
+
+
+
+
+<BODY>
+<BHEAD>Image Class Data Requirements</BHEAD>
+<DIV1 ID="main">
+
+<P>
+<A HREF="mailto:dlxs-help@umich.edu">dlxs-help@umich.edu</A>
+</P>
+
+
+<P>Each collection used in the Image Services system must have a
+unique abbreviation. The abbreviation is used in many places in the
+system.</P>
+
+<P>Examples:</P>
+
+<TABLE BORDER="1">
+<TBODY>
+   <TR>
+      <TD>
+         <P>Unique collection abbreviation (lowercase alphabetic
+         characters, only)</P>
+      </TD>
+      <TD>
+         <P>Long collection name</P>
+      </TD>
+   </TR>
+   <TR>
+      <TD>
+         <P>musart</P>
+      </TD>
+      <TD>
+         <P>Museum of Art</P>
+      </TD>
+   </TR>
+   <TR>
+      <TD>
+         <P>scl</P>
+      </TD>
+      <TD>
+         <P>Special Collections Library</P>
+      </TD>
+   </TR>
+   <TR>
+      <TD>
+         <P>sampleic</P>
+      </TD>
+      <TD>
+         <P>French Architecture</P>
+      </TD>
+   </TR>
+</TBODY>
+</TABLE>
+
+<P>Each record must minimally have fields of the following
+<B>type</B>:</P>
+
+<TABLE BORDER="1">
+<TBODY>
+   <TR>
+      <TD>
+         <P>Identifier</P>
+      </TD>
+      <TD>
+         <P>Unique identification of the record within the collection</P>
+      </TD>
+   </TR>
+   <TR>
+      <TD>
+         <P>Image Filename(s)</P>
+      </TD>
+      <TD>
+         <P>The image filename, with or without filename extensions. This may
+         be a repeating field. (Not required if there are no images)</P>
+      </TD>
+   </TR>
+   <TR>
+      <TD>
+         <P>Image Caption(s)</P>
+      </TD>
+      <TD>
+         <P>Describes the specific view depicted in the image file.
+         If the Image Filename field is repeating, then the Image
+         Caption field(s) may be repeating also (though it is not a requirement). There may be
+         multiple image caption fields. In many cases, and especially
+         when there is only one image file per record, many or all of
+         the fields of the record might be considered
+         "caption"&#0160;fields. In such a case it usually works best
+         to consider only the fields that describe the view depicted
+         in the image to be caption fields. For example, a good
+         caption field would be one that has data similar to "view
+         from the south"&#0160;or "verso"&#0160;or "aerial view".</P>
+      </TD>
+   </TR>
+</TBODY>
+</TABLE>
+
+<P>Remember, this document is about minimal requirements. Please read <A HREF="image-imagestructures.xml">Image Class - Mapping Image Structures</A> for full coverage of image file topics.</P>
+
+<DIV2 ID="identifiers">
+<H2>Identifiers</H2>
+
+<P>It is important to know that there are significant limitations on
+the characters that are allowed within SGML IDs. Unique record IDs in
+image databases can take many different forms and include many
+different characters. The Image Class transformation process
+intelligently filters illegal SGML ID characters into legal logical
+representations of the character in order to ensure legal SGML IDs
+without hassle. For example, ampersand characters that occur in ID
+data are changed to "-amp-". This can at times result in very long and
+very ugly SGML IDs. The unfiltered version of the ID remains
+searchable and displayable since it is also encoded in a non-ID field
+in the SGML. If data is encountered that has illegal ID characters
+that are not filtered properly, contact dlxs-info@umich.edu for
+guidance.</P>
+</DIV2>
+<DIV2 ID="images">
+<H2>About Images</H2>
+
+<P>A database does not have to have digital images associated with
+it. It is acceptable for a database to not have an Image Filename
+field.</P>
+
+<P>Any given record in a database may have 0, 1 or multiple image
+files associated with it.</P> 
+
+
+
+</DIV2>
+<DIV2 ID="otherfields">
+<H2>Other Fields</H2>
+
+<P>Typically there are many other fields in a database. This is fine
+and desired. There is no limit to the number of fields that can be
+included.</P>
+</DIV2>
+<DIV2 ID="fieldsnames">
+<H2>Field Names</H2>
+
+<P>There are no specifications for field names. If there is a field
+called "Accession Number"&#0160;that serves the purpose of the
+Identifier field type, that is all that is required. Similarly, if the
+Image Filename field is called something like "filename", that is
+also fine.</P>
+</DIV2>
+<DIV2 ID="multipleuses">
+<H2>Multiple Uses</H2>
+
+<P>In some cases a field has potential to serve multiple
+requirements. In the most extreme example, a database might have just
+one field, "ID". The ID might also be the Image Filename, and the
+Image Caption. Of course this would not likely be very useful for
+searching, but it makes the point. The more common example is where
+image files are named by accession number. It is acceptable for a
+single field to serve more than one of the minimal field
+requirements, however it is absolutely critical for there to be no
+ambiguity in the use of the field for multiple purposes. For example,
+if data in an accession number field are to be used for filenames as
+well, then the actual image files must be named exactly as the
+accession numbers.</P>
+</DIV2>
+<DIV2 ID="charactersets">
+<H2><A HREF="image-charconversion.xml">Character Sets</A></H2>
+
+<P>All characters in the database must be 8-bit ISO
+8859 Latin 1 characters. For some collections this may be rather
+restrictive. At this time, characters that are not compliant
+with the standard will be converted to "?" (a question mark character)
+	  and not searchable properly. They also will not
+display properly (the question mark character will display as a place holder). Some characters may slip through the filters and generate errors at the time of SGML validation, though in most cases the errors may be
+ignored with the understanding that search, retrieval and display
+will be affected. Sometime your only choice is to ignore the errors if it is not possible to determine what the appropriate character should be.</P>
+</DIV2>
+</DIV1>
+</BODY>
+</DLPSDOC>

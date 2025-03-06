@@ -1,0 +1,2515 @@
+<?xml version="1.0"?>
+
+<!-- SPO Editorial Services                  -->
+<!-- automatically-generated XML header file -->
+
+<?xml-stylesheet href="../../pre11-dlxsdocs.xsl" type="text/xsl"?>
+<!DOCTYPE DLPSDOC PUBLIC "-//UM-DLPS//DTD DLPS Publications//EN" "http://docs.umdl.umich.edu/dlps/docs/dlpsdocs.dtd">
+<DLPSDOC>
+<TITLE>DLXS Release Notes</TITLE>
+<HEADER>
+<JOURNAL>DLXS Documentation</JOURNAL>
+<PUBDATE>2002-06-25 17:16:25 EDT</PUBDATE>
+<AUTH1>Farber, Phillip</AUTH1>
+<AUTH2></AUTH2>
+<DOCTITLE>DLXS Release Notes</DOCTITLE>
+<VOL>program</VOL>
+<ISS></ISS>
+<FILE>dlxsdocs-dlxs-releasenotes</FILE>
+</HEADER>
+<BODY>
+    <BHEAD> DLXS Release Notes</BHEAD>
+    <DIV1>
+      <P>These notes summarize the DLXS releases chronologically, most recent
+		  first. They are structured into  release numbers and within that level
+		  into General Information and then Middleware and XPAT-specific sections.</P>
+    </DIV1>
+
+    <DIV1>
+      <H1>DLXS Release 9 - 8 JUL 2002</H1>
+      <DIV2>
+        <H2>General Information</H2>
+        <P>DLXS Release 9 is comprised of:</P>
+        <UL>
+          <LI>TextClass version 2.5.10</LI>
+          <LI>BibClass version 2.2.7</LI>
+          <LI>FindingAids version 2.0.4</LI>
+          <LI>ImageClass version 2.3.3</LI>
+          <LI>Broker version 1.2.0</LI>
+          <LI>Collmgr version 1.1.0</LI>
+          <LI>XClass version 1.0.0</LI>
+          <LI>Lib version 2.4.15</LI>
+          <LI>mrsid_retrieve version 1.3.1</LI>
+          <LI>tif2web version 1.0.1</LI>
+          <LI>dlxsd version 1.0.0 </LI>
+          <LI>XPAT version 5.2.3</LI>
+        </UL>
+        <P>Significant functional changes and enhancements introduced in Release 9: </P>
+        <UL>
+          <LI>The Collection database is now at version 2.0.  DLXS Release 8 incorporated version 1.0 of the Collection database.  DLXS Release 9 includes a database utility called upgrade_1_2 that will upgrade an existing version 1.0 database to version 2.0 bringing it up to date with DLXS Release 9.</LI>
+          <LI>TextClass
+            <UL>
+              <LI>Citation restrictions have been integrated into the search forms. </LI>
+              <LI>Improved Level 2 results display by making results slicing occur at DIV1. </LI>
+              <LI> Pagviewer improvements:
+                <UL>
+                  <LI>Page turning makes only a single CGI call for the page image frame.</LI>
+                  <LI>PDF data is delivered in specifiable "chunks".</LI>
+                  <LI>Cross-frame status updating via Javascript.</LI>
+                  <LI>tif2web is used exclusively to support the available image formats (gif, pdf) for results </LI>
+                </UL>
+              </LI>
+            </UL>
+          </LI>
+          <LI>Image Class has had numerous bug fixes and minor enhancements. </LI>
+          <LI>All remote communication occurs via a single daemon program that uses a verb file for flexible configuration.  </LI>
+          <LI>BibClass now has a per-collection object for filtering and enhanced functionality rather than separate filter functions.</LI>
+          <LI>A prototype cross-class application (XClass) and supporting Lib modules have been developed.</LI>
+        </UL>
+      </DIV2>
+      
+      <DIV2>
+        <H2>XPAT version 5.2.3</H2>
+        <DIV3>
+          <UL>
+            <LI>No change from  Release 8</LI>
+          </UL>
+        </DIV3>
+      </DIV2>
+      
+      <DIV2>
+        <H2>Lib version 2.4.15</H2>
+        <DIV3>
+          <H3>New and Changed Functionality</H3>
+          <UL>
+            <LI>ApplicationResult.pm
+              <UL>
+                <LI>Initial definition of an cross-application result object.</LI>
+              </UL>
+             </LI>
+          </UL>
+          
+          <UL>
+            <LI>  BookBag.cfg
+              <UL>
+                <LI> Created customizable emails from bookbag.</LI>
+                <LI> Added Assertion reporting via email under envvar ASSERTION_EMAIL</LI>
+              </UL>
+             </LI>
+          </UL>
+          
+          <UL>
+            <LI>  BookBag.pm
+              <UL>
+                <LI> Mods for BibClass subclass to allow more flexible bookbag filtering</LI>
+                <LI> Changed download file name to something more generic.</LI>
+                <LI> Created customizable emails from bookbag.</LI>
+                <LI> Added Assertion reporting via email under envvar ASSERTION_EMAIL</LI>
+              </UL>
+             </LI>
+          </UL>
+          
+          <UL>
+            <LI>  CioFactory.pm
+              <UL>
+                <LI> Backward support for DLPS_DEV == 1 under new workspace model.</LI>
+                <LI> Added GetCioByClass().</LI>
+                <LI>Make connection to database ONCE and disconnect in DLXSApp::AppFinishUp() and change interface to CollsInfo and GroupsInfo objects new() methods to accept a database handle</LI>
+                <LI> Methods to support integration of citation information as a restriction to searching.</LI>
+                <LI> Added comment re: IGNORE_REAUTH to prevent authorization infinite loop.</LI>
+              </UL>
+             </LI>
+          </UL>
+          
+          <UL>
+            <LI>  CollsInfo.pm
+              <UL>
+                <LI> Added GetCioByClass().</LI>
+                <LI> Make connection to database ONCE and disconnect in DLXSApp::AppFinishUp() and change interface to CollsInfo and GroupsInfo objects new() methods to accept a database handle</LI>
+              </UL>
+             </LI>
+          </UL>
+          
+          <UL>
+            <LI>  CreateSessionTable.txt
+              <UL>
+                <LI> Changed blob to longblob</LI>
+              </UL>
+             </LI>
+          </UL>
+          
+          <UL>
+            <LI>  DLXSApp.pm
+              <UL>
+                <LI> Empty session mods</LI>
+                <LI> Added SetName()</LI>
+                <LI> Moved GetAppKeyInfo SetAppKeyInfo up to DLXSApp</LI>
+                <LI> Added Added ModeIsXClass() and access member data via GetAppKeyInfo and handle Debug() via no assert for xclass case.</LI>
+                <LI> Make connection to database ONCE and disconnect in DLXSApp::AppFinishUp() and change interface to CollsInfo and GroupsInfo objects new() methods to accept a database handle</LI>
+              </UL>
+             </LI>
+          </UL>
+          
+          <UL>
+            <LI>  DbUtils.pm
+              <UL>
+                <LI> Make connection to database ONCE and disconnect in DLXSApp::AppFinishUp() and change interface to CollsInfo and GroupsInfo objects new() methods to accept a database handle</LI>
+              </UL>
+             </LI>
+          </UL>
+          
+          <UL>
+            <LI>  DlpsSession.cfg
+              <UL>
+                <LI> Fix typos in session lock dir and email address in config blocks</LI>
+              </UL>
+             </LI>
+          </UL>
+          
+          <UL>
+            <LI>  DlpsSession.pm
+              <UL>
+                <LI> Empty session mods</LI>
+                <LI> Debug message and errorBail when calling session hash tying.</LI>
+                <LI> Added GetCioByClass().</LI>
+                <LI> Make connection to database ONCE and disconnect in DLXSApp::AppFinishUp() and change interface to CollsInfo and GroupsInfo objects new() methods to accept a database handle</LI>
+              </UL>
+             </LI>
+          </UL>
+          
+          <UL>
+            <LI>  DlpsUtils.pm
+              <UL>
+                <LI> Access $gERRORS from LibGlobals</LI>
+                <LI> Methods to support integration of citation information as a restriction to searching.</LI>
+                <LI> Addition of the CheckForAnyQValues routine.</LI>
+                <LI> Added XPAT_LOGGING envvar to track xpat local pid</LI>
+                <LI> Added Assertion reporting via email under envvar ASSERTION_EMAIL making var dynamic for To: address</LI>
+                <LI> Filter '&lt;' in DumpEnvVars()</LI>
+                <LI> Added, for LEL2, call to $rset->GetTotalFocusLevels.</LI>
+                <LI> Added "hitTerm" parameter to allow the term used for "hits" to be customized. If the parameter is omitted "hits" is used by default.</LI>
+              </UL>
+             </LI>
+          </UL>
+          
+          <UL>
+            <LI>  GroupsInfo.pm
+              <UL>
+                <LI> Added GetCioByClass().</LI>
+                <LI> Make connection to database ONCE and disconnect in DLXSApp::AppFinishUp() and change interface to CollsInfo and GroupsInfo objects new() methods to accept a database handle</LI>
+              </UL>
+             </LI>
+          </UL>
+          
+          <UL>
+            <LI>  LibGlobals.cfg
+              <UL>
+                <LI> Added 'PAGE_NOT_FOUND' as qq{Cannot find html template page: }, to a global error message hash for Lib modules</LI>
+                <LI> Fix debug logic for homesite link builder to stay with the virtual host that got you to the page originally e.g. pagliere.dev not fizzie. Deleted $gDevelopmentHost from LibGlobals</LI>
+                <LI> Added Assertion reporting via email under envvar ASSERTION_EMAIL</LI>
+              </UL>
+             </LI>
+          </UL>
+          
+          <UL>
+            <LI>  LibVersion.pm
+              <UL>
+                <LI> 2.0900</LI>
+                <LI> Make connection to database ONCE and disconnect in DLXSApp::AppFinishUp() and change interface to CollsInfo and GroupsInfo objects new() methods to accept a database handle</LI>
+              </UL>
+             </LI>
+          </UL>
+          
+          <UL>
+            <LI>  ObjectFactory.pm
+              <UL>
+                <LI> Implement CreateObject() for NameBibApp to avoid XCOLL/single issues from a cgi other than bib-idx</LI>
+                <LI> Added GetCioByClass()</LI>
+              </UL>
+             </LI>
+          </UL>
+          
+          <UL>
+            <LI>  ProcIns.pm
+              <UL>
+                <LI> Changed RE to parse the PI parameters into a hash to allow parameter values to contain spaces for better readability on suggestion of Sakaama Heesakkers.</LI>
+              </UL>
+             </LI>
+          </UL>
+          
+          <UL>
+            <LI>  WW.pm
+              <UL>
+                <LI> Added DLXSDATAROOT handling of dd path</LI>
+                <LI> Methods to support integration of citation information as a restriction to searching.</LI>
+              </UL>
+             </LI>
+          </UL>
+          
+          <UL>
+            <LI>  XPat.pm
+              <UL>
+                <LI> Fix debug statement 'pat' changed to 'patexec'</LI>
+                <LI> More debug stmts.</LI>
+                <LI> SIGPIPE handler to trap exec errors in local forked child running XPAT for us.</LI>
+                <LI> Added debug=rawresults</LI>
+                <LI> Added XPAT_LOGGING envvar to track xpat local pid added reg CGI check and $0</LI>
+                <LI> Use of new XPAT verb in the dlxsd.</LI>
+              </UL>
+             </LI>
+          </UL>
+          
+          <UL>
+            <LI>  XPatResultSet.pm
+              <UL>
+                <LI> Methods to support integration of citation information as a restriction to searching.</LI>
+              </UL>
+             </LI>
+          </UL>
+          
+          
+          <UL>
+            <LI>  BookBagItem/BBItemBC.pm
+              <UL>
+                <LI> Mods for BibClass subclass to allow more flexible bookbag filtering</LI>
+              </UL>
+             </LI>
+          </UL>
+          
+          <UL>
+            <LI>  BookBagItem/BBItemTC.pm
+              <UL>
+                <LI> Mods for BibClass subclass to allow more flexible bookbag filtering</LI>
+                
+              </UL>
+             </LI>
+          </UL>
+          
+          <UL>
+            <LI>  dbmove
+              <UL>
+                <LI> Pageview table not moved if target is CSV. Message showing progress of table population.</LI>
+                <LI> Changed release switch to accomodate release and workshop releases.</LI>
+              </UL>
+             </LI>
+          </UL>
+          
+          <UL>
+            <LI>  dbmove.cfg
+              <UL>
+                <LI> Changed release switch to accomodate release and workshop release.</LI>
+                <LI> Added text class collections and groups for release and workshop.</LI>
+              </UL>
+             </LI>
+          </UL>
+          
+        </DIV3>
+        
+        <DIV3>
+          <H3>Bugs Fixed</H3>
+          <UL>
+            <LI>344: Allow AddPI to refer to a method as well as a subroutine  </LI>
+            <LI>351: DlpsUtils::CleanCgiParameters deletes params with value 0  </LI>
+            <LI>895: MySQL-based sessions broken for BC and IC  </LI>
+          </UL>
+        </DIV3>
+      </DIV2>
+      
+      <DIV2>
+        <H2>Text Class version 2.5.10</H2>
+        <DIV3>
+          <H3>New and Changed Functionality</H3>
+          <DIV4>
+            <H4>cgi/t/text</H4>
+
+          <UL>
+            <LI>  PVApp.pm
+              <UL>
+                <LI> Added GetCioByClass()</LI>
+                <LI> Removed GetMainFrameSrc method. Now initial call to pageviewer, as well as subsequent page navigation calls, use the same code. Previously, the initial call created a link in the main html frame to an image, while subsequent calls wrapped an img tag in an html template. Now they all use the html template to build the main frame.</LI>
+                <LI> Changes to support integration of citation information as a restriction to searching.</LI>
+              </UL>
+             </LI>
+          </UL>
+
+          <UL>
+            <LI>  PageView.cfg
+              <UL>
+                <LI> Added remoteGif key in %gFormatToFormatHandlers</LI>
+              </UL>
+             </LI>
+          </UL>
+
+          <UL>
+            <LI>  PageView.pm
+              <UL>
+                <LI> Changes to support integration of citation information as a restriction to searching.</LI>
+              </UL>
+             </LI>
+          </UL>
+
+          <UL>
+            <LI>  TextApp.pm
+              <UL>
+                <LI> Added DSO param to bookbag methods</LI>
+                <LI> Remove parameter for GetRequestedCollIds() GetCollids()</LI>
+                <LI> Added _reinitialize()</LI>
+                <LI> Error message in Assert in HeaderViewSearchesAndFilter</LI>
+                <LI> Changes $self={}; to %$self={};</LI>
+                <LI> Fixed bug in ShowMaxDepthRegions.</LI>
+                <LI> Added GetCioByClass()</LI>
+                <LI> Add xclass functionality and application result object handling</LI>
+                <LI> Moved xclass exit outside of loop over collections so we don't jump out after just one</LI>
+                <LI> Changes to support integration of citation information as a restriction to searching.</LI>
+                <LI> Addition of the CheckForAnyQValues in ValidityChecks.</LI>
+                <LI> Fixed bug in bib searches (handling rgn and rgn1, etc.) by adding a bit to ValidityChecks to set the rgn for type=boolean;subtype=bib.</LI>
+              </UL>
+             </LI>
+          </UL>
+
+          <UL>
+            <LI>  TextClass.pm
+              <UL>
+                <LI> Add "browseable" db fiels and remove HandlerExists() and ProcessCollSpecificPI() methods from several subclasses.</LI>
+                <LI> Added an ASSERT to SubmitSearchSet to handle the previously silent failing when an empty (but non-error) result was returned from XPat.</LI>
+                <LI> Moved ASSERT from SubmitSearchSet to XPatResultSet::InitIterator.</LI>
+                <LI> Added DLXSDATAROOT functionality</LI>
+                <LI> Fixed bug in ShowMaxDepthRegions.</LI>
+                <LI> Added HandleHeaderFilter() and GetParentApp()</LI>
+                <LI> Add xclass functionality and application result object handling</LI>
+                <LI> Fix womv ptr notes problem. The target region was not being qualified by the idno when searching for the parent region (to get the head). Being too general the target selected the wrong div from which to extract the head for the note Popup window title.</LI>
+                <LI> Changes to support integration of citation information as a restriction to searching.</LI>
+                <LI> Assert in FindXPatContainingIdno re xpat object.</LI>
+                <LI> Fix font highlighting</LI>
+                <LI> Fixed bug in bib searches (handling rgn and rgn1, etc.) by adding a bit to ValidityChecks to set the rgn for type=boolean;subtype=bib.</LI>
+                <LI> Added MAINHEADER to the synthetic regions accounted for in TextClass::_PagesWithHitsFilter.</LI>
+              </UL>
+             </LI>
+          </UL>
+
+          <UL>
+            <LI>  TextClassUtils.pm
+              <UL>
+                <LI> Remove userpath functionality from sub GetCollFilePath</LI>
+                <LI> Alphabetic collection name sorting</LI>
+                <LI> Remove parameter for GetRequestedCollIds() GetCollids()</LI>
+                <LI> Added GetCioByClass()</LI>
+                <LI> Added GID PI</LI>
+                <LI> moved $gDevelopmentHost to LibGlobals and text for DLPS_DEV==uniqname</LI>
+                <LI> Changes to support integration of citation information as a restriction to searching. 2002/06/05 --> Added support for orglink and orgtext PIs.</LI>
+                <LI> Changed ORG_INFO related PIs to do the following: First, if the search is cross-collection, the contents of the INCLUDE_ PIs are ripped out. Second, there is only one PI (ORG_INFO) which takes the parameter "type" (either "link" or "text"), much like the CONTACT PI.</LI>
+                <LI> Fix debug logic for homesite link builder to stay with the virtual host that got you to the page originally e.g. pagliere.dev not fizzie. Deleted $gDevelopmentHost from LibGlobals</LI>
+              </UL>
+             </LI>
+          </UL>
+
+          <UL>
+            <LI>  WWApp.pm
+              <UL>
+                <LI> Added GetCioByClass()</LI>
+              </UL>
+             </LI>
+          </UL>
+
+          <UL>
+            <LI>  pageviewer-idx
+              <UL>
+                <LI> Added GetCioByClass()</LI>
+                <LI> Add ApplicationClass attribute for application object creation</LI>
+                <LI> Now require LibGlobals 2.0800</LI>
+              </UL>
+             </LI>
+          </UL>
+
+          <UL>
+            <LI>  text-idx
+              <UL>
+                <LI> Added GetCioByClass()</LI>
+                <LI> Add ApplicationClass attribute for application object creation</LI>
+                <LI> Now require LibGlobals 2.0800</LI>
+              </UL>
+             </LI>
+          </UL>
+
+          <UL>
+            <LI>  textclass.cfg
+              <UL>
+                <LI> moved gDevelopmentHost to LibGlobals</LI>
+                <LI> Changes to support integration of citation information as a restriction to searching.</LI>
+              </UL>
+             </LI>
+          </UL>
+
+          <UL>
+            <LI>  ww2-idx
+              <UL>
+                <LI> Add ApplicationClass attribute for application object creation</LI>
+                <LI> Now require LibGlobals 2.0800</LI>
+              </UL>
+             </LI>
+          </UL>
+
+  
+          </DIV4>  
+
+          <DIV4>
+            <H4>web/t/text</H4>
+          <UL>
+            <LI>  bib.tpl</LI>
+            <LI>  boolean.tpl</LI>
+            <LI>  header.tpl</LI>
+            <LI>  proximity.tpl</LI>
+            <LI>  reslist.tpl</LI>
+            <LI>  searchhistory.tpl</LI>
+            <LI>  text.tpl</LI>
+            <LI>  textclass.css</LI>
+            <LI>  ww-full.tpl</LI>
+            <LI>  ww-start.tpl
+              <UL>
+                <LI> Changes to templates to support integration of citation information as a restriction to searching.</LI>
+              </UL>
+             </LI>
+          </UL>
+
+          <UL>
+            <LI>  bibext.tpl
+              <UL>
+                <LI> Changed REGION_SEARCH_SELECT to REGION1_SEARCH_SELECT.</LI>
+              </UL>
+             </LI>
+          </UL>
+
+
+
+          <UL>
+            <LI>  browse_template.tpl
+              <UL>
+                <LI> Added browse template template</LI>
+              </UL>
+             </LI>
+          </UL>
+
+          <UL>
+            <LI>  search.js
+              <UL>
+                <LI> Changed clearSelectOptions function</LI>
+              </UL>
+             </LI>
+          </UL>
+
+
+          <UL>
+            <LI>  simple.tpl
+              <UL>
+                <LI> Changes to templates to support integration of citation information as a restriction to searching.</LI>
+                <LI> First use of the ORG_INFO PI.</LI>
+              </UL>
+             </LI>
+          </UL>
+
+          <UL>
+            <LI>  graphics/pq.jpg</LI>
+            <LI>  graphics/pq2.jpg</LI>
+            <LI>  graphics/scale2.gif
+              <UL>
+                <LI> New</LI>
+              </UL>
+             </LI>
+          </UL>
+
+
+          <UL>
+            <LI>  graphics/smnavline.gif</LI>
+            <LI>  graphics/smnavarrow.gif</LI>
+            <LI>  graphics/smnavplug-end.gif</LI>
+            <LI>  graphics/smnavplug.gif</LI>
+            <LI>  graphics/smnavplug1.gif
+              <UL>
+                <LI> graphics files for search revisions</LI>
+              </UL>
+             </LI>
+          </UL>
+
+
+          </DIV4>
+        </DIV3>
+        
+        <DIV3>
+          <H3>Bugs Fixed</H3>
+          <UL>
+            <LI>167: Add Help Text</LI>
+            <LI>183: Use DBI for access to all database-like data</LI>
+            <LI>224: wordwheel indexing find "aeque" when query is for "que"</LI>
+            <LI>230: first scoped head is a garbage kwic</LI>
+            <LI>241: Extend TextClass functionality: level 2 and mixed levels support</LI>
+            <LI>243: TextClass help.html missing</LI>
+            <LI>250: The bookbag indicator should not appear in the main window</LI>
+            <LI>253: Update code to handle latest version of Apache::Session</LI>
+            <LI>256: TextClass needs alternative to Adobe distill utility</LI>
+            <LI>263: Move divdepths and need for notes and entities filtering to colldb</LI>
+            <LI>266: Browse page builder has eccentricities</LI>
+            <LI>270: Highlighting of hits in SGML</LI>
+            <LI>271: idnos do not expand when given a 7 digit NOTIS ID, pages cannot be vie</LI>
+            <LI>293: Collection wordwheel Makefiles need to be changed to not use MFS</LI>
+            <LI>308: home links in header blow away session</LI>
+            <LI>309: home link in pageviewer loads in frame, not over frameset</LI>
+            <LI>357: TextClassUtils subroutines should be TextClass methods</LI>
+            <LI>363: Fix uses of FindHostName() and 'homesite', 'home' colldb for failover</LI>
+            <LI>365: Selecting a letter also does a search on the letter in Wordwheel</LI>
+            <LI>389: Need to implement a simple browse</LI>
+            <LI>405: Pageviewer defaults to seq=1 should be seq=00000001</LI>
+            <LI>409: Implement a more flexible mechanism for collection-specific look and feel</LI>
+            <LI>447: results page for searches in header fields have empty "hits in doc" li</LI>
+            <LI>476: colldb in TC should not have hard-coded DLXSROOT</LI>
+            <LI>478: Port ImageClass and TextClass to MySQL maintaining CSV support</LI>
+            <LI>484: Index search takes user to page not found</LI>
+            <LI>485: Broken links in MoA browse pages</LI>
+            <LI>494: pageviewer rewrite</LI>
+            <LI>568: Header.tpl reallignment</LI>
+            <LI>579: Pageviewer should be able to handle IDNO plus N value</LI>
+            <LI>602: MoA journal browse pages can't be repurposed</LI>
+            <LI>646: No filtering of bibliographic tags in full text</LI>
+            <LI>854: DirectoryIndex redirect incompatible with existing nav PIs</LI>
+          </UL>
+        </DIV3>
+      </DIV2>
+      
+      <DIV2>
+        <H2>Bib Class version 2.2.7</H2>
+        <DIV3>
+          <H3>New and Changed Functionality</H3>
+          <DIV4>
+            <H4>cgi/b/bib</H4>
+          <UL>
+            <LI>  BibApp.pm
+              <UL>
+                <LI> Changes implementing the BibClass subclass + no record numbering if only one record</LI>
+                <LI> Implemented "view long format in new window" link</LI>
+                <LI> Implementation of _initializeLocal() for NameBibApp</LI>
+                <LI> fix HIDDED_GID html var substitution fixing #819</LI>
+                <LI> Created routine to initialization for book bag</LI>
+                <LI> Added header to _reinitialize routine. </LI>
+                <LI> Moved GetAppKeyInfo SetAppKeyInfo up to DLXSApp</LI>
+                <LI> Added GetCioByClass() and CollsFIlter)(in BibClass.pm</LI>
+                <LI> Added handling for class-based index.tpl</LI>
+                <LI> Added homesite support for collection link in the global.tpl page</LI>
+                <LI> Fixed date range check for pub year.</LI>
+                <LI> Fix debug logic for homesite link builder to stay with the virtual host that got you to the page originally e.g. pagliere.dev not fizzie. Deleted $gDevelopmentHost from LibGlobals</LI>
+                <LI> Help page link was not beening created correctly.</LI>
+                <LI> Made email button a PI</LI>
+                <LI> Added call to RemoveClassObject. Before history was not working without this call.</LI>
+              </UL>
+             </LI>
+          </UL>
+
+          <UL>
+            <LI>  BibClass.pm
+              <UL>
+                <LI> Initial</LI>
+                <LI> Added DLXSDATAROOT functionality</LI>
+                <LI> Added DualDisplayModeSupport()</LI>
+                <LI> Added GetCioByClass() and CollsFIlter)(in BibClass.pm</LI>
+                <LI> Make GetPersistentSessionItemByKey('cio' ) GetCioByClass()</LI>
+                <LI> Now use DbUtils::GetCellByKey_DBI() top get tectclass collection name for bibclass filtering via live database handle saved on session</LI>
+                <LI> Added eval block around call to $collname = DbUtils::GetCellByKey_DBI to catch thrown exception if fetchrow_arrayref fails.</LI>
+                <LI> Use of DlpsUtils::ResolveDlxsDataRoot function.</LI>
+              </UL>
+             </LI>
+          </UL>
+
+          <UL>
+            <LI>  BibClassUtils.pm
+              <UL>
+                <LI> Initial</LI>
+              </UL>
+             </LI>
+          </UL>
+
+          <UL>
+            <LI>  bib-idx
+              <UL>
+                <LI> Changes implementing the BibClass subclass + no record numbering if only one record</LI>
+                <LI> Added GetCioByClass() and CollsFIlter)(in BibClass.pm</LI>
+              </UL>
+             </LI>
+          </UL>
+
+          <UL>
+            <LI>  bibclass.cfg
+              <UL>
+                <LI> Changes implementing the BibClass subclass + no record numbering if only one record</LI>
+                <LI> Implemented "view long format in new window" link</LI>
+                <LI> Bib Name Resolver group bibperm in new global</LI>
+                <LI> Created routine for initialization for book bag</LI>
+                <LI> Added homesite support for collection link in the global.tpl page</LI>
+                <LI> Added label for emailing from bookbag, since this was made into a PI.</LI>
+              </UL>
+             </LI>
+          </UL>
+
+          <UL>
+            <LI>  bibperm
+              <UL>
+                <LI> Created</LI>
+              </UL>
+             </LI>
+          </UL>
+
+          <UL>
+            <LI>  specific.functions.cfg</LI>
+            <LI>  default.functions.cfg
+              <UL>
+                <LI> Obsolete</LI>
+              </UL>
+             </LI>
+          </UL>
+
+          <UL>
+            <LI>  bib.map
+              <UL>
+                <LI> Added mappings for COLL,FMT,LANG,TYPE</LI>
+              </UL>
+             </LI>
+          </UL>
+
+          </DIV4>
+          <DIV4>
+            <H4>web/b/bib</H4>
+          <UL>
+            <LI>  bbagWindow.js
+              <UL>
+                <LI> Replaced by window.js</LI>
+              </UL>
+             </LI>
+          </UL>
+
+          <UL>
+            <LI>  bbagemail.tpl
+              <UL>
+                <LI> Add HIDDED_GID html var</LI>
+              </UL>
+             </LI>
+          </UL>
+
+          <UL>
+            <LI>  global.tpl
+              <UL>
+                <LI> Add HIDDED_GID html var</LI>
+              </UL>
+             </LI>
+          </UL>
+
+          <UL>
+            <LI>  index.tpl
+              <UL>
+                <LI> Added handling for class-based index.tpl</LI>
+              </UL>
+             </LI>
+          </UL>
+
+          <UL>
+            <LI>  longfmt.tpl
+              <UL>
+                <LI> Initial</LI>
+              </UL>
+             </LI>
+          </UL>
+
+          <UL>
+            <LI>  pageheadernavbar.chunk
+              <UL>
+                <LI> Add HIDDED_GID html var</LI>
+              </UL>
+             </LI>
+          </UL>
+
+          <UL>
+            <LI>  searchhistory.tpl
+              <UL>
+                <LI> Add HIDDED_GID html var</LI>
+              </UL>
+             </LI>
+          </UL>
+
+          <UL>
+            <LI>  window.js
+              <UL>
+                <LI> Replaced bbagWindow.js</LI>
+                <LI> Changed retrieving message to be more generic.</LI>
+              </UL>
+             </LI>
+          </UL>
+
+
+          </DIV4>
+        </DIV3>
+        <DIV3>
+          <H3>Bugs Fixed</H3>
+          <UL>
+            <LI>295: map files not being read  </LI>
+            <LI>773: support long display of a single record from a list  </LI>
+            <LI>782: BibClass requires a per class subclass structure.  </LI>
+            <LI>819: CGI loses g= parameter after search  </LI>
+            <LI>829: changes to Long Display  </LI>
+            <LI>920: text change from "Bibliographic" to "Metadata"  </LI>
+            <LI>921: request for less space between file names on Filepicker page  </LI>
+            <LI>945: BibClass app needs method to read Collections table  </LI>
+          </UL>
+        </DIV3>
+      </DIV2>
+      
+      <DIV2>
+        <H2>Image Class version 2.3.3</H2>
+        <DIV3>
+          <H3>New and Changed Functionality</H3>
+          <DIV4>
+            <H4>General</H4>
+            <UL>
+              <LI>The fisheye PI was modified to include vertical bar characters at the beginning and end. These will appear between the fisheye and "&lt;&lt; previous items" and between the fisheye and "next items &gt;&gt;" on the TOP and BOTTOM of the results pages. Therefore customized templates, including collection specific templates, should have the vertical bars around the fisheye PI removed. This solves the problem of bars being displayed even when there are not enough results to warrant a fisheye. The few remaining chunks of "interface english" left in the code were shifted to the %gWords has h in imageclass.cfg. This change affected ImageClassUtils.pm as well.</LI>
+              
+              <LI>Image file dimensions for the view tab graphics were shifted to a global variable to accomodate size changes.</LI>
+              
+              <LI>ImageApp.pm and ImageClassUtils.pm were modified to make thumbnail images link to the full record when displayed in the record div on the "images with full record" results page.</LI>
+            </UL>
+
+          </DIV4>
+          <DIV4>
+            <H4>cgi/i/image</H4>
+          <UL>
+            <LI>  Collectionmaps-last.pm
+              <UL>
+                <LI> XPAT queries were modified to remove requirement for the ID attribute of the COLL element to have a value beginning with "MC".</LI>
+              </UL>
+             </LI>
+          </UL>
+
+          <UL>
+            <LI>  Collectionmaps.pm
+              <UL>
+                <LI> XPAT queries were modified to remove requirement for the ID attribute of the COLL element to have a value beginning with "MC".</LI>
+              </UL>
+             </LI>
+          </UL>
+
+          <UL>
+            <LI>  ImageApp.pm
+              <UL>
+                <LI> Changed handling of "-dev" collids in the AUTHZD_COLL and PUBLIC_COLL environment variables so that when DLPS_DEV is true, it is OK if the environment variables do not have "-dev" on the collids.</LI>
+                <LI> minor tweak to auth "-dev" tweak in ForceAuth routine.</LI>
+                <LI> Added Get[CG]ioByClass() for cross class access to CIO and GIO from DSO. Alos added 'ApplicationClass' attribute for CioFactory->new() calls to identify Class for CIO/GIO operations.</LI>
+                <LI> Support for template override via the tpl cgi parameter was added.</LI>
+                <LI> Add xclass functionality and application result object handling</LI>
+              </UL>
+             </LI>
+          </UL>
+
+          <UL>
+            <LI>  ImageClassUtils.pm
+              <UL>
+                <LI> Fixed minor layout problem with "next/prev item"</LI>
+                <LI> The "groups" PI parameter was added to GROUPSPICK PI to allow the list of groups included for selection to be limited to the list of group ids in the parameter. The default of no groups parameter is provided is all groups.</LI>
+                <LI> When no thumbnail image is availble, pleasant text is displayed rather than ugly gray placeholder images. In some cases, nothing is displayed (e.g., entry/record view).</LI>
+                <LI> Added DLXSDATAROOT functionality</LI>
+                <LI> A change was made to hide the panning tool when panning is not an option (e.g., when the full image is being viewed).</LI>
+                <LI> Added Get[CG]ioByClass() for cross class access to CIO and GIO from DSO. Alos added 'ApplicationClass' attribute for CioFactory->new() calls to identify Class for CIO/GIO operations.</LI>
+                <LI> Additional field display options were added to the RecordFilt subroutine. A field may have multiple urls (separated by whitespace) in it, and all will be turned in to links if the "url" option is on. "urltarget" (allows target to be specified when "url" option is on).</LI>
+                <LI> "urltarget," "delim," and "keylinks," field display options were added to RecordFilt. the "url" option was modified to support multiple urls in a single field.</LI>
+                <LI> Collection Home links were added to collection picking routines.</LI>
+                <LI> Fixed minor bug that stopped group "all" from being excluded from the group selection list when the pi specifies it. the "next" was inside the debug scope.</LI>
+                <LI> A validity check was added for the rgnN parameter to make sure that for each qN parameter, there is an rgnN parameter. When there is not, term highlighting does not work properly.</LI>
+                <LI> A small HTML error was corrected in the RecordFilt subroutine, shifting a "nowrap" attribute from the TR to TD tag in two places.</LI>
+              </UL>
+             </LI>
+          </UL>
+
+          <UL>
+            <LI>  getimage-idx
+              <UL>
+                <LI> Added Get[CG]ioByClass() for cross class access to CIO and GIO from DSO. Alos added 'ApplicationClass' attribute for CioFactory->new() calls to identify Class for CIO/GIO operations.</LI>
+                <LI> Now require LibGlobals 2.0800</LI>
+              </UL>
+             </LI>
+          </UL>
+
+          <UL>
+            <LI>  getthumbnail-idx
+              <UL>
+                <LI> Added Get[CG]ioByClass() for cross class access to CIO and GIO from DSO. Alos added 'ApplicationClass' attribute for CioFactory->new() calls to identify Class for CIO/GIO operations.</LI>
+                <LI> Now require LibGlobals 2.0800</LI>
+                <LI> Fixed a bug where getthumbnail-idx was failing with an assertion error because the %attributes hash was lacking information about which class was being used.</LI>
+              </UL>
+             </LI>
+          </UL>
+
+          <UL>
+            <LI>  image-idx
+              <UL>
+                <LI> Added Get[CG]ioByClass() for cross class access to CIO and GIO from DSO. Alos added 'ApplicationClass' attribute for CioFactory->new() calls to identify Class for CIO/GIO operations.</LI>
+                <LI> Now require LibGlobals 2.0800</LI>
+              </UL>
+             </LI>
+          </UL>
+
+          <UL>
+            <LI>  imageclass.cfg
+              <UL>
+                <LI> changed image host for dev</LI>
+                <LI> Add xclass functionality: $gImageClassCgiRoot</LI>
+              </UL>
+             </LI>
+          </UL>
+
+          <UL>
+            <LI>  makeCollectionmaps-idx
+              <UL>
+                <LI> XPAT queries were modified to remove requirement for the ID attribute of the COLL element to have a value beginning with "MC".</LI>
+                <LI> Added Get[CG]ioByClass() for cross class access to CIO and GIO from DSO. Alos added 'ApplicationClass' attribute for CioFactory->new() calls to identify Class for CIO/GIO operations.</LI>
+                <LI> Now require LibGlobals 2.0800</LI>
+              </UL>
+             </LI>
+          </UL>
+
+          </DIV4>
+
+          <DIV4>
+            <H4>web/i/image</H4>
+
+            <UL>
+              <LI>  entry.tpl
+              <UL>
+                  <LI> fixed minor layout problem with "next/prev item"</LI>
+                </UL>
+            </LI>
+            </UL>
+            
+          </DIV4>
+
+        </DIV3>
+        <DIV3>
+          <H3>Bugs Fixed</H3>
+          <UL>
+            <LI>345 v2: Collection selection  </LI>
+            <LI>347 v2: New image controls and quality parameters  </LI>
+            <LI>348 v2: Personal collection management tools  </LI>
+            <LI>349 v2: Login interface  </LI>
+            <LI>350 v2: Results with full record  </LI>
+            <LI>388 v2: Independent sid serving  </LI>
+            <LI>397 v2: Migrate to multiregion  </LI>
+            <LI>410 v2: Handling of help email  </LI>
+            <LI>411 v2: Make sure that null q2 with no q1 still works  </LI>
+            <LI>413 v2: Thumbfull results divs not display right in netscape agitator  </LI>
+            <LI>415 v2: Sids displayed in open portfolio window  </LI>
+            <LI>417 v2: Imageclassutils::insertCollName should use colldb for collname  </LI>
+            <LI>418 v2: Imageclassutils::thumbrecordfilt should use colldb briefcollname  </LI>
+            <LI>421 v2: Meta categs other than dublin core (search forms and sort menu)  </LI>
+            <LI>422 v2: Remove old access control mechanism  </LI>
+            <LI>426 v2: Temp cgi dir must be configurable  </LI>
+            <LI>446 v2: Id resolver functionality  </LI>
+            <LI>454 v2: Add search term highlighting in results  </LI>
+            <LI>456 v2: Add slideshow to entry view, and cgi memory for the last view  </LI>
+            <LI>459 v2: Css/template cleanup  </LI>
+            <LI>460 v2: Move interface english from cgi to configurable place  </LI>
+            <LI>462 v2: Makecollectionmaps needs updating  </LI>
+            <LI>463 v2: Sorting broken  </LI>
+            <LI>464 v2: Support for version 3 browsers  </LI>
+            <LI>465 v2: Better feedback for zero results searches  </LI>
+            <LI>486 v2: Need to use web path in groups db  </LI>
+            <LI>512 v2: Check urls for backward compatability  </LI>
+            <LI>515 v2: Should image size defaults be in colldb?  </LI>
+            <LI>518 v2: Implement new collection info template  </LI>
+            <LI>520 v2: Include thumb image in record description table in full record resu  </LI>
+            <LI>521 v2: Create template for no results page  </LI>
+            <LI>522 v2: Makecolls can't move new .pm in to place  </LI>
+            <LI>534 v2: Minimal description needed on page with full image  </LI>
+            <LI>536 v2: Delete portfolio button missing in netscape  </LI>
+            <LI>538 v2: Portfolio addition interface lacks radio button  </LI>
+            <LI>551 v2: No horizontal scroll bar in entry view  </LI>
+            <LI>554 v2: Image structures need some flexibility  </LI>
+            <LI>563 v2: Xcoll reslist results view needs collname in records  </LI>
+            <LI>564 v2: Slideshow results view needs redirect from cgi for backward compat  </LI>
+            <LI>565 v2: Record display after sorting displays wrong record.  </LI>
+            <LI>566 v2: Contact colldb collname change  </LI>
+            <LI>570 v2: Should we add group descriptions to groups.tpl?  </LI>
+            <LI>586 v2: Add colldb config of sid nlevel range  </LI>
+            <LI>657 v2: Search form clear button doesn't work for revised searches  </LI>
+            <LI>985 Need CSSURL PI handler for tips.tpl  </LI>
+          </UL>
+        </DIV3>
+
+      </DIV2>
+      
+      <DIV2>
+        <H2>Broker version 1.2.0</H2>
+        <DIV3>
+          <H3>New and Changed Functionality</H3>
+
+          <DIV4>
+            <H4>cgi/b/broker</H4>
+            <UL>
+              <LI>  broker
+              <UL>
+                  <LI> Chnaged it so that Dienst verbs work against the text collections rather than bib.</LI>
+                  <LI> Remove group from set list in ListSets verb.</LI>
+                  <LI> For the GetRecord verb, once a record is caught you loop out, before we would get all the records, so you could not have two collections with the same id.</LI>
+                  <LI> Corrected rank search.</LI>
+                  <LI> Change onlink to umelectr.</LI>
+                  <LI> Fixed so that full bib and full text work now.</LI>
+                  <LI> Changed the call to new cio and new gio to comply with lib changes.</LI>
+                </UL>
+             </LI>
+            </UL>
+            
+            <UL>
+              <LI>  broker.cfg
+              <UL>
+                  <LI> Added code to support text search for Dienst verbs.</LI>
+                  <LI> Removed extra / in file name.</LI>
+                </UL>
+             </LI>
+            </UL>
+            
+          </DIV4>
+
+        </DIV3>
+      </DIV2>
+      
+      <DIV2>
+        <H2>Collmgr version 1.1.0</H2>
+        <DIV3>
+          <H3>New and Changed Functionality</H3>
+          <P>In release 9 Collmgr expects to see a version 2.0 DLXS database.  This is either a new sample database as delivered with Release 9 or a version 1.0 database compatible with Release 8 and upgraded to version 2.0 by the upgrade_1_2 utility. </P>
+          <DIV4>
+            <H4>cgi/c/collmgr</H4>
+            
+            <UL>
+              <LI>  collmgr
+              <UL>
+                  <LI> Add collmgr login link to logout good-bye page. Fiz it's partial html</LI>
+                  <LI> Added debugging for CSV_XS and DBI</LI>
+                </UL>
+             </LI>
+              </UL>
+          </DIV4>
+
+          <DIV4>
+            <H4>web/c/collmgr</H4>
+            
+            <UL>
+              <LI>  collmgr-fields.html
+              <UL>
+                  <LI> Added browseable field to the list</LI>
+                  <LI> Updated information for the subclassmodule field</LI>
+                  
+                </UL>
+             </LI>
+            </UL>
+            
+          </DIV4>
+          
+        </DIV3>
+      </DIV2>
+      
+      
+      <DIV2>
+        <H2>Finding Aids version 2.0.4</H2>
+        <DIV3>
+          <UL>
+            <LI>No significant code changes from  Release 8.  Finding Aids now comes with a sample data set found in obj/s/samplefa and idx/s/samplefa and preparatory scripts in prep/s/samplefa.</LI>
+          </UL>
+        </DIV3>
+      </DIV2>
+
+      <DIV2>
+        <H2>XClass version 1.0.0</H2>
+        <DIV3>
+          <UL>
+            <LI>This is the first release of XClass.  The current implementation of XClass is a prototype cross-class search application which sens a simple word or phrase query to each of TextClass and ImageClass and displays a simple result detailing the number of hits in each class and provides a link for the user to go to a given class and explore the result in more detail.  XClass receives and ApplicationResult object from each class containing the result of the query. It is anticipated that this prototype will develop in functionality in subsequent releases.</LI>
+          </UL>
+        </DIV3>
+      </DIV2>
+    </DIV1>
+    
+
+    <!-- End Release 9 -->
+
+
+    <DIV1>
+      <H1>DLXS Release 8 - 22 Mar 2002</H1>
+      <DIV2>
+        <H2>General Information</H2>
+        <P>This is an interim release of DLXS middleware. </P>
+        <P>DLXS Release 8 is comprised of TextClass version 2.5.0, BibClass version
+  2.1.6, FindingAids version 2.0.3, ImageClass version 2.3.1, Broker version 1.1.2, Collmgr version 1.1.0, mrsid_retrieve version 1.3.1, tif2web version 1.0.0, dlxsd version 1.0.0 and XPAT version 5.2.3. In particular, dlxsd (the remote daemon), mrsid_retrieve and tif2web are first-time deliverables in this release. </P>
+        <P>Release 8 introduces a new architecture incorporating an Application Object which
+encapsulates the mainline code from a given class of middleware (text-idx, image-idx, bib-idx) and abstracts it into a Perl class that can be instantiated and manipulated as an object.  The main program is reduced to just a few lines.  The Application Object's class can be subclassed to change functionality in a manner similar to the subclasses of the TextClass collection object base class. In addition, a single CGI program can instantiate multiple application objects (from different middleware classes) and combine their functionality to produce "cross-class" applications.  We expect to demonstrate such functionality in an upcoming release.</P>
+        <P>Release 8 has a new top-level directory structure  "misc/{db,c/class/maps}" that replaces obj/c/class/lib/{db,maps}. </P>
+        
+      </DIV2>
+      
+      <DIV2>
+        <H2>XPAT version 5.2.3</H2>
+        <DIV3>
+          <UL>
+            <LI>No change from  Release 7</LI>
+          </UL>
+        </DIV3>
+      </DIV2>
+      
+      <DIV2>
+        <H2>Lib version 2.4.7</H2>
+        <DIV3>
+          <H3>New and Changed Functionality</H3>
+          <UL>
+            <LI>BookBag.cfg
+    <UL>
+                <LI>Install functions + change for $gReleaseUser to dlxsadm
+      </LI>
+              </UL>
+  </LI>
+            <LI>CioFactory.pm
+    <UL>
+                <LI>Lib changes supporting arbitrary databases.
+      </LI>
+                <LI>Install functions + change for $gReleaseUser to dlxsadm
+      </LI>
+                <LI> Do not redirect ot an nonexistend URL
+                during reauth if the installed middleware was configured
+                without a login URL such as at a site without an auth
+                system
+      </LI>
+                <LI>added debugging for database user name
+      </LI>
+                <LI>changed USERID to REMOTE_USER
+      </LI>
+                <LI>A problem in the Reauthenticate routine
+                was corrected. In situations where reauthentication
+                was necessary, the cgi ended up redirecting to itself
+                rather than to the login screen. This resulted in
+                an endless loop that timed out before too long.
+      </LI>
+              </UL>
+  </LI>
+            <LI>CollsInfo.pm
+    <UL>
+                <LI>Lib changes supporting arbitrary databases.
+      </LI>
+                <LI>changes for subclass directories
+      </LI>
+              </UL>
+  </LI>
+            <LI>DLXSApp.pm
+    <UL>
+                <LI>cdrom version number variable added
+      </LI>
+                <LI>rename $cgi->Dump() to $cgi->as_string()
+                an alias for Dump. Dump is causing repeated problems
+                not being recognized due to autoloading and exporT
+                AS "Dump" instead of "dump" I guess.
+      </LI>
+              </UL>
+  </LI>
+            <LI>DbUtils.pm
+    <UL>
+                <LI>added debugging for DBI_Connect
+      </LI>
+              </UL>
+  </LI>
+            <LI>DevUtils.pm
+    <UL>
+                <LI>get collections from DEV_COLL and AUTHZD_COLL
+                only when in development
+      </LI>
+              </UL>
+  </LI>
+            <LI>DlpsSession.cfg, DlpsSession.pm
+    <UL>
+                <LI>Install functions + change for $gReleaseUser
+                to dlxsadm
+      </LI>
+                <LI>Added "empty" as an option to the new
+                method as well as a method to simply attach a hash
+                reference to an empty DlpsSession object's persistent
+                data.
+      </LI>
+              </UL>
+  </LI>
+            <LI>DlpsUtils.pm
+              <UL>
+                <LI>Installation instrumentation changes
+      </LI>
+                <LI>Fix HighlightHit() setlocale logic
+                to be optional
+      </LI>
+                <LI>Allow 'host' to be 'localhost' in SetLocalOrRemoteMode()
+                giving a local connection.
+      </LI>
+                <LI>Remove quotes and regexp metachars
+                in CleanCgiParameters() and in pat50TruncationHandler()
+      </LI>
+
+                <LI>Added "force" to CGI call in BuildPullDown
+                so that "default" value would be the selected option.
+      </LI>
+                <LI> changed USERID to REMOTE_USER
+      </LI>
+                <LI> changes for subclass directories, Integrate ObjectFactory
+      </LI>
+              </UL>
+            </LI>
+            <LI>GroupsInfo.pm
+    <UL>
+                <LI>Lib changes supporting arbitrary databases
+      </LI>
+              </UL>
+  </LI>
+            <LI>LibGlobals.cfg
+    <UL>
+                <LI>new connect string for CSV = qq{DBI:CSV:f_dir=$CSV_filedir;binary=0;csv_sep_char=\t;csv_eol=\n;csv_quote_char=;
+      </LI>
+
+                <LI>Install functions + change for $gReleaseUser to dlxsadm
+      </LI>
+                <LI> login url is query_null for install.
+      </LI>
+                <LI>assign MySQL_adm_username directly to gReleaseUser
+      </LI>
+              </UL>
+  </LI>
+            <LI>ProcIns.pm
+    <UL>
+                <LI>Fixed ProcIns ProcessPIs method typo from previous change (eliminating &amp;`, etc.)
+      </LI>
+                <LI>Change to better handle regular expression in ProcessPIs.
+      </LI>
+              </UL>
+  </LI>
+            <LI>QueryFactory.pm
+    <UL>
+                <LI>Remove quotes and regexp metachars in CleanCgiParameters() and in pat50TruncationHandler()
+      </LI>
+              </UL>
+  </LI>
+            <LI>XPat.pm
+    <UL>
+                <LI>Added better debug msg for xpat error return string &lt;error>&lt;/>
+      </LI>
+              </UL>
+  </LI>
+
+          </UL>
+        </DIV3>
+        <DIV3>
+          <H3>Bugs Fixed</H3>
+          <UL>
+            <LI>130: Investigate and Implement multi-page PDFs</LI>
+            <LI>301: installation script for DLXS</LI>
+            <LI>344: Allow AddPI to refer to a method as well as a subroutine</LI>
+            <LI>351: DlpsUtils::CleanCgiParameters deletes params with value 0</LI>
+            <LI>477: Architectural change to support an "Application Object"</LI>
+            <LI>483: Word Index page gets funcky when narrowed</LI>
+            <LI>493: Add daemon code to CVS, middleware tree, and release process</LI>
+            <LI>508: Modify DLXS session functionality to support central repository</LI>
+          </UL>
+        </DIV3>
+      </DIV2>
+
+      <DIV2>
+        <H2>Text Class version 2.5.0</H2>
+        <DIV3>
+          <H3>New and Changed Functionality</H3>
+
+
+
+          <DIV4>
+            <H4>bin/t/text</H4>
+            <UL>
+              <LI>TextClass subclass modules have moved to cgi/t/text/TextClass
+<UL>
+                  <LI> </LI>
+                </UL> </LI>
+              <LI>Pageviewer
+<UL>
+                  <LI>Much work done in pageviewer: Use of
+                c42pdf for tif to pdf conversion. Use of newer version
+                of tif2gif. Syntax in command parameters for new xpatviewd
+                daemon using "verbs" (that in xpat-5.2.4) JavaScript
+                in page navigation frame to not always resubmit entire
+                frameset and its multiple cgi calls. "Chunking" of
+                pdfs, handling of "ready made pdfs" Minor typos in
+                CmeTC. Minor typos in TextClass and proper ordering
+                of two parameters in the FilterLel3and4... method.
+</LI>
+                </UL>
+</LI>
+              <LI>DlpsLocalUtils.pm
+<UL>
+                  <LI>Changed gHtmlTemplates to be fully
+                qualified with TCGlobals package name to fix bug with
+                checking of idno multiple matches.
+
+</LI>
+                </UL>
+</LI>
+              <LI>PVApp.pm
+<UL>
+                  <LI>Add DLXSROOT to baseObjDir in ServePageForIdno
+</LI>
+                  <LI>test/u/uniqname/gifcvtdir not needed
+                on remote machines
+</LI>
+                  <LI>New subroutine CreatePageViewObject()
+                to allow subclassing of the PageView object (pvo)
+</LI>
+                  <LI>Change to CreateMainFrameSrc to properly
+                handle text view (pageviewer runs targeted to _top,
+                which in turn calls text-idx in main frame).
+</LI>
+                  <LI>Fixed handling of gif image for text
+                view in method for GOTO_GIF PI handling.
+</LI>
+                  <LI>Fixed ValidityChecks so that incoming
+                cc is used if there is one.
+</LI>
+                  <LI>PVApp, WWApp, text-idx ww2-idx pageviewer-idx
+                uses new path syntax from DlpsUtils
+</LI>
+                  <LI>Integrate ObjectFactory
+</LI>
+                </UL>
+</LI>
+              <LI>PageView.cfg
+<UL>
+                  <LI>Install functions + change for $gReleaseUser
+                to dlxsadm
+</LI>
+                  <LI>Separate password for PageView so different
+                database type can be configured at install time e.g.
+                CSV for collection data abd MySQL for PageView table.
+</LI>
+                  <LI>Chnage all references in TextClassUtils
+                of the genre db field to singular.
+</LI>
+                  <LI>Changes to accommodate tif2web and
+                better syntax for xpatviewd daemon.
+</LI>
+                </UL>
+</LI>
+              <LI>PageView.pm
+<UL>
+                  <LI>FindHostName changes to Find_HTTP_HostName
+</LI>
+                  <LI>Change in maximum number for pdf chunking.
+</LI>
+                  <LI>Separate password for PageView so different
+                database type can be configured at install time e.g.
+                CSV for collection data abd MySQL for PageView table.
+</LI>
+                  <LI>Call to create destination directory
+                for local tif2pdf.
+</LI>
+                  <LI>remove superfluous require PageView.cfg
+</LI>
+
+                </UL>
+</LI>
+              <LI>importpageviewdata.pl
+    <UL>
+                  <LI>New in Release 8
+</LI>
+	          <LI>General utility for copying page-level
+              metadata stored in legacy pageview.dat files into the
+              database store used by Text Class
+</LI>
+                </UL>
+  </LI>
+              <LI>TextApp.pm
+<UL>
+                  <LI>Changed gTextClassCgi to gTextClassCgiRoot
+                in CheckIdMatches.
+</LI>
+                  <LI>handle tcumodule subclasses of TextClassUtils
+                object
+</LI>
+
+                  <LI>FindHostName => Find_HTTP_HostName
+                <LI> Install functions + change for $gReleaseUser</LI>
+                to dlxsadm
+</LI>
+                  <LI>Install functions + change for $gReleaseUser
+                to dlxsadm
+</LI>
+                  <LI>Fixed GetItemEncodingLevel to ASSERT
+                if idno is not defined and changed calls to it to
+                supply an idno, gotten elsewhere; e.g., from a divhead
+                that is being filtered in a reslist. The bug was in
+                the case of searches that had no idno in the CGI object;
+                i.e., a general search.
+</LI>
+
+                  <LI>Integrate ObjectFactory
+</LI>
+                </UL>
+</LI>
+              <LI>TextClass.pm
+<UL>
+                  <LI>Lib changes supporting arbitrary databases
+</LI>
+                  <LI>Added $gRankFilePath and read 'rankfile'
+                path frorm db. FIxes broken moa sorting.
+</LI>
+                  <LI>Change firstpublished to firstpublishedstart
+                firstpublishedend and firstpublishedinc
+</LI>
+
+
+                  <LI> Type in call to GetItemEncodingLevel.
+</LI>
+                </UL>
+</LI>
+              <LI>TextClassUtils.pm
+<UL>
+                  <LI>Links to homesite do not use userpath
+                in development.
+</LI>
+                  <LI>Chnage all references in TextClassUtils
+                of the genre db field to singular.
+</LI>
+                  <LI> Added userpath to GetCollFilePath method.
+</LI>
+                </UL>
+</LI>
+              <LI>WWApp.pm
+<UL>
+                  <LI>ValidityChecks in WWApp to add cc.
+</LI>
+                  <LI>Fix missing sid on quicklink found
+                by Sakaama
+</LI>
+                  <LI>Integrate ObjectFactory
+</LI>
+                </UL>Integrate ObjectFactory
+</LI>
+              <LI>pageviewer-idx
+<UL>
+                  <LI>Addition of CioFactory in pageviewer-idx and ww2-idx.
+</LI>
+                  <LI>Lib changes supporting arbitrary databases.
+</LI>
+                  <LI>changed #!/l/local/bin/perl to #!../../../bin/symlinks/perl
+                to facilitate installation
+</LI>
+                  <LI>Installation instrumentation changes
+</LI>
+                  <LI>New subroutine CreatePVApp() to allow
+                subclassing
+</LI>
+                  <LI>Much work done in pageviewer: Use of
+                c42pdf for tif to pdf conversion. Use of newer version
+                of tif2gif. Syntax in command parameters for new xpatviewd
+                daemon using "verbs" (that in xpat-5.2.4) JavaScript
+                in page navigation frame to not always resubmit entire
+                frameset and its multiple cgi calls. "Chunking" of
+                pdfs, handling of "ready made pdfs" Minor typos in
+                CmeTC. Minor typos in TextClass and proper ordering
+                of two parameters in the FilterLel3and4... method.
+</LI>
+                  <LI> PVApp, WWApp, text-idx ww2-idx pageviewer-idx
+                uses new path syntax from DlpsUtils
+</LI>
+                  <LI> Integrate ObjectFactory
+</LI>
+                </UL>
+</LI>
+              <LI>text-idx
+<UL>
+                  <LI>Lib changes supporting arbitrary databases.
+</LI>
+                  <LI>changed #!/l/local/bin/perl to #!../../../bin/symlinks/perl to facilitate installation
+</LI>
+
+                  <LI>handle appmodule subclasses of TextApp
+                object
+</LI>
+
+                  <LI>PVApp, WWApp, text-idx ww2-idx pageviewer-idx
+                uses new path syntax from DlpsUtils
+</LI>
+                  <LI>Integrate ObjectFactory
+</LI>
+                </UL>
+</LI>
+              <LI>textclass.cfg
+<UL>
+                  <LI>Links to homesite do not use userpath
+                in development. Added $gDevelopmentHost to TCGlobals
+                package (textclass.cfg)
+</LI>
+                  <LI> obj -> misc directory structure change
+</LI>
+                  <LI>Added $gRankFilePath
+</LI>
+                  <LI>Install functions + change for $gReleaseUser to dlxsadm
+</LI>
+
+                </UL>
+</LI>
+              <LI>ww2-idx
+<UL>
+                  <LI>Addition of CioFactory in pageviewer-idx and ww2-idx.   Lib changes supporting arbitrary databases.
+changed #!/l/local/bin/perl to #!../../../bin/symlinks/perl to facilitate installation.
+Installation instrumentation changes. Integrate ObjectFactory
+</LI>
+                </UL>
+</LI>
+
+            </UL>
+
+
+          </DIV4>
+
+          <DIV4>
+            <H4>web/t/text</H4>
+            <UL>
+              <LI>bibext.tpl
+    <UL>
+                  <LI>Missing &lt;input type=prox,citation,boolean
+                in all extended forms>
+      </LI>
+                </UL>
+  </LI>
+              <LI>booleanext.tpl
+    <UL>
+                  <LI>Missing &lt;input type=prox,citation,boolean
+                in all extended forms>
+      </LI>
+                </UL>
+  </LI>
+              <LI>header.tpl
+    <UL>
+                  <LI>minor changes to the css file for nav
+                colors, and removed footer nav from header.tpl
+      </LI>
+                </UL>
+  </LI>
+              <LI>pageviewer.frameset.tpl,pageviewer.nav.tpl,pageviewer.pagenav.tpl
+    <UL>
+                  <LI>Change of template for page navigation
+                in pageviewer. Extra JavaScript to handle the updating
+                of frames, rather than the re-submission of the entire
+                frameset and its cgi's, if full re-submission is not
+                necessary. Pdf page chunking also now incorporated. Changed orientation of frameset to
+                horizontal
+      </LI>
+
+                </UL>
+  </LI>
+              <LI>proximityext.tpl
+    <UL>
+                  <LI>Missing &lt;input type=prox,citation,boolean
+                in all extended forms>
+      </LI>
+                </UL>
+  </LI>
+              <LI>search.js
+    <UL>
+                  <LI>Making sure that the "genre" javascript
+                array and genre pulldown are built with the singular
+                genre and not plural (part of a coll db column name
+                change back to singular).
+      </LI>
+                </UL>
+  </LI>
+              <LI>textclass.css
+    <UL>
+                  <LI>minor changes to the css file for nav
+                colors, and removed footer nav from header.tpl
+      </LI>
+                </UL>
+  </LI>
+            </UL>
+          </DIV4>
+        </DIV3>
+
+        <DIV3>
+          <H3>Fixed Bugs</H3>
+          <UL>
+            <LI>n/a</LI>
+          </UL>
+        </DIV3>
+      </DIV2>
+
+      <DIV2>
+        <H2>Bib Class version 2.1.6</H2>
+        <DIV3>
+          <H3>New and Changed Functionality</H3>
+          <UL>
+            <LI>BibApp.pm
+    <UL>
+                <LI>Lib changes supporting arbitrary databases.
+      </LI>
+                <LI>removed locale == 'c' and now handle
+                appmodule subclasses of BibApp object
+      </LI>
+
+                <LI>Fixed tpl parameter handling so searches
+                can use custom pages as wel as just when we are serving
+                a page
+      </LI>
+                <LI>Change FindHostName() to Find_HTTP_HostName() for remote connect handling
+      </LI>
+                <LI>Install functions + change for $gReleaseUser to dlxsadm
+      </LI>
+                <LI>Long display is now a separete html page for fgdc data.
+      </LI>
+              </UL>
+  </LI>
+            <LI>bib-idx
+    <UL>
+                <LI>fix app object creation for single
+                class mode
+      </LI>
+                <LI>handle
+                appmodule subclasses of BibApp object. Integrate ObjectFactory
+      </LI>
+                <LI> BibApp uses new path syntax from DlpsUtils
+      </LI>
+              </UL>
+  </LI>
+            <LI>bibclass.cfg
+    <UL>
+                <LI>Install functions + change for $gReleaseUser
+                to dlxsadm
+      </LI>
+              </UL>
+  </LI>
+            <LI>default.functions.cfg
+    <UL>
+                <LI>fixed &lt;W> problems in short and long
+                filters
+      </LI>
+              </UL>
+  </LI>
+
+          </UL>
+
+        </DIV3>
+      </DIV2>
+
+      <DIV2>
+        <H2>Image Class version 2.3.1</H2>
+        <DIV3>
+          <H3>New and Changed Functionality</H3>
+          <UL>
+            <LI>Added support for CollMgr (collection manager).</LI>
+            <LI>Modified to use LibGlobals.pm.</LI>
+            <LI>Changed perl hash bangs and MrSID retrieve path to reference symlinks in /bin/symlink.</LI>
+            <LI>Rearranged code for compliance as DLXS application object. This included moving globals to the ICGlobals name space.</LI>
+            <LI>Added cgi parameter adjustment for situations where there is a cc but no c parameter. c is set to equal cc.</LI>
+            <LI>Modified to work with ObjectFactory.</LI>
+            <LI>Corrected the problem where an attempt was made to connect to the BookBagDB even if $gBookBagToggle was set to "off".</LI>
+            <LI>Changed to Find_HTTP_Host for proper support of localhost in collmgr. Fixed bug in MySQL_username.</LI>
+            <LI>Modified makeCollectionmaps-idx so that it uses only collids from collmgr rows that are appropriate to the situation (collmgr-release, production, or userid)</LI>
+            <LI>Modified middleware to support automated installation.</LI>
+            <LI>All uses of the USERID environment variable were changed to REMOTE_USER since USERID has been depricated.</LI>
+            <LI>Corrections and enhancements were made to the contextual instructions in %gViewInstruct and %gWords of imageclass.cfg.</LI>
+            <LI>Added support for AUTHZD_COLL file for command link collection authorization.</LI>
+            <LI>Added auto-support of g=all for getthumbnail-idx which was failing without it.</LI>
+            <LI>Corrected bug where image would fail to display if session was new. It worked when using an old session because the group parameter would get picked up from the session.</LI>
+            <LI>If mrsid_retrieve is not found, Sidget2 module now reports this as a debug message. It does not bail, because there are some situations where it is OK that mrsid_retrieve is not available. getimage-idx now uses group "all" if it is not a cross collection search. This corrects a problem where an inappropropriate group was being used when a collection specific search was initiated from a non-all group selection page.</LI>
+            <LI>Corrected the problem where the cross collection search form was not displaying a collection's searchable fields in the case where a single collection was selected and the dfltsrchflds collmgr entry was "default".</LI>
+            <LI>Links to getthumbnail-idx were getting built without a session id. This is now corrected.</LI>
+            <LI>Fixed problem where fallback was not working for "viewtabs" graphics in the sense that the middleware was not checking for the presense of collection specific files.</LI>
+            <LI>Corrected a problem where bbentry.tpl and entry.tpl templates lacked quote marks around an attribute value for a PI. In bbentry, this caused the graphics for panning and zooming to not display properly.</LI>
+          </UL>
+        </DIV3>
+
+
+
+
+        <DIV3>
+          <H3>Fixed Bugs</H3>
+          <UL>
+            <LI>345 v2 collection selection</LI>
+            <LI>347 v2 new image controls and quality parameters</LI>
+            <LI>348 v2 personal collection management tools</LI>
+            <LI>349 v2 login interface</LI>
+            <LI>350 v2 results with full record</LI>
+            <LI>388 v2 independent sid serving</LI>
+            <LI>396 v2: problem with quotes in alt tags for images</LI>
+            <LI>397 v2: migrate to multiregion</LI>
+            <LI>410 v2: handling of help email</LI>
+            <LI>411 v2: make sure that null q2 with no q1 still works</LI>
+            <LI>412 v2: migrate to sgml without line breaks</LI>
+            <LI>413 v2: thumbfull results divs not display right in netscape agitator</LI>
+            <LI>415 v2: sids displayed in open portfolio window</LI>
+            <LI>417 v2: ImageClassUtils::insertCollName should use colldb for collname</LI>
+            <LI>418 v2: ImageClassUtils::thumbrecordfilt should use colldb briefcollname</LI>
+            <LI>421 v2: meta categs other than dublin core (search forms and sort menu)</LI>
+            <LI>422 v2: remove old access control mechanism</LI>
+            <LI>426 v2: temp cgi dir must be configurable</LI>
+            <LI>446 v2: id resolver functionality</LI>
+            <LI>454 v2: add search term highlighting in results</LI>
+            <LI>456 v2: add slideshow to entry view, and cgi memory for the last view</LI>
+            <LI>459 v2: css/template cleanup</LI>
+            <LI>460 v2: move interface english from cgi to configurable place</LI>
+            <LI>462 v2: makeCollectionmaps needs updating</LI>
+            <LI>463 v2: sorting broken</LI>
+            <LI>464 v2: support for version 3 browsers</LI>
+            <LI>465 v2: better feedback for zero results searches</LI>
+            <LI>486 v2:need to use web path in groups db</LI>
+            <LI>490 v2: hide field display based on value (IMLS)</LI>
+            <LI>512 v2: check urls for backward compatability</LI>
+            <LI>514 v2: related views not displaying in ie os x, at least</LI>
+            <LI>515 v2: should image size defaults be in colldb?</LI>
+            <LI>518 v2:implement new collection info template</LI>
+            <LI>520 v2:Include thumb image in record description table in full record resu</LI>
+            <LI>521 v2:create template for no results page</LI>
+            <LI>522 v2: makeColls can't move new .pm in to place</LI>
+            <LI>532 v2: unnecessary step in choosing a collection ?</LI>
+            <LI>533 v2: unnecessary steps in choosing a collection (?)</LI>
+            <LI>534 v2: minimal description needed on page with full image</LI>
+            <LI>535 v2: "i" buttons not intuitive for searching</LI>
+            <LI>536 v2: delete portfolio button missing in netscape</LI>
+            <LI>537 v2: delete portfolio button missing in netscape</LI>
+            <LI>538 v2: portfolio addition interface lacks radio button</LI>
+            <LI>551 v2: no horizontal scroll bar in entry view</LI>
+            <LI>554 v2: image structures need some flexibility</LI>
+            <LI>563 v2: xcoll reslist results view needs collname in records</LI>
+            <LI>564 v2: slideshow results view needs redirect from cgi for backward compat</LI>
+            <LI>565 v2: record display after sorting displays wrong record.</LI>
+            <LI>566 v2: contact colldb collname change</LI>
+            <LI>570 v2: should we add group descriptions to groups.tpl?</LI>
+            <LI>580 v.2: APIS 'descriptive info' links could be explained more fully.</LI>
+            <LI>586 v2: add colldb config of sid nlevel range</LI>
+            <LI>657 v2: search form clear button doesn't work for revised searches</LI>
+            <LI>679 IMLS: Correct header display when using "select groups" link to return</LI>
+            <LI>681 IMLS: independent selection of display fields for each view</LI>
+            <LI>682 IMLS: display collection db name for each view</LI>
+            <LI>687 IMLS: bug in access point drop-down menu</LI>
+            <LI>732 collection names should be links in group list</LI>
+            <LI>739 is "images with full record" an appropriate designation</LI>
+
+          </UL>
+        </DIV3>
+        <DIV3>
+          <H3>Known Problems</H3>
+          <UL>
+            <LI>Image Class does not work properly when using MySQL for the session database. CSV is therefore preferred. Since the session database is configured in Lib (i.e., globally for all of DLXS), CSV must be used for all Classes if Image Class is to be used. The installer will ask, "Select the session datastore type," which should be answered "CSV" if Image Class is to be used. The configuration can be changed post-install by editing the value of $gSessDatabaseSelector in /DLXSROOT/lib/DlpsSession.cfg.</LI>
+            <LI>The Makefiles for building Image Class XPAT indexes allocate 384 MB to
+the xpatbld process. If the memory allocation fails, the allocation
+should be lowered using the following guideline:
+Memory allocation for xpatbld (-m 384m) should be no more than 3/4
+physical memory. And, there is no need for it to be more than twice
+thesize of the .sgm file.
+</LI>
+          </UL>
+        </DIV3>
+      </DIV2>
+
+      <DIV2>
+        <H2>Finding Aids version 2.0.1</H2>
+        <DIV3>
+          <UL>
+            <LI>No change from Release 6</LI>
+          </UL>
+        </DIV3>
+      </DIV2>
+
+      <DIV2>
+        <H2>Broker version 1.1.2</H2>
+        <DIV3>
+          <UL>
+
+            <LI>This release of broker uses the bib collections maintained by Collmgr, rather than a copy of these collections.</LI>
+            <LI>Sets are created based on groups that have the OAI parameter set to Y or y.   Sets are also composed of the specific collections that make up these groups.</LI>
+            <LI>Added installation parameters to make Broker easier to setup.</LI>
+            <LI>Complete Latin-1 Unicode support was added, and a couple of other characters.</LI>
+          </UL>
+        </DIV3>
+      </DIV2>
+
+      <DIV2>
+        <H2>Collmgr version 1.0.0</H2>
+        <DIV3>
+          <UL>
+            <LI>This is the initial release of Collmgr.</LI>
+            <LI>Collmgr is responsible for maintaining collection and group information for the three DLXS classes.  It interface to either a MySQL database or a CSV database, and maintains collection/group data there.</LI>
+            <LI>Collmgr works kind of like a configuration management system, where users login and check out collections/groups, make changes to them, test these changes and then checkin their changes.</LI>
+            <LI>Collmgr can also perform specific administrative functions, like adding and deleting collection/group fields to the database, and releasing the checked in collections/groups to production.</LI>
+          </UL>
+        </DIV3>
+      </DIV2>
+
+
+      <DIV2>
+        <H2>Finding Aids version 2.0.3</H2>
+        <DIV3>
+          <UL>
+            <LI>No significant changes from  Release 7</LI>
+          </UL>
+        </DIV3>
+      </DIV2>
+    </DIV1>
+
+                <LI></LI>
+
+    <DIV1>
+      <H1>DLXS  Release 7 - 9 JAN 2002</H1>
+      <DIV2>
+        <H2>General Information</H2>
+        <P>This is an interim release of DLXS middleware intended to distribute Image
+  Class version 2.0.0, which is a complete rewrite of the class. </P>
+        <P>DLXS  Release 6 is comprised of TextClass version 2.3.0, BibClass version
+  2.1.0, FindingAids version 2.0.1, ImageClass version 2.0.0, Broker version 1.1.0
+  and XPAT version 5.2.3. </P>
+
+      </DIV2><DIV2>
+        <H2>XPAT version 5.2.3</H2>
+        <DIV3>
+          <UL>
+            <LI>No change from  Release 6</LI>
+          </UL>
+        </DIV3> </DIV2> <DIV2>
+        <H2>Text Class version 2.3.0</H2>
+        <DIV3>
+          <UL>
+            <LI>No change from  Release 6</LI>
+          </UL>
+        </DIV3> </DIV2> <DIV2>
+        <H2>Bib Class version 2.1.0</H2>
+        <DIV3>
+          <UL>
+            <LI>No change from  Release 6</LI>
+          </UL>
+        </DIV3> </DIV2> <DIV2>
+        <H2>Image Class version 2.0.0</H2>
+        <DIV3>
+          <H3>New and Changed Functionality</H3>
+          <P>Image Class was rewritten to improve performance and to make better use of
+  DLXS Lib, colldb, and groups. To the extent possible, backward compatability
+  for cgi parameters was maintained.</P>
+          <P>Several key enhancements have been made:</P>
+          <UL>
+            <LI>Interface redesign</LI>
+            <LI>Results sorting</LI>
+            <LI>Portfolios (a.k.a., personal collections)</LI>
+            <LI>Greater use of common DLXS libraries</LI>
+            <LI>Support for more image file formats and sizes</LI>
+            <LI>Support for remote image serving (images may be served from a different
+      machine than the middleware and xpat indexes)</LI>
+            <LI>Collection specific XPAT indexes</LI>
+            <LI>Results caching for faster navigation in a result set</LI>
+            <LI>Support for Cascading Style Sheets</LI>
+            <LI>Extensive use of COLLDB for collection configuration and customization</LI>
+            <LI>Collection grouping</LI>
+          </UL>
+        </DIV3>
+        <DIV3>
+          <H3>Known Problems</H3>
+          <P>imageclass.cfg attempts to establish connection with mysql for BookBagDB functionality, even if BookBag functionality is turned off. Please make the following adjustments <B>(in bold)</B> to the imageclass.cfg...</P>
+          <PRE>### BookBagDB Configuration
+{
+    my $dsn;
+    my $username = 'usernamehidden';
+    my $pw = 'passwordhidden';
+    $gbbagentrydivsdefault = 'full image';
+    $gBbagTableName = 'BookBagDB';
+
+
+<B>    if ($gBookBagToggle)
+      {</B>
+        if ( $ENV{'DLPS_DEV'} )
+          {
+            $dsn = 'DBI:mysql:dlxs:fizzie.umdl.umich.edu:';
+          }
+        else
+          {
+            $dsn = 'DBI:mysql:dlxs:dlps1.umdl.umich.edu:';
+          }
+        eval{ $gDBHBbag = &amp;DbUtils::Connect_DBI($dsn, $username, $pw); };
+        if ( $@ )
+          {
+            &amp;DlpsUtils::errorBail( $@ );
+          }
+<B>
+      }</B>
+  }
+</PRE>
+
+        </DIV3>
+      </DIV2> <DIV2> </DIV2><DIV2>
+        <H2>Finding Aids version 2.0.1</H2>
+        <DIV3>
+          <UL>
+            <LI>No change from  Relase #6</LI>
+          </UL>
+        </DIV3> </DIV2> <DIV2>
+        <H2>Broker version 1.1.0</H2>
+        <DIV3>
+          <UL>
+            <LI>No change from  Release 6</LI>
+          </UL>
+        </DIV3> </DIV2> <DIV2>
+        <H2>Lib version 2.4.0</H2>
+        <DIV3>
+          <UL>
+            <LI>No change from  Release 6</LI>
+          </UL>
+        </DIV3> <DIV3>
+          <H3>Backward Compatibility</H3>
+          <P>No changes from  #6</P>
+        </DIV3> </DIV2> </DIV1> <DIV1>
+      <H1>DLXS  Release 6 - 1 OCT 2001</H1>
+      <DIV2>
+        <H2>General Information</H2>
+        <P>This is an interim release of DLXS middleware intended to distribute bug fixes, functional enhancements and coding clean-ups which have occurred since the 30 MAR 2001  Release 5. </P>
+        <P>DLXS  Release 6 is comprised of TextClass version
+2.3.0, BibClass version 2.1.0, FindingAids version 2.0.1, ImageClass
+version 1.0.6, Broker version 1.1.0 and XPAT version 5.2.3. </P>
+        <P>These fixes and enhancements apply primarily to TextClass,
+BibClass  and Lib. ImageClass version 1.0.6 and XPAT 5.2.3 (both first
+delivered in DLXS  Release 5) are unchanged in this release.</P>
+        <P>With this release comes the initial delivery of Broker version 1.1.0.</P>
+      </DIV2>
+      <DIV2>
+        <H2>XPAT version 5.2.3</H2>
+        <DIV3>
+          <H3>New and Changed Functionality</H3>
+          <UL>
+            <LI>No change from  Release 5</LI>
+          </UL>
+        </DIV3>
+        <DIV3>
+          <H3>Fixed Bugs</H3>
+          <UL>
+            <LI>n/a</LI>
+          </UL>
+        </DIV3>
+        <DIV3>
+          <H3>Known Problems</H3>
+          <UL>
+            <LI><CODE>xmlrgn</CODE> makes all the region names all uppercase.  Element names in XML are case-sensitive.                                 "P" and "p", for instance, would be two completely different elements.  XPAT cannot work with documents that might have elements with the same name, but different case.  Such documents are rare. </LI>
+            <LI> <CODE>xmlrgn</CODE> will complain: <CODE>...omitted tag minimization parameter can be omitted only if "OMITTAG NO" is specified on the SGML declaration</CODE>.  This is unexpected since XML doesn't allow the minimization parameter. The xml.dcl file included with the XPAT distribution can be used to work around these problems. </LI>
+            <LI> <CODE>xmlrgn</CODE> will complain: <CODE>...general entity "lt" (or "gt" or "amp) not defined and no default entity</CODE>.    This is unexpected since they are three of the five predefined or "built-in" entities of XML.  The xml.dcl file included with the XPAT distribution can be used to work around these problems. </LI>
+          </UL>
+        </DIV3>
+      </DIV2>
+      <DIV2>
+        <H2>Text Class version 2.3.0</H2>
+        <DIV3>
+          <H3>New and Changed Functionality</H3>
+          <DIV4>
+            <H4>cgi/t/text</H4>
+            <UL>
+              <LI>subclass modules (in general)
+              <UL>
+                  <LI>Mandatory to define <CODE>maxdepthitems</CODE> array for each subclasses. Enforced via assertion in base class.  This is because every collection has different "lowest level" elements in reslist display.</LI>
+                  <LI>Extensive rework of notes handling removed much of the need to over-ride base class notes filtering in the subclasses.  There are now 2 mechanisms to define <CODE>NOTEPARENT</CODE> regions: (1) as usual in the <CODE>coll.extra.srch</CODE> as a fabricated region and (2) explicitly in the subclass code (if the parent regions may be nested).</LI>
+                </UL>
+            </LI>
+              <LI>Wordwheel
+              <UL>
+                  <LI>makeWordWheelFiles.pl: split on all non-alphanumerics including all 8 bit to fix problem with \0255 masquerading as '-'</LI>
+                  <LI>sample.ww.blank.dd: Added \346 (ae ligature) to &lt;mappings> as 'e' to fix wordwheel problem of aem appearing when 'm' is entered due xpat bug where "æ" is indexed as an empty string.</LI>
+                </UL>
+            </LI>
+              <LI>text-idx
+              <UL>
+                  <LI>New customization mechanism: code to import <CODE>trap</CODE> routines from DlpsLocalUtils.pm</LI>
+                  <LI>Added eval around <CODE>EmailBookBag</CODE> to trap malformed address message thrown from BookBag.pm</LI>
+                  <LI>Added <CODE>AUTHZD_COLL</CODE> file for debugging as a proxy for auth system to set contents of <CODE>AUTHZD_COLL</CODE> environment variable</LI>
+                  <LI>Added "groups" functionality.  A group is a set of collections.  The group is based on the "groups" database table and is specified by the <CODE>g</CODE> URL parameter.  This functionality is as yet not exposed in the user interface. </LI>
+                  <LI>Added fallback mechanism for locating templates. If handling a pagespec URL parameter we "fallback" from collection-specific directory to a group-specific directory to the class web directory. If xcollmode is 'group' fallback from group to class. If xcollmode is 'colls' no fallback. If not in xcollmode, fallback from collection-specific dir to class web directory.</LI>
+                  <LI> <CODE>ValidityChecks</CODE> makes sure <CODE>cc</CODE> matches one of the <CODE>c</CODE> URL parameters</LI>
+
+                </UL>
+            </LI>
+              <LI>ww2-idx
+              <UL>
+                  <LI>Fix problem with uppercase search term not matching the always lowercase ww sgml data resulting in item not highlighted. </LI>
+                  <LI>Fix spacing of WORDWHEEL_UP|DOWN_BUTTON</LI>
+                  <LI>Add <CODE>Debug_AUTHZD_COLL</CODE> calls so pageviewer and ww2 can run as stand-alone scripts in debug mode to pick up the list of authorized collections in AUTHZD_COLL file. </LI>
+
+                </UL>
+            </LI>
+              <LI>pageviewer-idx
+              <UL>
+                  <LI>Changes to generalize the dlpsid resolver (if only a abc1234 formatted id comes in without 00x.000x volume.issue qualifier). Code put in an installation local Utils file (DlpsLocalUtils) and a subroutine to call the code as a "trap". </LI>
+                  <LI>Add <CODE>Debug_AUTHZD_COLL</CODE> calls so pageviewer and ww2 can run as stand-alone cgi's in debug mode to pick up the list of authorized collections in AUTHZD_COLL file. </LI>
+
+                </UL>
+            </LI>
+              <LI>textclass.cfg
+              <UL>
+                  <LI>Changes to handle new <CODE>trap</CODE> mechanism </LI>
+                  <LI>Added German to default languages </LI>
+                  <LI>Fix authentication problem where static variable hard-coded to "ets" was used instead of the <CODE>CGI::self_url</CODE> of the current $cgi object: Delete: $gRedirToAuthSystem = 'http://ets.umdl.umich.edu/t/text'; </LI>
+
+                </UL>
+            </LI>
+              <LI>TextClass.pm
+              <UL>
+                  <LI>Changes to handle multiple idno matching trap.</LI>
+                  <LI>Moved <CODE>MakeButtonLinkFromDivT</CODE> routine to TextClass.pm so that it can be overridden.</LI>
+                  <LI>Moved <CODE>BuildGoToHeaderViewButton</CODE> from TextClassUtils to TextClass and changed from a subroutine to method so it can be overridden. </LI>
+                  <LI>Moved <CODE>BuildGoToHeaderViewButton</CODE> from TextClassUtils to TextClass and changed from subroutine to method so it can be overridden </LI>
+                  <LI>Fixed <CODE>singlegenre,</CODE> <CODE>singlegender</CODE> and <CODE>singleperiod</CODE> not appearing in templates by not deleting the <CODE>mapped</CODE> key from the CIO when that object is instantiated and checking for it in <CODE>TextClass->GetValueByKey</CODE> </LI>
+                  <LI>Fix misspelling of "caesura" in <CODE>TextFilter</CODE> </LI>
+                  <LI>Change to <CODE>GetValueByKey</CODE> in TextClass.pm to look for those bits of info that come from the CollsInfo object contained in the TextClass object (rather than having come from direct setting of the TextClass object).</LI>
+                  <LI>Make low encoded text page viewing preserve the line breaks </LI>
+                  <LI>Significant changes to how notes and their scoping parents are searched for and filtered.   There are now 2 mechanisms to define <CODE>NOTEPARENT</CODE> regions: (1) as usual in the <CODE>coll.extra.srch</CODE> as a fabricated region and (2) explicitly in the subclass code (if the parent regions may be nested). </LI>
+                  <LI>Improvements to <CODE>EDITION[STMT}</CODE> filtering in <CODE>_HeaderFilter</CODE> </LI>
+                  <LI>Fixed bug where <CODE>psetoffset</CODE> was not properly being passed into the XPat object and so was not used in properly calculating the byte offset (used in ordering results) when type was PSet. </LI>
+                  <LI>Added filtering in <CODE>TextFilter</CODE> to remove <CODE>DLPSTEXTCLASS</CODE> tags and to add lines for <CODE>&lt;P TYPE="SKIPLINE"></CODE> </LI>
+                  <LI>Added error messages identifying <CODE>rgn</CODE> URL parameter value when we have an <CODE>ASSERT</CODE> failure trying to terminology map a region </LI>
+                  <LI>Modified calls to <CODE>AddPI</CODE> passing method names rather than coderefs to allow method invocation on derived classes via <CODE>ProcessPI.</CODE> </LI>
+                  <LI>Call <CODE>_HeaderFilter</CODE> as a method rather than subroutine </LI>
+                  <LI>Moved <CODE>FilterPBs,</CODE> <CODE>HI_Filter,</CODE> <CODE>FigureFilter</CODE> from TextClassUtils to TextClass methods.</LI>
+                  <LI>Added <CODE>HtmlForNoIndentLevel</CODE></LI>
+                  <LI>Made <CODE>$gTextClassCgi</CODE> a <CODE>main::</CODE> global moved out of TextClassUtils.pm</LI>
+                  <LI>Fix regexp in <CODE>ParsePbTag</CODE> causing Page 'NA' to be displayed for all pages for <CODE>HEADER_TOC</CODE> PI.</LI>
+                  <LI>Added <CODE>HandleHighlighting</CODE> to support special input mapping for collections like CME. Special input mapping allows the user to enter uppercase characters as proxies for certain other characters (e.g Middle English 'yogh') that cannot easily be generated at the keyboard and to search for same in specially prepared collection data.</LI>
+                  <LI>Added filtering to <CODE>TextFilter</CODE> to map &lt;S> (textclass.dtd sentence element, html strikethru) to nothing.   Added similar filtering to <CODE>CleanResidualTags</CODE> for KWIC handling.</LI>
+                  <LI> Changed gender restriction query building
+                to include a new fabricated region <CODE>GENDERWITHIN</CODE> to handle cases where the <CODE>GENDER</CODE> fabricated region is in the <CODE>HEADER</CODE> sometimes and within <CODE>divwithinfo</CODE> other times.</LI>
+                  <LI>Added <CODE>GetNoteMaxDivHead</CODE> to indicate the deepest level at which NOTE1 or PTR might occur. Needed to know where to start looking for parent DIV (HEAD). Formerly used <CODE>GetDivHeadRange</CODE> but that does not work because we don't always display the deepest DIVs in results.</LI>
+                  <LI>Fixed query in sub <CODE>PageFilterForLowLel:</CODE> <CODE>ENCODINGDESC-T</CODE> should have been <CODE>EDITORIALDECL-T</CODE></LI>
+                  <LI>Added filtering to <CODE>TextFilter</CODE> to better handle the content of <CODE>&lt;FRONT></CODE> e.g. in bwrp. Improve stray tag cleanup in general by calling <CODE>DlpsUtils::RemoveTags</CODE> </LI>
+                  <LI>Added <CODE>FilterFullRegion</CODE> method called from <CODE>_ScopedResultsFilter</CODE> to handle <CODE>fullregion</CODE> search results in an subclass over-ridable way.</LI>
+                  <LI>Add <CODE>FigureToHTML</CODE> method (over-ridable) to replace <CODE>&lt;FIGURE></CODE> with <CODE>&lt;img></CODE> (or whatever). </LI>
+                  <LI>Add highlighting functionality to notes display.  Links that point to notes that contain hits are displayed in red.  Hits are highlighted  in results displayed in Notes window.</LI>
+                </UL>
+            </LI>
+              <LI>TextClassUtils.pm
+              <UL>
+                  <LI>TextClassUtils is now a Perl Class module which is instantiated as a TCUO object by the 3 TextClass cgi programs. As such all the subroutines in TextClassUtils can be over-ridden as methods of a subclass of the TextClassUtils Class. This change requires a new syntax: <CODE>TextClassUtils::Sub</CODE> becomes <CODE>$tcuo->Sub</CODE> </LI>
+                  <LI>Now call <CODE>Find_HTTP_HostName</CODE> when building links so virtual hosts with different <CODE>DocumentRoot</CODE> values are supported. </LI>
+                  <LI>Added <CODE>ProcessGraphicsPathPI</CODE> to handle <CODE>GRAPHICS_PATH</CODE> PI for graphics file location fallback mechanism </LI>
+
+                </UL>
+            </LI>
+            </UL>
+
+          </DIV4>
+          <DIV4>
+            <H4>web/t/text</H4>
+            <UL>
+              <LI>templates (in general)
+              <UL>
+                  <LI>Add <CODE>COLL_SPECIFIC_CONTENT</CODE> PI for inline help </LI>
+                  <LI>Add <CODE>GRAPHICS_PATH</CODE> PI supporting graphics file fallback </LI>
+                  <LI>Changes to navbars and to main style sheet </LI>
+                </UL>
+            </LI>
+              <LI>pageviewer.frameset.tpl
+              <UL>
+                  <LI>Increased vertical real estate </LI>
+                </UL>
+            </LI>
+              <LI>pageviewer.nav.tpl
+              <UL>
+                  <LI>Significant layout changes </LI>
+                  <LI>Minor adjustment to nav background graphics</LI>
+                </UL>
+            </LI>
+              <LI>pageviewer.main.tpl
+              <UL>
+                  <LI>Added class=indentBlock to main frame </LI>
+                </UL>
+            </LI>
+              <LI>simpleext.tpl
+              <UL>
+                  <LI>Add <CODE>&lt;input type="hidden" name="type" value="simple"></CODE> instead of letting it default so statistic gather will be accurate </LI>
+                </UL>
+            </LI>
+              <LI>textclass.css
+              <UL>
+                  <LI>Added styles for <CODE>&lt;SPEAKER></CODE> and <CODE>&lt;STAGE></CODE> elements for theater related collections </LI>
+                </UL>
+            </LI>
+              <LI>ww-full.tpl
+              <UL>
+                  <LI>Fix spacing of WORDWHEEL_UP|DOWN_BUTTON and use of smaller arrow graphics </LI>
+                </UL>
+            </LI>
+            </UL>
+
+          </DIV4>
+          <DIV4>
+            <H4>obj/t/text/maps</H4>
+            <UL>
+              <LI>maps in general
+              <UL>
+                  <LI>Several new maps added. </LI>
+                  <LI><CODE>TARGETPARENT,</CODE> <CODE>NOTEPARENT,</CODE> <CODE>TARGET</CODE> removed from most maps.</LI>
+                </UL>
+            </LI>
+
+            </UL>
+
+          </DIV4>
+          <DIV4>
+            <H4>obj/t/text/db</H4>
+            <UL>
+              <LI>groups
+              <UL>
+                  <LI>New table: 'groups' added.  See above. </LI>
+                </UL>
+            </LI>
+              <LI>colldb
+              <UL>
+                  <LI>Fixed 1500-1600 to read: pre-1600 in some collections.</LI>
+                </UL>
+            </LI>
+            </UL>
+
+          </DIV4>
+        </DIV3>
+        <DIV3>
+          <H3>Fixed Bugs</H3>
+          <UL>
+            <LI>Bugzilla #271 Idnos do not expand when given a 7 digit NOTIS ID, pages cannot be viewed</LI>
+            <LI>Bugzilla #308 Home links in header do not include session ID</LI>
+            <LI>Bugzilla #230 First scoped head is a garbage kwic</LI>
+            <LI>Bugzilla #253 Update code to handle latest version (1.53) of Apache::Session</LI>
+            <LI>Bugzilla #270 HighlightHit cannot differentiate between text in tags and actual content</LI>
+            <LI>Bugzilla #293 Collection wordwheel Makefiles need to be changed to not use MFS indexing</LI>
+          </UL>
+        </DIV3>
+        <DIV3>
+          <H3>Known Problems</H3>
+          <UL>
+            <LI>n/a</LI>
+          </UL>
+        </DIV3>
+      </DIV2>
+      <DIV2>
+        <H2>Bib Class version 2.1.0</H2>
+        <P>This release does not include any significant improvements in functionality.  It is focused mainly on bug fixes. Not listed in a separate item below is support for an ID attribute on the A element in bib.map.</P>
+        <DIV3>
+          <H3>New and Changed Functionality</H3>
+          <DIV4>
+            <H4>cgi/b/bib</H4>
+            <UL>
+              <LI>bib-idx
+              <UL>
+                  <LI>Fixed <CODE>CleanCgiParameters</CODE> call to use the one in DlpsUtils instead of the one in main which
+                has bugs.</LI>
+                  <LI>Fixed <CODE>ASSERT</CODE> failure where <CODE>cc</CODE> is <CODE>ALLSELECTED</CODE> and no Terminology Mapper defined for <CODE>ALLSELECTED</CODE> - use default Terminology Mapper since we only need the standard mapping for <CODE>rgn1</CODE> </LI>
+                  <LI>Added call to <CODE>TerminologyMapper::GetMapfileName</CODE> for better error reporting.</LI>
+                  <LI>Fix pagespec/pagename parameter convention to adhere to DLXS parameter standard <CODE>page=pagespec</CODE> <CODE>pagename=somepage.tpl</CODE></LI>
+                  <LI>Added AUTHZD_COLL debugging file functionality</LI>
+                </UL>
+            </LI>
+
+              <LI>bibclass.cfg
+              <UL>
+                  <LI>Fix authentication problem where static variable hard-coded to "ets" was used instead of the <CODE>CGI::self_url</CODE> of the current $cgi object: Delete: <CODE>$gRedirToAuthSystem</CODE> = 'http://ets.umdl.umich.edu/t/text'; </LI>
+                </UL>
+            </LI>
+
+              <LI>specific.functionality.cfg
+              <UL>
+                  <LI>Many new filters added </LI>
+                </UL>
+            </LI>
+            </UL>
+          </DIV4>
+        </DIV3>
+        <DIV3>
+          <H3>Fixed Bugs</H3>
+          <UL>
+            <LI>Bugzilla #295 DLXS map files not being read. Only bib.map was being read for NonStandardBaseQueryNaturalLanguage</LI>
+          </UL>
+        </DIV3>
+        <DIV3>
+          <H3>Known Problems</H3>
+          <UL>
+            <LI>Bugzilla #272: BibClass does not build links based on the
+				  'host' field in the database so links to collections hosted on machines other
+				  than the machine running bib-idx will point to to the local machine data which
+				  usually does not exist (rather it is on a remote machine). This will only be a
+				  problem if BibClass colldb contains rows for more than one host.</LI>
+          </UL>
+        </DIV3>
+      </DIV2>
+      <DIV2>
+        <H2>Image Class version 1.0.6</H2>
+        <DIV3>
+          <P>This release is identical to that contained in DLXS  Release 5. Considerable
+				architectural and functional enhancements are scheduled for version 2 of the
+				Image Class, expected to be released in late 2001.</P>
+        </DIV3>
+      </DIV2>
+      <DIV2>
+        <H2>Finding Aids version 2.0.1</H2>
+        <DIV3>
+          <H3>New and Changed Functionality</H3>
+          <UL>
+            <LI>All non-idresolver code for <CODE>&lt;DAO></CODE> filtering has been removed.</LI>
+            <LI>Fix boolean searches in the Collection Title Field produced no matches.</LI>
+          </UL>
+        </DIV3>
+        <DIV3>
+          <H3>Fixed Bugs</H3>
+          <UL>
+            <LI>n/a</LI>
+          </UL>
+        </DIV3>
+        <DIV3>
+          <H3>Known Problems</H3>
+          <UL>
+            <LI>n/a</LI>
+          </UL>
+        </DIV3>
+      </DIV2>
+      <DIV2>
+        <H2>Broker version 1.1.0</H2>
+        <DIV3>
+          <H3>Functionality</H3>
+          <UL>
+            <LI>This initial release of broker consists of the implementation of the OAI Protocol for metadata harvesting, and the implementation of most of the Dienst verbs. The implementation is Unicode compliant, and uses an interface to a mysql database to create responses for some of the Dienst verbs.</LI>
+          </UL>
+        </DIV3>
+        <DIV3>
+          <H3>Fixed Bugs</H3>
+          <UL>
+            <LI>n/a</LI>
+          </UL>
+        </DIV3>
+        <DIV3>
+          <H3>Known Problems</H3>
+          <UL>
+            <LI>n/a</LI>
+          </UL>
+        </DIV3>
+      </DIV2>
+      <DIV2>
+        <H2>Lib version 2.4.0</H2>
+        <P>This release of the shared DLXS library modules incorporates some minor enhancements to the API and significant additional functionality in the database interface defined in DbUtils.pm.</P>
+        <DIV3>
+          <H3>New and Changed Functionality</H3>
+          <UL>
+            <LI>BookBag.pm
+              <UL>
+                <LI>Rename method in <CODE>DlpsSession::Delete</CODE> to <CODE>DeleteSession</CODE> (also for warning re: redefinition of <CODE>Delete</CODE> </LI>
+              </UL>
+            </LI>
+            <LI>CollsInfo.pm
+              <UL>
+                <LI>Modifications below the API to generalize data access via DBI. </LI>
+                <LI><CODE>AddClassObjects</CODE> now passes <CODE>$optionalArgsRef</CODE> to class <CODE>new</CODE> method to support a subclass-able TextClassUtils object at first element of this argument array.</LI>
+              </UL>
+            </LI>
+            <LI>DevUtils.pm
+              <UL>
+                <LI>Add <CODE>Debug_AUTHZD_COLL</CODE> to support reading debug-time authorized collection list from a file.  This, so all classes can benefit. </LI>
+              </UL>
+            </LI>
+            <LI>
+              <UL>
+                <LI>Rename method in <CODE>DlpsSession::Delete</CODE> to <CODE>DeleteSession</CODE> </LI>
+              </UL>
+            </LI>
+            <LI>DlpsUtils.pm
+              <UL>
+                <LI>Added mapping for &amp;grqu; => " in <CODE>FilterCharEnts_CH_Greek</CODE> for Chadwick-Heealy collections</LI>
+                <LI>Added entity mapping for &amp;quest; => '?'</LI>
+                <LI>Assorted additional character entity filtering additions.</LI>
+                <LI><CODE>ReAuthorizeLink</CODE> changes to fix authentication problem where static variable hard-coded to "ets" was used instead of the <CODE>CGI::self_url</CODE> of the current $cgi object.</LI>
+                <LI>Use temporary cgi in <CODE>ReAuthorizeLink</CODE> so sid does not get lost.</LI>
+                <LI> Add <CODE>Find_HTTP_HostName</CODE> to call when building links so virtual hosts with different <CODE>DocumentRoots</CODE> will be correct.</LI>
+                <LI>Added subroutine <CODE>GetTagAttributes</CODE> to return key/value hash of attributes/values in a tag.</LI>
+                <LI>Added <CODE>GroupGroupResolution</CODE> to aid in groups processing.</LI>
+                <LI>Workaround DLPS authentication module problem where %20 mapped to '+' in redirect in <CODE>ReAuthorizeLink</CODE>x</LI>
+                <LI>Improve stray tag cleanup in general by adding <CODE>DlpsUtils::RemoveTags</CODE> </LI>
+                <LI>Call <CODE>TrimSpaces</CODE> on each cgi parameter in <CODE>CleanCgiParameters</CODE> so we don't pass along "stuff " or even " " to query factory (which accepts this blindly).</LI>
+                <LI>Added boolean return value to <CODE>HighlightHit</CODE> to indicate whether text contained a hit that was highlighted.</LI>
+                <LI>Add <CODE>$noSub</CODE> (parameter to <CODE>HighlightHit</CODE> to check for hits without adding highlighting.</LI>
+              </UL>
+            </LI>
+            <LI>GroupsInfo.pm
+              <UL>
+                <LI>Modifications below the API to generalize data access via DBI.</LI>
+              </UL>
+            </LI>
+            <LI>ProcIns.pm
+              <UL>
+                <LI> <CODE>ProcIns::ProcessPIs</CODE> now accepts either a subroutine ref or a string containing (possibly subclassed) object method names for specifying the routine to run to handle a PI.</LI>
+                <LI>Modified <CODE>GetParms</CODE> to return writable copy of parameter array for possible modification (shift) in <CODE>ProcessPI</CODE> for method invocation on derived classes.</LI>
+              </UL>
+            </LI>
+            <LI>TerminologyMapper.pm
+              <UL>
+                <LI>Added <CODE>GetMapfileName</CODE> to retrieve filename for better error reporting. </LI>
+              </UL>
+            </LI>
+            <LI>XPat.pm
+              <UL>
+                <LI>Added line to change XPat's default left context of 14 to 0 with "{LeftContext 0}"</LI>
+              </UL>
+            </LI>
+          </UL>
+        </DIV3>
+        <DIV3>
+          <H3>Backward Compatibility</H3>
+          <P>DLXS  #6 introduces some minor non-backward compatible changes. One, as a result of a generalization in the database connect mechanism, is trivial because the class middleware interface to DbUtils.pm is mediated by the CollsInfo.pm and GroupsInfo.pm APIs this change should have no effect on existing middleware.</P>
+          <UL>
+            <LI><CODE>DbUtils::Connect_DBI</CODE> replaces <CODE>DbUtils::Connect_CSV</CODE> and supports a arbitrary string parameter to define the underlying data store which can be any store supported by a perl DBD driver including CSV, mySql, etc..</LI>
+            <LI>Rename method in <CODE>DlpsSession::Delete</CODE> to <CODE>DeleteSession.</CODE></LI>
+          </UL>
+        </DIV3>
+        <DIV3>
+          <H3>Fixed Bugs</H3>
+          <UL>
+            <LI>167: Add Help Text  </LI>
+            <LI>183: Use DBI for access to all database-like data  </LI>
+            <LI>230: First scoped head is a garbage kwic  </LI>
+            <LI>241: Extend TextClass functionality: level 2 and mixed levels support  </LI>
+            <LI>243: TextClass help.html missing  </LI>
+            <LI>245: Javascript on extended proximity search appears to be broken  </LI>
+            <LI>253: Update code to handle latest version of Apache::Session  </LI>
+            <LI>261: Change middleware to adhere to new directory conventions  </LI>
+            <LI>263: Move divdepths and need for notes and entities filtering to colldb  </LI>
+            <LI>266: Browse page builder has eccentricities  </LI>
+            <LI>269: Must be able to search any region in TC header  </LI>
+            <LI>270: Highlighting of hits in SGML  </LI>
+            <LI>271: idnos do not expand when given a 7 digit NOTIS ID, pages cannot be vie  </LI>
+            <LI>293: Collection wordwheel Makefiles need to be changed to not use MFS  </LI>
+            <LI>308: Home links in header blow away session  </LI>
+            <LI>309: Home link in pageviewer loads in frame, not over frameset  </LI>
+            <LI>340: Linux tif2gif gives fuzzy, unreadble results  </LI>
+            <LI>357: TextClassUtils subroutines should be TextClass methods  </LI>
+            <LI>363: Fix uses of FindHostName() and 'homesite', 'home' colldb for failover  </LI>
+            <LI>405: Pageviewer defaults to seq=1 should be seq=00000001  </LI>
+            <LI>409: Implement a more flexible mechanism for collection-specific look-and-feel  </LI>
+            <LI>447: Results page for searches in header fields have empty "hits in doc" li  </LI>
+            <LI>476: colldb in TC should not have hard-coded DLXSROOT  </LI>
+            <LI>478: Port ImageClass and TextClass to MySQL maintaining CSV support  </LI>
+            <LI>484: Index search takes user to page not found  </LI>
+            <LI>489: TC regions/colls in the colldb have "order" problems  </LI>
+            <LI>494: pageviewer rewrite  </LI>
+            <LI>568: Header.tpl reallignment  </LI>
+            <LI>602: MoA journal browse pages can't be repurposed  </LI>
+            <LI>646: No filtering of bibliographic tags in full text  </LI>
+          </UL>
+        </DIV3>
+        <DIV3>
+          <H3>Known Problems</H3>
+          <UL>
+            <LI>While much more difficult to reproduce that in the previous
+				  release, due to a race condition, it is still possible to click "add to
+				  bookbag" on multiple items rapidly enough to make the code fail to add one or
+				  more of the clicked items to the BookBag.</LI>
+          </UL>
+        </DIV3>
+      </DIV2>
+    </DIV1>
+
+    <DIV1>
+      <H1>DLXS  Release 5 - 30 MAR 2001</H1>
+      <DIV2>
+        <H2>General Information</H2>
+        <P>This is the first release that incorporates all three Classes (Text,
+			 Bib, Image) and the Finding Aid middleware in a single release.</P>
+      </DIV2>
+      <DIV2>
+        <H2>XPAT version 5.2.3</H2>
+        <DIV3>
+          <H3>Enhancements</H3>
+          <UL>
+            <LI>A new command option and argument to specify a sync message for
+				  startup. The syntax is [-s [ syncargmsg ] ].</LI>
+          </UL>
+        </DIV3>
+        <DIV3>
+          <H3>Known Problems</H3>
+          <UL>
+            <LI><?xm-replace_text {LI}?></LI>
+          </UL>
+        </DIV3>
+      </DIV2>
+      <DIV2>
+        <H2>Text Class version 2.2.3</H2>
+        <DIV3>
+          <H3>Enhancements</H3>
+          <UL>
+            <LI><?xm-replace_text {LI}?></LI>
+          </UL>
+        </DIV3>
+        <DIV3>
+          <H3>Known Problems</H3>
+          <UL>
+            <LI><?xm-replace_text {LI}?></LI>
+          </UL>
+        </DIV3>
+      </DIV2>
+      <DIV2>
+        <H2>Bib Class version 2.0.2</H2>
+        <P>This release is a significant re-development of BibClass which uses
+			 the DLXS common library modules found in Lib. In particular, it uses a database
+			 for collection data and session management for BookBag and Search History
+			 functionality. </P>
+        <DIV3>
+          <H3>Enhancements</H3>
+          <UL>
+            <LI><?xm-replace_text {LI}?></LI>
+          </UL>
+        </DIV3>
+        <DIV3>
+          <H3>Known Problems</H3>
+          <UL>
+            <LI>Bugzilla #272: BibClass does not build links based on the
+				  'host' field in the database so links to collections hosted on machines other
+				  than the machine running bib-idx will point to to the local machine data which
+				  usually does not exist (rather it is on a remote machine). This will only be a
+				  problem if BibClass colldb contains rows for more than one host.</LI>
+          </UL>
+        </DIV3>
+      </DIV2>
+      <DIV2>
+        <H2>Image Class version 1.0.6</H2>
+        <DIV3>
+          <UL>
+            <LI>The most current DLXS libraries are now used where applicable.
+				  <UL>
+                <LI>DlpsUtils.pm</LI>
+                <LI>DevUtils.pm </LI>
+                <LI>QueryFactory.pm </LI>
+                <LI>TerminologyMapper.pm </LI>
+                <LI>XPat.pm </LI>
+                <LI>XPatResult.pm</LI>
+                <LI>XPatResultSet.pm</LI>
+              </UL> </LI>
+            <LI>CGI parameters conform to DLXS standard</LI>
+            <LI>Full conformance with standard directory structures.</LI>
+          </UL>
+          <P>The primary goal was to make essential changes to keep pace with
+				core DLXS developments. This was intentionally done without drastically
+				modifying the architecture or functionality of the programs. Considerable
+				architectural and functional enhancements are scheduled for version 2 of the
+				Image Class, expected to be released in spring 2001.</P>
+        </DIV3>
+        <DIV3>
+          <H3>Enhancements</H3>
+          <P>There are a few remarkable enhancements in Version 1.</P>
+          <UL>
+            <LI>Improved delivery of JPEGs extracted from SID files (better
+				  caching, and believed to be faster) </LI>
+            <LI>Improved results retrieval (faster retrieval for records with
+				  multiple images) </LI>
+            <LI>Unlimited Boolean query components (q1 .. qN)</LI>
+            <LI>Support for advanced image structures (e.g., differentiation
+				  between overviews and details) </LI>
+            <LI>In the process of adding support for advanced image structures,
+				  the transformation tools were significantly improved upon, further simplifying
+				  collection deployment. </LI>
+            <LI>Several bugs that caused XPAT sessions to run endlessly were
+				  eliminated. </LI>
+            <LI>Improved display in situations where thumbnails are not
+				  available, especially for related views.</LI>
+            <LI>Improved interface for navigating to related views from a
+				  detail view. </LI>
+            <LI>The transformation process can now find image filenames in any
+				  number of specified fields.</LI>
+          </UL>
+          <P>Version 1 includes a significant DTD change, which requires
+				collection metadata to be reprocessed. It is a general goal to keep DTD changes
+				to an absolute minimum.</P>
+        </DIV3>
+        <DIV3>
+          <H3>Dependencies</H3>
+          <UL>
+            <LI>The
+				  <A HREF="http://www.dlxs.org/products/xpat.html">XPAT search
+					 engine</A> </LI>
+            <LI>
+				  <A>MrSID</A> for compression and delivery of images online.</LI>
+            <LI>
+				  <A>sgmlnorm</A> for normalizing and validating SGML.</LI>
+          </UL>
+        </DIV3>
+      </DIV2>
+      <DIV2>
+        <H2>Finding Aids version 2.0.0</H2>
+        <DIV3>
+          <H3>Enhancements</H3>
+          <UL>
+            <LI><?xm-replace_text {LI}?></LI>
+          </UL>
+        </DIV3>
+        <DIV3>
+          <H3>Known Problems</H3>
+          <UL>
+            <LI><?xm-replace_text {LI}?></LI>
+          </UL>
+        </DIV3>
+      </DIV2>
+      <DIV2>
+        <H2>Lib version 2.1.1</H2>
+        <P>This is the first release of the shared DLXS library modules
+			 (collectively known as Lib). Release of Lib as a separately versioned
+			 deliverable gives us needed flexibility to supply updates for functionality
+			 enhancements and bug fixes and to better maintain backward-compatibility when
+			 newer Lib versions are released.</P>
+        <DIV3>
+          <H3>Enhancements</H3>
+          <UL>
+            <LI>LibVersion.pm maintains the version number for Lib and via the
+				  Perl 'use' statement allows programs to programatically ensure that the correct
+				  level of functionality is present in the shared modules that compose Lib.</LI>
+
+            <LI>A new module (GroupsInfo.pm) provides an interface to a DBI
+				  table (
+				  <TT>groups</TT>) which supports the grouping of collection into
+				  named groups. This functionality is used in this release of BibClass.</LI>
+            <LI>A new module (DbUtils.pm) provides a simple interface built on
+				  top of DBI to connect to a CSV database, read a table and disconnect. </LI>
+            <LI>Adapted sessions handling to use the new Apache::Session module
+				  version 1.53 , and added configuration options the for the session data store
+				  (File, MySQL, etc.)</LI>
+            <LI>A subclass module (BookBagItem/BBItemBC.pm) provides a variant
+				  of the BookBagItem class for use by BibClass.</LI>
+          </UL>
+        </DIV3>
+        <DIV3>
+          <H3>Backward Compatibility</H3>
+          <P>DLXS  #5 introduces 2 non-backward compatible changes as a
+				result of the move to the Perl DBI database interface and the update of
+				Apache::Session to version 1.53 with its correspondingly different file
+				structure for session management</P>
+          <UL>
+            <LI>The TextClass and BibClass configuration variable $gCollDbName
+				  now points to the directory
+				  <I>containing</I> the database tables rather than to the database
+				  file (
+				  <TT>colldb</TT>) itself. Because colldb is a DBI CSV table it can
+				  contain neither blank lines nor comment (#) lines. The "s_" and "a_" data type
+				  prefixes on the column heads have been eliminated also. To convert your colldb,
+				  remove blank and comment lines and the "s_" and "a_" prefixes form the column
+				  heads.</LI>
+            <LI>The new session file structure now consists of a subdirectory
+				  (e.g.
+				  <TT>/tmp/sessions</TT> ) containing one file per session rather
+				  than consisting of a single file maintaining all sessions. This change was
+				  necessary due to problems with slow access to the CGI attributable to
+				  contention for access to the single semaphore-protected file mechanism. In the
+				  release, remove the session file and create a directory to hold the multiple
+				  session files and a second directory (e.g.
+				  <TT>/tmp/sessionslock</TT>) to hold the lock files which protect
+				  the session files.</LI>
+          </UL>
+        </DIV3>
+        <DIV3>
+          <H3>Known Problems</H3>
+          <UL>
+            <LI>While much more difficult to reproduce that in the previous
+				  release, due to a race condition, it is still possible to click "add to
+				  bookbag" on multiple items rapidly enough to make the code fail to add one or
+				  more of the clicked items to the BookBag.</LI>
+          </UL>
+        </DIV3>
+      </DIV2>
+    </DIV1>
+  </BODY>
+</DLPSDOC>

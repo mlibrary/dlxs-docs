@@ -1,0 +1,368 @@
+<html>
+  <head>
+    <title>DLXS Release Notes, 13</title>
+    <link href="../13/dlxsdocs.css" rel="stylesheet" type="text/css">
+    </head>
+  <body>
+    <div class="pageTitle"> Release Notes for DLXS Release 13 - 6 APRIL 2007
+      MARCH 2007</div>
+    <h2>General Information</h2>
+    <p>TextClass, FindaidClass and BibClass are substantially
+      identical to release 12 except for bug fixes as noted below. ImageClass
+      has undergone extensive changes focused primarily on improving performance.</p>
+
+    <p>Release 13 is comprised of:
+  <ul>
+        <li><a href="#bib">BibClass version 3.7.0</a></li>
+        <li><a href="#bibperm">Bibperm (Nameresolver) version 4.7.0</a></li>
+        <li><a href="#broker20">Broker20 version 1.4.0</a></li>
+        <li><a href="#collmgr">Collmgr version 3.2.2</a></li>
+        <li><a href="#findaid">FindaidClass version 6 4 0</a></li>
+        <li><a href="#image">ImageClass version 4.7.0</a></li>
+        <li><a href="#lib">Lib version 4.10.0</a></li>
+        <li><a href="#text">TextClass version4.6.0</a></li>
+        <li><a href="#xclass">XClass version 2.2.5</a></li>
+        <li><a href="#mets">METS Pageturner version 1.12.0</a></li>
+        <li><a href="#xpat">XPAT version 5.3.2</a></li>
+        <li><a href="#bib">SRU version 1.1.0</a></li>
+        <li>dlxsd version 1.0.1</li>
+        <li>Other items released
+          <ul>
+            <li>mrsid_retrieve version 1.3.1</li>
+            <li>tif2web version 1.0.4</li>
+            <li>kakadu version 4.0.2</li>
+            <li>cjpeg version 6b</li>
+            <li>dlps-auth version 1.5</li>
+            <li>xpatutf8check version 1.0</li>
+            <li>utf8conditioner version 1.0.1</li>
+          </ul>
+        </li>
+	<li><a href="/products/archive-by-CDROM/13/Patches">Patches</a></li>
+  </ul>
+      <hr />
+    </p>
+
+
+    <!-- Known Problems -->
+
+    <h2>Known Problems</h2>
+
+    <ul>
+      <li>None</li>
+    </ul>
+
+
+    <h2>Database Installation Notes</h2>
+    <p>MySQL is now the only supported database type.  CSV file-based database support has been removed. In order to run DLXS you will need to have a MySQL server installed.  Sample data is delivered in the form of a MySQL dump file which can be directly imported into a MySQL database.  The database upgrade script (<b>upgrade_5_6</b>) operates only on a MySQL database.  If you have a version 5 CSV database you should run <b>dbmove</b> to move your CSV data into a MySQL database prior to running the upgrade.  These issues are documented in detail in the <a href="../13/installation/index.html">installation instructions</a> and the <a href="../13/collmeta/upgrade.html">upgrade instructions</a>.</p>
+
+    <!-- New and Changed Functionality -->
+
+    <h2>New and Changed Functionality</h2>
+
+    <h3><a name="xpat" id="xpat"></a>XPAT</h3>
+    <ul>
+      <li>No changes.</li>
+    </ul>
+
+    <h3><a name="lib"></a>Lib </h3>
+
+    <ul>
+      <li>If user fails to supply email address it is now treated
+      as a user error not a system error. <strong>[BookBag.pm]</strong> </li>
+      <li>Added&quot;value&quot; to the list of cgi parameters
+        excluded from cleaning. &quot;value&quot; needs to be excluded because
+        it is used in a MySQL query for browse that does a partial phrase match
+        (using &quot;like&quot;). If characters such as parenthesis are stripped
+        out, the query fails. <strong>[CioFactory.pm]</strong></li>
+      <li>A modest performance improvement was achieved through
+        a simple code change that drastically reduced the number of calls to
+        the SetUTF8Flag routine when reading the Collection Database. <strong>[CollsInfo.pm]</strong></li>
+      <li>Added slices and tag lists to browsing. Added support for
+        field specific browse level configuration. Added Browse navigation and
+        list building was changed to optimize mysql querying and to fix anomalies
+        in listing certain letter pairs. <strong>[DLXSApp.pm]</strong></li>
+      <li>Several minor additions and enhancements were made, most
+        notably automatic reconnection to database which is especially helpful
+        when loading large datasets. <strong>[DbUtils.pm]</strong></li>
+      <li>Added silent assertion, which sends an asssertion email
+        to developers but does not disrupt the CGI run for the user. [DlpsUtils.pm]</li>
+      <li>Added tpl parameter for specifying an arbitrary xml template
+        file without needing to add it to the perl hash and without affecting
+        program flow (using page param instead of tpl can affect program flow
+        in an undesireable way). <strong>[DlpsUtils.pm]</strong></li>
+      <li>Code changes were made in support of collid column addition to ItemBrowse
+        table. <strong>[Browse Related Scripts] </strong></li>
+      <li>Fixed a bug and improved the general situation regarding removal of
+        articles and punctuation from the beginning of browse strings. The bug
+        had to do with<br>
+the hanlding of multiple field values.  <strong>[Browse Related Scripts]</strong></li>
+      <li>Implemented &quot;purge&quot; to be able to remove a collection's rows
+      from the Browse tables without repopulating them. <strong>[Browse Related
+      Scripts]</strong></li>
+      <li><strong>OAITransform</strong> has been enhanced to handle character encoding problems
+        that may exist in incoming data. </li>
+      <li>The newly added DLXS statistics system consists of two parts: (1)
+        a tool to run on each web server to parse web log files, calculate hits,
+        and insert those hits into the database, and (2) a web interface for
+      retrieving reports such as HTML or MS Excel files.</li>
+    </ul>
+
+    <h3><a name="text"></a>Text Class </h3>
+
+    <h4>XML template and XSL stylesheet changes</h4>
+    <ul>
+      <li>browse.xml - Added &lt;BrowseLevels&gt;&lt;?BROWSE_LEVELS_XML?&gt;&lt;/BrowseLevels&gt;</li>
+      <li>browse.xsl - Changes for subject browse and special 'browsefields' syntax to support browse levels per
+                field, e.g. subject=0, author=1</li>
+
+      <li>navheader.xsl - Avoid adding empty "tips=" parameter to url for navbar links to fix problem where additional url params tacked onto end create invalid syntax e.g. ...tips=target=_top</li>
+
+      <li>results.xsl - Stub template for PDF link in reslist, desired. Handle common XML tags being passed through in KWICS. (Formerly handled in TextClass::CleanResidualTags.)</li>
+      <li>resultsheader.xsl -  Check for BIBLSCOPE[@TYPE='pageno'] in definePubInfoForSerialIssue.  Don't display BIBLSCOPE TYPE="datesort". </li>
+      <li>scopedivs.xsl - Support DATE in HEADs with new DATE template. In &lt;template match="Divhead"&gt;: removed extraneous table row. Cleaned up redundant code that was also in &lt;template name="BuildDivHeadLinkLabel"&gt;  Use BIBLSCOPE[(@TYPE='pg' or @TYPE='pageno')] instead of just pg. Separate multiple AUTHORINDs with semicolons.</li>
+      <li>search.xsl - Move tips to below the search form so the iframe is not squeezed into a tiny box</li>
+      <li> text.components.xsl -  Filter for LIST in filterNumberedNoteWithParas. Pass through value of COLSPAN in table cells.</li>
+      <li>tocheader.xsl - Correct formatting for multiple authors.  Fixed formatting for multiple authors in printsourcestmt in OutputHeader.  Made inclusion of BookmarkableUrl conditional on string not being empty. Don't display label for BIBLSCOPE TYPE="pg" if the element is empty. Multiple authors, editors formatting handled in textheader.xsl Copied AUTHOR and EDITOR templates from textheader.xsl.</li>
+    </ul>
+
+
+    <h4>CGI/Middleware</h4>
+    <ul>
+      <li> TextApp.pm - Backward compatibility for pagenname=browseentries/Na.xml. Removed ValidityChecks setting of default value for browse. It is set when building the browse page when we know more about what is available instead of just selecting 'a'</li>
+      <li> TextClass.pm -  Allow parameter $idroot to sub FigureIDResolver to indicate extra dir level in image filepath, e.g. web/c/coll/images/idroot/idno.jpg. Extensive re-write of  entity resolution in &lt;FIGURE ENTITY=...&gt; to support more types of resolution.  Better error message when a query failure occurs fetching the text of a pageviewer page. TextClass::Filter_REFsForText now handles more kinds of REF targets. BEG Change regexp in FilterPBs_XML to accept &lt;PB .../&gt; or &lt;PB ...&gt;&lt;/PB&gt; since both are valid XML. Filter_REFsForText: check for TYPE="ptr" instead of assuming every REF with a TARGET attr is of the same type. Optimize Filter_REFsForText for case of no &lt;REF ..&gt; elements. Fix bug: Empty defaultpageview field is ok if pageimages field is empty or 0 in collmgr. Better error message in GetItemEncodingLevel()</li>
+    </ul>
+
+
+    <h3><a name="image"></a>Image Class </h3>
+
+
+
+	<h4>CGI/Middleware</h4>
+
+<p>Known Problems</p>
+<ul>
+<li>Metadata fields containing xml must be mapped to ic_xml in the field_admin_maps Collection Manager field. AND, there is a bug in the released version of the data2db.pm perl module that causes fields containing XML to be skipped completely. <a href="/products/archive-by-CDROM/13/Patches">Download</a> the data2db.pm patch file.</li>
+<li>July 11, 2007. data2db.pm parser for FMP DSO XML failed to handle fields where the name of the field contains special regular expression characters that needed to be quoted. <a href="/products/archive-by-CDROM/13/Patches">Download</a> the data2db.pm patch file.</li>
+<li>TEXT::CSV_XS Perl module must be installed (available in CPAN) in order for the image class data loading script to perform.</li>
+<li>The owner of a session based/temporary portfolio is not allowed to open it. For example, a non-authenticated user adds an image to a new portfolio and the user is not allowed to see the portfolio when it tries to open to display the new addition. To fix the problem, change the following lines of the <strong>GetBookBag</strong> method in <strong>$DLXSROOT/cgi/i/image/ImageApp.pm</strong>.
+<br><strong>Old</strong>
+	<pre>
+	  if ( ( lc($ENV{'REMOTE_USER'}) ne lc($portfolioOwner) ) && ( ! $portfolioPublic ) )
+	  {
+	  &DlpsUtils::errorBail( qq{Requested portfolio is not public. The owner may choose to make it so.} );
+	  }
+	</pre>
+<strong>New</strong>
+	<pre>
+	  my $sessionid = &DlpsUtils::GetReadOnlySessionId(); 
+	  my $username = $ENV{'REMOTE_USER'} || qq{sid-} . $sessionid; 
+ 
+	  if ( ( $username !~ m/^$portfolioOwner$/i ) && ( ! $portfolioPublic ) ) 
+	  { 
+	  &DlpsUtils::errorBail( qq{Requested portfolio is not public. The owner may choose to make it so.} ); 
+	  } 
+	</pre>
+      </li>
+    </ul>
+
+
+
+	<p>Speed/Performance Enhancements </p>
+  <ul>
+  <li>Sliced viewing of portfolios was added to improve performance of large portfolios
+  and to avoid getting throttled by the web server due to many thumbnail requests
+  at once. This changed required some rearrangement of interface functions.</li>
+  <li>Browse results are now sliced for better performance and a list of field
+    values with occurrence counts is presented in the sidebar for further navigation
+    within the browse results. </li>
+  <li>Changed Image Class searching to use UNION of sql select statements rather
+    than a temp table. The temp table was contributing to MySQL database replication
+    errors.</li>
+  <li>Thumbnails are now embedded in XHTML as a data:URI, reducing the number
+    of HTTP requests and improving performance. This does not work with IE, so,
+    the common thumbnail linking method is used for IE. </li>
+  <li>A limited number of search results are now cached on the session in raw
+    unformatted form and as XML. Look-ahead cacheing is done as the end of the
+    CGI run for the next slice as well. The cacheing improves overall performance.</li>
+  </ul>
+	<p>Other</p>
+	<ul>
+	  <li>Made changes to <em>related views</em> to support
+    direct media links.</li>
+	  <li>Minor xsl change related to entry display
+    of real media and pdf links.</li>
+	  <li>Separated thumbnail XSL code out into new template
+    for easy override.</li>
+	  <li>Made changes to avoid searching all
+    collections when no collections are selected in group search mode. It is now
+      necessary for the user to select at least one collection.</li>
+	  <li>Improved handling
+        of missing portfolio items.</li>
+	  <li>CSS is used to change the background color of items just added to a
+          portfolio.</li>
+	  <li>Enlarged the display size of the DIV that encloses each thumbnail
+            in the results view. This reduces the clipping of metadata in some
+          cases.</li>
+	  <li>Image Class was modified to use a database table (ImageClassMediaFiles)
+          to store and retrieve technical metadata about images instead of storing
+        this information in text files on disk.</li>
+	  <li>Previously a record with multiple media items, each with a distinct
+          caption, resulted in a single combined caption. Now captions are independently
+          associated with images. Please see documentation for details of how to
+          take advantage of this new functionality relating to <em>ic_vi </em>field
+        mappings. </li>
+	  <li>Added ability to output xml (rather than xhtml or html, and without
+          using debug=XML) after applying xslt to original xml.</li>
+	  <li>Improved retrieval of items when an exact match of the ID is not possible.
+          For example, when an id stored in a portfolio fails to work as is, there
+          are some simple things that can be done to find the right record in most
+          cases.</li>
+	  <li>Fixed a bug that allowed private portfolios to be retrieved by ID,
+          even if not the owner. This situation was not likely to occur in real
+          use, and it did not make the content accessible, just the structure of
+          the portfolio.</li>
+	  <li>Browse level configuration can now be done per field using Collmgr. </li>
+	  <li>Image Class items can now be retrieved by filename alone if there is
+          an exact match with an entry. </li>
+	  <li>Changed handling of captions in related views for situation where there
+          is no image for the view to display the caption. This is helpful with
+          a database that has a single record with &quot;views&quot; for digital
+          and slide so that the slide has reasonable representation in the related
+          views table.</li>
+	  <li>Added a status check on prep tables to make sure there are indexes before
+          allowing the middleware to hit on them. This adds stability in certain
+          environments, like Michigan's where MySQL replication is in use.</li>
+	  <li>Improved handling of AUTHZD_COLL list for comparision to entry auth
+          value for allowing/denying access to full image.</li>
+	  <li>Enhanced getimage-idx to do a better job of finding an image where
+          the viewid has changed for some reason, and a stale external link is
+          being used.</li>
+  </ul>
+	<h4>Data Preparation</h4>
+	<p>Speed/Performance Enhancements </p>
+	<ul><li>Image Class was modified to use a database
+	      table (ImageClassMediaFiles) to store and retrieve technical metadata
+        about images instead of storing this information in text files on disk.
+        Unofficially, metadata loading is 2-4 times faster than it was before
+        because image filenaming checking is faster with the table.</li>
+	  <li>Tables are now locked during metadata loading. This speeds up the data
+      loading.</li>
+	  <li>Consolidated table optimizations into single MySQL statement rather than
+	    several. The same was done for index building. This is approach is much
+      faster. </li>
+	  <li>Combined ic_all (all fields of the record) field is now made into a unique
+	    list of words to reduce the size of ic_all a little, and in turn improve
+      search performance.</li>
+	</ul>
+
+
+
+    <p>Other</p>
+    <ul>
+      <li> Made changes to the key Image Class data loading scripts to add an
+        option that allows data records to be loaded to an alternative (e.g.,
+        development or prep) MySQL server. The option is configured globally
+        in the icdbprep.cfg file, and can also be controlled with a command line
+        parameter for load.pl, icdbprep.pl, fmpxml2mysql.pl (deprecated in favor
+      of data2db.pl), and data2db.pl.</li>
+      <li>The mediaprep script replaced imageprep as the utility for gathering
+          information about media files for use with Image Class. mediaprep works
+        with the new ImageClassMediaFiles table. </li>
+      <li>Previously a record with multiple media items, each with a distinct
+          caption, resulted in a single combined caption. Now captions are independently
+          associated with images. Please see documentation for details of how to
+          take advantage of this new functionality relating to <em>ic_vi </em>field
+        mappings. </li>
+      <li>Changed the way the ic_all field is assembled so that it includes &quot;istruct_caption_&quot; fields
+      that are mapped to ic_all. </li>
+      <li>Session timeouts during data loading are now avoided by making the
+          sessions empty so that there is no attempt to write the session back
+        to the session database.</li>
+      <li>If a
+    ic_id was &gt; 255, index would not get added. Now, it
+    will, for those odd situations where an ic_id is so
+    long (probably a data error).</li>
+      <li>Case of filename field
+    names was not handled properly. Uppercase fieldnames
+    were ignored. This had been fixed. </li>
+      <li>Changed &quot;splitrepeatingfield&quot; routine
+    so that it no longer splits on a comma in an ic_vi (caption) or ic_fn (filename)
+        field. ic_vi fields often include commas not meant as delimiters. </li>
+      <li>Added automatic database reconnection. This is most likely to aid data
+          loading processes in certain environments. This is actually a change
+        to DbUtils.pm, but is most beneficial to Image Class. </li>
+      <li>Removed a filter for binary files that
+    was getting confused about text PDFs and RAM files that simply enclose a URL
+        for redirection.</li>
+    </ul>
+    <h3><a name="bib"></a>Bib Class</h3>
+    <ul>
+      <li>Exploratory work in BibClass IMLS subclasses for clustering/categorization support.</li>
+    </ul>
+
+    <h3><a name="bibperm"></a>Bibperm (Nameresolver)</h3>
+    <ul>
+      <li></li>
+    </ul>
+
+    <h3><a name="broker20"></a>Broker20</h3>
+    <ul>
+      <li>No changes.</li>
+    </ul>
+
+
+
+    <h3><a name="collmgr"></a>Collmgr</h3>
+    <ul>
+      <li>Labels on radio buttons now clickable.</li>
+    </ul>
+
+
+
+
+
+    <h3><a name="findaid"></a>FindaidClass </h3>
+    <h4>XML template and XSL stylesheet changes</h4>
+    <ul>
+      <li>browse.xml - Added &lt;BrowseLevels&gt;&lt;?BROWSE_LEVELS_XML?&gt;&lt;/BrowseLevels&gt;</li>
+      <li>browse.xsl - Changes for subject browse and special 'browsefields' syntax to support browse levels per field, e.g. subject=0, author=1</li>
+      <li>navheader.xsl - Avoid adding empty "tips=" parameter to url for navbar links to fix problem where additional url params tacked onto end create invalid syntax e.g. ...tips=target=_top</li>
+      <li>search.xsl - Move tips to below the search form so the iframe is not squeezed into a tiny box</li>
+      <li>results.xsl - BEG Fixed bug in hit summary creation for boolean search results.</li>
+      <li>text.xml -  Remove TextClass PI doesn't belong &lt;DocEncodingType>&lt;?DOC_ENCODING_TYPE_XML?>&lt;/DocEncodingType></li>
+      <li>text.xsl -  Refer to results.str.returntoresults instead of results.str.22 so "return to results" link will show up.</li>
+
+    </ul>
+
+    <h4>CGI/Middleware</h4>
+    <ul>
+      <li> FindaidAppp.pm - Removed ValidityChecks setting of default value for browse. It is set when building the browse page when we know more about what is available instead of just selecting 'a'</li>
+
+      <li>FindaidClass.pm - Added 'silent' optional parameter to ASSERT in dao resolution so an unresolvable dao does not prevent the entire page from rendering. Improved visibility of dao links and emit "[image not available]" for unresolved daos. Add 'silent' optional parameter to ASSERT so processing can continue but still give us an email warning. Move list of section heads that was hardcoded in FindaidClass::_initialize to findaidclass.cfg to make editing out those heads that are missing under sume EAD encoding practices.  Catch connect exception when doing idresolver calls. Fix FilterAllDaos_XML case where there is no href attribute to prevent infinite loop. </li>
+    </ul>
+
+    <h3><a name="xclass"></a>XClass</h3>
+    <ul>
+      <li>No changes.</li>
+    </ul>
+
+    <h3><a name=""></a>Tif2web binary</h3>
+    <ul>
+      <li></li>
+    </ul>
+
+
+    <h3><a name="xclass"></a>XClass</h3>
+    <ul>
+      <li>No changes.</li>
+    </ul>
+
+    <h3><a name="mets"></a>METS Pageturner</h3>
+    <ul>
+      <li>Ongoing development work.</li>
+    </ul>
+
+  </body>
+
+</html>
+

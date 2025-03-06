@@ -1,0 +1,75 @@
+<?xml version="1.0"?>
+
+<!-- SPO Editorial Services                  -->
+<!-- automatically-generated XML header file -->
+
+<?xml-stylesheet href="../../../pre11-dlxsdocs.xsl" type="text/xsl"?>
+<!DOCTYPE DLPSDOC PUBLIC "-//UM-DLPS//DTD DLPS Publications//EN" "http://docs.umdl.umich.edu/dlps/docs/dlpsdocs.dtd">
+<DLPSDOC>
+<TITLE>Image Class Image File Naming</TITLE>
+<HEADER>
+<JOURNAL>DLXS Documentation</JOURNAL>
+<PUBDATE>2003-12-01 11:25:56 EST</PUBDATE>
+<AUTH1>Weise, John</AUTH1>
+<AUTH2></AUTH2>
+<DOCTITLE>Image Class Image File Naming</DOCTITLE>
+<VOL>class</VOL>
+<ISS>image</ISS>
+<FILE>dlxsdocs-image-imagefilenaming</FILE>
+</HEADER>
+
+
+<BODY>
+<BHEAD>Image Class Image File Naming</BHEAD>
+<DIV1 ID="main">
+
+<P>
+<A HREF="mailto:dlxs-info@umich.edu">dlxs-info@umich.edu</A>
+</P>
+
+<P>This document covers required and recommended filenaming
+conventions for digital image files that will be delivered online via
+the Image Class. This is not a specification of how master image
+files should be named, however there are clear advantages to using
+names for master image files that are compatible with the
+requirements of the Image Class.</P>
+
+<DIV2 ID="requirements">
+<H2>Requirements</H2>
+
+<P>There is only one real requirement:</P>
+
+<UL>
+   <LI>Images must have 3 character filename extensions.</LI>
+   
+</UL>
+</DIV2>
+<DIV2 ID="recommendations">
+<H2>Recommendations</H2>
+
+<UL>
+   
+  <LI>Image filenames should be unique within a collection (see the the <A HREF="image-imageloading.xml#Filenaming">filenaming 
+    section of the Image Loading documentation</A> for an alternative)</LI>
+   
+   <LI>Image filenames should not have mixed case.</LI>
+   
+   <LI>The fewest complications will be encountered if filenames
+   conform strictly to the ISO
+   9660 filenaming standard for CD ROM. Often filenames do not
+   conform to the standard, and that is usually fine, though there
+   are many characters that should be avoided when naming files e.g., "(" and ")".</LI>
+   
+   <LI>Image filenames should not have spaces.</LI>
+   
+   <LI>These recommendations are generally true for directory
+   names as well.</LI>
+</UL>
+
+</DIV2>
+
+
+
+</DIV1>
+</BODY>
+</DLPSDOC>

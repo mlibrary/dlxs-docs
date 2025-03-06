@@ -1,0 +1,256 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+   <meta name="GENERATOR" content="Mozilla/4.73 [en] (Win98; U) [Netscape]">
+   <title>DLXS Programmers &amp; Technical Workshop</title>
+<link rel="stylesheet" href="styles.css">
+<style type="text/css">
+<!--
+ul {  line-height: 125%}
+-->
+</style>
+</head>
+<body class="mainpalette">
+
+<h2>
+DLXS Directory Structure Detail <i>(with some files as examples)</i></h2>
+<i>There are 6 top level directories: <b>web/, cgi/ lib/, obj/, idx/, bin/
+:</b></i>
+<ul>
+<li>
+web/t/text</li>
+
+<ul>
+<li>
+<a href="sourcetext/web/simple.tpl.txt" target="external">simple.tpl</a></li>
+
+<li>
+<a href="sourcetext/web/boolean.tpl.txt" target="external">boolean.tpl</a></li>
+
+<li>
+<a href="sourcetext/web/reslist.tpl.txt" target="external">reslist.tpl</a></li>
+
+<li>
+<a href="sourcetext/web/ww-start.tpl.txt" target="external">ww-start.tpl</a></li>
+
+<li>
+images/</li>
+
+<li>
+gifcvtdir/ (must be owner <b>nobody</b> so it is writeable by the web server)</li>
+</ul>
+
+<li>
+cgi/t/text</li>
+
+<ul>
+<li>
+<a href="sourcetext/cgi/text-idx.txt" target="external">text-idx</a></li>
+
+<li>
+<a href="sourcetext/cgi/text-idx.cfg.txt" target="external">text-idx.cfg</a></li>
+
+<li>
+<a href="sourcetext/cgi/TextClass.pm.txt" target="external">TextClass.pm</a></li>
+</ul>
+
+<li>
+lib/</li>
+
+<ul>
+<li>
+<a href="sourcetext/lib/XPat.pm.txt" target="external">XPat.pm</a></li>
+
+<li>
+<a href="sourcetext/lib/WW.pm.txt" target="external">WW.pm</a></li>
+</ul>
+
+<li>
+obj/</li>
+
+<ul>
+<li>
+c/coll/</li>
+
+<ul>
+<li>
+coll.sgml</li>
+</ul>
+
+<li>
+a/b/c/abc1234/</li>
+
+<ul>
+<li>
+abc1234.sgm</li>
+
+<li>
+p00001.tif</li>
+
+<li>
+<a href="sourcetext/pageview.dat.txt" target="external">pageview.dat</a></li>
+</ul>
+</ul>
+
+<li>
+obj/lib/</li>
+
+<ul>
+<li>
+sgml/</li>
+
+<ul>
+<li>
+<a href="sourcetext/wordwheel.dtd.txt" target="external">wordwheel.dtd</a></li>
+
+<li>
+*.ent</li>
+</ul>
+
+<li>
+maps/</li>
+
+<ul>
+<li>
+<a href="sourcetext/bosnia.map.txt" target="external">bosnia.map</a></li>
+
+<li>
+teso.map</li>
+</ul>
+</ul>
+
+<li>
+idx/</li>
+
+<ul>
+<li>
+c/coll/&nbsp;&nbsp; <i>e.g. b/bosnia/</i></li>
+
+<ul>
+<li>
+coll.dd&nbsp;&nbsp;&nbsp; <i>e.g. <a href="sourcetext/bosnia.dd.txt" target="external">bosnia.dd</a></i></li>
+
+<li>
+coll.idx&nbsp;&nbsp; <i>e.g. bosnia.idx</i></li>
+
+<li>
+coll.rgn&nbsp;&nbsp; <i>e.g. bosnia.rgn</i></li>
+
+<li>
+<a href="sourcetext/idx/Makefile.bosnia.txt" target="external">Makefile</a></li>
+</ul>
+
+<li>
+idx/c/coll/WW/</li>
+
+<ul>
+<li>
+coll.ww.dd&nbsp;&nbsp; <i>etc.</i></li>
+
+<li>
+<a href="sourcetext/makeWordWheelFiles.cfg.txt" target="external">makeWordWheelFiles.cfg</a></li>
+
+<li>
+<a href="sourcetext/idx/Makefile.ww.txt" target="external">Makefile</a></li>
+</ul>
+</ul>
+
+<li>
+bin/</li>
+
+<ul>
+<li>
+<a href="sourcetext/bin/output.dd.frag.pl.txt" target="external">output.dd.frag.pl</a></li>
+</ul>
+
+<li>
+bin/WW/</li>
+
+<ul>
+<li>
+<a href="sourcetext/bin/makeWordWheelFiles.pl.txt" target="external">makeWordWheelFiles.pl</a></li>
+</ul>
+
+<li>
+bin/t/text/</li>
+
+<ul>
+<li>
+&nbsp;<a href="sourcetext/bin/makepageviewdata.pl.txt" target="external">makepageviewdata.pl</a></li>
+</ul>
+</ul>
+
+<h3>
+DLXS middleware &amp; collection release<b> </b>directories.</h3>
+Note that the development work directory is embedded within the middleware
+release directory structure as indicated in italics. Typically, DLXS subscribers
+would receive separate CDs for each of middleware and collections (one
+or more).
+<dl>
+<dl>
+<li>
+<b>those related to the TextClass middleware</b></li>
+
+<dl>
+<li>
+lib/</li>
+
+<dl>
+<li>
+<i>lib/p/pfarber, lib/p/pagliere, etc.</i></li>
+</dl>
+
+<li>
+bin/ and below</li>
+
+<dl>
+<li>
+<i>e.g. bin/WW/p/pfarber</i></li>
+</dl>
+
+<li>
+cgi/t/text/</li>
+
+<dl>
+<li>
+<i>cgi/t/text/p/pfarber, cgi/t/text/p/pagliere, etc.</i></li>
+</dl>
+
+<li>
+web/t/text</li>
+
+<dl>
+<li>
+<i>web/t/text/p/pfarber, web/t/text/p/pagliere, etc.</i></li>
+</dl>
+</dl>
+
+<li>
+<b>those related to collections</b></li>
+
+<dl>
+<li>
+obj/</li>
+
+<li>
+idx/</li>
+</dl>
+</dl>
+</dl>
+
+<h3>
+DLXS miscellaneous<b> files &amp; </b>directories of note.</h3>
+
+<ul>
+<li>
+/tmp/Cache/sessions - This is the Apache session data file.&nbsp; It must
+be owned by <b>nobody</b> so the web server can write to it.</li>
+</ul>
+
+<br>&nbsp;
+<br>&nbsp;
+<br>&nbsp;
+<br>&nbsp;
+</body>
+</html>

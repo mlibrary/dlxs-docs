@@ -1,0 +1,54 @@
+<?xml version="1.0"?>
+
+<!-- SPO Editorial Services                  -->
+<!-- automatically-generated XML header file -->
+
+<?xml-stylesheet href="../../pre11-dlxsdocs.xsl" type="text/xsl"?>
+<!DOCTYPE DLPSDOC PUBLIC "-//UM-DLPS//DTD DLPS Publications//EN" "http://docs.umdl.umich.edu/dlps/docs/dlpsdocs.dtd">
+<DLPSDOC>
+<TITLE>The DLXS XPAT Manual</TITLE>
+<HEADER>
+<JOURNAL>DLXS Documentation</JOURNAL>
+<PUBDATE>2002-05-28 14:11:01 EDT</PUBDATE>
+<AUTH1>Wilkin, John Price</AUTH1>
+<AUTH2></AUTH2>
+<DOCTITLE>The DLXS XPAT Manual</DOCTITLE>
+<VOL>xpat</VOL>
+<ISS></ISS>
+<FILE>dlxsdocs-xpat-manual</FILE>
+</HEADER>
+
+
+<BODY>
+<BHEAD>The DLXS XPAT Manual [DRAFT]</BHEAD>
+<DIV1 ID="main">
+<P>This is a work in progress, trying to piece together the relevant parts from the original (largely irrelevant) documentation and put together something for DLXS.  Most of the necessary documents are now here and are in XML, but significant work needs to be done on the sections on Searching and Detailed Index Building.</P>
+<UL>
+<LI><A HREF="xpat-archoverview.xml">1. Overview</A></LI>
+<LI>2. Searching XPAT Databases
+<UL>
+<LI><A HREF="xpat-searching.xml">1. Guide to Searching XPAT</A></LI>
+<LI><A HREF="xpat-commands.xml">2. The XPAT command syntax and concept guide</A></LI>
+</UL></LI>
+<LI>3. Detailed Structure of XPAT Text Databases
+<UL>
+<LI><A HREF="xpat-datadict.xml">1. The XPAT Data Dictionary</A></LI>
+<LI><A HREF="xpat-regions.xml">2. XPAT Regions</A></LI>
+<LI><A HREF="xpat-indexing-overview.xml">3. XPAT Index Building, Overview</A></LI>
+</UL></LI>
+<LI>4. Detailed Index Building (the following chapters are largely unedited XML drawn from OCR of original Open Text documentation; editing will take place as time permits)
+<UL>
+<LI><A HREF="xpat-indexing.xml">1. Index Building Concepts and Syntax</A></LI>
+<LI><A HREF="xpat-ml-indexing.xml">2. SGML and XML Indexing Support</A></LI>
+<LI><A HREF="xpat-xpatmaint.xml">3. XPAT Database Maintenance</A></LI>
+<LI><A HREF="xpat-indexing-scenarios.xml">4. XPAT Indexing Scenarios</A></LI>
+</UL></LI>
+<LI>Appendices
+<UL>
+<LI><A HREF="mfs.doc">The MFS System</A> (formerly chapter 2.2 and something constructed from parts eliminated?)</LI>
+<LI><A HREF="man">man pages (most in HTML)</A></LI>
+</UL></LI>
+</UL>
+</DIV1>
+</BODY>
+</DLPSDOC>

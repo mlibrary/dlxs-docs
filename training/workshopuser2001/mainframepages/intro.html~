@@ -1,0 +1,102 @@
+<HTML>
+<HEAD>
+<TITLE>Introduction</TITLE>
+<META http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<LINK rel="stylesheet" href=".././styles.css">
+
+</HEAD>
+
+<BODY class="mainpalette">
+<H2>DLXS Programmers &amp; Technical Workshop</H2>
+<TABLE WIDTH="100%" BORDER="0" CELLPADDING="5">
+  <TR> 
+    <TD WIDTH="19%" VALIGN="TOP"> 
+      <DIV ALIGN="RIGHT"><B>Location</B></DIV>
+    </TD>
+    <TD WIDTH="81%" VALIGN="TOP">
+      <P>Faculty Exploratory, second floor Hatcher Graduate Library, University 
+        of Michigan.<BR>
+        See <A HREF="http://www.umich.edu/%7Enewsinfo/ccamp.html" TARGET="external">map 
+        of Central Campus</A> (look for the building just north of the one labeled 
+        number 8.</P>
+      </TD>
+  </TR>
+  <TR> 
+    <TD WIDTH="19%" VALIGN="TOP"> 
+      <DIV ALIGN="RIGHT"><B>Dates</B></DIV>
+    </TD>
+    <TD WIDTH="81%" VALIGN="TOP">July 30 - August 2, 2001</TD>
+  </TR>
+  <TR> 
+    <TD WIDTH="19%" VALIGN="TOP"> 
+      <DIV ALIGN="RIGHT"><B>Instructors</B><A HREF="mailto:pfarber@umich.edu"></A></DIV>
+    </TD>
+    <TD WIDTH="81%" VALIGN="TOP"><A HREF="mailto:pfarber@umich.edu">Phil Farber</A>, 
+      <A HREF="mailto:pagliere@umich.edu">Alan Pagliere</A>, and <A HREF="mailto:jweise@umich.edu">John 
+      Weise</A> University of Michigan, Digital Library Production Service</TD>
+  </TR>
+  <TR> 
+    <TD WIDTH="19%" VALIGN="TOP"> 
+      <DIV ALIGN="RIGHT"><B>Guests</B><A HREF="mailto:mstoef@umich.edu"></A></DIV>
+    </TD>
+    <TD WIDTH="81%" VALIGN="TOP"><A HREF="mailto:mstoef@umich.edu">Matt Stoeffler</A>, 
+      <A HREF="mailto:blancoj@umich.edu">Jos&eacute; Blanco</A>,<A HREF="mailto:kumarp@umich.edu"> 
+      Prarthna Kumar</A> University of Michigan, Digital Library Production Service 
+    </TD>
+  </TR>
+</TABLE>
+<H3>Course objectives</H3>
+<UL>
+  <LI> Become familiar with the DLXS middleware (including searching with XPat, 
+    document classes, and how to modify the middleware). <A HREF="objectives.html" TARGET="mainFrame">Objectives 
+    details</A>.</LI>
+</UL>
+<H3>Prerequisites</H3>
+<UL>
+  <LI>some familiarity with SGML</LI>
+  <LI>familiarity with perl5</LI>
+  <LI>have seen the kinds of online collections DLPS makes available already (see 
+    <A href="http://www.umdl.umich.edu/" target="external">http://www.umdl.umich.edu/</A> 
+    and <A href="http://www.hti.umich.edu/" target="external">http://www.hti.umich.edu/</A> 
+    for examples)</LI>
+  <LI>have the XPAT package from DLXS</LI>
+  <LI>Note: during the workshop, we will provide data, already indexed and ready 
+    for use. Information on data preparation can be found at: <A href="/dlxs/training/workshop-user-2000.html" target="external">DLXS 
+    Public Service &amp; Text Encoders Workshop</A><BR>
+  </LI>
+</UL>
+<H3 class="mainpalette">It may be useful to peruse the following links</H3>
+<UL>
+  <LI> <A href="http://www.umdl.umich.edu/" target="external">DLPS Main Page</A> 
+    (goto HTI, HRAF, Image Services...)</LI>
+  <LI> <A href="http://www.hti.umich.edu/mec/" target="external">Middle English 
+    Compendium</A>, including various and diverse collections: Corpus of Middle 
+    English Prose and Verse, the Middle English Dictionary, and the Hyperbibliography 
+    of Middle English.</LI>
+  <LI> <A href="http://ref.umdl.umich.edu/bin/help-idx" target="external">DLPS 
+    Help Documentation</A></LI>
+  <LI> <A href="http://dev.hti.umich.edu/misc/findaid/" target="external">Bentley 
+    Historical Library Finding Aids</A></LI>
+  <LI><A href="http://www.umdl.umich.edu/moa/" target="external">Making of America</A></LI>
+  <LI><A href="http://www.hti.umich.edu/english/amverse/" target="external">American 
+    Verse Collection</A></LI>
+  <LI> <A href="http://www.hti.umich.edu/english/eprosed/" target="external">English 
+    Prose Drama</A> (TextClass implementation)</LI>
+  <LI> <A href="http://images.umdl.umich.edu/" target="external">DLPS Image Services</A> 
+    (Images and related text)</LI>
+</UL>
+<H3>History <I>(background reading)</I></H3>
+
+<UL>
+  <LI>What started it all: <A HREF="http://jpw.hti.umich.edu/pubs/www-to-pat/" TARGET="external"></A><A href="http://jpw.umdl.umich.edu/pubs/www-to-pat/">WWW-to-PAT 
+    Gateway: Exploiting an SGML-aware System Through the Web</A> 
+  <LI><A 
+href="http://www.dlib.org/dlib/may97/michigan/05pricewilkin.html">Just-in-time 
+    Conversion, Just-in-case Collections: Effectively Leveraging Rich Document 
+    Formats for the WWW</A> 
+  <LI><A 
+href="http://www.dlib.org/dlib/july97/humanities/07powell.html">SGML Creation 
+    and Delivery: The Humanities Text Initiative</A>
+</UL>
+</BODY>
+</HTML>

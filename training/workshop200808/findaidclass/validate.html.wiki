@@ -1,0 +1,23 @@
+make validate
+
+ 
+   onsgmls -wxml -s -f $(PREPDIR)$(NAMEPREFIX).errors $(XMLDECL) $(XMLDOCTYPE) $(XMLFILE)
+
+Here is the command with the substitutions made for s/samplefa:.
+
+ 
+ onsgmls -wxml -s -f $DLXSROOT/prep/s/samplefa/samplefa.errors $DLXSROOT/misc/sgml/xml.dcl $DLXSROOT/prep/s/samplefa/samplefa.xml.inp     $DLXSROOT/obj/s/samplefa/samplefa.xml
+
+This command runs onsgmls to validate the copy using the doctype in samplefa.xml.inp
+
+* -wxml tells onsgmls to output XML warnings (rather than SGML warnings)
+* -s suppresses output. That means instead of getting a parse tree, we just get any errors
+* -f ...errors tells onsgmls to write errors to a file with that name
+* $DLXSROOT/misc/sgml/xml.dcl is an SGML Declaration for valid XML documents.
+* $DLXSROOT/prep/s/samplefa/samplefa.xml.inp is a document type declaration which points to the dlxsead2002.dtd. (See below). Its essentially the EAD 2002 DTD which allows the &lt;ead&gt; to be repeated and wraps the repeated &lt;ead&gt;s in &lt;COLL&gt; element tags.
+
+Samplefa.xml.inp:
+
+<br /> &lt;!DOCTYPE COLL SYSTEM "/l1/release/13/misc/sgml/dlxsead2002.dtd" [<br /> ]&gt;<br />
+
+See http://openjade.sourceforge.net/doc-1.5.1/nsgmls.htm for more info on onsgmls

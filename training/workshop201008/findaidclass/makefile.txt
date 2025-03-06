@@ -1,0 +1,145 @@
+#$Id: Makefile,v 1.24 2008/07/31 20:51:14 tburtonw Exp $#
+DLXSROOT = /l1/releasse/14
+NAMEPREFIX = samplefa
+FIRSTLETTERSUBDIR = s
+# --------------------------------------------------
+OBJDIR = $(DLXSROOT)/obj/$(FIRSTLETTERSUBDIR)/$(NAMEPREFIX)/
+IDXDIR = $(DLXSROOT)/idx/$(FIRSTLETTERSUBDIR)/$(NAMEPREFIX)/
+PREPDIR = $(DLXSROOT)/prep/$(FIRSTLETTERSUBDIR)/$(NAMEPREFIX)/
+DATADIR = $(DLXSROOT)/prep/$(FIRSTLETTERSUBDIR)/$(NAMEPREFIX)/data/
+
+COLLBINDIR = $(DLXSROOT)/bin/$(FIRSTLETTERSUBDIR)/$(NAMEPREFIX)/
+BINDIR = $(DLXSROOT)/bin/f/findaid/
+
+XMLFILE = $(OBJDIR)$(NAMEPREFIX).xml
+
+# --------------------------------------------------
+#change these when we change names!
+CONCATDOCTYPE = $(PREPDIR)$(NAMEPREFIX).concat.ead.dcl
+SINGLEDOCTYPE = $(PREPDIR)$(NAMEPREFIX).ead2002.dcl
+# --------------------------------------------------
+XMLDECL = $(DLXSROOT)/misc/sgml/xml.dcl
+# --------------------------------------------------
+XPATBINDIR = /l/local/bin/
+XPATBLD = $(XPATBINDIR)xpatbldu
+XPATEXEC = $(XPATBINDIR)xpatu
+SGMLRGN = $(XPATBINDIR)sgmlrgn
+MULTIRGN = $(XPATBINDIR)multirgn
+XMLRGN = $(XPATBINDIR)xmlrgn
+# Use OpsnSP 1.5 or higher
+OSX = /l/local/bin/osx
+OSGMLNORM = /l/local/bin/osgmlnorm
+
+VALIDATEEACHSCRIPT = $(BINDIR)validateeach.sh
+FILELIST=$(PREPDIR)list_of_eads  
+
+# --------------------------------------------------
+# Set these environment variables so that onsgmls osgmlnorm
+# will use XML rules to determin input encoding and output 
+# UTF-8
+
+# Enable XML all the time: The multibyte version of OpenSP can 
+# operate in a mode in which the internal character set does not
+# vary with the document character set, but is always a fixed
+# character set, known as the system character set; this mode of
+# operation is called fixed character set mode.  
+export SP_CHARSET_FIXED=YES
+
+# This specifies the default encoding when operating in fixed
+# character set mode. The value must be the name of an available
+# encoding. The default encoding cannot be document character set
+# relative when operating in fixed character set mode. On input,
+# this uses XML's rules to determine the encoding. On output, this
+# uses UTF-8.
+export SP_ENCODING=XML
+
+## ----------------------------------------------------------------------
+
+##
+#  make all convenience method
+##
+all: prepdocs validate norm validate2 singledd xml post
+## ----------------------------------------------------------------------
+# to allow using prepdocslist and then the rest of the steps
+
+allbutprep:  validate norm validate2 singledd xml post
+## ----------------------------------------------------------------------
+#
+index:	singledd xml post
+## ----------------------------------------------------------------------
+### validate each file individually (easier to find errors that way)
+validateeach:
+	$(VALIDATEEACHSCRIPT)  -d $(DATADIR) -x $(XMLDECL) -t $(SINGLEDOCTYPE) 
+
+### !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+###       Now check .err files in data dir
+### !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
+### ----------------------------------------------------------------------
+### fix up and concatenate all xml docs in $(DATADIR)
+prepdocs:
+	$(COLLBINDIR)preparedocs.pl -d $(DATADIR) -o $(XMLFILE) -l $(PREPDIR)logfile.txt
+### ----------------------------------------------------------------------
+### fix up and concatenate all docs specified in $FILELIST
+prepdocslist:
+	$(COLLBINDIR)preparedocs.pl -i $(FILELIST) -o $(XMLFILE) -l $(PREPDIR)logfile.txt
+## ----------------------------------------------------------------------
+## validate one last time for luck
+validate:
+	onsgmls -wxml -w no-explicit-sgml-decl -s -f $(PREPDIR)$(NAMEPREFIX).errors $(XMLDECL) $(CONCATDOCTYPE) $(XMLFILE)
+## ----------------------------------------------------------------------
+## validate again and write to separate errors file *errors2
+validate2:
+	onsgmls -wxml -w no-explicit-sgml-decl -s -f $(PREPDIR)$(NAMEPREFIX).errors2 $(XMLDECL) $(CONCATDOCTYPE) $(XMLFILE)
+## ----------------------------------------------------------------------
+
+## ----------------------------------------------------------------------
+## ensure attribute order matches DTD (required for xmlrgn) and that 
+## singletons have the form <foo/> not <foo>
+## note the hyphen preceding the osx target.  This tells make to ignore errors for just the osx command
+## also -E0 flag to osx allows infinite number of errors otherwise on files containing lots of EADs it will stop partway through the file
+norm:
+	cp $(XMLFILE) $(XMLFILE).prenorm
+	$(OSGMLNORM) -f $(PREPDIR)$(NAMEPREFIX).osgmlnorm.errors $(XMLDECL) $(CONCATDOCTYPE) $(XMLFILE).prenorm > $(XMLFILE).postnorm
+	-$(OSX) -E0 -bUTF-8 -xlower -xempty -xno-nl-in-tag -f $(PREPDIR)$(NAMEPREFIX).osx.errors $(XMLDECL) $(CONCATDOCTYPE) $(XMLFILE).postnorm > $(XMLFILE).postnorm.osx 
+	cp $(XMLFILE).postnorm.osx $(XMLFILE)
+
+## ----------------------------------------------------------------------
+
+## ----------------------------------------------------------------------
+## have xpat index everything as a single file
+singledd:
+	cp $(PREPDIR)$(NAMEPREFIX).blank.dd $(IDXDIR)$(NAMEPREFIX).dd
+	chmod 664 $(IDXDIR)$(NAMEPREFIX).dd
+	$(XPATBLD) -m 256m -D $(IDXDIR)$(NAMEPREFIX).dd
+	cp $(IDXDIR)$(NAMEPREFIX).dd $(PREPDIR)$(NAMEPREFIX).presgml.dd
+## ----------------------------------------------------------------------
+
+## ----------------------------------------------------------------------
+## index the sgml using xmlrgn -- validates and indexes with SGML declaration.
+xml:
+	cp $(PREPDIR)$(NAMEPREFIX).presgml.dd $(IDXDIR)$(NAMEPREFIX).dd
+	$(XMLRGN) -D $(IDXDIR)$(NAMEPREFIX).dd $(XMLDECL) $(CONCATDOCTYPE) $(XMLFILE) 
+	cp $(IDXDIR)$(NAMEPREFIX).dd $(PREPDIR)$(NAMEPREFIX).prepost.dd
+## ----------------------------------------------------------------------
+
+
+## ----------------------------------------------------------------------
+post:
+	cp $(PREPDIR)$(NAMEPREFIX).prepost.dd $(IDXDIR)$(NAMEPREFIX).dd
+	$(XPATEXEC) -q $(IDXDIR)$(NAMEPREFIX).dd < $(PREPDIR)$(NAMEPREFIX).extra.srch | $(BINDIR)output.dd.frag.pl $(IDXDIR) > $(PREPDIR)$(NAMEPREFIX).extra.dd
+	$(BINDIR)inc.extra.dd.pl $(PREPDIR)$(NAMEPREFIX).extra.dd $(IDXDIR)$(NAMEPREFIX).dd
+## ----------------------------------------------------------------------
+clean:
+	rm -f $(PREPDIR)$(NAMEPREFIX).err*
+	rm -f $(PREPDIR)$(NAMEPREFIX).prepost.dd
+	rm -f $(PREPDIR)$(NAMEPREFIX).extra.dd
+	rm -f $(IDXDIR)$(NAMEPREFIX).dd
+	rm -f $(IDXDIR)*.rgn
+	rm -f $(IDXDIR)*.idx
+	rm -f $(IDXDIR)tmp*
+	rm -f $(IDXDIR)*.m*
+	rm -f $(IDXDIR)*.t*
+	rm -f $(IDXDIR)*.i0
+	rm -f $(IDXDIR)*.log
+	rm -f $(XMLFILE)*

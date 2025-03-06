@@ -1,0 +1,172 @@
+<html>
+<head>
+<title>DLXS System Requirements</title>
+
+
+
+ </head>         <BODY>
+<table class="updateTable" CELLSPACING="3" CELLPADDING="3" border="1">
+<tr>
+<td>Last updated</td>
+<td>2004-01-08 10:24:01 EST</td>
+</tr>
+<tr>
+<td>Doc Title</td>
+<td>DLXS System Requirements</td>
+</tr>
+<tr>
+<td>Author 1</td>
+<td>Snavely, Cory</td>
+</tr>
+<tr>
+<td>CVS Revision</td>
+<td>$Revision: 1.8 $</td>
+</tr>
+</table>
+
+<DIV CLASS="pageTitle">DLXS System Requirements</div>
+  
+      <OL>
+	<LI><B>Supported platforms</B> 
+	  <OL>
+	    <LI><I>Platforms in active development.</I> We currently develop and/or deploy 
+	      live material on these platforms:
+	      <OL>
+		<LI>Solaris SPARC 2.6 or higher</LI>
+		<LI>Red Hat Linux Intel 8.0 or higher</LI>
+	      </OL>
+	    </LI>
+
+	  </OL>
+	</LI>
+	<LI><B>Disk space requirements</B> 
+          <OL>
+            <LI><I>DLXS Middleware:</I> 10 MB to store the libraries and programs that make
+                up the working DLXS system.
+            </LI>
+            <LI><I>Content:</I> This varies dramatically according to the amount and format
+                of your material. For a collection of significant scale, the storage requirements
+                will be dominated by the number of page images and/or continuous tone
+                images--SGML and metadata are quite small in comparison. DLXS allows you to store
+                the middleware and the content in different locations to simplify system
+                administration.
+            </LI>
+          </OL>
+        </LI>
+	<LI><B>Required capabilities and software</B> 
+	  <OL>
+	    <LI>root access (to change aspects of the environment, e.g., directory and file permissions, web server configuration, etc.)</LI>
+	    <LI><a href="http://www.perl.com/" TARGET="external">Perl 5.6.1</A> or higher.  Perl 5.8.3 or higher is required to support Unicode UTF-8 functionality.</LI>
+	    <LI>The following <a href="http://www.cpan.org/modules/" TARGET="external">Perl modules</A> (where
+                versions are given, DLXS requires that version or higher):</LI>
+          <OL>
+            <LI>Apache::Session 1.54</LI>
+            <LI>CGI 2.91</LI>
+            <LI>Carp 1.01</LI>
+            <LI>Cwd 2.06</LI>
+            <LI>DBD::CSV 0.2002</LI>
+            <LI>DBD::mysql 2.1026</LI>
+            <LI>DBI 1.35</LI>
+            <LI>Exporter 5.566</LI>
+            <LI>File::Basename 2.71</LI>
+            <LI>File::Copy 2.05</LI>
+            <LI>File::Find 1.04</LI>
+            <LI>File::Path 1.05</LI>
+            <LI>FileHandle 2.01</LI>
+            <LI>Getopt::Std 1.03</LI>
+            <LI>HTML::Parser 3.27</LI>
+            <LI>HTML::Template 2.6</LI>
+            <LI>IPC::Open3 1.0104</LI>
+            <LI>LWP::Simple 1.36</LI>
+            <LI>Mail::Mailer 1.58</LI>
+            <LI>Mail::Send 1.58</LI>
+            <LI>MIME::Base64 2.18</LI>
+            <LI>Net::hostent 1</LI>
+            <LI>POSIX 1.05</LI>
+            <LI>Socket 1.75</LI>
+            <LI>SQL::Statement 1.005</LI>
+          <P><B>IMPORTANT NOTE:</B> The SQL::Statement version 1.005 Perl module is not backward
+             compatible with version 0.1021, our previous requirement.  Version 0.1021 was typical
+             of Perl version 5.6.1 whereas 1.005 is typical of Perl 5.8.0. We recommend you install
+             Perl 5.8.0 and SQL::Statement 1.005 or higher and follow the workarounds below as
+             necessary. (These workarounds may not be required when SQL::Statement 1.006 becomes
+             available.)
+          <UL>
+            <LI>collmgr
+              <UL>
+                <LI>Functions normally with either 0.1021 or 1.005</LI>
+              </UL>
+            </LI>
+          </UL>
+          <UL>
+            <LI>dbmove
+              <UL>
+                <LI>Functions normally moving CSV to MySQL under either 1.005 or 0.1021</LI>
+                <LI>Incorrectly uppercases column names when moving MySQL to CSV under 1.005.  The
+                    workaround is to lower case the resulting column names using an ascii editor.</LI>
+                <LI>Fails completely under 0.1021 moving CSV to MySQL or vice versa.</LI>
+              </UL>
+            </LI>
+          </UL>
+          <UL>
+            <LI>upgrade_1_2, upgrade_2_3
+              <UL>
+                <LI>Functions normally upgrading a MySQL database under either 1.005 or 0.1021</LI>
+                <LI>Incorrectly uppercases column names when upgrading CSV under 1.005.  The workaround
+                    is to lower case the resulting column names using an ascii editor.</LI>
+              </UL>
+            </LI>
+          </UL>
+          </P>
+            <LI>Storable 2.07</LI>
+        <LI>Symbol 1.04</LI>
+        <LI>Text::CSV_XS 0.23</LI>
+        <LI>URI 1.23</LI>
+        <LI>XML::LibXSLT 1.53</LI>
+        <LI>XML::LibXML 1.53</LI>
+        <P>Note that XML::LibXML and XML::LibXSLT are not required unless you configure a collection's collmgr <B>rendering</B> field to <I>xslt</I>.</P>
+      </OL>
+      <LI>A web server that supports Apache sessions. We recommend <a href="http://httpd.apache.org/" TARGET="external">Apache</A> 1.3.26 or higher.</LI>
+      <LI><a href="http://openjade.sourceforge.net/" TARGET="external">OpenSP</A> 1.5 or higher (for using the supplied tools to prepare SGML and/or XML content for delivery via DLXS).</LI>
+	  </OL>
+	</LI>
+	<LI><B>Optional components</B> 
+	  <OL>
+	    <LI>For database management
+	      <OL>
+		<LI><a href="http://www.mysql.com/" TARGET="external">MySQL</A> for <STRONG>Image Class</STRONG> metadata (version 4.0.2 or newer strongly recommended for full functionality. version 3.23.23 is minimally required.) Use of MySQL for Image Class requires MySQL to be used with Collmgr as well.</LI>
+		  <LI><a href="http://www.mysql.com/" TARGET="external">MySQL</A> for storing session data and/or collection data (Collmgr) (any stable production version 3.23.23 or newer)</LI>
+	      </OL>
+	    </LI>
+	    <LI>For page image viewing 
+	      <OL>
+		<LI><a href="http://c42pdf.ffii.org/" TARGET="external">c42pdf</A> for displaying TIFF images in PDF format (free)</LI>
+		<LI><a href="http://www.dlxs.org/products/products.html" TARGET="external">tif2web</A> for displaying TIFF images
+		  in GIF and/or PNG format (free)</LI>
+	      </OL>
+	    </LI>
+	    <LI>For <STRONG>JPEG2000</STRONG>-compressed continuous tone image viewing
+	      <OL>
+		<LI>a JPEG2000 encoding tool such as <STRONG>kdu_compress</STRONG> that supports batch encoding of images (provided to DLXS subscribers and readily available at <a href="http://www.kakadusoftware.com/" TARGET="external">Kakadu Software</A>)</LI>
+		<LI><STRONG>kdu_expand</STRONG> for expanding and displaying
+		  JPEG2000-compressed images (provided to DLXS subscribers and readily available at <a href="http://www.kakadusoftware.com/" TARGET="external">Kakadu Software</A>)</LI>
+		<LI><STRONG>cjpeg</STRONG> for use in conjunction with kdu_expand for JPEG2000 web delivery (available as part of libjpeg)</LI>
+	      </OL>
+	    </LI>
+	    <LI>For <a href="http://www.lizardtech.com/" TARGET="external">MrSID</A>-compressed continuous tone image viewing
+	      <OL>
+		<LI>a MrSID encoding product such as MrSIDGeo that supports batch encoding of images (not free)</LI>
+		<LI><a href="http://www.dlxs.org/products/products.html" TARGET="external">mrsid_retrieve</A> for displaying
+		  MrSID-encoded images in JPEG format (free)</LI>
+	      </OL>
+	    </LI>
+	  </OL>
+	</LI>
+      </OL>
+      <P>We appreciate hearing from you if you encounter other system requirements. 
+	Please <a href="mailto:csnavely@umich.edu?subject=dlxs system requirements">contact the author</A> for
+	additions and suggestions.</P>
+    
+  </BODY>
+
+</html>

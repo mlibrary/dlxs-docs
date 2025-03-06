@@ -1,0 +1,142 @@
+<html>
+  <head>
+    <title>Finding Aids Class</title>
+    <link href="../../dlxsdocs.css" rel="stylesheet" type="text/css">
+  </head>
+  <body>
+    <div class="pageTitle">Programming Example: Adding Elements to the Results Display </div>
+    
+    <p class="alert">Beginnings of a section describing User interface programming.</p>
+    
+    <p>Following is an edited version of a support email describing
+    how to make additional elements from a finding aid appear in the
+    results display.  As such it may give you the flavor of the
+    programming techniques needed to modify the behavior of the
+    middleware at a fairly low level. Reading through this example
+    deliberately should guide you through all the steps needed for
+    this, which is just a specific instance of the general way a
+    search set and a result set get things added to them, how the
+    result set gets that new thing filtered and added to the output
+    XML and finally how the XSL is used to get that XML out to HTML.
+</p>
+    
+<p>When one clicks on one of the links in the left-hand "outline" on a
+"standard view", the middleware does an XPat search for the container,
+or other region (seen as the <code>focusrgn</code> parameter on the
+URL) that contains a particular byte offset (the link having been
+created by the middleware when it created the "standard view".</p>
+
+<p>If you add a <code>debug=xml</code> to that URL, you should see something like:
+
+<blockquote><pre>
+&lt;FullTextResults>
+  &lt;Results>
+    &lt;DocContent>
+      &lt;RegionContent>
+         &lt;controlaccess>
+....
+       &lt;/controlaccess>
+....
+</pre>
+</blockquote>
+</p>
+
+<p>Look at <code>DLXSROOT/web/f/findaid/text.xml</code>, which is the
+file used by the "standard" view.  (Note that you can always see what
+files are in play by adding a <code>debug=tpl</code> to the URL.)  In
+this file you should see the following snippet of XML:
+
+<blockquote><pre>
+  &lt;FullTextResults>
+    &lt;DocEncodingType>&lt;?DOC_ENCODING_TYPE_XML?>&lt;/DocEncodingType>
+    &lt;Results>&lt;?RESULTS_XML?>&lt;/Results>
+  &lt;/FullTextResults>
+</pre>
+</blockquote>
+</p>
+
+<p>It is the <code>RESULTS_XML</code> PI that is filled in with
+everything from <code>DocContent</code> onward. In this case, searches have been
+done by the middleware, at some point the EAD
+<code>controlaccess</code> region was searched for by the middleware
+and returned by XPat.</p>
+
+In <code>text.xsl</code>, which is used to transform the
+<code>text.xml</code> data, you will find:
+<blockquote><pre>
+          &lt;xsl:when test="$FocusRegion = 'controlaccess'">
+            &lt;xsl:apply-templates select="controlaccess"/>
+          &lt;/xsl:when>
+</pre>
+</blockquote>
+
+The template for <code>controlaccess</code> is in <code>text.components.xsl</code>.
+
+To add this to the "Search terms in context" view, we have to make
+sure that <code>reslist.xml</code>, which is what is used for that
+view (again <code>debug=tpl</code> will show that), has to have a PI
+that triggers a handler that eventually requests XPat to do a search
+for the <code>controlaccess</code> within the finding aid in question.</p>
+
+<p>There is a <code>RESULTS_XML</code> PI in
+<code>reslist.xml</code>. So, what we have to do is make sure that,
+for a "search terms in context" view, (i.e., CGI params:
+<code>view=reslist;subview=detail</code>), the <code>RESULTS_PI</code>
+triggers not only the header and the hits "kwics" (aka keywords in
+context) and all the containers and other top level elements that
+include those kwics, but also the <code>controlaccess</code>
+element.</p>
+
+<p>A useful technique is to run under the Perl debugger with the URL
+parameters and follow through the code. In this case, with
+<code>view=reslist;subview=detail</code>, <code>FindaidApp.pm</code>
+takes us to <code>DetailViewSearchesAndFilter_XML</code>.  From there
+to <code>FindaidClass::SubmitItemKwicSearches</code>.  This leads us
+to <code>DLXSROOT/lib/DLXSApp/FullTextApp::DetailViewSearches</code>
+and this goes to <code>FindaidClass::DoDetailResultsSearches</code>.
+This in turn uses
+<code>DLXSROOT/lib/DLXSClass/FullTextClass::AddSimpleSearches</code>
+(or <code>AddBooleanSearches</code>). This adds "ScopingHeads", that
+is, the containers and such that contain the kwics.</p>
+
+<p>Having gone through all that code, you can see how the kwics and their
+"ScopingHeads" are added to the search set. Finally, the search set is
+submitted (back up in
+<code>FindaidClass::DoDetailResultsSearches</code>) and the results
+are added to an <code>XPatResultSet</code>.</p>
+
+<p>Later, the result set is filtered. As in all cases, the result set is
+an iterator and the results one by one are handed to the middleware,
+in occurrence order, so that a container head will come before any
+kwics within that container and so on.</p>
+
+<p>So, you'll want to subclass <code>FindaidClass.pm</code> (see <a
+href="../../program/subclassing.html">this reference to writing DLXS
+subclasses</a>) so that you can override of
+<code>SubmitItemKwicSearches</code>. In that method, you add a call to
+a routine that will add, to the search set called 'kwicresults', a
+search for the proper additional <code>controlaccess</code> region
+within your finding aid.</p>
+
+<p>Then comes the filtering step.  You will need to add an extra
+<code>elsif</code> block to the method
+<code>ScopedDetailResultsFilter_XML</code> in your
+<code>FindaidClass.pm</code> subclass.  You'll see that there are
+various <code>if, elsif</code> blocks that check for different labels
+(added at search time) so that the code knows how to package/filter
+the result for output to the XML file. Your new <code>elsif</code>
+will check for results with a label (such as "additionalcontrolaccess"
+or some such) and add the returned XML to the output results.</p>
+
+<p>Then of course, you'll probably have to deal with some XSL to filter
+the new <code>controlaccess</code> region in a way that fits the
+output for this HTML page rather than the "focused region" type of
+"standard view" output for "subject terms/controlaccess."</p>
+
+
+    
+    
+    
+    
+  </body>
+</html>

@@ -1,0 +1,111 @@
+<?xml version="1.0"?>
+
+<!-- SPO Editorial Services                  -->
+<!-- automatically-generated XML header file -->
+
+<?xml-stylesheet href="../../../pre11-dlxsdocs.xsl" type="text/xsl"?>
+<!DOCTYPE DLPSDOC PUBLIC "-//UM-DLPS//DTD DLPS Publications//EN" "http://docs.umdl.umich.edu/dlps/docs/dlpsdocs.dtd">
+<DLPSDOC>
+<TITLE>Preparation for Index Building (Finding Aids)</TITLE>
+<HEADER>
+<JOURNAL>DLXS Documentation</JOURNAL>
+<PUBDATE>2003-11-03 14:52:30 EST</PUBDATE>
+<AUTH1>Powell, Chris</AUTH1>
+<EMAIL1></EMAIL1>
+<AUTH2>Pagliere, Alan</AUTH2>
+<DOCTITLE>Preparation for Index Building (Finding Aids)</DOCTITLE>
+<VOL>class</VOL>
+<ISS>findaid</ISS>
+<FILE>dlxsdocs-findaid-prep</FILE>
+</HEADER>
+<BODY>
+         <BHEAD>Preparation for Index Building (Finding Aids)</BHEAD>
+         <DIV1>
+            <H1>Setting up directories</H1>
+            <P>You will need to identify directories where you plan to store your 
+               EAD2002 XML source file, your index file (approximately 75% of 
+               the size of your finding aids), your "region" files and other information 
+               such as data dictionaries, and files you use to prepare your data. 
+               We recommend you use the following structure:</P>
+            <UL>
+               <LI>Store specialized scripts for your collection and its Makefile 
+                  in 
+                  <TT>$DLXSROOT/bin/{c}/{coll}/</TT>
+                  where 
+                  <TT> $DLXSROOT</TT>
+                  is the "tree" where you install all DLXS components, 
+                  <TT>{c}</TT>
+                  is the first letter of the name of the collection you are indexing, 
+                  and 
+                  <TT>{coll}</TT>
+                  is the collection ID of the collection you are indexing. For 
+                  example, if your collection ID is "bhlead" and your DLXSROOT is 
+                  "/l1", you will place the Makefile in 
+                  <TT>/l1/bin/b/bhlead/</TT>
+                  , e.g., 
+                  <TT>/l1/bin/b/bhlead/Makefile</TT>
+                  . See 
+                  <A HREF="http://docs.umdl.umich.edu/arch/general/directory-conventions.xml">directory 
+                     conventions</A>
+                  for more information.</LI>
+               <LI>Store your source finding aids and any DTDs, doctype, and files 
+                  for preparing your data in 
+                  <TT>$DLXSROOT/prep/{c}/{coll}/</TT>. Unlike the contents of other directories, everything in prep 
+                  should be expendable when actually running the indexes.</LI>
+               <LI>Store the finalized, concatenated XML file for your finding 
+                  aids collection in 
+                  <TT>$DLXSROOT/obj/{c}/{coll}/</TT>
+                  , e.g., 
+                  <TT>/l1/obj/b/bhlead/bhlead.xml</TT>
+                  .</LI>
+               <LI>Store index, region, data dictionary, and init files in 
+                  <TT>$DLXSROOT/idx/{c}/{coll}/</TT>
+                  , e.g., 
+                  <TT>/l1/idx/b/bhlead/bhlead.idx.</TT>
+                  See the 
+                  <A HREF="../../xpat/xpat-index.xml">XPAT documentation</A>
+                  for more on these types of files. </LI>
+            </UL>
+            <P>The files that are located in 
+               <TT>$DLXSROOT/bin/s/samplefa</TT>
+               and 
+               <TT>$DLXSROOT/prep/s/samplefa</TT>
+               can be used in preparing your finding aids and creating your indexes. 
+               The following files may need to have the #! adjusted for your location 
+               of perl:</P>
+            <UL>
+               <LI>$DLXSROOT/bin/f/findaid/output.dd.frag.pl </LI>
+               <LI>$DLXSROOT/bin/f/findaid/inc.extra.dd.pl </LI>
+            </UL>
+            <P>The following files will need to be edited to reflect your collection 
+               names and paths:</P>
+            <UL>
+               <LI>$DLXSROOT/bin/s/samplefa/Makefile</LI>
+               <LI>$DLXSROOT/prep/s/samplefa/samplefa.blank.dd</LI>
+               <LI>$DLXSROOT/prep/s/samplefa/samplefa.extra.srch</LI>
+               <LI> $DLXSROOT/prep/s/samplefa/samplefa.inp</LI>
+            </UL>
+            <P>The following file will need to be edited to reflect the location 
+               of your entity reference files:</P>
+            <UL>
+               <LI>$DLXSROOT/prep/s/samplefa/dlxsead2002.dtd</LI>
+            </UL>
+         </DIV1>
+         <DIV1>
+            <H1>Preparing your data</H1>
+            <P>In your prep directory, create a 
+               <TT>data</TT>
+               subdirectory for your collection and copy the finding aids for 
+               your collection into it. In our example collection for the Bentley 
+               Historical Library, this would be 
+               <TT>$DLXSROOT/prep/b/bhlead/data/</TT>.
+			   Ensure that each has a unique value in the eadid element.
+			</P>
+			            <UL>
+               <LI>More to come ....
+             </LI>
+            </UL>
+
+         </DIV1>
+      </BODY>
+   </DLPSDOC>

@@ -1,0 +1,128 @@
+<html>
+  <head>
+    <title>OAI Harvesting System</title>
+    <link href="../dlxsdocs.css" rel="stylesheet" type="text/css">
+  </head>
+  <body>
+    <div align="center" class="pageTitle">OAI Harvesting System</div>
+    <h1>Contents</h1>
+    <ul>
+      <li><a href="#func">Functional overview</a></li>
+      <li><a href="#harvest">Harvester (UMHarvester)</a></li>
+      <li><a href="#transform">Transform engine (OAITransform)</a></li>
+    </ul>
+
+    <h1><a name="func"></a>Overview</h1>
+    <p>DLXS hosts the <a href="http://www.oaister.org/">OAIster</a> project, as well as other OAI test portals (<a href="http://quod.lib.umich.edu/m/mods/">MODS</a>, <a href="http://quod.lib.umich.edu/a/aquifer/">Aquifer</a>, <a href="http://quod.lib.umich.edu/i/imls/">DLF</a>). This document details how to run the harvester used for gathering records we use in these portals, and how to transform the harvested records into <a href="../class/bib/index.html">Bibliographic Class</a>.</p>
+
+<p>For more information on OAI and the Protocol for Metadata Harvesting (OAI-PMH), see the <a href="http://www.openarchives.org/pmh/">official site</a>. For best practices related to OAI, see the <a href="http://oai-best.comm.nsdl.org/cgi-bin/wiki.pl?TableOfContents">Best Practices wiki</a>.
+
+<p>To download just the harvester and transform engine, see the <a href="http://www.dlxs.org/products/release13_OAI.html">OAI Tools Package</a>.
+
+    <h1><a name="harvest"></a>Harvester (UMHarvester)</h1>
+    <p><strong>N.B.</strong>: To use the harvester in your system, you may have to make changes to the Global Parameters located at the beginning of the UMHarvester script.</p>
+
+<p>To start the harvester use <code>./UMHarvester</code> from within /$DLXSROOT/bin/o/oaister/scripts/</p>
+
+<p>These flags let you perform harvesting:</p>
+
+<ul>
+<li><code>-i</code><br/> The id of the repository. This is pulled from /$DLXSROOT/bin/o/oaister/scripts/id_URL_table.txt, a text file that lists the id and the baseURL of repositories, e.g., cogprints=http://cogprints.ecs.soton.ac.uk/perl/oai2. (Use id_URL_table.sample.txt to get started.) You can run multiple harvests at the same time by separating ids with commas.</li>
+
+<li><code>-v</code><br/> The verbs. You can specify:
+<ul>
+<li><code>lr</code> = ListRecords</li>
+<li><code>id</code> = Identify</li>
+<li><code>ls</code> = ListSets</li>
+<li><code>lf</code> = ListMetadataFormats</li>
+</ul>
+When running ListRecords, if the folder that will contain the repository's record already exists, it will place the original folder in a backup place. Currently, this is set up as such:
+<ul>
+<li>Records are placed in /$DLXSROOT/prep/h/harvester/[repository_id]</li>
+<li>Backup is in /$DLXSROOT/prep/h/harvester_other/backup/[repository_id]</li>
+</ul>
+Logs of ListRecords output are placed in /$DLXSROOT/bin/o/oaister/scripts/log/. The active.log is overwritten for each (set of) harvests run. The [repository_id].log is appended with successful harvests or harvesting errors.</li>
+
+<li><code>-s</code><br/> To harvest sets for a particular repository. Use the <code>setSpec</code> name for a particular set.</li>
+
+<li><code>-f</code><br/> To harvest records in the following metadata formats:
+<ul>
+<li>mods</li>
+<li>oai_marc</li>
+<li>marc21</li>
+<li>marc21a</li>
+<li>marc21b</li>
+<li>marcxml</li>
+</ul>
+The harvester will harvest in oai_dc format, unless a metadata format is specified.</li>
+
+<li><code>-n</code><br/> To harvest records from the last harvest date for a repository (i.e., incremental harvesting). This flag checks the datestamp granularity from the Identify response and starts harvesting either the next second after the last harvest finished (e.g., last harvest finished 2005-03-15T10:45:46Z, incremental harvest starts at 2005-03-15T10:45:47Z) or the next day after the last harvest finished (e.g., last harvest finished 2005-03-15, incremental harvest starts at 205-03-16). The flag creates a tar.gz copy of the repository's records and puts that in the backup directory. As the incremental harvest runs, it checks the contents of the repository's directory and replaces those records that have been modified. If it finds no replacement for a harvested record, it places this in a directory specific to the incremental harvest date (e.g., cogprints1-1000_2007-03-28).</li>
+
+<li><code>-a</code><br/> To retry a harvest following a timeout. This flag will wait 5 minutes to retry a timeout on a particular resumptionToken. The limit is 10 retries for a particular harvest.
+
+<li><i>Examples</i>:<br/>
+<ul>
+<li><code>./UMHarvester -i auburn,epsilondiss,rdn -v ls</li></code>
+<li><code>./UMHarvester -i cogprints -v id</li></code>
+<li><code>./UMHarvester -i cogprints -v id</li></code>
+<li><code>./UMHarvester -i uiucimages -v lr -s ALA</li></code>
+<li><code>./UMHarvester -i lcoa1 -v lr -f mods</li></code>
+<li><code>./UMHarvester -i forex -v lr -n</li></code>
+<li><code>./UMHarvester -i CCSDthesis -v lr -a</li></code>
+</ul>
+</li></ul>
+
+<p>The Batch_UMHarvest file is used to run automated incremental harvests on repositories. See the /$DLXSROOT/bin/o/oaister/scripts/Batch_UMHarvest_sample file for an example.</p>
+
+<blockquote><font size="-1">
+<pre>
+my @Monday = 
+(['uiucimages', 'ALA', 'oai_dc', 'dr'],
+);
+</pre></font></blockquote>
+
+<p>Add your own repository id, set, metadata format, and run specification (<code>r</code> to run, <code>dr</code> to not run OAITransform) for each repository you wish to batch harvest. Batch_UMHarvest will perform an incremental harvest from the last time you harvested, based on the .log file for that repository id.</p>
+
+<p>Rename Batch_UMHarvest_sample to Batch_UMHarvest to use. To start the Batch_UMHarvest run <br/>
+<code>./Batch_UMHarvest -d M &</code><br/>
+ from within /$DLXSROOT/bin/o/oaister/scripts/. This will run all the repository ids within the "M" (or Monday) batch harvest group.</p>
+
+    <h1><a name="transform"></a>Transform engine (OAITransform)</h1> 
+
+<p>OAITransform creates concatenated BibClass file of all oai_dc records, per repository. To start the transform tool use <code>./oaitransform/OAITransform [repository_id]</code> from within /$DLXSROOT/bin/o/oaister/oaitransform/</p>
+
+<p>Add the repository id you want to transform. This id is taken from repository_table.txt, which you will build using repository_table.sample.txt as your starting point.<br/>
+e.g.,<code>./oaitransform/OAITransform celebration</code></p>
+
+<p>The transform program will process your oai_dc harvested files, first by concatenating them into raw files and then by transforming them into BibClass files. The /$DLXSROOT/bin/o/oaister/oaitransform/oai-bibclass3.xsl file is used to perform the mapping from oai_dc to BibClass.</p>
+
+<p>The repository report at the end of the transform will provide a number of statistics.</p>
+
+<blockquote><font size="-1">
+<pre>
+Repository Report: bristol
+        records with URLs       = 818
+        records without URLs    = 5
+        repository records      = 823
+        success rate            = 99.39%
+        ------------------------
+        data conditioning msgs? = YES!
+        deleted records (.del)  = 0
+        normalization errors    = 2
+        raw parse failures      = 0
+</pre></font></blockquote>
+
+<ul>
+<li>records with URLs: OAIster is only interested in oai_dc records with a dc:identifier beginning with http or ftp, so the transform engines only transforms those records with those dc:identifiers.</li>
+<li>records without URLs: The remainder of the records.</li>
+<li>repository records: All the oai_dc records harvested.</li>
+<li>data condtioning msgs: If there are character errors during transformation, these are fixed by OAITransform. See <a href="condition.html">an explanation of the data conditioning</a> that can be performed. To see character errors that have been fixed after a transformation, see /$DLXSROOT/bin/o/oaister/errors/utf8_status_log.txt</li>
+<li>deleted records (.del): Not used unless you want to re-write the harvester to mark deleted records with a .del extension.</li>
+<li>normalization errors: The transform tool uses the /$DLXSROOT/bin/o/oaister/oaitransform/normal_types.txt file to normalize the dc:type field values into five distinct BibClass TYPE values, i.e., text, image, audio, video, dataset. If the values in the dc:type fields can't be normalized because there are not mappings for them, these will be logged to an error file located at /$DLXSROOT/bin/o/oaister/errors/normalization_errors.txt</li>
+<li>raw parse failures: If there are encoding errors which the transform tool cannot fix, these will be indicated during the transform.</li>
+</ul>
+
+<p>For questions on how to transform MODS records, please contact Kat Hagedorn at khage at umich dot edu.</p>
+
+  </body>
+</html>

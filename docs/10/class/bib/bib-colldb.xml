@@ -1,0 +1,62 @@
+<?xml version="1.0"?>
+
+<!-- SPO Editorial Services                  -->
+<!-- automatically-generated XML header file -->
+
+<?xml-stylesheet href="../../../pre11-dlxsdocs.xsl" type="text/xsl"?>
+<!DOCTYPE DLPSDOC PUBLIC "-//UM-DLPS//DTD DLPS Publications//EN" "http://docs.umdl.umich.edu/dlps/docs/dlpsdocs.dtd">
+<DLPSDOC>
+<TITLE>Adding Collections to collmgr, Bibliographic Class</TITLE>
+<HEADER>
+<JOURNAL>DLXS Documentation</JOURNAL>
+<PUBDATE>2003-03-04 09:38:37 EST</PUBDATE>
+<AUTH1>Hagedorn, Kat</AUTH1>
+<EMAIL1>khage@umich.edu</EMAIL1>
+<AUTH2></AUTH2>
+<DOCTITLE>Adding Collections to collmgr, Bibliographic Class</DOCTITLE>
+<VOL>class</VOL>
+<ISS>bib</ISS>
+<FILE>dlxsdocs-bib-colldb</FILE>
+</HEADER>
+<BODY>
+<BHEAD>Adding Collections to collmgr, Bibliographic Class</BHEAD>
+<DIV1 ID="overview">
+<P>The <A HREF="../../collmeta/dlxs-colldatabases.xml">collection database</A> for Bibliographic Class and all other classes is managed through the <A HREF="../../collmeta/dlxs-collmgr.xml">collmgr</A> program. The collmgr application mediates access to creating and updating the metadata, and has online, in-context documentation, for example, the DLPS implementation of <A HREF="http://docs.dlxs.org/collmeta/dlxs-collmgr-fields.xml">collmgr documentation</A>. This documentation notes fields that are "required," as well as the types of values that each field supports.  In those cases where a field uses the reserved keyword "default," a system-supplied default value or function is used. For example, in Bibliographic Class, if "default" is used for <TT>short filter</TT>, records will be displayed according to the rules used in the default Bibliographic Class short filter.</P>
+
+<P>For most of your Bibliographic Class collections, you will add the following fields. The instructions below assume a sample collection named "nyt". Please replace these sample names with your local filenames.</P>
+
+<UL>
+<LI><TT>collid</TT> = [The unique ID string used for the collection, e.g.,] <I>nyt</I></LI>
+<LI><TT>collname</TT> = [The collection name as it will appear on the cross-collection results lists, in the collection picker (sorted alphabetically), and on the home page for the collection, e.g.,] <I>Historical Index to the New York Times (1863-1905)</I></LI>
+<LI><TT>homesite</TT> = [The URL for the host webserver hosting the middleware, e.g.,] <I>http://www.hti.umich.edu/</I></LI>
+<LI><TT>host</TT> = [The host name for the machine hosting the collection data and data indexes, e.g.,] <I>www.hti.umich.edu</I></LI>
+<LI><TT>webdir</TT> = [The directory path relative to DLXSROOT for the collection (usually in the form /c/collid), e.g.,] <I>/n/nyt</I></LI>
+<LI><TT>objdir</TT> = [The directory where text/image objects are stored, e.g.,] <I>/n/nyt</I></LI>
+<LI><TT>map</TT> = [The location of the TerminologyMapper map file for the collection, e.g.,] <I>nyt.map</I> [or default]</LI>
+<LI><TT>port</TT> = [The access port for the XPAT daemon on the machine identified in "host" above. Only necessary for collections where data and indexes are on a different machine than the middleware, e.g.,] <I>620</I></LI>
+<LI><TT>appmodule</TT> = [The module name (without .pm suffix) of the Application Object or subclass thereof supporting the basic application functionality for the Bibliographic Class  middleware, e.g.,] <I>BibApp</I></LI>
+<LI><TT>subclassmodule</TT> = [The name of the subclass module (without the ".pm" suffix) that defines the subclass of the Bibliographic Class object for the collection, e.g.,] <I>BibClass/NytBC</I></LI>
+<LI><TT>primarytitle</TT> = [The first title (or graphical banner) that appears at the top of the initial web page, e.g.,] <I>text:Historical Index to the New York Times (1863-1905)</I></LI>
+<LI><TT>minmaxyearstart</TT> = [The minimum valid year value to be used to check user input for date searches, e.g.,] <I>1912</I></LI>
+<LI><TT>minmaxyearend</TT> = [The maximum valid year value to be used to check user input for date searches, e.g.,] <I>2002</I></LI>
+<LI><TT>dddir</TT> = [The directory containing the XPAT dd file or files (specified in the dd field) for the collection, e.g.,] <I>/n/nyt</I></LI>
+<LI><TT>dd</TT> = [A list of one or more XPAT .dd files for the collection. Their location is specified by the dddir field, e.g.,] <I>nyt.dd</I></LI>
+<LI><TT>regionsearch</TT> = [The regions which are retrieved for Boolean searches (minimally, "entire record"), e.g.,]</LI>
+<UL>
+<LI><I>entire record</I></LI>
+<LI><I>author</I></LI>
+<LI><I>title</I></LI>
+</UL>
+</UL>
+
+<P>Submit your changes and check them in.</P>
+
+</DIV1>
+
+<DIV1 ID="related"><H1>Related Information</H1>
+<P>You <B>must</B> also create templates for the new collection.  For more information on creating and altering templates, please see <A HREF="bib-templates.xml">Creating and Editing HTML/Template Files</A>.</P>
+<P>You <B>may</B> also add new fields, not previously defined.  For more information on adding new searchable fields, please see <A HREF="bib-maps.xml">Adding New Searchable Fields</A>.</P>
+<P>You <B>may</B> also wish to create special filtering routines for the new collection.  For more information on creating and editing filters, please see <A HREF="bib-filters.xml">Creating and Editing Filtering Routines</A>.</P>
+</DIV1>
+</BODY>
+</DLPSDOC>

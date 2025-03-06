@@ -1,0 +1,183 @@
+<?xml version="1.0"?>
+
+<!-- SPO Editorial Services                  -->
+<!-- automatically-generated XML header file -->
+
+<?xml-stylesheet href="../../../pre11-dlxsdocs.xsl" type="text/xsl"?>
+<!DOCTYPE DLPSDOC PUBLIC "-//UM-DLPS//DTD DLPS Publications//EN" "http://docs.umdl.umich.edu/dlps/docs/dlpsdocs.dtd">
+<DLPSDOC>
+<TITLE>Representative Resources, Bibliographic Class</TITLE>
+<HEADER>
+<JOURNAL>DLXS Documentation</JOURNAL>
+<PUBDATE>2002-05-03 09:21:04 EDT</PUBDATE>
+<AUTH1>Wilkin, John Price</AUTH1>
+<AUTH2>Hagedorn, Kat</AUTH2>
+<DOCTITLE>Representative Resources, Bibliographic Class</DOCTITLE>
+<VOL>class</VOL>
+<ISS>bib</ISS>
+<FILE>dlxsdocs-bib-representative</FILE>
+</HEADER>
+
+
+
+
+<BODY>
+<BHEAD>Representative Resources, Bibliographic Class</BHEAD>
+<DIV1 ID="main">
+<P>This section discusses several members of the Bibliographic Class with particularly representative characteristics. The examples have been selected in part to help describe both the range of characteristics and the "tensions" in the class. The examples include:</P>
+<OL>
+<LI><A HREF="http://www.hti.umich.edu/cgi/u/umr/umrbib-idx">University of Michigan Reports</A> (MARC records, extracted)</LI>
+<LI><A HREF="http://ets.umdl.umich.edu/cgi/b/bib/bib-idx?c=wing">Wing</A> (simple bibliographic information)</LI>
+<LI> and the <A HREF="http://www.hti.umich.edu/cgi/b/bib/bib-idx?c=ethnic">Michigan Ethnic Directory</A> (opportunities to be had with reference works)</LI>
+</OL>
+<P>The <A HREF="http://www.hti.umich.edu/cgi/u/umr/umrbib-idx">University of Michigan Reports</A> records are extracted from USMARC records in the UM Library's NOTIS system.  The records are fairly typical of cataloging in most regards, with a higher than normal degree of authority control and consistency in punctuation.  (DLXS makes available an unsupported utility for conversion of USMARC records; for more information on bibliographic record conversion, see <A HREF="bib-transforming.xml">Transforming Bibliographic Files</A>.)</P>
+<P>The <A HREF="http://ets.umdl.umich.edu/cgi/b/bib/bib-idx?c=wing">Wing</A> records are more characteristic of scholarly bibliographic citation projects, with, for example, shorter entries and specialized information such as holding libraries.  Other brief citation resources in the Bibliographic Class include the <A HREF="http://ets.umdl.umich.edu/cgi/b/bib/bib-idx?c=times">Official Index to the Times (London), 1906-1980, and Palmers Index to the Times, 1790-1905</A>.</P>
+<P>One of the better examples of an unusual application of the Bibliographic Class is the  <A HREF="http://www.hti.umich.edu/cgi/b/bib/bib-idx?c=ethnic">Michigan Ethnic Directory</A>.  Not a "bibliographic" resource at all, the  <A HREF="http://www.hti.umich.edu/cgi/b/bib/bib-idx?c=ethnic">Michigan Ethnic Directory</A> benefits from the relatively small, tight structure of the <A HREF="bib-dtd.xml">Bibliographic Class DTD</A>, and the "behaviors" such as the Clipboard associated with the Bibliographic Class.</P>
+<P>The three resources described here (with samples below) help to represent the range to which the Bibliographic Class has been applied.  Some resources such as the <A HREF="http://www.hti.umich.edu/cgi/b/bib/bib-idx?c=ethnic">Michigan Ethnic Directory</A> have a problematic "fit" with the Class, requiring work to create special filters and add mappings for additional searchable fields, and may perhaps require the creation of a special reference class in the future.  At the same time, the Bibliographic Class capably handles both short citations and longer bibliographic records from online catalogs.  This built-in tension will continue to be monitored as DLXS defines and extends its classes.</P>
+</DIV1>
+<DIV1 ID="illustrations">
+<H1>Appendix: Sample Entries</H1>
+<DIV2 ID="umr-samples">
+<H2>University of Michigan Reports</H2>
+<DIV3 ID="umr-rendered">
+<H3>UMR Record:  Rendered with field labels</H3>
+<TABLE><TBODY>
+<TR><TD><B>Author:</B></TD><TD>Barton, Ben F. (Ben Frederick)</TD></TR>
+<TR><TD><B>Title:</B></TD><TD>The design of efficient coupling networks / B.F. Barton.</TD></TR>
+<TR><TD><B>Extent:</B></TD><TD>vi, 42 p. ; ill. ; 28 cm.</TD></TR>
+<TR><TD><B>Place of publication:</B></TD><TD>[Ann Arbor]:</TD></TR>
+<TR><TD><B>Publisher:</B></TD><TD>University of Michigan,</TD></TR>
+<TR><TD><B>Date of publication:</B></TD><TD>[1955]</TD></TR>
+<TR><TD><B>ID:</B></TD><TD>BAB1034</TD></TR>
+<TR><TD><B>ID:</B></TD><TD>UMR0270</TD></TR>
+<TR><TD><B>Availability:</B></TD><TD>Publicly accessible text for non-commercial applications.</TD></TR>
+<TR><TD><B>Note:</B></TD><TD>"This report was orginally distributed as Technical Report No. 44 by the Electronic Defense Group, Department of Electrical Engineering, the University of Michigan."</TD></TR>
+<TR><TD><B>Note:</B></TD><TD>University of Michigan. College of Engineering. Industry Program.</TD></TR>
+<TR><TD><B>Subject:</B></TD><TD>Electronic networks.</TD></TR>
+<TR><TD><B>URL:</B></TD><TD>http://www.hti.umich.edu/cgi/u/umr/pageviewer?id=BAB1034</TD></TR>
+</TBODY></TABLE>
+</DIV3>
+<DIV3 ID="umr-encoded">
+<H3>UMR Record:  Displayed with encoding</H3>
+<PRE>
+&lt;A A="A" ID="BAB1034" DT="2000-08-22">
+&lt;B>
+&lt;K>The design of efficient coupling networks / B.F. Barton.&lt;/K>
+&lt;L>Barton, Ben F. (Ben Frederick)&lt;/L>
+&lt;/B>
+&lt;D>vi, 42 p. : ; ill. ; ; 28 cm.&lt;/D>
+&lt;E>
+&lt;U>[Ann Arbor]:&lt;/U>
+&lt;T>University of Michigan,&lt;/T>
+&lt;YR>[1955]&lt;/YR>
+&lt;W A="NOTIS">BAB1034&lt;/W>
+&lt;W A="CALLNO">UMR0270&lt;/W>
+&lt;X>Publicly accessible text for non-commercial applications.&lt;/X>
+&lt;/E>
+&lt;G>
+&lt;AA>"This report was orginally distributed as Technical Report No. 
+44 by the Electronic Defense Group, Department of Electrical Engineering, 
+the University of Michigan."&lt;/AA>
+&lt;/G>
+&lt;G>
+&lt;AA>University of Michigan. College of Engineering. Industry Program.&lt;/AA>
+&lt;/G>
+&lt;I2>
+&lt;SG>
+&lt;SU A="1">Electronic networks.&lt;/SU>
+&lt;/SG>
+&lt;/I2>
+&lt;J>
+&lt;URL>http://www.hti.umich.edu/cgi/u/umr/pageviewer?id=BAB1034&lt;/URL>
+&lt;/J>
+&lt;/A></PRE>
+</DIV3>
+</DIV2>
+<DIV2 ID="wing-samples">
+<H2>Wing</H2>
+<DIV3 ID="wing-rendered">
+<H3>Wing entry rendered with field labels</H3>
+<TABLE><TBODY>
+<TR><TD><B>Author:</B></TD><TD>Powell, Thomas, 1572?-1635?</TD></TR>
+<TR><TD><B>Title:</B></TD><TD>Mr. Powels answer to a late fictitious pamphlet . . . Quakers</TD></TR>
+<TR><TD><B>Alternate title:</B></TD><TD>answer to a late fictitious pamphlet . . . Quakers</TD></TR>
+<TR><TD><B>Place of publication:</B></TD><TD>London</TD></TR>
+<TR><TD><B>Wing number:</B></TD><TD>P3067B.</TD></TR>
+<TR><TD><B>Publisher:</B></TD><TD>Printed</TD></TR>
+<TR><TD><B>Year:</B></TD><TD>1676</TD></TR>
+<TR><TD><B>Note:</B></TD><TD>quarto [fewer than 50 pages]</TD></TR>
+<TR><TD><B>Note:</B></TD><TD>This item also described in Arber, Edward, ed. The Term Catalogues, 1668-1709 A.D. London:  privately printed; 1903-1906. vol. 1. p. 256</TD></TR>
+<TR><TD><B>Holdings:</B></TD><TD><UL><LI>Bodleian Library, Oxford, Eng.</LI><LI>Henry E. Huntington Library, San Marino, Calif., U.S.</LI></UL></TD></TR>
+</TBODY></TABLE>
+</DIV3>
+<DIV3 ID="wing-encoded">
+<H3>Wing entry displayed with encoding</H3>
+<PRE>
+&lt;A ID="WING305358" DT="19990407">
+&lt;B>
+&lt;K>Mr. Powels answer to a late fictitious pamphlet . . . Quakers&lt;/K>
+&lt;K A="alternate">answer to a late fictitious pamphlet . . . Quakers&lt;/K>
+&lt;L>Powell, Thomas, 1572?-1635?&lt;/L>
+&lt;/B>
+&lt;E>
+&lt;U>London&lt;/U>
+&lt;W A="Wing">P3067B&lt;/W>
+&lt;T>Printed&lt;/T>
+&lt;YR>1676&lt;/YR>
+&lt;/E>
+&lt;G>
+&lt;AA A="format">&lt;P>quarto [fewer than 50 pages]&lt;/P>&lt;/AA>
+&lt;AA A="reference">&lt;P>This item also described in  Arber, Edward, ed.  
+The Term Catalogues, 1668-1709 A.D. London: privately printed; 
+1903-1906. vol. 1.  p. 256&lt;/P>&lt;/AA>
+&lt;/G>
+&lt;J>
+&lt;LOC>Bodleian Library, Oxford, Eng.&lt;/LOC>
+&lt;LOC>Henry E. Huntington Library, San Marino, Calif., U.S.&lt;/LOC>
+&lt;/J>
+&lt;/A>
+</PRE>
+</DIV3>
+</DIV2>
+<DIV2 ID="ethnic-samples">
+<H2>Michigan Ethnic Directory</H2>
+<DIV3 ID="ethnic-rendered">
+<H3>Michigan Ethnic Directory entry rendered with field labels</H3>
+<TABLE><TBODY>
+<TR><TD><B>Organization:</B></TD><TD>Cuban Festival Dancers</TD></TR>
+<TR><TD><B>Address:</B></TD><TD>695 Crawford Street<BR/>
+            Detroit, MI 48209</TD></TR>
+<TR><TD><B>Ethnicity:</B></TD><TD>Cuban (also see Hispanic)</TD></TR>
+<TR><TD><B>Type:</B></TD><TD>Fine, Folk, and Performing Arts Organizations</TD></TR>
+</TBODY></TABLE>
+</DIV3>
+<DIV3 ID="ethnic-encoded">
+<H3>Michigan Ethnic Directory entry displayed with encoding</H3>
+<PRE>
+&lt;A ID="ethnic01" DT="1">
+&lt;B>
+&lt;K>Cuban Festival Dancers&lt;/K>
+&lt;/B>
+&lt;E>
+&lt;V>
+&lt;VV>
+&lt;ST>695 Crawford Street&lt;/ST>
+&lt;ST>Detroit, MI 48209&lt;/ST>
+&lt;/VV>
+&lt;/V>
+&lt;/E>
+&lt;I2>
+&lt;KW A="eth">
+&lt;AF>Cuban (also see: Hispanic)&lt;/AF>
+&lt;/KW>
+&lt;KW A="org">
+&lt;AF>Fine, Folk, and Performing Arts Organizations&lt;/AF>
+&lt;/KW>
+&lt;/I2>
+&lt;/A>
+</PRE>
+</DIV3>
+</DIV2>
+</DIV1>
+</BODY>
+</DLPSDOC>

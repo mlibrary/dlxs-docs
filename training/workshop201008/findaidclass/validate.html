@@ -1,0 +1,43 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+<title>make validate</title>
+</head>
+
+<body>
+
+make validate
+
+
+
+<pre>
+  onsgmls -wxml -s -f $(PREPDIR)$(NAMEPREFIX).errors $(XMLDECL) $(XMLDOCTYPE) $(XMLFILE)</pre>
+
+
+<p>Here is the command with the substitutions made for s/samplefa:. </p>
+
+<pre>
+onsgmls -wxml -s -f $DLXSROOT/prep/s/samplefa/samplefa.errors $DLXSROOT/misc/sgml/xml.dcl $DLXSROOT/prep/s/samplefa/samplefa.xml.inp     $DLXSROOT/obj/s/samplefa/samplefa.xml </pre>
+
+This command runs onsgmls to validate the copy using the doctype in samplefa.xml.inp
+<ul>
+  <li>-wxml tells onsgmls to output XML warnings (rather than SGML warnings) </li>
+  <li>-s  suppresses output.  That means instead of getting a parse tree, we just get any errors</li>
+  <li>-f ...errors tells onsgmls to write errors to a file with that name </li>
+<li>$DLXSROOT/misc/sgml/xml.dcl   is an  SGML Declaration for valid XML documents. </li> 
+This lets onsgmls which is an SGML parser work with XML documents
+<li>$DLXSROOT/prep/s/samplefa/samplefa.xml.inp  is a document type declaration which  points to the dlxsead2002.dtd. (See below). Its essentially the EAD 2002 DTD which allows the &lt;ead&gt; to be repeated and wraps the repeated &lt;ead&gt;s in   &lt;COLL&gt; element tags. </li>
+</ul>
+
+  <p>Samplefa.xml.inp:</p>
+  <p> <br />
+  &lt;!DOCTYPE COLL SYSTEM &quot;/l1/release/13/misc/sgml/dlxsead2002.dtd&quot; [<br />
+    ]&gt;<br />
+  </p>
+  See <a href="http://openjade.sourceforge.net/doc-1.5.1/nsgmls.htm">http://openjade.sourceforge.net/doc-1.5.1/nsgmls.htm</a>  for more info on onsgmls
+
+
+
+</body>
+</html>

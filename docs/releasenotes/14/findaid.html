@@ -1,0 +1,220 @@
+
+==========================================================
+<H4>web/f/findaid</H4>
+
+<UL>
+<LI> bookbagitemsstring_debug.xsl
+<UL>
+ <LI>For debugging in oxygen since the Oxygen
+                debugger uses Saxon and Saxon doesn't understand the
+                extensions</LI></UL></LI>
+</UL>
+<UL>
+<LI> browseheader.xsl
+<UL>
+ <LI>bulk dates labelled</LI></UL></LI>
+</UL>
+<UL>
+<LI> htmlhead.xsl
+<UL>
+ <LI>emit full path to main XML template
+                for &lt;TemplateName> element</LI>
+ <LI>changed TemplateName to TemplatePath</LI></UL></LI>
+</UL>
+<UL>
+<LI> text.components.xsl
+<UL>
+ <LI>Modified template for processing c0x's
+                so that if there are two containers within a //c0x/did/
+                such as box/folder they will both show up in the proper
+                column.</LI>
+ <LI>Highlighting fix. Replaced about 36
+                instances of &lt;xsl:value-of select="."/> with <xsl:apply-templates
+                select="*|text()"/> If value-of select gets highlighted
+                text in the context node: "text&lt;HIGHLIGHT>text</HIGHLIGHT>text
+                text" it will ignore the &lt;HIGHLIGHT> elemnts and just
+                render all the text. On the other hand the apply-templates
+                "*" will match the &lt;HIGHLIGHT> element and trigger
+                the appropriate highlighting template and the text()
+                nodes will get passed to the template that just outputs
+                the text</LI>
+ <LI>Temporarily removed highlighting code
+                from template match unittitle mode=SimpleUnittitle
+                because bug was causing actual unittitle to not output
+                Also removed callnumber foobar which never should
+                have made it to production</LI>
+ <LI>Fixed code in template match=unittitle
+                mode=SimpleUnittitle because foreach was messing with
+                context Also change code for handling notes/scopeconent
+                in match=C01|c02... because it was an xsl:choose,
+                but notes and scopecontent are not mutually exclusive</LI>
+ <LI>Changed code for handling notes/scopeconent
+                in match=C01|c02... now both did/note and note and
+                did/scopecontent and scopecontent will be rendered</LI>
+ <LI>fixed bug in template match="list"
+                where there was a foreach and then value-of select
+                *|text() that needed to be value-of select="."</LI>
+ <LI>space before unitdate value</LI>
+ <LI>title styling</LI>
+ <LI>optional labels for additional descriptive
+                material</LI>
+ <LI>hide sorting title</LI>
+ <LI>sponsor</LI>
+ <LI>Restored ADD to full-text view</LI>
+ <LI>abstracts in dids</LI>
+ <LI>Change template for index mode= add
+                so it doesn't produce 2 copies of any &lt;head> text.
+                Key is to limit the apply templates after we already
+                processed the head not to process the head again:
+                &lt;xsl:apply-templates select="*[not(self::head)]"/></LI></UL></LI>
+</UL>
+==========================================================
+<H4>bin/f/findaid</H4>
+
+<UL>
+<LI> catsourcefiles.pl
+<UL>
+ <LI>No longer used for samplefa (replaced
+                by preparedocs.pl) Also it contains bhl specific code.
+                For bhl use the copy in $DLXSROOT/bin/b/bhlead which
+                is in cvs.</LI></UL></LI>
+</UL>
+<UL>
+<LI> cvstag.findaid
+<UL>
+ <LI>Add CvstagHelper</LI>
+ <LI>Add CvstagHelper</LI>
+ <LI>Kadd exit status</LI>
+ <LI>Added entries for demofa collection
+                demofa demonstrates customization of findaid class
+                for EAD encoding practices that differ from the Bentley's</LI>
+ <LI>add demofa</LI></UL></LI>
+</UL>
+<UL>
+<LI> fixdoctype.pl
+<UL>
+ <LI>Moved here from bin/s/samplefa No collection-specific
+                customization These should work on any EAD that conforms
+                to the ead2002.dtd</LI></UL></LI>
+</UL>
+<UL>
+<LI> isolat128bit.pl
+<UL>
+ <LI>No longer used for findaids, since
+                all findaids should be utf8 encoded</LI></UL></LI>
+</UL>
+<UL>
+<LI> makerepo.pl
+<UL>
+ <LI>Script to make directories for a new
+                collection and to populate them with template files
+                from samplefa initial commit</LI>
+ <LI>Added command line argument parsing</LI>
+ <LI>Changed makerepo.pl name to setup_newcoll</LI></UL></LI>
+</UL>
+<UL>
+<LI> setup_newcoll
+<UL>
+ <LI>Changed makerepo.pl name to setup_newcoll</LI>
+ <LI>Added some argument checking and reorganized
+                default options</LI>
+ <LI>Changed to use Getopt::Long. Added
+                POD for producing usage message (Pod::Usage) Added
+                different levels of reporting to stdout</LI>
+ <LI>Added usage message if unknown options
+                passed in Added confirmation of dir/coll prior to
+                executing</LI>
+ <LI>quoted version string</LI>
+ <LI>Added -o overwrite option to allow
+                redoing or building over existing files. Cleaned up
+                a bit</LI></UL></LI>
+</UL>
+<UL>
+<LI> stripdoctype.pl
+<UL>
+ <LI>This library file is now used by preparedocs.pl
+                and validateeach.sh (through $DLXSROOT/bin/s/samplefa/fixdoctype.pl)
+                to correctly remove multiple line DOCTYPE declarations
+                and any entity references contained within them. It
+                is a replacement for the one-line perl program previously
+                used by those two programs.</LI></UL></LI>
+</UL>
+<UL>
+<LI> validate.pl
+<UL>
+ <LI>Removing outdated file that worked
+                on sgml files. FindaidClass now exclusively xml</LI></UL></LI>
+</UL>
+<UL>
+<LI> validateeach.sh
+<UL>
+ <LI>Moved here from bin/s/samplefa No collection-specific
+                customization These should work on any EAD that conforms
+                to the ead2002.dtd</LI></UL></LI>
+</UL>
+==========================================================
+<H4>bin/WW</H4>
+
+<UL>
+<LI> rdist.WW
+<UL>
+ <LI>storage server merge. all ridsts go
+                to NASDCMR = ( nas-dcmr.umdl.umich.edu ) NASHATCHER
+                = ( nas-hatcher.umdl.umich.edu ) HOSTS = ( ${NASDCMR}
+                ${NASHATCHER} )</LI></UL></LI>
+</UL>
+==========================================================
+<H4>cgi/f/findaid</H4>
+
+<UL>
+<LI> FindaidApp.pm
+<UL>
+ <LI>remove FormatGuideFrame() obsolete
+                since the change to XML/XSL</LI></UL></LI>
+</UL>
+<UL>
+<LI> FindaidAppXsltPIFiller.pm
+<UL>
+ <LI>Removed FormatOutlineResult_XML and
+                FormatOutlineFrame_XML as they are not called by any
+                code (or bound to any PIs).</LI></UL></LI>
+</UL>
+<UL>
+<LI> FindaidClass.pm
+<UL>
+ <LI>highlight hits in layer 1 result items</LI>
+ <LI>Added highlighting to BuildItemTitle_XML
+                so highlighting will show up in title</LI>
+ <LI>Fixed bug in FilterAllDaos_XML that
+                would not properly process daos with real hrefs and
+                would result in illegal xml being output when id resolver
+                is turned on.</LI></UL></LI>
+</UL>
+<UL>
+<LI> FindaidClass/ClementsmssFC.pm
+<UL>
+ <LI>removes "viewtextnote" speedbump</LI></UL></LI>
+</UL>
+<UL>
+<LI> FindaidClass/DemofaFC.pm
+<UL>
+ <LI>Demo of subclassing to use &lt;head> tags
+                for bioghist instead of bentley logic</LI>
+ <LI>Changed the labels for several TOC
+                heads</LI>
+ <LI>Improved comments and added back in
+                commented out code</LI></UL></LI>
+</UL>
+==========================================================
+Log for directory  ( findaid since 6apr2007 )
+
+==========================================================
+<H4>misc/f/findaid/maps</H4>
+
+<UL>
+<LI> clementsmss.map
+<UL>
+ <LI>new search region = main</LI>
+ <LI>forced</LI>
+ <LI>new search region refined</LI></UL></LI>
+</UL>

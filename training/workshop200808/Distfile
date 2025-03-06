@@ -1,0 +1,34 @@
+# Destination Production Server
+HOSTS = ( nas-dcmr.umdl.umich.edu nas-hatcher.umdl.umich.edu )
+
+# File Directories to be released
+
+# NOTE:
+# /l1/web/d/dlxs has a Distfile that does not
+# include this subdirectory "workshop200808"
+
+WEB1 = /l1/web/d/dlxs/training/workshop200808
+
+MYSOURCE = ( ${WEB1} )
+
+# Files & Directories to exclude from update
+EXCEPT_PAT  = ( CVS ~ Distfile )
+
+# Release instructions Note: we except all the releases except the
+# current one. Less stuff for rdist to figure out speeds things up.
+# This needs to be updated at release time
+
+(${MYSOURCE}) -> (${HOSTS})
+      install -ofollow,remove,younger;
+      except_pat ${EXCEPT_PAT} ;
+      notify ( 
+             pfarber@umich.edu  
+             sooty@umich.edu  
+             jweise@umich.edu  
+             tburtonw@umich.edu 
+             csnavely@umich.edu 
+             khage@umich.edu 
+             pwillett@umich.edu
+	     santelli@umich.edu
+	     kludewig@umich.edu
+             ) ;

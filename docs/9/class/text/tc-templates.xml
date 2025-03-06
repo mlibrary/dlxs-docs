@@ -1,0 +1,176 @@
+<?xml version="1.0"?>
+
+<!-- SPO Editorial Services                  -->
+<!-- automatically-generated XML header file -->
+
+<?xml-stylesheet href="../../../pre11-dlxsdocs.xsl" type="text/xsl"?>
+<!DOCTYPE DLPSDOC PUBLIC "-//UM-DLPS//DTD DLPS Publications//EN" "http://docs.umdl.umich.edu/dlps/docs/dlpsdocs.dtd">
+<DLPSDOC>
+<TITLE>Text Class Templates</TITLE>
+<HEADER>
+<JOURNAL>DLXS Documentation</JOURNAL>
+<PUBDATE>2002-07-08 11:52:08 EDT</PUBDATE>
+<AUTH1>Stoeffler, Matt</AUTH1>
+<AUTH2></AUTH2>
+<DOCTITLE>Text Class Templates</DOCTITLE>
+<VOL>class</VOL>
+<ISS>text</ISS>
+<FILE>dlxsdocs-tc-templates</FILE>
+</HEADER>
+<BODY>
+    <BHEAD>Text Class Templates</BHEAD>
+    <DIV1 ID="main">
+      <P>The table below gives a brief description of all templates included in the 
+    Text Class distribution. As a companion, you may also want to view the <A HREF="tc-pis.xml">list 
+    of processing instructions</A> also supported in text class.</P>
+  
+<TABLE FRAME="border" RULES="all" WIDTH="100%" CELLPADDING="5" BORDER="1" CELLSPACING="0" STYLE="border-width: 1px; border-color: #CCCCCC">
+  <TR> 
+      <TH WIDTH="10%" VALIGN="top">Template name</TH>
+      <TH WIDTH="90%" VALIGN="top">Description</TH>
+    </TR>
+    <TR> 
+      <TD WIDTH="10%" VALIGN="top"><SPAN ID="bbagemail">bbagemail.tpl</SPAN></TD>
+      <TD WIDTH="90%" VALIGN="top">Displays a form for emailing the contents of 
+        the book bag. The form contains only one input box for an email address.</TD>
+    </TR>
+    <TR> 
+      <TD WIDTH="10%" VALIGN="top"><SPAN ID="bbaglist">bbaglist.tpl</SPAN></TD>
+      <TD WIDTH="90%" VALIGN="top">Displays current contents of the book bag. 
+      </TD>
+    </TR>
+    <TR> 
+      <TD WIDTH="10%" VALIGN="top"><SPAN ID="bib">bib.tpl</SPAN></TD>
+      <TD WIDTH="90%" VALIGN="top">Form for citation searching in individual collections.</TD>
+    </TR>
+    <TR> 
+      <TD WIDTH="10%" VALIGN="top"><SPAN ID="bibext">bibext.tpl</SPAN></TD>
+      <TD WIDTH="90%" VALIGN="top">Extended form for citation searching across 
+        multiple collections.</TD>
+    </TR>
+    <TR> 
+      <TD WIDTH="10%" VALIGN="top"><SPAN ID="boolean">boolean.tpl</SPAN></TD>
+      <TD WIDTH="90%" VALIGN="top">Form for boolean searching in individual collections.</TD>
+    </TR>
+    <TR> 
+      <TD WIDTH="10%" VALIGN="top"><SPAN ID="booleanbbag">booleanbbag.tpl</SPAN></TD>
+      <TD WIDTH="90%" VALIGN="top">Form for boolean searching within contents 
+        of book bag.</TD>
+    </TR>
+    <TR> 
+      <TD WIDTH="10%" VALIGN="top"><SPAN ID="booleanext">booleanext.tpl</SPAN></TD>
+      <TD WIDTH="90%" VALIGN="top">Extended form for boolean searching across 
+        multiple collections. </TD>
+    </TR>
+    <TR> 
+      <TD WIDTH="10%" VALIGN="top"><SPAN ID="header">header.tpl</SPAN></TD>
+      <TD WIDTH="90%" VALIGN="top">Displays bibliographic header and table of 
+        contents or search results.</TD>
+    </TR>
+    <TR> 
+      <TD WIDTH="10%" VALIGN="top"><SPAN ID="home">home.tpl</SPAN></TD>
+      <TD WIDTH="90%" VALIGN="top">Home page template for links to home after 
+        sessions have been established.</TD>
+    </TR>
+    <TR> 
+      <TD WIDTH="10%" VALIGN="top"><SPAN ID="note">note.tpl</SPAN></TD>
+      <TD WIDTH="90%" VALIGN="top">Displays contents of a note within a designated 
+        target window.</TD>
+    </TR>
+    <TR> 
+      <TD WIDTH="10%" VALIGN="top"><SPAN ID="pageviewerframeset">pageviewer.frameset.tpl</SPAN></TD>
+      <TD WIDTH="90%" VALIGN="top">Draws the frameset for displaying documents 
+        as page-facsimile-images.</TD>
+    </TR>
+    <TR> 
+      <TD WIDTH="10%" VALIGN="top"><SPAN ID="pageviewermain">pageviewer.main.tpl</SPAN></TD>
+      <TD WIDTH="90%" VALIGN="top">Main frame of pageviewer.frameset containing 
+        the current page image.</TD>
+    </TR>
+    <TR> 
+      <TD WIDTH="10%" VALIGN="top"><SPAN ID="pageviewernav">pageviewer.nav.tpl</SPAN></TD>
+      <TD WIDTH="90%" VALIGN="top">Top frame of pageviewer.frameset containing  
+        all document and site navigation.</TD>
+    </TR>
+    <TR> 
+      <TD WIDTH="10%" VALIGN="top"><SPAN ID="pageviewerpicklist">pageviewer.picklist.tpl</SPAN></TD>
+      <TD WIDTH="90%" VALIGN="top">For incidences where an id reference to a document 
+        may be incomplete, producing a list of documents with ids that contain 
+        the id reference. The template generates a list of possible documents 
+        as a linked list. </TD>
+    </TR>
+    <TR> 
+      <TD WIDTH="10%" VALIGN="top"><SPAN ID="proximity">proximity.tpl</SPAN></TD>
+      <TD WIDTH="90%" VALIGN="top">Form for proximity searching in an individual 
+        collection.</TD>
+    </TR>
+    <TR> 
+      <TD WIDTH="10%" VALIGN="top"><SPAN ID="proximitybbag">proximitybbag.tpl</SPAN></TD>
+      <TD WIDTH="90%" VALIGN="top">Form for proximity searching within book bag 
+        contents.</TD>
+    </TR>
+    <TR> 
+      <TD WIDTH="10%" VALIGN="top"><SPAN ID="proximityext">proximityext.tpl</SPAN></TD>
+      <TD WIDTH="90%" VALIGN="top">Extended form for proximity searching across 
+        multiple collections.</TD>
+    </TR>
+    <TR> 
+      <TD WIDTH="10%" VALIGN="top"><SPAN ID="reslist">reslist.tpl</SPAN></TD>
+      <TD WIDTH="90%" VALIGN="top">Displays results for searches against one or 
+        more collections.</TD>
+    </TR>
+    <TR> 
+      <TD WIDTH="10%" VALIGN="top"><SPAN ID="searchhistory">searchhistory.tpl</SPAN></TD>
+      <TD WIDTH="90%" VALIGN="top">Displays a search history for the current session 
+        as a table, containing, in one table, the successfully submitted queries 
+        as links for resubmission.</TD>
+    </TR>
+    <TR> 
+      <TD WIDTH="10%" VALIGN="top"><SPAN ID="simple">simple.tpl</SPAN></TD>
+      <TD WIDTH="90%" VALIGN="top">Form for simple searches against individual 
+        collections.</TD>
+    </TR>
+    <TR> 
+      <TD WIDTH="10%" VALIGN="top"><SPAN ID="simplebbag">simplebbag.tpl</SPAN></TD>
+      <TD WIDTH="90%" VALIGN="top">Form for simple searches within book bag contents.</TD>
+    </TR>
+    <TR> 
+      <TD WIDTH="10%" VALIGN="top"><SPAN ID="simpleext">simpleext.tpl</SPAN></TD>
+      <TD WIDTH="90%" VALIGN="top">Extended form for simple searches across multiple 
+        collections. </TD>
+    </TR>
+    <TR> 
+      <TD WIDTH="10%" VALIGN="top"><SPAN ID="splash">splash.tpl</SPAN></TD>
+      <TD WIDTH="90%" VALIGN="top">Displays a linked list of all available collections 
+        (in a multiple collection context), allowing users to go to home pages 
+        for each collection.</TD>
+    </TR>
+    <TR> 
+      <TD WIDTH="10%" VALIGN="top"><SPAN ID="textpicklist">text.picklist.tpl</SPAN></TD>
+      <TD WIDTH="90%" VALIGN="top">Similar to pageviewer.picklist.tpl, but for 
+        documents that are fully encoded text.</TD>
+    </TR>
+    <TR> 
+      <TD WIDTH="10%" VALIGN="top"><SPAN ID="text">text.tpl</SPAN></TD>
+      <TD WIDTH="90%" VALIGN="top">Displays any requested portion of a fully encoded 
+        text. </TD>
+    </TR>
+    <TR> 
+      <TD WIDTH="10%" VALIGN="top"><SPAN ID="viewtextnote2">viewtextnote.tpl</SPAN></TD>
+      <TD WIDTH="90%" VALIGN="top">Displays a warning note when the &quot;view 
+        entire text&quot; link is selected from a bibliographic header page.</TD>
+    </TR>
+    <TR> 
+      <TD WIDTH="10%" VALIGN="top"><SPAN ID="wwfull">ww-full.tpl</SPAN></TD>
+      <TD WIDTH="90%" VALIGN="top">Word wheel index form after a word index has been 
+        started. Produces a picklist containing a range of words from the word 
+        index.</TD>
+    </TR>
+    <TR> 
+      <TD WIDTH="10%" VALIGN="top"><SPAN ID="wwstart">ww-start.tpl</SPAN></TD>
+      <TD WIDTH="90%" VALIGN="top">Word index initial form. Displays an input 
+        box or linked index for entering a word index.</TD>
+    </TR>
+  </TABLE></DIV1>
+  </BODY>
+</DLPSDOC>

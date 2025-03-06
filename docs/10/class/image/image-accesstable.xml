@@ -1,0 +1,179 @@
+<?xml version="1.0"?>
+
+<!-- SPO Editorial Services                  -->
+<!-- automatically-generated XML header file -->
+
+<?xml-stylesheet href="../../../pre11-dlxsdocs.xsl" type="text/xsl"?>
+<!DOCTYPE DLPSDOC PUBLIC "-//UM-DLPS//DTD DLPS Publications//EN" "http://docs.umdl.umich.edu/dlps/docs/dlpsdocs.dtd">
+<DLPSDOC>
+<TITLE>Image Class Access Control Summary and Examples Table</TITLE>
+<HEADER>
+<JOURNAL>DLXS Documentation</JOURNAL>
+<PUBDATE>2002-05-16 16:33:08 EDT</PUBDATE>
+<AUTH1>Weise, John</AUTH1>
+<AUTH2></AUTH2>
+<DOCTITLE>Image Class Access Control Summary and Examples Table</DOCTITLE>
+<VOL>class</VOL>
+<ISS>image</ISS>
+<FILE>dlxsdocs-image-accesstable</FILE>
+</HEADER>
+
+<BODY>
+<BHEAD>Image Class Access Control Summary and Examples Table</BHEAD>
+<DIV1 ID="main">
+<P><A HREF="http://images.umdl.umich.edu/">Image Services</A><BR/>
+<A HREF="http://www.umdl.umich.edu/">Digital Library Production
+Service</A><BR/>
+University of Michigan<BR/>
+<A HREF="http://www.umdl.umich.edu/dlxs/">Digital Library eXtension
+Service </A><BR/>
+<A HREF="mailto:dlxs-help@umich.edu">dlxs-help@umich.edu</A></P>
+
+
+
+
+<P>It is important to also read the following documentation:</P>
+<UL>
+<LI><A HREF="/intro/dlxs-auth.xml">DLXS Authentication and Authorization</A> </LI>   
+  <LI><A HREF="image-accesscontrol.xml">Image Class Access Control </A></LI>
+   
+   
+  <LI><A HREF="image-datatransform.xml">Image Class Data Transformation</A>, especially the section on <A HREF="image-datatransform.xml#CollectionLevelInformation">Collection 
+    Level Information</A></LI>
+</UL>
+
+<P>The following table represents all of the possible combinations of access control 
+  for the Image Class version 2.</P>
+
+<TABLE BORDER="1">
+  <TBODY> 
+  <TR> 
+    <TH> 
+      <P>Descriptive Data</P>
+    </TH>
+    <TH> 
+      <P>Thumbnail Images</P>
+    </TH>
+    <TH> 
+      <P>Images (larger than thumbnail)</P>
+    </TH>
+    <TH> 
+      <P>Collection Info Field 3 Value</P>
+    </TH>
+    <TH> 
+      <P>Entry Auth Field (DLXS.ea) Needed In Record*</P>
+    </TH>
+    <TH> 
+      <P>Environment Variable (add collid to this var)</P>
+    </TH>
+    <TH> 
+      <P>Collection Level Information File Example</P>
+    </TH>
+  </TR>
+  <TR> 
+    <TD> 
+      <P>Unrestricted Access</P>
+    </TD>
+    <TD> 
+      <P>Unrestricted Access</P>
+    </TD>
+    <TD> 
+      <P>Unrestricted Access</P>
+    </TD>
+    <TD> 
+      <P>WORLD</P>
+    </TD>
+    <TD> 
+      <P>No</P>
+    </TD>
+    <TD> 
+      <P>PUBLIC_COLL</P>
+    </TD>
+    <TD> 
+      <P>French Architecture#Images by Rebecca Price#WORLD</P>
+    </TD>
+  </TR>
+  <TR> 
+    <TD> 
+      <P>Unrestricted Access</P>
+    </TD>
+    <TD> 
+      <P>Unrestricted Access</P>
+    </TD>
+    <TD> 
+      <P>Restricted</P>
+    </TD>
+    <TD> 
+      <P>COLLID</P>
+    </TD>
+    <TD> 
+      <P>No</P>
+    </TD>
+    <TD> 
+      <P>PUBLIC_COLL</P>
+    </TD>
+    <TD> 
+      <P>French Architecture#Images by Rebecca Price#SAMPLEIC</P>
+    </TD>
+  </TR>
+  <TR> 
+    <TD> 
+      <P>Unrestricted Access</P>
+    </TD>
+    <TD> 
+      <P>Unrestricted Access</P>
+    </TD>
+    <TD> 
+      <P>Mixed</P>
+    </TD>
+    <TD> 
+      <P>COLLID (this will be overridden by values found in the records Entry 
+        Auth Field (DLXS.ea).</P>
+    </TD>
+    <TD> 
+      <P>Yes</P>
+      <P>Entry Auth Field (DLXS.ea) value must be "WORLD" for records with images 
+        (larger than thumbnail) that should not be restricted.</P>
+      <P>Other Entry Auth Field values will result in restricted access for the 
+        records images (larger than thumbnail).</P>
+    </TD>
+    <TD> 
+      <P>PUBLIC_COLL</P>
+    </TD>
+    <TD> 
+      <P>French Architecture#Images by Rebecca Price#SAMPLEIC</P>
+    </TD>
+  </TR>
+  <TR> 
+    <TD> 
+      <P>Restricted</P>
+    </TD>
+    <TD> 
+      <P>Restricted</P>
+    </TD>
+    <TD> 
+      <P>Restricted</P>
+    </TD>
+    <TD> 
+      <P>COLLID</P>
+    </TD>
+    <TD> 
+      <P>No</P>
+    </TD>
+    <TD> 
+      <P>AUTHZD_COLL</P>
+    </TD>
+    <TD> 
+      <P>French Architecture#Images by Rebecca Price#SAMPLEIC</P>
+    </TD>
+  </TR>
+  </TBODY> 
+</TABLE>
+
+
+<P>* Meaning, there needs to be a field in the raw data to be transformed to SGML.</P>
+<P>jweise@umich.edu<BR/>
+</P>
+</DIV1>
+</BODY>
+</DLPSDOC>

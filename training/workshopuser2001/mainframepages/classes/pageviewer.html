@@ -1,0 +1,45 @@
+<HTML>
+<HEAD>
+<TITLE>Pageviewer</TITLE>
+<META http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<LINK rel="stylesheet" href="../../styles.css">
+</HEAD>
+<BODY class="mainpalette">
+<H2>Pageviewer</H2>
+<P>For collections that have page images, PB tags are inserted into the SGML with 
+  various attributes: image file name, page sequence number, book page number, 
+  feature (type of page), image format, etc. This information allows <I>pageviewer</I> 
+  to navigate the pages, which are displayed as GIFs or PDFs.</P>
+<UL>
+  <LI><B>Data</B> 
+    <UL>
+      <LI>page images are stored as TIFF, but delivered as GIF and PDF</LI>
+      <LI>tools: <A HREF="http://kalex.engin.umich.edu/tif2gif/" TARGET="external">tif2gif</A> 
+        for GIF converstion and psprint and distiller (changing over to <A HREF="http://c42pdf.ffii.org/" TARGET="external">c42pdf</A>) 
+        for PDF</LI>
+      <LI>pageview.dat: each SGML document has a pageview.dat file created containing 
+        all the page information from the PB tags (<A HREF="http://www.dlxs.org/training/workshops2001/encoding/index.html" TARGET="external">see 
+        encoding workshop</A>)</LI>
+    </UL>
+  </LI>
+  <LI><B>Pageviewer Functionality</B> 
+    <UL>
+      <LI>Navigation through page images of an SGML document</LI>
+    </UL>
+  </LI>
+  <LI><B>Objects, modules used</B> 
+    <UL>
+      <LI>CollsInfo, XPat, RemoteXPat, ProcIns, DlpsSession</LI>
+      <LI>PageView (encapsulates pageview.dat info)</LI>
+      <LI>CGI, Apache::Session, Auth</LI>
+    </UL>
+  </LI>
+  <LI><B>Configuration</B> 
+    <UL>
+      <LI>pageviewer.cfg</LI>
+    </UL>
+  </LI>
+  <LI><B>Flowchart</B> to show decision tree for search, filtering, etc.</LI>
+</UL>
+</BODY>
+</HTML>

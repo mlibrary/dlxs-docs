@@ -1,0 +1,147 @@
+<?xml version="1.0"?>
+
+<!-- SPO Editorial Services                  -->
+<!-- automatically-generated XML header file -->
+
+<?xml-stylesheet href="../../../pre11-dlxsdocs.xsl" type="text/xsl"?>
+<!DOCTYPE DLPSDOC PUBLIC "-//UM-DLPS//DTD DLPS Publications//EN" "http://docs.umdl.umich.edu/dlps/docs/dlpsdocs.dtd">
+<DLPSDOC>
+<TITLE>Text Class Graphics Files</TITLE>
+<HEADER>
+<JOURNAL>DLXS Documentation</JOURNAL>
+<PUBDATE>2003-03-03 16:51:05 EST</PUBDATE>
+<AUTH1>Stoeffler, Matt</AUTH1>
+<EMAIL1></EMAIL1>
+<AUTH2></AUTH2>
+<DOCTITLE>Text Class Graphics Files</DOCTITLE>
+<VOL>class</VOL>
+<ISS>text</ISS>
+<FILE>dlxsdocs-tc-graphics</FILE>
+</HEADER>
+<BODY>
+    <BHEAD>Text Class Graphics Files</BHEAD>
+
+<DIV1 ID="main">
+  
+ <P>The following table describes those graphics files that are likely to be 
+    used by any instance of Text Class. All of the files below should be strored 
+    in the <CODE>&lt;dlxsroot&gt;/t/text/graphics</CODE> directory, and in each 
+    subsequent <CODE>../c/collection/graphics</CODE> directory. Saving any alternative 
+    graphics by these names in individual graphics directories will result in 
+    variation of appearance within template-generated pages. </P>
+ <TABLE WIDTH="530" BORDER="1" CELLSPACING="0" CELLPADDING="5">
+     <TBODY>
+    <TR> 
+    <TH ALIGN="CENTER" WIDTH="105">Image</TH>
+    <TH ALIGN="CENTER" WIDTH="175">File name</TH>
+    <TH WIDTH="250" ALIGN="CENTER">Description</TH>
+  </TR>
+  <TR> 
+      <TD ALIGN="CENTER"><IMG SRC="graphics/aro_upw.gif" ALT="aro_upw.gif" WIDTH="17" HEIGHT="17"/></TD>
+    <TD ALIGN="CENTER">aro-upw.gif</TD>
+    <TD VALIGN="TOP">Appears in all scrollable pages as a &quot;back to top&quot; button. </TD>
+  </TR>
+  <TR> 
+      <TD ALIGN="CENTER" STYLE="background-color: 9999CC"><IMG SRC="graphics/ww-dw-000000.gif" ALT="ww-dw-000000.gif" WIDTH="17" HEIGHT="17"/></TD>
+    <TD ALIGN="CENTER">ww-dw-000000.gif</TD>
+    <TD VALIGN="TOP">Scroll down button on ww-full.tpl</TD>
+  </TR>
+  <TR> 
+      <TD ALIGN="CENTER" STYLE="background-color: 9999cc"><IMG SRC="graphics/ww-up-000000.gif" ALT="ww-up-000000.gif" WIDTH="17" HEIGHT="17"/></TD>
+    <TD ALIGN="CENTER">ww-up-000000.gif</TD>
+    <TD VALIGN="TOP">Scroll up button on ww-full.tpl</TD>
+  </TR>
+  <TR> 
+      <TD ALIGN="CENTER"><IMG SRC="graphics/sm-dwnarrow.gif" ALT="sm-dwnarrow.gif" WIDTH="8" HEIGHT="10" STYLE="border: 1px solid 000000;"/></TD>
+    <TD ALIGN="CENTER">sm-dwnarrow.gif</TD>
+    <TD VALIGN="TOP">Used to indicate an expanded menu in the help 
+      pages.</TD>
+  </TR>
+  <TR> 
+      <TD ALIGN="CENTER"><IMG SRC="graphics/navarrow.gif" ALT="navarrow.gif" WIDTH="7" HEIGHT="10" STYLE="border: 1px solid 000000;"/></TD>
+    <TD ALIGN="CENTER">navarrow.gif</TD>
+    <TD VALIGN="TOP">Used to indicate an expandable menu in help files.</TD>
+  </TR>
+  <TR>
+    <TD ALIGN="CENTER" STYLE="background-color: 9999cc"><IMG SRC="graphics/navdwnarrow.gif" ALT="navdwnarrow.gif" WIDTH="16" HEIGHT="8"/></TD>
+    <TD ALIGN="CENTER">navdwnarrow.gif</TD>
+    <TD VALIGN="TOP">Used to indicate an expandable menu in the main navigation
+      bar.</TD>
+  </TR>
+  <TR>
+    <TD ALIGN="CENTER"><IMG SRC="graphics/navdwnarrow-grey.gif" ALT="navdwnarrow-grey.gif" WIDTH="16" HEIGHT="8" STYLE="border: 1px solid 000000;"/></TD>
+    <TD ALIGN="CENTER">navdwnarrow-grey.gif</TD>
+    <TD VALIGN="TOP">Corresponding image to navdwnarrow.gif for highlighted (e.g.,
+      white) navigation tabs.</TD>
+  </TR>
+  <TR> 
+      <TD ALIGN="CENTER"><IMG SRC="graphics/plug.gif" ALT="plug.gif" WIDTH="10" HEIGHT="20" STYLE="border: 1px solid 000000;"/></TD>
+    <TD ALIGN="CENTER">plug.gif</TD>
+      <TD VALIGN="TOP">Transparent spacer gif used throughout. hdr-bg1.gif, 
+        hdr-bg2.gif, and hdr-bg3.gif are also transparent gifs used as table background 
+        gifs for header displays.</TD>
+  </TR>
+  <TR>
+    <TD ALIGN="CENTER"><IMG SRC="graphics/onbullet.gif" ALT="onbullet.gif" WIDTH="11" HEIGHT="11" STYLE="border: 1px solid 000000;"/></TD>
+    <TD ALIGN="CENTER">onbullet.gif</TD>
+    <TD VALIGN="TOP">Used in a mulitple collection results list to help highlight
+      the collection group whose results are currently being listed.</TD>
+  </TR>
+  <TR> 
+      <TD ALIGN="CENTER"><IMG SRC="graphics/ret-arrow-generic-grey.gif" ALT="ret-arrow-generic-grey.gif" WIDTH="16" HEIGHT="15" STYLE="border: 1px solid 000000;"/></TD>
+    <TD ALIGN="CENTER">ret-arrow-generic-grey.gif</TD>
+    <TD VALIGN="TOP">Used in header.tpl and text.tpl as part of a 
+      link back to search results.</TD>
+  </TR>
+  <TR> 
+      <TD ALIGN="CENTER" STYLE="background-color: #FFFFFF"><IMG SRC="graphics/prevoff.gif" ALT="prevoff.gif" STYLE="border: 1px solid 000000;"/></TD>
+    <TD ALIGN="CENTER">prevoff.gif</TD>
+    <TD VALIGN="TOP">Used in pageviewer.nav.tpl as the &quot;up&quot; 
+      stage of the previous page button.</TD>
+  </TR>
+  <TR> 
+      <TD ALIGN="CENTER" STYLE="background-color: #FFFFFF"><IMG SRC="graphics/prevon.gif" ALT="prevon.gif" STYLE="border: 1px solid 000000;"/></TD>
+    <TD ALIGN="CENTER">prevon.gif</TD>
+    <TD VALIGN="TOP">Used in pageviewer.nav.tpl as the &quot;mouseover&quot; 
+      stage of the previous page button.</TD>
+  </TR>
+  <TR> 
+      <TD ALIGN="CENTER" STYLE="background-color: #FFFFFF"><IMG SRC="graphics/nextoff.gif" ALT="nextoff.gif" STYLE="border: 1px solid 000000;"/></TD>
+    <TD ALIGN="CENTER">nextoff.gif</TD>
+    <TD VALIGN="TOP">Used in pageviewer.nav.tpl as the &quot;up&quot; 
+      stage of the next page button.</TD>
+  </TR>
+  <TR> 
+      <TD ALIGN="CENTER" STYLE="background-color: #FFFFFF"><IMG SRC="graphics/nexton.gif" ALT="nexton.gif" STYLE="border: 1px solid 000000;"/></TD>
+    <TD ALIGN="CENTER">nexton.gif</TD>
+    <TD VALIGN="TOP">Used in pageviewer.nav.tpl as the &quot;mouseover&quot; 
+      stage of the next page button.</TD>
+  </TR>
+  <TR> 
+      <TD ALIGN="CENTER" STYLE="background-color: #999999"><IMG SRC="graphics/ret-arrow-generic.gif" ALT="ret-arrow-generic.gif" WIDTH="16" HEIGHT="19" STYLE="border: 1px solid 000000;"/></TD>
+    <TD ALIGN="CENTER">ret-arrow-generic.gif</TD>
+    <TD VALIGN="TOP">Used in pageviewer.nav.tpl as part of the link 
+      back to the results page.</TD>
+  </TR>
+  <TR> 
+      <TD ALIGN="CENTER"><IMG SRC="graphics/scale.gif" ALT="scale.gif" WIDTH="53" HEIGHT="18" STYLE="border: 1px solid 000000;"/></TD>
+    <TD ALIGN="CENTER">scale.gif</TD>
+    <TD VALIGN="TOP">Used in pageviewer.nav.tpl as the scale menu 
+      label.</TD>
+  </TR>
+  <TR> 
+      <TD ALIGN="CENTER"><IMG SRC="graphics/view.gif" ALT="view.gif" WIDTH="77" HEIGHT="18" STYLE="border: 1px solid 000000;"/></TD>
+    <TD ALIGN="CENTER">view.gif</TD>
+    <TD VALIGN="TOP">Used in pageviewer.nav.tpl as the page view menu 
+      label.</TD>
+  </TR>
+  <TR> 
+      <TD ALIGN="CENTER"><IMG SRC="graphics/goto.gif" ALT="goto.gif" WIDTH="53" HEIGHT="18" STYLE="border: 1px solid 000000;"/></TD>
+    <TD ALIGN="CENTER">goto.gif</TD>
+    <TD VALIGN="TOP">Used in pageviewer.nav.tpl as the goto menu label.</TD>
+  </TR>
+  </TBODY>
+</TABLE>
+</DIV1> 
+ </BODY>
+</DLPSDOC>

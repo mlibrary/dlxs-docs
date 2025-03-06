@@ -1,0 +1,87 @@
+<HTML>
+<HEAD>
+<TITLE>Collection &amp; Group Databases</TITLE>
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+<LINK REL="stylesheet" HREF="../styles.css" TYPE="text/css">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF" CLASS="mainpalette">
+<H3>Collection/Group Databases</H3>
+<UL>
+  <LI><B>Evolution</B> 
+    <UL>
+      <LI>Previous versions of DLXS software 
+        <UL>
+          <LI>used <I>colldb</I>, a tab-delimited file for each class</LI>
+          <LI>each class's colldb duplicated many columns</LI>
+        </UL>
+      </LI>
+      <LI>Current version uses a relational database called <I>dlxs</I> 
+        <UL>
+          <LI>Underlying data format vs. logical format</LI>
+          <LI>managed through a CGI program called the <A HREF="collmgr.html">Collection 
+            Manager (collmgr)</A></LI>
+        </UL>
+      </LI>
+    </UL>
+  </LI>
+  <LI><B>Collection Database Schema</B> 
+    <UL>
+      <LI><I>One</I> database for all classes rather than separate colldb files 
+        for each class </LI>
+      <LI>Collection table to hold fields common to all collections classes</LI>
+      <LI>Class tables to hold fields that are specific to each class </LI>
+      <LI>Backup tables, version table </LI>
+    </UL>
+  </LI>
+  <LI><B>Groups Database</B> 
+    <UL>
+      <LI>A group of collections (for collection coordinators to logically group 
+        collections for searching)</LI>
+      <LI>Used mainly by Image Class and Bib Class</LI>
+    </UL>
+  </LI>
+  <LI><B>Other information required by the middleware that is kept in databases</B> 
+    <UL>
+      <LI>Part of the dlxs database: 
+        <UL>
+          <LI>Pageview (for which we recommend against CSV because of functionality, 
+            performance, scalability)</LI>
+          <LI>Portfolios (BookBagDB table)</LI>
+        </UL>
+      </LI>
+      <LI>These are databases, but are not part of the <i>dlxs</i> database as 
+        such; temporary 
+        <UL>
+          <LI>Sessions, TextClass BookBag</LI>
+        </UL>
+      </LI>
+    </UL>
+  </LI>
+  <LI> <B>Middleware use of databases</B> 
+    <UL>
+      <LI><A HREF="middleware.html">Middleware</A> and <A HREF="collmgr.html">collmgr</A> 
+        use Perl <A HREF="http://www.perl.com/pub/a/1999/10/DBI.html" TARGET="external">DBI</A> 
+        and support DBD drivers for CSV, MySQL (Oracle to follow)</LI>
+    </UL>
+  </LI>
+  <UL>
+    <LI>For example: CioFactory object compares requested collections and groups, 
+      authorized collections (see AUTHZD_COLL) and groups </LI>
+  </UL>
+  <LI><B>See</B> the <A HREF="http://docs.dlxs.org/collmeta/dlxs-colldatabases.xml" TARGET="external">DLXS 
+    documentation for more information on the databases</A></LI>
+  <LI><B>Database maintenance</B> 
+    <UL>
+      <LI><B><A HREF="http://docs.dlxs.org/collmeta/dlxs-dbconv.xml" TARGET="external">dbconv</A></B>: 
+        one time program to convert DLXS users' colldb's (from any release prior 
+        to #8) to a database (either CSV or MySQL) for the current version.</LI>
+      <LI><B><A HREF="http://docs.dlxs.org/collmeta/dlxs-dbmove.xml" TARGET="external">dbmove</A></B>: 
+        program to convert from CSV to MySQL versions of the same, new database 
+        structure (We at DLPS will also use this to release CSV versions of new 
+        database structures as time goes by)</LI>
+      <LI><A HREF="collmgr.html"><B>collmgr</B> (Collection Manager)</A></LI>
+    </UL>
+  </LI>
+</UL>
+</BODY>
+</HTML>

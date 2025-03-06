@@ -1,0 +1,25 @@
+<HTML>
+<head>
+<TITLE>Web Server Overview</TITLE>
+<meta HTTP-EQUIV="Content-Type" content="text/html; charset=iso-8859-1">
+<LINK REL="stylesheet" HREF="../styles.css" TYPE="text/css">
+</head>
+<BODY BGCOLOR="#FFFFFF" CLASS="mainpalette">
+<H3>Web Server Overview</H3>
+<P>We give here, as an example, the DLPS environment.</P>
+<UL>
+  <LI><A HREF="http://www.apache.org" TARGET="external">Apache</A> (version 1.3.27
+      as of this workshop date)</LI>
+  <LI>Virtual hosts for various collections with their own specific 
+    <UL>
+      <LI> DocumentRoot</LI>
+      <LI>ScriptAlias</LI>
+      <LI>DLXSROOT environment variable </LI>
+      <LI>If no external <A HREF="auth.html">Auth</A> system, include AUTHZD_COLL 
+        environment variable containing a list of authorized collections (Middleware 
+        expects this environment variable to be set) </LI>
+    </UL>
+  </LI>
+</UL>
+</BODY>
+</HTML>

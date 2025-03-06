@@ -1,0 +1,92 @@
+<HTML>
+<HEAD>
+   <TITLE>Results: <?INSERT "nav:collname"></TITLE>
+</HEAD>
+
+<BODY BGCOLOR="#FFFFFF">
+
+<P><font="-1">Note: this page is an example only.</font><BR><BR><BR>
+
+         <FONT FACE="Helvetica">&nbsp;&nbsp;&nbsp;<?INSERT "nav:collname"></FONT>
+
+<TABLE BORDER=1  BGCOLOR="#FFFFFF" CELLPADDING=5 CELLSPACING=5>
+   <TR>
+      <TD COLSPAN=2 BGCOLOR="#FFFFFF">
+         <FONT SIZE="-1" FACE="Helvetica">Search Results </FONT><STRONG>
+         <FONT SIZE="-1" FACE="Helvetica"><?INSERT "nav:slicestart"></FONT></STRONG>
+         <FONT SIZE="-1" FACE="Helvetica"> through </FONT><STRONG>
+         <FONT SIZE="-1" FACE="Helvetica"><?INSERT "nav:sliceend"></FONT></STRONG>
+         <FONT SIZE="-1" FACE="Helvetica"> of </FONT><STRONG>
+         <FONT SIZE="-1" FACE="Helvetica"><?INSERT "nav:totalhits"></FONT></STRONG>
+         &nbsp&nbsp;|&nbsp;
+         <a href="<?INSERT "nav:thumbnail">"><FONT SIZE="-1" FACE="Helvetica">THUMBNAILS</FONT></a>&nbsp;|&nbsp;
+	<a href="<?INSERT "nav:slide">"><FONT SIZE="-1" FACE="Helvetica">SLIDE SHOW</FONT></a>&nbsp;|&nbsp;         
+<A HREF="<?INSERT "nav:newsearch">"><FONT SIZE="-1" FACE="Helvetica">NEW SEARCH</FONT></A>
+         
+         <!-- -----------                                                    ------------------------ -->
+
+         <HR><A HREF="<?INSERT "nav:prev">"><FONT SIZE="-1" FACE="Helvetica"><STRONG>PREVIOUS</STRONG></FONT></A>&nbsp;|&nbsp; 
+         <A HREF="<?INSERT "nav:next">"><FONT SIZE="-1" FACE="Helvetica"><STRONG>NEXT</STRONG></FONT></A>&nbsp;|&nbsp;
+         <FONT SIZE="-1" FACE="Helvetica">JUMP TO <?INSERT "nav:fisheye"></FONT>
+      </TD>
+   </TR>
+
+
+   <?BEGIN "repeatingresultsformat">
+   <tr>
+      <td ALIGN="RIGHT" VALIGN="TOP">
+         <P><STRONG><?INSERT "nav:resultNum"></STRONG></P>
+      </TD>
+      <TD ALIGN="LEFT" VALIGN="TOP" BGCOLOR="#FFFFFF">
+         <A HREF="<?INSERT "nav:details.html">">
+	 <?INSERT "categ:name=COL.TI"></A>
+      </td>
+      </tr>
+   <?END "repeatingresultsformat">
+
+
+<P>
+<TR>
+      <TD COLSPAN=2 BGCOLOR="#FFFFFF">
+         <FONT SIZE="-1" FACE="Helvetica">Search Results </FONT><STRONG>
+         <FONT SIZE="-1" FACE="Helvetica"><?INSERT "nav:slicestart"></FONT></STRONG>
+         <FONT SIZE="-1" FACE="Helvetica"> through </FONT><STRONG>
+         <FONT SIZE="-1" FACE="Helvetica"><?INSERT "nav:sliceend"></FONT></STRONG>
+         <FONT SIZE="-1" FACE="Helvetica"> of </FONT><STRONG>
+         <FONT SIZE="-1" FACE="Helvetica"><?INSERT "nav:totalhits"></FONT></STRONG>
+         &nbsp&nbsp;|&nbsp;
+         <a href="<?INSERT "nav:thumbnail">"><FONT SIZE="-1" FACE="Helvetica">THUMBNAILS</FONT></a>&nbsp;|&nbsp;
+        <a href="<?INSERT "nav:slide">"><FONT SIZE="-1" FACE="Helvetica">SLIDE SHOW</FONT></a>&nbsp;|&nbsp; 
+	<A HREF="<?INSERT "nav:newsearch">"><FONT SIZE="-1" FACE="Helvetica">NEW SEARCH</FONT></A>
+         
+         <!-- -----------                                                    ------------------------ -->
+
+         <HR><A HREF="<?INSERT "nav:prev">"><FONT SIZE="-1" FACE="Helvetica"><STRONG>PREVIOUS</STRONG></FONT></A>&nbsp;|&nbsp;
+         <A HREF="<?INSERT "nav:next">"><FONT SIZE="-1" FACE="Helvetica"><STRONG>NEXT</STRONG></FONT></A>&nbsp;|&nbsp;
+         <FONT SIZE="-1" FACE="Helvetica">JUMP TO <?INSERT "nav:fisheye"></FONT>
+      </TD>
+   </TR>
+
+</TABLE>
+
+<!-- ----------- link to info on collections authorized and refused ------------------------ -->
+<HR>
+<TABLE BORDER=0 CELLPADDING=5 CELLSPACING=5>
+   <TR>
+      <TD>
+<P><font size="-1" face="helvetica"><?INSERT "nav:collectionlists"> </font></P>
+      </TD>
+   </TR>
+</TABLE>
+
+<!-- --------------------------------------------------------------------------------------- -->
+
+<br>
+<br>
+<br>
+<br>
+<P><align="center"><font size="4" face="Helvetica">To return to <a href="../image-templates.htm">Template Documentation</a>.</font></center>
+
+
+</BODY>
+</HTML>

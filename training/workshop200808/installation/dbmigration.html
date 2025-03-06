@@ -1,0 +1,54 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+  <head>
+    <title>Database Installation and Upgrading for Release 14</title>
+    
+    <link rel="stylesheet" href="../styles.css" type="text/css">
+  </head>
+  <body class="mainpalette" leftmargin="10" topmargin="10"
+    marginwidth="10" marginheight="10">
+    
+    <h1>Database Installation and Upgrading for Release 14</h1>
+    <ul>
+      <li><a href="#dbmove">Database installation</a></li>
+      <li><a href="#dbconversion">Database upgrading</a></li>
+    </ul>
+    
+    <h3><a name="dbmove"></a>Database installation</h3>
+    <p>For brand new DLXS middleware installations, create a new MySQL database following these <a href="http://webservices.itcs.umich.edu/mediawiki/dlxs14/index.php/Installing_and_Upgrading_the_Database#MySQL_configuration">MySQL database configuration instructions</a> in the main documentation.</p>
+    
+    <p>After the database is created, the next step is to install the sample database data contained in  <tt> <a href="http://www.dlxs.org/products/archive-by-CDROM/13/Lib/src/misc/db/db-dump-v6.0-release.sql">$DLXSROOT/misc/db/db-dump-v7.0-release.sql</a></tt>.</p>
+    <p>  Let <tt><b>dlxs_v7</b></tt> be the database name you chose for this installation. Note that this is the database name you supplied at the prompt when you ran the Installer.  Use the <b>mysql</b> command line client to load the dump file like this:<br><br></p><center> <b><code>% mysql -u dlxsadm -p dlxs_v7 &lt; $DLXSROOT/misc/db/db-dump-v7.0-release.sql</code></b></center></p><p>That's it!</p>
+    
+    <h3><a name="dbconversion"></a>Database upgrading</h3>
+    <p>If you already have a DLXS database set up for an earlier release, make a copy of it and then upgrade the copy to support the newly installed DLXS release. </p>
+    <p>
+      Let's say your current database is named <tt><b>dlxs_v6</b></tt> and the new database will be named <tt><b>dlxs_v7</b></tt>. To make a copy of your current MySQL database and upgrade it:
+      <ol>
+        <li>dump  <b><tt>dlxs_v6</tt></b> using:<blockquote><b><tt> mysqldump -u dlxsadm -p dlxs_v6 > dlxs_v6_dump.sql</tt></b></b></blockquote>  </li>
+        <li>create an empty <b><tt>dlxs_v7</tt></b> database as described in <a href="http://webservices.itcs.umich.edu/mediawiki/dlxs14/index.php/Installing_and_Upgrading_the_Database#MySQL_configuration">MySQL database configuration instructions</a> in the main documentation.</li>
+        <li>load <b><tt>dlxs_v6_dump.sql</tt></b> into <b><tt>dlxs_v7</tt></b>: <blockquote><b><tt>mysql -u dlxsadm -p dlxs_v7 < dlxs_v6_dump.sql</tt></b></blockquote></li>
+        <li>upgrade the copy of <b><tt>dlxs_v6</tt></b> that you loaded into <b><tt>dlxs_v7</tt></b>:
+          <blockquote><b><tt>$DLXSROOT/bin/db/upgrade_6_7</tt></b></blockquote> where <b><tt>$DLXSROOT</tt></b> is the root of the new DLXS release 14 installation. This means <b><tt>upgrade_6_7</tt></b> will act on the database name you supplied when you installed release 14.  </li>
+      </ol>
+   </p>
+
+    <p>If your existing database version is more than one version behind 7, run the <b><tt>$DLXSROOT/bin/db/upgrade_*</tt></b> sequentially on the copied database, starting with the version of the copied database.</p>
+    <p>For example if you copied <b><tt>dlxs_v5</tt></b> into <b><tt>dlxs_v7</tt></b> then run, in order: <b><tt>$DLXSROOT/bin/db/upgrade_5_6</tt></b> and <b><tt>$DLXSROOT/bin/db/upgrade_6_7</tt></b>.  Again, <b><tt>$DLXSROOT</tt></b> would be the root of the new DLXS release 14 installation.</p>
+    <p>
+      For reference:
+      <table border="1" width="30%">
+        <tr><td><b>DLXS release</b></td><td><b>database version</b></td></tr>
+        <tr><td>8</td><td>1</td></tr>
+        <tr><td>9</td><td>2</td></tr>
+        <tr><td>10</td><td>3</td></tr>
+        <tr><td>11, 11a</td><td>4</td></tr>
+        <tr><td>12, 12a</td><td>5</td></tr>
+        <tr><td>13</td><td>6</td></tr>
+        <tr><td>14</td><td>7</td></tr>
+      </table>
+    </p>
+
+
+  </body>
+</html>

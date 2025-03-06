@@ -1,0 +1,27 @@
+=== Build the XPAT Index using the Makefile ===
+
+The Makefile in the <span class="unixcommand">bin</span> directory contains the commands necessary to build the index, and can be executed easily.
+
+To create an index for use with the Findaid Class interface, you will need to index the words in the collection, then index the XML (the structural metadata, if you will), and then finally "fabricate" structures based on a combination of elements (for example, defining what the "main title " is: the text between open &lt;origination&gt; tag and the closing &lt;/unittitle&gt; tag).
+
+'''What to do: '''
+
+After editing the variables at the top of the Makefile (all named using capital letters), the following commands can be given at the command line to prepare the data and make the varioius indexes needed by XPAT.
+
+'''make validateeach ''' validates the individual ead2002 XML files against the ead2002 DTD
+
+'''make prepdocs ''' removes the XML and DOCTYPE declarations, changes IDs to be unique across all files, and concatenates all the XML files into one, wrapping all the <span class="unixcommand">ead</span> elements in a <span class="unixcommand">COLL</span> element
+
+'''make validate''' validates the new, concatenated file against the dlxsead2002 DTD
+
+'''make singledd''' indexes the full text of the full file
+
+'''make xml ''' indexes the XML structure while at the same time validating. The use of <span class="unixcommand">xmlrgn</span> by this command is slower than <span class="unixcommand">multirgn</span> because of this validation.
+
+'''make post''' builds and indexes fabricated regions based on the XPAT queries stored in the <span class="unixcommand">samplefa.extra.srch</span> file.
+
+----
+
+'''[makefile.txt Click here for the text of an example Makefile]'''
+
+ 

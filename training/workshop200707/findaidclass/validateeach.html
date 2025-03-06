@@ -1,0 +1,56 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+<title>validateeach.csh</title>
+</head>
+
+<body>
+
+validateeach.csh
+
+
+ 
+<pre>
+     1  #!/bin/csh
+     2
+     3  foreach file ( $DLXSROOT/prep/s/samplefa/data/*.xml )
+     4  echo "working on $file"
+     5  perl -p -e 's,<\!DOCTYPE.*?\>,,s;' $file  > $file.tmp
+     6  onsgmls -s -f $file.err $DLXSROOT/misc/sgml/xml.dcl DLXSROOT/prep/s/samplefa/samplefa.text.inp $file.tmp
+     7  rm $file.tmp
+     8  end
+     9
+    10
+    11  find $DLXSROOT/prep/s/samplefa/data -type f -size 0 -prune -exec rm {} \;
+    12
+</pre>
+
+<ul>
+<li>Line 5 creates a copy of the EAD with a ".tmp" extension after it removes the doctype declaration</li>
+<li>Line 6  runs onsgmls to validate the copy using the doctype in samplefa.text.inp<ul><li>-s  suppresses output.  That means instead of getting a parse tree, we just get any errors</li>
+<li>-f $file.err tells onsgmls to write errors to a file with the “.err” extension</li>
+<li>$DLXSROOT/misc/sgml/xml.dcl   is an  SGML Declaration for valid XML documents. </li> 
+This lets onsgmls which is an SGML parser work with XML documents
+<li>$DLXSROOT/prep/s/samplefa/samplefa.text.inp  is a replacement for the deleted document type declaration.  It points to a copy of the EAD2002 dtd and adds several entities. These are not needed and the next version of DLXS will not include these entities. However, if you have custom entities such as a logo in your finding aids, you may want to declare them in your customized version of samplefa.txt.imp and samplefa.xml.imp. </li>
+<li>Note: The next version of DLXS will add the -wxml flag which tells onsgmls to use xml warnings (instead of sgml): &quot;onsgmls -wxml -s -f $file.err $DLXSROOT/misc/sgml/xml.dcl DLXSROOT/prep/s/samplefa/samplefa.text.inp $file.tmp&quot;</li>
+</ul>
+<li>line 7 removes the temporary files</li>
+<li>line 11 removes 0 byte files (any *err files that are completely empty) </li>
+</li>
+</ul>
+
+samplefa.text.inp 
+<pre>&lt;!DOCTYPE ead SYSTEM &quot;/l1/release/13/misc/sgml/ead.dtd&quot; [<br />&lt;!ENTITY gt &quot;&amp;gt;&quot; &gt;<br />&lt;!ENTITY lt &quot;&amp;lt;&quot; &gt;<br />&lt;!ENTITY mdash &quot;&amp;mdash;&quot; &gt;<br />&lt;!ENTITY amp &quot;&amp;amp;&quot; &gt;<br />]&gt;<br />
+Note:The character entities are not needed and will be removed in next release of FindaidClass
+However, if you have other entities in your DTD you should put them in samplefa.text.inp  as well as in
+samplefa.xml.inp.
+
+See <a href="http://openjade.sourceforge.net/doc-1.5.1/nsgmls.htm">http://openjade.sourceforge.net/doc-1.5.1/nsgmls.htm</a>  for more info on onsgmls
+
+
+
+</pre>
+
+</body>
+</html>

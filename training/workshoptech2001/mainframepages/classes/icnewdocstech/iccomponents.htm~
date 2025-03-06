@@ -1,0 +1,317 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+  <head>
+    <title>Image Class Middleware Components</title>
+  </head>
+
+  <body>
+    <h1>Image Class Middleware Components</h1>
+
+<h2>image-idx</h2>
+<P>image-idx is the primary cgi of the image class. It is the primary decision tree for request made to Image Class. Searches, BookBag/Portfolio interactions, and page displays all channel through this CGI.</P>
+
+<h2>getimage-idx</h2>
+<P>getimage-idx is a cgi dedicated to the delivery of all images with the exception of thumbnails. getimage-idx retrieves images by entry ID, which means that it recieves an entry id as input and does an XPat query to retrieve specific entry data, including the filename, by ID. The filename is then used to open the image and stream it to the browser. Retrieval of images by ID helps to ensure that images are retrieved consistenly over time, even if filenames change.</P>
+
+<h2>getthumbnail-idx</h2>
+<P>getthumbnail-idx is a cgi dedicated to the delivery of thumbnail images. Because thumbnail images are delivered in great quantity and there is a lot of overhead involved in firing up the cgi for each and every thumbnail image, the use of getthumbnail-idx is actually not recommended. Circumvent getthumbnail-idx by putting a symlink in /DLXSROOT/web/c/coll to /DLXSROOT/img/c/coll/index/thumb. The advantage of using getthumbnail-idx is that it only delivers the thumb if the user is authorized to see thumbnails for the collection. If access restrictions are not necessary for the thumbnail images of a collection, simply build the symlink and the getthumbnail-idx cgi will be skipped.</P>
+
+<h2>ImageClassUtils.pm</h2>
+<P>ImageClassUtils.pm is a perl module of subroutines that filter sgml to html and handle processing instructions that dynamically insert functionality in to the html interface templates.</P>
+
+<h2>ICLocalUtils.pm</h2>
+<P>ICLocalUtils.pm is a perl module initially with only one subroutine in it called "allpurpose." This subroutine is activated by the ALLPURPOSE processing instruction, which may be used in any template. The ALLPURPOSE processing instruction is for adding or customizing Image Class functionality without having to significantly modify image-idx, ImageClassUtils.pm, etc. By containing local alterations in the ICLocalUtils.pm module, it should make upgrading to future versions of Image Class easy. ICLocalUtils.pm should, if possible, be used for making other types of local modifications to Image Class.</P>
+
+<h2>imageclass.cfg</h2>
+<P>imageclass.cfg is a file full of global variables used by the Image Class cgis (image-idx, getimage-idx, getthumbnail-idx). Most of the variables need not be changed, but a few definately need modification. They are:<P>
+
+
+<UL>
+<LI><b>$gLoginUrl</b><BR>
+The URL where a user can login to gain greater access and/or functionality.
+</LI>
+<LI><b>$gLoginEnabled</b><BR>
+Include or exclude login functions in the interface.
+</LI>
+<LI><b>$gBookBagToggle</b><BR>
+Turn BookBag/Portfolio functionality on or off.
+</LI>
+<LI><b>BookBagDB Configuration: $dsn, $username, $pw</b><BR>
+Configure DBI parameters for access to the BookBagDB. BookBag/Portfolio uses MySQL to store BookBag data.</LI>
+</UL>
+
+<pre>
+  DB<3> x $caller
+0  'EntryServePageHandler'
+  DB<4> x $cgi
+0  CGI=HASH(0x95b840)
+   '.fieldnames' => HASH(0x97bfa4)
+        empty hash
+   '.parameters' => ARRAY(0x97bfec)
+      0  'q1'
+      1  'rgn1'
+      2  'op2'
+      3  'rgn2'
+      4  'xc'
+      5  'med'
+      6  'g'
+      7  'c'
+      8  'lasttype'
+      9  'view'
+      10  'lastview'
+      11  'subview'
+      12  'cc'
+      13  'entryid'
+      14  'viewid'
+      15  'start'
+      16  'resnum'
+      17  'corig'
+      18  'sid'
+   'c' => ARRAY(0xad563c)
+      0  'bhl'
+   'cc' => ARRAY(0x9e1220)
+      0  'bhl'
+   'corig' => ARRAY(0x9e8cbc)
+      0  'bhl'
+   'entryid' => ARRAY(0x9e1298)
+      0  'x-bl000104'
+   'g' => ARRAY(0x9e1208)
+      0  'all'
+   'lasttype' => ARRAY(0x9e1280)
+      0  'boolean'
+   'lastview' => ARRAY(0x9e12b0)
+      0  'thumbnail'
+   'med' => ARRAY(0x9cdfb0)
+      0  1
+   'op2' => ARRAY(0x9b3c80)
+      0  'And'
+   'q1' => ARRAY(0x9e11fc)
+      0  'winter'
+   'resnum' => ARRAY(0x9e13d0)
+      0  2
+   'rgn1' => ARRAY(0x9b3c8c)
+      0  'All Categories'
+   'rgn2' => ARRAY(0x9b3d64)
+      0  'All Categories'
+   'sid' => ARRAY(0x9e7dac)
+      0  '3d58f43d3dfd4e9828b39ad8b1a9145c'
+   'start' => ARRAY(0x9e12a4)
+      0  1
+   'subview' => ARRAY(0x9636c0)
+      0  'detail'
+   'view' => ARRAY(0x9b3cc8)
+      0  'entry'
+   'viewid' => ARRAY(0x9e13b8)
+      0  1
+   'xc' => ARRAY(0x9b3f44)
+      0  1
+  DB<5> x $cio
+0  CollsInfo=HASH(0x9e7a68)
+   'authcollcount' => 2
+   'authkey' => 'apisbhlfrarchmusartummu'
+   'authtextscount' => 0
+   'colls' => HASH(0x9e128c)
+      'bhl' => HASH(0xaa0fd4)
+         'banner' => 'text:Bentley Historical Library'
+         'briefcollname' => 'UM Bentley'
+         'collname' => 'Bentley Historical Library University of Michigan'
+         'dd' => 'image.dd'
+         'dddir' => '/b/bhl'
+         'dfltentryflds' => 'bhl.it|bhl.da|bhl.tis|bhl.cr|bhl.ca|bhl.no|bhl.su|bhl.g|bhl.ct|bhl.cc|bhl.lo|bhl.fn|bhl.ne'
+         'dfltresentryflds' => 'bhl.it|bhl.da|bhl.tis|bhl.cr|bhl.ca|bhl.no'
+         'dfltresflds' => 'bhl.fn|bhl.it|bhl.ca'
+         'dfltsrchflds' => 'bhl.it|bhl.da|bhl.tis|bhl.cr|bhl.ca|bhl.no|bhl.su|bhl.g|bhl.ct|bhl.cc|bhl.lo|bhl.fn|bhl.ne'
+         'entrydivs' => 'full image|description|other views'
+         'entrydivsdefault' => 'full image'
+         'host' => 'fizzie.umdl.umich.edu'
+         'map' => 'default'
+         'mediaonly' => 'on hidden'
+         'numqs' => 3
+         'port' => 619
+         'relviewmenu' => 'off'
+         'relviewmenuinstruct' => 'default'
+         'relviewmenuprefx' => 'default'
+         'relviewmenuvals' => 'default'
+         'requested' => 1
+         'resfldtrim' => 50
+         'resultsviews' => 'thumbnail|thumbfull|reslist'
+         'resultsviewsdefault' => 'thumbnail'
+         'webdir' => 'b/bhl'
+         'xpatexec' => '/l/local/xpat/bin/xpat'
+      'musart' => HASH(0xad3c8c)
+         'banner' => 'text:University of Michigan Museum of Art'
+         'briefcollname' => 'UM Museum of Art'
+         'collname' => 'University of Michigan Museum of Art'
+         'dd' => 'image.dd'
+         'dddir' => '/m/musart'
+         'dfltentryflds' => 'musart.an|musart.asn|musart.ti|musart.da|musart.per|musart.med|musart.ty|musart.dim|musart.cl|musart.co|musart.rc|musart.n|musart.key|musart.ins|musart.ri'
+         'dfltresentryflds' => 'musart.an|musart.asn|musart.ti|musart.da|musart.per|musart.med|musart.ty|musart.dim|musart.cl|musart.co|musart.rc|musart.n|musart.key|musart.ins|musart.ri'
+         'dfltresflds' => 'musart.ti|musart.ar'
+         'dfltsrchflds' => 'musart.an|musart.asn|musart.ti|musart.da|musart.per|musart.med|musart.ty|musart.dim|musart.cl|musart.co|musart.rc|musart.n|musart.key|musart.ins|musart.ri'
+         'entrydivs' => 'full image|description|other views'
+         'entrydivsdefault' => 'full image'
+         'host' => 'fizzie.umdl.umich.edu'
+         'map' => 'default'
+         'mediaonly' => 'off'
+         'numqs' => 2
+         'port' => 619
+         'relviewmenu' => 'off'
+         'relviewmenuinstruct' => 'default'
+         'relviewmenuprefx' => 'item'
+         'relviewmenuvals' => 'viewid'
+         'requested' => 0
+         'resfldtrim' => 30
+         'resultsviews' => 'thumbnail|thumbfull|reslist'
+         'resultsviewsdefault' => 'thumbfull'
+         'webdir' => 'm/musart'
+         'xpatexec' => '/l/local/xpat/bin/xpat'
+   'reqcollcount' => 1
+   'reqtextscount' => 0
+  DB<6> x $dso
+0  DlpsSession=HASH(0x9e79cc)
+   'id' => '3d58f43d3dfd4e9828b39ad8b1a9145c'
+   'persistentdata' => HASH(0x59e214)
+      '_session_id' => '3d58f43d3dfd4e9828b39ad8b1a9145c'
+      'authed' => 'no'
+      'cio' => CollsInfo=HASH(0x9e7a68)
+         'authcollcount' => 2
+         'authkey' => 'apisbhlfrarchmusartummu'
+         'authtextscount' => 0
+         'colls' => HASH(0x9e128c)
+            'bhl' => HASH(0xaa0fd4)
+               'banner' => 'text:Bentley Historical Library'
+               'briefcollname' => 'UM Bentley'
+               'collname' => 'Bentley Historical Library University of Michigan'
+               'dd' => 'image.dd'
+               'dddir' => '/b/bhl'
+               'dfltentryflds' => 'bhl.it|bhl.da|bhl.tis|bhl.cr|bhl.ca|bhl.no|bhl.su|bhl.g|bhl.ct|bhl.cc|bhl.lo|bhl.fn|bhl.ne'
+               'dfltresentryflds' => 'bhl.it|bhl.da|bhl.tis|bhl.cr|bhl.ca|bhl.no'
+               'dfltresflds' => 'bhl.fn|bhl.it|bhl.ca'
+               'dfltsrchflds' => 'bhl.it|bhl.da|bhl.tis|bhl.cr|bhl.ca|bhl.no|bhl.su|bhl.g|bhl.ct|bhl.cc|bhl.lo|bhl.fn|bhl.ne'
+               'entrydivs' => 'full image|description|other views'
+               'entrydivsdefault' => 'full image'
+               'host' => 'fizzie.umdl.umich.edu'
+               'map' => 'default'
+               'mediaonly' => 'on hidden'
+               'numqs' => 3
+               'port' => 619
+               'relviewmenu' => 'off'
+               'relviewmenuinstruct' => 'default'
+               'relviewmenuprefx' => 'default'
+               'relviewmenuvals' => 'default'
+               'requested' => 1
+               'resfldtrim' => 50
+               'resultsviews' => 'thumbnail|thumbfull|reslist'
+               'resultsviewsdefault' => 'thumbnail'
+               'webdir' => 'b/bhl'
+               'xpatexec' => '/l/local/xpat/bin/xpat'
+            'musart' => HASH(0xad3c8c)
+               'banner' => 'text:University of Michigan Museum of Art'
+               'briefcollname' => 'UM Museum of Art'
+               'collname' => 'University of Michigan Museum of Art'
+               'dd' => 'image.dd'
+               'dddir' => '/m/musart'
+               'dfltentryflds' => 'musart.an|musart.asn|musart.ti|musart.da|musart.per|musart.med|musart.ty|musart.dim|musart.cl|musart.co|musart.rc|musart.n|musart.key|musart.ins|musart.ri'
+               'dfltresentryflds' => 'musart.an|musart.asn|musart.ti|musart.da|musart.per|musart.med|musart.ty|musart.dim|musart.cl|musart.co|musart.rc|musart.n|musart.key|musart.ins|musart.ri'
+               'dfltresflds' => 'musart.ti|musart.ar'
+               'dfltsrchflds' => 'musart.an|musart.asn|musart.ti|musart.da|musart.per|musart.med|musart.ty|musart.dim|musart.cl|musart.co|musart.rc|musart.n|musart.key|musart.ins|musart.ri'
+               'entrydivs' => 'full image|description|other views'
+               'entrydivsdefault' => 'full image'
+               'host' => 'fizzie.umdl.umich.edu'
+               'map' => 'default'
+               'mediaonly' => 'off'
+               'numqs' => 2
+               'port' => 619
+               'relviewmenu' => 'off'
+               'relviewmenuinstruct' => 'default'
+               'relviewmenuprefx' => 'item'
+               'relviewmenuvals' => 'viewid'
+               'requested' => 0
+               'resfldtrim' => 30
+               'resultsviews' => 'thumbnail|thumbfull|reslist'
+               'resultsviewsdefault' => 'thumbfull'
+               'webdir' => 'm/musart'
+               'xpatexec' => '/l/local/xpat/bin/xpat'
+         'reqcollcount' => 1
+         'reqtextscount' => 0
+      'gio' => GroupsInfo=HASH(0x9e79d8)
+         'authkey' => 'bhlmusart'
+         'groups' => HASH(0xac9b58)
+            'all' => HASH(0xa1ed34)
+               'collids' => 'bhl|musart'
+               'groupname' => 'All Image Collections'
+               'primarytitle' => 'text:All Image Collections'
+               'webdir' => 'i/image/all'
+         'groupscount' => 1
+         'requestedgroup' => 'all'
+  DB<7> x $fieldsRef
+0  HASH(0x8f5148)
+   '' => 'Bentley Historical Library'
+   'BHL.CC' => 'Cooley, Mortimer E.  (Mortimer Elwyn), 1855-1944'
+   'BHL.CT' => 'Mortimer E. Cooley papers, 1873-1944'
+   'BHL.DA' => '1882  (ca.)'
+   'BHL.FN' => 'bl000104'
+   'BHL.ID' => 780
+   'BHL.IT' => 'First Engineering Building at University of Michigan'
+   'BHL.LO' => 'Box 66.  Folder 16: MU School of Engineering Early Buildings'
+   'BHL.NE' => 'na4955'
+   'BHL.NO' => 'Original is restored copy photo of stereograph in same folder.  On verso of stereograph: Engineering Shops; 1882; Spring; Built in Winter 1881-82; First Class; 2nd semester. '
+   'BHL.RE' => 'Bentley Historical Library'
+   'BHL.RI' => 'This image may be protected by copyright law. Contact the Bentley Historical Library for permission to reproduce, display or transmit this image.'
+   'BHL.SS' => '4x5 b&amp;w copy negative'
+   'BHL.SU' => 'University of Michigan--Buildings; East Engineering Building (University of Michigan); Wheelchairs; Handicapped persons--Michigan--Ann Arbor'
+   'BHL.TIS' => 'verso'
+   'ISTRUCT.FACE' => 'FRONT'
+   'ISTRUCT.ISENTRYID' => 'S-BHL-X-BL000104-1'
+   'ISTRUCT.M' => 'bl000104'
+   'ISTRUCT.MS' => 'P'
+   'ISTRUCT.MT' => 'IMAGE'
+   'ISTRUCT.STID' => 0
+   'ISTRUCT.STTY' => 'SUMM'
+   'ISTRUCT.X' => 1
+   'ISTRUCT.Y' => 1
+   'caption' => 'First Engineering Building at University of Michigan'
+  DB<8> x $metaHashRef
+0  HASH(0x8f516c)
+   '' => 'DC.PU'
+   'BHL.CC' => 'DC.SO'
+   'BHL.CT' => 'DC.SO'
+   'BHL.DA' => 'DC.DA'
+   'BHL.FN' => 'DLXS.MA DC.ID'
+   'BHL.IT' => 'DC.TI DLXS.MA'
+   'BHL.LO' => 'IC.MISC'
+   'BHL.NE' => 'DC.DE'
+   'BHL.NO' => 'DC.DE'
+   'BHL.RE' => 'DC.SO'
+   'BHL.RI' => 'DC.RI'
+   'BHL.SS' => 'IC.MISC'
+   'BHL.SU' => 'DC.SU'
+   'BHL.TIS' => 'DC.DE'
+  DB<9> x $adminHashRef
+0  HASH(0x8f5190)
+   'IC.ID IC.FN IC.SORTID' => 'BHL.FN'
+   'IC.SORTDA' => 'BHL.DA'
+   'IC.VI IC.SORTTI' => 'BHL.IT'
+  DB<10> x $itemIDsRef
+0  undef
+  DB<11> x $bbo
+0  BookBag=HASH(0x9d2304)
+   'colls' => undef
+   'totalcolls' => 0
+   'totalitems' => 0
+  DB<12> x $bbaginfohashref
+0  undef
+  DB<13> x $dbhbbagRef
+0  undef
+  DB<14> x $sortedResultsArrRef
+0  undef
+  DB<15> x $piParamHashRef
+0  HASH(0x4929f0)
+   'test' => 123
+  DB<16> q
+
+Debugger finished
+</pre>
+
+  </body>
+</html>

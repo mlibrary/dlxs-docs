@@ -1,0 +1,73 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+   <meta name="GENERATOR" content="Mozilla/4.72 [en] (WinNT; I) [Netscape]">
+   <title>Installation</title>
+<link rel="stylesheet" href="styles.css">
+<style type="text/css">
+<!--
+ol {  line-height: 125%}
+-->
+</style>
+</head>
+<body class="mainpalette">
+
+<h2>
+Installation of DLXS TextClass Middleware &amp; Content</h2>
+The install process will create the directory structure described in the
+"<a href="dirstructure-det.html">Directory Structure</a>" section of the
+workshop.&nbsp; Take your time.&nbsp; We'll make sure everyone has a good
+installation before continuing.
+<p>We'll create this structure in the <b>dlxs </b>subdirectory<b><i> </i></b>of
+your home directory by extracting files from the tarfile <b>/l1/dlxs2000-workshop/dlxs2000.tar</b>
+<p>You may notice that the directory <b>web/t/text/gifcvtdir</b> already
+exists under <b>$HOME/dlxs.</b>&nbsp; We put that directory in place so
+we could change the ownership to nobody which requires root priviledges.&nbsp;
+This directory needs to be owned by nobody so the web server can write
+to it.
+<p>The "<b>%</b>" character indicates your Unix shell prompt.
+<p>
+<hr WIDTH="100%">
+<h3>
+Step 1</h3>
+<font face="Courier New,Courier">% <b>cd $HOME/dlxs</b></font>
+<br><font face="Courier New,Courier">% <b>tar pxvf&nbsp; /l1/dlxs2000-workshop/dlxs2000.tar</b></font>
+<br>
+<hr WIDTH="100%">
+<p>Tar will echo the <a href="sourcetext/deliverables.txt" target="external">files</a>
+it is extracting.
+<p>The middleware is self-configuring.&nbsp; The mddleware reads the <b>DLXSROOT</b>
+environment variable.&nbsp; Our web server is configured to supply this
+variable with the correct value for each of your environments. Here is
+a sample o fthe configuration we are using:
+<pre>Listen 8007
+&lt;VirtualHost 141.211.175.34:8007>
+&nbsp; SetEnv DLXSROOT /disks/l1/home/pfarber/dlxs
+
+&nbsp; DocumentRoot /disks/l1/home/pfarber/dlxs/web
+&nbsp; ScriptAlias&nbsp; /cgi/&nbsp;&nbsp;&nbsp;&nbsp; /disks/l1/home/pfarber/dlxs/cgi/
+&lt;/VirtualHost></pre>
+Currently, the data preparation files such as .dd files and Makefiles are
+not self-configuring. In the future we hope to have an install process
+that will automate the next steps. Until then, we must edit the paths in
+a number of files to point to the root directory (<b>DLXSROOT</b>) of your
+particular installation.&nbsp; It has a different value for each participant:
+either <b>/disks/li/home/&lt;&lt;userid>>/dlxs </b>or<b> /prep3/usr/&lt;&lt;userid>>/dlxs</b>.
+<p>You can determine the correct value by typing at the shell prompt :
+<b>echo
+$HOME/dlxs</b> .&nbsp; In the following step we run a configuration script
+to do the work for us.&nbsp;&nbsp; Note: for command-line (off-line) debugging
+you would set the DLXSROOT environment variable in your shell.
+<p>
+<hr WIDTH="100%">
+<h3>
+Step 2</h3>
+<font face="Courier New,Courier">% <b>cd $HOME/dlxs</b></font>
+<br><font face="Courier New,Courier">% <b>/l1/dlxs2000-workshop/configure</b></font>
+<h1>
+
+<hr WIDTH="100%">Done :-)</h1>
+
+</body>
+</html>

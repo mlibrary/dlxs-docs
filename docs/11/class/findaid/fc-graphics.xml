@@ -1,0 +1,90 @@
+<?xml version="1.0"?>
+
+<!-- SPO Editorial Services                  -->
+<!-- automatically-generated XML header file -->
+
+<?xml-stylesheet href="../../../pre11-dlxsdocs.xsl" type="text/xsl"?>
+<!DOCTYPE DLPSDOC PUBLIC "-//UM-DLPS//DTD DLPS Publications//EN" "http://docs.umdl.umich.edu/dlps/docs/dlpsdocs.dtd">
+<DLPSDOC>
+<TITLE>Findaid Class Graphics Files</TITLE>
+<HEADER>
+<JOURNAL>DLXS Documentation</JOURNAL>
+<PUBDATE>2003-12-01 15:40:10 EST</PUBDATE>
+<AUTH1>Stoeffler, Matt</AUTH1>
+<EMAIL1></EMAIL1>
+<AUTH2></AUTH2>
+<DOCTITLE>Findaid Class Graphics Files</DOCTITLE>
+<VOL>class</VOL>
+<ISS>findaid</ISS>
+<FILE>dlxsdocs-fc-graphics</FILE>
+</HEADER>
+<BODY>
+    <BHEAD>Findaid Class Graphics Files</BHEAD>
+
+<DIV1 ID="main">
+  
+ <P>The following table describes those graphics files that are likely to be 
+    used by any instance of Text Class. All of the files below should be strored 
+    in the <CODE>&lt;dlxsroot&gt;/t/text/graphics</CODE> directory, and in each 
+    subsequent <CODE>../c/collection/graphics</CODE> directory. Saving any alternative 
+    graphics by these names in individual graphics directories will result in 
+    variation of appearance within template-generated pages. </P>
+ <TABLE WIDTH="530" BORDER="1" CELLSPACING="0" CELLPADDING="5">
+     <TBODY>
+    <TR> 
+    <TH ALIGN="CENTER" WIDTH="105">Image</TH>
+    <TH ALIGN="CENTER" WIDTH="175">File name</TH>
+    <TH WIDTH="250" ALIGN="CENTER">Description</TH>
+  </TR>
+  <TR> 
+      <TD ALIGN="CENTER"><IMG SRC="graphics/aro_upw.gif" ALT="aro_upw.gif" WIDTH="17" HEIGHT="17"/></TD>
+    <TD ALIGN="CENTER">aro-upw.gif</TD>
+    <TD VALIGN="TOP">Appears in all scrollable pages as a &quot;back to top&quot; button. </TD>
+  </TR>
+  <TR> 
+      <TD ALIGN="CENTER"><IMG SRC="graphics/sm-dwnarrow.gif" ALT="sm-dwnarrow.gif" WIDTH="8" HEIGHT="10" STYLE="border: 1px solid 000000;"/></TD>
+    <TD ALIGN="CENTER">sm-dwnarrow.gif</TD>
+    <TD VALIGN="TOP">Used to indicate an expanded menu in the help 
+      pages.</TD>
+  </TR>
+  <TR> 
+      <TD ALIGN="CENTER"><IMG SRC="graphics/navarrow.gif" ALT="navarrow.gif" WIDTH="7" HEIGHT="10" STYLE="border: 1px solid 000000;"/></TD>
+    <TD ALIGN="CENTER">navarrow.gif</TD>
+    <TD VALIGN="TOP">Used to indicate an expandable menu in help files.</TD>
+  </TR>
+  <TR>
+    <TD ALIGN="CENTER" STYLE="background-color: 9999cc"><IMG SRC="graphics/navdwnarrow.gif" ALT="navdwnarrow.gif" WIDTH="16" HEIGHT="8"/></TD>
+    <TD ALIGN="CENTER">navdwnarrow.gif</TD>
+    <TD VALIGN="TOP">Used to indicate an expandable menu in the main navigation
+      bar.</TD>
+  </TR>
+  <TR>
+    <TD ALIGN="CENTER"><IMG SRC="graphics/navdwnarrow-grey.gif" ALT="navdwnarrow-grey.gif" WIDTH="16" HEIGHT="8" STYLE="border: 1px solid 000000;"/></TD>
+    <TD ALIGN="CENTER">navdwnarrow-grey.gif</TD>
+    <TD VALIGN="TOP">Corresponding image to navdwnarrow.gif for highlighted (e.g.,
+      white) navigation tabs.</TD>
+  </TR>
+  <TR> 
+      <TD ALIGN="CENTER"><IMG SRC="graphics/plug.gif" ALT="plug.gif" WIDTH="10" HEIGHT="20" STYLE="border: 1px solid 000000;"/></TD>
+    <TD ALIGN="CENTER">plug.gif</TD>
+      <TD VALIGN="TOP">Transparent spacer gif used throughout. hdr-bg1.gif, 
+        hdr-bg2.gif, and hdr-bg3.gif are also transparent gifs used as table background 
+        gifs for header displays.</TD>
+  </TR>
+  <TR>
+    <TD ALIGN="CENTER"><IMG SRC="graphics/onbullet.gif" ALT="onbullet.gif" WIDTH="11" HEIGHT="11" STYLE="border: 1px solid 000000;"/></TD>
+    <TD ALIGN="CENTER">onbullet.gif</TD>
+    <TD VALIGN="TOP">Used in a mulitple collection results list to help highlight
+      the collection group whose results are currently being listed.</TD>
+  </TR>
+  <TR> 
+      <TD ALIGN="CENTER"><IMG SRC="graphics/ret-arrow-generic-grey.gif" ALT="ret-arrow-generic-grey.gif" WIDTH="16" HEIGHT="15" STYLE="border: 1px solid 000000;"/></TD>
+    <TD ALIGN="CENTER">ret-arrow-generic-grey.gif</TD>
+    <TD VALIGN="TOP">Used in header.tpl and text.tpl as part of a 
+      link back to search results.</TD>
+  </TR>
+  </TBODY>
+</TABLE>
+</DIV1> 
+ </BODY>
+</DLPSDOC>

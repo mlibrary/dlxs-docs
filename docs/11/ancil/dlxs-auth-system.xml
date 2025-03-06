@@ -1,0 +1,1078 @@
+<?xml version="1.0"?>
+
+<!-- SPO Editorial Services                  -->
+<!-- automatically-generated XML header file -->
+
+<?xml-stylesheet href="../../pre11-dlxsdocs.xsl" type="text/xsl"?>
+<!DOCTYPE DLPSDOC PUBLIC "-//UM-DLPS//DTD DLPS Publications//EN" "http://docs.umdl.umich.edu/dlps/docs/dlpsdocs.dtd">
+<DLPSDOC>
+<TITLE>DLXS Authentication and Authorization System</TITLE>
+<HEADER>
+<JOURNAL>DLXS Documentation</JOURNAL>
+<PUBDATE>2002-07-03 15:01:40 EDT</PUBDATE>
+<AUTH1>Snavely, Cory</AUTH1>
+<AUTH2></AUTH2>
+<DOCTITLE>DLXS Authentication and Authorization System</DOCTITLE>
+<VOL>ancil</VOL>
+<ISS></ISS>
+<FILE>dlxsdocs-dlxs-auth-system</FILE>
+</HEADER>
+
+
+
+<BODY>
+<BHEAD>DLXS Authentication and Authorization System</BHEAD>
+<DIV1 ID="contents">
+<H1>Contents</H1>
+<UL>
+<LI><A HREF="#func">Functional overview</A></LI>
+<LI><A HREF="#tech">Technical overview</A></LI>
+<LI><A HREF="#req">Requirements</A></LI>
+<LI><A HREF="#inst">Installation</A></LI>
+<LI><A HREF="#acc">Adding access controls</A></LI>
+<LI><A HREF="#local">Appendix: Features of the UM Digital Library Services installation</A></LI>
+</UL>
+</DIV1>
+<DIV1>
+<H1><A name="func"></A>Functional overview</H1>
+<P>The DLXS Authentication and Authorization system is
+a  complete     access    control  system designed primarily for use in digital
+ library   environments.     It can  interoperate with core DLXS middleware
+ to control   access to collections,      or it can be used as a standalone
+ access control   system in a general web    environment.</P>
+<P>The system has the following general capabilities:
+<UL>
+                       <LI>user authentication, using either a self-contained 
+  encrypted      password    or existing Kerberos authentication server(s)</LI>
+                       <LI>user self-service: each user can set or reset
+his/her     password,      and  will receive automated confirmation email
+after doing     so</LI>
+                       <LI>institutional authentication using IP address
+ranges</LI>
+                       <LI>centralized management of all user, institution, 
+ and   access    information    in an Oracle database</LI>
+                                         
+</UL>
+</P>
+<P>Designed to function with a heterogenous mix of resources, 
+   both   public    and  restricted, this system could be useful if you are 
+  looking   to do any    of the  following:
+<UL>
+                       <LI>provide off-campus users with authenticated access 
+  to  locally-hosted       resources</LI>
+                       <LI>leverage an existing Kerberos authentication infrastructure
+       in  a  web  environment</LI>
+                       <LI>provide other institutions with IP address range-based 
+    access    to  locally-hosted  resources</LI>
+                                         
+</UL>
+</P>
+</DIV1>
+<DIV1>
+<H1><A name="tech"></A>Technical overview</H1>
+<P>The system is made up of three components:
+                                         
+<OL>
+                       <LI>authentication and authorization database: Here
+ is  stored    all   information   on user accounts and user groups, institution 
+  names  and  IP  address ranges,    collections or resources, and access 
+permissions--which      users and institutions   may access which collections 
+or resources. This     must be an Oracle database.</LI>
+                       <LI>Apache web server module: This modular extension 
+ to  Apache    acts   as  a gatekeeper to all of the material on the web server,
+  consulting    the   database  in real time. It uses the access control
+information   in  the  database   to grant  access, deny access, or request
+authentication.    In addition,  it   implements  the user interface which
+accepts a username    and password,  or  which guides  new users through
+ the process of setting    their initial password.</LI>
+                      <LI>Page templates: The Apache module uses these fully-customizable 
+        HTML   templates to generate the pages in the user interface.</LI>
+                                         
+</OL>
+</P>
+</DIV1>
+<DIV1>
+<H1><A name="req"></A>Requirements</H1>
+<P>                     This is a robust system that supplies a complete campus
+  authentication        and  authorization environment, and as such, it has
+  heavy requirements     that   may  be out of reach for some institutions
+ or impractical for some     purposes.   DLXS  acknowledges this, and will
+ also be undertaking development     of a "Lite"   version  of this system
+ that requires nothing beyond the  <A HREF="../intro/dlxs-sysreq.xml">standard DLXS system 
+requirements</A>. This product is currently being shaped,
+but  will probably be  geared    strictly  toward interoperation only with
+DLXS  middleware, and will provide    simple access control assuming a pre-existing
+ web authentication  mechanism.    Thoughts into the preliminary design of
+ this system are welcome...and  encouraged!    Please <A
+ HREF="mailto:csnavely@umich.edu?subject=thoughts%20on%20dlxs%20auth%20%22lite%22">
+                     contact the author of this document</A> to share your
+ ideas.</P>
+<P>                     The following software or systems are required:
+<UL>
+                       <LI><A HREF="http://httpd.apache.org/">Apache 1.3.26</A>
+       or  higher     with <A HREF="http://www.modssl.org/">mod_ssl 2.8.10</A>
+      or higher  and  mod_so, but not Apache 2.x</LI>
+                       <LI><A HREF="http://web.mit.edu/kerberos/www/">Kerberos
+   V5</A>       1.2   or  higher</LI>
+                  <LI><A HREF="http://www.openssl.org/">OpenSSL 0.9.6</A>
+ or  higher<BR></BR>
+                  </LI>
+                       <LI><A HREF="http://www.oracle.com/">Oracle 9i Server</A>
+        or  higher.</LI>
+                                         
+</UL>
+                     In addition, the following skills or staff will be required
+    for   installation     and/or maintenance:<BR></BR>
+                                          
+<UL>
+                        <LI>familiarity with the C programming language</LI>
+                       <LI>administrative access to the Apache server and 
+Oracle    Server    installations</LI>
+                       <LI>familiarity with Oracle administration and with
+ SQL   syntax    for   inserting,   deleting, and manipulating data in tables<BR></BR>
+                       </LI>
+                                         
+</UL>
+                     Note: it is OK, and in fact preferred, for an instance 
+ of  Apache    to  run   on the same server with Oracle to provide only the 
+ user  interface     of  the  system. It is <i>not</i> recommended that Oracle
+  Server  be installed    alongside Apache on servers that are intended for
+  heavy web  service  use.</P>
+<P>             Note: This system will establish an Oracle session for each
+Apache    server    process. If you expect the number of Apache web servers
+to be  high,  it is   recommended that you configure Oracle to use shared
+servers  to ensure  scalability.</P>
+</DIV1>
+<DIV1>
+<H1><A name="inst"></A>Installation</H1>
+                                         
+<OL>
+                       <LI><b>Unpack the distribution archive.</b> The system 
+  is  distributed       as a compressed tar archive. Extract the contents 
+of  the  archive into   an   area on your system where software is typically 
+ installed;  e.g., <tt>     /usr/local/dlps_auth</tt>        .<BR></BR>
+                       </LI>
+                       <LI><b>Set up the Oracle tablespace. </b>The following 
+  instructions       will  create an Oracle user, tablespace, and tables to
+  support the system.       Ideally,  you should have your Oracle administrator 
+  at least looking  over     your shoulder  for this portion of the installation.</LI>
+                                                                        
+          
+  <OL>
+                         <LI>Change to the directory where SQL scripts are
+ supplied     with   the   command (e.g.) <tt>cd /usr/local/dlps_auth/sql</tt>
+  .</LI>
+                        <LI>Carefully edit the file <tt>create_tablespace.sql</tt>
+         ,  substituting     the correct local customizations for Oracle
+data   file   locations  as needed.</LI>
+                        <LI>Carefully edit the file <tt>create_tables.sql</tt>
+     ,  substituting       the correct system administrator email address 
+for   sysadmin@your.domain      on  line 133.<BR></BR>
+                        </LI>
+                        <LI>Start the SQL monitor with the command <tt>sqlplus
+   system</tt>            (you  will be prompted for the Oracle system password).</LI>
+                        <LI>Create the schema and tablespace with the command 
+        <tt>    @create_tablespace</tt>           .</LI>
+                        <LI>Set a new password for the dlps_auth user, exit 
+ from   the   SQL   monitor,   and restart the SQL monitor with the command 
+       <tt>   sqlplus    dlps_auth</tt>  (you will be prompted for the new 
+ dlps_auth password).</LI>
+                        <LI>Create all required tables with the command<tt>
+   @create_tables</tt>                 .</LI>
+                        <LI><tt>C</tt>reate the unique identifier and timestamp 
+   triggers     with   the command <tt>@create_triggers</tt>.</LI>
+                        <LI>Define the primary keys with the command <tt>
+@key</tt>         .</LI>
+                        <LI>Create the auxiliary indexes with the command 
+      <tt>    @index</tt>           .</LI>
+                        <LI>Define the stored procedures with the command 
+      <tt>    @dlps_auth</tt>           .</LI>
+                                                                        
+      
+  </OL>
+                  <LI><b>Modify the module source code.</b> Several behaviors 
+  and   settings   are still compiled into the module source (<tt>mod_dlps_auth.c</tt>
+            ),  and will require hand customization.</LI>
+                                                               
+  <OL>
+                    <LI>Starting on line 345, the function change_passwd
+contains     user   interface  logic that lets a user select one of two Kerberos
+realms,     and  is specific  to the UM environment. This section will probably
+need    modification   based  on your local authentication environment.</LI>
+                    <LI>Starting on line 686, the confirmation email message
+  that   is  sent   when a user successfully changes his/her password will
+ need modification     as is appropriate to your environment.</LI>
+                    <LI>On line 1437, the domain name associated with the 
+cookie    that   is  used for persistent authentication should be changed 
+to your  local  domain.</LI>
+                                                               
+  </OL>
+                  <LI><b>Compile and install the module.</b></LI>
+                                                               
+  <OL>
+                    <LI>Carefully edit the file <tt>Makefile</tt>, substituting 
+   the   installation   paths of Kerberos, OpenSSL, and Oracle as appropriate.</LI>
+                    <LI>Compile the module with the command <tt>make</tt>
+.</LI>
+                    <LI>Install the module into your Apache installation
+with   the   command          <tt>make install</tt>.</LI>
+                                                               
+  </OL>
+                  <LI><b>Configure and activate the system.</b>  The 
+following      instructions  will modify your Apache configuration and immediately 
+create      some amount of load on your Oracle server. Ideally,  you 
+should have     your Apache administrator at least looking over   your shoulder 
+ for this     portion of the installation.</LI>
+                                                               
+  <OL>
+                    <LI>Carefully edit the configuration file (e.g.) <tt>
+/usr/local/dlps_auth/etc/dlps_auth.conf</tt>                , substituting
+the appropriate local values, as indicated below:</LI>
+                                                                        
+           
+    <OL>
+                      <LI>Set <tt>DLPSAuthOracleHome</tt> to your Oracle
+installation       home directory.</LI>
+                      <LI>Set <tt>DLPSAuthOracleTNSName</tt> to the global
+ TNS   name   of  your Oracle  server.</LI>
+                      <LI>Set <tt>DLPSAuthOraclePassword</tt> to the password 
+  you   assigned   for the  dlps_auth user in Step 2.6.</LI>
+                      <LI>Set <tt>DLPSAuthEncryptionKey</tt> to 16 random 
+characters.</LI>
+                      <LI>Set <tt>DLPSAuthEnterPasswordServer</tt> to the 
+server    name   you'll use  to host the login page.</LI>
+                      <LI>Set <tt>DLPSAuthCookieLifetime</tt> to the number 
+ of  seconds    you'd like  authentication to persist, or 0 if you'd like 
+authentication     to expire when  the user's browser is closed.</LI>
+                      <LI>Set <tt>DLPSAuthChangePasswordServer</tt> to the
+ server    name   you'll use  to host the login page.</LI>
+                      <LI>Set <tt>DLPSAuthPasswordResultsServer</tt> to the 
+ server    name  you'll use  to host the login page.</LI>
+                      <LI>Set <tt>DLPSAuthDefDestOnAuthenSuccess</tt> to
+a  URL   that   the  system should  redirect users to after successful authentication
+   if,   for some reason, it  is unable to determine the referring page.</LI>
+                      <LI>Set <tt>DLPSAuthDelayOnAuthenSuccess</tt> to the
+ number    of  seconds to display  the page that informs the user that he/she
+ authenticated      successfully  (before  redirecting him/her back to the
+ referring page).</LI>
+                      <LI>Set <tt>DLPSAuthDocumentRoot</tt> to the directory
+  containing     the HTML  templates, e.g. <tt>/usr/local/dlps_auth/html/templates</tt>
+       .<BR></BR>
+                      </LI>
+                      <LI>Set <tt>DLPSAuthHelpContact</tt> to the email address 
+   that   should receive  replies to password change confirmation emails from
+   users.</LI>
+                      <LI>Set <tt>DLPSAuthSysAdminContact</tt> to the email 
+ address     that  should receive  bounced delivery attempts to password confirmation
+    emails</LI>
+                                                                        
+                       
+    </OL>
+                  <LI>Reference this configuration file in your Apache configuration
+      file with the directive (e.g.) <tt>Include /usr/local/dlps_auth/etc/dlps_auth.conf</tt>
+             .<BR></BR>
+                   </LI>
+                 <LI>Restart Apache with the command <tt>apachectl restart</tt>
+      ,  and   check the error log to ensure that the server restarted successfully.
+    If  it didn't, you can easily remove the system from your configuration
+  by  placing   a <tt> #</tt> character in front of the <tt>Include</tt>
+directive     above  and restarting Apache.</LI>
+                                                                    
+  </OL>
+                         
+</OL>
+             If all went well, the system is now running and ready to accept
+  access    controls!<BR></BR>
+                         
+<OL>
+                                                               
+  <OL>
+                                                                        
+                      
+    <OL>
+                                                                        
+                   
+    </OL>
+                                                                        
+               
+  </OL>
+                               
+</OL>
+</DIV1>
+<DIV1>
+<H1><A name="acc"></A>Adding access controls</H1>
+<P>            In the database, an access control is made up of three parts:
+ 1)  a  collection    record, which is essentially one or more server names
+ and  directory  paths;    2) a user or institution record; and 3) an access
+ record  indicating  the  user  or institution and the collection. In this
+ way, collections,  users,   and institutions  can be defined, and access
+permissions can be given in  any combination.</P>
+<P>             The following sequence of example SQL commands will demonstrate
+  the   routine  tasks associated  with maintaining access controls in the
+ database.</P>
+<DIV2>
+<H4>Example: Creating a collection record</H4>
+<TABLE cellpadding="2" cellspacing="2" border="0" width="75%">
+           <tbody>
+             <tr>
+               <td valign="top">                                        
+                      
+      <pre><BR></BR>insert into aa_coll (uniqueIdentifier,<BR></BR>                     commonName,<BR></BR>                     description,<BR></BR>                     dlpsClass, dlpsSource,<BR></BR>                     dlpsAuthenMethod, dlpsAuthzType,<BR></BR>                     dlpsPartlyPublic,<BR></BR>                     manager,<BR></BR>                     lastModifiedTime, lastModifiedBy,<BR></BR>                     dlpsDeleted)<BR></BR>             values ('jbt',<BR></BR>                     'Journal of Bobbles and Trinkets',<BR></BR>                     'An online resource focusing on the<BR></BR>                      study of buttons, plastic toys,<BR></BR>                      do-nothing machines, and the like',<BR></BR>                     'local', 'local',<BR></BR>                     'any', 'n',<BR></BR>                     'f',<BR></BR>                     0,<BR></BR>                     SYSDATE, 'root', 'f');</pre>
+                          </td>
+               <td valign="top">Description of database columns:<BR></BR>
+                                                                       
+      <TABLE cellpadding="2" cellspacing="2" border="0" width="100%">
+                 <tbody>
+                   <tr>
+                     <td valign="top"><tt>uniqueIdentifier</tt><BR></BR>
+                     </td>
+                     <td valign="top">the (unique) collection identifier<BR></BR>
+                     </td>
+                   </tr>
+                   <tr>
+                     <td valign="top"><tt>commonName</tt><BR></BR>
+                     </td>
+                     <td valign="top">the collection name<BR></BR>
+                     </td>
+                   </tr>
+                   <tr>
+                     <td valign="top"><tt>description</tt><BR></BR>
+                     </td>
+                     <td valign="top">a textual description of the collection<BR></BR>
+                     </td>
+                   </tr>
+                   <tr>
+                     <td valign="top"><tt>dlpsClass</tt><BR></BR>
+                     </td>
+                     <td valign="top">the collection class (for use with
+DLXS   middleware   classes)<BR></BR>
+                     </td>
+                   </tr>
+                   <tr>
+                     <td valign="top"><tt>dlpsSource</tt><BR></BR>
+                     </td>
+                     <td valign="top">the source of the material<BR></BR>
+                     </td>
+                   </tr>
+                   <tr>
+                     <td valign="top"><tt>dlpsAuthenMethod</tt><BR></BR>
+                     </td>
+                     <td valign="top">the authentication method to use: either
+    'ip'  (IP address range-based authentication, 'pw' (forced password authentication),
+      or 'any' (a combination of the two)<BR></BR>
+                     </td>
+                   </tr>
+                   <tr>
+                     <td valign="top"><tt>dlpsAuthzType</tt><BR></BR>
+                     </td>
+                     <td valign="top">the authorization type to use: either 
+ 'n'   (normal) or  'd' (delegated)<BR></BR>
+                     </td>
+                   </tr>
+                   <tr>
+                     <td valign="top">                                  
+                                                                        
+         
+            <pre>dlpsPartlyPublic</pre>
+                     </td>
+                     <td valign="top">a flag indicating whether the material
+  is  public:  either 't' (true) or 'f' (false)<BR></BR>
+                     </td>
+                   </tr>
+                   <tr>
+                     <td valign="top"><tt>manager</tt><BR></BR>
+                     </td>
+                     <td valign="top">the user group responsible for managing 
+  this   collection entry<BR></BR>
+                     </td>
+                   </tr>
+                   <tr>
+                     <td valign="top"><tt>lastModifiedTime</tt><BR></BR>
+                     </td>
+                     <td valign="top">the date and time this record was last
+  modified<BR></BR>
+                     </td>
+                   </tr>
+                   <tr>
+                     <td valign="top"><tt>lastModifiedBy</tt><BR></BR>
+                     </td>
+                     <td valign="top">the username of the user who last modified
+    this record<BR></BR>
+                     </td>
+                   </tr>
+                   <tr>
+                     <td valign="top"><tt>dlpsDeleted</tt><BR></BR>
+                     </td>
+                     <td valign="top">a flag indicating whether this record 
+ is  deleted:   either 't' (true) or 'f' (false)<BR></BR>
+                     </td>
+                   </tr>
+                                                                        
+                
+        </tbody>                                                         
+     
+      </TABLE>
+               </td>
+            </tr>
+                               
+  </tbody>        
+</TABLE>
+</DIV2>
+<DIV2>
+<H4>Example: Associating a server and directory with a collection</H4>
+<TABLE cellpadding="2" cellspacing="2" border="0" width="75%">
+            <tbody>
+              <tr>
+                <td valign="top">                                       
+                              
+      <pre><BR></BR>insert into aa_coll_obj (dlpsServer,<BR></BR>                         dlpsPath,<BR></BR>                         coll,<BR></BR>                         lastModifiedTime, lastModifiedBy,<BR></BR>                         dlpsDeleted)<BR></BR>                 values ('www.your.domain',<BR></BR>                         '/usr/local/apache/htdocs/jbt%',<BR></BR>                         'jbt',<BR></BR>                         SYSDATE, 'root', 'f');<BR></BR><BR></BR></pre>
+               </td>
+                <td valign="top"> Description of database columns:<BR></BR>
+                                                                       
+      <TABLE cellpadding="2" cellspacing="2" border="0" width="100%">
+                 <tbody>
+                   <tr>
+                     <td valign="top">                                  
+                                                                        
+         
+            <pre>dlpsServer</pre>
+                     </td>
+                     <td valign="top">the hostname of the web server<BR></BR>
+                     </td>
+                   </tr>
+                   <tr>
+                     <td valign="top">                                  
+                                                                        
+         
+            <pre>dlpsPath</pre>
+                     </td>
+                     <td valign="top">the full file system path where the 
+material     is stored; note the "%" wildcard at the end of the path, which 
+allows the    access control to be applied to all contained files and directories<BR></BR>
+                     </td>
+                   </tr>
+                   <tr>
+                     <td valign="top">                                  
+                                                                        
+         
+            <pre>coll</pre>
+                     </td>
+                     <td valign="top">the corresponding collection identifier<BR></BR>
+                     </td>
+                   </tr>
+                   <tr>
+                     <td valign="top">                                  
+                                                                        
+         
+            <pre>lastModifiedTime</pre>
+                     </td>
+                     <td valign="top">the date and time this record was last
+  modified<BR></BR>
+                     </td>
+                   </tr>
+                   <tr>
+                     <td valign="top">                                  
+                                                                        
+         
+            <pre>lastModifiedBy</pre>
+                     </td>
+                     <td valign="top">the username of the user who last modified
+    this record<BR></BR>
+                     </td>
+                   </tr>
+                   <tr>
+                     <td valign="top">                                  
+                                                                        
+         
+            <pre>dlpsDeleted<BR></BR></pre>
+                     </td>
+                     <td valign="top">a flag indicating whether this record 
+ is  deleted:   either 't' (true) or 'f' (false)<BR></BR>
+                     </td>
+                   </tr>
+                                                                        
+                
+        </tbody>                                                         
+     
+      </TABLE>
+                </td>
+              </tr>
+                                       
+  </tbody>          
+</TABLE>
+<P>          At this point, any attempt to access this resource, which is  non-public
+   and yet has no access permissions, should result in a prompt  for authentication.</P>
+</DIV2>
+<DIV2>
+<H4>Example: Creating an institution record</H4>
+<TABLE cellpadding="2" cellspacing="2" border="0" width="75%">
+          <tbody>
+            <tr>
+              <td valign="top">                                         
+       
+      <pre><BR></BR>insert into aa_inst (uniqueIdentifier,<BR></BR>                     organizationName, manager,<BR></BR>                     lastModifiedTime, lastModifiedBy,<BR></BR>                     dlpsDeleted)<BR></BR>             values (1000,<BR></BR>                     'University of Michigan', 0,<BR></BR>                     SYSDATE, 'root', 'f');</pre>
+              </td>
+              <td valign="top"> Description of database columns:<BR></BR>
+                                                               
+      <TABLE cellpadding="2" cellspacing="2" border="0" width="100%">
+                <tbody>
+                  <tr>
+                    <td valign="top"><tt>uniqueIdentifier</tt></td>
+                    <td valign="top">the (unique) institution identifier<BR></BR>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td valign="top"><tt>organizationName</tt><BR></BR>
+                    </td>
+                    <td valign="top">the institution name<BR></BR>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td valign="top"><tt>manager</tt><BR></BR>
+                    </td>
+                    <td valign="top">the user group responsible for managing
+  this    collection entry<BR></BR>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td valign="top"><tt>lastModifiedTime</tt><BR></BR>
+                    </td>
+                    <td valign="top">the date and time this record was last 
+ modified<BR></BR>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td valign="top"><tt>lastModifiedBy</tt><BR></BR>
+                    </td>
+                    <td valign="top">the username of the user who last modified 
+   this  record<BR></BR>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td valign="top"><tt>dlpsDeleted</tt><BR></BR>
+                    </td>
+                    <td valign="top">a flag indicating whether this record
+ is  deleted:   either 't' (true) or 'f' (false)<BR></BR>
+                    </td>
+                  </tr>
+                                                                        
+      
+        </tbody>                                                        
+      </TABLE>
+              </td>
+            </tr>
+                               
+  </tbody>        
+</TABLE>
+</DIV2>
+<DIV2>
+<H4>Example: Associating an IP address range with an institution</H4>
+<TABLE cellpadding="2" cellspacing="2" border="0" width="75%">
+           <tbody>
+            <tr>
+              <td valign="top">                                         
+       
+      <pre><BR></BR>insert into aa_network (dlpsCIDRAddress,<BR></BR>                        dlpsAddressStart, dlpsAddressEnd,<BR></BR>                        dlpsAccessSwitch, inst,<BR></BR>                        lastModifiedTime, lastModifiedBy,<BR></BR>                        dlpsDeleted)<BR></BR>                values ('141.211.0.0/15',<BR></BR>                        2379415552,2379546623,<BR></BR>                        'allow', 1000,<BR></BR>                        SYSDATE, 'root', 'f');</pre>
+              </td>
+              <td valign="top"> Description of database columns:<BR></BR>
+                                                               
+      <TABLE cellpadding="2" cellspacing="2" border="0" width="100%">
+                <tbody>
+                                <tr>
+                  <td valign="top">                                     
+                                        
+            <pre>dlpsCIDRAddress</pre>
+                  </td>
+                  <td valign="top">the IP address range in CIDR format<BR></BR>
+                  </td>
+                </tr>
+                <tr>
+                  <td valign="top">                                     
+                                        
+            <pre>dlpsAddressStart</pre>
+                  </td>
+                  <td valign="top">the numeric starting address of the range<BR></BR>
+                  </td>
+                </tr>
+                <tr>
+                  <td valign="top">                                     
+                                        
+            <pre>dlpsAddressEnd</pre>
+                  </td>
+                  <td valign="top">the numeric ending address of the range<BR></BR>
+                  </td>
+                </tr>
+                <tr>
+                  <td valign="top">                                     
+                                        
+            <pre>dlpsAccessSwitch</pre>
+                  </td>
+                  <td valign="top">a flag indicating whether this address 
+range   is to be allowed or denied: either 'allow' or 'deny'<BR></BR>
+                    </td>
+                  </tr>
+                <tr>
+                  <td valign="top">                                     
+                                        
+            <pre>inst</pre>
+                  </td>
+                  <td valign="top">the corresponding institution identifier<BR></BR>
+                  </td>
+                </tr>
+                <tr>
+                  <td valign="top">                                     
+                                        
+            <pre>lastModifiedTime</pre>
+                  </td>
+                  <td valign="top">the date and time this record was last 
+modified<BR></BR>
+                  </td>
+                </tr>
+                <tr>
+                  <td valign="top">                                     
+                                        
+            <pre>lastModifiedBy</pre>
+                  </td>
+                  <td valign="top">the username of the user who last modified 
+  this  record<BR></BR>
+                  </td>
+                </tr>
+                <tr>
+                  <td valign="top">                                     
+                                        
+            <pre>dlpsDeleted</pre>
+                  </td>
+                  <td valign="top">a flag indicating whether this record
+is  deleted:    either 't' (true) or 'f' (false)<BR></BR>
+                  </td>
+                </tr>
+                                                                        
+      
+        </tbody>                                                        
+      </TABLE>
+              </td>
+            </tr>
+                               
+  </tbody>        
+</TABLE>
+<P>The system allows multiple IP address ranges to be associated with each institution.</P>
+</DIV2>
+<DIV2>
+<H4>Example: Permitting an institution to a collection</H4>
+<TABLE cellpadding="2" cellspacing="2" border="0" width="75%">
+       <tbody>
+         <tr>
+           <td valign="top">                            
+      <pre><BR></BR>insert into aa_may_access (inst, coll,<BR></BR>                           lastModifiedTime, lastModifiedBy,<BR></BR>                           dlpsDeleted)<BR></BR>                   values (1000, 'jbt',<BR></BR>                           SYSDATE, 'root', 'f');<BR></BR></pre>
+          </td>
+           <td valign="top"> Description of database columns:<BR></BR>
+                               
+      <TABLE cellpadding="2" cellspacing="2" border="0" width="100%">
+            <tbody>
+              <tr>
+                <td valign="top">                                        
+           
+            <pre>inst</pre>
+                </td>
+                <td valign="top">the corresponding institution identifier<BR></BR>
+                </td>
+              </tr>
+              <tr>
+                <td valign="top">                                        
+           
+            <pre>coll</pre>
+                </td>
+                <td valign="top">the corresponding collection identifier<BR></BR>
+                </td>
+              </tr>
+              <tr>
+                <td valign="top">                                        
+           
+            <pre>lastModifiedTime</pre>
+                </td>
+                <td valign="top">the date and time this record was last modified<BR></BR>
+                </td>
+              </tr>
+              <tr>
+                <td valign="top">                                        
+           
+            <pre>lastModifiedBy</pre>
+                </td>
+                <td valign="top">the username of the user who last modified 
+ this  record<BR></BR>
+                </td>
+              </tr>
+              <tr>
+                <td valign="top">                                        
+           
+            <pre>dlpsDeleted</pre>
+                </td>
+                <td valign="top">a flag indicating whether this record is 
+deleted:     either 't' (true) or 'f' (false)<BR></BR>
+                </td>
+              </tr>
+                                       
+        </tbody>                            
+      </TABLE>
+           </td>
+         </tr>
+                   
+  </tbody>     
+</TABLE>
+<P>     At this point, the resource will be accessible from the UM campus, 
+ but any attempt to access it from elsewhere should result in a prompt for 
+  authentication. However, as no users currently exist, it will not be possible 
+to authenticate.</P>
+</DIV2>
+<DIV2>
+<H4>Example: Creating a user</H4>
+<TABLE cellpadding="2" cellspacing="2" border="0" width="75%">
+      <tbody>
+        <tr>
+          <td valign="top">                     
+      <pre><BR></BR>insert inst aa_user (userid,<BR></BR>                     givenName, initials, surname,<BR></BR>                     rfc822Mailbox,<BR></BR>                     dlpsKey, userPassword,<BR></BR>                     lastModifiedTime, lastModifiedBy,<BR></BR>                     dlpsDeleted)<BR></BR>             values ('cufarley',<BR></BR>                     'Charles', 'U.', 'Farley',<BR></BR>                     'cufarley@your.domain',<BR></BR>                     '123-45-6789', '!none',<BR></BR>                     SYSDATE, 'root', 'f');<BR></BR></pre>
+          </td>
+          <td valign="top"> Description of database columns:<BR></BR>
+                       
+      <TABLE cellpadding="2" cellspacing="2" border="0" width="100%">
+           <tbody>
+             <tr>
+               <td valign="top">                                       
+            <pre>userid</pre>
+               </td>
+               <td valign="top">the (unique) user identifier<BR></BR>
+               </td>
+             </tr>
+             <tr>
+               <td valign="top">                                       
+            <pre>givenName</pre>
+               </td>
+               <td valign="top">the given (first) name<BR></BR>
+               </td>
+             </tr>
+             <tr>
+               <td valign="top">                                       
+            <pre>initials</pre>
+               </td>
+               <td valign="top">the middle initial(s)<BR></BR>
+               </td>
+             </tr>
+             <tr>
+               <td valign="top">                                       
+            <pre>surname</pre>
+               </td>
+               <td valign="top">the surname<BR></BR>
+               </td>
+             </tr>
+             <tr>
+               <td valign="top">                                       
+            <pre>rfc822Mailbox</pre>
+               </td>
+               <td valign="top">the email address<BR></BR>
+               </td>
+             </tr>
+             <tr>
+               <td valign="top">                                       
+            <pre>dlpsKey</pre>
+               </td>
+               <td valign="top">the "key" value which will permit the user
+ to establish or change their password using the self-serve user interface;
+ this should be known only to the user<BR></BR>
+               </td>
+             </tr>
+             <tr>
+               <td valign="top">                                       
+            <pre>userPassword</pre>
+               </td>
+               <td valign="top">the encrypted password or Kerberos authentication 
+ realm; this should be initially set to '!none', and will be set by the user<BR></BR>
+               </td>
+             </tr>
+             <tr>
+               <td valign="top">                                       
+            <pre>lastModifiedTime</pre>
+               </td>
+               <td valign="top">the date and time this record was last modified<BR></BR>
+               </td>
+             </tr>
+             <tr>
+               <td valign="top">                                       
+            <pre>lastModifiedBy</pre>
+               </td>
+               <td valign="top">the username of the user who last modified
+ this   record<BR></BR>
+               </td>
+             </tr>
+             <tr>
+               <td valign="top">                                       
+            <pre>dlpsDeleted</pre>
+               </td>
+               <td valign="top">a flag indicating whether this record is
+deleted:      either 't' (true) or 'f' (false)<BR></BR>
+               </td>
+             </tr>
+                             
+        </tbody>                     
+      </TABLE>
+          </td>
+        </tr>
+               
+  </tbody>    
+</TABLE>
+</DIV2>
+<DIV2>
+<H4>Example: Associating a user with an institution</H4>
+<TABLE cellpadding="2" cellspacing="2" border="0" width="75%">
+     <tbody>
+       <tr>
+         <td valign="top">              
+      <pre><BR></BR>insert into aa_is_member_of_inst (userid, inst,<BR></BR>                                  lastModifiedTime, lastModifiedBy,<BR></BR>                                  dlpsDeleted)<BR></BR>                          values ('cufarley', 1000,<BR></BR>                                  SYSDATE, 'root', 'f');<BR></BR></pre>
+         </td>
+         <td valign="top"> Description of database columns:             
+      <TABLE cellpadding="2" cellspacing="2" border="0" width="100%">
+          <tbody>
+            <tr>
+              <td valign="top">                          
+            <pre>userid</pre>
+              </td>
+              <td valign="top">the corresponding user identifier<BR></BR>
+              </td>
+            </tr>
+            <tr>
+              <td valign="top">                          
+            <pre>inst</pre>
+              </td>
+              <td valign="top">the corresponding institution identifier<BR></BR>
+              </td>
+            </tr>
+            <tr>
+              <td valign="top">                          
+            <pre>lastModifiedTime</pre>
+              </td>
+              <td valign="top">the date and time this record was last modified<BR></BR>
+              </td>
+            </tr>
+            <tr>
+              <td valign="top">                          
+            <pre>lastModifiedBy</pre>
+              </td>
+              <td valign="top">the username of the user who last modified 
+this   record<BR></BR>
+              </td>
+            </tr>
+            <tr>
+              <td valign="top">                          
+            <pre>dlpsDeleted</pre>
+              </td>
+              <td valign="top">a flag indicating whether this record is deleted:
+     either 't' (true) or 'f' (false)<BR></BR>
+              </td>
+            </tr>
+                   
+        </tbody>              
+      </TABLE>
+         </td>
+       </tr>
+           
+  </tbody>   
+</TABLE>
+<P>   At this point, after being prompted for authentication, the user  may
+authenticate  and will be given access to the resource.</P>
+</DIV2>
+<DIV2>
+<H4>Example: Permitting a user to a collection</H4>
+<P>Access to collections may be given to individual users directly instead 
+of via association with an institution. The following commands would modify
+the database to remove the association of the user with the institution,
+and explicitly permit the user to the collection. (Compare with <b>Permitting
+an institution to a collection</b>, above.)</P>
+<TABLE cellpadding="2" cellspacing="2" border="0" width="75%">
+    <tbody>
+      <tr>
+        <td valign="top">       
+      <pre><BR></BR>delete from aa_is_member_of_inst<BR></BR>       where userid = 'cufarley' and inst = 1000;<BR></BR><BR></BR>insert into aa_may_access (userid, coll,<BR></BR>                           lastModifiedTime, lastModifiedBy,<BR></BR>                           dlpsDeleted)<BR></BR>                   values ('cufarley', 'jbt',<BR></BR>                           SYSDATE, 'root', 'f');</pre>
+        </td>
+              </tr>
+       
+  </tbody>  
+</TABLE>
+</DIV2>
+<DIV2>
+<H4>Example: Creating a DLXS text class collection record</H4>
+<P>Collections served by DLXS class middleware use a special mode of the system 
+called "delegated authorization", which will be explained in more detail
+in the next example. First, though, to trigger this mode, DLXS class collections
+must specify both their class (e.g. text or image) and the appropriate authorization
+type flag, as shown below:</P>
+<TABLE cellpadding="2" cellspacing="2" border="0" width="75%">
+  <tbody>
+    <tr>
+      <td valign="top">
+      <pre><BR></BR>insert into aa_coll (uniqueIdentifier,<BR></BR>                     commonName,<BR></BR>                     description,<BR></BR>                     dlpsClass, dlpsSource,<BR></BR>                     dlpsAuthenMethod, dlpsAuthzType,<BR></BR>                     dlpsPartlyPublic,<BR></BR>                     manager,<BR></BR>                     lastModifiedTime, lastModifiedBy,<BR></BR>                     dlpsDeleted)<BR></BR>             values ('jbt-text',<BR></BR>                     'Journal of Bobbles and Trinkets',<BR></BR>                     'An online resource focusing on the<BR></BR>                      study of buttons, plastic toys,<BR></BR>                      do-nothing machines, and the like',<BR></BR>                     'text', 'local',<BR></BR>                     'any', 'd',<BR></BR>                     'f',<BR></BR>                     0,<BR></BR>                     SYSDATE, 'root', 'f');</pre>
+      </td>
+      <td valign="top">Description of database columns, where different from
+      <b>Creating a collection record.</b> above:<BR></BR>
+                                                                        
+                                  
+      <TABLE cellpadding="2" cellspacing="2" border="0" width="100%">
+        <tbody>
+                                                         <tr>
+                     <td valign="top"><tt>dlpsClass</tt><BR></BR>
+                     </td>
+                     <td valign="top">the collection class (for use with
+DLXS   middleware   classes)<BR></BR>
+                     </td>
+                   </tr>
+                                                         <tr>
+                     <td valign="top"><tt>dlpsAuthzType</tt><BR></BR>
+                     </td>
+                     <td valign="top">the authorization type to use: either 
+ 'n'   (normal) or  'd' (delegated)<BR></BR>
+                     </td>
+                   </tr>
+                                                                        
+                      
+        </tbody>
+      </TABLE>
+      <BR></BR>
+      </td>
+    </tr>
+  </tbody>
+</TABLE>
+</DIV2>
+<DIV2>
+<H4>Example: Permitting an institution to a DLXS text class collection</H4>
+<P>             When a permission is given to a collection that is set for delegated
+authorization, as above, the system behaves in a completely different way.
+Instead of acting as a gatekeeper, the system instead collects all pertinent
+authorization information and passes that information via environment variables
+to the DLXS middleware. The DLXS middleware will then use that information
+to decide which collections to present to the user.</P>
+<P>This mode is necessary because DLXS middleware supports searching across
+multiple collections. Because any given user may have different access permissions
+based on institutional associations or explicit permissions, it is impossible
+to simply grant or deny access on a global basis. Instead, the DLXS middleware
+must be supplied with a customized list of authorized collections on a per-transaction
+basis in order to present the user with all of the material they are permitted
+to access, and none of the material for which they are not. The authorization
+type is referred to as "delegated" because the system is "delegating" the
+authorization decision to the DLXS middleware.</P>
+<P>For a description of the information that is passed from the system to the
+DLXS middleware and how it is used, see <A
+ HREF="../intro/dlxs-auth.xml">DLXS Authentication and
+Authorization</A>.</P>
+<P>As you can see below, the command required to add the permission is the same
+regardless of the authorization type:
+<TABLE cellpadding="2" cellspacing="2" border="0" width="75%">
+  <tbody>
+    <tr>
+      <td valign="top">
+      <pre><BR></BR>insert into aa_may_access (inst, coll,<BR></BR>                           lastModifiedTime, lastModifiedBy,<BR></BR>                           dlpsDeleted)<BR></BR>                   values (1000, 'jbt-text',<BR></BR>                           SYSDATE, 'root', 'f');</pre>
+      <BR></BR>
+      </td>
+      <td valign="top"> Description of database columns:<BR></BR>
+                                                         
+      <TABLE cellpadding="2" cellspacing="2" border="0" width="100%">
+        <tbody>
+          <tr>
+                <td valign="top">                                        
+           
+            <pre>inst</pre>
+                </td>
+                <td valign="top">the corresponding institution identifier<BR></BR>
+                </td>
+              </tr>
+              <tr>
+                <td valign="top">                                        
+           
+            <pre>coll</pre>
+                </td>
+                <td valign="top">the corresponding collection identifier<BR></BR>
+                </td>
+              </tr>
+              <tr>
+                <td valign="top">                                        
+           
+            <pre>lastModifiedTime</pre>
+                </td>
+                <td valign="top">the date and time this record was last modified<BR></BR>
+                </td>
+              </tr>
+              <tr>
+                <td valign="top">                                        
+           
+            <pre>lastModifiedBy</pre>
+                </td>
+                <td valign="top">the username of the user who last modified 
+ this  record<BR></BR>
+                </td>
+              </tr>
+              <tr>
+                <td valign="top">                                        
+           
+            <pre>dlpsDeleted</pre>
+                </td>
+                <td valign="top">a flag indicating whether this record is 
+deleted:     either 't' (true) or 'f' (false)</td>
+          </tr>
+        </tbody>
+      </TABLE>
+      <BR></BR>
+      </td>
+    </tr>
+  </tbody>
+</TABLE>
+</P>
+</DIV2>
+</DIV1>
+<DIV1>
+<H1><A name="local"></A>Appendix: Features of the UM Digital Library Services
+ installation</H1>
+<P>Our local installation of this system includes the following:
+<UL>
+  <LI><b>Oracle configuration.</b> Two Oracle 9i servers are installed in
+two different, and distant, parts of campus. These servers use replication
+features of Oracle to stay in near-real-time synchronization; if a change
+is made on one server, that change will be replicated to the other server
+in less than one minute. All Oracle client software has been configured with
+connect-time and session failover capabilities so that the Oracle server
+which is physically closest is preferred under normal circumstances, but
+the other  will be chosen in the event of a failure. One server is Sun
+hardware running Solaris, and the other is Intel hardware running Linux.</LI>
+  <LI><b>Apache web server configuration.</b> Apache, equipped with mod_ssl
+and the DLXS authentication and authorization system, is running alongside
+Oracle on each server. Each Apache installation is configured with a copy
+of a server certificate for the name "login.umdl.umich.edu" and has identical
+appearance in all respects.</LI>
+  <LI><b>Load balancing and failover.</b> A DNS-based system has been put
+in place to dynamically direct users' browsers to the Apache server that
+is physically closest under normal circumstances, to the least loaded server
+under heavy usage conditions, or to the only available server in the event
+of a failure. A user accessing the server "login.umdl.umich.edu" may transparently
+hit either server.<BR></BR>
+  </LI>
+  <LI><b>Locally-hosted text and image resources.</b> Servers that are dedicated
+to serving text and image content are equipped with the DLXS authentication
+and authorization system if they host any non-public content. The database
+is maintained with records which restrict access to these materials as needed.
+At the time of this writing, there are approximately 500 active institutions
+records in the database for institutions with subscriptions to resources
+hosted by DLS.</LI>
+  <LI><b>Library web server.</b> The library's main web server also has the
+system installed, and restricted access to materials such as course reserves
+and staff-only areas of the website is provided through the system via IP
+address range or password authentication, as appropriate.</LI>
+  <LI><b>Library catalog.</b> The Web-accessible interface to the library's
+catalog has been enhanced to honor the authentication cookie used by the
+system, and uses that to enable saved record sets, patron self-service functions,
+and other functions requiring authentication.</LI>
+  <LI><b>Library proxy server.</b> The library's proxy server, EZProxy, was
+enhanced with a small custom script to honor the authentication cookie used
+by the system to initialize a proxy session. UM affiliates who have authenticated
+for other reasons are automatically granted a proxy session.<BR></BR>
+  </LI>
+</UL>
+</P>                                         
+</DIV1>
+</BODY>
+</DLPSDOC>

@@ -1,0 +1,306 @@
+<?xml version="1.0"?>
+
+<!-- SPO Editorial Services                  -->
+<!-- automatically-generated XML header file -->
+
+<?xml-stylesheet href="../../../pre11-dlxsdocs.xsl" type="text/xsl"?>
+<!DOCTYPE DLPSDOC PUBLIC "-//UM-DLPS//DTD DLPS Publications//EN" "http://docs.umdl.umich.edu/dlps/docs/dlpsdocs.dtd">
+<DLPSDOC>
+<TITLE>Creating and Editing Filtering Routines, Bibliographic Class</TITLE>
+<HEADER>
+<JOURNAL>DLXS Documentation</JOURNAL>
+<PUBDATE>2002-07-08 13:12:04 EDT</PUBDATE>
+<AUTH1>Hagedorn, Kat</AUTH1>
+<AUTH2></AUTH2>
+<DOCTITLE>Creating and Editing Filtering Routines, Bibliographic Class</DOCTITLE>
+<VOL>class</VOL>
+<ISS>bib</ISS>
+<FILE>dlxsdocs-bib-filters</FILE>
+</HEADER>
+
+
+
+<BODY>
+<BHEAD>Creating and Editing Filtering Routines, Bibliographic Class</BHEAD>
+<DIV1 ID="main">
+<H1>Overview</H1>
+<P>Bibliographic Class is delivered with a default set of filtering routines based on the <A HREF="bib-dtd.xml">DTD</A> and relatively conventional uses of the DTD. The content you are putting online may employ unusual use of the tags, may require different display labels, or may simply use different encoding that consequently requires different filtering routines.</P>
+
+<P>The default filtering can be found in the <TT>/{DLXSROOT}/cgi/b/bib/</TT> folder. By using the keyword <TT>BibClass</TT> for the <TT>subclassmodule</TT> field in collmgr, you will be drawing on the corresponding subroutines in the file <TT>/{DLXSROOT}/cgi/b/bib/BibClass.pm</TT>. New, custom filters can be written to override those in the base class <TT>BibClass.pm</TT> by creating subclass modules and placing them in <TT>/{DLXSROOT}/cgi/b/bib/BibClass/</TT>, e.g., for the patents collection, patents.pm. Any methods in a new module will override the ones in <TT>BibClass.pm</TT>.</P>
+</DIV1>
+
+<DIV1 ID="filters">
+<H1>Creating New Filters</H1>
+<DIV2 ID="declaring">
+<H2>Declaring new subroutines</H2>
+<P>Each new filter is declared by creating a method in a new .pm file in <TT>DLXSROOT/cgi/b/bib/</TT>. You create a method and supply the transformations that will take place in that method. In this example, we will create a "short" record display filter for a collection called "patents".</P>
+<PRE>
+    sub ShortRecordFilter
+    {
+</PRE>
+<P>... and ...</P>
+<PRE>
+     }
+</PRE>
+<P>Within the braces, you will supply the filtering parameters.  For example:</P>
+<PRE>
+    my $self = shift;
+    my ( $i, $cgi, $dso ) = @_;
+    $$i =~ s,&lt;/A&gt;,,gs;
+    $$i =~ s,&lt;A [^&gt;]*&gt;,,gs;
+    $$i =~ s,&lt;T&gt;(.*?)&lt;/T&gt;,&lt;strong&gt;Publisher:&lt;/strong&gt; $1&lt;br&gt;,gs;
+    # more transformations follow
+</PRE>
+</DIV2>
+
+<DIV2 ID="transforming">
+<H2>Creating transformations</H2>
+<P>Transformations in Bibliographic Class are done in Perl using regular expressions.  Many can be relatively simple, substituting an HTML value for an existing SGML or XML value.  For example, in order to transform the content of the element <TT>V</TT>, which in Bibliographic Class represents an address, into a link of text with a preceding label, an expression like the following would be used:</P>
+<PRE>
+        $$i =~ s,&lt;V&gt;(.*?)&lt;/V&gt;,&lt;strong&gt;Address:&lt;/strong&gt; $1&lt;br&gt;,gs;
+</PRE>
+<P>Similarly, an element <TT>URL</TT> which has an ID value and no other attributes, could be transformed in the following way if the ID of the URL had no real value in the display of information for users:</P>
+<PRE>
+        $$i =~ s,&lt;URL ID="[^"]*"&gt;(.*?)&lt;/URL&gt;,&lt;strong&gt;URL:&lt;/strong&gt; &lt;A HREF="$1"&gt;$1&lt;/A&gt;,gs;
+</PRE>
+<P>And, in the following case, the contents <TT>IDNO</TT> element with an attribute whose value is <TT>"BMP"</TT> could be transformed in the following way into HTML:</P>
+<PRE>
+        $$i =~ s,&lt;IDNO TYPE="BMP"&gt;(.*?)&lt;/IDNO&gt;,&lt;strong&gt;BMP number:&lt;/strong&gt; $1&lt;br&gt;,gs;
+</PRE>
+<P>While many transformations are relatively simple, as in these cases, it is possible to use the entire range of possibilities in Perl to create more sophisticated displays, even moving entire blocks of information around for the eventual browser output.  At the end of this document you will find two examples that represent the range of these possibilities.  The <A HREF="#afisample">American Film Institute Index</A> filtering routine is especially complex, and is designed to take a significant body of encoded information and create a display similiar to the printed entries from the source.</P>
+</DIV2>
+</DIV1>
+<DIV1 ID="samples">
+<H1>Sample Filtering Routines</H1>
+<DIV2 ID="timessample">
+<H2>Times of London/Palmer's Index to the Times filtering</H2>
+<PRE>
+
+sub ShortRecordFilter
+{
+    my $self = shift;
+    
+    my ( $i, $cgi, $dso ) = @_;
+    
+    $$i =~ s,</A>,,gs;
+    $$i =~ s,<A>,,gs;
+    $$i =~ s,<A [^>]*>,,gs;
+    $$i =~ s,</?B>,,gs;           ## ----- TITLESTMT
+    $$i =~ s|<F>\s*<K[^>]*>(.*?)</K>\s*<Z>\s*<YR>(.*?)</YR>\s*<PG>(.*?)</PG>\s*</Z>\s*</F>|qq{<strong>Citation:</strong> $1, } . &BibClassUtils::_YYYYMMDD2English($2) . qq{, $3<br>}|gse;    ## ----- SERIESSTMT, CITE, YR, PG
+    $$i =~ s,<K[^>]*>(.*?)</K>,<strong>Title:</strong> $1<br>,gs;    ## ----- TITLE
+    $$i =~ s,(.*)<L[^>]*>(.*?)</L>,<strong>Author:</strong> $2<br>$1,gs;  ## ----- AUTHOR
+    $$i =~ s,<H[^>]*>.*</H>,,gs;      ## ----- SOURCEDESC
+    $$i =~ s,<I2[^>]*>.*</I2>,,gs;    ## ----- TEXTCLASS
+}
+
+
+sub LongRecordFilter
+{
+    my $self = shift;
+
+    my ( $i, $cgi, $dso ) = @_;
+    
+    $$i =~ s,</A>,,gs;
+    $$i =~ s,<A>,,gs;
+    $$i =~ s,<A [^>]*>,,gs;
+    $$i =~ s,</?B>,,gs;
+    $$i =~ s,</?I2>,,gs;
+    $$i =~ s|<F>\s*<K[^>]*>(.*?)</K>\s*<Z>\s*<YR>(.*?)</YR>\s*<PG>(.*?)</PG>\s*</Z>\s*</F>|qq{<strong>Citation:</strong> $1, } . &BibClassUtils::_YYYYMMDD2English($2) . qq{, $3<br>}|gse;
+    $$i =~ s,<K[^>]*>(.*?)</K>,<strong>Title:</strong> $1<br>,gs;
+    $$i =~ s,(.*)<L[^>]*>(.*?)</L>,<strong>Author:</strong> $2<br>$1,gs;
+    $$i =~ s,<H[^>]*>\s*<P>(.*)</P>\s*</H>,<strong>Volume:</strong> $1<br>,gs;
+    $$i =~ s,<KW[^>]*>\s*<AF>(.*?)</AF>\s*</KW>,<strong>Subject:</strong> $1<br>,gs;
+}
+
+</PRE>
+</DIV2>
+<DIV2 ID="afisample">
+<H2>American Film Institute Index filtering</H2>
+<PRE>
+
+sub ShortRecordFilter
+{
+    my $self = shift;
+
+    my ( $i, $cgi, $dso ) = @_;
+
+    my $i = shift;
+
+    # This section is getting rid of bounding elements with no
+    # specific content other than other elements
+    $$i =~ s,</A>,,gs;
+    $$i =~ s,<A [^>]*>,,gs;
+    $$i =~ s,<SOMHD>,,g;
+    $$i =~ s,</SOMHD>,,g;
+
+    # Now some basic formatting things for both short and long
+    $$i =~ s,<PLS></PLS>,,g;
+    $$i =~ s,<NUM>[^<]*</NUM>,,g;
+
+    # Now some things that are for short or long
+    $$i =~ s,<K>([^<]*)</K>,<strong>Title:</strong> $1<br>,gs;
+    $$i =~ s,<YR>([^<]*)</YR>,<strong>Release year:</strong> $1<br>,gs;
+    $$i =~ s,<DIR><NAME>([^<]*)</NAME><NAMEINV>[^<]*</NAMEINV></DIR>,<strong>Director:</strong> $1<br>,g;
+    $$i =~ s,<DCO>([^<]*)</DCO>,<strong>Distribution company:</strong> $1<br>,g;
+    $$i =~ s,<PCO>([^<]*)</PCO>,<strong>Production company:</strong> $1<br>,g;
+
+    # Now to get rid of some things specifically for long
+    $$i =~ s,<DIR><NAME>[^<]*</NAME><NAMEINV>[^<]*</NAMEINV><CREDIT>[^<]*</CREDIT></DIR>,,g;
+    $$i =~ s,<DIR>.*?</DIR>,,g;
+    $$i =~ s,<ANI>.*?</ANI>,,g;
+    $$i =~ s,<ART>.*?</ART>,,g;
+    $$i =~ s,<ATI>.*?</ATI>,,g;
+    $$i =~ s,<BR>.*?</BR>,,g;
+    $$i =~ s,<CAS>.*?</CAS>,,g;
+    $$i =~ s,<CDT>.*?</CDT>,,g;
+    $$i =~ s,<CHR>.*?</CHR>,,g;
+    $$i =~ s,<CNO>.*?</CNO>,,g;
+    $$i =~ s,<COC>.*?</COC>,,g;
+    $$i =~ s,<COL>.*?</COL>,,g;
+    $$i =~ s,<COPYRIGHT>.*?</COPYRIGHT>,,g;
+    $$i =~ s,<COS>.*?</COS>,,g;
+    $$i =~ s,<CREDIT>.*?</CREDIT>,,g;
+    $$i =~ s,<CTL>.*?</CTL>,,g;
+    $$i =~ s,<CTY>.*?</CTY>,,g;
+    $$i =~ s,<DAN>.*?</DAN>,,g;
+    $$i =~ s,<DRF>.*?</DRF>,,g;
+    $$i =~ s,<DRM>.*?</DRM>,,g;
+    $$i =~ s,<DRR>.*?</DRR>,,g;
+    $$i =~ s,<EDI>.*?</EDI>,,g;
+    $$i =~ s,<ESG>.*?</ESG>,,g;
+    $$i =~ s,<EST>.*?</EST>,,g;
+    $$i =~ s,<ETH>.*?</ETH>,,g;
+    $$i =~ s,<GEN>.*?</GEN>,,g;
+    $$i =~ s,<LANG>.*?</LANG>,,g;
+    $$i =~ s,<MAK>.*?</MAK>,,g;
+    $$i =~ s,<MTX>.*?</MTX>,,g;
+    $$i =~ s,<MUS>.*?</MUS>,,g;
+    $$i =~ s,<NAME>.*?</NAME>,,g;
+    $$i =~ s,<NAMEINV>.*?</NAMEINV>,,g;
+    $$i =~ s,<NOT>.*?</NOT>,,g;
+    $$i =~ s,<PCN>.*?</PCN>,,g;
+    $$i =~ s,<PDA>.*?</PDA>,,g;
+    $$i =~ s,<PDQ>.*?</PDQ>,,g;
+    $$i =~ s,<PHO>.*?</PHO>,,g;
+    $$i =~ s,<PHY>.*?</PHY>,,g;
+    $$i =~ s,<PRE>.*?</PRE>,,g;
+    $$i =~ s,<PRM>.*?</PRM>,,g;
+    $$i =~ s,<PRO>.*?</PRO>,,g;
+    $$i =~ s,<RDO>.*?</RDO>,,g;
+    $$i =~ s,<RDT>.*?</RDT>,,g;
+    $$i =~ s,<SAU>.*?</SAU>,,g;
+    $$i =~ s,<SBA>.*?</SBA>,,g;
+    $$i =~ s,<SBI>.*?</SBI>,,g;
+    $$i =~ s,<SCT>.*?</SCT>,,g;
+    $$i =~ s,<SDO>.*?</SDO>,,g;
+    $$i =~ s,<SER>.*?</SER>,,g;
+    $$i =~ s,<SET>.*?</SET>,,g;
+    $$i =~ s,<SFX>.*?</SFX>,,g;
+    $$i =~ s,<SIG>.*?</SIG>,,g;
+    $$i =~ s,<SOU>.*?</SOU>,,g;
+    $$i =~ s,<STA>.*?</STA>,,g;
+    $$i =~ s,<STX>.*?</STX>,,g;
+    $$i =~ s,<SUM>.*?</SUM>,,g;
+    $$i =~ s,<WRT>.*?</WRT>,,g;
+}
+ 
+
+sub LongRecordFilter
+{
+    my $self = shift;
+
+    my ( $i, $cgi, $dso ) = @_;
+
+    my $output;
+
+    # Construct output by matching specific elements of the A element
+    # and reassembling them conditionally
+
+    # Title (three of these K elements aren't followed by a YR
+    my ( $title, $x, $year ) = ( $$i =~ m,<K>(.*?)</K>(<YR>(.*?)</YR>)?, );
+    $output .= $year ? "<h3>$title ($year)</h3>" : "<h3>$title</h3>";
+
+    # Next a blockquote around the production info and the alternate
+    # title (no label) Looks like it's these elements:
+    # PDQ|DCO|RDO|RDT|PDA|DRF|SER|PRE|DRM|COC|CDT|CNO|DRR|PHY|PCN|CTL|ATI
+    $output .= '<blockquote>';
+    $output .= &AFI_DoElement( $cgi, $i, 'CTY', '(', '', '; ' );
+    $output .= &AFI_DoElement( $cgi, $i, 'LANG', '', '', ') ' );
+    $output .= &AFI_DoElement( $cgi, $i, 'ATI', 'Alternate Title ', 'i', ' ' );
+    $output .= &AFI_DoElement( $cgi, $i, 'PCO', 'Production Co. ', 'i', ' ' );
+    $output .= &AFI_DoElement( $cgi, $i, 'PDQ', '', '', ' ' );
+    $output .= &AFI_DoElement( $cgi, $i, 'DCO', 'Distribution Co. ', 'i', ' ' );
+    $output .= &AFI_DoElement( $cgi, $i, 'PRE', '', '', ' ' );
+    $output .= &AFI_DoElement( $cgi, $i, 'RDT', 'Release ', 'i', ' ' );
+    $output .= &AFI_DoElement( $cgi, $i, 'RDO', 'Release ', 'i', ' ' );
+    $output .= &AFI_DoElement( $cgi, $i, 'PDA', 'Production ', 'i', ' ' );
+
+    if ( $$i =~ m,<COPYRIGHT>Y, )
+    {
+        $output .= '[&copy ';
+        $output .= &AFI_DoElement( $cgi, $i, 'COC', '', '', '; ' );
+        $output .= &AFI_DoElement( $cgi, $i, 'CDT', '', '', '; ' );
+        $output .= &AFI_DoElement( $cgi, $i, 'CNO', '', '', ';' );
+        $output .= '] ';
+    }
+    $output .= &AFI_DoElement( $cgi, $i, 'DRM', '', '', ' min.; ' );
+    $output .= &AFI_DoElement( $cgi, $i, 'DRF', '', '', ' ft.; ' );
+    $output .= &AFI_DoElement( $cgi, $i, 'DRR', '', '', ' reels.; ' );
+    $output .= &AFI_DoElement( $cgi, $i, 'PHY', '', '', '; ' );
+    $output .= &AFI_DoElement( $cgi, $i, 'PCN', 'PCA cert no. ', '', ' ' );
+    $output .= '</blockquote>';
+
+    # Source
+    $output .= "<p>" . &AFI_DoElement( $cgi, $i, 'SOU', 'Source: ', 'strong' ) . "</p>";
+    # Series
+    $output .= "<p>" . &AFI_DoElement( $cgi, $i, 'SER', 'Series: ', 'strong' ) . "</p>";
+    # Production Credits:
+    $output .= "<p><strong>Production Credits: </strong>";
+    $output .= &AFI_DoProductionCredit( $i, 'PRO', 'Producer' );
+    $output .= &AFI_DoProductionCredit( $i, 'DIR', 'Director' );
+    $output .= &AFI_DoProductionCredit( $i, 'WRT', 'Writer' );
+    $output .= &AFI_DoProductionCredit( $i, 'PHO', 'Photography' );
+    $output .= &AFI_DoProductionCredit( $i, 'ART', 'Art' );
+    $output .= &AFI_DoProductionCredit( $i, 'EDI', 'Editor' );
+    $output .= &AFI_DoProductionCredit( $i, 'SET', 'Set' );
+    $output .= &AFI_DoProductionCredit( $i, 'COS', 'Costumes' );
+    $output .= &AFI_DoProductionCredit( $i, 'MUS', 'Music' );
+    $output .= &AFI_DoProductionCredit( $i, 'MTX', 'Music text' );
+    $output .= &AFI_DoProductionCredit( $i, 'SDO', 'Sound' );
+    $output .= &AFI_DoProductionCredit( $i, 'DAN', 'Dance' );
+    $output .= &AFI_DoProductionCredit( $i, 'MAK', 'Makeup/hair' );
+    $output .= &AFI_DoProductionCredit( $i, 'SFX', 'Special Effects' );
+    $output .= &AFI_DoProductionCredit( $i, 'PRM', 'Production misc.' );
+    $output .= &AFI_DoProductionCredit( $i, 'STA', 'Stand-ins' );
+    $output .= &AFI_DoProductionCredit( $i, 'COL', 'Color personnel' );
+    $output .= &AFI_DoProductionCredit( $i, 'ANI', 'Animation' );
+    $output .= "</p>";
+
+    # Cast
+    $output .= "<p><strong>Cast: </strong>";
+    $output .= &AFI_DoCast( $cgi, $i ) . "</p>";
+    # Songs/Music
+    $output .= "<p>" . &AFI_DoElement( $cgi, $i, 'STX', 'Songs/Music: ', 'strong' ) . "</p>";
+    # Genre
+    $output .= "<p>" . &AFI_DoElement( $cgi, $i, 'GEN', 'Genre: ', 'strong' ) . "</p>";
+    # Broad Subject
+    $output .= "<p>" . &AFI_DoElement( $cgi, $i, 'SBA', 'Broad Subjects: ', 'strong' ) . "</p>";
+    # Specific Subject
+    $output .= "<p>" . &AFI_DoElement( $cgi, $i, 'SBI', 'Specific Subjects: ', 'strong' ) . "</p>";
+    # Plot Summary
+    $output .= "<p>" . &AFI_DoElement( $cgi, $i, 'SUM', 'Plot Summary: ', 'strong' ) . "</p>";
+    # Note
+    $output .= qq{<p><font size="-1">} . &AFI_DoElement( $cgi, $i, 'NOT', 'Note: ', 'strong' ) . "</font></p>";
+    # Source Citations
+    $output .= "<p>" . &AFI_DoElement( $cgi, $i, 'SCT', 'Source Citations: ', 'strong' ) . "</p>";
+    # Finally, a footer
+    $output .= qq{<p><font size="-1"><code>[ ]</code> = offscreen credit<br>Data copyright 1999 The American Film Institute</font></p>} ;
+
+    $$i = $output;
+}
+
+</PRE>
+</DIV2>
+</DIV1>
+</BODY>
+</DLPSDOC>

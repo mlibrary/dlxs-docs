@@ -1,0 +1,59 @@
+<html>
+<head>
+<title>Findaid Class DTD</title>
+<link href="../../dlxsdocs.css" rel="stylesheet" type="text/css">
+</head>
+<body>
+<div class="pageTitle">The Findaid Class DTD</div>
+<p>The DTD used by the DLXS Findaid Class is essentially identical to the EAD2002
+   DTD. For more information on the EAD2002 DTD, please visit the <a href="http://www.loc.gov/ead/" target="external">Library
+   of Congress EAD2002 web site</a>. The only difference is that the dlxsead2002.dtd
+   has one extra element defined that wraps any number ead elements. In this
+   way, we can create a collection of individual ead elements; i.e., a collection
+   of individual finding aids.</p>
+<p><span class="pageTitle">Encoding your EAD </span></p>
+<p>DLPS does not have any preferred methods or quick and easy tools for this
+   stage of the process. Only you, looking at your texts and your encoding practices,
+   can do the intellectual work required to encode your finding aids in XML using
+the EAD 2002 DTD. </p>
+<h3 class="sectionheader">Practical
+EAD Encoding Issues </h3>
+<p>There are, however, two areas of practice that can have an effect on your
+   online collection that are outside of hands-on encoding or conversion of word
+   processed finding aids. One is the use of IDs as attributes on elements. I
+   want to make it clear that we are NOT talking about the <span class="unixcommand">eadid</span> here,
+   but refer to IDs used to identify the element so that it can be referred to,
+   or referenced from, somewhere else. You no doubt all know that each ID within
+   a document must be unique (and the DTD enforces this). However, you may not
+   have thought about the consequences of joining all your finding aids into
+   one collection. Your IDs will need to be unique across the entire collection.
+   One way to ensure this is to prefix ID values with the eadid for a given document.
+   At this time, there is no functionality in DLXS that requires you to have
+   IDs on any elements, but you may have used them for your own internal purposes.
+   Here at DLPS, we have run into this ourselves and are simply giving a heads-up,
+   on the theory that our problems are fairly typical.</p>
+<p>Another issue that you might run into, especially if you are migrating finding
+   aids from SGML EAD 1.0 to XML EAD 2002, is that of handling special characters.
+   If you are authoring finding aids in multiple languages in XML using some
+   XML authoring tool, this is unlikely to be a problem for you -- you are aware
+   of the issues, UTF-8 is the default encoding for XML, you will have no problems.
+   You'll just want to make sure to index with the UTF-8
+   enabled version of XPAT. If you have finding
+   aids with multiple languages and/or special characters, you have probably
+   thought this through already. However, if you have the occasionally e acute
+   (&eacute;)
+   in your SGML finding aid, you'll need to think about what you want to do with
+   these characters. A straight converstion from SGML to XML will probably convert
+   your character entities (for example, <span class="unixcommand">&amp;eacute;</span>)
+   in your files to numeric entities (for example, <span class="unixcommand">&amp;#233;</span>).
+   While this is valid, it will present a problem with regard to searching. XPAT
+   will treat this as a string of characters, and in order to search for bless&eacute;d,
+   you would need to key in bless&amp;#233;d. If all your special characters
+   are ISO Latin 1, you can convert them to their 8-bit equivalents and index
+   as usual. If you have a mixture, UTF-8 is the way to go. Again, this is merely
+   a heads up. Note that the sample finding aids supplied with the release were
+   chosen for their size and linking behaviors; they are sadly conventional
+   in their use of character entities (ampersand only, in fact).</p>
+<p>&nbsp;</p>
+</body>
+</html>

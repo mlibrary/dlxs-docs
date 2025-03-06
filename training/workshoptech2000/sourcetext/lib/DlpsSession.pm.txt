@@ -1,0 +1,406 @@
+
+package DlpsSession;
+
+use Exporter ();
+@ISA = qw( Exporter );
+
+use Apache::Session::DBI;
+use CollsInfo;
+use SearchHistory;
+#use Bookbag;
+
+# pull in any configuration information
+require "DlpsSession.cfg";
+
+# **********************************************************************
+# this module is a wrapper for the Apache::Session::DBI object
+
+# The structure of this object is:
+# DlpsSession Object->
+#    {'id'}            # session id
+#    {'data'}          # ref to regular Apache::Session::DBI object
+#                      #    we then use the tied hash interface to get at
+#                      #    the Apache::Session object. However, since we
+#                      #    prefer the object method interface, the tied hash
+#                      #    interface is here, while main and other modules use
+#                      #    the object methodes
+## **********************************************************************
+
+
+# ----------------------------------------------------------------------
+# NAME      : new
+# PURPOSE   : create new DlpsSession object
+#             
+# CALLED BY : 
+# CALLS     : DlpsSession->_initialize
+# INPUT     : 
+# RETURNS   : 
+# NOTES     : 
+# ----------------------------------------------------------------------
+
+sub new 
+{
+    my $class = shift;
+    my $self = {};
+    bless $self, $class;
+    $self->_initialize(@_);
+    return $self;
+}
+
+# ----------------------------------------------------------------------
+# NAME      : _initialize
+# PURPOSE   : create structure for DlpsSession object
+# CALLED BY : new
+# CALLS     : 
+# INPUT     : see new
+# RETURNS   : 
+# NOTES     : 
+# ----------------------------------------------------------------------
+
+sub _initialize 
+{
+    my $self = shift;
+    my $sid  = shift;
+    my %sessionHash = ();
+
+    # if there was no incoming session id
+    if ( ! $sid )
+    {   
+        tie %sessionHash, 'Apache::Session::DBI', undef,
+        { DataSource => 'dbi:CSV:'. $sessionFileDir,
+          UserName => 'dummyuser',
+          Password => 'password'
+        };
+    
+        ## set the session id for future use
+        $sid = $sessionHash{_session_id};
+
+        if ( $ENV{'DEBUG'} == 2 )
+        {     print( qq{<h1>SETTING SESSION ID to $sid</h1>} );       }
+    }
+    else
+    {
+        tie %sessionHash, 'Apache::Session::DBI', $sid,
+        { DataSource => 'dbi:CSV:' . $sessionFileDir,
+          UserName => 'dummyuser',
+          Password => 'password'
+        };
+        
+        if ( $ENV{'DEBUG'} == 2 )
+        {     print( qq{<h1>RETRIEVED OLD SESSION, ID $sid</h1>} );     }
+    }
+
+    # save the Apache::Session::DBI id and tied hash in this DlpsSession wrapper object
+    $self->{'id'} = $sid;
+    $self->{'data'} = \%sessionHash;
+
+}
+
+# ----------------------------------------------------------------------
+# NAME      : UpdateSessionColls
+# PURPOSE   : compare currently authorized collections with previously
+#             authorized collections as represented in the CollsInfoObject
+#             stored in the Session Object. If equal, do nothing. If different,
+#             user has likely re-authenticated; therefore update the Session's
+#             CollsInfo object.
+# CALLED BY : main
+# CALLS     : CollsInfoObject->GetRequestedCollIds()
+# INPUT     : ref to array of currently authorized collections; ref
+#             to Session hash
+# RETURNS   : 0 if not equal; 1 if equal
+# NOTES     : 
+# ----------------------------------------------------------------------
+
+sub UpdateSessionColls
+{
+    my $self           = shift;
+    my ( $collDbName, $authzdCollsRef, $reqCollsRef )= @_;
+    
+    my $sessionRef = $self->{'data'};
+#    my %sessionHash  = %$sessionRef;
+    
+    # if no CollsInfoObject exists in the session return false, need to build new CIO
+    if ( ! $sessionRef->{'cio'} )
+    {
+        $self->_RefreshCio( $collDbName, $authzdCollsRef, $reqCollsRef );
+    }
+    # otherwise, compare to see if there has been a change since last authorization
+    else
+    {
+        my $sessionCio = $sessionRef->{'cio'};
+        my @sessionColls = $sessionCio->GetCollIds();
+
+        # create sorted, joined string for both arrays of colls, and compare
+        my $authzdCollsString  = join ( '', sort ( @{ $authzdCollsRef } ) );
+        my $sessionCollsString = join ( '', sort ( @sessionColls ) );
+
+
+        if ( ( $ENV{'DEBUG'} eq 'session' ) ||
+             ( $ENV{'DEBUG'} eq 'all' ) )
+        {            
+            print ( qq{<br>\nComparing authzdColls: $authzdCollsString<br>\n} .
+                    qq{with<br>\n}. 
+                    qq{sessionColls: $sessionCollsString}
+                  );
+        }
+                       
+        if ( $authzdCollsString ne $sessionCollsString )
+        {
+            if ( ( $ENV{'DEBUG'} eq 'session' ) ||
+                 ( $ENV{'DEBUG'} eq 'all' ) )
+            {    print(qq{refreshing session\'s collinfo object<br>\n});   }
+
+            $self->_RefreshCio( $collDbName, $authzdCollsRef, $reqCollsRef );
+        }
+    }
+}
+
+
+# ----------------------------------------------------------------------
+# NAME         : _RefreshCio
+# PURPOSE      : remove any old CollsInfo object in the Session and create a new
+#                one from the current authorized colls list
+# CALLED BY    : DlpsSession->UpdateSessionColls
+# CALLS        : CollsInfo->new
+# INPUT        : refs to arrays of authorized and requested collections
+# RETURNS      : NONE
+# SIDE-EFFECTS : 
+# NOTES        : 
+# ----------------------------------------------------------------------
+
+sub _RefreshCio
+{
+    my $self = shift;
+    my ( $collDbName, $authzdCollsRef, $reqCollsRef ) = @_;
+
+    my $sessionRef = $self->{'data'};
+#    my %sessionHash  = %$sessionRef;
+
+    if ( $ENV{'DEBUG'} >= 1 )
+    {        print qq{<h1>Inside Refresh method</h1>\n};    }
+
+    # remove old CollsInfo object if there is one
+    if ( $sessionRef->{'cio'} )
+    {    delete ( $sessionRef->{'cio'} );      }
+
+    # create new one CollsInfo object and attach to session
+    my $cio = new CollsInfo ( 
+                             $collDbName,
+                             $authzdCollsRef,
+                             $reqCollsRef 
+                            );
+
+    $sessionRef->{'cio'} = $cio;
+}
+
+# ----------------------------------------------------------------------
+# NAME         : GetCollsInfoObject
+# PURPOSE      : retrieve the CollsInfo obj attached to this session
+# CALLED BY    : main
+# CALLS        : NONE
+# INPUT        : NONE
+# RETURNS      : CollsInfo object
+# GLOBALS      : 
+# SIDE-EFFECTS : 
+# NOTES        : 
+# ----------------------------------------------------------------------
+
+sub GetCollsInfoObject
+{
+    my $self = shift;
+
+    my $sessionRef = $self->{'data'};
+#    my %sessionHash  = %$sessionRef;
+    
+    return $sessionRef->{'cio'};
+}
+
+# ----------------------------------------------------------------------
+# NAME         : GetSessionId
+# PURPOSE      : retrieve the session id for this session
+# CALLED BY    : main
+# CALLS        : NONE
+# INPUT        : NONE
+# RETURNS      : session id
+# GLOBALS      : 
+# SIDE-EFFECTS : 
+# NOTES        : 
+# ----------------------------------------------------------------------
+
+sub GetSessionId
+{
+    my $self = shift;
+
+    return $self->{'id'};
+}
+
+
+# ----------------------------------------------------------------------
+# NAME      : Close
+# PURPOSE   : update time stamp on this DlpsSession and close it
+# CALLED BY : main
+# CALLS     : 
+# INPUT     : 
+# RETURNS   : 
+# NOTES     : 
+# ----------------------------------------------------------------------
+
+sub Close
+{
+    my $self = shift;
+    my $sessionRef = $self->{'data'};
+    
+    ## update last used info: get system date
+    my ($sec, $min, $hour, $mday, $mon, $year) = localtime(time);
+    my $date =  ($year+1900) . $mon . $mday;
+
+    $sessionRef->{'timestamp'} = $date;
+    
+    # release DlpsSession
+    untie ( %{$sessionRef} );
+}
+
+# ----------------------------------------------------------------------
+# NAME         : 
+# PURPOSE      : 
+#                
+# CALLED BY    : 
+# CALLS        : 
+# INPUT        : 
+# RETURNS      : 
+# GLOBALS      : 
+# SIDE-EFFECTS : 
+# NOTES        : 
+# ----------------------------------------------------------------------
+
+sub SetSessionItemByKey
+{
+    my $self = shift;
+    my ( $key, $item ) = @_;
+    
+    my $sessionRef = $self->{'data'};
+
+    ${$sessionRef}{$key} = $item;
+}
+
+# ----------------------------------------------------------------------
+# NAME         : 
+# PURPOSE      : 
+#                
+# CALLED BY    : 
+# CALLS        : 
+# INPUT        : 
+# RETURNS      : 
+# GLOBALS      : 
+# SIDE-EFFECTS : 
+# NOTES        : 
+# ----------------------------------------------------------------------
+
+sub GetSessionItemByKey
+{
+    my $self = shift;
+    my $key  = shift;
+    
+    my $sessionRef = $self->{'data'};
+
+    return ${$sessionRef}{$key};
+}
+
+# ----------------------------------------------------------------------
+# NAME      : SetBookbag
+# PURPOSE   : 
+# CALLED BY : main
+# CALLS     : 
+# INPUT     : 
+#             
+# RETURNS   : 
+# NOTES     : 
+# ----------------------------------------------------------------------
+
+sub SetBookbag
+{
+    my $self = shift;
+    my $bbo  = shift;
+    
+    $self->SetSessionItemByKey( 'bookbag', $bbo );
+}
+
+# ----------------------------------------------------------------------
+# NAME      : GetBookbag
+# PURPOSE   : 
+# CALLED BY : main
+# CALLS     : 
+# INPUT     : 
+#             
+# RETURNS   : 
+# NOTES     : 
+# ----------------------------------------------------------------------
+
+sub GetBookbag
+{
+    my $self = shift;
+    
+    my $bbo = undef;
+    
+    $bbo = $self->GetSessionItemByKey( 'bookbag' );
+    if ( ! defined( $bbo ) )
+    {
+        $bbo = new Bookbag;
+        $self->SetBookbag( $bbo );
+    }        
+    
+    return $bbo;
+}
+
+# ----------------------------------------------------------------------
+# NAME      : SetSearchHistory
+# PURPOSE   : 
+# CALLED BY : main
+# CALLS     : 
+# INPUT     : 
+#             
+# RETURNS   : 
+# NOTES     : 
+# ----------------------------------------------------------------------
+
+sub SetSearchHistory
+{
+    my $self = shift;
+    my $sho  = shift;
+    
+    $self->SetSessionItemByKey( 'searchhistory', $sho );
+}
+
+
+# ----------------------------------------------------------------------
+# NAME      : GetSearchHistory
+# PURPOSE   : 
+# CALLED BY : 
+# CALLS     : 
+# INPUT     : 
+#             
+# RETURNS   : 
+# NOTES     : 
+# ----------------------------------------------------------------------
+
+sub GetSearchHistory
+{
+    my $self = shift;
+    my $sho  = undef;
+    
+    $sho = $self->GetSessionItemByKey( 'searchhistory' );
+    if ( ! defined( $sho ) )
+    {
+        $sho = new SearchHistory;
+        $self->SetSearchHistory( $sho );
+    }        
+    
+    return $sho;
+}
+
+
+
+## ----------------------------------------------------------------------
+1;
+
+

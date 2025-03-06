@@ -1,0 +1,327 @@
+  <html>
+    
+   <head>
+      <title>DLXS Installation</title>
+      <link rel="stylesheet" href="../styles.css" type="text/css">
+    
+   </head>
+    <body class="mainpalette" leftmargin="10" topmargin="10" marginwidth="10" marginheight="10">
+      <h1>DLXS Installation</h1>
+   <UL>
+        
+      <LI>
+         <span class="mainpalette"><a href="#intro">Introduction</a></span>
+         <UL>
+            <LI>
+               <a href="#process">The install process</a> 
+         </UL>
+      </LI>
+      <LI>
+         <a href="#preinstallsteps">Pre-install steps</a>
+          
+         <UL>
+            <LI>
+               <a href="#installwhere">Decide where to install</a>
+            </LI>
+            <LI>
+               <a href="#extractingxpat">Extracting/Installing XPAT</a>
+            </LI>
+            <LI>
+               <a href="#otherbinaries">Other Binaries</a>
+            </LI>
+            <LI>
+               <a href="#reqperlmodules">Get Required Perl Modules</a>
+            </LI>
+         </UL>
+      </LI>
+      <LI>
+         <a href="#installsteps">Install steps</a>
+      </LI>
+      <LI>
+          <a href="#postinstallsteps">Post-install steps</a> 
+          
+         <UL>
+            <LI>
+               <a href="#sessiondirs">Create session directories (Optional)</a>
+            </LI>
+            <LI>
+               <a href="#permissions">Change directory and file permissions</a>
+            </LI>
+            <LI>
+               <a href="#apacheconfig">Apache config sample files</a>
+            </LI>
+            <LI>
+               <a href="#dbmove">Database moving</a>
+            </LI>
+            <LI>
+               <a href="#dbconversion">Database conversion</a>
+            </LI>
+         </UL>
+      </LI>
+   </UL>
+   <h2><a name="intro"></a>Introduction</h2>
+   <P>
+      The goal of the install process is to create an initial working system that can function using the sample collection data.
+   </P>
+   <P>
+      On the open source CD you'll find:
+   </P>
+   <UL>
+      <LI>
+         gzipped tarfiles for middleware and open source binaries
+      </LI>
+      <LI>
+         Installer.pl
+      </LI>
+      <LI>
+         an installation configuration file called main.cfg.
+      </LI>
+   </UL>
+   <P>
+      XPAT is on the second CD.
+   </P>
+   <P>
+      There are two methods to do the install:
+   </P>
+   <UL>
+        
+      <LI>
+         Run the installation directly from the CD.
+      </LI>
+      <LI>
+         Copy the open source tarfiles, Installer.pl and main.cfg from the CD a directory and run the install from that directory.
+      </LI>
+   </UL>
+   <P>
+      Installer only installs the middleware not the open source binaries or XPAT binaries
+   </P>
+   <h3><a name="process"></a>The install process</h3>
+   <P>
+      There are 3 parts to installing DLXS:
+   </P>
+   <OL>
+        
+      <LI>
+         Pre-install.  Preparation for middleware installation.
+      </LI>
+      <LI>
+         Running Installer
+      </LI>
+      <LI>
+         Post-install steps.  Operations not handled by Installer
+      </LI>
+   </OL>
+   <h2><a name="preinstallsteps"></a>Pre-install steps</h2><h3><a name="installwhere"></a>Decide where to install</h3>
+   <P>
+      Installer will ask for a path to a directory which initially should not exist, e.g. <tt>/usr/local/dlxs</tt>. Installer will create <tt>dlxs</tt> under <tt>/usr/local</tt> and populate it.
+   </P>
+   <P>
+       This path will be referred to as <b>DLXSROOT</b> and is accessed by the middleware via the DLXSROOT environment variable set by the web server. You should set DLXSROOT in your unix shell and for the Apache web server. Web server configuration info follows below. Setting DLXSROOT in the shell is necessary when running some DLXS command line scripts or the debugging the middleware. 
+   </P>
+   <P>
+      Super-user privileges are not required.  Only user write access to the directory containing DLXSROOT. Set your <b>umask</b> to 022 so files/directories will be created 664/775.
+   </P>
+   <h3><a name="extractingxpat"></a>Extracting/Installing XPAT</h3>
+   <P>
+      Uncompress and untar the XPAT tarfile where you would like to store the XPAT executables. For example, at many sites, this is /usr/local/. 
+   </P>
+   <P>
+        This directory should be in your shell $PATH. This enables Installer to offer you their actual locations when it prompts.  We'll illustrate the case where the CD and destination are local to one machine.  We'll assume <tt>/usr/local</tt>, <tt>xpat-5.2.3</tt>, Sun Solaris and a cdrom mount point of <tt>/cdrom</tt>:
+   </P>
+   <blockquote>
+        <pre><b>    cd /usr/local
+    zcat /cdrom/xpat-5.2.3/xpat_solaris_5-2-3.tar.gz | tar xf -</b>
+        </pre>
+      </blockquote>
+   <P>
+      Unlink any previous symlink from a version-specific directory of XPAT to an xpat directory (i.e., one without a specific version name. For example: 
+   </P>
+   <blockquote>
+        <pre><b>    cd /usr/local
+    rm xpat</b></pre>
+      </blockquote>
+   <P>
+      Create a symlink from the new version-specific directory of XPAT to an xpat 
+        directory (i.e., without version name). For example: 
+   </P>
+   <blockquote><pre><b>    cd /usr/local
+    ln -s xpat-5.2.3 /usr/local/xpat</b></pre>
+      </blockquote><h3><a name="otherbinaries"></a>Other Binaries</h3>
+   <P>
+      There are 3 other binaries which you may need. Install these on your system as required for the Classes you plan to use.
+   </P>
+   <UL>
+        
+      <LI>
+         c42pdf (required for TextClass page viewer)
+      </LI>
+      <LI>
+         tif2web (required for TextClass page viewer
+      </LI>
+      <LI>
+         mrsid_retrieve (required for ImageClass)
+      </LI>
+   </UL>
+   <P>
+      Installation steps for tif2web and mrsid_retrieve are identical to those for XPAT.
+   </P>
+   <P>
+      XPAT and tif2web are part of the DLXS distribution. Obtain the others as follows:
+   </P>
+   <UL>
+        
+      <LI>
+         c42pdf [ <a href="http://c42pdf.ffii.org/" target="external">http://c42pdf.ffii.org/</a>] We are currently using version 0.12 for Solaris 
+      </LI>
+      <LI>
+         mrsid_retrieve [ <a href="http://www.lizardtech.com" target="external">http://www.lizardtech.com</a>] 
+      </LI>
+   </UL>
+   <h3><a name="reqperlmodules"></a>Get Required Perl modules</h3>
+   <P>
+      We currently recommend you use the standard <b>Perl 5.8.0</b> release. 
+   </P>
+   <P>
+      In addition you'll need to install <a href="additionalperlmodules.html">additional modules</a> which can be obtained from <a href="http://www.cpan.org">CPAN</a>. 
+   </P>
+   <P>
+      There is currently an unresolved issue related to <kbd>SQL::Statement</kbd> and its existing versions <kbd>0.1021</kbd> and <kbd>1.005</kbd>. 
+      
+   <P>
+      Installer checks existence and version for each of these. Installer will list those not found and those with a version less than the recommended version.  Only those not in the standard distribution need to be fetched from CPAN.
+   </P>
+   <P>
+      You may see Installer complain about an already installed Perl module due to dependencies it has on other not yet installed Perl modules. These will go away when all reported Perl modules are installed.
+   </P>
+   <P>
+      <b>NOTE</b>: <tt>Socket</tt> and <tt>Net ::hostent</tt> are used directly by Installer and must be available in order to run Installer. 
+   </P>
+   <P>
+      With these 2 exceptions you may run the Installer without obtaining the additional modules so long as you fetch and install them before running the DLXS middleware.
+   </P>
+   <h2><a name="installsteps"></a>Install steps</h2>
+   <P>
+      <b>Install problems</b>. If for any reason the install is unsuccessful you may repeat the process. Simply delete the DLXSROOT directory (if it has been created) and run Installer again.
+   </P>
+   <P>
+      Using the example paths from earlier:
+   </P>
+   <blockquote>
+        <pre><b>  cd /usr/local/dlxs
+  perl Installer.pl</b></pre>
+      </blockquote>
+   <P>
+      Installer will run and prompt you to answer a number of questions. Installer.pl does not hard-code a Perl path so be sure to run it as an argument to the Perl command line as shown above.
+   </P>
+   <P>
+      There are several functions performed by Installer:
+   </P>
+   <UL>
+        
+      <LI>
+         create $DLXSROOT 
+      </LI>
+      <LI>
+         check Perl dependencies 
+      </LI>
+      <LI>
+         record installation locations of required and optional binaries as symlinks
+      </LI>
+      <LI>
+         extract and install middleware, including sample collection templates and data
+      </LI>
+      <LI>
+         modify <a href="configfiles.html">configuration files</a> using your choices for:
+          
+         <UL>
+            <LI>
+               the collection database store (e.g., mySQL, CSV.) for the collection and group related data 
+            </LI>
+            <LI>
+               the session database store 
+            </LI>
+            <LI>
+               a number of global variables used in the main Perl scripts that make up the DLXS middleware 
+            </LI>
+         </UL>
+      </LI>
+      <LI>
+         replace Perl "hash bang" strings in certain utility programs with local Perl path. 
+      </LI>
+      <LI>
+         substitute local value of DLXSROOT environment variable in sample data indexes. 
+      </LI>
+      <LI>
+         run processing scripts on installed sample data. 
+      </LI>
+      <LI>
+         generate localized example files.  Their content should be added, by the Sysadmin, to several non-DLXS configuration files, e.g.:
+          
+         <UL>
+            <LI>
+               Apache virtual host directives 
+            </LI>
+            <LI>
+               Unix cron job commands to manage session expiration 
+            </LI>
+         </UL>
+      </LI>
+   </UL>
+   <h2><a name="postinstallsteps"></a>Post-install steps</h2><h3><a name="sessiondirs"></a>Create session directories (Required for CSV sessions)</h3>
+   <P>
+      If your session database type is CSV, create the <em>session</em> and <em>sessionlock</em> subdirectories in the locations you specified when configuring DlpsSession.cfg and change the permissions on them to give write access for the UID of the web server.
+   </P>
+   <h3><a name="permissions"></a>Change directory and file permissions</h3>
+   <P>
+      The DLXSROOT/web/t/text/<b>gifcvtdir</b> is created by the Install program with 777 permissions. Optionally, you may want to change permissions on this directory to make it writeable only to the UID of the web server.
+   </P>
+   <P>
+      The files (sample database tables) in DLXSROOT/misc/db are installed with 666 permissions. Optionally, you may want to change permissions on these files to make them accessible only to the UID of the web server.
+   </P>
+   <h3><a name="apacheconfig"></a>Apache config sample files</h3>
+   <P>
+      Examine <tt><b>DLXSROOT/bin/installer/config-examples/httpd.conf.dlxs</b></tt>. You may integrate this segment into your Apache configuration file, adapting as necessary. It assumes you want to run your DLXS installation on a virtual host called dlxs.&lt;?dlxs-install var="hostname"?&gt; (where the part between the braces will be replaced with the hostname of the machine you installed on) and that you have created the proper DNS record, typically dlxs.&lt;?dlxs-install var="hostname"?&gt; IN CNAME &lt;?dlxs-install var="hostname"?&gt;
+   </P>
+   <P>
+      Take a look at this Apache <a href="virtualhost.html">virtual host configuration</a> for one of the workshop users.
+   </P>
+   <P>
+      If you would like to run your DLXS installation on a different
+        virtual host, please consult your Apache documentation.
+   </P>
+   <P>
+      <i>You can </i> comment-out the Basic Authentication section in httpd.conf.dlxs Basic Authentication for the collmgr. If you disable this be aware that the collmgr requires some form of authentication which sets the <tt><b>REMOTE_USER</b></tt> variable for proper operation. So, to run "out of the box", the easiest thing to do is to use the "Basic Authentication" sample configuration.
+   </P>
+   <P>
+      The file <tt><b>DLXSROOT/bin/installer/config-examples/htpasswd.dlxs</b></tt> codes the administrative user ID <b><i>dlxsadm</i></b> for the collmgr with the password <b><i>collmgr. </i> </b>Change the password to a different value using the Apache program:
+   </P>
+   <blockquote>
+        
+   <P>
+       <tt><b>htpasswd passwordfile username</b></tt>
+   </P>
+   </blockquote>
+   <P>
+      where <font face="Courier New, Courier, mono">passwordfile</font> is APACHE/conf/htpasswd.dlxs and <font face="Courier New, Courier, mono">username</font> is dlxsadm. Note: place htpasswd.dlxs in the <tt>conf</tt> subdirectory of you Apache installation.
+   </P>
+   <h3><a name="dbmove"></a>Database moving</h3>
+   <P>
+      For initial installations, if you chose MySQL for your database, use <a href="http://docs.dlxs.org/collmeta/dlxs-dbmove.xml">$DLXSROOT/bin/db/dbmove</a> to move the sample CSV database into your MySQL database before you try to run the sample data.  This assumes you've configured a MySQL database as described in the <a href="http://docs.dlxs.org/intro/dlxs-install.xml#mysqlconfig">MySQL database configuration documentation</a>.
+   </P>
+   <h3><a name="dbconversion"></a>Database conversion</h3>
+   <P>
+      If you are installing DLXS for the first time, conversion is not an issue.
+   </P>
+   <P>
+      If you have a Release 9 DLXS installation an upgrade utility called <b><font face="Courier New, Courier, mono">upgrade_2_3</font></b> in DLXSROOT/bin/db can be used to update your version 2 database to version 3.  See documentation on database functionality for <a href="http://docs.dlxs.org/collmeta/dlxs-upgrade.xml">complete instructions</a>
+   </P>
+   <P>
+      If you have a Release 8 DLXS installation an upgrade utility called <b><font face="Courier New, Courier, mono">upgrade_1_2</font></b> in DLXSROOT/bin/db can be used to update your version 1 database to version 2.  See documentation on database functionality for <a href="http://docs.dlxs.org/collmeta/dlxs-upgrade.xml">complete instructions</a>
+   </P>
+   <P>
+      If you have a DLXS installation that predates release 8, a conversion utility, called <b><font face="Courier New, Courier, mono">dbconv</font></b> in DLXSROOT/bin/db can be used to capture the data in your existing colldb files and merged into the CSV tables located in DlXSROOT/misc/db.  See documentation on database functionality for <a href="http://docs.dlxs.org/collmeta/dlxs-dbconv.xml">complete instructions</a>. 
+   </P>
+   </body>
+  
+</html>
+  

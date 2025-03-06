@@ -1,0 +1,166 @@
+<html>
+  <head>
+    <title>Subclassing DLXS Class Modules</title>
+    
+    <link href="../dlxsdocs.css" rel="stylesheet" type="text/css"> </head>         <body>
+    <div class="pageTitle">DLPS Classes</div>
+    
+    <h1>Subclassing in TextClass -- An Example </h1>
+    <p>DLXS middleware is written in Object-Oriented Perl. Base classes objects have default member data and generally applicable methods. Collection specific behavior is implemented by writing subclasses of the base class. Many look and feel issues can be addressed by changing collection specific XSL changes.  However, different or additional searches or entirely new functionality will require 
+      Perl code modification. This is accomplished through subclassing.</p>
+    <p>There are many useful examples of subclassing in the <tt>DLXSROOT/cgi/t/text/TextClass</tt> subdirectory. These examples can be extended to all the classes of middleware.   As an example, consider how <tt>DLXSROOT/cgi/t/text/TextClass/MachynTC.pm</tt> changes the number of characters returned in a KWIC snippet and changes the title for an item with a specitic ID.</p>
+    
+    <p>The general idea (which was followed for <TT>MachynTC</TT>) is the following:</p>
+    
+    <ol>
+      <li>Make a subclass of <tt>TextClass.pm</tt>. By convention we name TextClass subclasses  
+        based on the collection id. For the purposes of this discussion, if your 
+        collection id is <TT>machyn</TT>, the subclass module would be called <tt>MachynTC.pm</tt>. 
+        This file should be in the <tt>DLXSROOT/cgi/t/text/TextClass</tt> subdirectory. </li>
+      <li>
+        The subclass module needs to have certain Perl code  early on 
+        that makes this file a subclass of <tt>TextClass.pm</tt>. See below. 
+      </li>
+      <li>
+        In the collmgr, enter <tt>TextClass/MachynTC</tt> in the <tt>subclassmodule</tt> 
+        field. This will tell the middleware to instantiate an TextClass object from the MachynTC subclass for this collection.
+      </li>
+    </ol>
+    
+    <p>The easiest way to create a TextClass subclass module is to copy  an 
+      existing subclass module. The simplest version is <tt>SampleTC.pm</tt>.</p>
+ 
+    <pre>
+   package SampleTC;
+   BEGIN
+   {
+       # enable strict under development
+       if ( $ENV{'DLPS_DEV'} )
+       {
+           require &quot;strict.pm&quot;;
+           strict::import();
+       }
+   }
+   use TextClass ();
+   use DlpsUtils qw( :DEFAULT );
+</pre>
+    <font color="red">Remove the following line or change to "use" other subclass needed modules</font><pre>
+   use Foo;
+
+   # Subclass of TextClass.pm module
+   use vars qw( @ISA );   
+   @ISA = qw( TextClass );
+   
+   # ----------------------------------------------------------------------
+   # NAME      : new (Defaults to BaseClass::new
+   # PURPOSE   : create new SampleTC object
+   #
+   # CALLED BY : main
+   # CALLS     : SampleTC-&gt;_initialize
+   # INPUT     : see TextClass::_initialize
+   # RETURNS   : 
+   # NOTES     :
+   # ----------------------------------------------------------------------
+   # ----------------------------------------------------------------------
+   # NAME      : _initialize
+   # PURPOSE   : create structure for TextClass object
+   # CALLED BY : new
+   # CALLS     :
+   # INPUT     : see new
+   # RETURNS   :
+   # NOTES     :
+   # ----------------------------------------------------------------------
+   sub _initialize
+   {
+       my $self = shift;
+       $self-&gt;SUPER::_initialize( @_ );
+   }
+   ## ----------------------------------------------------------------------
+   1;
+   </pre>
+    
+    
+    <p>After copying the file, you will need to change the package name to match 
+      the collection. In the example case,</p>
+    <pre>package MachynTC;</pre>
+    <p>You can replace <tt>use Foo;</tt> with any <tt>use ... </tt> statements you 
+      might need, that the base class (<tt>TextClass.pm</tt>) doesn't already <tt>use</tt></p>
+    <p>The code that refers to the <tt>@ISA</tt> array is needed to tell Perl what base 
+      class this module <i>is a</i> subclass of. This does not need changing.</p>
+    <p>Now, any method that you create here that has the same name as a method 
+      in the base class (<tt>TextClass.pm</tt>) will be run instead of the method in the 
+      base class.</p>
+    <p>Any method you create here that does not exist in the base class can also 
+      be run by the middleware when dealing with this collection. </p>
+    <p>Of course, when writing methods, the first parameter passed in, implicitly, 
+      is the object itself. So, <tt>$self = shift;</tt> should always be the first line 
+      in any class's method.</p>
+    <p>Finally, at any time, you can call <tt>$self-&gt;SUPER::NameOfMethodInBaseClass( 
+      )</tt>. This will run the method that is defined in the base class. Often it 
+      is convenient to create a method by the same name as the base class's method, 
+      run the base class version of it (via <tt>SUPER::</tt>) and then add some more code.
+      Or vice versa; 
+      that is, run some code and then call the base class method (via <tt>SUPER::</tt>).</p>
+    <p>The first example of method overriding in <tt>MachynTC.pm</tt> changes the number of characters returned from XPAT in a KWIC snippet.   Note that it overrides the <tt>_initialize()</tt> method to change the value of some member data from its default in <tt>TextClass.pm</tt> to the value required in MachynTC.   <tt>MachynTC::_initialize()</tt> calls the base class <tt>_initialize()</tt> method as <tt>SUPER::_initialize()</tt> BEFORE changing the <tt>psetoffset</tt> member data value so that the new value will be in effect.</p>
+    <pre>
+
+     sub _initialize
+     {
+         my $self = shift;
+
+         $self->SUPER::_initialize( @_ );
+
+         # --- custom --------------------------------------------
+         # Increase the number of characters returned in the kwic 
+         # so that the largest ADD element will be returned intact
+         # (should the hit be in the middle of a kwic).
+         # This is to allow correct special formatting of the ADD.
+         # -------------------------------------------------------
+
+         my $maxADDsize = 650;
+         $self->{'psetoffset'} = $maxADDsize;
+         $self->{'psetstring'} =
+             $self->{'psetoffset'} .
+                 qq{ shift.-} .
+                     int(($self->{'psetoffset'}) / 2);
+
+         # --- end custom ----------------------------------------
+     }
+
+    </pre>
+    
+
+    <p>The next example of method overriding in <tt>MachynTC.pm</tt> changes
+    the title in the XML returned by XPAT for one specific item. Note that the <tt>_HeaderFilter_XML</tt> here performs the title substitution before invoking the base class method to do the heavy lifting of processing the entire header XML.  In this way, code duplication is avoided, making the code easier to maintain.  If the some additional element in the header needs to be expressed in the otput, the code can be changed in the base class and MachynTC will benefit from the new code without additional effort.</p>
+
+    <pre>
+     sub _HeaderFilter_XML
+     {
+         my $self = shift;
+         my ( $cgi, $dso, $headRef ) = @_;
+
+         my $NEWTITLE = "British Library Cotton MS. Vitellius F. v.";
+
+         if( $cgi->param('idno') eq  "5076866.0001.001"
+             &amp;&amp; $cgi->param('view') eq "image" )
+         {
+             $$headRef =~ s,(<TITLE [^>]*>)[^<]*(</TITLE>),$1$NEWTITLE$2,gs;
+         }
+
+         $self->SUPER::_HeaderFilter_XML( $cgi, $dso, $headRef );
+     }
+
+    </pre>
+
+
+    <p> Strictly speaking, it would be
+    preferable to fix the data but this may not always be possible or
+    easy.  And this serves as a good example of the kind of changes
+    subclassing can implement.</p>
+
+    <p>Remember that, for a collection to use subclassed code, you
+      need to update the <tt>subclassmodule</tt> field for this collection's entry
+      in the <a href="../collmeta/collmgr-fields.html#subclassmodule">Collection Manager</a>.</p>
+  </body>
+  
+</html>

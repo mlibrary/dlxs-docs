@@ -1,0 +1,91 @@
+<html>
+  <head>
+    <title>DLXS Database Upgrade Utility</title>
+    
+    
+    
+    <link href="../dlxsdocs.css" rel="stylesheet" type="text/css">
+  </head>         <body>
+    <div class="pageTitle">DLXS Database Upgrade Utility</div>
+    
+    <h1>Overview</h1>
+    <p>This document describes the upgrade process for the dlxs database. This document assumes you are upgrading from a version 5 MySQL database used with DLXS release 12, 12a to a version 6 database MySQL for DLXS release 13. Please consult previous release documentation at <a href="http://docs.dlxs.org/">http://docs.dlxs.org/</a> for upgrading from earlier database versions. Also, please note that the CSV database option is not supported in DLXS release 13, database version 6.  </p> 
+    <p><font color="red">If you are currently running a version 5 CSV database you must create an empty MySQL database and run the script <i>$DLXSROOT/bin/db/dbmove -s CSV -t MySQL</i> to populate it before following the steps below.  Please refer to the <a href="dbmove.html">DBMOVE documentation</a> for this step.</font></p>
+
+    <p>Each version of the database is meant to be run with a specific version of DLXS.  For example, version 5 of the database works only with versions 12 and 12a of DLXS.  If you need to have two or more versions of DLXS running, you will need to set up a database with the appropriate version for each DLXS installation.  If this is of interest to you, contact DLXS Help for guidance in doing this.</p>
+
+    <p>Below is a series of steps to follow to upgrade your database.  You should upgrade the database after installing the DLXS middleware since the upgrade script is part of the installation and depends on values you supply during installation.</p>
+    <h1>Step 1. Dump a copy of your version 5 MySQL database</h1>
+    <p>Use the <code>mysqldump</code> command line client to dump a copy of your current version 5 MySQL DLXS database. For example:</p>
+    <p> <code>% mysqldump -u dlxsadm -p dlxs_v5 &gt; dlxs_v5_dump.sql<code></p>
+
+    <h1>Step 2. Create an empty MySQL database</h1>
+    <p>Create an empty MySQL database specifying the name you want it to have for your DLXS release 13 installation, e.g.  <code>dlxs_v6</code>.  Please refer to this <a href="../installation/index.html#mysqlconfig">section</a> of the installation instructions for information on creating a MySQL database.</p>
+
+    <h1>Step 3. Populate the empty MySQL database with the dump</h1>
+    <p> Use the <code>mysql</code> command line client to load the dump of your version 5 DLXS database into the empty database that will become a version 6 DLXS database after you upgrade it.</p>
+    <p><code>% mysql -u dlxsadm -p dlxs_v6 &lt; dlxs_v5_dump.sql<code></p>
+
+    <h1>Step 4.  Run the upgrade_5_6 script</h1>
+    <p>Bring the database into which you loaded the dump up to version 6 using the $DLXSROOT/bin/db/upgrade_5_6 script.  There are no command line parameters to the script.  It reads the server name, database name, username, and password out of $DLXSROOT/lib/LibGlobals.cfg as supplied by you at install time.   </p>
+     <p><code>% cd $DLXSROOT/bin/db; ./upgrade_5_6<code></p>
+
+    <p><table border="1" width="50%">
+      <tbody align="LEFT">
+        <tr style="bold">
+          <th>IMPORTANT NOTE</th>
+          </tr>
+          <tr>
+            <td>Due to schema changes to the dynamic browse tables (ItemBrowse, ItemBrowseCounts, ItemColl) that are not backward compatible, the upgrade process will create new <b>empty</b> versions of these tables.  Following the upgrade process it will be necessary to re-generate the data rows for these tables for collections other than the sample data collections <tt>sampletc_utf8</tt>, <tt>sampleic</tt>, and <tt>samplefa</tt>.  Please consult the <a href="browse.html#PopulatingTables">dynamic browse database building documentation</a></td>
+          </tr>
+        </tbody>
+      </table>
+      
+      <p>Once the upgrade is completed you will have a version 6 DLXS database compatible with release 13 of the DLXS middleware.</p>
+      <p>The following is a list of changes that the upgrade script makes:</p>
+      <table border="1">
+        <tbody align="LEFT">
+          <tr style="bold">
+            <th>SQL Command</th>
+          </tr>
+          <tr><td>DROP TABLE `DbStructure`</td></tr>
+          <tr><td>DROP TABLE `Bkup_BibClass`, `Bkup_BibClassGroup`, `Bkup_Collection`, `Bkup_FindaidClass`, `Bkup_FindaidClassGroup`, `Bkup_GroupColl`, `Bkup_GroupData`, `Bkup_ImageClass`, `Bkup_ImageClassGroup`, `Bkup_TextClass`, `Bkup_TextClassGroup`</td></tr>
+          <tr><td>ALTER TABLE `ImageClass` DROP `viewtabform`</td></tr>
+          <tr><td>UPDATE `Collection` SET `appmodule`='ImageApp' WHERE `appmodule`='ImageApp/mysqlImageApp'</td></tr>
+          <tr><td>ALTER TABLE `Collection` ADD COLUMN `authsystems` text</td></tr>
+          <tr><td>UPDATE Collection SET authsystems='um'</td></tr>
+          <tr><td>ALTER TABLE `ImageClass` ADD COLUMN `range_srchflds` text NULL DEFAULT NULL</td></tr>
+          <tr><td>ALTER TABLE `ImageClass` ADD COLUMN `privileged_users` text NULL DEFAULT NULL</td></tr>
+          <tr><td>ALTER TABLE `Collection` ADD COLUMN `browseupdatemodule` varchar(250) NULL DEFAULT NULL</td></tr>
+          <tr><td>UPDATE `Collection` SET `browseupdatemodule`='BrowseUpdate/ImageMysqlBU' WHERE `class`='image' AND (`browseupdatemodule` IS NULL OR `browseupdatemodule`='')</td></tr>
+          <tr><td>UPDATE `Collection` SET `browseupdatemodule`='BrowseUpdate/FindaidBU' WHERE `class`='findaid' AND (`browseupdatemodule` IS NULL OR `browseupdatemodule`='')</td></tr>
+          <tr><td>UPDATE `Collection`, `TextClass` SET `browseupdatemodule`= CASE WHEN `encodingtype`='monograph' THEN 'BrowseUpdate/MonographBU' WHEN `encodingtype`='serialissue' THEN 'BrowseUpdate/SerialIssueBU' WHEN `encodingtype`='serialarticle' THEN 'BrowseUpdate/SerialArticleBU' ELSE NULL END WHERE `Collection`.`collid`=`TextClass`.`collid` AND (`browseupdatemodule` IS NULL OR `browseupdatemodule`='')</td></tr>
+          <tr><td>ALTER TABLE `GroupData` DROP COLUMN `ignoreon`</td></tr>
+          <tr><td>DROP TABLE `ItemBrowse`</td></tr>
+          <tr><td>CREATE TABLE `ItemBrowse` (`idno` varchar(250) default NULL, `collid` varchar(250) default NULL, `field` varchar(250) default NULL, `value` varchar(250) default NULL, `rank` varchar(250) default NULL, KEY `idno` (`idno`), KEY `collid` (`collid`), KEY `field` (`field`), KEY `value` (`value`))</td></tr>
+          <tr><td>DROP TABLE `ItemBrowseCounts`</td></tr>
+          <tr><td>CREATE TABLE `ItemBrowseCounts` (`collid` varchar(250) default NULL, `field` varchar(250) default NULL, `value` varchar(250) default NULL, `count` int(11) default NULL, KEY `field` (`field`), KEY `value` (`value`), KEY `collid` (`collid`))</td></tr>
+          <tr><td>DROP TABLE `ItemColl`</td></tr>
+          <tr><td>CREATE TABLE `ItemColl` (`idno` varchar(250) NOT NULL default '', `collid` varchar(250) default NULL, `moddate` date default NULL, `xmlmeta` text, `pagesequence` int(11) default NULL, KEY `idno` (`idno`), KEY `collid` (`collid`))</td></tr>
+          <tr><td>ALTER TABLE `PageviewFig` ADD INDEX(`seq`)</td></tr>
+          <tr><td>DROP TABlE `sessions`</td></tr>
+          <tr><td>CREATE TABLE `sessions` (`id` varchar(32) NOT NULL default '', `a_session` longblob, PRIMARY KEY (`id`))</td></tr>
+          <tr><td>DROP TABLE IF EXISTS `BookBagDB_upgradetemp`</td></tr>
+          <tr><td>CREATE TABLE `BookBagDB_upgradetemp` DEFAULT CHARSET=utf8 SELECT * FROM `BookBagDB`</td></tr>
+          <tr><td>ALTER TABLE `BookBagDB_upgradetemp` MODIFY `id` int(10) unsigned NOT NULL AUTO_INCREMENT PRIMARY KEY</td></tr>
+          <tr><td>ALTER TABLE `BookBagDB_upgradetemp` MODIFY `modified` timestamp NOT NULL default CURRENT_TIMESTAMP on update CURRENT_TIMESTAMP</td></tr>
+          <tr><td>ALTER TABLE `BookBagDB_upgradetemp` ADD INDEX `username_2` (`username`,`class`)</td></tr>
+          <tr><td>ALTER TABLE `BookBagDB_upgradetemp` ADD INDEX(`shared`)</td></tr>
+          <tr><td>ALTER TABLE `BookBagDB_upgradetemp` ADD INDEX(`class`)</td></tr>
+          <tr><td>ALTER TABLE `BookBagDB_upgradetemp` ADD INDEX(`temp`)</td></tr>
+          <tr><td>DROP TABlE `BookBagDB`</td></tr>
+          <tr><td>ALTER TABLE `BookBagDB_upgradetemp` RENAME TO `BookBagDB`</td></tr>
+          
+        </tbody>
+      </table>
+      
+      <p></p>
+      
+  </body>
+  
+</html>

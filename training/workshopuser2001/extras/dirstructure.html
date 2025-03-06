@@ -1,0 +1,83 @@
+<HTML>
+<HEAD>
+<TITLE>Directory Structure</TITLE>
+<META http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<LINK rel="stylesheet" href="../styles.css">
+</HEAD>
+<BODY class="mainpalette">
+<H2>Directory Structure</H2>
+<H3>Under the DLXSROOT ...</H3>
+<UL>
+  <LI> <B>web/</B> 
+    <UL>
+      <LI><I><B>c/class</B></I> (html pages, html templates, other web subdirectories) 
+        <UL>
+          <LI> <B>gifcvtdir/</B> (must be owner <B>nobody</B> so it is writeable 
+            by the web server)</LI>
+        </UL>
+      </LI>
+    </UL>
+  </LI>
+  <UL>
+    <LI><B>c<I>/collection</I></B> 
+      <UL>
+        <LI> images/ (symlink to directories in DLXSROOT for thumbnails and other 
+        </LI>
+      </UL>
+    </LI>
+  </UL>
+  <LI> <B>cgi</B> 
+    <UL>
+      <LI><B>/<I>c/class</I></B> (middleware perl scripts, related files; e.g., 
+        subclasses, cfg files)</LI>
+      <LI><B>/<I>c/class</I></B> (middleware perl scripts, related files; e.g., 
+        subclasses, cfg files)</LI>
+    </UL>
+  </LI>
+  <LI> <B>lib/</B> (perl modules)</LI>
+  <LI> <B>obj/ </B>(sgml files, related page images, pageview.dat)</LI>
+  <UL>
+    <LI><I><B> c/collection/ </B></I>(collection based organization)</LI>
+    <LI> <B><I>a/b/c/abc1234/ </I></B>(notis id/dlps id based organization)</LI>
+    <LI><B>lib/</B> 
+      <UL>
+        <LI> <B>db/</B> (colldb, groupsdb)</LI>
+        <LI> <B>maps/</B> (TerminologyMapper files) </LI>
+      </UL>
+    </LI>
+  </UL>
+  <LI> <B>idx/</B></LI>
+  <UL>
+    <LI> <I><B>c/collection/ </B></I>(XPat index files; e.g., collection.dd, collection.idx. 
+      collection.rgn) 
+      <UL>
+        <LI><B> WW/</B> (Xpat index files for collection's wordwheel)</LI>
+      </UL>
+    </LI>
+  </UL>
+  <LI> <B>bin/</B> 
+    <UL>
+      <LI><I><B>c/class/ </B></I>(pageview preparation scripts, etc.)</LI>
+      <LI><B><I>c/collection/</I></B> (collection preparation scripts) 
+        <UL>
+          <LI> WW/ (preparation scripts for collection's Wordwheel) </LI>
+        </UL>
+      </LI>
+    </UL>
+  </LI>
+</UL>
+<H3> <A NAME="virtualHostInfo"></A>Virtual Hosts in Web Server</H3>
+<UL>
+  <LI> DLXSROOT environment variable </LI>
+  <LI>DocumentRoot, ScriptAlias</LI>
+</UL>
+<H3>DLXS miscellaneous<B> files &amp; </B>directories of note</H3>
+<UL>
+  <LI> <B>/tmp/sessions/ &amp; </B> <B>/tmp/sessionslock/</B> (Session data files 
+    and lock files. Directories and files must be owned by <B>nobody</B> so the 
+    web server can write to them.)</LI>
+</UL>
+<UL>
+</UL>
+</BODY>
+</HTML>

@@ -1,0 +1,822 @@
+#!/l/local/bin/perl 
+
+## ----------------------------------------------------------------------
+## This script is a general wrapper for much of the functionality of the
+## TextClass. Most of the real work is done in the TextClass.pm with support
+## from TextClassUtils, and other more general modules like DlpsSession, ProcIns, 
+## etc.
+##
+## ----------------------------------------------------------------------
+
+BEGIN 
+{
+    # this is commented out until we can get mod_perl and auth to work simultaneously
+#    use Apache();
+#    use lib "/l/local/perl-5.005_03/lib/site_perl/5.005/sun4-solaris/Apache" ;
+#    unshift ( @INC, "/l/local/perl/lib/5.00503" );
+
+    # this allows us to temporarily get to the GetDevUsernameFromScript
+    # routine with which we can expand a development path for INC
+    # This is so that, in a browser, using the regular script name gets
+    # "checked in" behavior, while using the symlinked blah-idx-uniqname
+    # script in the URL gets us working code behavior.
+    require $ENV{'DLXSROOT'} . '/lib/DevUtils.pm';
+    my ( $userpath ) = &GetDevUsernameFromScript;
+    
+    unshift ( @INC, $ENV{'DLXSROOT'} . '/lib' . $userpath . '/' );
+}
+
+# ----------------------------------------------------------------------
+# remove in production
+use strict;  
+
+# ----------  mod_perl related ----------
+use Symbol;               # seems to be using proper Symbol, after changing path in startup.pl
+
+# this is commented out until we can get mod_perl and auth to work simultaneously
+# use CGI::Apache qw( :standard :html3 escape unescape escapeHTML );    
+use CGI qw( :standard :html3 escape unescape escapeHTML );    
+
+# ----------  DLPS related ----------
+
+#use TextClassGlobals;
+
+use CollsInfo;
+use DlpsSession;
+use Bookbag;
+use ProcIns;
+use TextClassUtils;
+
+use DlpsUtils qw( :DEFAULT );
+
+# **********************************************************************
+#                           MAIN
+# **********************************************************************
+
+# ----------  globals ----------
+# these are defined in text-idx.cfg
+
+
+
+use vars qw( $gReq $gCgi
+             $gCollDbName
+             @gRequestedColls @gAuthzdColls
+        
+             $gDefaultStart
+             $gDefaultSliceSize
+
+             %gPageToSearchHash
+             %gHtmlTemplates
+
+             $gRequestingHost
+             $gCio 
+             $gBbo
+             $gSho
+             $gDso $gSessionId 
+             $gHtmlDocRoot
+             @gGenres @gPeriods @gLanguages @gGenders
+             %gERRORS
+
+           );
+
+
+
+# in mod_perl, need to explicitly wipe out all globals
+&ZeroOutGlobals;
+
+
+# this must be after ZeroOutGlobals routine
+require "text-idx.cfg";            # configuration file (with use's)
+
+
+# ----------------------------------------------------------------------
+# this is commented out until we can get mod_perl and auth to work simultaneously
+#      GLOBAL REQUEST AND CGI OBJECTS
+#if ( $ENV{'MOD_PERL'} )
+#{    $gReq = Apache->request;    }    # $gReq, the request object, is global    
+
+#if ( $ENV{'MOD_PERL'} )
+#{
+#    $gCgi = new CGI::Apache;     # create the classic CGI object, get all URL parameters
+#}
+#else
+#{
+    $gCgi = new CGI;     # create the classic CGI object, get all URL parameters
+#}
+
+$gRequestingHost = &FindHostName();   # get host name in case need to find other machine
+&CleanCgiParameters( $gCgi );         # remove all undef or empty URL parameters
+
+
+# set environment var so that all modules can access it
+if ( $gCgi->param('debug') )
+{   &DlpsUtils::SetupHtmlDebugging( $gCgi->param( 'debug' ) );     }
+
+# ----------------------------------------------------------------------
+# determine what is authorized and what is requested
+# ----------------------------------------------------------------------
+# If running in debugger (outside of web environment), set authzd colls
+# by hardcoding, otherwise, let auth system do the work
+if ( ! exists $ENV{'AUTHZD_COLL'} )
+{
+    $ENV{'AUTHZD_COLL'} = 'ampo20:yeats:daap20:gandf:voltaire:bosnia:teso' ;
+    
+}
+# ----------------------------------------------------------------------
+
+@gAuthzdColls = &DlpsUtils::GetAuthListFromENV( );
+
+
+@gRequestedColls = &CollectionResolution ( $gCgi, \@gAuthzdColls );         
+
+$gDso = &StartSession ( $gCgi );                          # set get or create session
+$gSessionId = $gDso->GetSessionId( );
+
+$gDso->UpdateSessionColls( $gCollDbName, 
+                           \@gAuthzdColls, 
+                           \@gRequestedColls ); # attach collection info to session
+
+$gCio = $gDso->GetCollsInfoObject;              # bring in session's CollsInfo obj as global
+$gCio->AddTextClassObjects( );                  # add TextClass objects to CollsInfo object
+
+$gSho = $gDso->GetSearchHistory( );              # bring in session's SearchHistory obj as global
+
+#$gBbo = $gDso->GetBookbag( );                   # bring in session's Bookbag obj as global
+
+# --------------------------------------------------
+&Debug;                                         # if debug is needed, dump info
+&ValidityChecks;                                # make sure request is doable
+
+
+my $htmlPageRef = &ProcessRequest;              # process request, returns a ref to an htmlpage
+&DlpsUtils::OutputHtmlPage( $htmlPageRef );     # 
+
+&KillXPatProcesses;                             # this done before removal of TextClass objs from $gCio
+
+$gCio->RemoveTextClassObjects( );               # remove TextClass objects to CollsInfo objects
+                                                # since we don't need to store them with session
+
+
+
+$gDso->Close( );                                # other clean up here? Apache::clean... ?
+
+# this is commented out until we can get mod_perl and auth to work simultaneously
+#&Apache::exit();    
+
+exit;
+
+
+# **********************************************************************
+#      END OF MAIN
+# **********************************************************************
+
+
+
+# **********************************************************************
+#      SUBROUTINES
+# **********************************************************************
+
+# ----------------------------------------------------------------------
+# NAME         : ZeroOutGlobals
+# PURPOSE      : under mod_perl, all instances of this cgi run under
+#                one perl process. To avoid one stepping on the other,
+#                wipe out all globals
+# CALLED BY    : main
+# CALLS        : NONE
+# INPUT        : NONE
+# RETURNS      : NONE
+# GLOBALS      : all globals
+# SIDE-EFFECTS : 
+# NOTES        : Even though mod_perl is not implemented at the moment
+#                this doesn't hurt.
+# ----------------------------------------------------------------------
+
+sub ZeroOutGlobals
+{
+    $gReq            = '';
+    $gCgi            = '';
+    $gCollDbName     = '';
+    %gHtmlTemplates  = ();
+    @gRequestedColls = ();
+    @gAuthzdColls    = ();
+    $gRequestingHost = '';
+    $gCio            = '';
+    $gDso            = '';
+    $gBbo            = '';
+    $gSho            = '';
+    $gSessionId      = '';
+    $gHtmlDocRoot    = '';
+    @gGenres         = ();
+    @gPeriods        = ();
+    @gLanguages      = ();
+    @gGenders        = ();
+    %gERRORS         = ();
+}
+
+
+# ----------------------------------------------------------------------
+# NAME      : Debug
+# PURPOSE   : when debug set, dump environment variables, URI variables,
+#             and collection information (from CollsInfo object)
+# CALLED BY : 
+# CALLS     : 
+# INPUT     : 
+# RETURNS   : 
+# NOTES     : 
+# ----------------------------------------------------------------------
+
+sub Debug
+{
+    # ----------------------------------------------------------------------
+    #        debugging requested?
+    if ( $ENV{'DEBUG'} )
+    {
+        print $gCgi->dump();
+    
+        if ( ( $ENV{'DEBUG'} eq 'env' ) ||
+             ( $ENV{'DEBUG'} eq 'all' ) )
+        {
+            print( &DlpsUtils::DumpEnvVars );
+            print( &CGI::br() . &CGI::hr() );
+        }
+        if ( ( $ENV{'DEBUG'} eq 'collsinfo' ) ||
+             ( $ENV{'DEBUG'} eq 'all' ) )
+        {
+            print "<br>Authorized Colls: <br>" . (join ( "<br>\n", @gAuthzdColls ) );
+            print "<br>Requested Colls: <br>" . (join ( "<br>\n", @gRequestedColls ) );
+                                                                                
+            print( $gCio->HtmlDumpCollsInfo() );
+            print( &CGI::br() . &CGI::hr() );
+        }        
+    }
+}
+
+# ----------------------------------------------------------------------
+# NAME         : HandlePage
+# PURPOSE      : deliver a cgi-generated html page / form
+# CALLED BY    : main
+# CALLS        : TextClassUtils::HandleGeneralProcIns, HandleSearchHistoryPage
+#                HandleSimplePage, HandleAdvancedSearchPage, HandleExtendedPage
+# INPUT        : CGI, CollsInfo, and DlpsSession objects
+# RETURNS      : ref to html page
+# GLOBALS      : 
+# SIDE-EFFECTS : 
+# NOTES        : 
+# ----------------------------------------------------------------------
+
+sub HandlePage
+{        
+    my ( $cgi, $cio, $dso ) = @_;
+    
+    my $htmlPage = &GetHtmlTemplateText( $gHtmlTemplates{$cgi->param( 'page' )} );
+
+    if ( $ENV{'DEBUG'} )
+    {
+        print qq{<br><h3>HTML Template page is: } .  $gHtmlTemplates{$cgi->param( 'page' )} . 
+          qq{</h3>\n};
+    }
+    
+    # take care of all nav bar link PIs, etc.
+    &TextClassUtils::HandleGeneralProcIns ( \$htmlPage, $cgi, $cio, 
+                                            $gHtmlDocRoot, $dso   
+                                          );
+    # build re-authorization link
+    &TextClassUtils::HandleReAuthLink ( \$htmlPage, $cgi );
+    
+    my $page = $cgi->param( 'page' );
+    
+    if ( $page eq 'history' )
+    {    &TextClassUtils::HandleSearchHistoryPage ( \$htmlPage, $dso, $cgi );      }
+
+    elsif ( $page =~ m,^simple, )
+    {    &TextClassUtils::HandleSimplePage ( \$htmlPage, $cgi, $cio );      }
+
+    elsif ( $page =~ m,^boolean, ||
+            $page =~ m,^proximity, )
+    {     &TextClassUtils::HandleAdvancedSearchPage ( \$htmlPage, $cgi, $cio );   }    
+
+    if ( $page =~ m,ext$, )
+    {   &TextClassUtils::HandleExtendedPage
+          ( \$htmlPage, $cgi, $cio,
+            \@gGenres, \@gPeriods, \@gLanguages, \@gGenders );
+    }
+
+
+    return \$htmlPage;
+}
+
+# ----------------------------------------------------------------------
+# NAME         : ValidityChecks
+# PURPOSE      : See if there are sufficient parameters to determine
+#                course of action; if not, set up default behavior
+# CALLED BY    : main
+# CALLS        : 
+# INPUT        : 
+# RETURNS      : 
+# GLOBALS      : 
+# SIDE-EFFECTS : 
+# NOTES        : 
+# ----------------------------------------------------------------------
+
+sub ValidityChecks
+{
+    ## if there are no requested collections or authorize, bail
+    if ( ( ! @gRequestedColls ) ||
+         ( scalar( @gRequestedColls ) < 1 ) )
+    {
+        &errorBail ( $gERRORS{'NO_COLLS'} );
+    }
+
+    if ( !( $gCgi->query_string ) || ( $gCgi->query_string eq '' ))
+    {
+        $gCgi->param( 'page', 'simple' );
+    }
+
+    ## if no page or type or view param, set default behavior to give
+    ## simple search page
+    elsif ( ( ! $gCgi->param( 'page' ) ) &&
+            ( ! $gCgi->param( 'type' ) ) &&
+            ( ! $gCgi->param( 'idno' ) ) &&
+            ( ! $gCgi->param( 'view' ) ) &&
+            ( ! $gCgi->param( 'node' ) )
+          )
+    {
+        $gCgi->param( 'page', 'simple' );
+    }
+
+    # Currently, if there is a type param, the view is coerced to
+    # 'reslist'.  This way we don't have to have a HIDDEN variable in
+    # all the html templates for searching.  
+    if ( $gCgi->param( 'type' ) &&
+       ! $gCgi->param( 'view' ) )
+    {
+	$gCgi->param( 'view', 'reslist' );
+    }
+    
+    # set default cc if there is none
+    if ( ! $gCgi->param( 'cc' ) )
+    {         $gCgi->param('cc', $gRequestedColls[0] );      }
+
+    # make sure simple search has a q1
+    if ( ( defined ( $gCgi->param( 'type' ) ) ) &&
+         ( ! defined ( $gCgi->param( 'q1' ) ) ) )
+    {	
+        &errorBail ( $gERRORS{'NO_Q1'} );
+    }
+}
+
+# ----------------------------------------------------------------------
+# NAME         : ProcessRequest
+# PURPOSE      : handle page or search request
+# CALLED BY    : main
+# CALLS        : main::HandlePage, main::SetUpPatProcesses, main::HandleSearch,
+#                main::errorBail
+# INPUT        : NONE
+# RETURNS      : NONE
+# GLOBALS      : $gCgi
+# SIDE-EFFECTS : 
+# NOTES        : 
+# ----------------------------------------------------------------------
+
+sub ProcessRequest
+{
+    my $htmlPageRef = '';
+
+#    if ( $gCgi->param( 'bbaction' ) )
+#    {    &HandleBookbagAction( );      }
+
+    # if searching from an "extended" page
+    if  ( $gCgi->param( 'setsearch' ) )
+    {
+        # find what kind of page this was in order to determine type of search to submit
+        my $type = $gCgi->param( 'page' );
+        $type =~ s,ext$,,;
+        
+        $gCgi->delete( 'page' );
+        $gCgi->param( 'type', $type );
+        $gCgi->param( 'view', 'reslist' );
+        
+
+        $gCgi->delete( 'setsearch' );
+    }
+    
+    # now continue
+    if ( $gCgi->param( 'page' ) )
+    {    $htmlPageRef = &HandlePage( $gCgi, $gCio, $gDso );   }
+
+    else 
+    {
+        # continue with search
+        my $view = $gCgi->param( 'view' );
+        my @c    = $gCgi->param( 'c' );
+        my $cc   = $gCgi->param( 'cc' );
+
+        # use view here to group all searches and results for this submission
+        &SetUpTcosForSearch( $view );
+
+        # get html template and deal with usual PIs
+        my $htmlPage = &GetHtmlTemplateText ( $gHtmlTemplates{$view} );
+        $htmlPageRef = \$htmlPage;
+        
+        &TextClassUtils::HandleGeneralProcIns (              
+                                               $htmlPageRef, 
+                                               $gCgi, $gCio, $gHtmlDocRoot, $gDso
+                                              ); 
+        # build re-authorization link
+        &TextClassUtils::HandleReAuthLink ( $htmlPageRef, $gCgi );
+
+	# Now branch based on the view.  If the view is 'reslist' we
+	# are doing a type=simple|boolean|proximity search
+
+	# Header
+        if ( $view eq 'header' )
+        {    
+            &HeaderViewSearchesAndFilter( 
+					  $htmlPageRef, $gCgi, $gCio, $gDso, 
+					  $gBbo,  $gSessionId, $cc, $view 
+					);
+        }
+	# Search
+	elsif ( $view eq 'reslist' )
+	{
+	     if ( ! $gCgi->param( 'type' ) )
+	     {
+		 &errorBail ( qq{URL 'type' parameter missing.} );
+	     }
+	     
+	     &TypedSearchAndFilter( 
+				   $htmlPageRef,
+				   $gCgi, $gCio, $gSessionId, $gDso 
+				  );
+	 }
+        # Text view, so get region to display
+        elsif ( $view eq 'text' )
+        { 
+            ## !!!!! change $htmlPageRef by ref as in other views above !!!!!!
+            &TextViewSearchesAndFilter ( 
+                                        $htmlPageRef,
+                                        $gCgi, $gCio, $gDso, $gBbo,
+                                        $gSessionId, $cc, $view
+                                       );    
+        }
+	# Note view (TARGET)
+	elsif ( $view eq 'trgt' )
+	{
+            &NotesViewSearchesAndFilter( 
+					$htmlPageRef, $gCgi, $gCio, $gDso, 
+					$gBbo,  $gSessionId, $cc, $view 
+				       );
+	}
+	# Bummer.
+        else
+        {   &errorBail ( qq{ValidityChecks is not doing its job.} )  }
+
+    }
+    
+    return $htmlPageRef;
+    
+}
+
+# ----------------------------------------------------------------------
+# NAME         : SetUpTcosForSearch
+# PURPOSE      : Farm out searches to the proper type handler (simple, boolean, etc.)
+# CALLED BY    : ProcessRequest
+# CALLS        : TextClass->SetUpSearchSet
+# INPUT        : NONE
+# RETURNS      : 
+# GLOBALS      : 
+# SIDE-EFFECTS : 
+# NOTES        : 
+# ----------------------------------------------------------------------
+
+sub SetUpTcosForSearch
+{
+    my $name = shift;
+    
+    # now that we are about to search, this TextClass object needs 
+    # QueryFactory, SearchSet and XPat process objects set up
+    foreach my $collid ( @gRequestedColls )
+    {
+        my $tco = $gCio->GetTextClassObjByCollId( $collid );
+
+        # create a QueryFactory object for each requested collection
+        $tco->AddQueryFactory( $gCgi );
+        
+        # set defaults for start and size since we are doing a search
+        &TextClassUtils::SetUpDefaultStartSizeParams( $gCgi, $gDefaultStart, $gDefaultSliceSize );
+
+        # create all needed SearchSet and XPatResultSet objects 
+        # for each requested collection
+        $tco->AddNeededSets( $name );
+
+        # create an XPat process for each requested collection
+        eval
+        {
+            $tco->StartXPatProcess( $gRequestingHost );
+        };
+        
+        if ( $@ )
+        {
+            # if there was a problem starting XPat for this collection,
+            # remove it from consideration in the CollsInfo object
+            $gCio->SetRequestedStatus( $collid, 0 );
+
+            # and remove it from the Requested Colls array
+            @gRequestedColls = grep !/$collid/,  @gRequestedColls;
+
+            # and remove it from cgi object
+            my @colls = $gCgi->param( 'c' );
+            @colls = grep ( !/$collid/, @colls );
+            $gCgi->param( 'c', @colls );
+        }
+    }
+}
+
+# ----------------------------------------------------------------------
+# NAME         : TypedSearchAndFilter
+# PURPOSE      : run appropriate search based on 'type' param, for each TextClass obj
+# CALLED BY    : HandleSearch
+# CALLS        : TextClass->SimpleSearch, BooleanSearch, ProximitySearch
+# INPUT        : CGI object
+# RETURNS      : 
+# GLOBALS      : @gRequestedColls, $gCio, $gSessionId
+# SIDE-EFFECTS : 
+# NOTES        : 
+# ----------------------------------------------------------------------
+
+sub TypedSearchAndFilter
+{
+    my ( $htmlPageRef, $cgi, $cio, $sid, $dso ) = @_;
+    
+    my $view = $cgi->param( 'view' );
+    my $type = $cgi->param( 'type' );
+    my $cc   = $cgi->param( 'cc' );
+    my @c    = $cgi->param( 'c' );
+    
+    # --------------------------------------------------
+    # if there were no requested collections
+    if ( scalar( @gRequestedColls ) <= 0 ) 
+    {
+        &errorBail( qq{<b>Either you requested no collections or you\n} .
+                    qq{are not authorized to any collections.</b>\n} );
+    }
+    else
+    {
+        # run through requested collections
+        foreach my $collid ( @gRequestedColls )
+        {
+            my $tco = $cio->GetTextClassObjByCollId( $collid );
+            
+            # need LEL for this collection so that if it is high
+            # we can search for and display a scoped heads type of reslist
+            my $lel = $tco->GetValueByKey( 'lel' );
+            
+            # if this collection is valid for searching
+            if ( $tco->GetStatus() )
+            {
+                # --------------------------------------------------
+                # GUIDE FRAME searches for all requested collections
+                
+                # this search does what used to be "flug" and "blog" searches
+                # $view is used to get the named SearchSet and ResultSet
+                $tco->GuideFrameSearches( $sid, $cgi, $view );     
+                
+                # --------------------------------------------------
+                # RESULTS FRAME searches for the focused collection (cc)
+                if ( $collid eq $cc )
+                {
+                    if ( $type eq 'simple' )
+                    {    $tco->SimpleResultsFrameSearches( $cgi, $sid, $view, $lel );    }
+                    elsif ( $type eq 'boolean' )
+                    {    $tco->BooleanResultsFrameSearches( $cgi, $gSessionId, $view );     }
+                    # ??? setting prox to use Simple
+                    elsif ( $type eq 'proximity' )
+                    {    $tco->SimpleResultsFrameSearches( $cgi, $gSessionId, $view );   }
+                }
+                
+                # --------------------------------------------------
+                # now have all searches. submit them and check for errors
+                $tco->SubmitSearchSet ( $view, $cgi );
+                if ( $tco->GetStatus() eq 'XPAT_SEARCH_ERROR' )
+                {      &errorBail ( qq{ERROR: error during XPat search for $collid} );      }
+            } 
+            # sid needed to look up xpat search labels, 
+            # $view used as default named rset and sset names
+            $cio->UpdateCrossCollNumbers( $gSessionId, $view );         
+            
+            if ( $collid eq $cc )
+            {
+                $tco->FilterResultsForReslist( $htmlPageRef, $gCgi, $view, $lel, $gBbo );   
+            }
+            
+        }
+	
+        # handle the PIs in the "guide frame"
+        &TextClassUtils::FilterGuideFrame( $htmlPageRef, \@gRequestedColls, $cio, $cgi, $view );
+        
+        $gSho->AppendSearch(
+                            $gCgi,
+                            &TextClassUtils::FilterNatLangSearch( \@gRequestedColls, $gCio ),
+                            &TextClassUtils::BuildEnglishListOfCollTitles( \@gRequestedColls, $gCio ),
+                            $gCio->GetTotalHits( )
+                           );
+        
+    }
+    
+}
+
+# ----------------------------------------------------------------------
+# NAME         : 
+# PURPOSE      : 
+#                
+# CALLED BY    : 
+# CALLS        : 
+# INPUT        : 
+# RETURNS      : 
+# GLOBALS      : 
+# SIDE-EFFECTS : 
+# NOTES        : 
+# ----------------------------------------------------------------------
+
+sub HandleBookbagAction
+{
+    if ( $gCgi->param( 'bbaction' )  eq 'add' )
+    {
+        # first add item to bookbag
+        $gBbo->AddItem( $gCgi->param( 'bbc' ), $gCgi->param( 'bbidno' ) );
+        
+        # update the session
+        $gDso->Close();
+
+        # now clean up and submit URL
+        $gCgi->delete( 'bbc' );
+        $gCgi->delete( 'bbidno' );
+        $gCgi->delete( 'bbaction' );
+
+        print $gCgi->redirect( -query => 1);
+        exit;
+    }    
+
+    elsif ( $gCgi->param( 'bbaction' )  eq 'remove' )
+    {
+        # first add item to bookbag
+        $gBbo->RemoveItem( $gCgi->param( 'bbc' ), $gCgi->param( 'bbidno' ) );
+        
+        # update the session
+        $gDso->Close();
+
+        # now clean up and submit URL
+        $gCgi->delete( 'bbc' );
+        $gCgi->delete( 'bbidno' );
+        $gCgi->delete( 'bbaction' );
+        print $gCgi->redirect( -query => 1);
+        exit;
+    }  
+    elsif ( $gCgi->param( 'bbaction' )  eq 'list' )
+    {
+        # first add item to bookbag
+        $gBbo->GetItems( );
+        
+        # update the session
+        $gDso->Close();
+
+
+    }    
+
+    # elsif ( $gCgi->param( 'bbaction' )  eq 'search' )
+  
+}
+
+
+# ----------------------------------------------------------------------
+# NAME         : NotesViewSearchesAndFilter
+# PURPOSE      : 
+#                
+# CALLED BY    : 
+# CALLS        : 
+# INPUT        : 
+# RETURNS      : 
+# GLOBALS      : 
+# SIDE-EFFECTS : 
+# NOTES        : 
+# ----------------------------------------------------------------------
+
+sub NotesViewSearchesAndFilter
+{
+    my ( $htmlPageRef, $cgi, $cio, $dso, $bbo, $sid, $cc, $view ) = @_;
+    
+    my $tco = $cio->GetTextClassObjByCollId( $cc );
+    
+    # searches for header display
+    $tco->RegionNotesSearches ( $sid, $cgi, $view );
+    $tco->SubmitSearchSet( $view ) ;
+    
+    if ( $tco->GetStatus() eq 'XPAT_SEARCH_ERROR' )
+    {      &errorBail ( qq{ERROR: error during XPat search: view=$view, collid=$cc} );      }
+
+    eval
+    {
+	$tco->FilterResultsForNotes( $htmlPageRef, $cgi, $view, $bbo );
+    };
+    if ( $@ )
+    {
+	&errorBail ( qq{ERROR: error during notes results filtering: $@} );	
+    }
+}
+
+# ----------------------------------------------------------------------
+# NAME         : HeaderViewSearchesAndFilter
+# PURPOSE      : 
+#                
+# CALLED BY    : 
+# CALLS        : 
+# INPUT        : 
+# RETURNS      : 
+# GLOBALS      : 
+# SIDE-EFFECTS : 
+# NOTES        : 
+# ----------------------------------------------------------------------
+        
+sub HeaderViewSearchesAndFilter
+{
+    my ( $htmlPageRef, $cgi, $cio, $dso, $bbo, $sid, $cc, $view ) = @_;
+        
+    my $tco = $cio->GetTextClassObjByCollId( $cc );
+
+    my $lel = $tco->GetItemEncodingLevel( $cgi );
+                                          
+    # high "lowest encoding level"
+    if ( $lel >= 3 )
+    {
+        $tco->HeaderSearchesForHighLel ( $sid, $cgi, $view );
+        $tco->SubmitSearchSet( $view ) ;
+
+        if ( $tco->GetStatus() eq 'XPAT_SEARCH_ERROR' )
+        {      &errorBail ( qq{ERROR: error during XPat search for $cc} );      }
+    
+        $tco->FilterResultsForHighLelHeader( $htmlPageRef, $cgi, $view, $bbo );
+    }
+    
+    # low "lowest encoding level"
+    else
+    {
+        $tco->HeaderSearchesForLowLel ( $sid, $cgi, $view );
+        $tco->SubmitSearchSet( $view ) ;
+        
+        if ( $tco->GetStatus() eq 'XPAT_SEARCH_ERROR' )
+        {      &errorBail ( qq{ERROR: error during XPat search for $cc} );      }
+        $tco->FilterResultsForLowLelHeader( $htmlPageRef, $cgi, $view, $bbo );
+    }
+}
+
+# ----------------------------------------------------------------------
+# NAME         : TextViewSearchesAndFilter
+# PURPOSE      : 
+#                
+# CALLED BY    : 
+# CALLS        : 
+# INPUT        : 
+# RETURNS      : 
+# GLOBALS      : 
+# SIDE-EFFECTS : 
+# NOTES        : 
+# ----------------------------------------------------------------------
+
+sub TextViewSearchesAndFilter
+{
+    my ( $htmlPageRef, $cgi, $cio, $dso, $bbo, $sid, $cc, $view ) = @_;
+    
+    my $tco = $cio->GetTextClassObjByCollId( $cc );
+    
+    # searches for header display
+    $tco->RegionTextSearches ( $sid, $cgi, $view );
+    $tco->SubmitSearchSet( $view ) ;
+    
+    if ( $tco->GetStatus() eq 'XPAT_SEARCH_ERROR' )
+    {      &errorBail ( qq{ERROR: error during XPat search: view=$view, collid=$cc} );      }
+
+    $tco->FilterResultsForText( $htmlPageRef, $cgi, $view, $bbo );
+}
+
+
+# ----------------------------------------------------------------------
+# NAME         : 
+# PURPOSE      : 
+#                
+# CALLED BY    : 
+# CALLS        : 
+# INPUT        : 
+# RETURNS      : 
+# GLOBALS      : 
+# SIDE-EFFECTS : 
+# NOTES        : 
+# ----------------------------------------------------------------------
+ 
+sub KillXPatProcesses
+{
+    foreach my $collid ( @gRequestedColls )
+    {
+        my $tco = $gCio->GetTextClassObjByCollId( $collid );
+        $tco->KillXPat( );
+    }
+}

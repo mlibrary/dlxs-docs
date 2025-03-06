@@ -1,0 +1,15 @@
+<html>
+  <head>
+    <title><?TITLE></title>
+    <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+
+    <link rel="STYLESHEET" type="text/css" href="<?DOC_ROOT>textclass.css">    
+
+  </head>
+  
+  <body bgcolor="#FFFFFF" marginwidth="0" marginheight="0">
+    <h3 class="trgttophead"><?TITLE></h3>
+    <?SCOPEDNOTE>
+    
+  </body>
+</html>

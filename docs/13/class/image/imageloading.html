@@ -1,0 +1,399 @@
+<html>
+<head>
+<title>Image Class Image Loading for Online Delivery</title>
+
+
+<meta name="description" content="DLXS digital library software system image database documentation for DLXS Image Class. Image / Media loading.">
+
+
+
+ <link href="../../dlxsdocs.css" rel="stylesheet" type="text/css">
+</head>         <body>
+<div class="pageTitle">Image Class Media Loading for Online Delivery</div>
+
+<div class="docnavlinks">
+<p><a href="http://www.dlxs.org" target="dlxs">DLXS</a> | 
+<a href="../../index.html">DLXS Documentation</a> | 
+
+<a href="index.html">Image Class Documentation</a> | 
+<a href="http://images.umdl.umich.edu" target="umichimageclass">See Image Class in Action</a></p>
+</div>
+
+
+
+
+<h1><a name="QuickStart"></a>Quick Start </h1>
+<p>If you are migrating from a previous version of DLXS that used imageprep rather than mediaprep, please read this entire document, especially "Migration," before running mediaprep.</p>
+
+<p>Image Class supports JPEG2000, MrSID, JPEG, GIF, PNG, Flash, MP3, and WAV,
+and PDF media formats by default. Support for other formats can be added.</p>
+<p>Place media files (filenames must be unique within the collection) on production
+  web server following the convention below. The &quot;incoming&quot; directory is optional.
+  If you use the incoming directory, files will automatically be moved out and into a directory
+  named by year and month (YYYYMM). The &quot;incoming&quot; directory is required if adding
+  files incrementally without reprocessing all media files (see next section). </p>
+<p><strong>JPEG2000 with thumbnail:</strong><br>
+  <span class="command">$DLXSDATAROOT/img/c/coll/[incoming]/.../<strong>jp2</strong>/filename.<strong>jp2</strong></span><br>
+  <span class="command">$DLXSDATAROOT/img/c/coll/[incoming]/.../<strong>thumbjp2</strong>/filename.<strong>jpg</strong></span></p>
+<p><strong>MrSID with thumbnail:</strong><br>
+  <span class="command">$DLXSDATAROOT/img/c/coll/[incoming]/.../<strong>sid</strong>/filename.<strong>sid</strong></span><br>
+  <span class="command">$DLXSDATAROOT/img/c/coll/[incoming]/.../<strong>thumb</strong>/filename.<strong>jpg</strong></span></p>
+<p><strong>JPEG with thumbnail:</strong><br>
+  <span class="command">$DLXSDATAROOT/img/c/coll/[incoming]/.../filename.<strong>jpg</strong></span><br>
+  <span class="command">$DLXSDATAROOT/img/c/coll/[incoming]/.../<strong>thumb</strong>/filename.<strong>jpg</strong></span></p>
+<p><strong>PDF:</strong><br>
+  <span class="command">$DLXSDATAROOT/img/c/coll/[incoming]/.../filename.<strong>pdf</strong></span></p>
+<p><strong>MOV:</strong><br>
+  <span class="command">$DLXSDATAROOT/img/c/coll/[incoming]/.../filename.<strong>mov</strong></span></p>
+<p><strong>RM:</strong><br>
+  <span class="command">$DLXSDATAROOT/img/c/coll/[incoming]/.../filename.<strong>rm</strong></span></p>
+<p><strong>MP3:</strong><br>
+  <span class="command">$DLXSDATAROOT/img/c/coll/[incoming]/.../filename.<strong>mp3</strong></span></p>
+<p><strong>WAV:</strong><br>
+  <span class="command">$DLXSDATAROOT/img/c/coll/[incoming]/.../filename.<strong>wav</strong></span></p>
+<p><strong>Flash:</strong><br>
+  <span class="command">$DLXSDATAROOT/img/c/coll/[incoming]/.../filename.<strong>swf</strong></span></p>
+<p>JPEG, GIF, and PNG formats are supported equally. Anywhere you see &quot;.jpg&quot;
+  above, you can substitute &quot;.gif&quot; or &quot;.png&quot;, and in any combination.</p>
+<p>Please refer to the <a href="imagefilenaming.html">Image Class Image File
+Naming</a> document for the more information about filenaming.</p>
+<h2>Running the &quot;mediaprep&quot; Script </h2>
+<p>With your media files in place run the <strong>mediaprep</strong> script
+  like this...</p>
+<p class="command">$DLXSROOT/bin/i/image/mediaprep c=[collid]</p>
+<p><strong>mediaprep</strong> analyzes all media files and registers findings
+  in a DLXS database table called <strong>ImageClassMediaFiles</strong>. It also
+  creates a directory of symlinks called &quot;index&quot;. Together, the table <strong>ImageClassMediaFiles</strong>  and the &quot;index&quot; directory are used in the processes of loading metadata records
+  and providing web access to the images. </p>
+<p><strong>mediaprep</strong> should be run before the loading of metadata records.</p>
+
+
+<h1><a name="Migration"></a>Migration</h1>
+
+<p>Migration from a previous version of DLXS that did not use <strong>mediaprep</strong>  requires an understanding of the changes that have occurred. Note: DLXS 12a was the last version to use <strong>imageprep</strong>.</p>
+
+
+<p><strong>mediaprep</strong> differs from the its predecessor <strong>imageprep</strong> in the following ways:
+<ul>
+<li>Information about media files is stored in a MySQL table called <strong>ImageClassMediaFiles</strong>, not in text files.</li>
+<li>The index directory, that in the past held the text files and symlinks to thumbnails, now only holds symlinks. The text files are obsolete.</li>
+<li>The index directory is only needed on web servers. It is not needed, for example, on a machine used just for loading Image Class data records. DLXS 12a and earlier required the index directory be transferred to the data preparation server, if different than the web server.</li>
+<li><strong>mediaprep</strong> recognizes duplicate files and uses the newest. Additionally, older copies are moved to an <strong>outgoing</strong> directory by default, which differs from how imageprep worked.</li> 
+<li>New directories/files can be placed in an <strong>incoming</strong> directory and <strong>mediaprep</strong> will move them to the prescribed directory structure based on the current date. Preexisting files may remain where they are.</li>
+<li>Some steps that happened automatically in the past are now optional, and not executed by default. For example, the checking of file permissions is now optional.</li>
+<li><strong>mediaprep</strong> deletes empty directories it finds.</li>
+</ul>
+</p>
+
+<p><strong>mediaprep</strong> resembles its predecessor <strong>imageprep</strong> in the following ways:
+<ul>
+<li><strong>mediaprep</strong> uses the imageprep.cfg and localimageprep.cfg files for configuration.</li>
+<li><strong>mediaprep</strong> is essential for preparing images and other media for use with Image Class.</li>
+</ul>
+</p>
+
+
+
+
+If during migration your old and new versions of ImageClass need to share the same img directory, the following is the recommended migration path:
+<ul>
+<li>Run <strong>mediaprep</strong> using the <a href="#hold">hold=1</a> and <a href="#keepold">keepold=1</a> options. This allows both DLXS 12a Image Class and DLXS 13 Image Class to function simultaneously.</li>
+<li>Complete the migration to the DLXS 13 Image Class middleware, including code customizations, etc.</li>
+<li>Run mediaprep again without the <a href="#indexonly">indexonly=1</a> option, but not the hold and keepold options.</li>
+<li>If necessary, it is OK to run imageprep. For example, if you forget to use the hold=1 option when running mediaprep, you can compensate by running imageprep as you have in the past.</li>
+<li>In the future, just run mediaprep, most likely without hold, keepold, or indexonly. </li>
+</ul>
+
+
+
+<h1>Thumbnails and the Web Server Document Root </h1>
+<p>Fast delivery of thumbnails to the browser requires the thumbnail image files
+  to be under the web server's document root directory. To achieve this, add
+  a symlink named &quot;thumb&quot; in the collection's web directory, and have it point
+  to the &quot;index&quot; directory.</p>
+<p>You may have to create a web directory for the collection if one does not
+  already exist.</p>
+<p class="command">cd $DLXSROOT/web/c/coll</p>
+<p class="command">ln -s $DLXSDATAROOT/img/c/coll/index thumb</p>
+<p>Remember, &quot;c/coll&quot; should be replaced with the actual collid and inital letter.</p>
+<h1>Adding Media Files</h1>
+<p>To incrementally add media files without reprocessing the
+    entire set, create an &quot;incoming&quot; directory and place new files
+  in it, then run mediaprep with the &quot;incoming&quot; command line parameter set.</p>
+<p class="command">mkdir $DLXSDATAROOT/img/c/coll/incoming.</p>
+<p>Place files in incoming (as shown above in Quick Start). </p>
+<p class="command">$DLXSROOT/bin/i/image/mediaprep c=collid incoming=1 </p>
+<h1>About the Index Directory, and Options </h1>
+<p>When mediaprep runs, it creates a directory called &quot;indexprep&quot; and places
+  within it relative symlinks to the thumbnail images. When done creating symlinks,
+  the &quot;indexprep&quot; directory is renamed to &quot;index&quot;, automatically. If necessary,
+  an existing &quot;index&quot; directory is first renamed &quot;index-old&quot; and then deleted
+  after everything else is done.</p>
+<h2><a name="hold"></a>&quot;Holding&quot;  an Index Directory </h2>
+<p>Optionally, mediaprep can create an &quot;indexprep&quot; directory, but refrain from
+  renaming it as &quot;index&quot;. Rarely useful, but a handy trick if transitioning
+  from DLXS 12 or 12a to 13 because 13 can use an index directory created by
+  12a.</p>
+<p>e.g., </p>
+<p><span class="command">$DLXSROOT/bin/i/image/mediaprep c=collid hold=1</span></p>
+
+<h2><a name="keepold"></a>Keeping Old Files</h2>
+<p><strong>mediaprep</strong> by default moves old duplicate files to the <strong>outgoing</strong> directory, creating the directory if necessary. Keeping old files can be useful when migrating to DLXS 13, because it allows for minor differences in the way duplicate files are handled. If mediaprep were allowed to shift duplicates to the outgoing directory, it might cause the index directory created by the older imageprep program to become disconnected with some of the media files.</p>
+<p>e.g., </p>
+<p><span class="command">$DLXSROOT/bin/i/image/mediaprep c=collid keepold=1</span></p>
+
+
+<h2><a name="purge"></a>Purge Existing ImageClassMediaFiles Rows</h2>
+<p><strong>mediaprep</strong> by default uses the existing rows in the <strong>ImageClassMediaFiles</strong> table, making relative modifications as necessary. Sometimes it is valuable to purge the existing rows for a collection from the table first. The <strong>purge=1</strong> command line option does just that before proceeding with trest of the operation.</p>
+
+<p>The primary advantage of purge is that it gives you a clean slate which is essential when using the <strong><a href="#sidjp2">sidjp2</a></strong> equivalency option.</p>
+
+<p>The only real disadvantage to using purge is that none of the images of the collection will not be accessible to users during the run of mediaprep. If the collection is small, this hardly matters. If the collection is large, and it takes a couple of hours for mediaprep to run, then it may be worth considering.</p>  
+
+<p>e.g., </p>
+<p><span class="command">$DLXSROOT/bin/i/image/mediaprep c=collid purge=1</span></p>
+
+<h2><a name="sidjp2"></a>Replacing MrSID files with JPEG2000, or Vice-Versa</h2>
+<p>MrSID and JPEG2000 files are fairly interchangeable in Image Class. JPEG2000 has become preferred in recent years, and you may be wanting to replace MrSID files with JPEG2000 (we recommend it, in fact.) If the files are named the same with the exception of the filename extension, <strong>mediaprep</strong> can replace MrSID files with JPEG2000. The opposite is also true. MrSID files can replace JPEG2000 files. The determining factor is the timestamp of the file. The newest file is always used. The <strong>sidjp2=1</strong> command line option requires the <a href="#purge">purge</a> option be used as well. 
+
+<p>e.g., </p>
+<p><span class="command">$DLXSROOT/bin/i/image/mediaprep c=collid purge=1 sidjp2=1</span></p>
+
+
+
+<h2><a name="indexonly"></a>Make An Index Directory Only (Without Updating the Database) </h2>
+<p>A collection needs an index directory on every server running the Image Class
+  middleware. Chances are this includes
+  your production server, and your development server (if you have one). The
+  actual media files only need to be on one server, since the Collmgr &quot;mediahost&quot;
+  and &quot;devmediahost&quot; fields can be used to tell Image Class which server to hit
+  for image delivery. Once mediaprep has been run against the media files, generating
+  an index directory on other servers is easy (as long as DLXS is installed).</p>
+<p><span class="command">$DLXSROOT/bin/i/image/mediaprep c=collid indexonly=1
+    [hold=1] </span></p>
+<p>The index directory is generated by reading rows from the ImageClassMediaFiles
+  table and creating symlinks from the table row information.</p>
+<p>It is no longer necessary to manually tar and transfer the index directory
+  to other servers. And it is no longer necessary to have an index directory
+  in machines used only for dataprep as long as the machine is not as an Image
+  Class web server. </p>
+<h1>Checking File Permissions</h1>
+<p>Optionally, <strong>mediaprep</strong> will check the permissions of media
+  files and attempt to set permissions properly for Image Class if necessary.
+  Permissions are not checked by default. Use the <strong>checkperms</strong> command
+  line parameter to turn this option on.</p>
+<p>The following command does the normal mediaprep operation, plus checks file
+  permissions. </p>
+<p><span class="command">$DLXSROOT/bin/i/image/mediaprep c=collid checkperms=1 </span> </p>
+<p>Image files need to be readable by the web server, which often runs as user "nobody".</p>
+<p>Image directories should be 775 and image files should be 664. The "mediaprep"&#0160;program
+  will attempt to properly set all permissions for all image directories and
+  files. However, if the user excecuting "imageprep" does not have the necessary
+  permissions to change the mode of the directories and files, the "imageprep" program
+  will not be successful in its attempt, and will generate a message reporting
+  this is the case.</p>
+<p>Alternatively, the chmod command can be used to set permissions. There are
+  ways to modify files in batch with UNIX commands, but this topic is beyond
+  the scope of this document.</p>
+<p>chmod 775 $DLXSDATAROOT/img/m/musart/sid</p>
+<p>chmod 664 abc.sid</p>
+<h1><a name="Filenaming"></a>Filenaming</h1>
+<p>Please refer to the <a href="imagefilenaming.html">Image Class Image File
+    Naming</a> document for the details.</p>
+<p>It is best/easiest if filenames are unique within a collection. If they are
+  not, the subdirectory path can be used to force uniqueness. To enable this
+  function, edit the file at $DLXSROOT/bin/i/image/localimageprep.cfg to add
+  the following code to the "COLL SPECIFIC OVERRIDES/ADDITIONS" section</p>
+<pre>
+if ($coll eq 'collid')
+  {
+    $gLoadedName = 'loaded';
+  }
+</pre>
+<p>Be sure to replace "collid" with the collection's ID!</p>
+<p>Use of &quot;loaded&quot; requires that filenames in the data records also
+  be a concatenation of the filename with the parent directory path. After running
+  mediaprep look within the $DLXSDATAROOT/img/c/coll/index directory at the names
+  of the .inf files. The media filename should be the same as the .inf file,
+  except with the .inf exetension changed to the appropriate media file extension.</p>
+<h1>More about Media File Storage</h1>
+<p>Media files must be stored using the following collection level directory
+  convention:</p>
+<ul>
+  <li>$DLXSDATAROOT/img/c/collid</li>
+  <li>collid is the unique alphabetic abbreviation of the collection name.</li>
+</ul>
+<p>For example, the unique collid for the collection "French Architecture" is "sampleic",
+  in which case the image file directory is...</p>
+<pre>$DLXSDATAROOT/img/s/sampleic</pre>
+<p>The software assumes that every image has a thumbnail image and a larger display
+  image. It is not a requirement, and a thumbnail is not expected for media types
+  other than still images.</p>
+<p>Within the collection directory, images should be stored in the following
+  locations.</p>
+<ul>
+  <li>Thumbnail images corresponding with large JPEG2000 images must be in a
+    directory or directories named 'thumbjp2'.</li>
+  <li>All other thumbnail images must be in a directory or directories named "thumb".</li>
+  <li>All JPEG2000 file must be in a directory or directories named "jp2".</li>
+  <li>All SID format images may be anywhere in the collection directory.</li>
+  <li>All JPEG, non-thumbnail, larger, images may be anywhere in the collection
+    directory, though not in the "index" directory. </li>
+  <li>Image files may be within multiple levels of sub-directories.</li>
+  <li>The directory name "index" is reserved for building an index directory
+    of symlinks for all images for the collection. Do not use "index"&#0160;for
+    storing actual image files. The index directory is created automatically.</li>
+  <p>To clarify with an example, the Image Class middleware assumes that all
+    JPEG files in directories named "thumbjp2" and within the<tt> $DLXSDATAROOT/img/c/collid</tt> structure
+    are thumbnails to be displayed in association with JPEG2000 images (stored
+    in "jp2" directories. All JPEG images not in thumb directories are assumed
+    to be single resolution images for large display.</p>
+  <p>Example:</p>
+  <p>The "sampleic" collection can again be used as a simple example. <tt>$DLXSDATAROOT/img/s/sampleic</tt> has
+    the following directories...</p>
+  <p><tt>drwxrwxr-x 4 jweise dlps 512 Feb 15 14:37 index<br/>
+    drwxrwxr-x 2 jweise dlps 2048 Feb 15 13:30 sid<br/>
+    drwxrwxr-x 2 jweise dlps 2048 Jun 8 1998 thumb</tt></p>
+  <p><tt>$DLXSDATAROOT/img/s/sampleic/sid </tt>contains all of the SID format, multiple
+    resolution, files for the collection.</p>
+  <p><tt>$DLXSDATAROOT/img/s/sampleic/thumb </tt>contains all of the JPEG format,
+    thumbnail size, files for the collection.</p>
+  <p>The sampleic collection does not have any large JPEG files since it relies
+    on SID files for large display.</p>
+  <p>The flexibility of structure within the collection specific image directory
+    is intentional and supports the variety of directory structures that are
+    typically encountered.</p>
+  <p>For example, at Michigan, we find it useful to load the image files on the
+    production server in a structure that reflects the CD that the master image
+    files are stored on. A single collection can easily have dozens of CDs worth
+    of master image data (typically TIFF format files). In the process of generating
+    SID and JPEG files, we maintain at least the name of the CD in the name of
+    the directory that the SID and JPEG images are kept in.</p>
+  <ul>
+    <li>Master CDs:;
+        <ul>
+          <li><tt>CD0001</tt>
+              <ul>
+                <li><tt>image001.TIF<br/>
+              image002.TIF<br/>
+              ...<br/>
+              image050.TIF</tt></li>
+              </ul>
+              <p><tt>...</tt></p>
+              <p><tt>CD0005</tt></p>
+              <ul>
+                <li><tt>image201.TIF<br/>
+              image202.TIF<br/>
+              ...<br/>
+              image250.TIF</tt></li>
+              </ul>
+          </li>
+        </ul>
+        <p>Image directories (that are loaded to the production server in the
+          $DLXSDATAROOT/img/c/collid directory)</p>
+        <ul>
+          <li><tt>CD0001</tt>
+              <ul>
+                <li><tt>sid</tt>
+                    <ul>
+                      <li><tt>image001.SID<br/>
+                  image002.SID<br/>
+                  ...<br/>
+                  image050.SID</tt></li>
+                    </ul>
+                    <p><tt>thumb</tt></p>
+                    <ul>
+                      <li><tt>image001.JPG<br/>
+                  image002.JPG<br/>
+                  ...<br/>
+                  image050.JPG</tt></li>
+                    </ul>
+                </li>
+              </ul>
+              <p><tt>...</tt></p>
+              <p><tt>CD0005</tt></p>
+              <ul>
+                <li><tt>sid</tt>
+                    <ul>
+                      <li><tt>image201.SID<br/>
+                  image202.SID<br/>
+                  ...<br/>
+                  image250.SID</tt></li>
+                    </ul>
+                    <p><tt>thumb</tt></p>
+                    <ul>
+                      <li><tt>image201.JPG<br/>
+                  image202.JPG<br/>
+                  ...<br/>
+                  image250.JP</tt></li>
+                    </ul>
+                </li>
+              </ul>
+          </li>
+        </ul>
+    </li>
+  </ul>
+  <p>It is fine for the images to be loaded in this type of hierarchical structure.
+    When the "mediaprep" program creates the index directory,
+    it recursively parses directories to find all media files.</p>
+</ul>
+
+
+<h1>Outgoing Files</h1>
+
+<p>You may find that media files loaded to Image Class for various reasons get loaded more than once over time. For example, maybe the JPEG2000 files need to be regenerated at a higher quality and reloaded. Whatever the reason, mediaprep helps to manage the reload process by moving the files being replaced to a directory called "outgoing" located at... <pre>$DLXSDATAROOT/img/c/collid/outgoing</pre> 
+</p>
+
+<p><strong>mediaprep</strong> checks filenames for duplicates and in the case of duplicates keeps the newest file and moves older copies to outgoing. Optionally, you can tell it not to move files to outgoing with the <a href="#keepold">keepold=1</a> command line option, in which case the newest file will still be used, but the others will be left alone.</p>
+
+<p>When moving files to outgoing, mediaprep also tries to move corresponding thumbnail images and text files. It is generally successful at this.</p>
+
+<p>Another option, <a href="#sidjp2">sidjp2=1</a> causes JPEG2000 and MrSID files to be treated equally in terms of replacement. That is, a JPEG2000 can cause a MrSID file to be pushed to the "outgoing" directory, and vice versa! The file with the newest timestamp wins, as always. This is a useful feature if replacing all MrSID files with JPEG2000 files as we are at Michgian, but it could also be used if going the other direction (replacing all JPEG2000s with MrSIDs). It is important to realize that the sidjp2 option <strong>must be used in conjunction with the <a href="#purge">purge</a> option</strong> otherwise comparison of MrSIDs to JPEG2000s could not be done accurately because there might be multiple rows already in the database table.
+</p> 
+
+<p>Files inadvertantly moved to outgoing by <strong>mediaprep</strong> may be moved back to their original location, though think carefully about what the implications might be before doing so. The process involves tarring up the relevant directories in outgoing and untarring them at the root of the old location. Proceed with caution.</p>
+
+
+<h1>Advanced Customization</h1>
+<p>Image Class can be configured to support a wide variety of directory and filenaming
+  conventions. This configuration is done in the 
+<tt>$DLXSROOT/bin/i/image/localimageprep.cfg</tt> file. Copy the %gTypeHash,
+and @gTypeComarisonOrder definitions from imageprep.cfg to localimageprep.cfg
+and  modify it to support local conventions</p>
+<p>It is even possible to add support for multiple image sizes for a single image in a non-MrSID format such as JPEG. That is, you could have small, medium, 
+and large JPEG images for a single item and have them all be available to the user in the interface. Michigan has done this for the 
+<a href="http://images.umdl.umich.edu/cgi/i/image/image-idx?c=apis">APIS</a> (Papyrus) collection where there is a mix of MrSID and JPEGs at multiple sizes (Though the examples are few and far between. In fact I can't find one at the moment.) Zooming is not possible without MrSID, but the user may select from the multiple sizes.</p>
+
+<p>Below is the %gTypeHash Michigan added to localimageprep.cfg to handle the APIS collection. The hash holds for each type of image an array of regular expressions used to match image files. For APIS, thumbnail images must either be JPEG files in a "thumb" directory or GIF files with "-tn" preceding the extension. SID images are also allowed and can reside anywhere. JPEGs that aren't thumbnails are assumed to be large image files and are given the label "1200", which is a somewhat arbitrary estimation of the maximum pixel dimension of the file. JPEGs with "-50" preceding the extension are labelled as large JPEGs with maximum pixel dimensions of 600. It does not matter too much what the labels are as long as they cause the images to sort properly by size in the user interface.</p>
+
+<p>The @gTypeComparison order array is important because it specifies an order of precedence for identifying images. In this case "thumb" is checked first, and if the filename matches one of the "thumb" regular expressions, it is not tested against the other types (i.e,. sid, 600, 1200).</p>
+
+
+<pre>
+if ($coll eq 'apis')
+  {
+    %gTypeHash =
+      (
+       'image:::dynamic:-:thumb' => [
+                                     '/thumb/([^/]+)\\.(jpg)',
+                                     '/thumb/([^/]+)\\.(JPG)',
+                                    ],
+       'image:::fixed:-:thumb' => [
+                                   '/([^/]+)-tn\\.(gif)',
+                                   '/([^/]+)-tn\\.(GIF)',
+                                  ],
+
+       'image:::dynamic:-:sid' =>   ['/([^/]+)\\.(sid)', '/([^/]+)\\.(SID)'],
+       'image:::fixed:-:600' =>   ['/([^/]+)-50\\.(jpg)', '/([^/]+)-50\\.(JPG)'],
+       'image:::fixed:-:1200' =>  ['/([^/]+)\\.(jpg)', '/([^/]+)\\.(JPG)'],
+      );
+    @gTypeComparisonOrder = ('image:::dynamic:-:thumb','image:::fixed:-:thumb', '
+image:::fixed:-:600','image:::fixed:-:1200','image:::dynamic:-:sid');
+  }
+
+</pre>
+
+
+</body>
+
+</html>

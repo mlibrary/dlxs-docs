@@ -1,0 +1,484 @@
+<?xml version="1.0"?>
+
+<!-- SPO Editorial Services                  -->
+<!-- automatically-generated XML header file -->
+
+<?xml-stylesheet href="../../../pre11-dlxsdocs.xsl" type="text/xsl"?>
+<!DOCTYPE DLPSDOC PUBLIC "-//UM-DLPS//DTD DLPS Publications//EN" "http://docs.umdl.umich.edu/dlps/docs/dlpsdocs.dtd">
+<DLPSDOC>
+<TITLE>Full Text of Text Class's textclass.css</TITLE>
+<HEADER>
+<JOURNAL>DLXS Documentation</JOURNAL>
+<PUBDATE>2003-03-03 16:46:08 EST</PUBDATE>
+<AUTH1>Stoeffler, Matt</AUTH1>
+<EMAIL1></EMAIL1>
+<AUTH2></AUTH2>
+<DOCTITLE>Full Text of Text Class's textclass.css</DOCTITLE>
+<VOL>class</VOL>
+<ISS>text</ISS>
+<FILE>dlxsdocs-tc-textclass-css</FILE>
+</HEADER>
+<BODY>
+    <BHEAD>Full Text of textclass.css</BHEAD>
+    <DIV1 ID="main">
+<P>/* HTML ELEMENT STYLES */</P>
+  <P>/* margin-less body is a requirement of xcoll-bbag only */</P>
+  <P>BODY {<BR />
+    margin-top: 0px;<BR />
+    margin-right: 0px;<BR />
+    margin-bottom: 0px;<BR />
+    margin-left: 0px;<BR />
+    padding-right: 0px;<BR />
+    }</P>
+  <P>FORM {	margin-top: 0px;<BR />
+    margin-right: 0px;<BR />
+    margin-bottom: 0px;<BR />
+    margin-left: 0px;<BR />
+    padding-top: 0px;<BR />
+    padding-right: 0px;<BR />
+    padding-bottom: 0px;<BR />
+    padding-left: 0px;<BR />
+    }<BR />
+    <BR />
+    A { text-decoration: none }<BR />
+    A:hover { text-decoration: underline }<BR />
+    A.nav { color: #FFFFFF; text-decoration: none }<BR />
+    A.homenav { color: #3333cc; text-decoration: none }<BR />
+    A.nav:hover { color : #FFCC33; text-decoration: underline }<BR />
+    A.homenav:hover { color : #FFCC33; text-decoration: underline }<BR />
+    A.menunav { color: #000000; text-decoration: none }<BR />
+    A.menunav:hover { color : #FF6633; text-decoration: underline }<BR />
+    <BR />
+    PRE { font-family: monospace; font-size: 0.75em }</P>
+  <P>TT { font-family: monospace; font-size: 0.75em }<BR />
+        <BR />
+    IMG { border: 0 }</P>
+  <P>IMG.figure {<BR />
+    border-top-width: 1px;<BR />
+    border-right-width: 1px;<BR />
+    border-bottom-width: 1px;<BR />
+    border-left-width: 1px;<BR />
+    border-top-style: solid;<BR />
+    border-right-style: solid;<BR />
+    border-bottom-style: solid;<BR />
+    border-left-style: solid;<BR />
+    }</P>
+  <P> LI { font-family: Arial, Helvetica, sans-serif }</P>
+  <P>UL { <BR />
+    padding-top : 0px; <BR />
+    padding-bottom : 7px; <BR />
+    border-top : 0px; <BR />
+    border-bottom : 0px; <BR />
+    margin-bottom : 0px; <BR />
+    margin-top : 0px <BR />
+    } </P>
+  <P> </P>
+  <P>/* STYLES FOR NAVIGATION AND MENUS */</P>
+  <P>.navhrcolor { background-color:#666666}<BR />
+    .navcolor { background-color: #9999CC}<BR />
+    .navlinks { font-family: Arial, Helvetica, sans-serif; font-size: 12px; font-weight:
+    bold; color: #000000; text-decoration: none}<BR />
+    .navhicolor { background-color: #FFFFFF }<BR />
+    .navhilinks { font-family: Arial, Helvetica, sans-serif; font-size: 12px;
+    font-weight: bold; text-decoration: none }<BR />
+    .navdivision { background-color: #666666}<BR />
+    .footernavcolor { background-color: #BDBDBD }<BR />
+    .hdrcolor { background-color: #FFFFFF }<BR />
+    .bbnavcolor { background-color: #990000 }<BR />
+    .navlinksroman { font-family: Arial, Helvetica, sans-serif; font-weight:
+    normal; text-decoration: none ; font-size: 12px}<BR />
+    .xcollnavcolor { background-color: #FFFFFF }<BR />
+    .authnavcolor { background-color: #FFFFFF }<BR />
+    .openbbnavcolor { background-color: #FFFFFF }<BR />
+    .gndivision { background-color: #666666 }<BR />
+    .navinfo { font-family: Arial, Helvetica, sans-serif; font-size: 11px; font-weight:
+    normal }</P>
+  <P>.mencellup { /* the color of popup menu cells in the up state - #BABCEA
+    */<BR />
+    background-color: #E5E5E5;<BR />
+    }</P>
+  <P>.menucellground { /* the color of the bground table cell for the menu nav
+    i.e., the border color for nav cells */<BR />
+    background-color: #666666;<BR />
+    }<BR />
+  </P>
+  <P>.hilitecellbottom { /* creates a border line along the bottom of a TD cell
+    */<BR />
+    border-top-width: 0px;<BR />
+    border-right-width: 0px;<BR />
+    border-bottom-width: 1px;<BR />
+    border-left-width: 0px;<BR />
+    border-top-style: solid;<BR />
+    border-right-style: solid;<BR />
+    border-bottom-style: solid;<BR />
+    border-left-style: solid;<BR />
+    border-top-color: #919191;<BR />
+    border-right-color: #666666;<BR />
+    border-bottom-color: #919191;<BR />
+    border-left-color: #999999;<BR />
+    }</P>
+  <P>/* STYLES FOR HEADER TEXT ANYWHERE */</P>
+  <P>.tophead { font-family : Helvetica, Verdana, Arial, sans-serif; font-size
+    : 16px; font-weight : bold }<BR />
+    .topheadlink {<BR />
+    font-family : Helvetica, Verdana, Arial, sans-serif;<BR />
+    font-size : 16px;<BR />
+    font-weight : bold;<BR />
+    color: #000000;<BR />
+    text-decoration: none;<BR />
+    margin-left: 1em;<BR />
+    margin-top: 10px;<BR />
+    margin-bottom: 10px;<BR />
+    }</P>
+  <P>.greysubheader { /* used to create a bolded grey subheader without using
+    an H element */<BR />
+    color: #333333;<BR />
+    font-weight: bold;<BR />
+    font-size: 14px;<BR />
+    font-family: Verdana, Arial, Helvetica, sans-serif;<BR />
+    }</P>
+  <P>/* STYLES FOR SEARCH RESULTS PAGES */</P>
+  <P>.blksubheader { /* used to create a bolded black subheader without using
+    an H element */<BR />
+    color: #000000;<BR />
+    font-weight: bold;<BR />
+    font-size: 14px;<BR />
+    font-family: Verdana, Arial, Helvetica, sans-serif;<BR />
+    }</P>
+  <P>.smallheadernormal { /* collection name in guide margin menu for xc results
+    */<BR />
+    font-family: Arial, Helvetica, sans-serif; <BR />
+    font-size: 12px <BR />
+    }</P>
+  <P>.smallheader { /* selected collection name in guide margin menu for xc results
+    */<BR />
+    font-family: Arial, Helvetica, sans-serif; <BR />
+    font-size: 12px; <BR />
+    font-weight: bold <BR />
+    }</P>
+  <P>.resultslist { margin-left: 10px; margin-right: 10px }<BR />
+    .ressummarycell { background-color: #D7D7FF } /* bg color of the results
+      summary at the top of the page */<BR />
+    .resultsheader { <BR />
+    font-family: Arial, Helvetica, sans-serif;<BR />
+    font-size: 12px; <BR />
+    font-style: normal; <BR />
+    font-weight: normal <BR />
+    }</P>
+  <P>.maintitle { /* font style for the main title in 1st and 2nd layer results
+    display */<BR />
+    font-family : Verdana, Arial, Helvetica, sans-serif;<BR />
+    margin-top: 0px;<BR />
+    margin-bottom: 0px;<BR />
+    padding-bottom: 0px;<BR />
+    }</P>
+  <P>.indentlevel1 { /* used for indenting blocks of text in results details
+    displays */<BR />
+    display : block;<BR />
+    margin-bottom : 1px;<BR />
+    padding-bottom : 0px;<BR />
+    padding-top : 0px;<BR />
+    margin-left: 1.0em;<BR />
+    }</P>
+  <P>.indentlevel2 { /* used for indenting blocks of text in results details
+    displays */<BR />
+    display : block;<BR />
+    margin-bottom : 1px;<BR />
+    padding-bottom : 0px;<BR />
+    padding-top : 0px;<BR />
+    font-weight: normal;<BR />
+    margin-left: 2.0em;<BR />
+    }</P>
+  <P>.indentlevel3 {<BR />
+    display : block;<BR />
+    margin-bottom : 1px;<BR />
+    padding-bottom : 0px;<BR />
+    padding-top : 0px;<BR />
+    margin-left: 3.0em;<BR />
+    }</P>
+  <P>.indentlevel4 {<BR />
+    display : block;<BR />
+    margin-bottom : 1px;<BR />
+    padding-bottom : 0px;<BR />
+    padding-top : 0px;<BR />
+    margin-left: 4.0em;<BR />
+    }</P>
+  <P>.indentlevel5 {<BR />
+    display : block;<BR />
+    margin-bottom : 1px;<BR />
+    padding-bottom : 0px;<BR />
+    padding-top : 0px;<BR />
+    margin-left: 5.0em;<BR />
+    }</P>
+  <P>.indentlevel6 { /* this should be sufficient!! */<BR />
+    display : block;<BR />
+    margin-bottom : 1px;<BR />
+    padding-bottom : 0px;<BR />
+    padding-top : 0px;<BR />
+    margin-left: 6.0em;<BR />
+    }</P>
+  <P>.indentlevel0 { /* used to put kwicsummary inline following page link in
+    details displays */<BR />
+    display : inline; <BR />
+    margin-bottom : 0px; <BR />
+    padding-bottom : 0px; <BR />
+    padding-top : 0px; <BR />
+    }</P>
+  <P>.divhead {<BR />
+    font-family : Verdana, Arial, Helvetica, sans-serif;<BR />
+    }</P>
+  <P>.scopingpage {<BR />
+    font-family: Verdana, Arial, Helvetica, sans-serif; <BR />
+    }</P>
+  <P>.kwic { <BR />
+    font-family: Verdana, Arial, Helvetica, sans-serif; <BR />
+    }</P>
+  <P>.kwicsummary {<BR />
+    font-family : Arial, Helvetica, sans-serif;<BR />
+    font-weight: normal;<BR />
+    }</P>
+  <P>.resauthor,.respubinfo,.resitemnav,.resitemsummary,.resclip,.bbadd { font-family:
+    Verdana, Arial, Helvetica, sans-serif; }<BR />
+    .respubinfo { font-family: Verdana, Arial, Helvetica, sans-serif }<BR />
+    .resitemnav { font-family: Verdana, Arial, Helvetica, sans-serif }<BR />
+    .resitemsummary { font-family: Verdana, Arial, Helvetica, sans-serif }<BR />
+    .bbadd { font-family: Verdana, Arial, Helvetica, sans-serif }<BR />
+    .resclip { font-family: Arial, Helvetica, sans-serif; font-style: normal;
+    font-weight: normal }<BR />
+    .resfieldlabel { font-family: Verdana, Arial, Helvetica, sans-serif; font-weight:
+    bold; }<BR />
+    .resbglink { text-decoration: underline; }<BR />
+    .resfglink { text-decoration: underline; }<BR />
+    .resitemlinks {margin-top: 1em; margin-bottom: 2em; font-family: Verdana,
+    Arial, Helvetica, sans-serif; }<BR />
+    .resitemdetail {margin-bottom: 1em ; font-family: Verdana, Arial, Helvetica,
+    sans-serif;}</P>
+  <P>.hilitecell { /* this is for hilighting the currently selected collname
+    in results guide frame */<BR />
+    border-top-width: 1px;<BR />
+    border-right-width: 0px;<BR />
+    border-bottom-width: 0px;<BR />
+    border-left-width: 1px;<BR />
+    border-top-style: solid;<BR />
+    border-right-style: solid;<BR />
+    border-bottom-style: solid;<BR />
+    border-left-style: solid;<BR />
+    border-top-color: #919191;<BR />
+    border-right-color: #666666;<BR />
+    border-bottom-color: #666666;<BR />
+    border-left-color: #999999;<BR />
+    background-color: #FFFFFF;<BR />
+    }</P>
+  <P>.collmenuhilite { /* used to provide a background hilite color for the currently
+    selected group selection */<BR />
+    font-size: 11px;<BR />
+    font-family: Verdana, Arial, Helvetica, sans-serif;<BR />
+    background-color: #FFD661;<BR />
+    }</P>
+  <P>.collmenuhilite2 { /* used to provide a background hilite color for the
+    currently selected group selection */<BR />
+    font-size: 11px;<BR />
+    font-family: Verdana, Arial, Helvetica, sans-serif;<BR />
+    background-color: #FFD661;<BR />
+    display: block;<BR />
+    }</P>
+  <P>.collsummary { /* for indenting collection summary info in the guide frame
+    - used on a block element */<BR />
+    margin-left: 1px;<BR />
+    }</P>
+  <P>.cresultslink { /* for hyperlinks under collnames in the guide frame */<BR />
+    font-family: Verdana, Arial, Helvetica, sans-serif;<BR />
+    font-size: 10px;<BR />
+    font-style: normal;<BR />
+    margin-left: .75em;<BR />
+    margin-top: 0.25em;<BR />
+    margin-bottom: 0.5em;<BR />
+    }</P>
+  <P>.bulletimg { /* controls margins around a bullet image in the xc results
+    page */<BR />
+    margin-bottom: 20px;<BR />
+    margin-right: 3px;<BR />
+    }</P>
+  <P>/* block and inline section headers */</P>
+  <P>.div1head {<BR />
+    display : block;<BR />
+    font-family : Arial, Helvetica, sans-serif;<BR />
+    margin-bottom : 0px;<BR />
+    padding-bottom : 0px;<BR />
+    padding-top : 0px;<BR />
+    font-weight: normal;<BR />
+    text-indent: -1.5em;<BR />
+    margin-left: 2.0em;<BR />
+    }</P>
+  <P>.div2head { <BR />
+    display : block; <BR />
+    font-family : Arial, Helvetica, sans-serif; <BR />
+    margin-bottom : 0px; <BR />
+    padding-bottom : 0px; <BR />
+    padding-top : 0px; <BR />
+    margin-top : 0px; <BR />
+    font-weight: normal <BR />
+    } </P>
+  <P>.div3head { <BR />
+    display : block; <BR />
+    font-family : Arial, Helvetica, sans-serif; <BR />
+    margin-bottom : 0px; <BR />
+    padding-bottom : 0px; <BR />
+    padding-top : 0px; <BR />
+    margin-top : 0px; <BR />
+    }</P>
+  <P>.div4head { display : block; <BR />
+    font-family : Arial, Helvetica, sans-serif; <BR />
+    margin-bottom : 0px; <BR />
+    padding-bottom : 0px; <BR />
+    padding-top : 0px; <BR />
+    margin-top : 0px; <BR />
+    font-weight: normal <BR />
+    } </P>
+  <P>.div1headinline {<BR />
+    display : inline; <BR />
+    font-family : Arial, Helvetica, sans-serif; <BR />
+    margin-bottom : 0px; <BR />
+    padding-bottom : 0px; <BR />
+    padding-top : 0px; <BR />
+    font-weight: normal <BR />
+    }</P>
+  <P>.div2headinline { <BR />
+    display : inline; <BR />
+    font-family : Arial, Helvetica, sans-serif; <BR />
+    margin-bottom : 0px; <BR />
+    padding-bottom : 0px; <BR />
+    padding-top : 0px; <BR />
+    margin-top : 0px; <BR />
+    font-weight: normal <BR />
+    }</P>
+  <P>.div3headinline { <BR />
+    display : inline; <BR />
+    font-family : Arial, Helvetica, sans-serif; <BR />
+    margin-bottom : 0px; <BR />
+    padding-bottom : 0px; <BR />
+    padding-top : 0px; <BR />
+    margin-top : 0px; <BR />
+    }</P>
+  <P>.div4headinline { <BR />
+    display : inline; <BR />
+    font-family : Arial, Helvetica, sans-serif; <BR />
+    margin-bottom : 0px; <BR />
+    padding-bottom : 0px; <BR />
+    padding-top : 0px; margin-top : 0px; <BR />
+    font-weight: normal <BR />
+    }</P>
+  <P>/* styles for toc bib pages - ANYTEXT XCOLL-BBAG - */</P>
+  <P>.bibinfo { font-family: Arial, Helvetica, sans-serif; font-size: 12px }<BR />
+    .hdroptions { font-family: Arial, Helvetica, sans-serif; font-size: 12px
+      }</P>
+  <P>/* OTHER MISC BODY STYLES */</P>
+  <P>.mainheader { /* on text page */<BR />
+    font-family : Arial, Helvetica, sans-serif;<BR />
+    font-weight : bold;<BR />
+    color : #333333;<BR />
+    margin-top: 1em;<BR />
+    margin-bottom: 0px;<BR />
+    padding-bottom: 0px;<BR />
+    font-size: 1.25em;<BR />
+    }</P>
+  <P>.globnav { font-family: Verdana, Arial, Helvetica, sans-serif; font-size:
+    smaller }<BR />
+    .indentHdr { /* available to attach to a div for indenting a header block
+    */}<BR />
+    .hilite { font-weight: bold; color: #CC0000 } /* used to display the search
+    term as hilighted (ie., red) text */<BR />
+    .hilitebox { border: 1px; border-color: #999999 } /* can be used to draw
+    a line around a table cell */</P>
+  <P>.releaseversion { /* controls fonts for release information footer */ <BR />
+    font-family: Arial, Helvetica, sans-serif; <BR />
+    font-size: 10pt; <BR />
+    font-style: normal; <BR />
+    color: #666666 <BR />
+    }</P>
+  <P>.wwquicklink { font-family : Arial, sans-serif; font-size : 12px } <BR />
+    .smalltext { <BR />
+    font-family: Verdana, Arial, Helvetica, sans-serif; <BR />
+    font-size: 10px; <BR />
+    font-style: normal<BR />
+    }</P>
+  <P>.indentBlock { margin-right: 7px; margin-left: 15px } /* used to indent
+    an entire div on right and left */<BR />
+    .csboxcolor { background-color:#D7D7FF } /* used to set the background color
+    or the coll. selection colum box */<BR />
+    .selectmenu { /* used with select form elements to control font size in the
+    selected items, or in other input elements */<BR />
+    font-size: 11px;<BR />
+    font-family: Verdana, Arial, Helvetica, sans-serif;<BR />
+    }<BR />
+    .homenavlinks { /* for navigation bar text away from nav bar proper */<BR />
+    font-family: Arial, Helvetica, sans-serif;<BR />
+    font-size: 12px;<BR />
+    font-weight: bold;<BR />
+    color: #000000;<BR />
+    text-decoration: none;<BR />
+    }<BR />
+    .homefont {<BR />
+    font-family: Verdana, Arial, Helvetica, sans-serif } /* to enforce one font
+    on the homepage */<BR />
+    .formfont { font-size: 12px; font-family: Verdana, Arial, Helvetica, sans-serif
+    } /* standard font used in forms */<BR />
+    .smallformfont { font-size: 11px; font-family: Verdana, Arial, Helvetica,
+    sans-serif } /* smaller form font */<BR />
+    .searchrestrictiontext { font-size: 11px; font-family: Verdana, Arial, Helvetica,
+    sans-serif; } <BR />
+    .formfontbuff { font-size: 12px; font-family: Verdana, Arial, Helvetica,
+    sans-serif; line-height: 1.35em }<BR />
+    .largerformfont { font-size: 14px; font-family: Verdana, Arial, Helvetica,
+    sans-serif; }<BR />
+    .subnavhilite { /* used on static (i.e., fixed open) navigation menus text
+    to indicate current position */ <BR />
+    font-family: Arial, Helvetica, sans-serif; <BR />
+    font-size: 12px; <BR />
+    font-weight: bold; <BR />
+    text-decoration: none <BR />
+    }<BR />
+    .smalltextbuff { /* used to create small text with an oversized line height
+    */<BR />
+    font-family: Verdana, Arial, Helvetica, sans-serif; <BR />
+    font-size: 10px; <BR />
+    font-style: normal; <BR />
+    line-height: 1.35em<BR />
+    }</P>
+  <P> .selectmenudisabled { /* will display some form elements in a &quot;disabled&quot; state
+    */<BR />
+    font-size: 11px;<BR />
+    font-family: Verdana, Arial, Helvetica, sans-serif;<BR />
+    background-color: #CCCCCC;<BR />
+    }</P>
+  <P>.groupspick { /* used for header text on xc browse colls page */ <BR />
+    font-family: Arial, Helvetica, sans-serif; <BR />
+    font-size: 14px; <BR />
+    } </P>
+  <P>.groupspickgroupname { /* used for header text on xc browse colls page */ <BR />
+    font-size: 14px; <BR />
+    font-weight: bold; <BR />
+    font-family: Verdana, Arial, Helvetica, sans-serif<BR />
+    }</P>
+  <P>.pageBreak { text-align: center } /* - ANYTEXT - */</P>
+  <P>/* STYLES FOR A TARGET WINDOW - ANYTEXT - */</P>
+  <P>.trgttophead { font-family : serif; font-size : 1.25em; font-weight : bold
+    }<BR />
+    .trgtdiv2head { display : block; font-family : serif; font-size : 1.3em;
+    padding-bottom : 3px }<BR />
+            <BR />
+    .trgtdiv3head { font-family : serif; font-size : 1.2em; display : block;
+    padding-bottom : 3px }<BR />
+    .trgtdiv4head { font-family : serif; font-size : 1.1em; display : block }<BR />
+    .trgttextblock { font-family : serif; font-size : 1.0em; margin-left: 1.0em
+    }</P>
+  <P>/* HELP PAGE STYLES */</P>
+  <P>.helpnavhead { font-size: 12px; font-weight: bold; color: #000000}<BR />
+    .helpnav { color: #000000; font-size: 10pt }<BR />
+    .helpnavlink { text-decoration: none; font-size: 10pt }<BR />
+    .helpnavheadlink { font-size: 12px; font-weight: bold; color: #000000 ; text-decoration:
+    none}</P>
+    </DIV1>
+  </BODY>
+</DLPSDOC>
+

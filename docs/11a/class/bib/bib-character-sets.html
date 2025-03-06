@@ -1,0 +1,53 @@
+<HTML>
+<head>
+<TITLE>Character Sets/Representation, Bibliographic Class</TITLE>
+<LINK HREF="../../dlxsdocs.css" REL="stylesheet" TYPE="text/css">
+</head>
+<BODY>
+<table class="updateTable" CELLSPACING="3" CELLPADDING="3" BORDER="1">
+   <TR>
+      <td>Last updated</td>
+      <td>2003-03-04 09:41:50 EST</td>
+   </TR>
+   <TR>
+      <td>Doc Title</td>
+      <td>Character Sets/Representation, Bibliographic Class</td>
+   </TR>
+   <TR>
+      <td>Author 1</td>
+      <td>Hagedorn, Kat</td>
+   </TR>
+   <TR>
+      <td>CVS Revision</td>
+      <td>$Revision: 1.6 $</td>
+   </TR>
+</table>
+<DIV CLASS="pageTitle">Character Sets/Representation, Bibliographic Class</DIV>
+<P>At the current time, XPAT (the DLXS search engine) supports both 7- and 8-bit
+   character sets, with no specific ties to any standard or non-standard character
+   set. The following approaches are equally possible:</P>
+<OL>
+<LI>An 8-bit ISO Latin 1 approach in the data dictionary (the <TT>.dd</TT> file),
+   mapping characters with diacritics to their unaccented form (e.g., an "a" with
+   umlaut would be searchable as an "a").</LI>
+<LI>An 8-bit ISO Latin 1 approach in the data dictionary, leaving characters
+   with diacritics searchable in their accented form (e.g., an "a" with umlaut
+   would be searchable only as an "a" with umlaut).</LI>
+<LI>An 8-bit ISO Latin 2 approach in the data dictionary, mapping characters
+   with diacritics to their unaccented form (e.g., an "a" with macron would be
+   searchable as an "a").</LI>
+<LI>... and so forth</LI>
+</OL>
+<P>The most common approach is to rely primarily on 8-bit representations of
+   ISO Latin 1 mappings for the bulk of the characters, and character entity
+   references for most other cases (e.g., &amp;amacr;). A sample data dictionary
+   using 8-bit ISO Latin 1 values is linked <A HREF="bib-sample.dd">here</A> as
+   an example of this approach.</P>
+<P>We do not yet provide filtering of these character entity set-based characters
+   to displayable representations, but will probably use transparent GIFs as
+   an interim strategy (as we do elsewhere in DLXS classes).</P>
+<P>Currently, we offer no documentation here for converting characters to ISO
+   Latin 1 values. In the interim, see the <A HREF="../image/image-charconversion.html">Image
+   Class Character Set Conversion</A>.</P>
+</BODY>
+</HTML>

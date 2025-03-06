@@ -1,0 +1,89 @@
+<?xml version="1.0"?>
+
+<!-- SPO Editorial Services                  -->
+<!-- automatically-generated XML header file -->
+
+<?xml-stylesheet href="../../pre11-dlxsdocs.xsl" type="text/xsl"?>
+<!DOCTYPE DLPSDOC PUBLIC "-//UM-DLPS//DTD DLPS Publications//EN" "http://docs.umdl.umich.edu/dlps/docs/dlpsdocs.dtd">
+<DLPSDOC>
+<TITLE>DLXS Database Upgrade Utility</TITLE>
+<HEADER>
+<JOURNAL>DLXS Documentation</JOURNAL>
+<PUBDATE>2003-02-12 14:03:02 EST</PUBDATE>
+<AUTH1>Blanco, Jose</AUTH1>
+<AUTH2></AUTH2>
+<DOCTITLE>DLXS Database Upgrade Utility</DOCTITLE>
+<VOL>collmeta</VOL>
+<ISS></ISS>
+<FILE>dlxsdocs-dlxs-upgrade</FILE>
+</HEADER>
+<BODY>
+		<BHEAD>DLXS Database Upgrade Utility</BHEAD>
+		<DIV1>
+			<H1>Overview</H1>
+			<P>This document discusses  strategies and specific procedures to accomplish a successful upgrade of the dlxs database. If you are using DLXS version 9, you will want to upgrade to version 2 of the metadata database.  If you are using DLXS version 10, you will want to upgrade to version version 3 of the metadata database.  The procedure you follow to upgrade the database depends on what version of the database you are starting with. If you have version 1 of the database and you want to upgrade to version 3, you will first have to run the script  <I>$DLXSROOT/bin/db/upgrade_1_2</I> to get to version 2 and then  <I>$DLXSROOT/bin/db/upgrade_2_3</I> to get to version 3. </P>
+			<P>It is important to keep in mind that each version of the database is meant to be run with a specific version of DLXS.  For example, version 2 of the database works with version 9 of DLXS, but will not work with other versions of DLXS.  So, if you need to have two or more versions of DLXS running, you will need to setup a database with the appropriate version for each of your DLXS installations.  If this is of interest to you, contact <A href="mailto:dlxs-help@umich.edu">DLXS Help</A> for guidance in doing this.</P>
+			<P>Below is a series of steps to follow when upgrading your database.  In order to update to version 2 of the database, you must have a version 1 of the database.  If you do not have a version 1 of the database, start at Step 1.   If you have a version 1 of the database and want to update to version 2, go to Step 3.  If you have a version 2 of the database and want to update to version 3, go to Step 4.</P>
+			<H2>Step 1.  To upgrade to Version 1 of the database</H2>
+			<P>To upgrade to version 1 of the database, you need run <I>$DLXRROOT/bin/db/dconv</I>.  This script will copy all the data in the colldb and groups files used by image, bib, and text class into a CSV database.  The CSV database created will be in <I>$DLXSROOT/misc/db</I> directory.</P>
+			<H2>Step 2.  CVS vs MySQL</H2>
+			<P>Now that you have copied all your data from the colldb and groups file into a CSV database, you can have the middleware access this metadata database.  But if you have a MySQL installation at your site, you may wish to move the CSV installation to a MySQL database.  To do this you can run the script <I>$DLXSROOT/bin/db/dbmove –s CSV –t MySQL</I> (the s stands for source, and the t for target).  Before you do this you will need to create a database by the name of dlxs, and two users for this database with specific privileges,   These users are <I>dlxs</I>, and <I>dlxsadm</I>.  Refer to the <A HREF="dlxs-colldatabases.xml#interaction">section of the DLXS documentation on database users</A> to get more information about setting up the privileges for these users. </P>
+			<P>If at any time you wish to move back to a CSV database, you can run the command <I>$DLXSROOT/bin/db/dbmove -r all –s MySQL –t CSV</I>.  Just make sure that the <I>$DLXSROOT/misc/db</I> directory is empty and that the script has permissions to write to it.  This database move script will not move the entire MySQL database to CSV, since the MySQL database may contain an enormous amount of data which could be potentially hazardous to place on a disk.  To learn more about the dbmove command read the <A href="dlxs-dbmove.xml#interaction">doucumentation section about the dbmove script.</A>
+			</P>
+			<H2>Step 3.  To upgrade to version 2 of the database from version 1</H2>
+			<P>If you need to upgrade version 1 of the database to version 2, you will need to use the script <I>$DLXSROOT/bin/db/upgrade_1_2</I>.   <I>$DLXSROOT/bin/db/upgrade_1_2</I> can be run against either a MySQL database or a CSV database. </P>
+			<P>To upgrade a MySQL database enter <I>$DLXSROOT/bin/db/upgrade_1_2 –d MySQL</I>.  Notice that the upgrade will try to backup the MySQL database into the directory <I>$DLXSROOT/misc/MySQL_DB_Backup</I> before performing the upgrade.  This is done just in case something goes wrong, you’ll have a backup of the database.  From the backup, you should be able to use the MySQL <I>mysqlimport</I> script to recover your database if you need to.</P>
+			<P>To upgrade a CSV database enter <I>$DLXSROOT/bin/db/upgrade_1_2 –d CSV</I>.  Notice that the upgrade will try to backup the CSV database into the directory <I>$DLXSROOT/misc/CSV_DB_Backup</I> before performing the upgrade.  This is done just in case something goes wrong, you’ll have a backup of the database.  </P>
+			<P>Once the upgrade is completed you should have a version 2 of the metadata database that is compatible with version 9 of the DLXS.</P>
+			<P>The following is a list of changes that the upgrade script makes:</P>
+			<UL>
+				<LI>shortrecordfilter field is deleted from the BibClass table.</LI>
+				<LI>longrecordfilter field is deleted from the BibClass table.</LI>
+				<LI>downloadrecordfilter field is deleted from the BibClass table.</LI>
+				<LI>emailrecordfilterfilter field is deleted from the BibClass table.</LI>
+				<LI>pageviewport field is deleted from the TextClass table.</LI>
+				<LI>browseable field is added to the  Collection table.</LI>
+				<LI>orgtext field is added to the Collection table.</LI>
+				<LI>orglink field is added to the Collection table.</LI>
+				<LI>lel2divtype field is added to the TextClass table.</LI>
+				<LI>idno field in the Pageview table is changed to varchar(32) NOT NULL.</LI>
+				<LI>image field in the Pageview table is changed to varchar(32) NOT NULL.</LI>
+				<LI>seq field in the Pageview table is changed to varchar(16) NOT NULL.</LI>
+				<LI>n field in the Pageview table is changed to varchar(16) DEFAULT NULL.</LI>
+				<LI>ftr field in the Pageview table is changed to varchar(16) DEFAULT NULL.</LI>
+				<LI>the sessions table is redefined to contain id varchar(32) default null, a_session long blob, and a key by the name of sessions_index composed of id is created.</LI>
+			</UL>
+			<H2>Step 3.  To upgrade to version 3 of the database from version 2</H2>
+			<P>If you need to upgrade version 2 of the database to version 3, you will need to use the script <I>$DLXSROOT/bin/db/upgrade_2_3</I>.   <I>$DLXSROOT/bin/db/upgrade_2_3</I> can be run against either a MySQL database or a CSV database. </P>
+			<P>To upgrade a MySQL database enter <I>$DLXSROOT/bin/db/upgrade_2_3 –d MySQL</I>.  Notice that the upgrade will try to backup the MySQL database into the directory <I>$DLXSROOT/misc/MySQL_DB_Backup</I> before performing the upgrade.  This is done just in case something goes wrong, you’ll have a backup of the database.  From the backup, you should be able to use the MySQL <I>mysqlimport</I> script to recover your database if you need to.</P>
+			<P>To upgrade a CSV database enter <I>$DLXSROOT/bin/db/upgrade_2_3 –d CSV</I>.  Notice that the upgrade will try to backup the CSV database into the directory <I>$DLXSROOT/misc/CSV_DB_Backup</I> before performing the upgrade.  This is done just in case something goes wrong, you’ll have a backup of the database.  </P>
+			<P>Once the upgrade is completed you should have a version 3 of the metadata database that is compatible with version 10 of the DLXS.</P>
+			<P>The following is a list of changes that the upgrade script makes:</P>
+			<UL>
+				<LI>defaultgroupid field is added to the Collection table.</LI>
+				<LI>groupdescr field is added to the GroupData table.</LI>
+				<LI>ignoreon field is added to the GroupData table.</LI>
+				<LI>viewtabfrom field is added to the ImageClass table.</LI>
+				<LI>detailviewtype field is added to the TextClass table.</LI>
+				<LI>encodingtype field is added to the TextClass table.</LI>
+				<LI>detailviewlayout field is added to the TextClass table.</LI>
+				<LI>sortflds field is added to the TextClass table.</LI>
+				<LI>lel2divtype field is deleted from the TextClass table.</LI>
+				<LI>rankfile field is deleted from the TextClass table.</LI>
+				<LI>resultsviewlength field is deleted from the TextClass table.</LI>
+				<LI>longviewtype field is deleted from the TextClass table.</LI>
+				<LI>language field is deleted from the TextClass table.</LI>
+				<LI>gender field is deleted from the TextClass table.</LI>
+				<LI>genre field is deleted from the TextClass table.</LI>
+				<LI>period field is deleted from the TextClass table.</LI>
+				<LI>primarytitle field is deleted from the ImageClassGroup table.</LI>
+				<LI>groupdescr field is deleted from the ImageClassGroup table.</LI>
+				<LI>ignoreon field in the Collection table is changed to text type.</LI>
+				<LI>cnf field in the Pageview table is changed to int(11) type.</LI>
+				<LI>bpp filed is added to the Pageview table.  bpp is made part of the key and its type is int(11).</LI>
+				<LI>A new table is added:PageviewFig.  This table consist of idno varchar(32) with default value of '', seq int (11) with default value of 0, image varchar(32) with default value of '', and a key by the name of idno composed of idno and seq is created.</LI>
+				<LI>the sessions table is redefined to contain id varchar(32) default null, a_session long blob, and a key by the name of sessions_index composed of id is created.</LI>
+			</UL>
+		</DIV1>
+	</BODY>
+</DLPSDOC>

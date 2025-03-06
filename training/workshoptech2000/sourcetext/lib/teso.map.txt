@@ -1,0 +1,351 @@
+<!DOCTYPE mappings [
+<!element mappings o o (mapping)+ >
+<!element mapping - - (label?, synthetic?, native?, nativeregionname?) >
+<!element label - - (#PCDATA) >
+<!element synthetic - - (#PCDATA) >
+<!element native - - (#PCDATA) >
+<!element nativeregionname - - (#PCDATA) >
+]>
+
+<!-- TermMapper mapfile for teso -->
+<!-- $Id: teso-idx.map,v 1.3 1999/12/22 16:25:32 bkirschn Exp $ -->
+
+<mappings>
+
+<!-- operator mapping -->
+<mapping>
+<label>And</label>
+<synthetic>AND</synthetic>
+<native>^</native>
+</mapping>
+
+<mapping>
+<label>Or</label>
+<synthetic>OR</synthetic>
+<native>+</native>
+</mapping>
+
+<mapping>
+<label>Not</label>
+<synthetic>NOT</synthetic>
+<native>-</native>
+</mapping>
+
+<mapping>
+<label>Within</label>
+<synthetic>CONTAINED WITHIN</synthetic>
+<native>within</native>
+</mapping>
+
+<mapping>
+<label>Including</label>
+<synthetic>INCLUDING</synthetic>
+<native>incl</native>
+</mapping>
+
+<mapping>
+<label>Near</label>
+<synthetic>NEAR</synthetic>
+<native>near</native>
+</mapping>
+
+<mapping>
+<label>Followed By</label>
+<synthetic>FOLLOWED BY</synthetic>
+<native>fby</native>
+</mapping>
+
+<mapping>
+<label>Not Near</label>
+<synthetic>NOT NEAR</synthetic>
+<native>not near</native>
+</mapping>
+
+<mapping>
+<label>Not Followed By</label>
+<synthetic>NOT FOLLOWED BY</synthetic>
+<native>not fby</native>
+</mapping>
+
+<mapping>
+<label>and</label>
+<synthetic>AND</synthetic>
+<native>^</native>
+</mapping>
+
+<mapping>
+<label>or</label>
+<synthetic>OR</synthetic>
+<native>+</native>
+</mapping>
+
+<mapping>
+<label>not</label>
+<synthetic>NOT</synthetic>
+<native>-</native>
+</mapping>
+
+<mapping>
+<label>within</label>
+<synthetic>CONTAINED WITHIN</synthetic>
+<native>within</native>
+</mapping>
+
+<mapping>
+<label>including</label>
+<synthetic>INCLUDING</synthetic>
+<native>incl</native>
+</mapping>
+
+<mapping>
+<label>near</label>
+<synthetic>NEAR</synthetic>
+<native>near</native>
+</mapping>
+
+<mapping>
+<label>followed by</label>
+<synthetic>FOLLOWED BY</synthetic>
+<native>fby</native>
+</mapping>
+
+<mapping>
+<label>not near</label>
+<synthetic>NOT NEAR</synthetic>
+<native>not near</native>
+</mapping>
+
+<mapping>
+<label>not followed by</label>
+<synthetic>NOT FOLLOWED BY</synthetic>
+<native>not fby</native>
+</mapping>
+
+
+<!-- region mapping -->
+
+<mapping>
+<label>full text</label>
+<synthetic>MAIN_SEARCHABLE</synthetic>
+<native>region TEXT</native>
+<nativeregionname>TEXT</nativeregionname>
+</mapping>
+
+<mapping>
+<label>Full text</label>
+<synthetic>MAIN_SEARCHABLE</synthetic>
+<native>region TEXT</native>
+<nativeregionname>TEXT</nativeregionname>
+</mapping>
+
+<mapping>
+<label>section and work titles</label>
+<synthetic>ALLTITLES</synthetic>
+<native>region alltitles</native><nativeregionname>alltitles</nativeregionname></mapping>
+
+<mapping>
+<label>Same work</label>
+<synthetic>ITEM</synthetic>
+<native>region main</native>
+<nativeregionname>main</nativeregionname>
+</mapping>
+
+<mapping>
+<label>work</label>
+<synthetic>ITEM</synthetic>
+<native>region main</native>
+<nativeregionname>main</nativeregionname>
+</mapping>
+
+<mapping>
+<label>Anywhere</label>
+<synthetic>ITEM</synthetic>
+<native>region main</native>
+<nativeregionname>main</nativeregionname>
+</mapping>
+
+<mapping>
+<label>Title</label>
+<synthetic>TITLE</synthetic>
+<native>region maintitle</native>
+<nativeregionname>maintitle</nativeregionname>
+</mapping>
+
+<mapping>
+<label>title</label>
+<synthetic>TITLE</synthetic>
+<native>region maintitle</native>
+<nativeregionname>maintitle</nativeregionname>
+</mapping>
+
+<mapping>
+<label>Author</label>
+<synthetic>AUTHOR</synthetic>
+<native>region mainauthor</native>
+<nativeregionname>mainauthor</nativeregionname>
+</mapping>
+
+<mapping>
+<label>author</label>
+<synthetic>AUTHOR</synthetic>
+<native>region mainauthor</native>
+<nativeregionname>mainauthor</nativeregionname>
+</mapping>
+
+<mapping>
+<label>Citation</label>
+<synthetic>BIBL</synthetic>
+<native>region mainheader</native>
+<nativeregionname>mainheader</nativeregionname>
+</mapping>
+
+<mapping>
+<label>citation</label>
+<synthetic>BIBL</synthetic>
+<native>region mainheader</native>
+<nativeregionname>mainheader</nativeregionname>
+</mapping>
+
+
+<mapping>
+<label>unique item identifier</label>
+<synthetic>IDNO</synthetic>
+<native>region IDNO</native>
+<nativeregionname>IDNO</nativeregionname>
+</mapping>
+
+<mapping>
+<label>idno</label>
+<synthetic>IDNO</synthetic>
+<native>region IDNO</native>
+<nativeregionname>IDNO</nativeregionname>
+</mapping>
+
+<mapping>
+<label>IDNO</label>
+<synthetic>IDNO</synthetic>
+<native>region IDNO</native>
+<nativeregionname>IDNO</nativeregionname>
+</mapping>
+
+
+<mapping>
+<label>mainheader</label>
+<synthetic>BIBL</synthetic>
+<native>region mainheader</native>
+<nativeregionname>mainheader</nativeregionname>
+</mapping>
+
+
+<mapping>
+<label>genre</label>
+<synthetic>GENRE</synthetic>
+<native>(region "TERM" incl "type=genre")</native>
+<nativeregionname>"TERM"</nativeregionname>
+</mapping>
+
+<mapping>
+<label>speech</label>
+<synthetic>SPEECH</synthetic>
+<native>region speech</native>
+<nativeregionname>speech</nativeregionname>
+</mapping>
+
+<mapping>
+<label>speaker</label>
+<synthetic>SPEAKER</synthetic>
+<native>region SPEAKER</native>
+<nativeregionname>SPEAKER</nativeregionname>
+</mapping>
+
+<mapping>
+<label>act</label>
+<synthetic>ACT</synthetic>
+<native>region act</native>
+<nativeregionname>act</nativeregionname>
+</mapping>
+
+<mapping>
+<label>scene</label>
+<synthetic>SCENE</synthetic>
+<native>region scene</native>
+<nativeregionname>scene</nativeregionname>
+</mapping>
+
+<mapping>
+<label>speeches</label>
+<synthetic>SPEECH</synthetic>
+<native>region speech</native>
+<nativeregionname>speech</nativeregionname>
+</mapping>
+
+<mapping>
+<label>acts</label>
+<synthetic>ACT</synthetic>
+<native>region act</native>
+<nativeregionname>act</nativeregionname>
+</mapping>
+
+<mapping>
+<label>scenes</label>
+<synthetic>SCENE</synthetic>
+<native>region scene</native>
+<nativeregionname>scene</nativeregionname>
+</mapping>
+
+<mapping>
+<label>div1</label>
+<synthetic>DIV1</synthetic>
+<native>region DIV1</native>
+<nativeregionname>DIV1</nativeregionname>
+</mapping>
+
+<mapping>
+<label>div2</label>
+<synthetic>DIV2</synthetic>
+<native>region DIV2</native>
+<nativeregionname>DIV2</nativeregionname>
+</mapping>
+
+<mapping>
+<label>div3</label>
+<synthetic>DIV3</synthetic>
+<native>region DIV3</native>
+<nativeregionname>DIV3</nativeregionname>
+</mapping>
+
+<mapping>
+<label>div4</label>
+<synthetic>DIV4</synthetic>
+<native>region DIV4</native>
+<nativeregionname>DIV4</nativeregionname>
+</mapping>
+
+<mapping>
+<label>node</label>
+<synthetic>NODE</synthetic>
+<native>region "A-NODE"</native>
+<nativeregionname>"A-NODE"</nativeregionname>
+</mapping>
+
+
+
+<!-- genre restriction mapping -->
+<mapping>
+<genreorder>1</genreorder><genrelabel>Auto Sacramental</genrelabel><genrenative>Auto Sacramental</genrenative></mapping>
+<mapping><genreorder>2</genreorder><genrelabel>Baile</genrelabel><genrenative>Baile</genrenative></mapping>
+<mapping><genreorder>3</genreorder><genrelabel>Colloquio </genrelabel><genrenative>Colloquio</genrenative></mapping>
+<mapping><genreorder>4</genreorder><genrelabel>Comedia</genrelabel><genrenative>Comedia</genrenative></mapping>
+<mapping><genreorder>5</genreorder><genrelabel>Diálogo</genrelabel><genrenative>Dialogo</genrenative></mapping>
+<mapping><genreorder>6</genreorder><genrelabel>Entremés</genrelabel><genrenative>Entremes</genrenative></mapping>
+<mapping><genreorder>7</genreorder><genrelabel>Jácara</genrelabel><genrenative>Jacara</genrenative></mapping>
+<mapping><genreorder>8</genreorder><genrelabel>Loa</genrelabel><genrenative>Loa</genrenative></mapping>
+<mapping><genreorder>9</genreorder><genrelabel>Paso</genrelabel><genrenative>Paso</genrenative></mapping>
+<mapping><genreorder>10</genreorder><genrelabel>Tragedia</genrelabel><genrenative>Tragedia</genrenative></mapping>
+<mapping><genreorder>10</genreorder><genrelabel>Tragicomedia</genrelabel><genrenative>Tragicomedia</genrenative></mapping>
+<mapping><genreorder>12</genreorder><genrelabel>Zarzuela</genrelabel><genrenative>Zarzuela</genrenative></mapping>
+
+<!-- strictly speaking, we don't need to mention 'All' here.  no map, no map -->
+
+
+</mappings>

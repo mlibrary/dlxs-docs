@@ -1,0 +1,98 @@
+<html>
+  <head>
+    <title>Collection&amp;Group Databases</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+      <link rel="stylesheet" href="../styles.css" type="text/css">
+  </head>
+  <body bgcolor="#FFFFFF" class="mainpalette">
+    <h3> DLXS Database Tables </h3>
+    <p><strong> DLXS</strong> uses the MySQL database engine. The database used by the middleware is named &quot;dlxs&quot;. Interaction between the database and the DLXS middleware is
+      handled through Perl <a href="http://www.perl.com/pub/a/1999/10/DBI.html" target="external">DBI</a> .</p>
+    <h4>Collection and Group Tables </h4>
+    <ul>
+      <li>The Collection and Group tables are used to store configuration information and are  managed through a CGI program called the <a href="collmgr.html">Collection
+          Manager (collmgr)</a> </li>
+      
+      <li><b>Collection Tables </b>
+        <ul>
+          <li> <i> </i>Collection (<B>Collection</B>) tables to hold fields common to all collections
+            classes</li>
+          <li> Class tables (e.g. <B>FindaidClass</B> or <B>ImageClass</B>) to hold fields that are specific to each class </li>
+          <li> Version table</li>
+        </ul>
+      </li>
+      
+      <li> <b> Groups Tables</b>
+        <ul>
+          <li> A group of collections (for collection coordinators to logically
+            group collections for searching)</li>
+        </ul>
+      </li>
+    </ul>
+    
+    <h4> Other information required by the middleware that is kept in the database: </h4>
+    <ul>
+      <li> Pageview</li>
+      <li> Portfolios (<B>BookBagDB</B> table)</li>
+      <li> <B>sessions</B> which holds search history, and other session state information needed during the running of the CGI program. In TextClass and FindaidClass, sessions also hold bookbag information.
+        In ImageClass, portfolios are held in a separate MySQL table.</li>
+    </ul>
+    
+  </ul>
+    
+    <li> <b>Middleware use of databases</b>
+      <ul>
+        <li> <a href="middleware.html"> Middleware</a> and <a href="collmgr.html"> collmgr</a> use
+          Perl <a href="http://www.perl.com/pub/a/1999/10/DBI.html" target="external"> DBI</a> and
+          support DBD driver for MySQL</li>
+      </ul>
+    </li>
+    <ul>
+      <li> For example: CioFactory object compares requested collections and
+        groups, authorized collections (see <span class="unixcommand">AUTHZD_COLL</span>) and groups to determine what the user is entitled to access.</li>
+    </ul>
+    <li> <b> See</b> the <a href="http://www.dlxs.org/docs/13/collmeta/colldatabases.html" target="external"> DLXS
+        documentation for more information on the databases</a> </li>
+    <li> <b> Database maintenance</b>
+      <ul>
+        <li> <a href="collmgr.html"> <b> collmgr</b> (Collection Manager)</a> </li>
+        <li> <strong>upgrade_XX scripts:</strong> <br>
+            <br>
+              <table border="1" width="50%">
+                <thead style="font-weight:bold">
+                  <tr align="center">
+                    <td>Upgrade Program</td>
+                    <td>Upgrade Releases: FROM => TO</td>
+                  </tr>
+                </thead>
+                <tr align="center">
+                  <td>upgrade_1_2</td>
+                  <td>8  => 9</td>
+                </tr>
+                <tr align="center">
+                  <td>upgrade_2_3</td>
+                  <td>9 => 10</td>
+                </tr>
+                <tr align="center">
+                  <td>upgrade_3_4</td>
+                  <td>10 => 11[a]</td>
+                </tr>
+                <tr align="center">
+                  <td>upgrade_4_5</td>
+                  <td>11[a] => 12[a,b]</td>
+                </tr>
+                <tr align="center">
+                  <td>upgrade_5_6</td>
+                  <td>12[a,b] => 13</td>
+                </tr>
+                <tr align="center">
+                  <td>upgrade_6_7</td>
+                  <td>13 => 14</td>
+                </tr>
+              </table>
+        </li>
+      </ul>
+    </li>
+  </ul>
+  </body>
+</html>

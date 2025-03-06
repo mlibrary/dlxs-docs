@@ -1,0 +1,74 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<title>DLXS Programmers &amp; Technical Workshop</title>
+<link rel="stylesheet" href="styles.css">
+<style type="text/css">
+<!--
+ul {  line-height: 125%}
+-->
+</style>
+</head>
+
+<body class="mainpalette">
+<h3>pageviewer-idx CGI Script</h3>
+<ol>
+  <li>Overview / Background 
+    <ol>
+      <li>Conversion of stored TIFF page image files 
+        <ol>
+          <li>use of <a href="http://kalex.engin.umich.edu/tif2gif/" target="external">tif2gif</a> 
+            to create gif</li>
+          <li>Acrobat distiller to create pdf</li>
+        </ol>
+      </li>
+      <li>Objects used 
+        <ol>
+          <li><a href="sourcetext/lib/CGI.pm.txt" target="sourcetext">CGI</a></li>
+          <li><a href="sourcetext/cgi/PageView.pm.txt" target="sourcetext">PageView</a><i> 
+            (encapsulates pageview.dat file during CGI run)</i> </li>
+          <li><a href="sourcetext/lib/CollsInfo.pm.txt" target="sourcetext">CollsInfo</a></li>
+          <li><a href="sourcetext/lib/DlpsSession.pm.txt" target="sourcetext">DlpsSession</a> 
+            / Apache::Session</li>
+          <li><a href="sourcetext/lib/ProcIns.pm.txt" target="sourcetext">ProcIns</a> 
+          </li>
+        </ol>
+      </li>
+      <li>Other modules used 
+        <ol>
+          <li><a href="sourcetext/lib/DlpsUtils.pm.txt" target="sourcetext">DlpsUtils.pm</a></li>
+          <li><a href="sourcetext/lib/DevUtils.pm.txt" target="sourcetext">DevUtils.pm</a></li>
+        </ol>
+      </li>
+      <li><a href="pageviewer-gen.html" target="mainFrame">pageview.dat</a> file 
+        <ol>
+          <li>contents</li>
+          <li>creation</li>
+        </ol>
+      </li>
+      <li><a href="http://dev.hti.umich.edu/docs/projects/shared/cgiparms.html" target="external">URL 
+        parameters</a> 
+        <ol>
+          <li>id <i>(id of text, notisid or extended notisid)</i></li>
+          <li>seq <i>(page sequence number to find)</i></li>
+        </ol>
+      </li>
+      <li><a href="sourcetext/cgi/pageviewer-idx.cfg.txt" target="sourcetext">pageviewer-idx.cfg</a> 
+        file</li>
+    </ol>
+  </li>
+  <li><a href="sourcetext/cgi/pageviewer-idx.txt" target="sourcetext">pageview-idx</a> 
+    walkthrough 
+    <ol>
+      <li>high level</li>
+      <li>deeper as needed</li>
+    </ol>
+  </li>
+</ol>
+</body>
+
+</html>
+

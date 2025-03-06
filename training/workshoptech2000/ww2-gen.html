@@ -1,0 +1,137 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+   <meta name="GENERATOR" content="Mozilla/4.72 [en] (WinNT; I) [Netscape]">
+   <title>DLXS Programmers &amp; Technical Workshop</title>
+<link rel="stylesheet" href="styles.css">
+<style type="text/css">
+<!--
+ul {  line-height: 125%}
+-->
+</style>
+</head>
+<body class="mainpalette">
+
+<h2>
+Wordwheel Program Overview and Data Preparation</h2>
+<a href="http://dev.hti.umich.edu/cgi/t/text/ww2-idx?c=bosnia&page=wwstart">Wordwheel</a>
+is the name we give to a browsing capability available in TextClass for
+a given collection or across multiple collections.
+<p>If the user enters a word or word-beginning, wordwheel presents the
+user with a list of all words that appear in a collection together with
+the number of occurrences.&nbsp; The user can select from the list and
+perform a simple search on the selected words.
+<p>The CGI that implements this functionality is discussed later in Program
+Architecture - <a href="ww2-idx.html">ww2-idx</a>
+<p>Here we discuss the creation of the <b><i>data</i></b> which supports
+the wordwheel for a given collection
+<br>&nbsp;
+<h3>
+History</h3>
+Previously implemented as a shell script that found words in the collection
+SGML and partitioned the result into files words_A through words_Z.&nbsp;
+The CGI then executed a grep using the user's input as a pattern over one
+or more of these files and extracted a window of lines around the match.&nbsp;
+Problems were slowness, difficulty of cross collection searching, extraction
+of windows spanning files.
+<br>&nbsp;
+<br>&nbsp;
+<h3>
+Directory Structure</h3>
+
+<blockquote>obj/lib/sgml/
+<blockquote>wordwheel.dtd</blockquote>
+idx/c/coll/WW/
+<blockquote>coll.ww.dd&nbsp;&nbsp; etc.
+<br>makeWordWheelFiles.cfg
+<br>Makefile</blockquote>
+bin/WW/
+<ul>Makefile
+<br>makeWordWheelFiles.pl
+<br>makeWordWheelFiles.sample.cfg
+<br>sample.ww.blank.dd
+<br>sample.ww.inp</ul>
+</blockquote>
+
+<h3>
+</h3>
+
+<h3>
+Overview of wordwheel data creation</h3>
+We first run <a href="sourcetext/idx/Makefile.ww.txt" target="sourcetext">Makefile
+for WW</a> which runs <a href="sourcetext/idx/makeWordWheelFiles.pl.txt" target="sourcetext">makeWordWheelFiles.pl</a>to
+create wordwheel derived SGML.&nbsp; This makefile has mostly the same
+targets as that for indexing the sgml for collections.&nbsp; It does not
+create fabricated regions -- they have no use in wordwheel.
+<br>&nbsp;
+<br>&nbsp;
+<h3>
+Work with Content Specialist / encoders on realms</h3>
+Looking at the <a href="sourcetext/makeWordWheelFiles.cfg.txt">makeWordWheelFIles.cfg</a>
+file note that what are called <b><i>realms </i></b>must be defined for
+each collection.&nbsp; We work with the content specialist to determine
+what region definitions best define the realms in question for a given
+collection.<b><i>&nbsp;</i></b> A <b><i>realm</i></b> is a region in the
+collection SGML from which we would like to extract words.
+<br>&nbsp;
+<br>&nbsp;
+<h3>
+The <a href="sourcetext/bin/makeWordWheelFiles.pl.txt">makeWordWheelFiles.pl</a>
+Program</h3>
+<b>makeWordWheelFiles.pl</b> reads realm definitions from the <a href="sourcetext/makeWordWheelFiles.cfg.txt">makeWordWheelFIles.cfg</a>&nbsp;
+file and constructs XPat queries against the collection SGML . Note therefore
+that the collection must already be indexed before we can make the Wordwheel
+data.&nbsp;&nbsp;&nbsp; makeWordWheelFiles.pl<b> </b>takes the query results
+and processes them into individual word of interest, stores the word and
+keeps a count of occurances.&nbsp; It wraps each word in and &lt;E> tag
+and sets the N, O and L (more later on these) attributes.&nbsp; Words are
+further categorized into alpha, numeric and other.&nbsp; A higher level
+tag, e.g. &lt;ALPHA> wraps the word tag.&nbsp; Finally the&lt; REALMNAME>
+tag is added and all are wrapped by a &lt;REALM> tag.&nbsp; We can see
+this in the <a href="sourcetext/wordwheel.dtd.txt">wordwheel.dtd.</a>
+<p>Here is an SGML fragment:
+<p><tt>&lt;REALM></tt>
+<br><tt>&nbsp; &lt;REALMNAME>full text&lt;/REALMNAME></tt>
+<br><tt>&nbsp;&nbsp;&nbsp;&nbsp; &lt;ALPHA></tt>
+<br><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;E N="0" O="8205"
+L="a">a &lt;/E></tt>
+<br><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;E N="1" O="1690"
+L="a">&agrave; &lt;/E></tt>
+<br><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;E N="2" O="1" L="a'district">a'district
+&lt;/E></tt>
+<br><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;E N="3" O="1" L="a-piece">a-piece
+&lt;/E></tt>
+<p><tt>After the Wordwheel SGML is created it is normalized and indexed
+using the same commands as for the collection SGML itself as described
+in<a href="xpatindexing-det.html"> XPat Indexing</a>.</tt>
+<p><tt>A word about the <b>L</b> attribute.&nbsp; L is short for LEMMA.&nbsp;
+This attribute is used to store 8 bit characters as their 7 bit equivalent
+so that<b> &agrave; </b>is stored as <b>a</b>.&nbsp; This feature allows
+the wordwheel CGI (<a href="sourcetext/cgi/ww2-idx.txt">ww2-idx</a>) to
+build cross-collection wordwheels sorted alphabetically across multiple
+collections that may span multiple languages.&nbsp; Otherwise <b>&agrave;
+</b>would sort after<b> z.&nbsp; </b>The flag for this to happen is the
+$gLocale variable in </tt><a href="sourcetext/makeWordWheelFiles.cfg.txt">makeWordWheelFIles.cfg.</a>&nbsp;
+If $gLocale is set to other than 'c', lemma attributes are created.<b><tt></tt></b>
+<center>
+<p>
+<hr WIDTH="100%"></center>
+
+<h4>
+Make Wordwheel Data: Hands On</h4>
+To get more of a feel for the process we'll use the bosnia Wordwheel Makefile
+to make the Wordwheel SGML, normalize the SGML and then index it.&nbsp;
+Earlier in the workshop we edited the correct paths into makeWordWheelFiles.cfg
+which is the input to makeWordWheelFIles.pl which is invoked by the first
+target.
+<p><b><font face="Courier New,Courier">% cd $HOME/dlxs/idx/b/bosnia/WW</font></b>
+<br><b><font face="Courier New,Courier">% make wordwheel</font></b>
+<br><b><font face="Courier New,Courier">% make norm</font></b>
+<br><b><font face="Courier New,Courier">% make dd</font></b>
+<br><b><font face="Courier New,Courier">% make sgmlrgn</font></b>
+<br><b><font face="Courier New,Courier">% make finish</font></b>
+<p>
+<hr WIDTH="100%">
+</body>
+</html>

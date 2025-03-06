@@ -1,0 +1,179 @@
+<HTML>
+  <head>
+    <TITLE>Nameresolver2 setup / design</TITLE>
+    <meta HTTP-EQUIV="Content-Type" content="text/html; charset=iso-8859-1">
+    <link rel="stylesheet" href="../icstyle/icstyles.css" type="TEXT/CSS">
+    <link rel="stylesheet" href="../styles.css" type="TEXT/CSS">
+    <style type="text/css">
+      <!--
+      .style1 { color: #FF0907; font-weight: bold; }
+      -->
+    </style>
+  </head>
+  <BODY BGCOLOR="#FFFFFF" TEXT="#000000" CLASS="mainpalette">
+
+    <h1>Nameresolver2</h1>
+
+
+    <h2 class="partheader">Overview and Design</h2>
+    <p>Nameresolver2 was developed in conjunction with the move away from broker20 and Bibliographic Class in DLPS. Instead of what old nameresolver offered-- a method for creating short URLs using xpat searches-- we developed a MySQL database that would store all the URLs and avoid using xpat. It also avoided the need for creating Bibliographic Class metadata in order to gather the long URLs that would be made into short URLs, which old nameresolver needed and new nameresolver2 does not. New nameresolver2 acts very similarly to idresolver, so we'll compare the differences below.</p>
+     
+    <h2 class="partheader">idresolver vs. nameresolver2 (idresolver-nr)</h2>
+ 
+    <p>The <a href="http://webservices.itcs.umich.edu/mediawiki/dlxs14/index.php/DLXS_IDRESOLVER" target="external">idresolver</a>
+    is a simple mechanism for resolving a unique ID to a URL.  The DLXS Classes can use it to, for example, link 
+    digital object identifiers in an Electronic Finding Aid to the actual digital object in another class.</p>
+
+    <table>
+      <tr>
+        <td><b>idresolver</b>   </td><td>There is always just one URL for each ID in the database.</td>
+      </tr><tr>
+        <td><b>nameresolver2</b> </td><td>Records are keyed on id / collection pairs so more than one URL for a given ID can exist.</td>
+      </tr><tr>
+        <td><hr/></td><td><hr/></td>
+      </tr><tr>
+        <td><b>idresolver</b>   </td><td>A URL (marked up in XML) for an ID is returned (see example below).</td>
+      </tr><tr>
+        <td><b>nameresolver2</b>   </td><td>If a single entry for an ID is found, the user is redirected to that URL.</td>
+      </tr>
+      <tr>
+        <td><b>nameresolver2</b>   </td><td>If more than one entry for an ID is found, the user is prompted with links to the item in different collections.</td>
+      </tr>
+    </table>
+
+    <p>idresolver example:</p>
+    <pre>
+    http://quod.lib.umich.edu/cgi/i/idresolver/idresolver?id=is.blake.0001
+
+    &lt;ITEM MTIME="2008-07-24 16:28:00">
+      &lt;ID>is.blake.0001&lt;/ID>
+      &lt;URI>http://images.umdl.umich.edu/cgi/i/image/image-idx?view=entry;subview=detail;
+        cc=blakeic;entryid=X-1;viewid=1&lt;/URI>
+    &lt;/ITEM>
+    </pre>
+
+
+    <h2 class="partheader">Nameresolver2 Usage</h2>
+     
+    <h3 class="sectionheader">Table structure:</h3>
+    Database: dlxs<br/>
+    Table name: nameresolver<br/>
+    <br/> <br/>
+    <table>
+      <tr>
+        <th scope="col">id</th>
+	<th scope="col">coll</th>
+	<th scope="col">url</th>
+	<th scope="col">modified (auto- generated)</th>
+     </tr>
+     <tr>
+     	<th scope="row">0599998.0001.001</th>
+	<td>alajournals</td>
+	<td>http://quod.lib.umich.edu/cgi/t/text/text-idx?c=alajournals;idno=0599998.0001.001</td>
+	<td>2008-01-15 09:54:32</td>
+     </tr>
+     <tr>
+     	<th scope="row">0599998</th>
+	<td>alajournals</td>
+	<td>http://quod.lib.umich.edu/cgi/t/text/text-idx?c=alajournals;idno=0599998</td>
+	<td>2008-01-15 09:54:32</td>
+     </tr>
+     <tr>
+     	<th scope="row">BAD1447.0002.001</th>
+	<td>genpub</td>
+	<td>http://quod.lib.umich.edu/cgi/t/text/text-idx?c=genpub;idno=BAD1447.0002.001</td>
+	<td>2008-01-15 10:01:30</td>
+     </tr>
+     <tr>
+     	<th scope="row">BAD1447.0002.001</th>
+	<td>micounty</td>
+	<td>http://quod.lib.umich.edu/cgi/t/text/text-idx?c=micounty;idno=BAD1447.0002.001</td>
+	<td>2008-01-15 10:04:00</td>
+     </tr>
+   </table>
+   
+   <h3 class="sectionheader">Long ID vs. Short ID</h3>
+   <p>The nameresolver table contains the full or long ID for a particular record as well as a short ID. For
+   our naming conventions, a long ID points to an individual
+   record. It has the format 0599998.0001.002. The first part (0599998) represents the title.
+ The second part is the volume (0001) and the third is the issue (002). 
+ This naming convention is useful for multi-volume works but it is not required for nameresolver2. 
+ If your IDs do not take this format, only the full ID will be used.</p>
+   
+   <h3 class="sectionheader">Browser Display</h3>
+
+   <ul>
+      <li>Long ID - User is forwarded directly to the record with no interim page</li>
+          <ul><li><a href="http://name.umdl.umich.edu/0599998.0001.001" target="external">http://name.umdl.umich.edu/0599998.0001.001</a></li></ul> 
+      <li>Short ID that corresponds to only one long ID - User is forwarded
+      directly to the record with no interim page</li>
+          <ul><li><a href="http://name.umdl.umich.edu/B1942529" target="external">http://name.umdl.umich.edu/B1942529</a> (long id
+	  <a href="http://name.umdl.umich.edu/B1942529.0001.001" target="external">B1942529.0001.001</a>)</li></ul>
+    <li>Short ID that links to multiple long IDs - User is forwarded to the
+    collection which presents the volumes for that short id</li>
+          <ul><li><a href="http://name.umdl.umich.edu/0599998" target="external">http://name.umdl.umich.edu/0599998</a></li></ul>
+    <li>ID in multiple collections - User is provided a list of collections in
+    which the record resides and can choose to view it in any of the
+    collections</li>
+          <ul><li><a href="http://name.umdl.umich.edu/BAD1447.0002.001" target="external">http://name.umdl.umich.edu/BAD1447.0002.001</a></li></ul> 
+    </ul>
+
+<h3 class="sectionheader">Location and Modification</h3>
+
+The nameresolver2 files are stored at <span style="font-family: monospace;">$DLXSROOT/bin/n/nameresolver</span>. Files of interest are:
+
+<ul>
+    <li><span style="font-family: monospace;">NRTable.sql</span> - SQL script to create the database table. This should work without modification.</li>
+    <li><span style="font-family: monospace;">IdParser.pl</span> - Perl script to that extracts the long and short ids,
+    collection, and URL information for each record and loads it to the
+    database. It uses the <span style="font-family: monospace;">$DLXSROOT/lib/LibGlobals.cfg</span> configuration file to connect to the
+    MySQL database.
+
+    </li>
+</ul>
+
+<h3 class="sectionheader">Populating the Database</h3>
+
+The <span style="font-family: monospace;">IdParser.pl</span> script stored at <span style="font-family: monospace;">$DLXSROOT/bin/n/nameresolver</span>
+has a well-documented usage message. If you run <span style="font-family: monospace;">IdParser.pl -h</span>, you will see a list of available options.  There are several ways to update nameresolver2.
+
+<ul>
+    <li>Option 1: Bib Class files</li>
+          <ul><li>This method can be used for the original migration from old
+	  nameresolver to nameresolver2. Consistent with the old nameresolver,
+	  it uses the ID (not IDNO) tag for the identifier.</li>
+          <li>Example: To add all Bib Class files from a given directory do:
+	  <pre>./IdParser.pl -d fullDirectoryPath</pre></li> 
+	  
+	  <li>To add a specific Bib Class file,
+	  add the -f option: <pre>./IdParser.pl -d fullDirectoryPath -f myColl-bib.xml</pre></li></ul>
+    <li>Option 2: Simplified XML format</li>
+          <ul><li>If you would like to add a small number of records to nameresolver2, there
+	  is a simpler format than Bib Class. This could be created using a list of records, such as from a database query. The format is:
+	  <pre>&lt;ITEMS&gt;&lt;ITEM&gt;&lt;ID&gt;123&lt;/ID&gt;&lt;COLL&gt;collid&lt;/COLL&gt;&lt;URL&gt;http://&lt;/URL&gt;&lt;/ITEM&gt;&lt;ITEM&gt;...&lt;/ITEM&gt;&lt;/ITEMS&gt;</pre>
+	  </li>
+          <li>Add -u to the examples from option 1.</li>
+	  <li>To add all Bib Class
+	  files from a given directory do: <pre>./IdParser.pl -d fullDirectoryPath -u</pre></li> 
+	  <li>To add a specific Bib Class file, add the -f option: 
+	  <pre>./IdParser.pl -d fullDirectoryPath -f myRecords.xml -u</pre></li>
+          </ul>
+    <li>Option 3: Single ID from the command line</li>
+          <ul><li>If you have only a small number of records to add, you can add
+	  them individually from the command line. This will process the long
+	  and short ID for the given ID.</li>
+          <li>Example: <pre>./IdParser.pl -c collName -i yourIdentifier -l "yourUrl"</pre></li></ul>
+    <li>Option 4: Comma-separated value (.csv) file (spreadsheet or flat text file)</li>
+          <ul><li>This may be the easiest option if you have a large number of
+	  ids to add which have the same base URL.</li>
+          <li>Example: <span style="font-family: monospace;">LoadLLMCIDs.pl</span>. This script is provided as an example
+	  and would have be to altered for your use.<br/><br/></li></ul>
+    <li>Option 5: From UMProvider</li>
+          <ul><li>The UMProvider suite synchronizes with nameresolver to add new
+	  nameresolver records along with new records to the oai
+	  database. When the UMProvider update is run, new DLXS text and image class records that are added to the oai database are also 
+	  added to nameresolver2.</li></ul>
+</ul>
+     
+  </BODY>
+</HTML>

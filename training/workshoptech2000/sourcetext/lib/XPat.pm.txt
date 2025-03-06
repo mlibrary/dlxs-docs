@@ -1,0 +1,961 @@
+#  XPat.pm - perl object module for opening and maintaining a Pat session
+#      may be used via the patservd daemon on another machine or
+#      in local mode
+#
+#  ================================================================
+#  COPYRIGHT (c) 1996 - 2000 The Regents of the University of Michigan
+#  All Rights Reserved
+#
+#  Redistribution of this software is prohibited.
+#
+#   This software is provided AS IS, WITHOUT REPRESENTATION FROM THE
+#  UNIVERSITY OF MICHIGAN AS TO ITS FITNESS FOR ANY PURPOSE, AND
+#  WITHOUT WARRANTY BY THE UNIVERSITY OF MICHIGAN OF ANY KIND, EITHER
+#  EXPRESSED OR IMPLIED, INCLUDING WITHOUT LIMITATION THE IMPLIED
+#  FITNESS FOR A PARTICULAR PURPOSE. THE REGENTS
+#  OF THE UNIVERSITY OF MICHIGAN SHALL NOT BE LIABLE FOR ANY DAMAGES,
+#  INCLUDING SPECIAL, INDIRECT, INCIDENTAL, OR CONSEQUENTIAL DAMAGES,
+#  WITH RESPECT TO ANY CLAIM ARISING OUT OF OR IN CONNECTION WITH THE
+#  USE OF THE SOFTWARE, EVEN IF IT HAS
+#  BEEN OR IS HEREAFTER ADVISED OF THE POSSIBILITY OF SUCH DAMAGES
+#  ================================================================
+package XPat;
+
+use strict;
+
+
+#use POSIX "sys_wait_h";      # to be able to use waitpid
+
+use IPC::Open3;      # to fork off an XPat process
+use Symbol;          # to get anonymous reader and writer handles
+use RemoteXPatConnect;
+
+
+use SearchSet;			
+use XPatResultSet;
+
+my $gPatClient = '/l/local/xpat/bin/PatClient.pl';
+
+## METHODS
+
+## new XPat (
+#              requesting host name,
+#              TextClass object's hostname, 
+#              TextClass object's dd file,
+#              TextClass object's XPat executable,
+#              TextClass object's port number for remote access 
+#            );
+# 
+# creates a new pat object in quieton mode using the passed in path as
+# the data dictionary.  Calls the internal "initialize" method.
+
+## $XPatObject->SetXPatSettings("Pat settings string");
+# 
+# sends string naively to pat, *not* expecting any output from pat in
+# return.  This is for sending pat configuration commands.  pushes the
+# passed-in string onto $pat->{'patSettings'} for future reference.
+
+## $XPatObject->GetResultsFromQuery("query string");
+# 
+# sends string naively to pat with a ~sync command appended, and waits
+# for returning input.  breaks input into result set chunks and creates
+# new XPatResultSet object to contain them.
+
+#  Currently
+# understands SSize, Error, RSet and PSet.  waits for the output of the
+# ~sync command to stop reading input from pat.  returns an array of
+# references to the Set objects it created.
+# 
+# if an Error is returned from the pat process, the query halts, and an
+# error structure is returned instead of normal results.  this structure
+# is an array whose first element is "ERROR" and whose second element is
+# the error text from Pat.
+
+
+# ----------------------------------------------------------------------
+# NAME         : new
+# PURPOSE      : 
+#                
+# CALLED BY    : 
+# CALLS        : 
+# INPUT        : 
+# RETURNS      : 
+# GLOBALS      : 
+# SIDE-EFFECTS : 
+# NOTES        : 
+# ----------------------------------------------------------------------
+
+sub new 
+{
+    # method for instantiating a new XPat object
+    # needs a CollsInfo Object as a second argument
+
+    my $class = shift;
+    my $self = {};
+    bless $self, $class;
+    $self->_initialize(@_);
+    return $self;
+}
+
+# ----------------------------------------------------------------------
+# NAME         : _initialize
+# PURPOSE      : 
+#                
+# CALLED BY    : 
+# CALLS        : 
+# INPUT        : 
+# RETURNS      : 
+# GLOBALS      : 
+# SIDE-EFFECTS : 
+# NOTES        : 
+# ----------------------------------------------------------------------
+
+sub _initialize 
+{
+    # THIS NEEDS TO REPORT ERRORS BETTER, NEEDS TO HAVE A RETURN
+    # VALUE THAT WILL TELL CALLER IF PAT IS FIRED UP OR NOT
+    # FIX ME
+
+    my $self           = shift;
+    my $requestingHost = shift;
+    my $tcoHost        = shift;    # calling TextClass object's host
+    my $tcoDd          = shift;    # calling TextClass object's dd file
+    my $tcoPatExec     = shift;    # calling TextClass object's pat executable
+    my $tcoPort        = shift;    # calling TextClass object's port
+
+    # set XPat's mode to remote or local
+    my $patMode = &_SetPatMode ( $requestingHost,
+                                 $tcoHost );
+
+    $self->{'patmode'}    = $patMode;
+    $self->{'dd'}         = $tcoDd;
+    $self->{'host'}       = $tcoHost;
+    $self->{'patexec'}    = $tcoPatExec;
+    $self->{'port'}       = $tcoPort;
+    
+    if ( ( $ENV{'DEBUG'} eq 'xpat' ) ||
+         ( $ENV{'DEBUG'} eq 'all' ) )
+    {
+        print qq{<h1><font color="blue">in XPat init. Setting up pat</font></h1>\n};
+        print qq{<h2>Requesting Host: $requestingHost </h2>\n};
+        print qq{<h2>Tco Host: $tcoHost </h2>\n};
+        print qq{<h2>Tco Dd: $tcoDd </h2>\n};
+        print qq{<h2>Tco Pat Exec: $tcoPatExec </h2>\n};
+        print qq{<h2>Tco Port: $tcoPort </h2>\n};
+        print qq{<h2>***PAT Mode: $patMode </h2>\n};
+    }
+    
+    my ( $wtr, $rdr, $err );
+    
+    eval
+    {
+        ## --------------------------------------------------
+        ##    Local Mode
+        ## --------------------------------------------------
+        if ( $patMode eq 'local' )
+        {
+            ## --------------------------------------------------
+            # use IPC::Open3 to fork and set up pipes
+            $wtr = $self->{'wtr'} = gensym();
+            $rdr = $self->{'rdr'} = gensym();
+            $err = $self->{'err'} = gensym();
+
+            # set up autoflush on writer pipe
+            select $wtr;            $| = 1; 
+            select STDOUT;
+            
+            # create command to send to open3
+            $self->{'pat'} = 
+              $self->{'patexec'} . qq{ -D } . $self->{'dd'};
+            
+            # use IPC::Open3 to fork off XPat process
+            my $pid = open3(
+                            $wtr,
+                            $rdr,
+                            $err,
+                            $self->{'pat'} 
+                           );
+        }
+        
+        
+        ## --------------------------------------------------
+        ##    Remote Mode
+        ## --------------------------------------------------
+        elsif ( $patMode eq 'remote' )
+        {
+            ( $wtr, $rdr ) = &RemoteXPatConnect::Open( $wtr,
+                                                       $rdr,
+                                                       $self->{'host'},
+                                                       $self->{'port'} ,
+                                                     );
+            
+            $self->{'rdr'} = $rdr;
+            $self->{'wtr'} = $wtr;
+
+            # set up autoflush on writer pipe
+            select $wtr;            $| = 1; 
+            select STDOUT;
+
+            # send the dd file name to the xpatserver daemon
+            print $wtr $self->{'dd'};
+        }
+        
+    };
+    # if there was a problem with forking or connecting
+    if ( $@ )
+    {     $self->{'status'} = qq{ERROR: } . qq{Could not fork XPat process or start remote process. $@};    }
+    else
+    { 
+        $self->{'status'} = qq{OK};    
+
+        ## --------------------------------------------------
+        ##      check if process started properly
+        ## --------------------------------------------------
+        # right now, this kludge using parsing of XPat's startup text is in place
+        # Tried using waitpid, we had trouble in a race condition between reading the rdr
+        # and the process dying after sending an error, and sending nothing
+        # upon successful startup.
+        # Eventually, we will have pat mode that returns something upon
+        # successful startup.
+        
+        # check reader handle; there might be an error
+        
+        #    my $temp = waitpid ( $pid, POSIX::WNOHANG );
+        #    # process is fine
+        #    if ( $temp == 0 )
+        #    {
+        #        $self->{'status'} = qq{OK};
+        #    }
+        #    # process is dead and/or sent an error message on the reader
+        #    else
+        #    {
+        #        my $xpatReturn = <$rdr>;
+        #        $self->{'status'} = qq{ERROR: } . $xpatReturn;
+        #    }
+        
+        my $tempSep = $/;
+        $/ = '>> ';
+        my $xpatReturn = <$rdr>;
+        
+        if ( $xpatReturn =~ m,Open Text Database System,s )
+        {
+            print $wtr '{quieton raw};';
+        }
+        else
+        {
+            $self->{'status'} = qq{ERROR: } . $xpatReturn;
+        }
+        $/ = $tempSep;
+    }
+
+    $self->{'separator'} = '>';	# used in parsing the stream from pat
+
+    if ( ( $ENV{'DEBUG'} eq 'xpat' ) ||
+         ( $ENV{'DEBUG'} eq 'all' ) )
+    {
+        print qq{<br><br><h1>Writer: } . $self->{'wtr'} . qq{</h1>};
+        print qq{<br><br><h1>PatExec: } . $self->{'pat'} . qq{</h1>};   
+    }
+}    
+
+# ----------------------------------------------------------------------
+# NAME         : 
+# PURPOSE      : 
+#                
+# CALLED BY    : 
+# CALLS        : 
+# INPUT        : 
+# RETURNS      : 
+# GLOBALS      : 
+# SIDE-EFFECTS : 
+# NOTES        : 
+# ----------------------------------------------------------------------
+
+# sub ConnectViaSocketToRemoteHost
+# {
+#     my ( $host, $port, $dd ) = @_;
+    
+#     ## --------------------------------------------------
+#     ## set up socket 
+
+#     my ($name, $aliases, $protocol) = getprotobyname('tcp');
+# #    chop($date = `date`);
+    
+#     if ($port !~ /^\d+$/) 
+#     {
+#         ($name, $aliases, $port) = getservbyname($port,'tcp');
+# #        chop($date = `date`);
+#     }
+      
+#     my ( $type, $len, $thataddr );
+#     ( $name, $aliases, $type, $len, $thataddr ) = gethostbyname( $host );
+        
+#     if ( !socket( SOCK, AF_INET, SOCK_STREAM, $protocol ) ) 
+#     { die "Socket : $!\n"; }
+
+#     select (SOCK);
+#     $| = 1;  # autoflush
+#     select(STDOUT);
+
+#     ## --------------------------------------------------
+
+#     ## --------------------------------------------------
+#     ## bind and connect
+#     my $sockaddr = 'S n a4 x8';
+#     my $this = pack( $sockaddr, AF_INET, 0, $thisaddr );
+#     my $that = pack( $sockaddr, AF_INET, $port, $thataddr );
+
+#     if ( !bind( SOCK, $this ) ) 
+#     { die $!; }
+
+#     if ( !connect( SOCK, $that ) ) 
+#     { die $!; }
+#     ## --------------------------------------------------
+# }
+
+
+# ----------------------------------------------------------------------
+# NAME         : GetStatus
+# PURPOSE      : return the status of this XPat object
+# CALLED BY    : TextClass->StartXPatProcess
+# CALLS        : 
+# INPUT        : NONE
+# RETURNS      : string
+# GLOBALS      : 
+# SIDE-EFFECTS : 
+# NOTES        : 
+# ----------------------------------------------------------------------
+
+sub GetStatus
+{
+    my $self = shift;
+    return $self->{'status'};
+}
+
+# ----------------------------------------------------------------------
+# NAME         : 
+# PURPOSE      : 
+#                
+# CALLED BY    : 
+# CALLS        : 
+# INPUT        : 
+# RETURNS      : 
+# GLOBALS      : 
+# SIDE-EFFECTS : 
+# NOTES        : 
+# ----------------------------------------------------------------------
+
+sub _SetPatMode
+{
+    my ( $requestingHost, $collHost ) = @_;
+    
+    ## set here to default, change later if necessary
+    my $mode = 'local';
+
+    ## ----- remove port number
+    $requestingHost =~ s,:\d+$,,;
+    $collHost       =~ s,:\d+$,,;
+    
+    
+    if ( $requestingHost ne $collHost )
+	{
+            $mode = 'remote' ;
+        }
+    return ( $mode );
+}
+
+# ----------------------------------------------------------------------
+# NAME         : GetResultsFromQuery
+# PURPOSE      : send a query to XPat process and receive results
+# CALLED BY    : TextClass->SubmitSearchSet, TextClass->SubmitSingleSearch
+# CALLS        : 
+# INPUT        : well-formed XPat query string
+# RETURNS      : XPatResultSet object
+# GLOBALS      : 
+# SIDE-EFFECTS : 
+# NOTES        : 
+# ----------------------------------------------------------------------
+
+sub GetResultsFromQuery
+{
+    my $self  = shift;
+    my $label = shift;
+    my $query = shift;
+    
+    # prepare handles for reading and writing
+    my $wtr = $self->{'wtr'};
+    my $rdr = $self->{'rdr'};
+    my $err = $self->{'err'};
+
+#    select ($wtr);
+#    $| = 1;  # autoflush
+#    select (STDOUT);
+    
+
+    $/ = $self->{'separator'};  # likely '>'
+
+    $query = '{quieton raw};' . $query . '~sync "EndOfResults";';
+    print $wtr  $query;
+
+    if ( $ENV{'DEBUG'} >= 2 )
+    {   print ( "<br>In XPat::GetResultsFromQuery<br>\nSENDING TO XPAT: " . 
+                $query .
+                "<br>\n"  )    }
+    
+    my ( $rawResult, $type, $cleanResult );
+    
+    
+    RESULTSLOOP:
+      while ( $rawResult = <$rdr> )
+      {
+          if ( $rawResult =~ m/^<Sync>$/ )  
+          {
+              # go to end of </Sync>
+              $_ = <$rdr>;
+              
+              # <Sync> tag from XPat tells us we're done with this search
+              last RESULTSLOOP;
+          }
+
+          elsif ( $rawResult =~ m/^<Error>$/ )
+          {
+              # get error set when there is a REAL problem with the
+              # passed in query, caller needs to be able to handle it
+              $type = "Error";
+              $rawResult = <$rdr>;
+
+              $rawResult =~ m,(.*?)</Error>,;
+              $cleanResult .= $1;
+#              $ExitUngracefully = 1;
+              
+              last RESULTSLOOP;
+          }
+          elsif ( $rawResult =~ m,^<SSize>$, )
+          {
+              $type = 'SSize';
+
+              # we've got a ssize chunk, slice it off and deal
+              $rawResult = <$rdr>;
+              $rawResult =~ m,^(-?\d+)</SSize>$,;
+              $cleanResult .= $1;
+              if ( $ENV{'DEBUG'} >= 3 )
+              {
+                  print qq{<br><font color="green">cleanResult is: $cleanResult</font><br>\n};
+              }
+          }
+          elsif ( $rawResult =~ m,^<PSet>$, )
+          {
+              $type = 'PSet';
+              $cleanResult = '';
+            PSETLOOP:
+              while ( $rawResult = <$rdr>)
+              {
+                  if ( $rawResult =~ m,^<\/PSet>$, )   # we're done with set
+                  {   last PSETLOOP;     }
+                  $cleanResult .= $rawResult;
+                  
+
+#                   elsif ( $rawResult =~ m,</Size>$, )   # text we want is after close SSize tag
+#                   {  
+#                       $rawResult = <$rdr>;
+#                       $rawResult =~ m,^(.*)</Raw>$,;
+#                       $cleanResult = $1;    
+#                   }
+#                   else 
+#                   {    next PSETLOOP;    }                      
+              }
+          }
+          elsif ( $rawResult =~ m,^<RSet>$, )
+          {
+              $type = 'RSet';
+              $cleanResult = '';
+            RSETLOOP:
+              while ( $rawResult = <$rdr>)
+              {
+                  if ( $rawResult =~ m,^<\/RSet>$, )   # we're done with set
+                  {   last RSETLOOP;     }
+                  $cleanResult .= $rawResult;
+              }   
+          }
+
+          else
+          {
+          }
+
+      }
+    return ( $type, $cleanResult, $label );
+}
+
+# ----------------------------------------------------------------------
+# NAME         : GetSimpleResultsFromQuery
+# PURPOSE      : send a query to XPat process and receive results
+#                Nothing fancy.
+# CALLED BY    : 
+# CALLS        : 
+# INPUT        : well-formed XPat query string
+# RETURNS      : string of text in quiteon raw mode
+# GLOBALS      : 
+# SIDE-EFFECTS : 
+# NOTES        : 
+# ----------------------------------------------------------------------
+
+sub GetSimpleResultsFromQuery
+{
+    my $self  = shift;
+    my $query = shift;
+
+    my $error = undef;    # later set to true if there is an error
+    
+    # prepare handles for reading and writing
+    my $wtr = $self->{'wtr'};
+    my $rdr = $self->{'rdr'};
+    my $err = $self->{'err'};
+
+    $/ = $self->{'separator'};  # likely '>'
+
+    $query = '{quieton raw};' . $query . '; ~sync "EndOfResults";';
+    print $wtr  $query;
+
+    if ( $ENV{'DEBUG'} >= 2 )
+    {   print ( "<br>In XPat::GetResultsFromQuery<br>\nSENDING TO XPAT: " . 
+                $query .
+                "<br>\n"  )    }
+
+    my ( $rawResult, $fullResult );
+    
+    RESULTSLOOP:
+      while ( $rawResult = <$rdr> )
+      {
+          if ( $rawResult =~ m/^<Sync>$/ )  
+          {
+              # go to end of </Sync>
+              $_ = <$rdr>;
+              
+              # <Sync> tag from XPat tells us we're done with this search
+              last RESULTSLOOP;
+          }
+          elsif ( $rawResult =~ m/^<Error>$/ )
+          {
+              # get error set when there is a REAL problem with the
+              # passed in query, caller needs to be able to handle it
+              $rawResult = <$rdr>;
+
+              $rawResult =~ m,(.*?)</Error>,;
+              $error = 1;
+              $fullResult = $1;
+#              $ExitUngracefully = 1;
+              
+              last RESULTSLOOP;
+          }
+          else
+          {
+              $fullResult .= $rawResult;
+          }
+      }
+    return ( $error, $fullResult );
+}
+
+# ##################################################
+ ## to kill a remote pat server
+ ##
+# sub StopRemotePatServer
+# {
+#     my $self = shift;
+#     my $fin = $self->{'fin'};
+#     my $fout = $self->{'fout'};
+#     my($toReturn);
+#     $/ = $self->{'separator'};
+
+#     print $fout ('stop');
+#     if ($main::debug) {
+# 	print STDERR ('stopping remote pat server on ', 
+# 		      $self->{'hostname'} ,
+# 		      qq{ on port }, 
+# 		      $self->{'portorexec'});
+#     }
+# }
+
+
+# ##################################################
+# sub _BindAndConnect
+# {
+#     my ($port, $thisaddr, $thataddr ) = @_;
+
+#     my $sockaddr = 'S n a4 x8';
+#     my $this = pack($sockaddr, AF_INET, 0, $thisaddr);
+#     my $that = pack($sockaddr, AF_INET, $port, $thataddr);
+
+#     if (bind(S, $this)) {
+#     }
+#     else  {
+# 	die $!;
+#     }
+
+#     if (connect(S, $that)) {
+#     }
+#     else {
+# 	die $!;
+#     }
+#     select(S);
+#     $| = 1;
+#     select(STDOUT);
+# }
+
+# ##################################################
+# sub _SetUpSocket 
+# {
+#     my ( $port, $server ) = @_;
+
+#     my ($name, $aliases, $protocol) = getprotobyname('tcp');
+	
+#     if ($port !~ /^\d+$/) {
+# 	($name, $aliases, $port) = getservbyname($port,'tcp');
+#     }
+
+#     ($name, $aliases,$type,$len,$thataddr) = gethostbyname($server);
+
+#     if (socket(S,AF_INET, SOCK_STREAM, $protocol)) {
+#     }
+#     else {
+# 	die "Socket : $!\n";
+#     }
+#     return ($port, $thataddr);
+# }
+
+# ##################################################
+# sub patSettings
+# {
+#     # method to take a string that it naively assumes is a valid 
+#     # pat settings command and passes it off to pat, and pushes on
+#     # the $self->{'patSettings'} stack (an array)
+#     # no return method for this yet...
+
+#     my $self = shift;
+#     my $s = shift;
+
+#     my $fout = $self->{'fout'};
+#     print $fout "$s";
+
+#     push( @{ $self->{'patSettings'} }, $s);
+# }
+# ##################################################
+# sub query 
+# {
+#     # expects a string to be passed in, which may contain several commands
+#     # to pat, pass it to pat with a ~sync command on the end, process the
+#     # results and hand back an array reference.
+
+#     my ($self, $query) = @_;
+#     my $fin = $self->{'fin'};
+#     my $fout = $self->{'fout'};
+#     my $counter = 0;
+#     my @toReturn;
+#     my $debug = 0;
+
+#     $/ = $self->{'separator'};
+
+#     print $fout "{quieton raw};" . $query . '; ~sync "EndOfResults";';
+#     if ($debug) {print "SENDING TO PAT: {quieton raw};" . $query . '; ~sync "EndOfResults";';}
+    
+#   RESULTLOOP:
+#     while (<$fin>) {
+# 	if ($debug) { print "GOT:  $_\n"; }
+# 	if (/^<Sync>$/) {
+# 	    # this is the tag that tells us we're done with this 
+# 	    # search
+# 	    $_ = <$fin>;
+# 	    last RESULTLOOP;
+# 	} elsif (/^<Error>$/) {
+# 	    # error sets obtain when there is a REAL problem with the
+# 	    # passed in query, caller needs to be able to deal...
+# 	    my $type = "Error";
+# 	    $_ = <$fin>;
+# 	    $ExitUngracefully = 1;
+# 	    return [ "ERROR", "$_" ];
+# 	    last RESULTLOOP;
+# 	} elsif (/^<(SSize|PSet|RSet)>$/) {
+# 	    # one of the normal sets
+# 	    my $type = $1;
+# 	    if ($type eq "SSize") {
+# 		# we've got a ssize chunk, slice it off and deal
+# 		$_ = <$fin>;
+# 		$_ =~ /^(-?\d+)<\/SSize>$/;
+# 		$toReturn[$counter] = new SetXColl($type, $1, $query, $self->{'patSettings'});
+# 		$counter++;
+# 	    } else {
+# 		# we've got a PSet or RSet
+# 		my $result = "";
+# 	      SETLOOP:
+# 		while (<$fin>) {
+# 		    if (/^<\/[RP]Set>$/) {
+# 			last SETLOOP;
+# 		    } else {
+# 			$result .= $_;
+# 		    }
+# 		}
+# 		if ($self->{'tag'}) {
+# 		    $toReturn[$counter] = new SetXColl($type, $result, $query, $self->{'patSettings'}, $self->{'tag'});
+# 		} else {
+# 		    $toReturn[$counter] = new SetXColl($type, $result, $query, $self->{'patSettings'});
+# 		}
+# 		$counter++;
+# 	    }
+# 	} else {
+# 	    # something wierd if the next chunk doesn't conform...
+# 	    ;
+# 	}
+#     }
+#     return @toReturn;
+#     # this array should contain 0 or more references to Set's of
+#     # various kinds, the first will usually be a SSize, followed
+#     # by others
+# }
+
+# ##################################################
+# # subroutine to perform searches such that Set2 objects are tagged
+# # on their way out.  accomplish this by receiving a reference to a
+# # hash as an argument, each value is another hash of otsearch and
+# # tag.  the search can return any number of Set2 objects, each of
+# # which are tagged with the tag, the whole lot being returned to
+# # the caller as an array as per query.
+
+# # it is hoped that this will clean somethings up, make
+# # distinguishing chunks easier and reduce the amount of logic
+# # involved.
+# sub hashQuery 
+# {
+#     my ($self, $hashqueryRef) = @_;
+
+#     my $fin = $self->{'fin'};
+#     my $fout = $self->{'fout'};
+ 
+#     my($counter) = 0;
+#     my(@toReturn);
+#     my($item);
+#     $/ = $self->{'separator'};
+    
+#     foreach $item (sort { $a <=> $b } (keys ( %{ $hashqueryRef } ))) {    
+# 	my($s) = \$hashqueryRef->{$item}{'search'};
+# 	my($k) = \$hashqueryRef->{$item}{'label'}{'key'};
+# 	my($v) = \$hashqueryRef->{$item}{'label'}{'value'};
+	
+# 	print $fout ('{quieton raw};', $$s, '; ~sync "EndOfResults";');
+# 	if ($debug) {
+# 	    print STDERR ('SENDING TO PAT: {quieton raw};', 
+# 		   $$s, '; ~sync "EndOfResults";');
+# 	}
+
+#       RESULTLOOP:
+# 	while (<$fin>)
+# 	{
+# 	    if ($debug) 
+# 	    {
+# 		print "GOT:  $_\n";
+# 	    }
+# 	    if (/^<Sync>$/) 
+# 	    {
+# 		# this is the tag that tells us we're done with this 
+# 		# search
+# 		$_ = <$fin>;
+# 		last RESULTLOOP;
+# 	    }
+# 	    elsif (/^<Error>$/) 
+# 	    {
+# 		# error sets obtain when there is a REAL problem with the
+# 		# passed in query, caller needs to be able to deal...
+# 		my $type = "Error";
+# 		$_ = <$fin>;
+# 		$ExitUngracefully = 1;
+# 		return [ "ERROR", "$_" ];
+# 		last RESULTLOOP;
+# 	    }
+# 	    elsif (/^<(SSize|PSet|RSet)>$/) 
+# 	    {
+# 		# one of the normal sets
+# 		my $type = $1;
+# 		if ($type eq "SSize") 
+# 		{
+# 		    # we've got a ssize chunk, slice it off and deal
+# 		    $_ = <$fin>;
+# 		    $_ =~ /^(-?\d+)<\/SSize>$/;
+# 		    $toReturn[$counter] = new SetXColl($type, $1, $$s, $self->{'patSettings'}, $$k, $$v);
+# 		    $counter++;
+# 		}
+# 		else
+# 		{
+# 		    # we've got a PSet or RSet
+# 		    my $result = "";
+# 		  SETLOOP:
+# 		    while (<$fin>) 
+# 		    {
+# 			if (/^<\/[RP]Set>$/) 
+# 			{
+# 			    last SETLOOP;
+# 			}
+# 			else 
+# 			{
+# 			    $result .= $_;
+# 			}
+# 		    }
+# 		    $toReturn[$counter] = new SetXColl($type, $result, $$s, $self->{'patSettings'}, $$k, $$v);
+# 		    $counter++;
+# 		}
+# 	    }
+# 	    else
+# 	    {
+# 		# something wierd if the next chunk doesn't conform...
+# 		;
+# 	    }
+# 	}
+#     }
+
+#     return @toReturn;
+#     # this array should contain 0 or more references to Set2 objs of
+#     # various kinds, the first will usually be a SSize, followed by
+#     # others
+# }
+
+# ##################################################
+# ## to kill a remote pat server
+# ##
+# sub StopRemotePatServer
+# {
+#     my $self = shift;
+#     my $fin = $self->{'fin'};
+#     my $fout = $self->{'fout'};
+#     my($toReturn);
+#     $/ = $self->{'separator'};
+
+#     print $fout ('stop');
+#     if ($main::debug) {
+# 	print STDERR ('stopping remote pat server on ', 
+# 		      $self->{'hostname'} ,
+# 		      qq{ on port }, 
+# 		      $self->{'portorexec'});
+#     }
+# }
+
+# ##################################################
+# ## for quickie searches
+# ## takes a string as an argument, hands back a string from pat
+# ##
+# sub lowendQuery 
+# {
+#     my ($self, $query) = @_;
+#     my $fin = $self->{'fin'};
+#     my $fout = $self->{'fout'};
+#     my($toReturn);
+#     $/ = $self->{'separator'};
+
+#     print $fout ('{quieton raw};', $query, '; ~sync "EndOfResults";');
+
+#     if ($debug) {
+# 	print STDERR ('lowend SENDING TO PAT: {quieton raw};', 
+# 		      $query, '; ~sync "EndOfResults";');
+#     }
+#   RESULTLOOP:
+#     while (<$fin>) {
+# 	if ($debug) { print "GOT:  $_\n"; }
+# 	if (/^<Sync>$/) {
+# 	    # this is the tag that tells us we're done with this 
+# 	    # search
+# 	    $_ = <$fin>;
+# 	    last RESULTLOOP;
+# 	} else {
+# 	    $toReturn .= $_;
+# 	}
+#     }
+#     return $toReturn;
+#     ## caveat caller, this is just a string.
+# }
+
+# sub flush {
+#     ## try to flush available pat input...
+
+#     my ($self, $query) = @_;
+#     my $fin = $self->{'fin'};
+#     my $fout = $self->{'fout'};
+#     my($toReturn);
+#     $/ = $self->{'separator'};
+
+#     print $fout ('{quieton raw};', $query, '; ~sync "EndOfResults";');
+#     if ($debug) {
+# 	print STDERR ('lowend SENDING TO PAT: {quieton raw};', 
+# 		      $query, '; ~sync "EndOfResults";');
+#     }
+
+#   RESULTLOOP:
+#     while (<$fin>) {
+# 	if ($debug) { print "GOT:  $_\n"; }
+# 	if (/^<Sync>$/) {
+# 	    # this is the tag that tells us we're done with this 
+# 	    # search
+# 	    $_ = <$fin>;
+# 	    last RESULTLOOP;
+# 	} else {
+# 	    $toReturn .= $_;
+# 	}
+#     }
+#     return $toReturn;
+#     ## caveat caller, this is just a string.
+# }
+
+# sub DESTROY {
+#     # destructor for the class
+#     # clean up my sockets, kill off child.
+
+#     my $self = shift;
+
+#     my $fin = $self->{'fin'};
+#     my $fout = $self->{'fout'};
+#     my $data = $self->{'data'};
+#     my $result = $self->{'result'};
+#     my $pid = $self->{'childpid'};
+#     if ($debug) {
+# 	print "\n$pid of child\n";
+#     }
+
+#     if ($ExitUngracefully) {
+# 	kill(9, $pid);
+#     } else {
+# 	print $fout "quit;";	# tell PAT to shut down.
+# 	waitpid($pid, 0);	# wait for the PAT process to die of
+#     }
+
+#     close($fin);
+#     close($fout);
+#     close($data);
+#     close($result);
+
+#     if ($debug) { print "<p>destroying PAT!</p>\n"; }
+# }
+
+# ----------------------------------------------------------------------
+# NAME         : 
+# PURPOSE      : 
+#                
+# CALLED BY    : 
+# CALLS        : 
+# INPUT        : 
+# RETURNS      : 
+# GLOBALS      : 
+# SIDE-EFFECTS : 
+# NOTES        : 
+# ----------------------------------------------------------------------
+sub SendCommand
+{
+    my $self = shift;
+    my $command = shift;
+
+    # prepare handles for reading and writing
+    my $wtr = $self->{'wtr'};
+    my $rdr = $self->{'rdr'};
+    my $err = $self->{'err'};
+
+    print $wtr  $command;
+}
+
+
+# ----------------------------------------------------------------------
+
+1;

@@ -1,0 +1,115 @@
+<html>
+  <head>
+    
+    <title>Search History</title>
+    
+    <meta content="template generated html">
+    
+    <link rel="STYLESHEET" type="text/css" href="/b/bib/bibclass.css">
+    <link rel="STYLESHEET" type="text/css" href="/b/bib/bibclass-specific.css">
+
+    <script language="javascript" src="/b/bib/bbagWindow.js"></script>
+    <script type="text/javascript" language="javascript">
+     <!-- 
+
+     window.name = "mainwindow";
+
+     //-->
+    </script>
+    
+  </head>
+  
+  <body bgcolor="#FFFFFF" marginwidth="10" marginheight="10">
+    
+    <!-- nav bar and page header links    -->
+
+    <!-- bib: pageheadernavbar.chunk -->
+    <table width="100%" border="0" cellspacing="0" cellpadding="5" bgcolor="#FFFFFF">
+      <tr> 
+        <td height="54" valign="middle" nowrap>
+          <a href="http://fizzie.umdl.umich.edu/cgi/b/bib/bib-idx?c=bmp&cc=bmp&page=index">          
+            <font class="tophead">British Manuscripts Project</font> </a>
+          <img src="/b/bib/graphics/plug.gif">
+            <font class="tophead"></font>
+        </td>
+      </tr>
+      <tr height="30"> 
+        <td class="navcolor" valign="middle" align="left" nowrap> 
+          <font color="#FFFFFF" class="navlinks">
+            <a href="http://fizzie.umdl.umich.edu/cgi/b/bib/bib-idx?c=bmp&cc=bmp&page=index" class="nav">search setup</a>
+            &nbsp;|&nbsp;
+            
+            
+            
+            <a class="nav" href="javascript:popupBBagWindow( 'http://fizzie.umdl.umich.edu/cgi/b/bib/bib-idx?c=bmp&cc=bmp&page=bbaglist&fmt=short' , true )">bookbag</a>
+            &nbsp;|&nbsp; 
+            
+            <a class="nav" href="/b/bib/help.html" target="bibhelp">help</a></font>
+        </font>
+        </td>
+    
+    </tr>
+  </table>
+    
+
+    
+    <table width="100%" border="0" cellspacing="0" cellpadding="5" bgcolor="#FFFFFF">
+      <tr>
+        <td height="54" valign="center"><b><font size="+1">Search History</font></b><td>
+          </tr>
+      <tr>
+
+        <td>
+          <font face="arial,sanserif" size="-1">Click on any search query in the history list to resubmit that search.</font>
+        </td>
+      </tr>
+      <tr>
+        <td align="left" valign="top" nowrap> 
+          <form method="GET" action="/cgi/b/bib/bib-idx">
+            <font size="2" face="arial,sanserif"> 
+              <input type="button" value="Clear History"  onclick="this.form.submit();window.history.back()">
+            </font>
+            
+            <input type="hidden" name="clearhistory" value="1">
+            <input type="hidden" name="page" value="history">
+            <INPUT TYPE="hidden" NAME="c" VALUE="bmp">
+
+            
+            
+          </form>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <table width="95%" border="0" cellspacing="2" cellpadding="5">
+            <tr>
+              <td valign="top"><font face="Arial,Helvetica" size="-1">Query #</font></td>
+              <td valign="top"><font face="Arial,Helvetica" size="-1">Search Query</font></td>
+              <td valign="top"><font face="Arial,Helvetica" size="-1">Databases Selected</font></td>
+              <td valign="top"><font face="Arial,Helvetica" size="-1">Total Results</font></td>
+            </tr>
+            
+          <tr valign="top" bgcolor="#ffcc99">
+<td><font size="-1 "face="Arial,Helvetica" class="smalltext">3</font></td><td><font size="-1 "face="Arial,Helvetica" class="smalltext"><A HREF="http://fizzie.umdl.umich.edu/cgi/b/bib/bib-idx?type=simple&c=bmp&Submit=search&sort=A-Z&q1=franklin&rgn1=author&cc=bmp&view=reslist&fmt=short" CLASS="smalltext">au: "franklin"</A></font></td>
+<td><font size="-1" face="Arial,Helvetica" class="smalltext">British Manuscripts Project</font></td>
+<td><font size="-1" face="Arial,Helvetica" class="smalltext">no matching records</font></td>
+</tr>
+<tr valign="top" bgcolor="#cccccc">
+<td><font size="-1 "face="Arial,Helvetica" class="smalltext">2</font></td><td><font size="-1 "face="Arial,Helvetica" class="smalltext"><A HREF="http://fizzie.umdl.umich.edu/cgi/b/bib/bib-idx?type=simple&c=bmp&Submit=search&sort=A-Z&q1=jones&rgn1=title&cc=bmp&view=reslist&fmt=short" CLASS="smalltext">title: "jones"</A></font></td>
+<td><font size="-1" face="Arial,Helvetica" class="smalltext">British Manuscripts Project</font></td>
+<td><font size="-1" face="Arial,Helvetica" class="smalltext">45 matches over 32 records</font></td>
+</tr>
+<tr valign="top" bgcolor="#ffcc99">
+<td><font size="-1 "face="Arial,Helvetica" class="smalltext">1</font></td><td><font size="-1 "face="Arial,Helvetica" class="smalltext"><A HREF="http://fizzie.umdl.umich.edu/cgi/b/bib/bib-idx?type=simple&c=bmp&q1=williams&rgn1=entire%20record&cc=bmp&view=reslist&sort=A-Z&fmt=short" CLASS="smalltext">kw: "williams"</A></font></td>
+<td><font size="-1" face="Arial,Helvetica" class="smalltext">British Manuscripts Project</font></td>
+<td><font size="-1" face="Arial,Helvetica" class="smalltext">489 matches over 478 records</font></td>
+</tr>
+
+    
+          </table>
+        </td>
+      </tr>
+    </table>
+    
+  </body>
+</html>

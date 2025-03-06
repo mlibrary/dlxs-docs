@@ -1,0 +1,105 @@
+<html>
+  <head>
+    <title><?TITLE></title>
+    <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+    <link rel="stylesheet" href="<?DOC_ROOT>textclass.css" type="text/css">
+    <script language="JavaScript" type="text/javascript">
+<!--
+
+// view pulldown needs to change form's action if selection is "text" view
+
+function SubmitViewForm ( aForm )
+{
+//        alert( "here I am\n"+ aForm.view.selectedIndex );
+        var i = aForm.view.selectedIndex;
+        if ( aForm.view.options[i].value == 'text' )
+        {
+                aForm.action = '<?TEXTCLASS_CGI>';
+        }
+        aForm.submit();
+}
+-->
+    </script>
+</head>
+
+  <body bgcolor="#FFFFFF" background="moa_pagebg.gif" marginwidth="0" marginheight="0">
+    <table width="100%" border="0" cellspacing="0" cellpadding="0" align="center">
+      <tr> 
+        <td height="21" width="33%">&nbsp;</td>
+        <td rowspan="2" valign="top" align="center" width="33%">
+          
+<!--  commented out till we decide on collection specific pageviewer templates
+
+          <img src="/imagesmoa-sm-logo.gif" width="144" height="46"></td>
+-->
+        <td align="right" valign="top" height="21" width="33%"> 
+
+          <?RE_AUTH_LINK>
+<!--
+          <a href="<?BOOKBAG_LINK>">
+            <img src="<?DOC_ROOT>images/bbag.gif" width="83" height="21" vspace="1" border="0">
+-->
+        </td>
+      </tr>
+
+      <tr> 
+    
+    <form method="get" name="viewform" action="<?SCRIPT_NAME>" target="_top">
+      
+      <td height="55" valign="middle" align="left" width="33%"> 
+        <img src="<?DOC_ROOT>images/view-as.gif" width="53" height="18" vspace="0" border="0" align="top">&nbsp;
+
+        <?VIEWFORM_HIDDEN_VARS>
+
+        <?VIEW_SELECT onchange="SubmitViewForm(this.form);">
+
+        <br clear="all">
+        <img src="<?DOC_ROOT>images/scale.gif" width="53" height="18" vspace="1" align="top" border="0">&nbsp;
+
+        <?SIZE_SELECT onchange="this.form.submit();">
+
+
+      </td>
+    </form>
+    
+    <form name="pgjump" method="get" action="<?SCRIPT_NAME>" target="_top">
+
+      <?VIEWFORM_HIDDEN_VARS>
+      
+      <td valign="middle" align="right" width="33%">
+        <img src="<?DOC_ROOT>images/goto.gif" width="53" height="18" align="top" vspace="2"> 
+ 
+        <?PAGE_SELECT onchange="this.form.submit();">
+
+      </td>
+    </form>
+
+  </tr>
+    <tr> 
+      <td height="31" valign="top" width="33%">
+        <?RETURN_TO_RESULTS target=_top>
+<!--
+          <img src="<?DOC_ROOT>images/results-arrow.gif" border="0" vspace="0">
+-->
+        </a>
+      </td>
+      <td height="31" valign="middle" align="center" class="navlinks" nowrap width="33%">
+        &nbsp;
+      </td>
+      <td height="31" align="right" valign="top" width="33%">
+        <div class="smalltext"><?PREV_PAGE_LINK>
+          &nbsp;
+          <?NEXT_PAGE_LINK>
+        </div>
+        
+        <!--
+      <a href="<?PREV_PAGE_LINK>" target="_top">Prev Page
+      <img src="<?DOC_ROOT>images/prev_arrow.gif" width="67" height="28" border="0" vspace="1" hspace="0"></a>
+      <a href="<?NEXT_PAGE_LINK>" target="_top">
+      <img src="<?DOC_ROOT>images/next-arrow.gif" width="72" height="28" align="top" border=0 vspace="1"></a>
+        -->
+      </td>
+    </tr>
+  </table>
+  </body>
+</html>

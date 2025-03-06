@@ -1,0 +1,45 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+  <head>
+    <title>Image Class Middleware Components</title>
+  </head>
+
+  <body>
+    <h1>Image Class Middleware Components</h1>
+
+<h2>image-idx</h2>
+<P>image-idx is the primary cgi of the image class. It is the primary decision tree for request made to Image Class. Searches, BookBag/Portfolio interactions, and page displays all channel through this CGI.</P>
+
+<h2>getimage-idx</h2>
+<P>getimage-idx is a cgi dedicated to the delivery of all images with the exception of thumbnails. getimage-idx retrieves images by entry ID, which means that it recieves an entry id as input and does an XPat query to retrieve specific entry data, including the filename, by ID. The filename is then used to open the image and stream it to the browser. Retrieval of images by ID helps to ensure that images are retrieved consistenly over time, even if filenames change.</P>
+
+<h2>getthumbnail-idx</h2>
+<P>getthumbnail-idx is a cgi dedicated to the delivery of thumbnail images. Because thumbnail images are delivered in great quantity and there is a lot of overhead involved in firing up the cgi for each and every thumbnail image, the use of getthumbnail-idx is actually not recommended. Circumvent getthumbnail-idx by putting a symlink in /DLXSROOT/web/c/coll to /DLXSROOT/img/c/coll/index/thumb. The advantage of using getthumbnail-idx is that it only delivers the thumb if the user is authorized to see thumbnails for the collection. If access restrictions are not necessary for the thumbnail images of a collection, simply build the symlink and the getthumbnail-idx cgi will be skipped.</P>
+
+<h2>ImageClassUtils.pm</h2>
+<P>ImageClassUtils.pm is a perl module of subroutines that filter sgml to html and handle processing instructions that dynamically insert functionality in to the html interface templates.</P>
+
+<h2>ICLocalUtils.pm</h2>
+<P>ICLocalUtils.pm is a perl module initially with only one subroutine in it called "allpurpose." This subroutine is activated by the ALLPURPOSE processing instruction, which may be used in any template. The ALLPURPOSE processing instruction is for adding or customizing Image Class functionality without having to significantly modify image-idx, ImageClassUtils.pm, etc. By containing local alterations in the ICLocalUtils.pm module, it should make upgrading to future versions of Image Class easy. ICLocalUtils.pm should, if possible, be used for making other types of local modifications to Image Class.</P>
+
+<h2>imageclass.cfg</h2>
+<P>imageclass.cfg is a file full of global variables used by the Image Class cgis (image-idx, getimage-idx, getthumbnail-idx). Most of the variables need not be changed, but a few definately need modification. They are:<P>
+
+
+<UL>
+<LI><b>$gLoginUrl</b><BR>
+The URL where a user can login to gain greater access and/or functionality.
+</LI>
+<LI><b>$gLoginEnabled</b><BR>
+Include or exclude login functions in the interface.
+</LI>
+<LI><b>$gBookBagToggle</b><BR>
+Turn BookBag/Portfolio functionality on or off.
+</LI>
+<LI><b>BookBagDB Configuration: $dsn, $username, $pw</b><BR>
+Configure DBI parameters for access to the BookBagDB. BookBag/Portfolio uses MySQL to store BookBag data.</LI>
+</UL>
+
+
+  </body>
+</html>

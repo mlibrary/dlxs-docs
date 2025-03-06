@@ -1,0 +1,26 @@
+=== Overview of Preprocessing and Encoding considerations ===
+
+Data Prep
+
+# [#DataPrepStep1 validating the files individually] against the EAD ''2002'' DTD<br />'''make validateeach'''<br />
+# [#DataPrepStep2 concatenating the files into one larger XML file]<br />'''make prepdocs'''<br />
+# [#DataPrepStep3 validating the concatenated file] against the ''dlxsead2002'' DTD:<br />'''make validate'''<br />
+# [#DataPrepStep4 "normalizing" the concatenated file.]<br />'''make norm'''<br />
+# [#DataPrepStep5 validating the normalized concatenated file against the ''dlxsead2002'' DTD]<br />'''make validate'''<br />
+
+ 
+ &lt;COLL&gt;<br />&lt;ead&gt;&lt;eadheader&gt;&lt;eadid&gt;1&lt;/eadid&gt;...&lt;/eadheader&gt;... content&lt;/ead&gt;<br />&lt;ead&gt;&lt;eadheader&gt;&lt;eadid&gt;2&lt;/eadid&gt;...&lt;/eadheader&gt;... content&lt;/ead&gt;<br />&lt;ead&gt;&lt;eadheader&gt;&lt;eadid&gt;3&lt;/eadid&gt;...&lt;/eadheader&gt;... content&lt;/ead&gt;<br />&lt;/COLL&gt;
+ 
+
+'''WARNING!'''    If are extra characters or some other problem with the part of the program that strips out the xml declaration and the docytype declearation the file will end up like:
+
+ 
+ &lt;COLL&gt;<br />baddata&lt;ead&gt;&lt;eadheader&gt;&lt;eadid&gt;1&lt;/eadid&gt;...&lt;/eadheader&gt;... content&lt;/ead&gt;<br />baddata&lt;ead&gt;&lt;eadheader&gt;&lt;eadid&gt;2&lt;/eadid&gt;...&lt;/eadheader&gt;... content&lt;/ead&gt;<br />baddata&lt;ead&gt;&lt;eadheader&gt;&lt;eadid&gt;3&lt;/eadid&gt;...&lt;/eadheader&gt;... content&lt;/ead&gt;<br />&lt;/COLL&gt;
+
+Indexing
+
+# '''make singledd''' indexes words for texts that have been concatenated into on large file for a collection. This is the recommended process.
+# '''make xml''' indexes the XML structure by reading the DTD. Validates as it indexes.
+# '''make post''' builds and indexes fabricated regions based on the XPAT queries stored in the workshopfa.extra.srch file.
+
+[fcoutline.html Return to main outline]

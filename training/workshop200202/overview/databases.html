@@ -1,0 +1,247 @@
+<HTML><!-- #BeginTemplate "/Templates/toplevelpages.dwt" -->
+<HEAD>
+<!-- #BeginEditable "doctitle" --> 
+
+<TITLE>Collection &amp; Group Databases</TITLE>
+
+<!-- #EndEditable -->
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+<LINK REL="stylesheet" HREF="../styles.css" TYPE="text/css">
+</HEAD>
+
+<BODY BGCOLOR="#FFFFFF" LEFTMARGIN="0" TOPMARGIN="0" MARGINWIDTH="0" MARGINHEIGHT="0">
+<TABLE WIDTH="100%" BORDER="0" CELLPADDING="0" CELLSPACING="0">
+  <TR> 
+    <TD CLASS="toppalette" HEIGHT="40"><DIV CLASS="header">&nbsp;&nbsp;DLXS Programmers &amp; 
+      Technical Workshop February, 2002</DIV>
+	  </TD>
+  </TR>
+  <TR> 
+    <TD WIDTH="100%" VALIGN="top"> 
+      <TABLE WIDTH="100%" BORDER="0" CELLPADDING="10" CELLSPACING="0">
+        <TR> 
+          <TD WIDTH="20%" CLASS="navpalette" VALIGN="top"> <A CLASS="navlink" HREF="../index.html">Introduction</A><BR>
+            <A CLASS="navlink" HREF="../workshopgeneral/workshopschedule.html"> 
+            Schedule</A><BR>
+            <A CLASS="navlink" HREF="../workshopgeneral/workshopoutline.html">Course 
+            Outline</A> 
+            <HR WIDTH="75%">
+            <A HREF="../misc/demonstration.html" CLASS="navlink">Demonstration</A><BR>
+            <A HREF="overview.html" CLASS="navlink">Overview</A><BR>
+            <HR WIDTH="75%">
+            <A HREF="../misc/installation.html" CLASS="navlink">Installation</A><BR>
+            <A HREF="../misc/sampledata.html" CLASS="navlink">Sample Data</A><BR>
+            &nbsp;&nbsp;<A HREF="../misc/sampledata.html#configure" CLASS="navlink">Configuration</A><BR>
+            &nbsp;&nbsp;<A HREF="../misc/sampledata.html#rerun" CLASS="navlink">Run</A><BR>
+            <HR WIDTH="75%">
+            <A CLASS="navlink" HREF="../xpat/xpatdetails.html">XPat</A><BR>
+            &nbsp;&nbsp;<A CLASS="navlink" HREF="../xpat/xpatdetails.html#textindexing">Indexing</A><BR>
+            &nbsp;&nbsp;<A CLASS="navlink" HREF="../xpat/xpatdetails.html#syntax">Query 
+            Language</A><BR>
+            &nbsp;&nbsp;<A CLASS="navlink" HREF="../xpat/xpatdetails.html#quietonrawmode">quieton 
+            mode </A><BR>
+            <HR WIDTH="75%">
+            <A HREF="../textclass/tcoutline200202.html" CLASS="navlink">TextClass</A><BR>
+            &nbsp;&nbsp;<A HREF="../textclass/tcoutline200202.html#WorkshopDay2TuesdayAfternoon" CLASS="navlink">Content 
+            Prep</A><BR>
+            &nbsp;&nbsp;<A HREF="../textclass/tcoutline200202.html#TextClassIndexBuildingwithXPAT" CLASS="navlink">Build 
+            Index </A><BR>
+            &nbsp;&nbsp;<A HREF="../textclass/tcoutline200202.html#TextClassCollectiontoWeb" CLASS="navlink">Collection 
+            To Web</A><BR>
+            <HR WIDTH="75%">
+            <A HREF="../imageclass/icoutline200202.html" CLASS="navlink">ImageClass</A><BR>
+            &nbsp;&nbsp;<A HREF="../imageclass/icoutline200202.html#ImageClassContentPreppart1" CLASS="navlink">Content 
+            Prep</A><BR>
+            &nbsp;&nbsp;<A HREF="../imageclass/icoutline200202.html#ImageClassIndexBuildingwithXPAT" CLASS="navlink">Build 
+            Index </A><BR>
+            &nbsp;&nbsp;<A HREF="../textclass/tcoutline200202.html" CLASS="navlink">Collection 
+            To Web</A><BR>
+            <HR WIDTH="75%">
+            <A HREF="../ui/userinterface.html" CLASS="navlink">User Interface</A> 
+            <BR>
+            &nbsp;&nbsp;<A HREF="../ui/userinterface.html#overview" CLASS="navlink">HTML 
+            Templates</A><BR>
+            &nbsp;&nbsp;<A HREF="../ui/userinterface.html#textclass" CLASS="navlink">TextClass</A><BR>
+            &nbsp;&nbsp;<A HREF="../ui/userinterface.html#imageclass" CLASS="navlink">ImageClass</A><BR>
+            <HR WIDTH="75%">
+            <A CLASS="navlink" HREF="../misc/future.html">The Future</A><BR>
+            <SPAN CLASS="navlink">General 
+            Questions</SPAN><BR>
+          </TD>
+          <TD CLASS="mainpalette" VALIGN="top"><!-- #BeginEditable "Main%20Contents" --> 
+
+            <H3>Collection/Group Databases</H3>
+
+            <UL>
+
+              <LI><B>Evolution</B> 
+
+                <UL>
+
+                  <LI>Previous versions of DLXS software 
+
+                    <UL>
+
+                      <LI>used <I>colldb</I>, a tab-delimited file for each class</LI>
+
+                      <LI>each class's colldb duplicated many columns</LI>
+
+                    </UL>
+
+                  </LI>
+
+                  <LI>Current version uses a relational database called <I>dlxs</I> 
+
+                    <UL>
+
+                      <LI>Underlying data format vs. logical format</LI>
+
+                      <LI>managed through a CGI program called the <A HREF="collmgr.html">Collection 
+
+                        Manager (collmgr)</A></LI>
+
+                    </UL>
+
+                  </LI>
+
+                </UL>
+
+              </LI>
+
+              <LI><B>Collection Database Schema</B> 
+
+                <UL>
+
+                  <LI><I>One</I> database for all classes rather than separate 
+
+                    colldb files for each class </LI>
+
+                  <LI>Collection table to hold fields common to all collections 
+
+                    classes</LI>
+
+                  <LI>Class tables to hold fields that are specific to each class 
+
+                  </LI>
+
+                  <LI>Backup tables, version table </LI>
+
+                </UL>
+
+              </LI>
+
+              <LI><B>Groups Database</B> 
+
+                <UL>
+
+                  <LI>A group of collections (for collection coordinators to logically 
+
+                    group collections for searching)</LI>
+
+                  <LI>Used mainly by Image Class and Bib Class</LI>
+
+                </UL>
+
+              </LI>
+
+              <LI><B>Other information required by the middleware that is kept 
+
+                in databases</B> 
+
+                <UL>
+
+                  <LI>Part of the dlxs database: 
+
+                    <UL>
+
+                      <LI>Pageview (for which we recommend against CSV because 
+
+                        of functionality, performance, scalability)</LI>
+
+                      <LI>Portfolios (BookBagDB table)</LI>
+
+                    </UL>
+
+                  </LI>
+
+                  <LI>DBI is used for these, but they are not part of the dlxs 
+
+                    database as such; temporary 
+
+                    <UL>
+
+                      <LI>Sessions, TextClass BookBag</LI>
+
+                    </UL>
+
+                  </LI>
+
+                </UL>
+
+              </LI>
+
+              <LI> <B>Middleware use of databases</B> 
+
+                <UL>
+
+                  <LI><A HREF="middleware.html">Middleware</A> and <A HREF="collmgr.html">collmgr</A> 
+
+                    use Perl <A HREF="http://www.perl.com/pub/a/1999/10/DBI.html" TARGET="external">DBI</A> 
+
+                    and support DBD drivers for CSV, MySQL (Oracle to follow)</LI>
+
+                </UL>
+
+              </LI>
+
+              <UL>
+
+                <LI>For example: CioFactory object compares requested collections 
+
+                  and groups, authorized collections (see AUTHZD_COLL) and groups 
+
+                </LI>
+
+              </UL>
+
+              <LI><B>See</B> the <A HREF="http://www.hti.umich.edu/d/docstest/dlxs/metadata/databases.html">DLXS 
+
+                documentation for more information on the databases</A></LI>
+
+              <LI><B>Database maintenance</B> 
+
+                <UL>
+
+                  <LI><B>dbconv</B>: one time program to convert current DLXS 
+
+                    users' colldb's to a database (either CSV or MySQL)</LI>
+
+                  <LI><B>dbmove</B>: program to convert from CSV to MySQL versions 
+
+                    of the same, new database structure (We at DLPS will also 
+
+                    use this to release CSV versions of new database structures 
+
+                    as time goes by)</LI>
+
+                  <LI><A HREF="collmgr.html"><B>collmgr</B> (Collection Manager)</A></LI>
+
+                </UL>
+
+              </LI>
+
+            </UL>
+
+            <!-- #EndEditable --></TD>
+        </TR>
+      </TABLE>
+    </TD>
+    <TD WIDTH="6"></TD>
+  </TR>
+  <TR> 
+    <TD HEIGHT="4"></TD>
+    <TD></TD>
+  </TR>
+</TABLE>
+</BODY>
+<!-- #EndTemplate --></HTML>

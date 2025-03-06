@@ -1,0 +1,254 @@
+package Bookbag;
+
+
+use Exporter ();
+@ISA = qw( Exporter );
+
+#use DlpsUtils qw( :DEFAULT );
+
+
+# **********************************************************************
+# this module is currently used for TextClass objects
+# need to store a collection id and an idno for a work level item
+#
+# The structure of this object is:
+# Bookbag Object->
+#    {'totalitems'}                        # total number of items currently stored
+#    {'totalcolls'}                        # total number of collections represented
+#    {'colls'}{$collid}{'totalitems'}      # total number of items for this coll
+#                      {'items'}{$idno}    # actual item
+#
+# This object can and should be attached to a DlpsSession object
+# **********************************************************************
+
+
+# ----------------------------------------------------------------------
+# NAME      : new
+# PURPOSE   : create new Bookbag object
+#             
+# CALLED BY : main
+# CALLS     : Bookbag->_initialize
+# INPUT     : 
+#             
+# RETURNS   : NONE
+# NOTES     : 
+# ----------------------------------------------------------------------
+
+sub new 
+{
+    my $class = shift;
+    my $self = {};
+    bless $self, $class;
+    $self->_initialize(@_);
+    return $self;
+}
+
+# ----------------------------------------------------------------------
+# NAME      : _initialize
+# PURPOSE   : create structure for Bookbag object
+# CALLED BY : new
+# CALLS     : 
+# INPUT     : see new
+# RETURNS   : 
+# NOTES     : 
+# ----------------------------------------------------------------------
+
+sub _initialize 
+{
+    my $self = shift;
+
+    $self->{'totalitems'} = 0;
+    $self->{'totalcolls'} = 0;
+    $self->{'colls'}      = undef;
+}
+
+# ----------------------------------------------------------------------
+# NAME         : UpdateTotals
+# PURPOSE      : tidy up total item and coll counts, etc. any time a change is made
+# CALLED BY    : 
+# CALLS        : 
+# INPUT        : NONE
+# RETURNS      : NONE
+# GLOBALS      : 
+# SIDE-EFFECTS : may change counts members in this object
+# NOTES        : 
+# ----------------------------------------------------------------------
+
+sub UpdateTotals
+{
+    my $self = shift;
+    my ( $collid, $idno );
+    my ( $totalColls, $totalItems ) = ( 0, 0 );
+        
+    # 
+    foreach $collid ( keys ( %{$self->{'colls'}} ) )
+    {
+        # update the collid's total item count
+        my $thisCollTotalItems = scalar  ( keys ( %{$self->{'colls'}{$collid}{'items'}} ) );
+        $self->{'colls'}{$collid}{'totalitems'} = $thisCollTotalItems;
+
+        #update total coll count
+        $totalColls++;
+        
+        # update bookbag's total item count
+        $totalItems += $thisCollTotalItems;
+    }
+    
+    $self->{'totalitems'} = $totalItems;
+    $self->{'totalcolls'} = $totalColls;
+}
+
+
+# ----------------------------------------------------------------------
+# NAME         : 
+# PURPOSE      : 
+#                
+# CALLED BY    : 
+# CALLS        : 
+# INPUT        : 
+# RETURNS      : 
+# GLOBALS      : 
+# SIDE-EFFECTS : 
+# NOTES        : 
+# ----------------------------------------------------------------------
+
+sub GetTotalItems
+{ 
+    my $self = shift;
+    return     $self->{'totalitems'};
+}
+
+
+
+# ----------------------------------------------------------------------
+# NAME         : AddItem
+# PURPOSE      : 
+#                
+# CALLED BY    : 
+# CALLS        : 
+# INPUT        : 
+# RETURNS      : 
+# GLOBALS      : 
+# SIDE-EFFECTS : 
+# NOTES        : 
+# ----------------------------------------------------------------------
+
+sub AddItem
+{
+    my $self = shift;
+    my ( $collid, $idno ) = @_;
+
+    # if not already in bookbag, add it
+    if ( ! exists ( $self->{'colls'}{$collid}{'items'}{$idno} ) )
+    {
+        $self->{'colls'}{$collid}{'items'}{$idno} = 1;
+
+        # update counts for all items and for this coll's items
+        $self->UpdateTotals( );
+    }
+}
+
+# ----------------------------------------------------------------------
+# NAME         : RemoveItem
+# PURPOSE      : 
+#                
+# CALLED BY    : 
+# CALLS        : 
+# INPUT        : 
+# RETURNS      : 
+# GLOBALS      : 
+# SIDE-EFFECTS : 
+# NOTES        : 
+# ----------------------------------------------------------------------
+
+sub RemoveItem
+{
+    my $self = shift;
+    my ( $collid, $idno ) = @_;
+
+    if ( exists ( $self->{'colls'}{$collid}{'items'}{$idno} ) )
+    {
+        delete ( $self->{'colls'}{$collid}{'items'}{$idno} ) ;
+
+        # update counts for all items and for this coll's items
+        $self->UpdateTotals( );
+    }
+}
+
+# ----------------------------------------------------------------------
+# NAME         : GetCollids
+# PURPOSE      : 
+#                
+# CALLED BY    : 
+# CALLS        : 
+# INPUT        : 
+# RETURNS      : sorted list of collids represented in this Bookbag object
+# GLOBALS      : 
+# SIDE-EFFECTS : 
+# NOTES        : 
+# ----------------------------------------------------------------------
+
+sub GetCollids
+{ 
+    my $self = shift;
+    
+    return ( sort ( keys ( %{$self->{'colls'}} ) ) );
+}
+
+# ----------------------------------------------------------------------
+# NAME         : GetIdnos
+# PURPOSE      : 
+#                
+# CALLED BY    : 
+# CALLS        : 
+# INPUT        : 
+# RETURNS      : sorted list of idnos for a given collid
+# GLOBALS      : 
+# SIDE-EFFECTS : 
+# NOTES        : 
+# ----------------------------------------------------------------------
+
+sub GetIdnos
+{ 
+    my $self   = shift;
+    my $collid = shift;
+    
+    return ( sort ( keys ( %{$self->{'colls'}{$collid}{'items'}} ) ) );
+}
+
+
+# ----------------------------------------------------------------------
+# NAME         : IsItemInBookbag
+# PURPOSE      : 
+#                
+# CALLED BY    : 
+# CALLS        : 
+# INPUT        : 
+# RETURNS      : 
+# GLOBALS      : 
+# SIDE-EFFECTS : 
+# NOTES        : 
+# ----------------------------------------------------------------------
+
+sub IsItemInBookbag
+{
+    my $self = shift;
+    my ( $collid, $idno ) = @_;
+
+    my $status = 0;
+    
+    if ( exists ( $self->{'colls'}{$collid}{'items'}{$idno} ) )
+    {
+        $status = 1;
+
+        # update counts for all items and for this coll's items
+        $self->UpdateTotals( );
+    }
+    return $status;
+    
+}
+
+# ----------------------------------------------------------------------
+1;
+    
+    

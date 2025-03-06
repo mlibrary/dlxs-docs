@@ -1,0 +1,129 @@
+<?xml version="1.0"?>
+
+<!-- SPO Editorial Services                  -->
+<!-- automatically-generated XML header file -->
+
+<?xml-stylesheet href="../../pre11-dlxsdocs.xsl" type="text/xsl"?>
+<!DOCTYPE DLPSDOC PUBLIC "-//UM-DLPS//DTD DLPS Publications//EN" "http://docs.umdl.umich.edu/dlps/docs/dlpsdocs.dtd">
+<DLPSDOC>
+<TITLE>XPAT Regions:  The Region Tag Names and DTD</TITLE>
+<HEADER>
+<JOURNAL>DLXS Documentation</JOURNAL>
+<PUBDATE>2002-04-30 17:44:12 EDT</PUBDATE>
+<AUTH1>Wilkin, John Price</AUTH1>
+<AUTH2></AUTH2>
+<DOCTITLE>XPAT Regions:  The Region Tag Names and DTD</DOCTITLE>
+<VOL>xpat</VOL>
+<ISS></ISS>
+<FILE>dlxsdocs-xpat-regions</FILE>
+</HEADER>
+<BODY>
+<BHEAD>2. XPAT Regions:  The Region Tag Names and DTD</BHEAD>
+<DIV1 ID="toc"><H1>Table of Contents</H1>
+<UL>
+<LI><A HREF="#sec1">2.1 Introduction</A></LI>
+<LI><A HREF="#sec2">2.2 Preparing the Tagnames File</A></LI>
+<LI><A HREF="#sec3">2.3 The Document Type Definition (DTD)</A></LI>
+<LI><A HREF="#sec4">2.4 Chapter Summary</A></LI>
+</UL>
+</DIV1>
+
+<DIV1 ID="sec1"><A NAME="sec1"></A><H1>2.1 Introduction</H1>
+<P>This chapter discusses the building of region indices on tagged or encoded
+text files. Tagged text files are ones in which structures are denoted by
+&lt;tagname&gt; and &lt;/tagname&gt; delimiters. These delimiters are often
+found in structured text, typically either in SGML or XML. </P>
+<P>The Data Dictionary control file discussed in the preceding chapter is the
+main control file for every XPAT database. There are three additional control
+files that play a role in the index-building process. These are the Region
+Tagnames file and the Document Type Definition (DTD). The Region Tagnames file
+employs a fairly simple method of specifying the data regions for which indices
+must be built, and can be used for well-formed (rather than valid) XML and for
+similarly constructed encoded text. This file is discussed in Section 2.2 of
+this chapter.  A DTD may be used to index all elements and attributes in valid
+SGML and XML which uses 7- and 8-bit character encodings, and is especially
+encouraged in the case of fully-encoded Text Class documents.  This file is
+discussed in Section 2.3.</P>
+</DIV1>
+<DIV1 ID="sec2"><A NAME="sec2"></A><H1>2.2 Preparing the Tagnames File</H1>
+<P>The Region Tagnames file is created by the XPAT database manager to specify
+the data regions for which indices are to be built using the multirgn utility. 
+Tagged or encoded files have tags in the data to indicate a hierarchy, content
+type, or features for specific portions of text. XPAT refers to these as
+"regions."  While they are similar in concept to <I>fields</I>, the
+special terminology is used to help make clear that these units of information
+can exist in complex relationships to each other, including nested
+relationships.  The XPAT software will build indices on regions specified by the
+XPAT database manager. Regions for index-building can be specified in the Region
+Tagnames file (or Tagnames for short). For instance, using the patent
+application example, specifying the region "inventor" would tell
+XPAT that an index should be built for every data region in the source files
+that is surrounded by the start and end tags &lt;inventor&gt; and
+&lt;/inventor&gt;. The Tagnames file need not contain every unique tagname in a
+database; however, DLXS implementers often find that using a complete or nearly
+complete list, especially in early experiments with the data, is useful. The
+Tagnames file typically has the suffix '.tag' and usually uses the
+same prefix as for the Data Dictionary file.</P>
+<P>Entries for Tagnames file use a special 'tagged' format. The
+tagged format provides the ability to distinguish between three types of region
+information:  </P>
+<OL>
+<LI><B>Elements</B>, which correspond to the content between tag pairs in SGML
+or XML. For example, by declaring the region inventor as follows in the Tagname
+file, the information between <TT>&lt;inventor&gt;</TT> and <TT>&lt;/inventor&gt;</TT> would be indexed:<BR/>
+<TT>  &lt;region&gt;&lt;element&gt;inventor&lt;/element&gt;&lt;/region&gt;</TT></LI>
+<LI><B>Attributes</B>, which correspond to the contents of an SGML or XML attribute.  For example, if the inventor element had a "inverted" attribute, as in <BR/>
+<TT>  &lt;inventor inverted="smith, robert"&gt;Robert Smith&lt;/inventor&gt;</TT><BR/>
+the contents between the quotes would be indexed.  Attributes are declared as follows:<BR/>
+<TT>  &lt;region&gt;&lt;att&gt;inverted&lt;/att&gt;&lt;/region&gt;</TT></LI>
+<LI><B>Tags</B>, which correspond to the contents between a single
+angle-bracketed tag in SGML or XML.  For example, in the above example for
+attributes, declaring a tag index for "inventor" would index the
+contents &lt;inventor inverted="smith, robert"&gt;, minus the
+"&lt;" and "&gt;" pair.  Tag regions are typically used
+in the case of empty elements (e.g., the page break or "PB" element
+in Text Class), where the contents of the element are held entirely in the tag
+itself.  Tag regions are declared as
+follows:<BR/>
+<TT>  &lt;region&gt;&lt;tag&gt;PB&lt;/tag&gt;&lt;/region&gt;</TT></LI>
+</OL>
+<P>Please note that all elements, attributes, and tags in your document(s)
+must be in a consistent case (e.g., all upper or lower case, or in the same
+mixed case form), and that they should be declared in this form in your Tagnames
+file. Refer to that man page for further details.</P>
+</DIV1>
+<DIV1 ID="sec3"><A NAME="sec3"></A><H1>2.3 The Document Type Definition (DTD)</H1>
+<P>The Document Type Definition (DTD) file is used by the XPAT database
+manager to create data regions for each element, attribute, and tag name in the
+encoded text.  A DTD is used with valid SGML and XML (currently only in 7- and
+8-bit character encodings), and indices are built using the sgmlrgn and xmlrgn
+utilities.  As noted above, encoded files have tags in the data to indicate a
+hierarchy, content type, or features for specific portions of text, and XPAT
+refers to these as "regions."  Unlike the Tagnames file, which
+results in building indices only on regions specified by the XPAT database
+manager, use of a DTD and sgmlrgn or xmlrgn will result in regions being created
+for all elements, attributes, and tag names in the file.</P>
+<P>Several features of using a DTD and sgmlrgn/xmlrgn are notable:</P>
+<OL>
+<LI>The document or document collection being indexed <I>must</I> be valid. 
+Validity tests can be performed with a number of software packages, including
+James Clark's SP.</LI>
+<LI>SGML files must be normalized, and specifically tag and attribute names must
+be in a consistent case (preferably upper case), attributes must be in a
+consistent order, and non-empty elements must have closing tags.</LI>
+<LI>All regions created by sgmlrgn and xmlrgn will be automatically added to the
+data dictionary and, in the case of sgmlrgn, will use upper case forms.</LI>
+<LI>XPAT does not currently support Unicode, and thus truly valid XML is not yet
+supported.  Only 7- and 8-bit characters will be indexed.  In XML, no attributes
+should contain character entity references.</LI></OL>
+</DIV1>
+<DIV1 ID="sec4"><A NAME="sec4"></A><H1>2.4 Chapter Summary</H1>
+<P>Regions can be built in two different ways.  The first method uses multirgn
+and a Tagnames file, is designed for speed and simplicity of indexing, and
+allows the XPAT database manager to choose regions that should be indexed. The
+second method uses a DTD (along with sgmlrgn or xmlrgn), and builds indexes on
+every element, attribute, and tag name in the file.  This approach, using a DTD,
+is typically necessary for fully-encoded Text Class documents.</P>
+</DIV1>
+</BODY>
+</DLPSDOC>

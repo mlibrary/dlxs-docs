@@ -1,0 +1,268 @@
+<?xml version="1.0"?>
+
+<!-- SPO Editorial Services                  -->
+<!-- automatically-generated XML header file -->
+
+<?xml-stylesheet href="../../../pre11-dlxsdocs.xsl" type="text/xsl"?>
+<!DOCTYPE DLPSDOC PUBLIC "-//UM-DLPS//DTD DLPS Publications//EN" "http://docs.umdl.umich.edu/dlps/docs/dlpsdocs.dtd">
+<DLPSDOC>
+<TITLE>Image Class User Interface Configuration and Customization</TITLE>
+<HEADER>
+<JOURNAL>DLXS Documentation</JOURNAL>
+<PUBDATE>2002-07-03 17:23:56 EDT</PUBDATE>
+<AUTH1>Weise, John</AUTH1>
+<AUTH2></AUTH2>
+<DOCTITLE>Image Class User Interface Configuration and Customization</DOCTITLE>
+<VOL>class</VOL>
+<ISS>image</ISS>
+<FILE>dlxsdocs-image-templates</FILE>
+</HEADER>
+
+
+
+
+<BODY>
+<BHEAD>Image Class User Interface Configuration and Customization</BHEAD> 
+<DIV1 ID="main"> 
+<P>  <A HREF="mailto:dlxs-help@umich.edu">dlxs-help@umich.edu</A> </P>
+<DIV2 ID="quicksumm"> 
+<H2>Quick Summary of Changes for Version 2</H2>
+<UL>
+  <LI>The template scheme has changed almost completely. Image Class now uses 
+    the common DLXS Processing Instruction (PI) methods. Old templates do not work 
+    with version 2.</LI>
+  <LI>Many aspects of interface configuration and customization are now handled 
+    in the collection database and groups database.</LI>
+  <LI>Cascading Style Sheets (CSS) are used.</LI>
+  <LI>The interface relies heavily on JavaScript.</LI>
+  <LI>There is a fallback mechanism in place for templates. If the middleware 
+    does not find a collection-specific template, it uses the default cross collection 
+    template. </LI>
+  <LI>Each group may have a custom set of templates, though this is not a requirement.</LI>
+  <LI>The filename extension for templates has changed from .html to .tpl.</LI>
+  <LI>There is no longer an explicit image comparison feature. Comparisons can 
+    be done in version 2 by viewing images in separate windows.</LI>
+  <LI>Netscape browsers are very picky about tagging when layers are in use (and 
+    Image Class uses layers quite a bit), and will <b>crash</b> if you fail to 
+    do something simple like close a &lt;P&gt; or &lt;FONT&gt; tag. Validation 
+    of your HTML may help resolve problems. Pay particular attention to tagging 
+    structure.</LI>
+  <LI>It is especially important to test in multiple browsers.</LI>
+  <LI>It is generally far, far, far easier to copy and modify an existing template 
+    that works than to start from scratch.</LI>
+</UL>
+</DIV2> <DIV2 ID="background"> 
+<H2>Background</H2>
+<P>The interface for image collections is highly adaptable to the particular collection. 
+  The user interface translates between the end-user and the collection data. 
+  Templates written in HTML and viewable on a browser interact directly with CGI 
+  scripts and SGML files in order to process queries and provide search results 
+  to the user. Having the templates in HTML while the actual data of the collection 
+  is housed on a server in SGML allows user interfaces to differ while keeping 
+  the collection information stable and secure. Basically, the SGML stores the 
+  data, the CGI script retrieves the data and parses the templates for instructions 
+  and then delivers the results to a browser as HTML.</P>
+</DIV2> <DIV2 ID="genrules"> 
+<H2>General Rules</H2>
+<UL>
+  <LI>The <b>default group</b> is the  &quot;all&quot; group. It is defined/configured 
+    in the <b>groups db</b>.</LI>
+  <LI>A collection may be included in multiple groups. In all cases, the<b> default 
+    group</b> for a collection is the &quot;all&quot; group.</LI>
+  <LI>Each group must have access to a full set of templates, CSS files, and a 
+    JavaScript file. Groups may share interface files simply by configuring the 
+    <b>groups db</b> entry for each to use the same web directory.</LI>
+  <LI>Out of the box, the <b>default group</b> web directory is $DLXSROOT/web/i/image.</LI>
+</UL>
+</DIV2> <DIV2 ID="singrules"> 
+<H2>Single Collection CGI Request Rules</H2>
+<UL>
+  <LI>The collection-specific template is used if available. The <b>default group</b> 
+    template is used if the collection-specific template is not available.</LI>
+  <LI>The<b> default group</b> CSS is loaded first and the collection-specific CSS 
+    is also loaded if available. Individual styles defined in the collection-specific 
+    CSS override styles of the same name in the <b>default group</b> CSS.</LI>
+  <LI>The collection-specific JavaScript file is used if available. The <b>default 
+    group</b> Javascript is used if collection-specific Javascript file is not available.</LI>
+  <LI>The collection-specific graphics files are used if available. The <b>default 
+    group</b> graphics are used otherwise.</LI>
+
+  <LI>The web directory for each collection must be specified in the <b>colldb</b>. 
+    Typically it is $DLXSROOT/web/c/collid.</LI>
+</UL>
+</DIV2> <DIV2 ID="multirules"> 
+<H2>Multiple Collection CGI Request Rules</H2>
+<UL>
+  <LI>The <b>group</b> template is used.</LI>
+  <LI>The <b>group</b> CSS is used.</LI>
+  <LI>The <b>group</b> JavaScript is used.</LI>
+  <LI>The <b>group</b> graphics files are used.</LI>
+  <LI>The web directory for each <b>group</b> must be specified in the <b>groups 
+    db</b>. Typically it is $DLXSROOT/web/g/group.</LI>
+</UL>
+</DIV2> <DIV2 ID="recommendations"> 
+<H2>Recommendations</H2>
+<P> It is recommended that collection-specific CSS files only include the specific 
+  styles that are defined differently than in the <b>default group</b> CSS file.</P>
+</DIV2> <DIV2 ID="main"> 
+<H2>File Descriptions</H2>
+<P> Below is a list of all Image Class interface files (graphics files were not 
+  listed individually). The items with an<b> X</b> in the Collection-Specific 
+  column are pertinent to building a customized collection-specific interface. 
+  If building a custom collection-specific interface, it is worthwhile to try 
+  to do as much as possible without creating collection-specific files in order 
+  to avoid having to maintain them in the future. <b>With that in mind:</b> 
+  <OL>
+    <LI>Do as much as you can in the colldb.</LI>
+    <LI>Next, focus on collection-specific style sheets.</LI>
+    <LI>Finally, create collection-specific template files if necessary.</LI>
+  </OL>
+  <p><b>TIP: </b>Be sure not to create the full set of interface files for a customization 
+    of a specific collection. It is best to only create the individual files that 
+    you wish to modify.</p>
+</P>
+<table width="45%" border="1" cellspacing="1" cellpadding="1">
+  <tbody> 
+  <tr> 
+    <th width="21%">File Name</th>
+    <th width="67%">Description</th>
+    <th width="12%">Collection-Specific</th>
+  </tr>
+  <tr> 
+    <td width="21%">index.tpl</td>
+    <td width="67%">collection home</td>
+    <td width="12%"><b>X</b></td>
+  </tr>
+  <tr> 
+    <td width="21%">groups.tpl</td>
+    <td width="67%">group selection</td>
+    <td width="12%"></td>
+  </tr>
+  <tr> 
+    <td width="21%">search.tpl</td>
+    <td width="67%">collection-specific search</td>
+    <td width="12%"><b>X</b></td>
+  </tr>
+  <tr> 
+    <td width="21%">searchgroup.tpl</td>
+    <td width="67%">group search</td>
+    <td width="12%"></td>
+  </tr>
+  <tr> 
+    <td width="21%">reslist.tpl</td>
+    <td width="67%">&quot;captions only&quot; results</td>
+    <td width="12%"><b>X</b></td>
+  </tr>
+  <tr> 
+    <td width="21%">thumbfull.tpl</td>
+    <td width="67%">&quot;thumbnail with full record&quot; results</td>
+    <td width="12%"><b>X</b></td>
+  </tr>
+  <tr> 
+    <td width="21%">thumbnail.tpl</td>
+    <td width="67%">&quot;thumbnail with caption&quot; results</td>
+    <td width="12%"><b>X</b></td>
+  </tr>
+  <tr> 
+    <td width="21%">collinfo.tpl</td>
+    <td width="67%">brief collection info</td>
+    <td width="12%"><b>X</b></td>
+  </tr>
+  <tr> 
+    <td width="21%">fieldinfo.txt</td>
+    <td width="67%">Description of data fields. Does not support Processing Instructions. 
+      May contain HTML snippets.</td>
+    <td width="12%"><b>X</b></td>
+  </tr>
+  <tr> 
+    <td width="21%">info.txt</td>
+    <td width="67%">A potentially lengthy description of the collection. Does 
+      not support Processing Instructions. May contain HTML snippets.</td>
+    <td width="12%"><b>X</b></td>
+  </tr>
+  <tr> 
+    <td width="21%">noresults.tpl</td>
+    <td width="67%">no results message page</td>
+    <td width="12%"><b>X</b></td>
+  </tr>
+  <tr> 
+    <td width="21%">entry.tpl</td>
+    <td width="67%">full record</td>
+    <td width="12%"><b>X</b></td>
+  </tr>
+  <tr> 
+    <td width="21%"> tips.tpl </td>
+    <td width="67%">search help</td>
+    <td width="12%"><b>X</b></td>
+  </tr>
+  <tr> 
+    <td width="21%">bbdel.tpl</td>
+    <td width="67%">portfolio/bookbag delete message</td>
+    <td width="12%"></td>
+  </tr>
+  <tr> 
+    <td width="21%">bbentry.tpl</td>
+    <td width="67%">portfolio/bookbag full record</td>
+    <td width="12%"></td>
+  </tr>
+  <tr> 
+    <td width="21%">bbname.tpl</td>
+    <td width="67%">create portfolio/bookbag</td>
+    <td width="12%"></td>
+  </tr>
+  <tr> 
+    <td width="21%">bbopen.tpl</td>
+    <td width="67%">open portfolio/bookbag</td>
+    <td width="12%"></td>
+  </tr>
+  <tr> 
+    <td width="21%">bbreslist.tpl</td>
+    <td width="67%">portfolio/bookbag &quot;captions only&quot; results</td>
+    <td width="12%"></td>
+  </tr>
+  <tr> 
+    <td width="21%"> bbthumbfull.tpl</td>
+    <td width="67%">portfolio/bookbag &quot;thumbnail with full record&quot; results</td>
+    <td width="12%"></td>
+  </tr>
+  <tr> 
+    <td width="21%">bbthumbnail.tpl</td>
+    <td width="67%">portfolio/bookbag &quot;thumbnail with caption&quot; results</td>
+    <td width="12%"></td>
+  </tr>
+  <tr> 
+    <td width="21%"> bbslideentry.tpl</td>
+    <td width="67%">portfolio/bookbag full record</td>
+    <td width="12%"></td>
+  </tr>
+  <tr> 
+    <td width="21%">graphics/</td>
+    <td width="67%">directory of interface graphics, buttons, etc.</td>
+    <td width="12%"><b>X</b></td>
+  </tr>
+  <tr> 
+    <td width="21%">css/</td>
+    <td width="67%">directory of Cascading Style Sheet files</td>
+    <td width="12%"><b>X</b></td>
+  </tr>
+  <tr> 
+    <td width="21%">js/imageclass.js</td>
+    <td width="67%">JavaScript File</td>
+    <td width="12%"><b>X</b></td>
+  </tr>
+  </tbody> 
+</table>
+</DIV2> 
+<P></P>
+<DIV2 ID="coldlb"> 
+<H2>Customizing the Interface by Modifying the COLLDB (Collection Database)</H2>
+<P>Please see <A HREF="image-colldb.xml">Image Class COLLDB (Collection Database)</A>.</P>
+</DIV2> <DIV2 ID="procins"> 
+<H2>Customizing the Interface with Processing Instructions</H2>
+<P>Processing instructions are tagged elements within the interface template files 
+  (.tpl) that get replaced by the cgi with interface functions and data.</P>
+<P>Please see <A HREF="image-pi.xml">Image Class Processing Instructions</A>.</P>
+</DIV2> 
+</DIV1> 
+</BODY>
+</DLPSDOC>

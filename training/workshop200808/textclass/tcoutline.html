@@ -1,0 +1,475 @@
+<!DOCTYPE HTML PUBLIC "-//SoftQuad Software//DTD XMetaL 2.0::19990601::extensions to HTML 4.0//EN">
+<html>
+  <head>
+	 <title>Text Class Collection Implementation</title>
+	 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+	 <link rel="stylesheet" href="../styles.css" type="TEXT/CSS">
+  </head>
+
+  <body class="mainpalette">
+
+   <p>&nbsp;
+   </p>
+   <h1>Text Class Collection Implementation</h1>
+	 <h2> <a href="../index.html">DLXS Workshop, August
+		2008</a></h2>
+	 <p>Text Class Instructor: <b>Chris Powell</b> </p>
+	<p class="mainpalette"><strong>
+  If you have questions, please address them to <a href="mailto:dlxs-help@umich.edu">dlxs-help@umich.edu</a>.
+  </strong></p> <p>This portion of the DLXS Workshop focuses on the differences in implementing a collection in Text Class, as compared to what we covered with Finding Aids Class on Tuesday. Links to the detailed Text Class documentation are included.</p>
+	 <p>A printed copy of this document will be available at the workshop. </p><hr align="left" noshade="NOSHADE" width="100%">
+	 <p> <a href="#WorkshopDay3WednesdayMorning">Workshop Day 3 -- Wednesday Morning</a> </p>
+	         <ul>
+                <li><a name="TOCTextClassContentPrep" href="#TextClassContentPrep">Text Class Content
+                  Preparation</a>
+                  <ul>
+                         <li> <a href="#TextClassDTDOverview">Text Class
+                                DTD Overview</a></li>
+                         <li><a href="#TextConversionStrategies">Text
+                                Conversion Strategies</a></li>
+                         <li><a href="#OtherTextModifications">Other Text
+                                Modifications</a></li>
+                         <li> <a href="#ValidateandNormalizeSGML">Normalize and Validate XML</a> </li>
+                         <li><a href="#StoringTextsandPageImages">Storing
+                                Texts and Page Images</a></li>
+                  </ul></li>
+  		<li> <a name="TOCTextClassIndexBuildingwithXPAT" href="#TextClassIndexBuildingwithXPAT">Text Class Index Building
+		  with XPAT</a>
+		  <ul>
+			 <li> <a href="#SetupDirectoriesforXPATIndex">Set Up Directories and
+				Files for XPAT Indexing</a> </li>
+			 <li> <a href="#BuildtheCollection">Build the Collection Specific Text
+				Class DTD</a></li>
+			 <li> <a href="#BuildtheXPATIndex">Build the XPAT Index</a> </li>
+		  </ul></li>
+		<li> <a name="TOCTextClassCollectiontoWeb" href="#TextClassCollectiontoWeb">Text Class Collection to Web</a>
+
+		  <ul>
+			 <li> <a href="#ReviewtheCollectionDatabaseEntrywithCollMgr">Review the Collection Database Entry with CollMgr </a> </li>
+			<li><a href="#ConfiguretheCollectionforDynamicBrowsingUsingCollMgr"> Configure the Collection for Dynamic Browsing Using CollMgr</a> </li>
+			 <li> <a href="#ReviewtheGroupsDatabaseEntrywithCollMgr">Review the Groups Database Entry with CollMgr</a> </li>
+			 <li> <a href="#MakeCollectionmaps">Make Collection Map</a> </li>
+			 <li> <a href="#SetuptheCollectionsWebDirectory">Set Up the
+				Collection's Web Directory</a> </li>
+		  </ul></li>
+	 </ul>
+	 <p> For simplified Data Flow Diagram overview of
+		TextClass data prep and delivery, including the directories in which files are
+		created, see the <a href="../graphics/dirstructuredfd_suz2.png"
+		target="sample">TextClass Prep DFD</a>.</p>
+	 <h3 class="dayheader"> Workshop Day 3 -- Wednesday Morning<a
+		name="WorkshopDay3WednesdayMorning"> </a></h3>
+	 <h2 class="partheader"><a name="TextClassContentPrep"></a>Text Class Content Preparation</h2>
+	 <p align="right" class="navlink"> <a
+		href="#TOCTextClassContentPrep">go to table of contents</a> </p>
+	 <p> In Text Class Content Prep we discuss the elements
+		and attributes required for Text Class delivery, the necessary architecture for
+		storing texts and collections, and review strategies and methods for converting texts to
+		conform to the Text Class DTD, XML, and UTF-8, and normalization.</p>
+	 <hr align="left" noshade="NOSHADE" width="100%">
+	 <h3 class="sectionheader"><a name="TextClassDTDOverview"></a>Text Class XML DTD
+		Overview </h3>
+	 <p>It is assumed that any texts to be converted to Text
+		Class already validate against another DTD for encoding monographic materials,
+		such as TEI Lite, that represents corresponding structures (chapters, pages,
+		etc.). Because of the extremely lax content modelling (almost every element is
+		defined to permit ANY of the named elements), the Text Class DTD is only useful
+		to ensure that the nomenclatures have been changed appropriately.
+	 <p>If you elect to modify the Text Class XML DTD to
+		validate your source documents, you may need to change the Text Class
+		middleware; you will almost certainly have to adjust XML to HTML
+		XSLT stylesheets, and changes may affect searching and results list behaviors.</p>
+	 <p>The following elements and attributes are
+		required:</p>
+	 <ul>
+		<li>DLPSTEXTCLASS</li>
+		<li>HEADER
+		  <ul>
+			 <li>EDITORIALDECL with N attribute according with
+				<a href="http://www.indiana.edu/~letrs/tei/">TEI in Libraries
+				recommendations</a> for encoding levels. </li>
+			 <li>IDNO -- must be unique for each text in a collection</li>
+		  </ul></li>
+		<li>TEXT
+		  <ul>
+			 <li>BODY</li>
+			 <li>nested numbered DIVs, with at least one DIV1
+				<ul>
+				  <li>Each DIV should have TYPE and must have NODE attributes</li>
+				  <li>All content, such as pagebreaks, should be in DIVs, not
+					 between, if at all possible</li>
+				</ul></li>
+			 <li>nested numbered elements that contain themselves
+				<ul>
+				  <li>for example, NOTE, Q, HI become NOTE1, Q1, H1, containing
+					 NOTE2, Q2, H2</li>
+				</ul></li>
+			 <li>NOTE1 and PTR must have N and ID attributes
+				<ul>
+				  <li>default value for N is *; IDs will be automatically assigned
+					 for elements without them</li>
+				</ul></li>
+		  </ul></li>
+	 </ul>
+	 <p>The Text Class XML DTD is a fluid document; more
+		attributes, and occasionally elements, are added as the need arises in
+		processing new collections. Because of differences in the syntax of SGML and XML DTDs, things that validated against the SGML version may not validate against the current XML version --  the SGML inclusions of floating elements like page breaks and line breaks throughout the entire TEXT element, for example, are gone, and these must be declared explicitly in the elements in which they occur.  </p><hr align="left" noshade="NOSHADE" width="100%">
+	 <h3 class="sectionheader"> <a name="TextConversionStrategies"></a>Text
+		Conversion Strategies</h3>
+	 <p>DLPS does not have any preferred methods or quick
+		and easy tools for this stage of the process. Only you, looking at your texts
+		and your encoding practices, can do the intellectual work required to convert
+		the texts. You should do this with the tools you are most comfortable using,
+		whether they be macros in your favorite editor, perl scripts if you have strong
+		programming skills, OmniMark if you like that, or XSLT (my personal choice). We
+		have a fairly detailed XSLT strategy on the documentation website, which uses
+		freely-available or ubiquitous tools, and if you are creating XML documents
+		anyway, this might be a reasonable route to pursue. </p>
+	 <p>We have also used a perl script to do conversions of
+		TEI Lite-encoded SGML into Text Class SGML in the past, and are willing to make these
+		(largely undocumented) scripts available. We are happy to offer suggestions and
+		our historical experience in converting collections, but cannot really support
+		you with specific tools or methods in your conversion, as it is particular to
+		the encoding of your texts.</p>
+
+			 <hr align="left" noshade="NOSHADE" width="100%">
+	 <h3 class="sectionheader"> <a name="OtherTextModifications"> </a>Other Text
+		Modifications</h3>
+	 <p>One way to help the cgi with identifying specific
+		text structures, like divisions, exactly is to insert unique attributes based
+		on a combination of the IDNO and the sequence of the division in the text. This
+		is an expendable ID and not meant to permanently identify a structure -- use
+		you own throughtfully assigned and permanent ID attributes for that. Before indexing, check to see if node attributes have been applied when the documents were converted to Text Class -- they will appear in the DIV tags for each division and will look like this: &lt;DIV1 NODE="AAN8938.0001.001:1"&gt;. If they have not, use the following tool provided in the DLXS installation to insert them:</p>
+	 <blockquote>
+		<pre class="unixcommand">$DLXSROOT/bin/t/text/nodefy<br>
+</pre></blockquote><hr align="left" noshade="NOSHADE" width="100%">
+	 <h3 class="sectionheader"><a name="ValidateandNormalizeSGML"> </a>Normalize
+		and Validate XML </h3>
+	 <p>This step checks the XML against the Text Class DTD
+		to validate the XML. It also normalizes the XML, which, if necessary, adjusts
+		the XML tagging so that it is consistent in terms of case and order of element
+		attributes. It is exactly the same as for Finding Aids class, though it is not built into the sample Makefile.</p>
+	 <hr align="left" noshade="NOSHADE" width="100%">
+	 <h3 class="sectionheader"> <a name="StoringTextsandPageImages"></a>Storing
+		Texts and Page Images </h3>
+	 <p>Unlike finding aids, we store each digitized text in its own directory, based on its DLPS ID, along with the related page images. The DLPS ID is a unique ID for each text, based on the ID assigned to its MARC record by the OPAC. Directories are created in the form $DLXSROOT/obj/d/l/p/dlpsid (the DLPS ID can consist of a mix of number and letter characters). Pageviewer defaults to search for page images stored in a directory based on this form, although there is a method that can be overridden to handle different storage options.</p>
+	 <p>To facilitate links between the texts and the images stored in the $DLXSROOT/obj directories, the middleware is configured to read a several million row table on our MySQL server containing page image metadata. If you have created pageview.dat files in the past and need to populate the SQL database, we delivering a program ($DLXSROOT/bin/t/text/makepageviewdata.pl) that will convert pageview.dat files into MySQL rows. Invocation is simple <b>(don't do it -- just FYI)</b>:</p>
+	 <blockquote>
+		<pre class="unixcommand">$DLXSROOT/bin/t/text/importpageviewdata.pl [-f] -d "$DLXSROOT/obj"</pre></blockquote>
+	 <p>The -f flag indicates a "full run", i.e., process
+		all files regardless of whether they've changed since the last run (otherwise,
+		there is a timestamp file to determine which files have changed since the last
+		run). Based on what database format you chose during DLXS installation, this
+		process will populate the database with the information from any pageview.dat
+		files it encounters as it runs through the directory you specified
+		recursively.</p>
+	 <h3 class="sectionheader"> <i>More Documentation</i></h3>
+	 <ul>
+		<li><a href="http://www.dlxs.org/docs/13/class/text/overview.html"
+		  class="Overview of Text Cl">Overview of Text Class</a></li>
+		<li><a href="http://www.dlxs.org/docs/13/class/text/docstruct.html">Text Class
+		  Documents -- Structure</a></li>
+		<li> <a href="http://www.dlxs.org/docs/13/class/text/convert.html">Converting
+		  Collections to Text Class</a></li>
+		<li><a href="http://www.dlxs.org/docs/13/class/text/prep.html">Preparing Data
+		  for Index Building</a></li>
+		<li><a
+		  href="http://www.dlxs.org/docs/13/class/text/pageviewer.html">Page Image Access
+		  Mechanisms</a></li>
+	 </ul>
+	 <a name="TextClassIndexBuildingwithXPAT"> </a>
+	 <h2 class="partheader">Text Class Index Building with XPATu</h2>
+	 <p align="right" class="navlink">
+		<a href="#TOCTextClassIndexBuildingwithXPAT">go to table of contents</a> </p>
+		<p>This is largely the same as indexing with Finding Aids Class.  The only major difference is the preparation of a custom DTD for your collection.</p><hr align="left" noshade="NOSHADE" width="100%">
+	 <h3 class="sectionheader"><a name="SetupDirectoriesforXPATIndex"> </a>Set
+		Up Directories and Files for XPATu Indexing </h3>
+	 <p> As with Finding Aids Class, you need the same directories for scripts, the collection concatenated XML, and the collection index.  The bin directory holds any scripts or tools used
+		for the collection specifically; obj holds the "object" or XML file for the collection, and idx holds the XPATu indexes.  There is no instruction for concatenation in the Text Class Makefile.  I tend to concatenate the texts into one collection with a command in the form:</p>
+	 <blockquote>
+		<pre class="unixcommand">cat /l1/workshop-samples/sooty/collstart *.noded /l1/workshop-samplesooty/collend &gt; $DLXSROOT/obj/c/coll/coll.xml</pre></blockquote>
+<p>You can examine the files referenced -- they just include a &lt;COLL&gt; and &lt;/COLL&gt; root element for the collection.  </p>
+		<hr align="left" noshade="NOSHADE" width="100%">
+	 <h3 class="sectionheader"> <a name="BuildtheCollection"> </a>Build the
+		Collection Specific Text Class DTD</h3>
+	 <p>Before indexing your collection, you will need to
+		create a collection-specific Text Class DTD. Because the class DTD supports any
+		element having any of the declared attributes (for convenience of DTD
+		creation), indexing "as-is" with XPATu will cause your index to be unnecessarily
+		large. This may also cause problems for XML validation tools. You can create
+		your own collection specific version of the Text Class DTD by running the
+		following command: <b>(don't do it -- just FYI)</b></p>
+	 <blockquote>
+		<pre class="unixcommand">egrep -i "&lt;\!ELEMENT" $DLXSROOT/misc/sgml/textclass.xml.dtd &gt; textclass.stripped.xml.dtd</pre></blockquote>
+	 <p>There is a "make dtd" command from the Makefile
+		to determine which attributes are used in your collection and build a custom
+		DTD by concatenating it with $DLXSROOT/misc/xml/textclass.stripped.xml.dtd. Using the "make validate" command will then validate your collection
+		against the new DTD. If the individual texts validated before, they should
+		validate as a concatenated collection.</p>
+		<hr align="left" noshade="NOSHADE" width="100%">
+	 <h3 class="sectionheader"> <a name="BuildtheXPATIndex"> </a>Build the XPATu
+		Index </h3>
+	 <p> As in Finding Aids Class, the Makefile in the bin directory contains the commands necessary to build the
+		index, and can be executed easily.</p>
+	 <p>To create an index for use with the Text Class
+		interface, you will need to index the words in the collection, then index the
+		XML (the structural metadata, if you will), and then finally "fabricate"
+		structures based on a combination of elements (for example, defining what the
+		"main entry" is, without adding a &lt;MAINENTRY&gt; tag around the appropriate
+		&lt;AUTHOR&gt; or &lt;TITLE&gt; element). The following commands can be used to
+		make the index, alone or in combination. We will be using "make dd," make
+		xml," and "make post."</p>
+	 <p><b>make dd</b> indexes words for texts that
+		have been concatenated into one large file for a collection. </p>
+	 <p><b>make xml</b> indexes the XML structure by
+		reading the DTD. Validates as it indexes. Slower than multiregion indexing (see
+		below) for this reason. However, necessary for collections that have nested
+		elements of the same name (for example a P within a NOTE1 within a P). </p>
+	 <p><b>make multi</b> (multiregion structure indexing)
+		indexes the XML structure and relies on a "tags file" (included in the sample
+		collection) to know what XML elements and attributes to index. Rarely used
+		with fully-encoded full-text collections because of the nesting problem
+		mentioned above. If you'd like to try this on your own, index only the new text
+		(bab3433.0001.001.norm.xml)</p>
+		<p><b>make post</b> builds and indexes fabricated
+		regions based on the XPATu queries stored in the workshoptc.extra.srch file.</p>
+
+	 <blockquote>
+		<pre class="unixcommand">make dd</pre></blockquote>
+	 <blockquote>
+		<pre>cp /l1/workshop/sooty/dlxs/prep/w/workshoptc/workshoptc.blank.dd /l1/workshop/sooty/dlxs/idx/w/workshoptc/workshoptc.dd
+/l/local/bin/xpatbldu -m 256m -D /l1/workshop/sooty/dlxs/idx/w/workshoptc/workshoptc.dd
+cp /l1/workshop/sooty/dlxs/idx/w/workshoptc/workshoptc.dd /l1/workshop/sooty/dlxs/prep/w/workshoptc/workshoptc.presgml.dd
+</pre></blockquote>
+	 <blockquote>
+		<pre class="unixcommand">make xml</pre></blockquote>
+	 <blockquote>
+		<pre>cp /l1/workshop/sooty/dlxs/prep/w/workshoptc/workshoptc.presgml.dd /l1/workshop/sooty/dlxs/idx/w/workshoptc/workshoptc.dd
+/l/local/bin/xmlrgn -D /l1/workshop/sooty/dlxs/idx/w/workshoptc/workshoptc.dd /l1/workshop/sooty/dlxs/misc/sgml/xml.dcl /l1/workshop/sooty/dlxs/prep/w/workshoptc/workshoptc.inp /l1/workshop/sooty/dlxs/obj/w/workshoptc/workshoptc.xml
+/l/local/bin/xmlrgn:/l1/workshop/sooty/dlxs/misc/sgml/xml.dcl:1:W: SGML declaration was not implied
+cp /l1/workshop/sooty/dlxs/idx/w/workshoptc/workshoptc.dd /l1/workshop/sooty/dlxs/prep/w/workshoptc/workshoptc.prepost.dd
+</pre></blockquote>
+	 <blockquote>
+		<pre class="unixcommand">make post</pre></blockquote>
+	 <blockquote>
+		<pre>cp /l1/workshop/sooty/dlxs/prep/w/workshoptc/workshoptc.prepost.dd /l1/workshop/sooty/dlxs/idx/w/workshoptc/workshoptc.dd
+touch /l1/workshop/sooty/dlxs/idx/w/workshoptc/workshoptc.init
+/l/local/bin/xpatu -q /l1/workshop/sooty/dlxs/idx/w/workshoptc/workshoptc.dd < /l1/workshop/sooty/dlxs/prep/w/workshoptc/workshoptc.extra.srch | /l1/workshop/sooty/dlxs/bin/t/text/output.dd.frag.pl /l1/workshop/sooty/dlxs/idx/w/workshoptc/ > /l1/workshop/sooty/dlxs/prep/w/workshoptc/workshoptc.extra.dd
+/l1/workshop/sooty/dlxs/bin/t/text/inc.extra.dd.pl /l1/workshop/sooty/dlxs/prep/w/workshoptc/workshoptc.extra.dd /l1/workshop/sooty/dlxs/idx/w/workshoptc/workshoptc.dd
+</pre></blockquote>
+	 <p>
+      <span><font color="#FF0000">Sorting and browse building require that you have only
+		<b>one</b> maintitle, mainauthor and maindate per text, so that you have one
+		value on which to sort. Your extra.srch files may need to be changed in order
+		to be more specific. If you do not, some sort operations will give you a
+		<tt>sortkey</tt> assertion failure.</font>
+   </span>
+   </p>
+   <p>
+      <span><font color="#FF0000">Some examples of more specific searches in your
+		extra.srch are provided below. The first relies on identifying metadata that
+		has been specified through the use of attributes; the second merely chooses the
+		first occurrence as an indication that it is the "main" value.</font></span>
+</p>
+	 <pre>(((region TITLE incl "type=main") within region TITLESTMT) within region SOURCEDESC);
+{exportfile "/l1/idx/e/example/maintitle.rgn"}; export; ~sync "maintitle";</pre>
+	 <pre>(((region AUTHOR within (region "&lt;TITLESTMT".."&lt;/AUTHOR&gt;")) within (region
+TITLESTMT within region FILEDESC)) not within (region SOURCEDESC)); {exportfile
+"/l1/idx/e/example/mainauthor.rgn"}; export; ~sync "mainauthor";</pre>
+	 <h3 class="sectionheader"> <i>More Documentation</i></h3>
+	 <ul>
+		<li><a href="http://www.dlxs.org/docs/13/class/text/indexing.html">Indexing
+		  the Collection</a></li>
+	 </ul>
+	 <h2 class="partheader"><a name="TextClassCollectiontoWeb"> </a>Text Class Collection to Web</h2>
+	 <p align="right" class="navlink"> <a
+		href="#TOCTextClassCollectiontoWeb">go to table of contents</a> </p>
+	 <p>These are the final steps in deploying an Text Class
+		collection online. As with Finding Aids Class,  the <b>Collection Manager</b> is used to create the <b>Collection Database</b> entry for the new collection, including setting up the collection for <b>dynamic browsing</b>. The <b>Collection Manager</b> is also used to review/amend the <b>Group Database</b>.  Finally, you need to work with the collection map and the set up the collection's web directory.</p>
+
+<hr align="left" noshade="NOSHADE" width="100%">
+	 <h3 class="sectionheader"><a
+		name="ReviewtheCollectionDatabaseEntrywithCollMgr"> </a>Review the Collection
+		Database Entry with CollMgr </h3>
+	 <p>Each collection has a record in the collection
+		database that holds collection specific configurations for the middleware.
+		CollMgr (Collection Manager) is a web based interface to the collection database that provides functionality for editing each collection's record.
+		Collections can be checked-out for editing, checked-in for testing, and
+		released to production.  In general, a new collection
+		needs to have a CollMgr record created  before the middleware can be used. The copy functionality can make this easier by allowing you to clone a collection with characteristics like your new collection.</p>
+	 <p>http://username.ws.umdl.umich.edu/cgi/c/collmgr/collmgr</p>
+
+	 <h3 class="sectionheader"> <i>More Documentation</i> </h3>
+	 <ul>
+		<li>
+		  <a target="external"
+		  href="http://www.dlxs.org/docs/13/collmeta/collmgr-fields.html">Collection Manager
+		  Field Descriptions</a></li>
+	 </ul>
+<h3 class="sectionheader"> <a name="ConfiguretheCollectionforDynamicBrowsingUsingCollMgr" id="ConfiguretheCollectionforDynamicBrowsingUsingCollMgr"></a>
+    <hr align="LEFT" noshade width="100%">
+Configure the Collection for Dynamic Browsing Using CollMgr</h3>
+<p class="mainpalette">
+ Adding dynamic browsing to a collection is a matter
+  of simple configuration in CollMgr and then running a script on the command
+  line to populate the browse tables with data to facilitate browsing.</p>
+<p class="mainpalette">Collmgr field: <strong>browseable</strong></p>
+<p class="mainpalette">To enable browsing, the <strong>browseable</strong> field must be set to
+  &quot;yes&quot;. </p>
+<p class="mainpalette">Collmgr field: <strong>browsenav</strong></p>
+<p class="mainpalette">The <strong>browsenav</strong> field must have a value of 0, 1 or 2. Small
+  collections should use 0. Medium collections 1. Large collections 2. This is the number of layers of browse tabs you want for the collection.  0 means that all the items are on one page -- no tabs.  1 means you have one layer of tabs with the letters of the alphabet, and 2 means you have two layers of tabs -- one for a letter, and another for the two-letter subdivisions under it.</p>
+<p class="mainpalette">Collmgr field: <strong>browsefields</strong></p>
+<p class="mainpalette"><strong>browsefields</strong>  holds the list of fields
+  you would like to be browseable. This list is used to prepare the data for
+  browsing, and also to present browsing options to the user.  Currently, author, title, and subject are the canonical Text Class browse fields.  You will need fabricated regions of mainauthor, maintitle, and subject to support browsing. A quick XPAT query of our workshop collection shows we don't have a fabricated <tt>region subject</tt> but we do have <tt>region TERM</tt> with subjects in them.  We could add subject browsing but would need to do some work to support it.</p>  <p>Now that we are finished updating CollMgr, we need to release our collection to production.</p>
+<p class="mainpalette">With the above fields properly configured and CollMgr released, the <strong>updatebrowsedb.pl</strong> script
+  can be run. It populates the ItemColl, ItemBrowse and ItemBrowseCounts tables with information
+  from the collection's data dictionary. You should use the "wrapper" shell script provided in the same subdirectory, ub .</p>
+<h3 class="sectionheader"><i>More Documentation</i></h3>
+<ul>
+  <li><a href="http://www.dlxs.org/docs/13/collmeta/browse.html" target="external">DLXS:
+      <strong>Browsing</strong>  </a></li>
+</ul>
+         <hr align="left" noshade="NOSHADE" width="100%">
+         <h3 class="sectionheader">                <a name="ReviewtheGroupsDatabaseEntrywithCollMgr"></a>Review the
+ Groups Database Entry with CollMgr </h3>         <p>One function of CollMgr allows the grouping of CollMgr (Collection Manager) is a web based interface to the collection database that provides functionality for editing each collection's record.  collections for cross-collection searching. Any number of collection groups may be created for Text Class. Text Class supports a group with the groupid "all".  It is not a requirement that all collections be in this group, though that's the basic idea. Groups are created and modified using CollMgr.  Take a look at the record to become familiar with it
+.</p>           
+         <p>http://username.ws.umdl.umich.edu/cgi/c/collmgr/collmgr</p>
+
+<hr align="left" noshade="NOSHADE" width="100%">	 <h3 class="sectionheader"><a name="MakeCollectionmaps"> </a>Make Collection
+		Map </h3>
+	 <p>Collection map files exist to identify the regions and operators used by the middleware when interacting with the search forms. Each collection will need one, but most collections can use a fairly standard map file, such as the one in the <b>sampletc_utf8</b> collection. The map files for all Text Class collections are stored in $DLXSROOT/misc/t/text/maps</p>
+	 <p>Map files take language that is used in the forms and translates it into language for the cgi and for XPAT. For example, if you want your users to be able to search within chapters, you would need to add a mapping for how you want it to appear in the search interface (case is important, as is pluralization!), how the cgi variable would be set (usually all caps, and not stepping on an existing variable), and how XPAT will identify and retrieve this natively.</p>
+	 <p>The first part of the file is operator mapping, for the form, the cgi, and XPAT. The second part is for region mapping, as in the example above. There is an optional third part for collections with metadata applied bibliographically, such as genre categories.</p>
+<p>If you want to make a map file specifically for your collection (because you want to change the values in pulldown menus, perhaps), you need to make a copy of the existing map used and alter the values in the newly-copied map file, and then change the values in collmgr to refer to the new map and the new values.</p>
+	 <p><font color="#FF0000">In DLXS post release 10, the map <b>must</b> have a mapping for the SYNTHETIC value ID. To facilitate sorting, the system must be able to assign one ID uniquely with each text. If you have a sortkey error, check this first!</font></p>
+<pre>
+&lt;label&gt;unique item identifier&lt;/label&gt;
+&lt;synthetic&gt;ID&lt;/synthetic&gt;
+&lt;native&gt;region id&lt;/native&gt;
+&lt;nativeregionname&gt;id&lt;/nativeregionname&gt;
+&lt;/mapping&gt;</pre>
+	 <p><font color="#FF0000">Mappings are also needed for maintitle, mainauthor, and maindate (if the latter are applicable).</font></p>
+	 <h3 class="sectionheader"> <i>More Documentation</i> </h3>
+	 <ul>
+		<li>
+		  <a target="external" href="http://www.dlxs.org/docs/13/collmeta/maps.html">DLXS
+		  Map Files</a></li>
+	 </ul><hr align="left" noshade="NOSHADE" width="100%">
+	 <h3 class="sectionheader"><a name="SetuptheCollectionsWebDirectory"></a>Set
+		Up the Collection's Web Directory </h3>
+	 <p>Each collection may have a web directory with custom
+		Cascading Style Sheets, interface templates, graphics, and javascript. The
+		default is for a collection to use the web templates at $DLXSROOT/web/t/text. A
+		collection specific web directory may be created, and it is necessary if you
+		have any customization at all. For a minimal collection, you will want two
+		files: index.html and textclass-specific.css.</p>
+	 <p>As always, you'll need to change the collection name
+		and paths. You might want to change the look radically, if your HTML skills are
+		up to it.</p>
+	<hr align="left" noshade="NOSHADE" width="100%">
+         <h3 class="sectionheader"><a name="Customize"> </a>Customizations </h3>
+
+<p>Now, suppose you want to change a few things.  Perhaps you want to change the word "Availability" to "Rights" in the ToC view. You may ask yourself, "How do I change this?  I don't even know where this comes from!" Just as search form labels are set in the <tt>collmgr</tt> and the mapfile used by the collection, text labels are set in the <tt>langmap</tt>.  (But grepping in the $DLXSROOT/web/t/text directory is always a good initial strategy for interface changes, if you haven't memorized every detail of DLXS yet.)</p><p> If you want to change this label for all Text Class collections, you can edit the page in the class directory. If this change is only relevant to one collection, you will need to make a <tt>langmapextra</tt> file and put it in the collection web directory. In my /l1/workshop-samples/sooty directory, there is a <tt>langmapextra.en.xml</tt> file that you can place in your $DLXSROOT/web/w/workshoptc directory.</p>  
+<blockquote>  
+<pre class="unixcommand">
+&lt;ColLookupTables&gt;
+  &lt;Lookup id="headerutils"&gt;
+    &lt;Item key="headerutils.str.22"&gt;Rights&lt;/Item&gt;
+  &lt;/Lookup&gt;
+&lt;/ColLookupTables&gt;
+</pre>
+</blockquote>
+
+<p>You might also want to change the color scheme for the navheader bars, as Suz discussed earlier.  You could edit the <tt>textclass-specific.css</tt> that we copied over (changing the td.mainnavcell  background-color and the .navcolor) to whatever color you choose, or you could replace the textclass-specific.css with the version in my /l1/workshop-samples/sooty directory, changing these to some particularly muted shades of purple.</p>        
+<blockquote>
+<pre class="unixcommand">
+/* STYLES FOR NAVIGATION AND MENUS   */
+td.mainnavcell {
+ background-color: #A2A0AB;
+ padding-left:20px;
+ padding-right:20px;
+ border-bottom: 1px solid #666666;}
+
+.navcolor { background-color: #8A7B90; }
+</pre>
+</blockquote>
+
+<p>Finally, you could change the handling of low-level encoding elements.  If we do a few XPAT queries, we'll see that there are a lot of FOREIGN elements, with language codes.  If we grep in $DLXSROOT/web/t/text for FOREIGN, we'll see it appears in <tt>text.components.xsl</tt>, but the values just get passed through with no additional styling.  If we want to give it a style, we can add a local <tt>text.components.xsl</tt> with a template for FOREIGN.  There is a version in my /l1/workshop-samples/sooty directory that you can copy to your $DLXSROOT/web/w/workshoptc directory and use as-is, or adapt to your XSLT abilities permit. 
+The template below italicizes the content of the FOREIGN element, and then follows it with the expanded version of the LANG attribute language code.</p>
+<blockquote>
+<pre class="unixcommand">
+&lt;?xml version="1.0" encoding="UTF-8" ?&gt;
+&lt;xsl:stylesheet version="1.0"
+  xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
+  xmlns:func="http://exslt.org/functions"
+  xmlns:dlxs="http://www.umdl.umich.edu/dlxs"
+  extension-element-prefixes="func"
+  exclude-result-prefixes="func dlxs"&gt;
+
+ &lt;xsl:import href="../../t/text/text.components.xsl"/&gt;
+
+&lt;xsl:template match="FOREIGN"&gt;
+&lt;span class="rend-i"&gt;&lt;xsl:value-of select="."/&gt;&lt;/span&gt;
+&lt;xsl:if test="@LANG='fle'"&gt;&lt;xsl:text&gt; [Flemish] &lt;/xsl:text&gt;&lt;/xsl:if&gt;
+&lt;xsl:if test="@LANG='fre'"&gt;&lt;xsl:text&gt; [French] &lt;/xsl:text&gt;&lt;/xsl:if&gt;
+&lt;xsl:if test="@LANG='ger'"&gt;&lt;xsl:text&gt; [German] &lt;/xsl:text&gt;&lt;/xsl:if&gt;
+&lt;xsl:if test="@LANG='gre'"&gt;&lt;xsl:text&gt; [Greek] &lt;/xsl:text&gt;&lt;/xsl:if&gt;
+&lt;xsl:if test="@LANG='hu'"&gt;&lt;xsl:text&gt; [Hungarian] &lt;/xsl:text&gt;&lt;/xsl:if&gt;
+&lt;xsl:if test="@LANG='it'"&gt;&lt;xsl:text&gt; [Italian] &lt;/xsl:text&gt;&lt;/xsl:if&gt;
+&lt;xsl:if test="@LANG='lat'"&gt;&lt;xsl:text&gt; [Latin] &lt;/xsl:text&gt;&lt;/xsl:if&gt;
+&lt;xsl:if test="@LANG='sp'"&gt;&lt;xsl:text&gt; [Spanish] &lt;/xsl:text&gt;&lt;/xsl:if&gt;
+&lt;/xsl:template&gt;
+</pre>
+</blockquote>
+<p>Note that this is just one template, not the entire <tt>text.components.xsl</tt> copied over. The class-level version is imported, and this FOREIGN template overrides the default one.</p>
+<p>Back to the browse issue for a moment.  Since subject browsing is available, and we know we have subject terms in our collection, we will probably want to add this functionality.  So what do we need to do?  <ul><li>First, we go back to <tt>CollMgr</tt> and add subject to the <tt>browsefields</tt>. Remember to release the collection to production.</li><li>Next, we return to $DLXSROOT/bin/browse and rerun the updatebrowse.pl command.<ul><li>So, we have a link to subject on the browse page and subjects in the browse table.  If we click on the "subject" link for our collection, though, we'll get an error. </li></ul></li><li>The browse script is hardcoded to look for the TERM element in the HEADER.  Now we need to make this region available to the rest of the interface.  The simplest method would be to add it to the collection map: 
+<pre class="unixcommand">  &lt;mapping&gt;
+    &lt;label&gt;subject&lt;/label&gt;
+    &lt;synthetic&gt;SUBJECT&lt;/synthetic&gt;
+    &lt;native&gt;region TERM&lt;/native&gt;
+    &lt;nativeregionname&gt;TERM&lt;/nativeregionname&gt;
+  &lt;/mapping&gt; </pre>
+This will work if the only TERMs you have are in the HEADER. Otherwise, you'll need to fabricate a region for subject and map that in the map.</li></ul> </p>
+<hr align="left" noshade="NOSHADE" width="100%">
+ 
+	 <h3 class="sectionheader"> <i>More Documentation</i> </h3>
+	 <ul>
+		<li><a
+		  href="http://www.dlxs.org/docs/13/class/text/index.html"> <b>Guide to All Text Class
+		  Documentation</b> </a></li>
+		<li><a
+		  href="http://www.dlxs.org/docs/13/class/text/ww.html">Building Text Class Word
+		  Wheels</a></li>
+	 </ul>
+
+   <h2 class="partheader"><a name="ReviewOldCollections" id="ReviewOldCollections"></a>Questions Always Worth Asking When You Add a New Collection</h2>
+	 <p align="right" class="navlink"> <a
+		href="#TOCReviewOldCollections">go to table of contents</a> </p>
+	 <h3 class="sectionheader">Check the Paths in All Your Files</h3>
+<ul>
+<li>Do your Makefile, coll.blank.dd, and coll.extra.srch have the correct paths for this collection?</li></ul>
+	 <h3 class="sectionheader">Check the Fabricated Regions</h3>
+
+   <ul>
+
+
+      <li>If you have more than one IDNO value per text, have you identified
+		  the text's unique ID in an id.rgn?</li>
+      <li>Do you have only one maintitle, mainauthor, and maindate per
+		  text?</li>
+   </ul>
+	 <h3 class="sectionheader">Check the CollMgr</h3>
+	 <ul>
+
+      <li>Are any of the default values that have been automatically added to
+		  your older collections inappropriate?</li><li>If you have a UTF-8 collection, is the <tt>locale</tt> set to en_US.UTF-8?</li><li>Have you enabled browse building appropriately?</li>
+	 </ul>
+	 <h3 class="sectionheader">Update the Map</h3>
+	 <ul>
+
+      <li>Do you have a mapping for the synthetic value ID?</li>
+	 </ul>
+	 <p>&nbsp;</p> </body>
+</html>

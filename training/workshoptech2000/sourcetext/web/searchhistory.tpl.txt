@@ -1,0 +1,96 @@
+<html>
+  <head>
+    
+    <title><?TITLE></title>
+
+    <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+
+    <link rel="stylesheet" href="<?DOC_ROOT>textclass.css">
+
+  </head>
+  
+  <!-- -------------------------------------------------- -->
+  
+<body bgcolor="#FFFFFF" marginwidth="0" marginheight="0">
+  
+  <!-- -------------------------------------------------- -->
+  
+    <table width="100%" border="0" cellspacing="0" cellpadding="5" bgcolor="#FFFFFF">
+      <tr> 
+        <td valign="bottom" width="75%"> <a name="top"></a>
+          <h3 class="tophead">
+            <?TITLE>
+          </h3>
+        </td>
+        
+        <td valign="top" width="25%" align="right">
+
+          <?RE_AUTH_LINK>
+<!--
+          <a href="<?BOOKBAG_LINK>">
+            <img src="<?DOC_ROOT>images/bbag.gif" width="83" height="21" vspace="1" border="0"></a>
+          &nbsp;<br>
+          <font class="navinfo" size="2"><?BOOKBAG_ITEMS>&nbsp;&nbsp;&nbsp;</font>&nbsp;
+-->
+        </td>
+      </tr>
+      
+      <tr> 
+        <td colspan="2" align="center" bgcolor="#666699" nowrap> 
+          
+      <p> <font color="#FFFFFF" class="navlinks"><b> 
+                <a href="<?REFINE_SEARCH_LINK>" class="nav">refine search</a>
+                |
+                <a href="<?SIMPLE_SEARCH_LINK>" class="nav">simple search</a>
+                |
+                <a href="<?BOOLEAN_SEARCH_LINK>" class="nav">boolean search</a>
+                |
+                <a href="<?PROXIMITY_SEARCH_LINK>" class="nav">proximity search</a>
+<!--
+                |
+                <a href="<?BIB_SEARCH_LINK>" class="nav">bibliography search</a> 
+-->
+                |
+                <a href="<?WORDWHEEL_SEARCH_LINK>" class="nav">wordwheel</a>
+                |
+                <a href="<?HELP_LINK>" class="nav">help</a>
+      
+      </b></font> </p>
+        </td>
+      </tr>
+    </table>
+    
+    
+    
+<table width="100%" border="0" cellspacing="0" cellpadding="15">
+<tr>
+    <td valign="top">
+          <table width="100%" border="0" cellspacing="1" cellpadding="5">
+            <tr>
+              <td colspan="4"><h3>Search History</h3>
+                
+                <font>Click on any search query in the history to resubmit that search.</font> 
+                <br>
+                <br>
+              </td>
+            </tr>
+            
+        <tr bgcolor="#CCCCCC"> 
+          <td valign="top" align="center" nowrap><font face="Arial,sans-serif">Query #</font></td>
+        
+          <td valign="top"><font face="Arial,sans-serif">Search Query</font></td>
+        
+          <td valign="top"><font face="Arial,sans-serif">Databases Selected</font></td>
+        
+          <td valign="top" align="center"><font face="Arial,sans-serif">Total Results</font></td>
+      </tr>
+      <?SEARCH_HISTORY_TABLE>
+  
+            
+          </table>
+        </td></tr>
+    </table>
+    
+    
+  </body>
+</html>

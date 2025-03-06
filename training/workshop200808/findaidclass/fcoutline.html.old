@@ -1,0 +1,69 @@
+<!DOCTYPE HTML PUBLIC "-//SoftQuad Software//DTD XMetaL 2.0::19990601::extensions to HTML 4.0//EN">
+<html>
+  <head>
+	 <title>Findaid Class Collection Implementation</title>
+	 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+
+	 <link rel="stylesheet" href="../styles.css" type="TEXT/CSS">
+    <style type="text/css">
+<!--
+body {
+	margin-left: 10px;
+	margin-top: 5px;
+	margin-right: 10px;
+	margin-bottom: 5px;
+}
+-->
+</style>
+  </head>
+
+  <body bgcolor="#ffffcc" class="mainpalette">
+
+   <p>&nbsp;
+   </p>
+   <h1><a name="top"></a>Findaid Class Collection Implementation</h1>
+	 <h2> <a href="../index.html">DLXS Workshop</a></h2>
+	 <h4><em>NOTE: Generally we either cover Text Class or Findaid Class in depth in the workshops, since they are very similar. This year we are covering both Text Class (1 1/2 days) and Findaid Class (1/2)days. Text Class and Findaid Class are similar, so the emphasis in the 1/2 day session will be on their differences. </em></h4>
+	 <p>Findaid Class Instructor: <b>Tom Burton-West </p>
+
+     <ul>
+      <li>Overview</li>
+      <li>Similarities and differences to Text Class</li>
+      <li><a href="./old.fcoutline.html#FindaidEncodingPractices">Findaid Class Encoding Practices and
+	      Processes</a>
+      <li><a href="./old.fcoutline.html#DataPrep">Data Preparation</a></li>
+
+	  <li><a href="./old.fcoutline.html#FindaidClassIndexBuildingwithXPAT">Indexing</a></li>
+	  <li><a href="./old.fcoutline.html#FindaidClassCollectiontoWeb">Web Presentation/Rendering</a></li>
+	  <li>Customizing</li>
+	  <li>Troubleshooting</li>
+  </ul>
+       </li>
+	  
+    </ul>
+<h3 name="overview">Overview and Introduction</h3><a name="overview" id="overview"></a>
+<ul>
+	    <li>Overview</li>
+	    <li>Comparison with Text Class</li>
+	    <li>Run through with samplefa/workshopfa
+	      <ul>
+	        <li>Data Prep</li>
+            <li>Indexing</li>
+	        <li>Web </li>
+	      </ul>
+	    </li>
+	    <li>Repeat with non-Bentley finding aids</li>
+	    <ul>
+	      <li>Troubleshooting and resolving problems</li>
+          <li>(prep scripts, config files, perl code, XSL) </li>
+          <li>Discussion of tips from other Finding Aids implementors</li>
+	</ul>
+</ul>
+
+	    <p>&nbsp;</p>
+<a href="intro1.html">Next</a>
+
+
+
+</body>
+</html>

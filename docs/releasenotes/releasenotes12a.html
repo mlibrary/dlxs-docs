@@ -1,0 +1,276 @@
+<html>
+  <head>
+    <title>DLXS Release Notes, 12a</title>
+    <link href="../12/dlxsdocs.css" rel="stylesheet" type="text/css">
+  </head>
+  <body>
+    <div class="pageTitle"> Release Notes for DLXS Release 12a - 15
+      MAY 2006</div>
+    <h2>General Information</h2>
+    <p>DLXS Release 12a is
+      an interim release of DLXS release 12.  TextClass is substantially
+      identical to release 12 except for bug fixes as noted below.
+      FindaidClass has seen more extensive bug fixes primarily in the
+      XSL as noted below.  BibClass incorporates additional
+      functionality around MODS and SRU.  ImageClass has undergone CSS
+      enhancements and some functional improvements in the Perl
+      code.</p>
+
+    <p>Release 12a is comprised of:
+      <ul>
+        <li><a href="#bib">BibClass version 3.3.0</a></li>
+        <li><a href="#bibperm">Bibperm (Nameresolver) version 3.3.0</a></li>
+        <li><a href="#broker20">Broker20 version 1.3.0</a></li>
+        <li><a href="#collmgr">Collmgr version 3.2.2</a></li>
+        <li><a href="#findaid">FindaidClass version 6.2.0</a></li>
+        <li><a href="#image">ImageClass version 4.1.0</a></li>
+        <li><a href="#lib">Lib version 4.1.0</a></li>
+        <li><a href="#text">TextClass version 4.2.0</a></li>
+        <li><a href="#xclass">XClass version 2.2.3</a></li>
+        <li><a href="#mets">METS Pageturner version 1.0.0</a></li>
+        <li><a href="#xpat">XPAT version 5.3.2</a></li>
+        <li><a href="#bib">SRU version 1.0.0</a></li>
+        <li>dlxsd version 1.0.1</li>
+        <li>Other items released
+          <ul>
+            <li>mrsid_retrieve version 1.3.1</li>
+            <li>tif2web version 1.0.4</li>
+            <li>kakadu version 4.0.2</li>
+            <li>cjpeg version 6b</li>
+            <li>dlps-auth version 1.5</li>
+            <li>xpatutf8check version 1.0</li>
+          </ul>
+        </li>
+      </ul>
+      <hr />
+    </p>
+
+
+    <!-- Known Problems -->
+
+    <h2>Known Problems</h2>
+
+    <h3>Database</h3>
+    <ul>
+      <li> If this is a first-time install of DLXS it is necessary to
+        lowercase the column headings in all of the CSV files under
+        /misc/db before you run DLXSROOT/bin/db/dbmove to populate the
+        MySQL database or run using the CSV database natively.  Use a
+        text editor for this purpose.  Field names need be lowercase to
+        be compatible with the underlying middleware.  This problem is
+        due to a difference between SQL::Statement 1.005 and 0.1021.
+      </li>
+    </ul>
+
+
+    <h3>Database Installation Notes</h3>
+    <p>There are four new fields
+      in 12a.  There is no upgrade script for 12 to 12a.  Instead, in
+      certain cases, you will use collmgr to add these fields to your
+      existing database as described below.
+    </p>
+    <ul>
+      <li>Field (optional): <b>authsystems:</b> by default, does not
+        have to be added.  You must add it via collmgr with the
+        appropriate values if you choose to subclass the new AuthNZ
+        module to support an authentication/authorization system based
+        on other than the AUTHZ_COLL, REMOTE_USER and PUBLIC_COLL
+        environment variables. This field is a member of the
+        <tt>Collection</tt> table (all classes).
+      </li>
+
+      <li>Field (optional): <b>range_srchfields:</b> specifies the
+        fields to be used for date range searching.  This is beta
+        functionality in Image Class.  This field is a member of the
+        <tt>ImageClass</tt> table. Add it using collmgr if you want to
+        use the functionality.
+      </li>
+
+      <li>Field (optional): <b>privileged_users:</b> lists IDs for
+        users with special privileges allowing access to images
+        otherwise restricted or limited by size.  This field is a member
+        of the <tt>ImageClass</tt> table. Add it using collmgr if you
+        want to use the functionality.
+      </li>
+
+      <li>Field (optional): <b>browseupdatemodule:</b> specifies the
+        name of the browse update Perl module. This is analogous to
+        e.g. the <tt>appmodule</tt> and <tt>subclassmodule</tt> fields.
+        This field supersedes a Perl configuration hash used in release
+        12.  If you plan to use dynamic browsing you must add this field
+        using collmgr to the <tt>Collection</tt> table (all classes).
+        The module files are located in <tt>DLXSROOT/bin/browse</tt>.
+        If a dynamic browse page is to be served this field must have a
+        value.  The default behavior is available using one of the
+        values <tt>BrowseUpdate/ImageMysqlBU</tt> or
+        <tt>BrowseUpdate/FindaidBU</tt> for ImageClass and FindaidClass,
+        respectively. The TextClass values depend on the
+        <tt>encodingtype</tt> of the collection.  For
+        <tt>monograph</tt>, <tt>serialissue</tt> or
+        <tt>serialarticle</tt> the values are
+        <tt>BrowseUpdate/MonographBU</tt>,
+        <tt>BrowseUpdate/SerialIssueBU</tt> and
+        <tt>BrowseUpdate/SerialArticleBU</tt>, respectively.  Newspapers
+        are a specialization of the serialissue encoding type.
+      </li>
+    </ul>
+
+
+
+    <!-- New and Changed Functionality -->
+
+    <h2>New and Changed Functionality</h2>
+
+    <h3><a name="xpat" id="xpat"></a>XPAT</h3>
+    <ul>
+      <li>No changes.</li>
+    </ul>
+
+    <h3><a name="lib"></a>Lib </h3>
+
+    <ul>
+      <li>The authentication module AuthNZ.pm was added supporting the
+        Athens Access Management auth system.  It is also extensible to
+        support other authentication/authorization systems via
+        subclassing.</li>
+      <li>Fixed a problem in the file
+        DLXSROOT/lib/DlpsSession.pm. The manifestations are: 1) loss of
+        search history 2) loss of bookbag contents 3) inability to
+        progress through different "slices" of results. Since search
+        history, bookbag and sort order of results are all saved in the
+        session, the fact that a new session was being created each time
+        the middleware ran lost whatever might have been saved in the
+        previous session. </li>
+      <li>Added the ability, at install-time, to choose sendmail or smtp to deliver mail from
+        BookBag. </li>
+    </ul>
+    
+    <h3><a name="text"></a>Text Class </h3>
+    
+    
+    <ul>
+      <li>Renamed cached xml files in pageviewer, to solve a browser
+        caching condition that prevented some users from changing
+        pages. 
+      </li> 
+      <li> Lots of small xsl fixes. Some related to
+        displaying kwics in detail views in scopedivs.xsl are
+        significant. 
+      </li>
+    </ul>
+    
+    
+    <h3><a name="image"></a>Image Class </h3>
+
+
+    <ul>
+      <li>XPAT support removed. Significant reduction of code and
+        more effective and efficient use of MySQL. All image collections
+        must now use MySQL.</li>
+
+      <li>The value of the appmodule field in Collmgr must be set to "ImageApp" for all Image Class collections. Failure to do so will likely result in the middleware failing to run with errors regarding "mysqlImageApp.pm" not being found.</li>
+
+      <li>Class object added, finally making Image Class a "class"
+        in terms of object oriented code.</li>
+
+      <li>CSS improvements. Most notably affecting the processing of
+        the display header. Local customizations of display header CSS and
+        XSL will need some basic migration work. Added the ability to have
+        page/view specific CSS overrides. In general, more cosmetic
+        customizations can be done in CSS without touching the XSL or Perl.</li>
+
+      <li>Several interface improvements, primarily in the area of
+        results display. Fixed header display, better "image with full
+        record" display. Less javascript. Better use of CSS. "Next" and
+        "previous" link functionality for portfolios.</li>
+
+      <li>Search result identifiers are no longer cached on the session.
+        These changes address subtle but serious problems introduced with
+        storage of the session ID in a cookie rather than on a URL parameter.
+        The problems were only apparent when paging to next/previous items
+        based on separate searches in two windows of a browser.</li>
+
+      <li>Query building module rewritten for Image Class.</li>
+
+      <li>Beta version of date range searching.</li>
+    </ul>
+
+
+
+    <h3><a name="bib"></a>Bib Class</h3>
+    <ul>
+      <li>SRU functionality added. A new program called "sru" will
+        search bibclass databases using SRU commands and return XML. We
+        have already implemented OAIster; implementing other bibclass
+        databases should be fairly simple.
+      </li>
+    </ul>
+
+    <h3><a name="bibperm"></a>Bibperm (Nameresolver)</h3>
+    <ul>
+      <li>Documentation added.</li>
+    </ul>
+
+    <h3><a name="broker20"></a>Broker20</h3>
+    <ul>
+      <li>No changes.</li>
+    </ul>
+
+
+
+    <h3><a name="collmgr"></a>Collmgr</h3>
+    <ul>
+      <li>The database version (5) for 12a is identical to 12 with the
+        exceptions noted in Database Know Problems.</li>
+    </ul>
+
+
+
+
+
+    <h3><a name="findaid"></a>FindaidClass </h3>
+    <ul>
+      <li>Lots of xsl fixes, mostly display of different content in
+        different views: accessrestrict in container list, extent in top
+        level did, creator, chronlists in tables, highlighting of hits,
+        unitdate within unittitle, eventgrps and events</li>
+
+      <li>Fixes of bugs including calculation and display of number
+        of collections and finding aids, better browsing using creator.
+      </li>
+    </ul>
+
+
+    <h3><a name="xclass"></a>XClass</h3>
+    <ul>
+      <li>No changes.</li>
+    </ul>
+
+    <h3><a name=""></a>Tif2web binary</h3>
+    <ul>
+      <li>A new version 1.0.4. Rectangle highlighting for word coordinate highlighting uses.</li>
+    </ul>
+
+
+    <h3><a name="xclass"></a>XClass</h3>
+    <ul>
+      <li>No changes.</li>
+    </ul>
+
+    <h3><a name="mets"></a>METS Pageturner</h3>
+    <ul>
+      <li>A METS pageturner--this is something we've been working on
+        and is not yet officially in production, but we'll include it in
+        this release. We developed this pageturner to work with the
+        materials that Google is scanning, but the very simple design
+        should work with just about any METS documents and accompanying
+        XSLT and CSS files.  It's a prototype, so it is optimized for
+        our environment--for instance, it queries our Aleph OPAC via the
+        XServer, and also queries a MySQL rights database for each
+        item.</li>
+    </ul>
+
+  </body>
+
+</html>
+

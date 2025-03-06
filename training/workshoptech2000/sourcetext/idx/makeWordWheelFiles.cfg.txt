@@ -1,0 +1,38 @@
+#
+# Template configuration file for makeWordWheelFiles.pl
+#
+# Edit as appropriate for the given collection(s) (`coll')
+
+$gOutFileDir    = '/l1/idx/b/bosnia/WW';
+$gOutFileSuffix = '.ww.unnorm.sgm';
+$gSeparateDirPerColl = 0;
+
+$gDataDict = '/l1/idx/b/bosnia/bosnia.dd';
+
+%gCollNameToRegion = (
+                      'bosnia' => q{(region "COLL")},
+		     );
+
+@gRealms = (
+	    'title',
+            'author',
+	    'full text',
+	   );
+
+%gRealmRegions = (
+		  'title' => q{(region "alltitles")},
+		  'author' => q{((region "AUTHOR" within region "FILEDESC") not within region "SOURCEDESC")},
+		  'full text' => q{(region "TEXT")},
+		 );
+
+%gRealmRegionFormats = (
+			'title' => q{"alltitles"},
+			'author' => q{"AUTHOR"},
+			'full text' => q{"TEXT"},
+                       );
+
+$gLocale = "fr";
+
+
+1;      ## ----- TRUTH -----
+

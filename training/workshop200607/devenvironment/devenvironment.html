@@ -1,0 +1,104 @@
+<HTML>
+  <head>
+    <TITLE>DLPS DLXS Development Environment</TITLE> 
+    <meta HTTP-EQUIV="Content-Type" content="text/html; charset=iso-8859-1">
+      <LINK REL="stylesheet" HREF="../styles.css" TYPE="TEXT/CSS"> 
+  </head>
+  
+  <BODY BGCOLOR="#FFFFFF" LEFTMARGIN="10" TOPMARGIN="10" MARGINWIDTH="10" MARGINHEIGHT="10" CLASS="mainpalette"> 
+    <H2><A NAME="top"></A>DLPS DLXS Development Environment</H2>
+    <P>A brief discussion of the elements of our development environment.  Supports a ~10 person work group of developers and collection managers.  There are several elements that make it up.</P>
+    <UL> 
+      <LI><A HREF="#cvsrepository">CVS and the Repository</A></LI>
+      <LI><A HREF="#dirstruct">A work directory structure</A></LI>
+      <LI><A HREF="#dbsupport">DLXS database, collection manager & middleware support</A></LI>
+      <LI><A HREF="#virthosts">A virtual host per developer</A></LI>
+      <LI><A HREF="#usefulscripts">A few useful scripts</A></LI>
+      <LI><A HREF="scenarios.html">Various scenarios of how the environment is used (with diagram)</A> </LI>
+    </UL>
+    
+    <H3><A NAME="cvsrepository"></A> 
+      <SPAN CLASS="sectionheader">CVS and the Repository</SPAN></H3>
+    <UL>
+      <LI>CVS is an open source version control system</LI>
+      <LI>multiple users work on a single contolled set of source files</LI>
+      <LI>Provides commands:
+        <UL>
+          <LI>initially populate a directory structure (<b><TT>cvs checkout</TT></b>)</LI>
+          <LI>update files with the latest version from the repository  (<b><TT>cvs update</TT></b>)</LI>
+          <LI>submit changes to the repository (<b><TT>cvs commit</TT></b>)</LI>
+          <LI>find out your status with respect to the repository (<b><TT>cvs status</TT></b>)</LI>
+        </UL>
+      </LI>
+      <LI>automatically merges changes upon update</LI>
+      <LI>prevents submission of out-of-date files </LI>
+      <LI>provides a change log of comments written by submitting authors</LI>
+      <LI>shows diffs between versions</LI>
+    </UL>
+  <!-- #BeginLibraryItem "/Library/back to top.lbi" -->
+    <A HREF="#top"><i>Back to top</i></A> <!-- #EndLibraryItem --> 
+
+
+    <H3><A NAME="dirstruct"></A> 
+      <SPAN CLASS="sectionheader">A work directory structure</SPAN></H3>
+    <UL>
+      <LI>each developer has a full copy of the repository in <TT>/l1/dev/username</TT> (DLXSROOT)</LI>
+      <LI>initialized via <TT>cvs checkout</TT> and kept up to date by <TT>cvs update</TT> </LI>
+      <LI>a private sandbox for that developer</LI>
+      <LI>The "release area":
+        <UL>  
+          <LI>special directory tree directly under <TT>/l1</TT> </LI>
+          <LI>updated read-only</LI>
+          <LI>less volatile</LI>
+          <LI>acts as source for production machine updating</LI>
+        </UL>
+      </LI>
+      <LI><A TARGET="external" HREF="workflow.png">Workflow</A></LI>
+    </UL>
+  <!-- #BeginLibraryItem "/Library/back to top.lbi" -->
+    <A HREF="#top"><i>Back to top</i></A> <!-- #EndLibraryItem --> 
+
+    <H3><A NAME="dbsupport"></A> 
+      <SPAN CLASS="sectionheader">DLXS database, collection manager & middleware support</SPAN></H3>
+      <P>Middleware, collection manager and database structure cooperate through environment variables</P>
+    <UL>
+      <LI><b>DLPS_DEV</b> (== username) environment variable set by a developer's virtual host tells middleware which set of database rows to read.  "Release" rows are read when DLPS_DEV == 1.  Authorization system is in effect to mimic production.</LI>
+      <LI><b>REMOTE_USER</b> (== username) environment variable is set by your authentication system or by Basic HTTP Authentication when you log in to use collmgr.  Tells collmgr which set of database rows to read/write</LI>
+      <LI>collection manager (collmgr) supports checkout/checkin per user when REMOTE_USER is <b>not</b> dlxsadm.</LI>
+      <LI><b>DLXSROOT</b> (== /l1/dev/username) environment variable set by a developer's virtual host tells middleware where to find all its pieces</LI>
+      <LI><b>DLXSDATAROOT</b> (== /l1) environment variable set by a developer's virtual host tells middleware where to find data to avoid duplicating large datasets.</LI>
+      <LI>no authentication/authorization system in effect for developer.  Instead middleware looks at a list of collections in <TT>DLXSROOT/cgi/c/clsss/AUTHZD_COLL</TT> file.</LI>
+
+    </UL>
+  <!-- #BeginLibraryItem "/Library/back to top.lbi" -->
+    <A HREF="#top"><i>Back to top</i></A> <!-- #EndLibraryItem --> 
+
+    <H3><A NAME="virthosts"></A> 
+      <SPAN CLASS="sectionheader">A virtual host per developer</SPAN></H3>
+    <UL>
+      <LI>A <A TARGET="external" HREF="devvirtualhost.txt">virtual host</A> is configured for each developer to set the environment when running from the browser. </LI>
+      <LI>When running under the debugger, the shell must set these variables. </LI>
+    </UL>
+  <!-- #BeginLibraryItem "/Library/back to top.lbi" -->
+    <A HREF="#top"><i>Back to top</i></A> <!-- #EndLibraryItem --> 
+
+    <H3><A NAME="usefulscripts"></A> 
+      <SPAN CLASS="sectionheader">A few useful scripts</SPAN></H3>
+    <UL>
+      <LI><A TARGET="external" HREF="updaterelease.full.txt">updaterelease.full</A></LI>
+      <LI><A TARGET="external" HREF="makedlxsroot.txt">makedlxsroot</A></LI>
+
+    </UL>
+  <!-- #BeginLibraryItem "/Library/back to top.lbi" -->
+    <A HREF="#top"><i>Back to top</i></A> <!-- #EndLibraryItem --> 
+
+    <BR>
+    <BR>
+    <BR>
+    <BR>
+    <BR>
+    <BR>
+    <BR>
+    <BR>
+  </BODY>
+</HTML>

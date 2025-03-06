@@ -1,0 +1,38 @@
+<?xml version="1.0"?>
+
+<!-- SPO Editorial Services                  -->
+<!-- automatically-generated XML header file -->
+
+<?xml-stylesheet href="../../../pre11-dlxsdocs.xsl" type="text/xsl"?>
+<!DOCTYPE DLPSDOC PUBLIC "-//UM-DLPS//DTD DLPS Publications//EN" "http://docs.umdl.umich.edu/dlps/docs/dlpsdocs.dtd">
+<DLPSDOC>
+<TITLE>Character Sets/Representation, Bibliographic Class</TITLE>
+<HEADER>
+<JOURNAL>DLXS Documentation</JOURNAL>
+<PUBDATE>2002-07-08 12:59:40 EDT</PUBDATE>
+<AUTH1>Hagedorn, Kat</AUTH1>
+<AUTH2></AUTH2>
+<DOCTITLE>Character Sets/Representation, Bibliographic Class</DOCTITLE>
+<VOL>class</VOL>
+<ISS>bib</ISS>
+<FILE>dlxsdocs-bib-character-sets</FILE>
+</HEADER>
+
+
+
+<BODY>
+<BHEAD>Character Sets/Representation, Bibliographic Class</BHEAD>
+<DIV1 ID="main">
+<P>At the current time, XPAT (the DLXS search engine) supports both 7- and 8-bit character sets, with no specific ties to any standard or non-standard character set.  The following approaches are equally possible:</P>
+<OL>
+<LI>An 8-bit ISO Latin 1 approach in the data dictionary (the <TT>.dd</TT> file), mapping characters with diacritics to their unaccented form (e.g., an "a" with umlaut would be searchable as an "a").</LI>
+<LI>An 8-bit ISO Latin 1 approach in the data dictionary, leaving characters with diacritics searchable in their accented form (e.g., an "a" with umlaut would be searchable only as an "a" with umlaut).</LI>
+<LI>An 8-bit ISO Latin 2 approach in the data dictionary, mapping characters with diacritics to their unaccented form (e.g., an "a" with macron would be searchable as an "a").</LI>
+<LI>... and so forth</LI>
+</OL>
+<P>The most common approach is to rely primarily on 8-bit representations of ISO Latin 1 mappings for the bulk of the characters, and character entity references for most other cases (e.g., &amp;amacr;).  A sample data dictionary using 8-bit ISO Latin 1 values is linked <A HREF="bib-sample.dd">here</A> as an example of this approach.</P>
+<P>We do not yet provide filtering of these character entity set-based characters to displayable representations, but will probably use transparent GIFs as an interim strategy (as we do elsewhere in DLXS classes).</P>
+<P>Currently, we offer no documentation here for converting characters to ISO Latin 1 values.  In the interim, see the <A HREF="../class/image/image-charconversion.xml">Image Class Character Set Conversion</A>.</P>
+</DIV1>
+</BODY>
+</DLPSDOC>

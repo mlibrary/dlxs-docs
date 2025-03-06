@@ -1,0 +1,79 @@
+<?xml version="1.0"?>
+
+<!-- SPO Editorial Services                  -->
+<!-- automatically-generated XML header file -->
+
+<?xml-stylesheet href="../../pre11-dlxsdocs.xsl" type="text/xsl"?>
+<!DOCTYPE DLPSDOC PUBLIC "-//UM-DLPS//DTD DLPS Publications//EN" "http://docs.umdl.umich.edu/dlps/docs/dlpsdocs.dtd">
+<DLPSDOC>
+<TITLE>DLPS's DLXS Development Environment</TITLE>
+<HEADER>
+<JOURNAL>DLXS Documentation</JOURNAL>
+<PUBDATE>2002-07-08 13:53:30 EDT</PUBDATE>
+<AUTH1>Farber, Phillip</AUTH1>
+<AUTH2>Pagliere, Alan</AUTH2>
+<DOCTITLE>DLPS's DLXS Development Environment</DOCTITLE>
+<VOL>program</VOL>
+<ISS></ISS>
+<FILE>dlxsdocs-dlps-dlxs-devenvironment</FILE>
+</HEADER>
+                                      
+  
+  
+  <BODY>
+    <BHEAD>DLPS's Development Environment for DLXS Software</BHEAD>
+    <DIV1>
+      <P>This document describes various aspects of the development environment used at DLPS. There may be, for example some reasonable assumptions about the specific DLPS development environment in parts of our middleware (consulting certain environment variables, etc.). However, the DLXS system does not absolutely rely on most of these in order to work. In other words, in a more "plain vanilla" environment that might be set up by DLXS.</P>
+      <P><B>Contents:</B></P>
+      <UL>
+        <LI><A HREF="#sourcecontrol">Source Control</A></LI>
+        <LI><A HREF="#workdirs">Support for Multiple Virtual Host-based Work Directories</A></LI>
+      </UL>
+    </DIV1>
+    <DIV1>
+      <H1><A NAME="sourcecontrol"></A>Source Control</H1>
+      <P>We use <A HREF="http://www.cvshome.org/">CVS</A> to handle source control, merging of multiple developers' code, tagging specific configurations of many files, releasing particular tagged versions of files, etc.  The CVS source repository stands between each developer's work space and what we call the <TT>release</TT> directory structure.  Each developer's work space is volatile and is expected to change frequently. </P>
+      <P> Completed work is committed to the CVS repository from the developer's workspace by issuing the <TT>cvs commit</TT> command.  The <TT>release</TT> directory structure is updated via the <TT>cvs update</TT> command which pulls the committed source out of the CVS repository and into the <TT>release</TT> directory structure.  </P>
+      <P>The <TT>release</TT> directory structure is semi-stable and does not change as frequently.  We never modify files in the <TT>release</TT> directory structure directly.  We always change files in the work directory, commit to CVS, and update into the <TT>release</TT> directory structure. </P>
+      <P> The <TT>release</TT> directory structure is an integration test area used to determine if changes from multiple developers work together.  Finally we copy the <TT>release</TT> directory structure to one of our production machines after it has been tested.  The production directory structure is the most stable environment. </P>
+      <P>In the absence of CVS you will need to copy files from your work directories to the release directories manually or with the aid of scripts.  Of course, without CVS or a similar source control system, you will not have file versions, merging, etc.  </P>
+    </DIV1>
+    <DIV1>
+      <H1><A NAME="workdirs"></A>Support for Multiple Virtual Host-based Work Directories</H1>
+      
+      <P>At DLPS, we have separate work directories that mirror most of the release/production <A HREF="../intro/dlxs-dirstruct.xml">directory structure</A>. This allows us to have multiple developers working on code, making changes to collection databases, etc. at the same time.</P>
+      
+      <P>We use a development model designed to support a workspace (directory structure and environment) for each developer separate from the release directory structure. As of Release #9, this structure will supercede the work directory model that used the special URL syntax in previous DLXS releases. In the virtual-host-based model, a virtual host is configured on the web server for each developer.  </P>
+      <P>Here is an example Apache virtual host configuration supporting a workspace for <I>smith</I>:</P>
+      <PRE>
+
+&lt;VirtualHost 123.456.789.123:80&gt;
+  ServerName smith.dev.umdl.umich.edu
+  ServerAlias smith smith.dev smith.dev.umdl
+
+  DocumentRoot          /l1/dev/smith/web
+  ScriptAlias   /cgi/   /l1/dev/smith/cgi/
+
+  SetEnv DLXSROOT       /l1/dev/smith
+  SetEnv DLXSDATAROOT   /l1
+  SetEnv DLPS_DEV       smith
+  SetEnv REMOTE_USER    smith
+&lt;/VirtualHost&gt;
+</PRE>
+      <P>Note that the DocumentRoot and ScriptAlias point to /l1/dev/smith under which is smith's set of development directories, in particular cgi and web. </P>
+      <P>Each developer has a domain, e.g., <TT>smith.dev.umdl.umich.edu</TT>. Each virtual host sets a unique <TT>DLXSROOT</TT> environment variable value that points to a complete DLXS directory structure.  For example, smith has a <TT>DLXSROOT</TT> value of <TT>/l1/dev/smith</TT>.  Into this directory we check out the CVS repository. This gives each developer a mirror of the entire CVS development directory structure.  </P>
+      
+      <P>To run smith's development copy of the middleware the basic URL (e.g. TextClass) would be: <TT>http://smith.dev.umdl.umich.edu/cgi/t/text/text-idx</TT></P>
+      
+      <P><TT>DLPS_DEV</TT> is the environment variable that signals to the middleware that it is running in development mode. The virtual host should set <TT>DLPS_DEV</TT> to the user ID that identifies smith to the system, e.g <TT>smith</TT>. At DLPS we use the developer's uniqname. </P>
+      <P> Part of the development environment is a facility in collmgr which gives each developer a set of collection database rows.  In this way, each developer can experiment with database changes without affecting the rows the released middleware is using. </P>
+      <P>How does the middleware know which rows to read in development mode?  It uses the value of <TT>DLPS_DEV</TT> (smith) as a key to select the correct rows. Please refer to <A HREF="../collmeta/dlxs-collmgr.xml">collmgr documentation</A>. </P>
+      <P>The <A HREF="../intro/dlxs-dirstruct.xml#dlxsdatarootenv"><TT>DLXSDATAROOT</TT></A> environment variable allows the data to be under a different directory root than the middleware programs.  We created <TT>DLXSDATAROOT</TT> because data and indexes are too large to duplicate for each developer and are not generally CVS source controlled.  Each virtual host sets this variable to point to the root of the <I>release</I> directory structure (outside of the developer's workspace) that contains the <TT>obj</TT> and <TT>idx</TT> directories where data and indexes reside. <TT>DLXSDATAROOT</TT> is optional.  If it is set, the middleware favors it over <TT><A HREF="../intro/dlxs-dirstruct.xml#dlxsrootenv">DLXSROOT</A></TT> when accessing data and indexes.  If it is not set, the
+middleware will use <TT>DLXSROOT</TT> to locate the data. In that event, you would need a copy of the data directories and their content in your development space. </P>
+      
+      <P>The <TT><A HREF="../collmeta/dlxs-collmgr.xml#remoteuserenv">REMOTE_USER</A></TT> environment variable is set for convenience to mimic the action of the authorization system which is absent on the development machines.  The middleware determines whether the user is logged in by testing <TT>REMOTE_USER</TT> for a value.</P>
+      
+      
+    </DIV1>
+  </BODY>
+</DLPSDOC>

@@ -1,0 +1,67 @@
+## makefile for a pat50 indexed wordwheel
+## a multifile index
+## IDXDIRPREFIX and NAMEPREFIX are self-explanatory
+
+DLXSROOT = /l1
+MAKEWORDWHEEL = $(DLXSROOT)/bin/WW/makeWordWheelFiles.pl
+MAKEWORDWHEELCFG = $(DLXSROOT)/idx/b/bosnia/WW/makeWordWheelFiles.cfg
+IDXDIRPREFIX = $(DLXSROOT)/idx/b/bosnia/WW/
+NAMEPREFIX = bosnia.ww
+
+FORCE:
+	@echo "working..."
+
+# **********************************************************************
+all: FORCE norm dd sgmlrgn finish
+
+
+# **********************************************************************
+wordwheel: FORCE
+	$(MAKEWORDWHEEL) $(MAKEWORDWHEELCFG)
+
+# **********************************************************************
+norm: FORCE
+	sgmlnorm \
+		$(IDXDIRPREFIX)$(NAMEPREFIX).inp \
+		$(IDXDIRPREFIX)$(NAMEPREFIX).unnorm.sgm \
+	> $(IDXDIRPREFIX)$(NAMEPREFIX).norm.sgm
+
+
+# **********************************************************************
+dd: FORCE
+	cat $(IDXDIRPREFIX)$(NAMEPREFIX).blank.dd > $(IDXDIRPREFIX)$(NAMEPREFIX).dd
+	mfsbld50 -D $(IDXDIRPREFIX)$(NAMEPREFIX).dd -o $(IDXDIRPREFIX)$(NAMEPREFIX).mfs
+	mfsmeta50 -o $(IDXDIRPREFIX)$(NAMEPREFIX).str -D $(IDXDIRPREFIX)$(NAMEPREFIX).dd
+
+
+# **********************************************************************
+sgmlrgn: FORCE
+	sgmlrgn50 -v -m region \
+		-o $(IDXDIRPREFIX)$(NAMEPREFIX) \
+		-M $(IDXDIRPREFIX)$(NAMEPREFIX).str \
+		-D $(IDXDIRPREFIX)$(NAMEPREFIX).dd \
+		$(IDXDIRPREFIX)$(NAMEPREFIX).inp \
+		$(IDXDIRPREFIX)$(NAMEPREFIX).dd
+
+# **********************************************************************
+finish:	FORCE
+	patbld50 -m 20m -D $(IDXDIRPREFIX)$(NAMEPREFIX).dd
+	patffw50 -m 20m -o $(NAMEPREFIX) -D $(IDXDIRPREFIX)$(NAMEPREFIX).dd
+	patffi50 -m 20m -o $(NAMEPREFIX) -D $(IDXDIRPREFIX)$(NAMEPREFIX).dd
+	rm -f $(IDXDIRPREFIX)$(NAMEPREFIX).str
+	rm -f $(IDXDIRPREFIX)$(NAMEPREFIX).mfs
+	rm -f $(IDXDIRPREFIX)$(NAMEPREFIX).ff[ciw]
+	@echo "made $(NAMEPREFIX)"
+
+# **********************************************************************
+clean: FORCE
+	rm -f $(IDXDIRPREFIX)$(NAMEPREFIX).dd
+	rm -f $(IDXDIRPREFIX)$(NAMEPREFIX).idx
+	rm -f $(IDXDIRPREFIX)$(NAMEPREFIX).rgn
+	rm -f $(IDXDIRPREFIX)$(NAMEPREFIX).norm.sgm
+	rm -f $(IDXDIRPREFIX)$(NAMEPREFIX).str
+	rm -f $(IDXDIRPREFIX)$(NAMEPREFIX).mfs
+	rm -f $(IDXDIRPREFIX)$(NAMEPREFIX).maps.[flx]mp
+	rm -f $(IDXDIRPREFIX)$(NAMEPREFIX).ff[ciw]
+
+##  ------------------------------------------------------------

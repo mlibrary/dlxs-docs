@@ -1,0 +1,82 @@
+  <HTML>
+    <HEAD>
+      <TITLE>BibClass</TITLE>
+      <META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+        <LINK REL="stylesheet" HREF="../styles.css">
+    </HEAD>
+    <BODY CLASS="mainpalette">
+      <H2><A HREF="./bibhandylinks.html">BibClass</A></H2>
+      <UL>
+        <LI><B>Data</B> 
+          <UL>
+            
+      <LI>simple, <A HREF="bibdtd.html" TARGET="sample">bib class DTD</A>, basically 
+        metadata <I>is</I> the item, indexed with XPat</LI>
+            
+      <LI> <A HREF="bibsample.html" TARGET="sample">Sample data</A></LI>
+          </UL>
+        </LI>
+        <LI><B>BibClass Middleware Components</B> </LI>
+          <UL>
+            <LI>bib-idx, bibclass.cfg, specific.functions.cfg, default.functions.cfg</LI>
+            <LI>colldb, groups, <I>maps</I></LI>
+            <LI>SGML and XPat index</LI>
+            <LI>HTML templates</LI>
+
+          </UL>
+        
+  <LI><B>BibClass URL Parameters</B> </LI>
+          <UL>
+            <LI>Collection parameters: c, cc, g, bbc</LI>
+            <LI>Search types: type=simple|boolean</LI>
+            <LI>Pages: page=simple|boolean page=collpick page=history </LI>
+            
+    <LI>Query parameters: q1, q2, ..., rgn1, rgn2, ..., op2, op3, ..., date1, 
+      date2</LI>
+            <LI>Views: view=reslist</LI>
+          <LI>Actions: bbaction=add|remove|download|email</LI>
+          <LI>Session ID: sid=106eb945036468c97458ee38d21186a0</LI>
+
+          
+          <LI>BibClass-specific: fmt=short|long, sort=A-Z|Descending|Ascending, </LI>
+
+
+          </UL>
+        <LI><B>Objects, modules used</B></LI>
+        <UL>
+          <LI>Authorization</LI>
+          
+    <LI>CollsInfo, GroupsInfo, XPat, XPatResult, XPatResultSet, SearchHistory, 
+      Bookbag, DlpsSession, LibVersion</LI>
+          <LI>CGI, Apache::Session</LI>
+        </UL>
+        
+  <LI><B><A HREF="BibClassFlow.gif" TARGET="sample">Flowchart</A></B> to show 
+    decision tree for search, filtering, etc.</LI> 
+        <LI><B>BibClass Functionality</B> 
+          <UL>
+            <LI>simple searches, grabs and displays results</LI>
+            <LI>BookBag, BookBagItem/BBItemBC, SearchHistory, sessions</LI>
+          </UL>
+        </LI>
+        <LI><B>Configuration</B> 
+          <UL>
+            <LI>colldb, groups, bib.cfg, BookBag.cfg, DlpsSession.cfg</LI>
+          </UL>
+        </LI>
+        <LI><B>Filtering</B> 
+          <UL>
+            <LI>Hands on: add or make change to a filtering subroutine to one of the 
+              collections</LI>
+          </UL>
+        </LI>
+        <LI><B>HTML Templates </B> 
+          <UL>
+            <LI>customization: fallback mechanism to collection specific, group specific 
+              or class general templates</LI>
+          </UL>
+        </LI>
+      </UL>
+    </BODY>
+  </HTML>
+  

@@ -1,0 +1,197 @@
+  <HTML>
+<HEAD>
+<TITLE>DLXS Troubleshooting</TITLE>
+<LINK REL="stylesheet" HREF="../styles.css" TYPE="text/css">
+</HEAD>
+<BODY CLASS="mainpalette" LEFTMARGIN="10" TOPMARGIN="10" MARGINWIDTH="10" MARGINHEIGHT="10">
+<H1>Troubleshooting DLXS Middleware</H1>
+<UL>
+  <LI><A HREF="#servererrors">Server errors</A></LI>
+  <LI><A HREF="#assertionfail">Assertion failures</A> </LI>
+  <LI><A HREF="#errormess">Error messages</A></LI>
+  <LI><A HREF="#misctech">Tools and techniques</A> 
+    <UL>
+      <LI><A HREF="#commandline">Running at the command line</A> </LI>
+      <LI><A HREF="#perldb">Running the Perl debugger at the command line</A> 
+      </LI>
+      <LI><A HREF="#removesid">Remove sid URL parameter</A> </LI>
+    </UL>
+  </LI>
+  <LI><A HREF="#misctech">Miscellaneous checks</A> 
+    <UL>
+      <LI><A HREF="#pageviewerlog">Pageviewer error log file</A> </LI>
+      <LI><A HREF="#apachelog">Apache error log</A> </LI>
+      <LI><A HREF="#perlmodules">Perl module versions</A> </LI>
+      <LI><A HREF="#configloc">Configured vs. actual file locations</A> </LI>
+      <LI><A HREF="#reltoprod">Move "release" rows to "production"</A> </LI>
+    </UL>
+  </LI>
+</UL>
+<P>Here are some tools, facilities and techniques useful for troubleshooting problems 
+  with the middleware after installation.</P>
+<H2><A NAME="servererrors"></A>Server errors</H2>
+<P>If you see a page similar to <A HREF="servererror.html">this page</A> it may 
+  due to a syntax error in your code. If you've made changes, check them for correct 
+  syntax. An easy way to do this is to run from the command line. User data is 
+  in bold, output in italics:</P>
+<BLOCKQUOTE> 
+  <PRE>
+<B>cd $DLXSROOT/cgi/t/text</B>
+<B>perl ./text-idx</B>
+<I>syntax error at ./text-idx line 105, near "foobar
+my "
+Global symbol "%attributes" requires explicit package name at ./text-idx line 105.
+Execution of ./text-idx aborted due to compilation errors.
+</I>
+        </PRE>
+</BLOCKQUOTE>
+<P>Another possibility is that the location of Perl in your system has changed 
+  since the middleware was installed. This means the symlink to Perl in $DLXSROOT/bin/symlinks 
+  is now bad. You can change the symlink manually or restore Perl to its original 
+  location. </P>
+<H2><A NAME="assertionfail"></A>Assertion failures</H2>
+<P>If the CGI program runs but encounters a condition that makes it impossible 
+  to perform a specific function it will exit and generate an <A HREF="assertionfail.html">assertion 
+  failure page</A>. An example might be a missing Terminology Mapper map file 
+  for one of your collections.</P>
+<P>Note that this page displays an optional message about the nature of the failure, 
+  the URL that led to the assertion failure and a traceback of the stack up to 
+  the point the assertion failed and . </P>
+<P>By examining each part you may be able to determine the reason for the failure. 
+  Sometimes it is useful to look at the line number in the code mentioned in the 
+  traceback to determine why the error occurred especially if no message appears. 
+</P>
+<H2><A NAME="errormess"></A>Error messages</H2>
+<P>There are a few error messages that crop up frequently.</P>
+<BLOCKQUOTE><B> Could not start XPAT for only requested collection sampletc ... 
+  terminating. Error: Could not fork XPAT process or start remote process or child 
+  had exec error. Connection refused at /l1/dev/pfarber/lib/RemoteConnect.pm line 
+  147. </B> </BLOCKQUOTE>
+<P>This means that value of <B><TT>host</TT></B> for this collection in the database 
+  is different from the machine or virtual host running the CGI program. In this 
+  event, the middleware attempts to start XPAT on that remote machine. Unless 
+  the remote access daemon (<B>dlxsd</B>) is running on that remote machine (and 
+  the collection data and indexes are there too) this error will occur. If your 
+  data is never remote, setting <B><TT>host</TT></B> to the value <B><TT>localhost</TT></B> 
+  is the simplest solution.</P>
+<H2>Debug flags</H2>
+<P>There are several useful debug flags which aid in determining the source of 
+  errors. Add <B><TT>;debug=<I>switch</I></TT></B> to the URL that caused the 
+  error and re-submit the URL in you browser. The <A HREF="http://docs.dlxs.org/program/dlxs-debug.xml">complete 
+  documentation</A> describes all the debug flags. The most useful values for 
+  <B><TT><I>switch</I></TT></B> are: </P>
+<DL> 
+  <DT><TT><B>all</B></TT></DT>
+  <DD>Turn on all debugging switches. This generates a lot of data.</DD>
+  <DT><TT><B>collsinfo</B></TT></DT>
+  <DD>Dump the contents of the CollsInfo database object. This lets you check 
+    that the database values for each collection, which you think are set, are 
+    actually those being used by the program.</DD>
+  <DT><TT><B>env</B></TT></DT>
+  <DD>dump the environment variables and their values. You can check for the correct 
+    values of critical environment variables such as <TT>REMOTE_USER</TT>, <TT>HTTP_HOST</TT>, 
+    <TT>AUTHZD_COLL</TT>, <TT>DLXSROOT</TT> and <TT>DOCUMENT_ROOT</TT>. This is 
+    a quick sanity check on the values of these environment variables set for 
+    CGI program by the web server / virtual host. </DD>
+  <DT><TT><B>search</B></TT></DT>
+  <DD>dump the raw XPAT queries the middleware generated for a given search</DD>
+</DL>
+<H2><A NAME="misctech"></A>Tools and techniques</H2>
+<P>You may be able to get additional information about what is going wrong by 
+  trying a few of these:</P>
+<H3><A NAME="commandline"></A>Running at the command line</H3>
+<P>Given a URL that causes a server error, try running the CDI program at the 
+  command line with the same input. For example given <A><TT>http://somewhere.edu/cgi/t/text/text-idx?sid=4f9d9be85c3c7e88a9d2ecb2f73fffef;c=moa;c=moajrnl;c=sampletc;c=workshoptc;xc=1;page=simpleext;cc=moa</TT></A> 
+  try running the CGI program at the command line like this:</P>
+<BLOCKQUOTE> 
+  <PRE><B>
+cd $DLXSROOT/cgi/t/text/text-idx
+perl ./text-idx c=moa c=moajrnl c=sampletc c=workshoptc xc=1 page=simpleext cc=moa
+        </B></PRE>
+</BLOCKQUOTE>
+<H3><A NAME="perldb"></A>Running the Perl debugger at the command line</H3>
+<P>You can also run the Perl debugger at the command line with the <TT><B>-d</B></TT> 
+  switch and step through the code line by line by typing '<TT><B>n</B></TT>' 
+  at the Perl debugger prompt <TT><B>DB&lt;1&gt;</B></TT>. This assumes the code 
+  compiles and can be executed:</P>
+<BLOCKQUOTE> 
+  <PRE><B>
+cd $DLXSROOT/cgi/t/text/text-idx
+perl -d ./text-idx c=moa c=moajrnl c=sampletc c=workshoptc xc=1 page=simpleext cc=moa
+        </B>
+<I>Default die handler restored.
+
+Loading DB routines from perl5db.pl version 1.07
+Editor support available.
+
+Enter h or `h h' for help, or `man perldebug' for more help.
+
+main::(./text-idx:87):  $::VERSION = 3.0000;
+  DB&lt;1&gt;</I>
+      </PRE>
+</BLOCKQUOTE>
+<P>If you run at the command line you must set the <TT>AUTHZD_COLL</TT> environment 
+  variable to include the collections you request in your command line input. 
+  For the above example, in you shell:</P>
+<BLOCKQUOTE> 
+  <PRE><B>
+setenv AUTHZD_COLL :moa:moajrnl:sampletc:workshoptc:
+        </B></PRE>
+</BLOCKQUOTE>
+<H3><A NAME="removesid"></A>Remove the sid URL parameter</H3>
+<P>In the preceeding example we removed the sid parameter from the command line 
+  input. This technique may also be useful when applied to the URL in the browser. 
+  It eliminates from the problem certain data that is cached in the session.</P>
+<H2><A NAME="miscchecks"></A>Miscellaneous checks</H2>
+<P>Here are a few additional areas you can check. Some apply to specific problems, 
+  some general.</P>
+<H3><A NAME="pageviewerlog"></A>Pageviewer error log file</H3>
+<P>The Pageviewer CGI program logs errors to a log file usually kept in <TT>/tmp/pageviewergifdir.log</TT> 
+  configured in <TT>$DLXSROOT/cgi/t/text/PageView.cfg</TT> by the <TT>$gMakeDirOutputLog</TT> 
+  Perl varialbe. It logs failures of the command used to create gif and pdf files 
+  from the tiff archival file and failures creating cache subdrictories of <TT>$DLXSROOT/web/t/text/gifcvtdir</TT>. 
+  This log file is maintained only for operations on the local machine not for 
+  caches on remote machines. </P>
+<H3><A NAME="apachelog"></A>Apache error log</H3>
+<P>It may be useful to examine the last few entries in the Apache web server's 
+  error log in <TT>APACHE/logs/error_log</TT>. You can monitor the log in real 
+  time as you send requests to the server from your browser at your shell command 
+  line via:</P>
+<BLOCKQUOTE> 
+  <PRE><B>
+tail -f APACHE/logs/error_log
+        </B></PRE>
+</BLOCKQUOTE>
+<H3><A NAME="perlmodules"></A>Perl module versions</H3>
+<P>The Installer prints out a report on missing Perl modules and Perl modules 
+  you have installed whose versions differ from the recommended. Double-check 
+  this list and make sure all modules are installed and that the versions match. 
+  We have found this to be especially important when dealing with the DBI/DBD 
+  database interface modules and with Apache::Session related modules.</P>
+<P>You can check both existence and version for a given module at the command 
+  line. For example, to check DBI and Apache::Session, respectively:</P>
+<BLOCKQUOTE> 
+  <PRE>
+<B>perl -e 'use DBI; print "$DBI::VERSION\n"'</B>
+<I>1.21</I>
+
+<B>perl -e 'use Apache::Session; print "$Apache::Session::VERSION\n"'</B>
+<I>1.54</I>
+          </PRE>
+</BLOCKQUOTE>
+<H3><A NAME="configloc"></A>Configured vs. actual file locations</H3>
+<P>Double check the values in the database (via collmgr) that specify locations 
+  for files to verify that they correspond to the actual file locations in your 
+  file system.</P>
+<H3><A NAME="reltoprod"></A> Move "release" rows to "production"</H3>
+<P>If the database edits you make to a collection are not taking effect it may 
+  be because you need to "Make a release to production" in <B>collmgr</B>. Recall 
+  that when you edit rows as the user <B>dlxsadm</B>, you are changing the "release" 
+  rows, i.e., those keyed by <TT><B>dlxsadm</B></TT>. When you <I>run</I> the 
+  DLXS middleware (using the suggested virtual host configuration), it is reading 
+  the rows keyed by <TT><B>production</B></TT>. Your edits are not visible to 
+  the running DLXS middleware unless you "Make a release to production".</P>
+</BODY>
+</HTML>
+  
+  

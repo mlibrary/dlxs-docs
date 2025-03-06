@@ -1,0 +1,982 @@
+<?xml version="1.0"?>
+
+<!-- SPO Editorial Services                  -->
+<!-- automatically-generated XML header file -->
+
+<?xml-stylesheet href="../../../pre11-dlxsdocs.xsl" type="text/xsl"?>
+<!DOCTYPE DLPSDOC PUBLIC "-//UM-DLPS//DTD DLPS Publications//EN" "http://docs.umdl.umich.edu/dlps/docs/dlpsdocs.dtd">
+<DLPSDOC>
+<TITLE>Text Class Processing Instructions</TITLE>
+<HEADER>
+<JOURNAL>DLXS Documentation</JOURNAL>
+<PUBDATE>2003-03-03 16:51:58 EST</PUBDATE>
+<AUTH1>Stoeffler, Matt</AUTH1>
+<EMAIL1></EMAIL1>
+<AUTH2></AUTH2>
+<DOCTITLE>Text Class Processing Instructions</DOCTITLE>
+<VOL>class</VOL>
+<ISS>text</ISS>
+<FILE>dlxsdocs-tc-pis</FILE>
+</HEADER>
+<BODY>
+        <BHEAD>Text Class Processing Instructions (PIs)</BHEAD>
+        <DIV1 ID="main">
+            <P>The following table includes descriptions of all the processing instructions (PIs)
+                that appear in TextClass templates and that are supported by the CGI (see <A
+                    HREF="../../ui/dlxs-templates.xml"> HTML Templates / Interfaces</A> for more on
+                PIs), as well as links to descriptions of the relevant template files in which they
+                may appear. Note that PIs are not interchangeable with templates; they must be
+                supported in the CGI to be rendered properly. </P>
+            <TABLE BORDER="1">
+                <THEAD>
+                    <TR>
+                        <TH ALIGN="LEFT" WIDTH="25%">PI tag</TH>
+                        <TH VALIGN="TOP" WIDTH="12%">Optional parameters</TH>
+                        <TH VALIGN="TOP" WIDTH="13%">Associated templates</TH>
+                        <TH VALIGN="TOP" WIDTH="50%">Description</TH>
+                    </TR>
+                </THEAD>
+                <TBODY>
+                    <TR>
+                        <TD VALIGN="TOP" WIDTH="25%">&lt;?BBAG_BOOLEAN_SEARCH_LINK&gt;</TD> 
+                        <TD VALIGN="TOP" WIDTH="12%"> </TD>
+                        <TD VALIGN="TOP" WIDTH="13%">bbagemail.tpl<BR/> bbaglist.tpl<BR/>
+                            bbagproximitysearchform.chnk<BR/> bbagsimplesearchform.chnk<BR/>
+                        </TD>
+                        <TD VALIGN="TOP" WIDTH="50%">Provides the <CODE>HREF</CODE> URL for the
+                            &quot;Boolean&quot; search within book bag link.</TD>
+                    </TR>
+                    <TR>
+                        <TD VALIGN="TOP" WIDTH="25%">&lt;?BBAG_PROXIMITY_SEARCH_LINK&gt;</TD>
+                        <TD VALIGN="TOP" WIDTH="12%"> </TD>
+                        <TD VALIGN="TOP" WIDTH="13%">bbagemail.tpl<BR/> bbaglist.tpl<BR/>
+                            bbagbooleansearchform.chnk<BR/> bbagsimplesearchform.chnk<BR/>
+                        </TD>
+                        <TD VALIGN="TOP" WIDTH="50%">Provides the <CODE>HREF</CODE> URL for the
+                            &quot;proximity&quot; search within book bag link.</TD>
+                    </TR>
+                    <TR>
+                        <TD VALIGN="TOP" WIDTH="25%">&lt;?BBAG_SIMPLE_SEARCH_LINK&gt;</TD>
+                        <TD VALIGN="TOP" WIDTH="12%"> </TD>
+                        <TD VALIGN="TOP" WIDTH="13%">bbagemail.tpl<BR/> bbaglist.tpl<BR/>
+                            bbagbooleansearchform.chnk<BR/> bbagsimplesearchform.chnk<BR/>
+                        </TD>
+                        <TD VALIGN="TOP" WIDTH="50%">Provides the <CODE>HREF</CODE> URL for the
+                            &quot;simple&quot; search within book bag link.</TD>
+                    </TR>
+                    <TR>
+                        <TD VALIGN="TOP" WIDTH="25%">&lt;?BIB_SEARCH_LINK&gt;</TD>
+                        <TD VALIGN="TOP" WIDTH="12%"> </TD>
+                        <TD VALIGN="TOP" WIDTH="13%">bbaglist.tpl<BR/> pageviewer.pagenav.tpl<BR/> navheader.chnk<BR/>
+                        </TD>
+                        <TD VALIGN="TOP" WIDTH="50%">Provides the <CODE>HREF</CODE> URL for the
+                            &quot;citation&quot; search form link in the main or footer navigation bar.</TD>
+                    </TR>
+                    <TR>
+                        <TD VALIGN="TOP">&lt;?BOOKBAG_ADD_REMOVE_ITEM&gt;</TD>
+                        <TD VALIGN="TOP"> </TD>
+                        <TD VALIGN="TOP">header.tpl</TD>
+                        <TD VALIGN="TOP">Used to insert a full link from a bibliographic header page
+                            for adding the current item to the book bag. </TD>
+                    </TR>
+                    <TR>
+                        <TD VALIGN="TOP" WIDTH="25%">&lt;?BOOKBAG_DOWNLOAD&gt;</TD>
+                        <TD VALIGN="TOP" WIDTH="12%"> </TD>
+                        <TD VALIGN="TOP" WIDTH="13%">bbagemail.tpl<BR/> bbaglist.tpl<BR/>
+                        </TD>
+                        <TD VALIGN="TOP" WIDTH="50%">Used to insert a button to download book bag contents.</TD>
+                    </TR>
+                    <TR>
+                        <TD VALIGN="TOP" WIDTH="25%">&lt;?BOOKBAG_EMAIL&gt;</TD>
+                        <TD VALIGN="TOP" WIDTH="12%"> </TD>
+                        <TD VALIGN="TOP" WIDTH="13%">bbaglist.tpl<BR/>
+                        </TD>
+                        <TD VALIGN="TOP" WIDTH="50%">Used to insert a button to email book bag contents.</TD>
+                    </TR>
+                    <TR>
+                        <TD VALIGN="TOP" WIDTH="25%">&lt;?BOOKBAG_EMPTY&gt;</TD>
+                        <TD VALIGN="TOP" WIDTH="12%"> </TD>
+                        <TD VALIGN="TOP" WIDTH="13%">bbagemail.tpl<BR/> bbaglist.tpl<BR/>
+                        </TD>
+                        <TD VALIGN="TOP" WIDTH="50%">Used to insert a button for removing all book
+                            bag contents.</TD>
+                    </TR>
+                    <TR>
+                        <TD VALIGN="TOP" WIDTH="25%">&lt;?BOOKBAG_ITEMS&gt;</TD>
+                        <TD VALIGN="TOP" WIDTH="12%"> </TD>
+                        <TD VALIGN="TOP" WIDTH="13%">bbagemail.tpl<BR/> bbaglist.tpl<BR/>
+                            browse_template.tpl<BR/> pageviewer.nav.tpl<BR/> navheader.chnk</TD>
+                        <TD VALIGN="TOP" WIDTH="50%">Used to insert the book bag items count in the
+                            current page.</TD>
+                    </TR>
+                    <TR>
+                        <TD VALIGN="TOP" WIDTH="25%">&lt;?BOOKBAG_LINK&gt;</TD>
+                        <TD VALIGN="TOP" WIDTH="12%"> </TD>
+                        <TD VALIGN="TOP" WIDTH="13%">browse_template.tpl<BR/>
+                            pageviewer.nav.tpl<BR/> navheader.chnk<BR/>
+                        </TD>
+                        <TD VALIGN="TOP" WIDTH="50%">Provides the <CODE>HREF</CODE> URL for the
+                            &quot;view bookbag&quot; link in a page.</TD>
+                    </TR>
+                    <TR>
+                        <TD VALIGN="TOP" WIDTH="25%">&lt;?BOOKBAG_RESULTS&gt;</TD>
+                        <TD VALIGN="TOP" WIDTH="12%"> </TD>
+                        <TD VALIGN="TOP" WIDTH="13%">bbaglist.tpl<BR/>
+                        </TD>
+                        <TD VALIGN="TOP" WIDTH="50%">Used to insert all current book bag items
+                            within table <CODE>&lt;TR></CODE> and <CODE>&lt;TD></CODE> tags.</TD>
+                    </TR>
+                    <TR>
+                        <TD VALIGN="TOP" WIDTH="25%">&lt;?BOOLEAN_SEARCH_LINK&gt;</TD>
+                        <TD VALIGN="TOP" WIDTH="12%"> </TD>
+                        <TD VALIGN="TOP" WIDTH="13%">bbaglist.tpl<BR/> pageviewer.pagenav.tpl<BR/>
+                            bibsearchform.chnk<BR/> navheader.chnk<BR/>
+                        </TD>
+                        <TD VALIGN="TOP" WIDTH="50%">Provides the <CODE>HREF</CODE> URL for the
+                            &quot;boolean&quot; search form link in the main or footer navigation bar.</TD>
+                    </TR>
+                    <TR>
+                        <TD VALIGN="TOP" WIDTH="25%">&lt;?BOOLEAN_SEARCH_WITHIN_LINK&gt;</TD>
+                        <TD VALIGN="TOP" WIDTH="12%"> </TD>
+                        <TD VALIGN="TOP" WIDTH="13%">header.tpl<BR/>
+                        </TD>
+                        <TD VALIGN="TOP" WIDTH="50%">Provides the <CODE>HREF</CODE> attribute value
+                            for the &quot;boolean&quot; search within this item link.</TD>
+                    </TR>
+                    <TR>
+                        <TD VALIGN="TOP" WIDTH="25%">&lt;?BROWSE_GROUPS_LINK&gt;</TD>
+                        <TD VALIGN="TOP" WIDTH="12%"> </TD>
+                        <TD VALIGN="TOP" WIDTH="13%">search.tpl<BR/>
+                        </TD>
+                        <TD VALIGN="TOP" WIDTH="50%">Provides the <CODE>HREF</CODE> value for a link
+                            back to the browse groups page from the search.tpl page.</TD>
+                    </TR>
+                    <TR>
+                        <TD VALIGN="TOP" WIDTH="25%">&lt;?CHUNK&gt;</TD>
+                        <TD VALIGN="TOP" WIDTH="12%"> filename=&quot;[value]&quot;</TD>
+                        <TD VALIGN="TOP" WIDTH="13%">bbagsearch.tpl<BR/> browsecolls.tpl<BR/>
+                            header.tpl<BR/> pageviewer.pagenav.tpl<BR/> picklist.tpl<BR/>
+                            reslist.tpl<BR/> search.tpl<BR/> searchhistory.tpl<BR/> text.tpl<BR/>
+                            ww-full.tpl<BR/> ww-start.tpl<BR/> bbagsearch.tpl<BR/>
+                            browsecolls.tpl<BR/> header.tpl<BR/> picklist.tpl<BR/> reslist.tpl<BR/>
+                            search.tpl<BR/> searchhistory.tpl<BR/> text.tpl<BR/> ww-full.tpl<BR/>
+                            ww-start.tpl<BR/> ww-full.tpl<BR/> bbagsearch.tpl<BR/> search.tpl<BR/>
+                        </TD>
+                        <TD VALIGN="TOP" WIDTH="50%">Resolves to a chunk file specified in the
+                            <CODE>filename</CODE> attribute</TD>
+                    </TR>
+                    <TR>
+                        <TD VALIGN="TOP" WIDTH="25%">&lt;?COLL_LIST_WITH_CHECKBOXES&gt;</TD>
+                        <TD VALIGN="TOP" WIDTH="12%"> </TD>
+                        <TD VALIGN="TOP" WIDTH="13%">search.tpl<BR/>
+                        </TD>
+                        <TD VALIGN="TOP" WIDTH="50%">On multiple collection search forms, used to
+                            insert the table of available collections with check boxes for selecting
+                            or deselecting.</TD>
+                    </TR>
+                    <TR>
+                        <TD VALIGN="TOP" WIDTH="25%">&lt;?COLL_SPECIFIC_CONTENT ></TD>
+                        <TD VALIGN="TOP" WIDTH="12%">id=&quot;navbarbrowselink&quot; <BR/> cginame=&quot;[value]&quot;</TD>
+                        <TD VALIGN="TOP" WIDTH="13%">pageviewer.pagenav.tpl<BR/> bbagsearch.tpl<BR/>
+                        </TD>
+                        <TD VALIGN="TOP" WIDTH="50%"> Provides the <CODE>HREF</CODE> URL for a
+                            collection specific (e.g., browse) navigation link in main nav bar or
+                            footer nav bar. </TD>
+                    </TR>
+                    <TR>
+                        <TD VALIGN="TOP" WIDTH="25%">&lt;?CONTACT&gt;</TD>
+                        <TD VALIGN="TOP" WIDTH="12%"> type=&quot;[ link | text ]&quot;</TD>
+                        <TD VALIGN="TOP" WIDTH="13%">bbagsearch.tpl<BR/> browsecolls.tpl<BR/>
+                            header.tpl<BR/> reslist.tpl<BR/> search.tpl<BR/> searchhistory.tpl<BR/>
+                            text.tpl<BR/> ww-full.tpl<BR/> ww-start.tpl<BR/>
+                        </TD>
+                        <TD VALIGN="TOP" WIDTH="50%">If <CODE>type=&quot;text&quot;</CODE> returns
+                            the text contact of the contact link. If
+                            <CODE>type=&quot;link&quot;</CODE> provides the HREF value for the link</TD>
+                    </TR>
+                    <TR>
+                        <TD VALIGN="TOP" WIDTH="25%">&lt;?DOC_ROOT&gt;</TD>
+                        <TD VALIGN="TOP" WIDTH="12%"> </TD>
+                        <TD VALIGN="TOP" WIDTH="13%">accesspolicy.tpl<BR/> bbagemail.tpl<BR/>
+                            bbaglist.tpl<BR/> bbagsearch.tpl<BR/> browse_template.tpl<BR/>
+                            browsecolls.tpl<BR/> header.tpl<BR/> home.tpl<BR/> newmaterial.tpl<BR/>
+                            note.tpl<BR/> pageviewer.main.tpl<BR/> pageviewer.nav.tpl<BR/>
+                            pageviewer.pagenav.tpl<BR/> picklist.tpl<BR/> reslist.tpl<BR/>
+                            search.tpl<BR/> searchhistory.tpl<BR/> text.tpl<BR/>
+                            viewtextnote.tpl<BR/> ww-full.tpl<BR/> ww-start.tpl<BR/>
+                            <BR/>
+                        </TD>
+                        <TD VALIGN="TOP" WIDTH="50%">Used to insert the appropriate root path for
+                            the collection accessing the template for relative file reference.</TD>
+                    </TR>
+                    <TR>
+                        <TD VALIGN="TOP" WIDTH="25%">&lt;?FIGURES&gt;</TD>
+                        <TD VALIGN="TOP" WIDTH="12%"> </TD>
+                        <TD VALIGN="TOP" WIDTH="13%">pageviewer.main.tpl<BR/>
+                        </TD>
+                        <TD VALIGN="TOP" WIDTH="50%">Returns HTML containing thumbnails with links
+                            to continuous tone images associated with bi-tonal page facsimile page images.</TD>
+                    </TR>
+                    <TR>
+                        <TD VALIGN="TOP" WIDTH="25%">&lt;?GO_TO_XCOLL&gt;</TD>
+                        <TD VALIGN="TOP" WIDTH="12%"> </TD>
+                        <TD VALIGN="TOP" WIDTH="13%">browse_template.tpl<BR/>
+                            pageviewer.nav.tpl<BR/> navheader.chnk<BR/>
+                        </TD>
+                        <TD VALIGN="TOP" WIDTH="50%">Provides the <CODE>HREF</CODE> URL for the
+                            &quot;multiple collection search&quot; link in a page.</TD>
+                    </TR>
+                    <TR>
+                        <TD VALIGN="TOP" WIDTH="25%">&lt;?GOTO_GIF&gt;</TD>
+                        <TD VALIGN="TOP" WIDTH="12%"> </TD>
+                        <TD VALIGN="TOP" WIDTH="13%">pageviewer.pagenav.tpl<BR/>
+                        </TD>
+                        <TD VALIGN="TOP" WIDTH="50%">Returns HTML for referenceing the bitmapped
+                            text label in pageviewer.pagenav.tpl</TD>
+                    </TR>
+                    <TR>
+                        <TD VALIGN="TOP" WIDTH="25%">&lt;?GRAPHICS_PATH&gt;</TD>
+                        <TD VALIGN="TOP" WIDTH="12%"> filename=&quot;[value]&quot;</TD>
+                        <TD VALIGN="TOP" WIDTH="13%">accesspolicy.tpl<BR/> browse_template.tpl<BR/>
+                            home.tpl<BR/> newmaterial.tpl<BR/> browsecolls.tpl<BR/> header.tpl<BR/>
+                            reslist.tpl<BR/> searchhistory.tpl<BR/> text.tpl<BR/> pageviewer.pagenav.tpl<BR/>
+                        </TD>
+                        <TD VALIGN="TOP" WIDTH="50%">Used to insert the appropriate path and
+                            filename for a graphics file. </TD>
+                    </TR>
+                    <TR>
+                        <TD VALIGN="TOP" WIDTH="25%">&lt;?GROUP_IN_FOCUS_NAME&gt;</TD>
+                        <TD VALIGN="TOP" WIDTH="12%"> </TD>
+                        <TD VALIGN="TOP" WIDTH="13%">search.tpl<BR/>
+                        </TD>
+                        <TD VALIGN="TOP" WIDTH="50%">Returns the name of the currently selected
+                            group that is being searched for the search.tpl page.</TD>
+                    </TR>
+                    <TR>
+                        <TD VALIGN="TOP" WIDTH="25%">&lt;?GROUPS_COLLS_LIST&gt;</TD>
+                        <TD VALIGN="TOP" WIDTH="12%"> </TD>
+                        <TD VALIGN="TOP" WIDTH="13%">browsecolls.tpl<BR/>
+                        </TD>
+                        <TD VALIGN="TOP" WIDTH="50%">Returns the list of available group names as
+                            links with associated collection names on the browse collections page.</TD>
+                    </TR>
+                    <TR>
+                        <TD VALIGN="TOP" WIDTH="25%">&lt;?GROUPS_SELECTION_NAV&gt;</TD>
+                        <TD VALIGN="TOP" WIDTH="12%"> </TD>
+                        <TD VALIGN="TOP" WIDTH="13%">search.tpl<BR/>
+                        </TD>
+                        <TD VALIGN="TOP" WIDTH="50%">Used to filter in/out HTML for the groups
+                            selection menu in the search.tpl page.</TD>
+                    </TR>
+                    <TR>
+                        <TD VALIGN="TOP" WIDTH="25%">&lt;?GUIDE_FRAME&gt;</TD>
+                        <TD VALIGN="TOP" WIDTH="12%"> </TD>
+                        <TD VALIGN="TOP" WIDTH="13%">reslist.tpl<BR/>
+                        </TD>
+                        <TD VALIGN="TOP" WIDTH="50%">Used to filter out HTML markup for the
+                            per-collection results summary from the results page when only one
+                            collection has been searched.</TD>
+                    </TR>
+                    <TR>
+                        <TD VALIGN="TOP" WIDTH="25%">&lt;?GUIDE_RESULTS_LINKS&gt;</TD>
+                        <TD VALIGN="TOP" WIDTH="12%"> </TD>
+                        <TD VALIGN="TOP" WIDTH="13%">reslist.tpl<BR/>
+                        </TD>
+                        <TD VALIGN="TOP" WIDTH="50%">That portion of the per-collection results
+                            summary code that inserts links for viewing results detail for each collection.</TD>
+                    </TR>
+                    <TR>
+                        <TD VALIGN="TOP" WIDTH="25%">&lt;?HEADER&gt;</TD>
+                        <TD VALIGN="TOP" WIDTH="12%"> </TD>
+                        <TD VALIGN="TOP" WIDTH="13%">header.tpl<BR/>
+                        </TD>
+                        <TD VALIGN="TOP" WIDTH="50%">Used to insert bibliographic information on a
+                            particular book within table &lt;TR> and &lt;TD> tags.</TD>
+                    </TR>
+                    <TR>
+                        <TD VALIGN="TOP" WIDTH="25%">&lt;?HEADER_TOC&gt;</TD>
+                        <TD VALIGN="TOP" WIDTH="12%"> </TD>
+                        <TD VALIGN="TOP" WIDTH="13%">header.tpl<BR/>
+                        </TD>
+                        <TD VALIGN="TOP" WIDTH="50%">Used to insert a linked table of contents from
+                            a book header display to the text display.</TD>
+                    </TR>
+                    <TR>
+                        <TD VALIGN="TOP" WIDTH="25%">&lt;?HEADER_TOC_LABEL&gt;</TD>
+                        <TD VALIGN="TOP" WIDTH="12%"> </TD>
+                        <TD VALIGN="TOP" WIDTH="13%">header.tpl<BR/>
+                        </TD>
+                        <TD VALIGN="TOP" WIDTH="50%"> </TD>
+                    </TR>
+                    <TR>
+                        <TD VALIGN="TOP" WIDTH="25%">&lt;?HELP_LINK&gt;</TD>
+                        <TD VALIGN="TOP" WIDTH="12%"> </TD>
+                        <TD VALIGN="TOP" WIDTH="13%">bbaglist.tpl<BR/> browse_template.tpl<BR/>
+                            pageviewer.pagenav.tpl<BR/> navheader.chnk<BR/> simplesearchform.chnk<BR/>
+                        </TD>
+                        <TD VALIGN="TOP" WIDTH="50%">Provides the <CODE>HREF</CODE> URL for the
+                            &quot;help&quot; link in the main or footer navigation bar.</TD>
+                    </TR>
+                    <TR>
+                        <TD VALIGN="TOP" WIDTH="25%">&lt;?HIDDEN_BOOKBAG&gt;</TD>
+                        <TD VALIGN="TOP" WIDTH="12%"> </TD>
+                        <TD VALIGN="TOP" WIDTH="13%">search.tpl<BR/> ww-full.tpl<BR/>
+                            ww-start.tpl<BR/> bbagbooleansearchform.chnk<BR/>
+                            bbagproximitysearchform.chnk<BR/> bbagsimplesearchform.chnk<BR/>
+                        </TD>
+                        <TD VALIGN="TOP" WIDTH="50%"> </TD>
+                    </TR>
+                    <TR>
+                        <TD VALIGN="TOP">&lt;?HIDDEN_CHECKED_ITEMS&gt;</TD>
+                        <TD VALIGN="TOP"> </TD>
+                        <TD VALIGN="TOP">fullscrollform.chnk</TD>
+                        <TD VALIGN="TOP">Used to insert one or more hidden INPUT elements into a
+                            word index form to retain values checked in the index in previous pages. </TD>
+                    </TR>
+                    <TR>
+                        <TD VALIGN="TOP" WIDTH="25%">&lt;?HIDDEN_DEBUG&gt;</TD>
+                        <TD VALIGN="TOP" WIDTH="12%"> </TD>
+                        <TD VALIGN="TOP" WIDTH="13%">search.tpl<BR/> ww-full.tpl<BR/> ww-start.tpl<BR/>
+                        </TD>
+                        <TD VALIGN="TOP" WIDTH="50%"> </TD>
+                    </TR>
+                    <TR>
+                        <TD VALIGN="TOP" WIDTH="25%">&lt;?HIDDEN_G&gt;</TD>
+                        <TD VALIGN="TOP" WIDTH="12%"> </TD>
+                        <TD VALIGN="TOP" WIDTH="13%">pageviewer.pagenav.tpl<BR/> search.tpl<BR/>
+                            ww-full.tpl<BR/> ww-start.tpl<BR/> bbagbooleansearchform.chnk<BR/>
+                            bbagproximitysearchform.chnk<BR/> bbagsimplesearchform.chnk<BR/>
+                            fullnewsearchform.chnk<BR/> fullscrollform.chnk<BR/>
+                        </TD>
+                        <TD VALIGN="TOP" WIDTH="50%">Returns a hidden form variable indicating the
+                            current group.</TD>
+                    </TR>
+                    <TR>
+                        <TD VALIGN="TOP" WIDTH="25%">&lt;?HIDDEN_IDNO&gt;</TD>
+                        <TD VALIGN="TOP" WIDTH="12%"> </TD>
+                        <TD VALIGN="TOP" WIDTH="13%">pageviewer.pagenav.tpl<BR/> search.tpl<BR/>
+                            ww-full.tpl<BR/> ww-start.tpl<BR/>
+                        </TD>
+                        <TD VALIGN="TOP" WIDTH="50%">Returns a hidden form variable indicating
+                            current item id number.</TD>
+                    </TR>
+                    <TR>
+                        <TD VALIGN="TOP">&lt;?HIDDEN_REQUESTED_CHARTYPE&gt;</TD>
+                        <TD VALIGN="TOP"> </TD>
+                        <TD VALIGN="TOP">fullnewsearchform.chnk<BR/> fullscrollform.chnk<BR/>
+                        </TD>
+                        <TD VALIGN="TOP"> </TD>
+                    </TR>
+                    <TR>
+                        <TD VALIGN="TOP" WIDTH="25%">&lt;?HIDDEN_REQUESTED_COLLECTIONS&gt;</TD>
+                        <TD VALIGN="TOP" WIDTH="12%"> </TD>
+                        <TD VALIGN="TOP" WIDTH="13%">pageviewer.pagenav.tpl<BR/> search.tpl<BR/>
+                            ww-full.tpl<BR/> ww-start.tpl<BR/> bbagbooleansearchform.chnk<BR/>
+                            bbagproximitysearchform.chnk<BR/> bbagsimplesearchform.chnk<BR/>
+                        </TD>
+                        <TD VALIGN="TOP" WIDTH="50%">Used to insert a hidden INPUT element into a
+                            search form storing the currently selected collection[s].</TD>
+                    </TR>
+                    <TR>
+                        <TD VALIGN="TOP">&lt;?HIDDEN_REQUESTED_REALM&gt;</TD>
+                        <TD VALIGN="TOP"> </TD>
+                        <TD VALIGN="TOP">fullnewsearchform.chnk<BR/> fullscrollform.chnk<BR/>
+                        </TD>
+                        <TD VALIGN="TOP">Used to insert a hidden INPUT element in a word index form
+                            to indicate the search region for the index terms.</TD>
+                    </TR>
+                    <TR>
+                        <TD VALIGN="TOP">&lt;?HIDDEN_REQUESTED_TOPBOTTOM&gt;</TD>
+                        <TD VALIGN="TOP"> </TD>
+                        <TD VALIGN="TOP">fullscrollform.chnk<BR/>
+                        </TD>
+                        <TD VALIGN="TOP">Used to insert hidden INPUT elements in a word index form
+                            to indicate the top and bottom terms in the current slice of the word index.</TD>
+                    </TR>
+                    <TR>
+                        <TD VALIGN="TOP" WIDTH="25%">&lt;?HIDDEN_SID&gt;</TD>
+                        <TD VALIGN="TOP" WIDTH="12%"> </TD>
+                        <TD VALIGN="TOP" WIDTH="13%">pageviewer.pagenav.tpl<BR/> search.tpl<BR/>
+                            ww-full.tpl<BR/> ww-start.tpl<BR/> bbagbooleansearchform.chnk<BR/>
+                            bbagproximitysearchform.chnk<BR/> bbagsimplesearchform.chnk<BR/>
+                            fullnewsearchform.chnk<BR/> fullscrollform.chnk<BR/>
+                        </TD>
+                        <TD VALIGN="TOP" WIDTH="50%">Used to insert hidden INPUT form elements
+                            indicating the current session id.</TD>
+                    </TR>
+                    <TR>
+                        <TD VALIGN="TOP" WIDTH="25%">&lt;?HIDDEN_SORT_VARS&gt;</TD>
+                        <TD VALIGN="TOP" WIDTH="12%"> </TD>
+                        <TD VALIGN="TOP" WIDTH="13%">reslist.tpl<BR/>
+                        </TD>
+                        <TD VALIGN="TOP" WIDTH="50%"> </TD>
+                    </TR>
+                    <TR>
+                        <TD VALIGN="TOP" WIDTH="25%">&lt;?HIDDEN_VARS&gt;</TD>
+                        <TD VALIGN="TOP" WIDTH="12%"> </TD>
+                        <TD VALIGN="TOP" WIDTH="13%">bbagemail.tpl<BR/>
+                        </TD>
+                        <TD VALIGN="TOP" WIDTH="50%"> </TD>
+                    </TR>
+                    <TR>
+                        <TD VALIGN="TOP" WIDTH="25%">&lt;?HIDDEN_XC&gt;</TD>
+                        <TD VALIGN="TOP" WIDTH="12%"> </TD>
+                        <TD VALIGN="TOP" WIDTH="13%">pageviewer.pagenav.tpl<BR/> search.tpl<BR/>
+                            ww-full.tpl<BR/> ww-start.tpl<BR/> bbagbooleansearchform.chnk<BR/>
+                            bbagproximitysearchform.chnk<BR/> bbagsimplesearchform.chnk<BR/>
+                            fullnewsearchform.chnk<BR/> fullscrollform.chnk<BR/>
+                        </TD>
+                        <TD VALIGN="TOP" WIDTH="50%"> </TD>
+                    </TR>
+                    <TR>
+                        <TD VALIGN="TOP" WIDTH="25%">&lt;?HIDDEN_XG&gt;</TD>
+                        <TD VALIGN="TOP" WIDTH="12%"> </TD>
+                        <TD VALIGN="TOP" WIDTH="13%">search.tpl<BR/> ww-full.tpl<BR/>
+                            ww-start.tpl<BR/> bbagbooleansearchform.chnk<BR/>
+                            bbagproximitysearchform.chnk<BR/> bbagsimplesearchform.chnk<BR/>
+                        </TD>
+                        <TD VALIGN="TOP" WIDTH="50%"> </TD>
+                    </TR>
+                    <TR>
+                        <TD VALIGN="TOP" WIDTH="25%">&lt;?HOME_LINK&gt;</TD>
+                        <TD VALIGN="TOP" WIDTH="12%"> </TD>
+                        <TD VALIGN="TOP" WIDTH="13%">accesspolicy.tpl<BR/> browse_template.tpl<BR/>
+                            newmaterial.tpl<BR/> pageviewer.nav.tpl<BR/> pageviewer.pagenav.tpl<BR/> navheader.chnk</TD>
+                        <TD VALIGN="TOP" WIDTH="50%">Returns the <CODE>HREF</CODE> value for a link
+                            going to the collection/group home.</TD>
+                    </TR>
+                    <TR>
+                        <TD VALIGN="TOP" WIDTH="25%">&lt;?INCLUDE_BOOKBAG_SEARCH_LINKS&gt;</TD>
+                        <TD VALIGN="TOP" WIDTH="12%"> </TD>
+                        <TD VALIGN="TOP" WIDTH="13%">bbagemail.tpl<BR/> bbaglist.tpl<BR/>
+                        </TD>
+                        <TD VALIGN="TOP" WIDTH="50%">Used to insert or exclude HTML markup for
+                            optional search links on book bag contents and/or email forms.</TD>
+                    </TR>
+                    <TR>
+                        <TD VALIGN="TOP" WIDTH="25%">&lt;?INCLUDE_COLL_LIST_WITH_CHECKBOXES&gt;</TD>
+                        <TD VALIGN="TOP" WIDTH="12%"> </TD>
+                        <TD VALIGN="TOP" WIDTH="13%">search.tpl<BR/> ww-full.tpl<BR/> ww-start.tpl<BR/>
+                        </TD>
+                        <TD VALIGN="TOP" WIDTH="50%">Used in search.tpl to filter in/out HTML markup
+                            containing the current colletions for the selected group.</TD>
+                    </TR>
+                    <TR>
+                        <TD VALIGN="TOP" WIDTH="25%">&lt;?INCLUDE_COLL_SPECIFIC_CONTENT&gt;</TD>
+                        <TD VALIGN="TOP" WIDTH="12%">id=&quot;[value]&quot;</TD>
+                        <TD VALIGN="TOP" WIDTH="13%">bbagsearch.tpl<BR/> pageviewer.pagenav.tpl<BR/>
+                        </TD>
+                        <TD VALIGN="TOP" WIDTH="50%">Used to include or exclude navigation link code
+                            for features that are available only for certain collections.</TD>
+                    </TR>
+                    <TR>
+                        <TD VALIGN="TOP" WIDTH="25%">&lt;?INCLUDE_DETAIL_DISPLAY_ITEMS&gt;</TD>
+                        <TD VALIGN="TOP" WIDTH="12%"> </TD>
+                        <TD VALIGN="TOP" WIDTH="13%">reslist.tpl<BR/>
+                        </TD>
+                        <TD VALIGN="TOP" WIDTH="50%"> </TD>
+                    </TR>
+                    <TR>
+                        <TD VALIGN="TOP" WIDTH="25%">&lt;?INCLUDE_GO_TO_XCOLL&gt;</TD>
+                        <TD VALIGN="TOP" WIDTH="12%"> </TD>
+                        <TD VALIGN="TOP" WIDTH="13%">browse_template.tpl<BR/>
+                            pageviewer.nav.tpl<BR/> navheader.chnk</TD>
+                        <TD VALIGN="TOP" WIDTH="50%"> </TD>
+                    </TR>
+                    <TR>
+                        <TD VALIGN="TOP" WIDTH="25%">&lt;?INCLUDE_GROUPS_SELECTION_NAV&gt;</TD>
+                        <TD VALIGN="TOP" WIDTH="12%"> </TD>
+                        <TD VALIGN="TOP" WIDTH="13%">search.tpl<BR/> ww-full.tpl<BR/> ww-start.tpl<BR/>
+                        </TD>
+                        <TD VALIGN="TOP" WIDTH="50%"> </TD>
+                    </TR>
+                    <TR>
+                        <TD VALIGN="TOP">&lt;?INCLUDE_NON_RESTRICTED_SEARCH_LINKS&gt;</TD>
+                        <TD VALIGN="TOP"> </TD>
+                        <TD VALIGN="TOP">booleansearchform.chnk<BR/> proximitysearchform.chnk<BR/> simplesearchform.chnk<BR/>
+                        </TD>
+                        <TD VALIGN="TOP"> </TD>
+                    </TR>
+                    <TR>
+                        <TD VALIGN="TOP" WIDTH="25%">&lt;?INCLUDE_RETURN_TO_RESULTS&gt;</TD>
+                        <TD VALIGN="TOP" WIDTH="12%"> </TD>
+                        <TD VALIGN="TOP" WIDTH="13%">header.tpl<BR/> pageviewer.pagenav.tpl<BR/>
+                            reslist.tpl<BR/> text.tpl<BR/>
+                        </TD>
+                        <TD VALIGN="TOP" WIDTH="50%">Returns a link to the current results list from
+                            a header, text, or pageviewer display.</TD>
+                    </TR>
+                    <TR>
+                        <TD VALIGN="TOP" WIDTH="25%">&lt;?INCLUDE_SEARCH_TAB&gt;</TD>
+                        <TD VALIGN="TOP" WIDTH="12%"> </TD>
+                        <TD VALIGN="TOP" WIDTH="13%">pageviewer.pagenav.tpl<BR/> navheader.chnk<BR/>
+                        </TD>
+                        <TD VALIGN="TOP" WIDTH="50%">Used to filter in/out HTML markup for the
+                            &quot;Search&quot; navigation tab.</TD>
+                    </TR>
+                    <TR>
+                        <TD VALIGN="TOP" WIDTH="25%">&lt;?INCLUDE_SHORT_DISPLAY_ITEMS&gt;</TD>
+                        <TD VALIGN="TOP" WIDTH="12%"> </TD>
+                        <TD VALIGN="TOP" WIDTH="13%">reslist.tpl<BR/>
+                        </TD>
+                        <TD VALIGN="TOP" WIDTH="50%"> </TD>
+                    </TR>
+                    <TR>
+                        <TD VALIGN="TOP" WIDTH="25%">&lt;?INCLUDE_SIZE_SELECT&gt;</TD>
+                        <TD VALIGN="TOP" WIDTH="12%"> </TD>
+                        <TD VALIGN="TOP" WIDTH="13%">pageviewer.pagenav.tpl<BR/>
+                        </TD>
+                        <TD VALIGN="TOP" WIDTH="50%">Used to include or exclude HTML code for a page
+                            size menu in pageviewer.</TD>
+                    </TR>
+                    <TR>
+                        <TD VALIGN="TOP" WIDTH="25%">&lt;?JS_PATH&gt;</TD>
+                        <TD VALIGN="TOP" WIDTH="12%"> filename=&quot;[value]&quot;</TD>
+                        <TD VALIGN="TOP" WIDTH="13%">pageviewer.main.tpl<BR/> bbagsearch.tpl<BR/>
+                            browse_template.tpl<BR/> browsecolls.tpl<BR/> header.tpl<BR/>
+                            search.tpl<BR/> searchhistory.tpl<BR/> ww-full.tpl<BR/>
+                            ww-start.tpl<BR/> note.tpl<BR/> picklist.tpl<BR/> text.tpl<BR/>
+                        </TD>
+                        <TD VALIGN="TOP" WIDTH="50%">Returns the correct path to collection specific
+                            or class default javascript file.</TD>
+                    </TR>
+                    <TR>
+                        <TD VALIGN="TOP" WIDTH="25%">&lt;?JS_REGION_ARRAYS&gt;</TD>
+                        <TD VALIGN="TOP" WIDTH="12%"> </TD>
+                        <TD VALIGN="TOP" WIDTH="13%">search.tpl<BR/>
+                        </TD>
+                        <TD VALIGN="TOP" WIDTH="50%">Used in multiple search forms to provide
+                            Javascript code for implementing the collection selecting functionality.</TD>
+                    </TR>
+                    <TR>
+                        <TD VALIGN="TOP" WIDTH="25%">&lt;?JUMP_TO_RESULTS_LABEL&gt;</TD>
+                        <TD VALIGN="TOP" WIDTH="12%"> </TD>
+                        <TD VALIGN="TOP" WIDTH="13%">header.tpl<BR/>
+                        </TD>
+                        <TD VALIGN="TOP" WIDTH="50%"> </TD>
+                    </TR>
+                    <TR>
+                        <TD VALIGN="TOP" WIDTH="25%">&lt;?MAIN_FRAME_SRC&gt;</TD>
+                        <TD VALIGN="TOP" WIDTH="12%"> </TD>
+                        <TD VALIGN="TOP" WIDTH="13%">pageviewer.frameset.tpl<BR/>
+                        </TD>
+                        <TD VALIGN="TOP" WIDTH="50%">Provides the <CODE>SRC</CODE> URL for the page
+                            content frame in the pageviewer frameset.</TD>
+                    </TR>
+                    <TR>
+                        <TD VALIGN="TOP" WIDTH="25%">&lt;?NAV_FRAME_SRC&gt;</TD>
+                        <TD VALIGN="TOP" WIDTH="12%"> </TD>
+                        <TD VALIGN="TOP" WIDTH="13%">pageviewer.frameset.tpl<BR/>
+                        </TD>
+                        <TD VALIGN="TOP" WIDTH="50%">Provides the <CODE>SRC</CODE> URL for the
+                            navigation frame in the pageviewer frameset.</TD>
+                    </TR>
+                    <TR>
+                        <TD VALIGN="TOP" WIDTH="25%">&lt;?NAV_TAB_STYLE_OVERRIDES&gt;</TD>
+                        <TD VALIGN="TOP" WIDTH="12%"> </TD>
+                        <TD VALIGN="TOP" WIDTH="13%">bbagsearch.tpl<BR/> browsecolls.tpl<BR/>
+                            pageviewer.nav.tpl<BR/> picklist.tpl<BR/> reslist.tpl<BR/>
+                            search.tpl<BR/> searchhistory.tpl<BR/> text.tpl<BR/> ww-full.tpl<BR/> ww-start.tpl<BR/>
+                        </TD>
+                        <TD VALIGN="TOP" WIDTH="50%">Returns a <CODE>&lt;LINK></CODE> element with
+                            path to a stylesheet containing appropriate style declarations for the
+                            current navigation context (i.e., which tab is highlighted?).</TD>
+                    </TR>
+                    <TR>
+                        <TD VALIGN="TOP" WIDTH="25%">&lt;?NUMBER_OF_COLLECTIONS&gt;</TD>
+                        <TD VALIGN="TOP" WIDTH="12%"> </TD>
+                        <TD VALIGN="TOP" WIDTH="13%">home.tpl<BR/>
+                        </TD>
+                        <TD VALIGN="TOP" WIDTH="50%">Previously used in search forms to indicate the
+                            number of collections currently being searched.</TD>
+                    </TR>
+                    <TR>
+                        <TD VALIGN="TOP" WIDTH="25%">&lt;?ORG_INFO&gt;</TD>
+                        <TD VALIGN="TOP" WIDTH="12%"> type=&quot;[value]&quot;</TD>
+                        <TD VALIGN="TOP" WIDTH="13%">bbagsearch.tpl<BR/>
+                        </TD>
+                        <TD VALIGN="TOP" WIDTH="50%"> </TD>
+                    </TR>
+                    <TR>
+                        <TD VALIGN="TOP" WIDTH="25%">&lt;?PAGE_IMAGE_OR_TEXT&gt;</TD>
+                        <TD VALIGN="TOP" WIDTH="12%"> </TD>
+                        <TD VALIGN="TOP" WIDTH="13%">pageviewer.main.tpl<BR/>
+                        </TD>
+                        <TD VALIGN="TOP" WIDTH="50%">Returns source for the content of the current
+                            page in pageviewer, whether it be raw text or a facsimile page image.</TD>
+                    </TR>
+                    <TR>
+                        <TD VALIGN="TOP" WIDTH="25%">&lt;?PAGE_NAV_FRAME_SRC&gt;</TD>
+                        <TD VALIGN="TOP" WIDTH="12%"> </TD>
+                        <TD VALIGN="TOP" WIDTH="13%">pageviewer.frameset.tpl<BR/>
+                        </TD>
+                        <TD VALIGN="TOP" WIDTH="50%">Provides the <CODE>SRC</CODE> URL for the
+                            document navigation frame in the pageviewer frameset.</TD>
+                    </TR>
+                    <TR>
+                        <TD VALIGN="TOP" WIDTH="25%">&lt;?PAGE_SELECT&gt;</TD>
+                        <TD VALIGN="TOP" WIDTH="12%"> onchange=&quot;[value]&quot;</TD>
+                        <TD VALIGN="TOP" WIDTH="13%">pageviewer.pagenav.tpl<BR/>
+                        </TD>
+                        <TD VALIGN="TOP" WIDTH="50%">Used to insert the select menu for jumping to a
+                            page in the current book in pageviewer.</TD>
+                    </TR>
+                    <TR>
+                        <TD VALIGN="TOP" WIDTH="25%">&lt;?PAGETYPE&gt;</TD>
+                        <TD VALIGN="TOP" WIDTH="12%"> </TD>
+                        <TD VALIGN="TOP" WIDTH="13%">search.tpl<BR/>
+                        </TD>
+                        <TD VALIGN="TOP" WIDTH="50%">Returns text indicating the current search type.</TD>
+                    </TR>
+                    <TR>
+                        <TD VALIGN="TOP" WIDTH="25%">&lt;?PICKLIST&gt;</TD>
+                        <TD VALIGN="TOP" WIDTH="12%"> </TD>
+                        <TD VALIGN="TOP" WIDTH="13%">picklist.tpl<BR/>
+                        </TD>
+                        <TD VALIGN="TOP" WIDTH="50%">Used to insert a linked list of possible titles
+                            to select for viewing in pageviewer or text display. </TD>
+                    </TR>
+                    <TR>
+                        <TD VALIGN="TOP" WIDTH="25%">&lt;?PREV_NEXT_ITEM_LINKS&gt;</TD>
+                        <TD VALIGN="TOP" WIDTH="12%"> </TD>
+                        <TD VALIGN="TOP" WIDTH="13%">reslist.tpl<BR/>
+                        </TD>
+                        <TD VALIGN="TOP" WIDTH="50%">Used to insert <CODE>HREF</CODE> URL code for
+                            the previous and next item when displaying results details for a
+                            particular item.</TD>
+                    </TR>
+                    <TR>
+                        <TD VALIGN="TOP" WIDTH="25%">&lt;?PROXIMITY_SEARCH_LINK&gt;</TD>
+                        <TD VALIGN="TOP" WIDTH="12%"> </TD>
+                        <TD VALIGN="TOP" WIDTH="13%">bbaglist.tpl<BR/> pageviewer.pagenav.tpl<BR/>
+                            bibsearchform.chnk<BR/> navheader.chnk<BR/>
+                        </TD>
+                        <TD VALIGN="TOP" WIDTH="50%">Returns the <CODE>HREF</CODE> value for a link
+                            to the proximity search form</TD>
+                    </TR>
+                    <TR>
+                        <TD VALIGN="TOP" WIDTH="25%">&lt;?PROXIMITY_SEARCH_WITHIN_LINK&gt;</TD>
+                        <TD VALIGN="TOP" WIDTH="12%"> </TD>
+                        <TD VALIGN="TOP" WIDTH="13%">header.tpl<BR/>
+                        </TD>
+                        <TD VALIGN="TOP" WIDTH="50%">Provides the <CODE>HREF</CODE> attribute value
+                            for the &quot;proximity&quot; search within this item link.</TD>
+                    </TR>
+                    <TR>
+                        <TD VALIGN="TOP" WIDTH="25%">&lt;?Q1_INPUT&gt;</TD>
+                        <TD VALIGN="TOP" WIDTH="12%"> size=&quot;[value]&quot; <BR/> class=&quot;[value]&quot;</TD>
+                        <TD VALIGN="TOP" WIDTH="13%">bbagbooleansearchform.chnk<BR/>
+                            bbagbooleansearchform.chnk<BR/> bbagproximitysearchform.chnk<BR/>
+                            bbagsimplesearchform.chnk<BR/> bibsearchform.chnk<BR/>
+                            booleansearchform.chnk<BR/> proximitysearchform.chnk<BR/>
+                            simplesearchform.chnk<BR/> ww-fullform.chnk<BR/>
+                            ww-fullnewsearchform.chnk<BR/> ww-start.tpl </TD>
+                        <TD VALIGN="TOP" WIDTH="50%">Used to insert an INPUT box into a search form
+                            for the first query term.</TD>
+                    </TR>
+                    <TR>
+                        <TD VALIGN="TOP" WIDTH="25%">&lt;?RE_AUTH_LINK&gt;</TD>
+                        <TD VALIGN="TOP" WIDTH="12%"> </TD>
+                        <TD VALIGN="TOP" WIDTH="13%">browse_template.tpl<BR/> home.tpl<BR/>
+                            pageviewer.nav.tpl<BR/> navheader.chnk<BR/>
+                        </TD>
+                        <TD VALIGN="TOP" WIDTH="50%">Provides the <CODE>HREF</CODE> URL for the
+                            &quot;Authorized user login&quot; link from any page.</TD>
+                    </TR>
+                    <TR>
+                        <TD VALIGN="TOP" WIDTH="25%">&lt;?REFINE_SEARCH_LINK&gt;</TD>
+                        <TD VALIGN="TOP" WIDTH="12%"> </TD>
+                        <TD VALIGN="TOP" WIDTH="13%">reslist.tpl<BR/>
+                        </TD>
+                        <TD VALIGN="TOP" WIDTH="50%">Returns a link to a results display to return
+                            to a search form to refine the search.</TD>
+                    </TR>
+                    <TR>
+                        <TD VALIGN="TOP" WIDTH="25%">&lt;?RESULTS&gt;</TD>
+                        <TD VALIGN="TOP" WIDTH="12%"> </TD>
+                        <TD VALIGN="TOP" WIDTH="13%">reslist.tpl<BR/>
+                        </TD>
+                        <TD VALIGN="TOP" WIDTH="50%">Inserts detailed results listings within
+                                table<CODE> &lt;TR></CODE> and <CODE>&lt;TD></CODE> tags</TD>
+                    </TR>
+                    <TR>
+                        <TD VALIGN="TOP" WIDTH="25%">&lt;?RETURN_TO_RESULTS&gt;</TD>
+                        <TD VALIGN="TOP" WIDTH="12%"> </TD>
+                        <TD VALIGN="TOP" WIDTH="13%">pageviewer.nav.tpl <BR/> reslist.tpl<BR/>
+                        </TD>
+                        <TD VALIGN="TOP" WIDTH="50%">Used to insert an HTML link back to results
+                            listings from the pageviewer.</TD>
+                    </TR>
+                    <TR>
+                        <TD VALIGN="TOP" WIDTH="25%">&lt;?SCOPEDNOTE&gt;</TD>
+                        <TD VALIGN="TOP" WIDTH="12%"> </TD>
+                        <TD VALIGN="TOP" WIDTH="13%">note.tpl<BR/>
+                        </TD>
+                        <TD VALIGN="TOP" WIDTH="50%">Used to insert the content of a linked note in
+                            a target window. </TD>
+                    </TR>
+                    <TR>
+                        <TD VALIGN="TOP" WIDTH="25%">&lt;?SCOPEDNOTE_EXTRA_CONTENT&gt;</TD>
+                        <TD VALIGN="TOP" WIDTH="12%"> </TD>
+                        <TD VALIGN="TOP" WIDTH="13%">note.tpl<BR/>
+                        </TD>
+                        <TD VALIGN="TOP" WIDTH="50%">?</TD>
+                    </TR>
+                    <TR>
+                        <TD VALIGN="TOP" WIDTH="25%">&lt;?SCRIPT_NAME&gt;</TD>
+                        <TD VALIGN="TOP" WIDTH="12%"> cginame=&quot;[value]&quot;</TD>
+                        <TD VALIGN="TOP" WIDTH="13%">pageviewer.pagenav.tpl<BR/>
+                            accesspolicy.tpl<BR/> bbagemail.tpl<BR/> bbaglist.tpl<BR/> home.tpl<BR/>
+                            newmaterial.tpl<BR/> reslist.tpl<BR/> search.tpl<BR/> ww-start.tpl<BR/>
+                        </TD>
+                        <TD VALIGN="TOP" WIDTH="50%">Used to insert a relevant script name into a
+                            collection-specific URL path.</TD>
+                    </TR>
+                    <TR>
+                        <TD VALIGN="TOP" WIDTH="25%">&lt;?SEARCH_HISTORY_LINK&gt;</TD>
+                        <TD VALIGN="TOP" WIDTH="12%"> </TD>
+                        <TD VALIGN="TOP" WIDTH="13%">bbaglist.tpl<BR/> pageviewer.pagenav.tpl<BR/>
+                            bibsearchform.chnk<BR/> booleansearchform.chnk<BR/> navheader.chnk<BR/>
+                            proximitysearchform.chnk<BR/> simplesearchform.chnk<BR/>
+                        </TD>
+                        <TD VALIGN="TOP" WIDTH="50%"> </TD>
+                    </TR>
+                    <TR>
+                        <TD VALIGN="TOP" WIDTH="25%">&lt;?SEARCH_HISTORY_TABLE&gt;</TD>
+                        <TD VALIGN="TOP" WIDTH="12%"> </TD>
+                        <TD VALIGN="TOP" WIDTH="13%">searchhistory.tpl<BR/>
+                        </TD>
+                        <TD VALIGN="TOP" WIDTH="50%">Provides the <CODE>HREF</CODE> URL for the
+                            &quot;history&quot; page link in the main or footer navigation bar.</TD>
+                    </TR>
+                    <TR>
+                        <TD VALIGN="TOP" WIDTH="25%">&lt;?SEARCH_QUALIFIER&gt;</TD>
+                        <TD VALIGN="TOP" WIDTH="12%"> </TD>
+                        <TD VALIGN="TOP" WIDTH="13%">reslist.tpl<BR/>
+                        </TD>
+                        <TD VALIGN="TOP" WIDTH="50%"> </TD>
+                    </TR>
+                    <TR>
+                        <TD VALIGN="TOP" WIDTH="25%">&lt;?SEARCH_RESTRICTION&gt;</TD>
+                        <TD VALIGN="TOP" WIDTH="12%"> </TD>
+                        <TD VALIGN="TOP" WIDTH="13%">ww-full.tpl<BR/> ww-start.tpl<BR/>
+                        </TD>
+                        <TD VALIGN="TOP" WIDTH="50%">Returns HTML markup containing the
+                            bibliographic info of an item currently being searched.</TD>
+                    </TR>
+                    <TR>
+                        <TD VALIGN="TOP" WIDTH="25%">&lt;?SEARCH_TYPE&gt;</TD>
+                        <TD VALIGN="TOP" WIDTH="12%"> </TD>
+                        <TD VALIGN="TOP" WIDTH="13%">search.tpl<BR/> ww-full.tpl<BR/> ww-start.tpl<BR/>
+                        </TD>
+                        <TD VALIGN="TOP" WIDTH="50%"> </TD>
+                    </TR>
+                    <TR>
+                        <TD VALIGN="TOP" WIDTH="25%">&lt;?SEARCH_TYPE_TEXT&gt;</TD>
+                        <TD VALIGN="TOP" WIDTH="12%"> </TD>
+                        <TD VALIGN="TOP" WIDTH="13%">bbagsearch.tpl<BR/> search.tpl<BR/>
+                            searchhistory.tpl<BR/> ww-full.tpl<BR/> ww-start.tpl<BR/>
+                        </TD>
+                        <TD VALIGN="TOP" WIDTH="50%">Returns the current search type value for the
+                            search page header.</TD>
+                    </TR>
+                    <TR>
+                        <TD VALIGN="TOP">&lt;?SEARCHES_RESTRICT_TEXT&gt;</TD>
+                        <TD VALIGN="TOP"> </TD>
+                        <TD VALIGN="TOP">booleansearchform.chnk<BR/> proximitysearchform.chnk<BR/> simplesearchform.chnk<BR/>
+                        </TD>
+                        <TD VALIGN="TOP">????</TD>
+                    </TR>
+                    <TR>
+                        <TD VALIGN="TOP" WIDTH="25%">&lt;?SGML_RESULTS&gt;</TD>
+                        <TD VALIGN="TOP" WIDTH="12%"> </TD>
+                        <TD VALIGN="TOP" WIDTH="13%">text.tpl<BR/>
+                        </TD>
+                        <TD VALIGN="TOP" WIDTH="50%">Returns the item text in HTML markup in text view.</TD>
+                    </TR>
+                    <TR>
+                        <TD VALIGN="TOP" WIDTH="25%">&lt;?SIMPLE_SEARCH_LINK&gt;</TD>
+                        <TD VALIGN="TOP" WIDTH="12%"> </TD>
+                        <TD VALIGN="TOP" WIDTH="13%">accesspolicy.tpl<BR/> bbaglist.tpl<BR/>
+                            browse_template.tpl<BR/> newmaterial.tpl<BR/>
+                            pageviewer.pagenav.tpl<BR/> bibsearchform.chnk<BR/> navheader.chnk<BR/>
+                        </TD>
+                        <TD VALIGN="TOP" WIDTH="50%">Provides the <CODE>HREF</CODE> attribute value
+                            for the &quot;basic&quot; search .</TD>
+                    </TR>
+                    <TR>
+                        <TD VALIGN="TOP" WIDTH="25%">&lt;?SIMPLE_SEARCH_WITHIN_LINK&gt;</TD>
+                        <TD VALIGN="TOP" WIDTH="12%"> </TD>
+                        <TD VALIGN="TOP" WIDTH="13%">header.tpl<BR/>
+                        </TD>
+                        <TD VALIGN="TOP" WIDTH="50%">Provides the <CODE>HREF</CODE> attribute value
+                            for the &quot;basic&quot; search within this item link.</TD>
+                    </TR>
+                    <TR>
+                        <TD VALIGN="TOP">&lt;?SINGLE_GENDER&gt;</TD>
+                        <TD VALIGN="TOP"> </TD>
+                        <TD VALIGN="TOP">bbagbooleansearchform.chnk<BR/>
+                            bbagproximitysearchform.chnk<BR/> bbagsimplesearchform.chnk<BR/>
+                            booleansearchform.chnk<BR/> proximitysearchform.chnk<BR/> simplesearchform.chnk<BR/>
+                        </TD>
+                        <TD VALIGN="TOP">Used to filter in/out HTML markup to add form elements for
+                            restricting searches based on gender information.</TD>
+                    </TR>
+                    <TR>
+                        <TD VALIGN="TOP">&lt;?SINGLE_GENRE&gt;</TD>
+                        <TD VALIGN="TOP"> </TD>
+                        <TD VALIGN="TOP">bbagbooleansearchform.chnk<BR/>
+                            bbagproximitysearchform.chnk<BR/> bbagsimplesearchform.chnk<BR/>
+                            booleansearchform.chnk<BR/> proximitysearchform.chnk<BR/> simplesearchform.chnk<BR/>
+                        </TD>
+                        <TD VALIGN="TOP">Used to filter in/out HTML markup to add form elements for
+                            restricting searches based on genre information.</TD>
+                    </TR>
+                    <TR>
+                        <TD VALIGN="TOP">&lt;?SINGLE_PERIOD&gt;</TD>
+                        <TD VALIGN="TOP"> </TD>
+                        <TD VALIGN="TOP">bbagbooleansearchform.chnk<BR/>
+                            bbagproximitysearchform.chnk<BR/> bbagsimplesearchform.chnk<BR/>
+                            booleansearchform.chnk<BR/> proximitysearchform.chnk<BR/> simplesearchform.chnk<BR/>
+                        </TD>
+                        <TD VALIGN="TOP">Used to filter in/out HTML markup to add form elements for
+                            restricting searches based on historical period information.</TD>
+                    </TR>
+                    <TR>
+                        <TD VALIGN="TOP">&lt;?SINGLE_PUB_BETWEEN&gt;</TD>
+                        <TD VALIGN="TOP"> </TD>
+                        <TD VALIGN="TOP">bbagbooleansearchform.chnk<BR/>
+                            bbagproximitysearchform.chnk<BR/> bbagsimplesearchform.chnk<BR/>
+                            booleansearchform.chnk<BR/> proximitysearchform.chnk<BR/> simplesearchform.chnk<BR/>
+                        </TD>
+                        <TD VALIGN="TOP">Used to filter in/out HTML markup to add form elements for
+                            restricting searches by beginning and ending publication dates. </TD>
+                    </TR>
+                    <TR>
+                        <TD VALIGN="TOP" WIDTH="25%">&lt;?SIZE_SELECT&gt;</TD>
+                        <TD VALIGN="TOP" WIDTH="12%"> onchange=&quot;[value]&quot;</TD>
+                        <TD VALIGN="TOP" WIDTH="13%">pageviewer.pagenav.tpl<BR/>
+                        </TD>
+                        <TD VALIGN="TOP" WIDTH="50%">Used to insert a select menu for changing the
+                            size of a page image in pageviewer.</TD>
+                    </TR>
+                    <TR>
+                        <TD VALIGN="TOP" WIDTH="25%">&lt;?SLICE_NAVIGATION_LINKS&gt;</TD>
+                        <TD VALIGN="TOP" WIDTH="12%"> occ=&quot;[value]&quot;</TD>
+                        <TD VALIGN="TOP" WIDTH="13%">reslist.tpl<BR/>
+                        </TD>
+                        <TD VALIGN="TOP" WIDTH="50%">Used to insert the links navigating between the
+                            current page of search results and other pages of results.</TD>
+                    </TR>
+                    <TR>
+                        <TD VALIGN="TOP" WIDTH="25%">&lt;?SORT_SELECT&gt;</TD>
+                        <TD VALIGN="TOP" WIDTH="12%"> onchange=&quot;[value]&quot;</TD>
+                        <TD VALIGN="TOP" WIDTH="13%">reslist.tpl<BR/>
+                        </TD>
+                        <TD VALIGN="TOP" WIDTH="50%">Inserts a form select element providing options
+                            for sorting results.</TD>
+                    </TR>
+                    <TR>
+                        <TD VALIGN="TOP" WIDTH="25%">&lt;?TITLE&gt;</TD>
+                        <TD VALIGN="TOP" WIDTH="12%">mode=&quot;[value]&quot;</TD>
+                        <TD VALIGN="TOP" WIDTH="13%">bbagemail.tpl<BR/> bbaglist.tpl<BR/>
+                            bbagsearch.tpl<BR/> browse_template.tpl<BR/> browsecolls.tpl<BR/>
+                            header.tpl<BR/> note.tpl<BR/> pageviewer.main.tpl<BR/>
+                            pageviewer.nav.tpl<BR/> picklist.tpl<BR/> reslist.tpl<BR/>
+                            search.tpl<BR/> searchhistory.tpl<BR/> text.tpl<BR/>
+                            viewtextnote.tpl<BR/> ww-full.tpl<BR/> ww-start.tpl<BR/>
+                            <BR/>
+                        </TD>
+                        <TD VALIGN="TOP" WIDTH="50%">Used to insert the collection title logo as an
+                            HTML graphic or text string within <CODE>&lt;A></CODE> tags linking to
+                            the collection home page. </TD>
+                    </TR>
+                    <TR>
+                        <TD VALIGN="TOP" WIDTH="25%">&lt;?VIEW_ENTIRE_TEXT_LINK&gt;</TD>
+                        <TD VALIGN="TOP" WIDTH="12%"> </TD>
+                        <TD VALIGN="TOP" WIDTH="13%">header.tpl<BR/>
+                        </TD>
+                        <TD VALIGN="TOP" WIDTH="50%">Returns a link to view the entire text in the
+                            browser window. The link goes first to an obligatory warning message to
+                            the user.</TD>
+                    </TR>
+                    <TR>
+                        <TD VALIGN="TOP" WIDTH="25%">&lt;?VIEW_SELECT&gt;</TD>
+                        <TD VALIGN="TOP" WIDTH="12%"> onchange=&quot;[value]&quot;</TD>
+                        <TD VALIGN="TOP" WIDTH="13%">pageviewer.pagenav.tpl<BR/>
+                        </TD>
+                        <TD VALIGN="TOP" WIDTH="50%">Used to insert a form SELECT menu into
+                            pageviewer navigation frame for selecting &quot;view page as&quot; options.</TD>
+                    </TR>
+                    <TR>
+                        <TD VALIGN="TOP" WIDTH="25%">&lt;?VIEW_TEXT_LINK&gt;</TD>
+                        <TD VALIGN="TOP" WIDTH="12%"> </TD>
+                        <TD VALIGN="TOP" WIDTH="13%">viewtextnote.tpl<BR/>
+                        </TD>
+                        <TD VALIGN="TOP" WIDTH="50%"> </TD>
+                    </TR>
+                    <TR>
+                        <TD VALIGN="TOP" WIDTH="25%">&lt;?VIEWFORM_HIDDEN_VARS&gt;</TD>
+                        <TD VALIGN="TOP" WIDTH="12%"> exclude=&quot;[value]&quot;</TD>
+                        <TD VALIGN="TOP" WIDTH="13%">pageviewer.pagenav.tpl<BR/>
+                        </TD>
+                        <TD VALIGN="TOP" WIDTH="50%"> </TD>
+                    </TR>
+                    <TR>
+                        <TD VALIGN="TOP">&lt;?WORDWHEEL_COMBINED_TABLE_ROWS&gt;</TD>
+                        <TD VALIGN="TOP"> </TD>
+                        <TD VALIGN="TOP">fullform.chnk<BR/> fullscrollform.chnk<BR/>
+                        </TD>
+                        <TD VALIGN="TOP">Used to insert the list of terms and occurence numbers
+                            (within table <CODE>&lt;TR></CODE> and <CODE>&lt;TD></CODE> tags) for
+                            each slice of a word index.</TD>
+                    </TR>
+                    <TR>
+                        <TD VALIGN="TOP" WIDTH="25%">&lt;?WORDWHEEL_QUICK_LINK&gt;</TD>
+                        <TD VALIGN="TOP" WIDTH="12%"> class=&quot;[value]&quot;</TD>
+                        <TD VALIGN="TOP" WIDTH="13%">ww-full.tpl<BR/> ww-start.tpl<BR/>
+                        </TD>
+                        <TD VALIGN="TOP" WIDTH="50%">Used to insert alphabetical and/or numeric
+                            indexes into a word index as HTML links.</TD>
+                    </TR>
+                    <TR>
+                        <TD VALIGN="TOP" WIDTH="25%">&lt;?WORDWHEEL_RADIO_GROUP&gt;</TD>
+                        <TD VALIGN="TOP" WIDTH="12%"> name=&quot;realm&quot; <BR/> columns=&quot;[value]&quot;</TD>
+                        <TD VALIGN="TOP" WIDTH="13%">ww-start.tpl<BR/>
+                        </TD>
+                        <TD VALIGN="TOP" WIDTH="50%">Used to insert <CODE>RADIO</CODE> buttons into
+                            word index forms for selecting realms (i.e., text regions) to retrieve
+                            word indexes from.</TD>
+                    </TR>
+                    <TR>
+                        <TD VALIGN="TOP" WIDTH="25%">&lt;?WORDWHEEL_SEARCH_LINK&gt;</TD>
+                        <TD VALIGN="TOP" WIDTH="12%"> </TD>
+                        <TD VALIGN="TOP" WIDTH="13%">bbaglist.tpl<BR/> pageviewer.pagenav.tpl<BR/>
+                            bibsearchform.chnk<BR/> booleansearchform.chnk<BR/> navheader.chnk<BR/>
+                            proximitysearchform.chnk<BR/> simplesearchform.chnk<BR/>
+                        </TD>
+                        <TD VALIGN="TOP" WIDTH="50%">Returns the <CODE>HREF</CODE> value for a link
+                            to the word wheel search form</TD>
+                    </TR>
+                    <TR>
+                        <TD VALIGN="TOP">&lt;?WORDWHEEL_UP_BUTTON&gt;</TD>
+                        <TD VALIGN="TOP"> </TD>
+                        <TD VALIGN="TOP">fullscrollform.chnk</TD>
+                        <TD VALIGN="TOP">Used to insert HTML markup for the &quot;scroll-up&quot;
+                            button in the word index.</TD>
+                    </TR>
+                    <TR>
+                        <TD VALIGN="TOP" WIDTH="25%">&lt;?WW_NAV&gt;</TD>
+                        <TD VALIGN="TOP" WIDTH="12%"> </TD>
+                        <TD VALIGN="TOP" WIDTH="13%">pageviewer.pagenav.tpl<BR/>
+                            bibsearchform.chnk<BR/> booleansearchform.chnk<BR/> navheader.chnk<BR/>
+                            proximitysearchform.chnk<BR/> simplesearchform.chnk<BR/>
+                        </TD>
+                        <TD VALIGN="TOP" WIDTH="50%">Used to insert or exclude an HTML link to a
+                            word index search form.</TD>
+                    </TR>
+                </TBODY>
+            </TABLE>
+        </DIV1>
+    </BODY>
+</DLPSDOC>

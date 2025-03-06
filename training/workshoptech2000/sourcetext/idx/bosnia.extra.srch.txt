@@ -1,0 +1,23 @@
+##
+## 1
+(region DLPSTEXTCLASS); {exportfile "main.rgn"}; export; ~sync "main";
+##
+## 2
+((region TITLE within (region TITLESTMT within region FILEDESC)) not within (region SOURCEDESC)) ; {exportfile "maintitle.rgn"}; export; ~sync "maintitle";
+##
+## 3
+((region AUTHOR within (region TITLESTMT within region FILEDESC)) not within (region SOURCEDESC)); {exportfile "mainauthor.rgn"}; export; ~sync "mainauthor";
+##
+## 4
+(region HEADER); {exportfile "mainheader.rgn"}; export; ~sync "mainheader";
+##
+## 5
+(((region "<DIV1".."</HEAD>") ^ (region DIV1 incl (region HEAD not within region DIV2))) + (((region "DIV1-T") ^ (region DIV1 not incl (region HEAD not within region DIV2))))); {exportfile "div1head.rgn"}; export; ~sync "div1head";
+##
+## 6
+(((region "<DIV2".."</HEAD>") ^ (region DIV2 incl (region HEAD))) + (((region "DIV2-T") ^ (region DIV2 not incl (region HEAD))))); {exportfile "div2head.rgn"}; export; ~sync "div2head";
+##
+## 7
+(2 + 5 + 6); {exportfile "alltitles.rgn"}; export; ~sync "alltitles";
+##
+

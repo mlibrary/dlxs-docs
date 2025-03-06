@@ -1,0 +1,74 @@
+<?xml version="1.0"?>
+
+<!-- SPO Editorial Services                  -->
+<!-- automatically-generated XML header file -->
+
+<?xml-stylesheet href="../../../pre11-dlxsdocs.xsl" type="text/xsl"?>
+<!DOCTYPE DLPSDOC PUBLIC "-//UM-DLPS//DTD DLPS Publications//EN" "http://docs.umdl.umich.edu/dlps/docs/dlpsdocs.dtd">
+<DLPSDOC>
+<TITLE>Text Class Code Walkthrough</TITLE>
+<HEADER>
+<JOURNAL>DLXS Documentation</JOURNAL>
+<PUBDATE>2002-03-13 12:08:45 EST</PUBDATE>
+<AUTH1>Pagliere, Alan</AUTH1>
+<AUTH2></AUTH2>
+<DOCTITLE>Text Class Code Walkthrough</DOCTITLE>
+<VOL>class</VOL>
+<ISS>text</ISS>
+<FILE>dlxsdocs-tc-codewalkthrough</FILE>
+</HEADER>
+
+
+<BODY>
+<BHEAD>DLXS Text Class Code Walkthrough</BHEAD>
+<DIV1>
+<H1>Overview</H1>
+<P>There are three CGI perl scripts that comprise the TextClass middleware:
+<TT>text-idx</TT>,
+<TT>ww2-idx</TT>, and
+<TT>pageviewer-idx</TT>.</P>
+</DIV1>
+<DIV1><H1>TEXT-IDX (MAIN)</H1><A NAME="Heading3"></A>
+<DIV2><H2>Set up</H2><A NAME="Heading4"></A>
+<P>There are several lines getting things ready for the main program. These
+include: creating a CGI object from the URL parameters; determining the
+requesting host (in case a remote search, to a collection on another machine, is
+needed); retrieving the list of authorized collections from the
+environment.</P>
+<P>We then start up the session and attach a CollsInfo
+object (CIO) to it. The CIO contains information from the collection
+database (colldb) for all authorized collections. Those that have been requested
+by the user (URL parameter "c") are flagged as such within the
+CIO.</P>
+<P>ValidityChecks does some basic checking of URL integrity and
+logic.</P>
+<P>Class Objects -- in the case of TextClass middleware, TextClass
+objects (TCO) -- are added to the CIO for requested collections.</P>
+<P>Search
+history and Bookbag information, in the form of the SearchHistory object (SHO)
+and Bookbag object (BBO), if any is already there, is retrieved from the
+session.</P>
+</DIV2>
+<DIV2><H2>Main processing</H2><A NAME="Heading10"></A>
+<DIV3><H3>main::ProcessRequest</H3><A NAME="Heading11"></A>
+<P>All searching and filtering (converting retrieved SGML into HTML for
+display) is done in this subroutine and those it calls. This is what the
+middleware is all about. See below for general flow of what is handled by
+ProcessRequest.</P>
+</DIV3>
+<DIV3><H3>DlpsUtils::OutputHtmlPage</H3><A NAME="Heading13"></A>
+<P>Taking a reference to a string containing HTML, this short routine prints
+to STDOUT a standard HTML header followed by the HTML text.</P>
+</DIV3>
+</DIV2>
+<DIV2><H2>ProcessRequest  flow</H2><A NAME="Heading15"></A>
+<P>Taking a reference to a string containing HTML, this short routine prints
+to STDOUT a standard HTML header followed by the HTML text.</P>
+</DIV2>
+</DIV1>
+<DIV1><H1>WW2-IDX</H1><A NAME="Heading17"></A>
+</DIV1>
+<DIV1><H1>PAGEVIEWER-IDX</H1><A NAME="Heading19"></A>
+</DIV1>
+</BODY>
+</DLPSDOC>

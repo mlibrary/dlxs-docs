@@ -1,0 +1,271 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+"http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<title>Layout</title>
+<link rel="stylesheet" href="../styles.css" type="text/css">
+</head>
+<body bgcolor="#FFFFFF" leftmargin="10" topmargin="10" marginwidth="10" marginheight="10" class="mainpalette">
+
+<h1> Layout and User Interface Customization Examples</h1>
+
+<p>Please read the <a href="index.html">User Interface Overview</a> and <a href="customizing.htm">User Interface Customization</a> section if you have
+  not yet. </p>
+
+<ul>
+  <li><a href="#General">General layout for TextClass</a></li>
+  <li><a href="#Header">Header Characteristics</a></li>
+  <li><a href="#LookAndFeel">Modifying Look and Feel</a>
+    <ul>
+      <li><a href="#ex1">Example 1: Changing color of navigation tabs</a></li>
+      <li><a href="#ex2">Example 2: Change a collection's header image with collection manager</a></li>
+      <li><a href="#ex3">Example 3: Change location of element in XSL</a> </li>
+    </ul>
+  </li>
+</ul>
+
+<hr size="1" width="90%">
+
+<h2><a name="General" id="General"> </a>General layout for TextClass</h2>
+
+<p>The General layout for TextClass (<em>though Image Class and FindAid Class are
+      roughly similar</em>) is shown in Figure 1. The structure is created using HTML tables. Each section has default class values so that style definitions
+        can be applied in the CSS.</p>
+
+<table border="0" cellpadding="0" cellspacing="2">
+  <tr>
+    <td><img height="368" src="graphics/gen-layout.gif" width="450"></td>
+  </tr>
+  <tr>
+    <td><b>Figure 1</b>: top-level table structure of a typical page in Text
+      Class </td>
+  </tr>
+</table>
+
+<p>&nbsp;</p>
+
+
+<p><b> Figure 2</b> shows the basic search page for the <em>Fisheries Division Library</em> collection. 
+  The header graphic is defined in the Collection Manager. Background images, background colors, font styles,
+  and font colors are defined in the CSS. Navigation bar labels, page text header markup (not
+  header text content, e.g., &quot;Basic Search&quot;), instruction text and
+  footer text are hard coded, and thus identical across all collections. All
+  other content is specified per collection by processing instructions. </p>
+   
+<table border="0" cellpadding="0" cellspacing="2">
+  <tr>
+    <td><img src="graphics/Fisheries_basic.gif"></td>
+  </tr>
+  <tr>
+    <td><b>Figure 2</b>: Basic search page for <em>Fisheries Division Library</em> in Text
+      Class </td>
+  </tr>
+</table>
+
+<h4>&nbsp;</h4>
+<h2><a name="Header" id="Header"> </a> Header characteristics</h2>
+<p>In Text Class, the header of each page template includes the area in the top
+  75 pixels of the page containing those elements associated with unique collection
+  identity: main collection title, global links, if any, and the main navigation
+  bar. All header and navigation components are built primarily
+  by the navheader.XML, navheader.xsl, and navbarutils.xsl files, which are incorporated
+  into each of the main functional template files. The relationship between a
+  main template file (e.g., reslist.XML) and navheader.xsl is illustrated in <strong>Figure
+  3</strong> below.</p>
+<table border="0" cellpadding="7" cellspacing="2">
+  <tr>
+    <td bgcolor="#CCCCCC"><img src="graphics/gen-layout-top_r1_c1.gif" alt="" name="genlayouttop_r1_c1" width="450" height="79" hspace="4" vspace="4" border="0"><br clear="all">
+        <span style="font-family: verdana,arial,sans-serif; font-size:10px">navheader</span></td>
+  </tr>
+  <tr>
+    <td bgcolor="#C5C5E2"><img src="graphics/gen-layout-bottom.gif" width="450" height="262" hspace="4" vspace="4"><br clear="all">
+        <span style="font-family: verdana,arial,sans-serif; font-size:10px">[anytemplate].xsl</span></td>
+  </tr>
+  <tr>
+    <td><b>Figure 3 </b> : Template layout showing division between main template
+      content and the navheader .</td>
+  </tr>
+</table>
+
+<p>&nbsp;</p>
+<h2><a name="LookAndFeel"></a>Modifying Look and Feel </h2>
+<div class="level2">The main header portion of the page is compiled from a navheader.xml
+  file and navheader.xsl file.  All references to
+  common graphics are hard-coded to the class graphics directory in
+  XSL templates. To include collection specific graphics will require changing
+  an XSL template rule for that collection. Techniques for CSS and
+  header options are detailed in the following sections.<br>
+</div>
+<p>Using Text Class again as an example, templates can utilize two CSS files for
+  controlling most font and color characteristics: textclass.css and textclass-specific.css.
+  textclass.css is stored in at the <code>$DLXSROOT/web/t/text/</code> path and
+  contains all the default style declarations. textclass-specific.css is optionally created
+  for each individual collection and stored at the <code>$DLXSROOT/web/c/coll/</code> path.
+  Reference paths to both stylesheets are now included as node values within
+  the DlxsGlobals node to each page ...</p>
+<blockquote>
+  <pre class="unixcommand"><code>&lt;CssLink&gt;/t/text/textclass.css&lt;/CssLink&gt;<br>
+&lt;CssLink&gt;/c/collection/textclass-specific.css&lt;/CssLink&gt;</code></pre>
+</blockquote>
+..and the link elements to the files are constructed in the htmlhead.xsl stylesheet.
+<p>Because textclass-specific.css is referenced after textclass.css, any style
+  declarations that appear in textclass-specific.css will effectively overwrite
+  matching declarations in textclass.css. This is how fonts and background colors
+  are varied for each collection. (<a href="textclasscss.html">full text of textclass.css</a>)</p>
+<p>When creating a local look and feel with textclass-specific.css, you replace
+  those CSS style rules that affect portions of the page header (or any other
+  styles) so that they will override, for that collection, the class level styles.
+  Refer to this <a href="cssSpecificConfigFS.html">guide to header css</a> styles
+  for more details on which styles are associated with each element.</p>
+
+<h3><a name="ex1"></a>Example 1: Changing color of navigation tabs</h3>
+<p>If you wanted to change the color of the main navigation tabs, you would start by finding
+  the associated style in textclass.css. Since many interface elements have multiple styles associated with
+  them, Firefox's Firebug can be extremely helpful in pinpointing the exact style definition to use. Below is 
+  a screenshot of Firebug in action. </p>
+
+<table border="0" cellpadding="0" cellspacing="2">
+  <tr>
+    <td><img src="graphics/CSS_inspect.png"></td>
+  </tr>
+  <tr>
+    <td><b>Figure 4</b>: Finding style definition using Firebug</td>
+  </tr>
+</table>
+
+<p>So, we can see that textclass.css has a style definition (td.mainnavcell) that includes background color for the main navigation tabs.
+
+<blockquote>
+  <pre class="unixcommand"><code>
+  td.mainnavcell {<br />
+  background-color:#F5F5DC;<br />
+  border-bottom:1px solid #DAD1B2;<br />
+  padding-left:20px;<br />
+  padding-right:20px;<br />
+  }
+</code></pre>
+</blockquote>
+
+<p>If all you want to change is the background color, you would just need to add the following style
+  definition your textclass-specific.css file:</p>
+  
+<blockquote>
+  <pre class="unixcommand"><code>
+  td.mainnavcell {<br />
+  background-color#DEC57B;<br />
+  }
+</code></pre>
+</blockquote>
+
+
+
+
+<h3><a name="ex2"></a>Example 2: Change a collection's header image with collection manager</h3>
+
+<p>If you want to use a graphic in the header for the collection identification, this can easily be done in Collection Manager.</p>
+
+<p>After you have created your new graphic (recommended size is approximately 500px X 72px), place it in the directory $DLXSROOT/web/c/collid/graphics.</p>
+
+<p>In <a href="http://www.dlxs.org/docs/13/collmeta/collmgr.html" target="_blank">Collection Manager</a>, find the primarytitle field. By default this is set to the collection title.
+  To change it to your new graphic, enter the name of your graphic file preceded by "graphic:"<strong>graphic:filename.ext</strong>. You will also need to update
+  the webdir field by entering the directory path (usually in the form of /c/collid).
+  
+  <table border="0" cellpadding="0" cellspacing="2">
+    <tr>
+      <td><img src="graphics/Colmgr_headergraphic.png"></td>
+    </tr>
+    <tr>
+      <td><b>Figure 5</b>: Example of primarytitle field in Collection Manager for the <em>Fisheries Division Library</em></td>
+    </tr>
+  </table>
+  
+  </p>
+
+<p><em>Note:</em> the graphic that is set in collmgr can be used in conjunction with a background image via the CSS. The textclass.css file has default background-image styles that are blank images:
+
+  <blockquote>
+    <pre class="unixcommand"><code>
+    td#hdr1 { <br />
+    background-image:url(/t/text/graphics/hdr-bg1.gif);<br />
+    }
+    
+    <p class="unixcommand"><code>
+    td#hdr2 { <br />
+    background-image:url(/t/text/graphics/hdr-bg1.gif);<br />
+    }
+  </code></pre>
+  </blockquote>
+
+  The Fisheries Division Library example above has customized the header to include a gradient image in both
+  sides of the header. This was done by overriding the default styles in textclass.css with custom styles in the
+  textclass-specific.css file. Below are the new collection specific styles relating to the header background...   
+
+
+  <blockquote>
+    <pre class="unixcommand"><code>
+    td#hdr1 { <br />
+    background-image:url(graphics/dnrwaterbg.gif);<br />
+    }<br />
+    <br />
+    td#hdr2 { <br />
+    background-image:url(graphics/dnrwaterbg.gif);<br />
+    }
+  </code></pre>
+  </blockquote>
+
+</p>
+
+<h3><a name="ex3"></a>Example 3: Change location of element in XSL</h3>
+
+<p>If you want to make simple changes to the location of certain interface elements, this can typically be
+done by creating a collection specific XSL file with the desired changes.<br />
+For example, if you just wanted to move the bookbag count string to above the other global links, you would need to create a collection
+specific version of navheader.xsl. </p>
+
+<table border="0" cellpadding="0" cellspacing="2">
+  <tr>
+    <td><img src="graphics/Bookbaglink.png"></td>
+  </tr>
+  <tr>
+    <td><b>Figure 6</b>: Default location of bookbag count and <br />Global links in <em>Fisheries Division Library</em> Collection.</td>
+  </tr>
+</table>
+
+<p>
+  If you are unsure about which XSL stylesheet to use, see the previous section on 
+  <a href="http://dev-linux.umdl.umich.edu/d/dlxs/training/workshop200707/ui/customizing.htm#XSLStylesheet">Finding the Correct Files...XSL Stylesheet</a>.
+  Using Firebug's inspect feature again, you can look to see if there are any associated styles for the elements you want to move. 
+  In the Fisheries example, we can see that the table containing the global links has the style: table class="globalLinksTable".
+  Even though we aren't changing the style, this will be useful for finding the bit of corresponding code in the navheader.xsl file.<p>
+  
+  <p>So, if you search navheader.xsl for "globalLinksTable" you'll find the table with that class and then the next table is the one
+  that contains the bookbag count. </p>
+  
+  <table border="0" cellpadding="0" cellspacing="2">
+    <tr>
+      <td><img src="graphics/XSL_before.png"></td>
+    </tr>
+    <tr>
+      <td><b>Figure 7</b>: Default order for global links and book bag count</td>
+    </tr>
+  </table>
+  
+  <p>Then, you will just need to create a new copy of navheader.xsl and edit it so that the second table with the bookbag string comes first:
+  This new navheader.xsl file will then be placed in the collection's directory $DLXSROOT/web/c/collid/.</p>
+  
+  <table border="0" cellpadding="0" cellspacing="2">
+    <tr>
+      <td><img src="graphics/XSL_after.png"></td>
+    </tr>
+    <tr>
+      <td><b>Figure 8</b>: Re-ordered book bag count and global links tables</td>
+    </tr>
+  </table>
+  
+</p>
+
+
+
+</body>
+</html>

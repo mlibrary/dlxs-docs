@@ -1,0 +1,363 @@
+<html>
+  <head>
+    <title>DLXS Release Notes</title>
+        
+    <link href="../12/dlxsdocs.css" rel="stylesheet" type="text/css"> 
+  </head>  
+  <body>
+    <div class="pageTitle"> Release Notes for DLXS Release 12 - 31 OCT
+      2005</div><h2>General Information</h2>
+    <p>DLXS Release 12 is the first release of DLXS that primarily uses XML/XSLT
+      to deliver HTML. Unicode data, encoded as XML, is indexed and searched. XML
+      results and other dynamic data is further packaged as a XML and handed to
+      a set of XSL files which render HTML. As of Release 12, TextClass, ImageClass
+      and FindaidClass use this as the  only way to deliver HTML. BibClass has not
+      yet been brought up to the same form of implementation.</p>
+    <p>The main changes in Release 12:</p>
+    <ul>
+      <li>*.tpl files no longer exist in Image, Text and Findaid
+        classes</li>
+      <li>JavaScript has been eliminated as much as possible</li>
+      <li>Non-dynamic text is encapsulated in langmap.??.xsl files so that languages
+        other than English can be used for  user interface elements </li>
+      <li>Dynamic browse (ImageClass and TextClass) made possible by MySQL dlxs
+        database item-browse-related tables that are populated by
+        a separate utility script. </li>
+      <li> XML / XSLT delivery for TextClass, FindingAid and ImageClass (similar
+        changes in BibClass not included Release 12)</li>
+      <li>Cookie to hold session (rather than URL parameter) </li>
+      <li>Pageviewer support for continuous
+        tone images</li>
+      <li>Item level authorization (ImageClass and TextClass)</li>
+      <li>Unicode / UTF-8 encoded
+        text, indexable by XPATu</li>
+      <li>old home.tpl replaced by collection-specific
+        index.html</li>
+      <li>language localization and collection-specific user interface
+        strings</li>
+      <li>prototype for newspaper viewing</li>
+      <li>wordwheel exclusively UTF-8</li>
+    </ul>
+    <p>Release 12 is comprised of:</p>
+    <ul>
+      <li><a href="#bib">BibClass version 3.2.1</a></li>
+      <li><a href="#broker20">Broker20 version 1.2.1</a></li>
+      <li><a href="#collmgr">Collmgr version 3.2.1</a></li>
+      <li><a href="#findaid">FindaidClass version 6.0.1</a></li>
+      <li><a href="#image">ImageClass version 4.0.2</a></li>
+      <li><a href="#lib">Lib version 4.0.1</a></li>
+      <li><a href="#text">TextClass version 4.0.1</a></li>
+      <li><a href="#xclass">XClass version 2.2.1</a></li>
+      <li><a href="#xpat">XPAT version 5.3.2</a>2</li>
+      <li>dlxsd version 1.0.1</li>
+      <li>Other items released
+        <ul>
+          <li>mrsid_retrieve version 1.3.1</li>
+          <li>tif2web version 1.0.3</li>
+          <li>kakadu version 4.0.2</li>
+          <li>cjpeg version 6b</li>
+          <li>dlps-auth version 1.5</li>
+          <li>xpatutf8check version 1.0 </li>
+        </ul>
+      </li>
+    </ul>
+    
+    <hr width="75%" />
+      <h2>Known Problems</h2>
+      
+      <h3>Lib Known Problems</h3>
+      <p>A coding error in the file DLXSROOT/lib/DlpsSession.pm manifests as: 1) loss of search history 2) loss of bookbag contents 3) inability to progress through different "slices" of results. The search history, bookbag and sort order of results are all saved in the session.  The error causes a new session to be created each time the middleware runs resulting in the lost of whatever might have been saved in the previous session. The browser will only read cookies for the domain in the URL.  The code is putting the wrong (umich.edu) domain in the cookie. 
+    <blockquote>Beginning at line number 144 you should see code that looks like this:
+
+<pre>
+my $sessionCookie = new CGI::Cookie(
+                                    -name => $sessionCookieName,
+                                    -value => $sid,
+                                    -path => '/',
+                                    -expires => '+3h',
+                                    -domain => '.umich.edu',
+                                   );
+</pre>
+      Change the domain from ".umich.edu" to whatever domain your DLXS virtual host(s) run from.  For example ".stateuniversity.edu.". Make sure your new string has two dots in it.
+    </blockquote>
+  </p>
+      
+      
+      <h3>XPAT Known Problems</h3>
+      <p>..</p>
+      
+      
+      <h3>Database Known Problems</h3>
+      <p>...  </p>
+      
+      
+      
+      <h3>Image Class Known Problems</h3>
+      <ul>
+        <li>..</li>
+      </ul>
+      
+      
+      
+      
+      <h2><a name="xpat" id="xpat"></a>XPAT version 5.3.2</h2>
+      
+      <ul>
+        <li>Bug fix for dd files with a large number of index points 
+          correcting index point buffer reallocation and eliminating
+          memory leak.</li>
+        <li>Bug fix for integrity checksum in new index point data
+          structure so checksum comparisons work across platforms with different
+          byte ordering.</li>
+      </ul>
+      
+      
+      
+      
+      <h2><a name="lib"></a>Lib version 4.0.1 </h2>
+      
+      <h3>New and Changed Functionality</h3>
+      <ul>
+        <li>Newspaper article and clip viewing with new class module ClipViewer.pm </li>
+      </ul>
+      
+      
+      
+      
+      <h2><a name="text"></a>Text Class version 4.0.1 </h2>
+      
+      <h3>New and Changed Functionality</h3>
+      
+      <ul>
+        <li>.... </li>
+      </ul>
+      
+      
+      
+      
+      <h2><a name="bib"></a>Bib Class version 3.2.1</h2>
+      
+      <h3>New and Changed Functionality</h3>
+      <p>There is a new subclass of BibClass that is able to query Z3950
+        search<br>
+          engines. It uses Net::Z3950 to connect and create Z3950 queries
+          which it<br>
+            then issues to a Z3950 search engine. Presently it is designed to
+            expect<br>
+              UTF-8 reponses from its Z3950 queries, so some of the template files
+              need to<br>
+                be subclassed to handle the UTF-8 responses. The collmgr parameter
+                'host'<br>
+                  indicates the server where the Z3950 engine resides. It is important
+                  to<br>
+                    note that presently it will only create queries for following fields:
+                    title,<br>
+                      author, pubyear, language, and id, and that it assumes that the
+                      Z3950<br>
+                        search engine has a database with the same name as the collid, which
+                        is<br>
+                          indicated when connecting to the engine. Here at UM, we are using
+                          Zebra as<br>
+                            our Z3950 general-purpose structured text indexing and retrieval
+                            engine.</p>
+      
+      
+      
+      <h2><a name="image"></a>Image Class version 4.0.1 </h2>
+      
+      <h3>New and Changed Functionality</h3>
+      <ul>
+        <li>Added dynamic browsing of items based on field values.</li>
+        <li>Added portfolio export/download including all media and data records as
+    html files for simplified use. </li>
+    <li>Easily make a portoflio public, or not.</li>
+    <li>Reduction of javascript.</li>
+    <li>Reduction of spawned/pop-up windows.</li>
+    <li>Added bug fix for next/prev navigation in situation where &quot;not searchable&quot; item
+      is being viewed and user clicks &quot;next&quot; or &quot;prev&quot;. As
+      it was, the same record would be retrieved (not next/prev) because the cgi
+      could not figure out which result was next/prev because the &quot;not searchable&quot; item
+      did not appear in the cached results id list. The solution is to store on
+      the session the id of the &quot;chaperone&quot; item (searchable) from which
+      the view of the &quot;not searchable&quot; item originated, and use it in
+      next/prev retrievals to sniff out the next/prev id from the cache.</li>
+    <li>The option to truncate a field for display is no longer available due to
+      difficulties maintaining XML structure.</li>
+    <li>Changed bookbag/portfolio actions menu so that javascript is no longer
+      needed.</li>
+    <li>Image Class gained support for collection specific sort threshold.</li>
+    <li>Better handling of media display with QuickTime plugin, esp. regarding
+      size. </li>
+    <li>Reduced the number of database connections created by Image Class by reusing
+      db connection from session whenever possible. </li>
+    <li>Fixed a bug related to removing an item from a portfolio. Had to do with
+      proper identification of a record that did not have an image when the item
+      was added to the portfolio, but does when the user attempts to delete it. </li>
+    <li>Better handling of portfolio items that are no longer available. </li>
+    <li>Added &quot;back&quot; link for results, which is different now that a
+      new entry window doesn't pop open by default.</li>
+    <li>Added option to pop open entry window. </li>
+    <li>Fixed sort options for portfolios. Group sort options were being picked
+      up from last group stored on session.</li>
+    <li>Any field in the data or media table can now be used for search, sort,
+      or display. This is a big improvement for collections with multiple images
+      per record making searching of the caption field desireable. This also removed
+      the dependency on the field labels collmgr field for verifying availability
+      of a field for searching and sorting. </li>
+    <li>Dropped use of thumbfullresflds Image Class collection database field since
+      fields are not displayed with each thumb. dfltresentryflds specifies the
+      full record div fields to use. both are not needed. </li>
+    <li>Added support for images being stored on any web server. URLs for thumbs
+      and other sizes must be encoded in .inf files. A media_table is required
+      if MySQL is being used to serve metadata.</li>
+    <li>Altered RecordFilt to allow istruct/media table field values to be displayed
+      along with collection specific fields in the entry view, and under thumbnails,
+      etc.</li>
+    <li>Fixed a bug  in the XPat query building routine of Image Class in Searchbuild.pm.
+      Region substitution was failing to skip substituion when ic_all or collid_all
+      were in use. Symptoms only appeared when a non _all field was preceded by
+      a _all<br>
+        field in the search submission. e.g. rgn1=ic_all rgn2=dc_ti failed, but rgn1=dc_ti
+        rgn=ic_all worked fine. </li>
+    <li>A search submitted with no search terms is now handled better for xpat
+      collections. handling is consistent with that of mysql.</li>
+    <li>Corrected an ugly bug in the media file http header output that caused
+      failure in a proxy situation.</li>
+    <li>Apostrophes in q params are converted to asterisk to achieve better results
+      when searching mysql. XPat searches not affected. </li>
+    <li>Added cgi param adjustment and support for new param &quot;id&quot;. id
+      param should be a fully qualified id (includes collid, entryid, viewid).
+      assumption is there are no other params. this is for direct linking to specific
+      item. this simple id param is converted into the normal set of params used
+      to retrieve an item in entry view. </li>
+    <li>There are all new tools for loading data to MySQL.</li>
+    <li>XPat data preparation tools now support unicode.</li>
+    <li> Imageprep now caches sid and jp2 file info in a text file adjacent to
+      the image file. On subsequent runs, cache file is updated if image file is
+      newer (according to modification date) than cache file. basic tests show
+      a significant performance increase (1.5x), on subsequent runs. </li>
+    <li>Added reduction factor to jp2 info collection command. This is huge, perhaps
+      even phenomenal, speed increase for imageprep. </li>
+    <li>Added to imageprep optional ability to create a MySQL table with a single
+      column of the filenames. This may be a useful aid to other dataprep tasks.
+      For example, dataprep for one collection will use it to sort out troubling
+      filename variations in the metadata. </li>
+    <li>Added fixed 600 and fixed 1200 to imageprep.cfg. Filter requires each to
+      be in '600' and '1200' directories which is a change from the past.</li>
+    
+    <li>started to add guideframe in cgi. interface/xsl work not done. results
+      summary needs to be cached somehow so that when viewing results for focused
+      coll, links to other colls are present. cacheing in text class handled by
+      aro, and this should be investigated for image class. </li>
+  </ul>
+    
+    
+    <h2><a name="broker20"></a>Broker20 version 1.2.1</h2>
+    
+    <h3>New and Changed Functionality</h3>
+    <ul>
+      <li>Replaced 'sid URL parameter with cookie support</li>
+      <li>Added code to
+        shorten url</li>
+      <li>Added description to set</li>
+      <li>Made a correction to the ListSets response</li>
+      <li>Changed response date
+        format to be compliant with protocol</li>
+      <li>Changed the way idno was
+        searched for</li>
+      <li>Fixed bug where -bib would be substituted for bib
+        even if not at end of line. It should only be substituted at the
+        end of the line.</li>
+      <li>Changed code to use DevUtils to access Debug_AUTHZ_COLL.</li>
+      <li>Added
+        completeListSize to resumptionToken.</li>
+      <li>Added carriage return to the
+        set description to make output more readable.</li>
+      <li>Add setting of open
+        files (pipes) calls through OSResources.</li>
+      <li>Remove OSResources.</li>
+      <li>Added code to remove controlled chars from
+        response.</li>
+      <li>Added code so that comlpleteListSize is only computed
+        when a set is requested, resulting in fewer XPat
+        sessions.</li>
+      <li>Added
+        code to put in repository description in Identify verb.</li>
+      <li>Commented out call to &quot;Convert&quot; routines, since the
+        data will now be in utf-8 format and not in iso8859-1.</li>
+      <li>Added text for repository description in Identify verb.</li>
+      <li>UM DLPS specific
+        <ul>
+          <li>Added www
+            to a cgm LWP call. This is a chage to the CGM protocol.</li>
+          <li>Added logic
+            so that if at UM (our base url) and no set is requested
+            for ListIdentifiers and ListRecords, the records returned
+            are from freeic-bib, restric-bib, freetc-bib, and restrtc-bib.</li>
+        </ul>
+      </li>
+    </ul>
+    
+    
+    
+    
+    <h2><a name="collmgr"></a>Collmgr version 3.2.1</h2>
+    
+    <h3>New and Changed Functionality</h3>
+    <ul>
+      <li>Clearer feedback for some operations.
+        <ul>
+          <li>Added a confirmation message when a collid or groupid
+            is removed</li>
+          <li>Added a display of the AGED status on the checkout collection
+            or group page</li>
+          <li>Fields are now shown in alphabetical order</li>
+          <li>Added reporting that a collection was not released
+            during a &quot;release to production&quot;, when its hold
+            field is set to 'yes'</li>
+        </ul>
+      </li>
+      <li>Added a parameter to the connect database statement to so that
+        interactions with MySQL are done using utf-8</li>
+      <li>Added  functionality to copy collections
+        and groups, to make creating new collections and groups easier
+        (by duplicating an existing one and editing it)</li>
+    </ul>
+    
+    <h3>dlxs database fields removed since Release 11a; not in Release
+      12's database version 5 </h3>
+    <p>pageviewimageformat<br>
+        storedimageformat<br>
+          perlpifillermodule<br>
+            charfilters<br>
+              notesfilters<br>
+                wwrealms<br>
+                  wwrealmseng</p>
+    
+    
+    
+    
+    <h2><a name="findaid"></a>FindaidClass version 6.0.1 </h2>
+    
+    <h3>New and Changed Functionality</h3>
+    <ul>
+      <li>..... </li>
+    </ul>
+    
+    
+    
+    
+    <h2><a name="xclass"></a>XClass version 2.2.1</h2>
+    
+    <h3>New and Changed Functionality</h3>
+    <ul>
+      <li>....</li>
+    </ul>
+    
+    
+    
+    
+    
+  </body>
+  
+</html>

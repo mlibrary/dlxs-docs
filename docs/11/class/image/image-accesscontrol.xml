@@ -1,0 +1,97 @@
+<?xml version="1.0"?>
+
+<!-- SPO Editorial Services                  -->
+<!-- automatically-generated XML header file -->
+
+<?xml-stylesheet href="../../../pre11-dlxsdocs.xsl" type="text/xsl"?>
+<!DOCTYPE DLPSDOC PUBLIC "-//UM-DLPS//DTD DLPS Publications//EN" "http://docs.umdl.umich.edu/dlps/docs/dlpsdocs.dtd">
+<DLPSDOC>
+<TITLE>Image Class Access Control</TITLE>
+<HEADER>
+<JOURNAL>DLXS Documentation</JOURNAL>
+<PUBDATE>2002-03-13 11:13:03 EST</PUBDATE>
+<AUTH1>Weise, John</AUTH1>
+<AUTH2></AUTH2>
+<DOCTITLE>Image Class Access Control</DOCTITLE>
+<VOL>class</VOL>
+<ISS>image</ISS>
+<FILE>dlxsdocs-image-accesscontrol</FILE>
+</HEADER>
+
+<BODY>
+<BHEAD>Image Class Access Control</BHEAD> <DIV1 ID="main"> 
+<P><A HREF="mailto:dlxs-help@umich.edu">dlxs-help@umich.edu</A> </P>
+
+<P>The document on <A HREF="/intro/dlxs-auth.xml">DLXS Authentication and Authorization</A> covers in depth what you need to do to set up access control for all of DLXS, including Image Class. </P>
+
+<P>A special Image Class option allows collections that are unrestricted at  the collection level, to have  
+    individually identified full-size images restricted at the record level. A good 
+    example of this is the <A HREF="http://images.umdl.umich.edu/m/musart/">University 
+    of Michigan, Museum of Art</A>. Authorized users (University of Michigan faculty, staff, students) have unrestricted (collection level) access to all text records, thumbnail images, and full size images. Those using the collection from outside the range of valid umich IP addresses are allowed to access all text records, all thumbnail images, and most full-size images, but are restricted from viewing some full-size images that are identified in the item level text record (encoded 
+    in the SGML) as being restricted (due to copyright in the case of the Museum).</P>
+<P>At the item level, every SGML encoded text record has an ENTRYAUTH element. 
+  If it says this...</P>
+<PRE>
+   &lt;ENTRYAUTH MALLOW="WORLD"&gt;
+</PRE>
+<P>...then the big image(s) (i.e., everything larger than the thumbnail) associated 
+  with the text record (SGML ENTRY element) may be accessed by a user at any IP 
+  address in the world. If the ENTRYAUTH says...</P>
+<PRE>
+   &lt;ENTRYAUTH MALLOW="COLLID"&gt;
+</PRE>
+<P>...(where COLLID is a collection ID; e.g., "MUSART") then the big (i.e., everything larger than the thumbnail) image(s) will 
+  be restricted to situations where the collid of the MALLOW attribute represents 
+  a collection the user is authorized to use according to AUTHZD_COLL or PUBLIC_COLL.</P>
+
+<P>Keep in mind that if the collection is restricted to an authorized group of users at the collection level, the Image Class middleware will not allow unauthorized users to access the image, no matter what the ENTRYAUTH says.</P>
+
+<P>The value of the ENTRYAUTH MALLOW attribute is established at the time the 
+  text database is transformed to SGML. The value can be specified globally (for 
+  an entire collection) in the collection "info" file. Please see the <A HREF="image-datatransform.xml#CollectionLevelInformation">Collection 
+  Level Information</A> section of the <A HREF="image-datatransform.xml">Image 
+  Class Data Transformation</A> documentation for details on how to create/edit the collection 
+  info file. The collection info file is a simple file with four fields delimited 
+  by "#". The third field is used to globally specify item level access for a 
+  collection. Here are two examples...</P>
+<P>The following table shows how the configuration of the third field of the collection 
+  info file affects the ENTRYAUTH in the SGML.</P>
+<TABLE BORDER="1">
+  <TBODY> 
+  <TR> 
+    <TD width="368"> French Architecture#RPW Image Publishing, Inc.#SAMPLEIC#both 
+    </TD>
+    <TD width="142"> 
+      <PRE>&lt;ENTRYAUTH MALLOW="SAMPLEIC"&gt;</PRE>
+    </TD>
+  </TR>
+  <TR> 
+    <TD width="368"> French Architecture#RPW Image Publishing, Inc.#WORLD#both 
+    </TD>
+    <TD width="142"> 
+      <PRE>&lt;ENTRYAUTH MALLOW="WORLD"&gt;</PRE>
+    </TD>
+  </TR>
+  </TBODY> 
+</TABLE>
+<P>Finally, as mentioned earlier, it is also possible for each record/ENTRY to 
+  have the ENTRYAUTH specified independently. This allows <I>some</I> full-size 
+  images to be available to the world, and others to be restricted to certain 
+  groups. In order for this to be utilized, the text database must have a field 
+  dedicated to specifying access restrictions for the full-size images associated 
+  with the record, and the appropriate field of the database mapped to the "DLXS.ea" 
+  <A HREF="image-datatransform.xml#RecordNumber4">Category Administrative Mapping</A> 
+  in record 4 of the transformation configuration file.</P>
+<P>Currently, if the value of the field mapped to DLXS.ea is "www" or "world" 
+  (not case sensitive) then the ENTRYAUTH will be set to "WORLD" in the SGML&#0160;file. 
+  Any other value in the DLXS.ea mapped field will result in the ENTRYAUTH MALLOW 
+  being set to the value of the third field of the coll-info.txt file.<DIV2></DIV2> 
+</P>
+<P>See <A HREF="image-accesstable.xml">Image Class Access Control Summary and 
+  Examples Table</A> for useful examples.</P>
+
+
+
+</DIV1> 
+</BODY>
+</DLPSDOC>

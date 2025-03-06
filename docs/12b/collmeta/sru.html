@@ -1,0 +1,77 @@
+<html>
+<head>
+<title>sru: Providing SRU Access to Bib Class Collections</title>
+<link href="../dlxsdocs.css" rel="stylesheet" type="text/css">
+</head>   
+      
+<body>
+<div class="pageTitle">sru: Providing SRU Access to Bib Class Collections</div>
+		
+			<h1>Overview and Contents</h1>
+			<p>
+				<tt>sru</tt> is the CGI program that produces XML responses to SRU requests as dictated by the SRU protocol. Setting up <tt>sru</tt> will allow federated search engines/clients to search your Bib Class collections. To learn about the SRU protocol go to <a href="http://www.loc.gov/standards/sru/" target="_blank">http://www.loc.gov/standards/sru/</a></p>
+
+				<b>Contents</b>:</p>
+			<ul>
+				<li>
+					<a href="#cfg">Setup Default Parameters</a>
+				</li>
+				<li>
+					<a href="#sample">Sample Requests</a>
+				</li>
+			</ul>
+		
+		
+			<h1>
+				<a name="cfg"/>Setup Default Parameters</h1>
+			
+				<p>The SRU protocol needs a default Bib Class collection to search, along with some other default values. During installation you will be prompted for the values of these default parameters, but you can also change them any time in <tt>/$DLXSROOT/cgi/s/sru/sru.cfg</tt>. Here is a list of the parameters that need to be set up for your particular institution:</p>
+
+			<ul>
+				<li>
+					<tt>gDefaultCollection</tt> - The collid to search when no x-collid parameter is passed in the searchRetrieve operation.  For UM the default is "oaister".
+				</li>
+				<li>
+					<tt>gHost</tt> -  The hosting site.  For UM the value is "www.hti.umich.edu".
+				</li>
+				<li>
+		 			<tt>gPort</tt> - The port of the site.  For UM the value is "620".
+				</li>
+				<li>
+					<tt>gDatabase</tt> - The name you are giving your SRU repository of data.  For UM the value is "dlps".
+				</li>
+				<li>
+					<tt>gTitle</tt> - A title describing your SRU gateway.  For UM the value is "University of Michigan Gateway".
+				</li>
+				<li>
+					<tt>gDescription</tt> - A description of your gateway.  At UM the description is "SRU Gateway to University of Michigan DLPS Collections".
+				</li>
+			</ul>
+    
+                       <p>Also, you will need to add the Bib Class collections to the AUTH system for <tt>sru</tt>, so that this cgi tool can have access to them.</p>
+								
+			<h1>
+				<a name="sample"/>Sample Requests</h1>
+			<p>This implementation of <tt>sru</tt> just implements the <tt>explain</tt> operation and the <tt>searchRetrieve</tt> operation. The <tt>explain</tt> operation identifies the repository. There are two ways to make an <tt>explain</tt> request-- one is to not pass any parameters and the other is to pass an <tt>explain</tt> request. The following two links from UM's implementation demonstrate this:</p>
+
+			<ul><li><a href="http://hti.umich.edu/cgi/s/sru/sru" target="_blank">http://hti.umich.edu/cgi/s/sru/sru</a>
+				</li>
+				<li>
+					<a href="http://hti.umich.edu/cgi/s/sru/sru?operation=explain" target="_blank">http://hti.umich.edu/cgi/s/sru/sru?operation=explain</a>
+				</li>
+			</ul>		
+
+			<p>The other operation is <tt>searchRetrieve</tt>. This operation is used to request the number of hits for a particular search ( query ), and then retrieve the results from the search. The particular collection to search can be passed in the <tt>x-collid</tt> parameter. If no <tt>x-collid</tt> parameter is passed, then the configured default collection is searched. The SRU protocol allows very robust query requests, but it is not mandatory that all these query requests be SRU compliant. For now, we have chosen to implement only level 0 of the SRU CQL language (term-only searches). The following examples from UM show how the <tt>searchRetrieve</tt> operation can be used to request hits for a particular search, and then retrieve the first 4 records returned by the search:</p>
+
+			<ul>
+				<li>
+					<a href="http://hti.umich.edu/cgi/s/sru/sru?operation=searchRetrieve&query=law&x-collid=oaister" target="_blank">http://hti.umich.edu/cgi/s/sru/sru?query=law&x-collid=oaister</a>
+				</li>
+
+				<li>
+					<a href="http://hti.umich.edu/cgi/s/sru/sru?operation=searchRetrieve&query=law&x-collid=oaister&startRecord=1&maximumRecords=4" target="_blank">http://hti.umich.edu/cgi/s/sru/sru?query=law&x-collid=oaister&startRecord=1&maximumRecords=4</a>
+				</li>
+			</ul>
+	
+	</body>
+</html>

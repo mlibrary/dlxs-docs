@@ -1,0 +1,80 @@
+<HTML>
+<HEAD>
+   <TITLE>Record: <?INSERT "nav:collname"></TITLE>
+</HEAD>
+
+<BODY BGCOLOR="#FFFFFF">
+
+<P><font="-1">Note: this page is an example only.</font><BR><BR><BR>
+
+
+		 <FONT FACE="Helvetica">&nbsp;&nbsp;&nbsp;<?INSERT "nav:collname"></FONT>
+
+<TABLE BORDER=1 CELLPADDING=5 CELLSPACING=5>
+   <TR>
+      <TD COLSPAN=2>
+         <FONT SIZE="-1" FACE="Helvetica">Search Result </FONT>
+         <STRONG><FONT SIZE="-1" FACE="Helvetica"><?INSERT "nav:slicestart"></FONT></STRONG>
+         <FONT SIZE="-1" FACE="Helvetica"> of </FONT>
+         <STRONG><FONT SIZE="-1" FACE="Helvetica"><?INSERT "nav:totalhits"></FONT></STRONG>&nbsp;|&nbsp;
+
+         <A HREF="<?INSERT "nav:thumbnail">"><FONT SIZE="-1" FACE="Helvetica">THUMBNAILS</A> or </FONT> 
+         <A HREF="<?INSERT "nav:text">"><FONT SIZE="-1" FACE="Helvetica">TEXT LIST</A></FONT>&nbsp;|&nbsp;
+         <A HREF="<?INSERT "nav:newsearch">"><FONT SIZE="-1" FACE="Helvetica">NEW SEARCH</FONT></A></P>
+      </TD>
+   </TR>
+
+      <?INSERT "form=yes:media:format=sid:quality=small">
+
+      <?BEGIN "repeatingresultsformat">
+        <tr  VALIGN=top>
+<td ALIGN=right>
+<FONT SIZE="-1" FACE="Helvetica"><STRONG>First Category</STRONG></FONT>
+</td>
+<td BGCOLOR="#FFFFFF">
+&nbsp;<?INSERT "categ:name=COL.FC">
+</td>
+</tr>
+
+<tr  VALIGN=top>
+<td ALIGN=right>
+<FONT SIZE="-1" FACE="Helvetica"><STRONG>Second Category</STRONG></FONT>
+</td>
+<td BGCOLOR="#FFFFFF">
+&nbsp;<?INSERT "categ:name=COL.SC">
+</td>
+</tr>
+
+<tr  VALIGN=top>
+<td ALIGN=right>
+<FONT SIZE="-1" FACE="Helvetica"><STRONG>Third Category</STRONG></FONT>
+</td>
+<td BGCOLOR="#FFFFFF">
+&nbsp;<?INSERT "categ:name=COL.TC">
+</td>
+</tr>
+
+      <?END "repeatingresultsformat">
+
+   <TR>
+      <TD COLSPAN=2>
+         <FONT SIZE="-1" FACE="Helvetica">Search Result </FONT>
+         <STRONG><FONT SIZE="-1" FACE="Helvetica"><?INSERT "nav:slicestart"></FONT></STRONG>
+         <FONT SIZE="-1" FACE="Helvetica"> of </FONT>
+         <STRONG><FONT SIZE="-1" FACE="Helvetica"><?INSERT "nav:totalhits"></FONT></STRONG>&nbsp;|&nbsp;
+
+         <A HREF="<?INSERT "nav:thumbnail">"><FONT SIZE="-1" FACE="Helvetica">THUMBNAILS</A> or </FONT>
+         <A HREF="<?INSERT "nav:text">"><FONT SIZE="-1" FACE="Helvetica">TEXT LIST</A></FONT>&nbsp;|&nbsp;
+         <A HREF="<?INSERT "nav:newsearch">"><FONT SIZE="-1" FACE="Helvetica">NEW SEARCH</FONT></A></P>
+      </TD>
+   </TR>
+</TABLE>
+
+<br>
+<br>
+<br>
+<br>
+<P><align="center"><font size="4" face="Helvetica">To return to <a href="../image-templates.htm">Template Documentation</a>.</font></center>
+
+</BODY>
+</HTML>
