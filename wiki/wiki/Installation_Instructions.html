@@ -1,0 +1,418 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en" dir="ltr">
+	
+<!-- Mirrored from localhost/wiki/Installation_Instructions by HTTrack Website Copier/3.x [XR&CO'2014], Mon, 03 Feb 2025 00:28:54 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=UTF-8" /><!-- /Added by HTTrack -->
+<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+		<meta name="generator" content="MediaWiki 1.13.5" />
+		<meta name="keywords" content="Installation Instructions,Authentication and Authorization,DLXS Daemon: Installing and Configuring,DLXS Database Upgrade Utility,DLXS Wiki,Directory Structure,Example Apache virtual host configuration,Installing DLXS,Installing DLXS Version 13 on Solaris 10,Installing and Upgrading the Database,Multiple Releases" />
+		<link rel="shortcut icon" href="http://localhost/favicon.ico" />
+		<link rel="search" type="application/opensearchdescription+xml" href="http://localhost/mediawiki/opensearch_desc.php" title="DLXS Documentation (en)" />
+		<link rel="alternate" type="application/rss+xml" title="DLXS Documentation RSS Feed" href="http://localhost/mediawiki/index.php?title=Special:RecentChanges&amp;feed=rss" />
+		<link rel="alternate" type="application/atom+xml" title="DLXS Documentation Atom Feed" href="http://localhost/mediawiki/index.php?title=Special:RecentChanges&amp;feed=atom" />
+		<title>Installation Instructions - DLXS Documentation</title>
+		<style type="text/css" media="screen, projection">/*<![CDATA[*/
+			@import "../mediawiki/skins/common/sharedfa7c.css?164";
+			@import "../mediawiki/skins/monobook/mainfa7c.css?164";
+		/*]]>*/</style>
+		<link rel="stylesheet" type="text/css" media="print" href="../mediawiki/skins/common/commonPrintfa7c.css?164" />
+		<!--[if lt IE 5.5000]><style type="text/css">@import "/mediawiki/skins/monobook/IE50Fixes.css?164";</style><![endif]-->
+		<!--[if IE 5.5000]><style type="text/css">@import "/mediawiki/skins/monobook/IE55Fixes.css?164";</style><![endif]-->
+		<!--[if IE 6]><style type="text/css">@import "/mediawiki/skins/monobook/IE60Fixes.css?164";</style><![endif]-->
+		<!--[if IE 7]><style type="text/css">@import "/mediawiki/skins/monobook/IE70Fixes.css?164";</style><![endif]-->
+		<!--[if lt IE 7]><script type="text/javascript" src="/mediawiki/skins/common/IEFixes.js?164"></script>
+		<meta http-equiv="imagetoolbar" content="no" /><![endif]-->
+		
+		<script type= "text/javascript">/*<![CDATA[*/
+var skin = "monobook";
+var stylepath = "/mediawiki/skins";
+var wgArticlePath = "/wiki/$1";
+var wgScriptPath = "/mediawiki";
+var wgScript = "http://localhost/mediawiki/index.php";
+var wgVariantArticlePath = false;
+var wgActionPaths = [];
+var wgServer = "http://localhost/";
+var wgCanonicalNamespace = "";
+var wgCanonicalSpecialPageName = false;
+var wgNamespaceNumber = 0;
+var wgPageName = "Installation_Instructions";
+var wgTitle = "Installation Instructions";
+var wgAction = "view";
+var wgArticleId = "113";
+var wgIsArticle = true;
+var wgUserName = null;
+var wgUserGroups = null;
+var wgUserLanguage = "en";
+var wgContentLanguage = "en";
+var wgBreakFrames = false;
+var wgCurRevisionId = "3102";
+var wgVersion = "1.13.5";
+var wgEnableAPI = true;
+var wgEnableWriteAPI = false;
+var wgRestrictionEdit = [];
+var wgRestrictionMove = [];
+/*]]>*/</script>
+                
+		<script type="text/javascript" src="../mediawiki/skins/common/wikibitsfa7c.js?164"><!-- wikibits js --></script>
+		<!-- Head Scripts -->
+		<script type="text/javascript" src="../mediawiki/skins/common/ajaxfa7c.js?164"></script>
+		<script type="text/javascript" src="http://localhost/mediawiki/index.php?title=-&amp;action=raw&amp;gen=js&amp;useskin=monobook"><!-- site js --></script>
+		<style type="text/css">/*<![CDATA[*/
+@import "http://localhost/mediawiki/index.php?title=MediaWiki:Common.css&amp;usemsgcache=yes&amp;action=raw&amp;ctype=text/css&amp;smaxage=18000";
+@import "http://localhost/mediawiki/index.php?title=MediaWiki:Monobook.css&amp;usemsgcache=yes&amp;action=raw&amp;ctype=text/css&amp;smaxage=18000";
+@import "http://localhost/mediawiki/index.php?title=-&amp;action=raw&amp;gen=css&amp;maxage=18000&amp;useskin=monobook";
+/*]]>*/</style>
+	</head>
+<body class="mediawiki ns-0 ltr page-Installation_Instructions">
+	<div id="globalWrapper">
+		<div id="column-content">
+	<div id="content">
+		<a name="top" id="top"></a>
+				<h1 class="firstHeading">Installation Instructions</h1>
+		<div id="bodyContent">
+			<h3 id="siteSub">From DLXS Documentation</h3>
+			<div id="contentSub"></div>
+									<div id="jump-to-nav">Jump to: <a href="#column-one">navigation</a>, <a href="#searchInput">search</a></div>			<!-- start content -->
+			<p><a href="DLXS_Wiki.html" title="DLXS Wiki">Main Page</a> &gt; <a href="Installing_DLXS.html" title="Installing DLXS">Installing DLXS</a> &gt; Installation Instructions
+</p>
+<hr />
+<p>This document explains how to install the DLXS middleware and XPAT software.  After reading and following instructions here, there may be class specific installation  issues, in which case there will be a link to those specific instructions</p>
+<table id="toc" class="toc" summary="Contents"><tr><td><div id="toctitle"><h2>Contents</h2></div>
+<ul>
+<li class="toclevel-1"><a href="#Overview_of_the_DLXS_Installation_Process"><span class="tocnumber">1</span> <span class="toctext">Overview of the DLXS Installation Process</span></a></li>
+<li class="toclevel-1"><a href="#Pre-install_Steps"><span class="tocnumber">2</span> <span class="toctext">Pre-install Steps</span></a>
+<ul>
+<li class="toclevel-2"><a href="#Extracting.2FInstalling_XPAT_.2F_tif2web_.2F_mrsid_retrieve_.2F_kdu_expand_.2F_cjpeg"><span class="tocnumber">2.1</span> <span class="toctext">Extracting/Installing XPAT / tif2web / mrsid_retrieve / kdu_expand / cjpeg</span></a></li>
+<li class="toclevel-2"><a href="#Installing_Other_Binaries"><span class="tocnumber">2.2</span> <span class="toctext">Installing Other Binaries</span></a></li>
+<li class="toclevel-2"><a href="#Required_Perl_modules"><span class="tocnumber">2.3</span> <span class="toctext">Required Perl modules</span></a></li>
+<li class="toclevel-2"><a href="#Decide_where_to_install_DLXS_Middleware"><span class="tocnumber">2.4</span> <span class="toctext">Decide where to install DLXS Middleware</span></a></li>
+</ul>
+</li>
+<li class="toclevel-1"><a href="#Running_the_Installation_Script"><span class="tocnumber">3</span> <span class="toctext">Running the Installation Script</span></a>
+<ul>
+<li class="toclevel-2"><a href="#Installation_Script:_Outline"><span class="tocnumber">3.1</span> <span class="toctext">Installation Script: Outline</span></a></li>
+</ul>
+</li>
+<li class="toclevel-1"><a href="#Step-by-Step_Installation_Instructions"><span class="tocnumber">4</span> <span class="toctext">Step-by-Step Installation Instructions</span></a></li>
+<li class="toclevel-1"><a href="#First_Time_Installation_vs._Update"><span class="tocnumber">5</span> <span class="toctext">First Time Installation vs. Update</span></a></li>
+<li class="toclevel-1"><a href="#Post-installation_Steps"><span class="tocnumber">6</span> <span class="toctext">Post-installation Steps</span></a>
+<ul>
+<li class="toclevel-2"><a href="#Change_cache_directory_permissions"><span class="tocnumber">6.1</span> <span class="toctext">Change cache directory permissions</span></a></li>
+<li class="toclevel-2"><a href="#Configure_crontab"><span class="tocnumber">6.2</span> <span class="toctext">Configure crontab</span></a></li>
+<li class="toclevel-2"><a href="#Apache_config_sample_files"><span class="tocnumber">6.3</span> <span class="toctext">Apache config sample files</span></a></li>
+<li class="toclevel-2"><a href="#Database_conversion_and_migration_following_installation"><span class="tocnumber">6.4</span> <span class="toctext">Database conversion and migration following installation</span></a></li>
+<li class="toclevel-2"><a href="#Configuration_Example_Files"><span class="tocnumber">6.5</span> <span class="toctext">Configuration Example Files</span></a></li>
+<li class="toclevel-2"><a href="#Sysadmin_tasks"><span class="tocnumber">6.6</span> <span class="toctext">Sysadmin tasks</span></a></li>
+<li class="toclevel-2"><a href="#Collection_Manager_Authorization"><span class="tocnumber">6.7</span> <span class="toctext">Collection Manager Authorization</span></a></li>
+<li class="toclevel-2"><a href="#Image_Class_JavaScript_Document_Domain"><span class="tocnumber">6.8</span> <span class="toctext">Image Class JavaScript Document Domain</span></a></li>
+</ul>
+</li>
+</ul>
+</td></tr></table><script type="text/javascript"> if (window.showTocToggle) { var tocShowText = "show"; var tocHideText = "hide"; showTocToggle(); } </script>
+<a name="Overview_of_the_DLXS_Installation_Process"></a><h2><span class="editsection">[<a href="http://localhost/mediawiki/index.php?title=Installation_Instructions&amp;action=edit&amp;section=1" title="Edit section: Overview of the DLXS Installation Process">edit</a>]</span> <span class="mw-headline">Overview of the DLXS Installation Process</span></h2>
+<p>On the open source CD you'll find:
+</p>
+<ul><li> gzipped tarfiles for middleware and open source binaries
+</li><li> <tt>Installer.pl</tt>
+</li><li> an installation configuration file: <tt>main.cfg</tt>
+</li></ul>
+<p>XPAT is on the second CD.
+</p><p>There are several methods you can choose from to do the open source install:
+</p>
+<ul><li> Run the installation directly from the mounted CD
+</li><li> Copy the files from the CD to a directory and install from there
+</li><li> Download the .iso image from www.dlxs.org. Mount it and install from the mount point.
+</li></ul>
+<p>The installer only installs the middleware, not the open source binaries or the XPAT binaries.
+</p>
+<p>You can break the DLXS software installation into three parts:</p>
+<ul><li> <a href="#Pre-install_Steps" title="">Pre-install Steps</a>
+</li></ul>
+<p>Deciding where to install, extracting XPAT, binaries, and getting Perl modules.
+</p>
+<ul><li> <a href="#Running_the_Installation_Script" title="">Running the Installation Script</a>
+</li></ul>
+<p>Creates an initial working system that can function using the sample collection data.
+</p>
+<ul><li> <a href="#Post-install_Steps" title="">Post-install steps</a>
+</li></ul>
+<p>Operations not handled by the Installer: change permissions of a few directories, configure  Apache web server, install database sample data.
+</p><p>The main pieces of software that need to be installed are: 
+</p>
+<ul><li> XPAT 
+</li><li> the other binaries
+</li><li> the DLXS middleware. 
+</li><li> additional Perl modules
+</li></ul>
+<p><b>XPAT</b>, and a few related binary files, are to be installed by a sysadmin  (or someone with root access to the machine). The sysadmin will decide where  the XPAT binaries should go and install them there. 
+</p><p>The <b>Middleware</b> files will be installed under one directory (whose  name should be set up as the <a href="Directory_Structure.html#DLXSROOT_Environment_Variable" title="Directory Structure">DLXSROOT  environment variable</a>).  The installation  script <i>does not</i> require root access, just write access to the $DLXSROOT directory which it will create during the installation process.
+</p>
+<a name="Pre-install_Steps"></a><h2><span class="editsection">[<a href="http://localhost/mediawiki/index.php?title=Installation_Instructions&amp;action=edit&amp;section=2" title="Edit section: Pre-install Steps">edit</a>]</span> <span class="mw-headline">Pre-install Steps</span></h2>
+<p>Installer will ask for a path to a directory that initially should <b>not</b> exist. For example: <tt>/l1/workshop/text02/dlxs</tt>. Installer will create <tt>dlxs</tt> under <tt>/l1/workshop/text02/dlxs</tt> and populate it.
+</p><p>We refer to this path as <b>DLXSROOT</b> and the middleware accesses it via the <tt>DLXSROOT</tt> environment variable set by the web server. You should set <tt>DLXSROOT</tt> in your shell and Apache virtual host configuration. For more information on virtual host configuration, see the <a href="#Apache_config_sample_files" title="">Apache config sample files</a> section. Set <tt>DLXSROOT</tt> in the shell when running some DLXS command line scripts or debugging the middleware at the command line.
+</p><p>Super-user privileges are not required; you only need user-write access to the directory containing DLXSROOT. Set your <b>unmask</b> to 022 so files/directories will be created 664/775.
+</p>
+<a name="Extracting.2FInstalling_XPAT_.2F_tif2web_.2F_mrsid_retrieve_.2F_kdu_expand_.2F_cjpeg"></a><h3><span class="editsection">[<a href="http://localhost/mediawiki/index.php?title=Installation_Instructions&amp;action=edit&amp;section=3" title="Edit section: Extracting/Installing XPAT / tif2web / mrsid_retrieve / kdu_expand / cjpeg">edit</a>]</span> <span class="mw-headline">Extracting/Installing XPAT / tif2web / mrsid_retrieve / kdu_expand / cjpeg</span></h3>
+<p><b>NOTE</b>: <i>tif2web</i> is a program used by the middleware (<a href="Working_with_Page_Image_Access_Mechanisms_in_Text_Class.html" title="Working with Page Image Access Mechanisms in Text Class">Pageviewer</a>)  to convert TIFF files to GIF and PNG formats. The installation of <i>tif2web</i> will closely follow the steps for installing XPAT.</p>
+<p><b>NOTE</b>: <i>mrsid_retrieve</i> is a program used by the ImageClass middleware to decompress MrSID files generating JPEG output for delivery to browsers.  As with <i>tif2web</i>, the installation of <i>mrsid_retrieve</i> will closely follow the steps for installing XPAT.</p>
+<p><b>NOTE</b>: <i>kdu_expand</i> is a program used by the ImageClass middleware to decompress jpeg2000 files generating JPEG output for delivery to browsers.  As with <i>tif2web</i>, the installation of <i>kdu_expand</i> will closely follow the steps for installing XPAT.</p>
+<p><b>NOTE</b>: <i>cjpeg</i> used in conjunction with kdu_expand for JPEG2000 web delivery.  As with <i>tif2web</i>, the installation of <i>kdu_expand</i> will closely follow the steps for installing XPAT.</p>
+<p>Uncompress and untar the XPAT tarfile where you would like to store the XPAT  executables. For example, at many sites, this is <i>/usr/local/.</i> You would  typically use the following command, replacing all items in  curly braces (i.e., { }) with appropriate values:</p>
+<p><b><i>Local CD, local destination </i></b></p>
+        <pre>
+    cd {path-to-XPATinstall}
+    tar xf {cdrom-mount-point}/{path-to-tarfile}/XPAT-{version}.tar </pre>
+<p>You should include this directory in your shell PATH environment variable. This enables <tt>Installer</tt> to offer you their actual locations when it prompts. 
+</p>
+<p>Unlink any previous symlink from a version-specific directory of XPAT to an  XPAT directory (i.e., one without a specific version name). For example: </p>
+        <pre>
+    cd {path-to-XPATinstall}
+    rm xpat </pre>
+<p>Create a symlink from the new version-specific directory of XPAT to an XPAT  directory (i.e., without version name). For example: </p>
+        <pre>
+    cd {path-to-XPATinstall} 
+    ln -s xpat-{version} {path-to-XPATinstall}/xpat</pre>
+<a name="Installing_Other_Binaries"></a><h3><span class="editsection">[<a href="http://localhost/mediawiki/index.php?title=Installation_Instructions&amp;action=edit&amp;section=4" title="Edit section: Installing Other Binaries">edit</a>]</span> <span class="mw-headline">Installing Other Binaries</span></h3>
+<p>There are several other binaries that you may need. Install these on your system as required for the DLXS classes you plan to use, and include them in $PATH. Adding them to $PATH is not required but if you add them, the installer will be able to offer you their actual locations when it prompts. <i>xpat</i>, <i>mrsid_retrieve</i>, <i>kdu_expand</i>, <i>cjpeg</i> and <i>tif2web</i> are part of the DLXS distribution.</p>
+<ul><li> <b>c42pdf</b> (required for TextClass pageviewer)
+</li><li> <b>tif2web</b> (required for TextClass pageviewer)
+</li><li> <b>mrsid_retrieve</b> (deprecated for ImageClass - Use the kdu_* utilities)
+</li><li> <b>kdu_compress, kdu_expand</b> (required if you use ImageClass .jp2 files)
+</li><li> <b>cjpeg</b> (required if you use ImageClass .jp2files)
+</li><li> <b>dlxsd</b> (required if you access data remotely)
+</li><li> <b>utf8conditioner</b> (required if you use OAITransform)
+</li><li> <b>xpatutf8check</b> (optional utf-8 validity-checking program)
+</li></ul>
+<p>The installation steps for these binaries are identical to the XPAT installation steps.
+</p>
+<p>In addition you will need standard unix utilities installed and present in $PATH:  make, mkdir, ln, cat, chmod.</p>
+<ul><li> <i>c42pdf</i> is not part of the DLXS distribution. You can get it at <a href="http://c42pdf.ffii.org/" class="external free" title="http://c42pdf.ffii.org/" rel="nofollow">http://c42pdf.ffii.org/</a>. We are currently using version 0.12 for Linux.
+</li></ul>
+<a name="Required_Perl_modules"></a><h3><span class="editsection">[<a href="http://localhost/mediawiki/index.php?title=Installation_Instructions&amp;action=edit&amp;section=5" title="Edit section: Required Perl modules">edit</a>]</span> <span class="mw-headline">Required Perl modules</span></h3>
+<p>We recommend you use the version of <b>Perl</b> specified in the <a href="System_Requirements.html" title="System Requirements">System Requirements</a> page.  See also notes on Perl in <a href="Installing_DLXS_Version_13_on_Solaris_10.html" title="Installing DLXS Version 13 on Solaris 10">Installing DLXS Version 13 on Solaris 10</a></p>
+<p>In addition you will need to install additional Perl modules. You can find the list of these additional Perl modules in the <a href="System_Requirements.html" title="System Requirements">System Requirements</a> page. The Installer checks for the existence of these modules.  We recommend you install these modules before installing the middleware.</p>
+<p>  During DLXS middleware installation, you may see Installer complain about an already installed Perl module due to dependencies it has on other not yet installed Perl modules. These will go away when all reported Perl modules are installed in your Perl distribution.</p>
+<a name="Decide_where_to_install_DLXS_Middleware"></a><h3><span class="editsection">[<a href="http://localhost/mediawiki/index.php?title=Installation_Instructions&amp;action=edit&amp;section=6" title="Edit section: Decide where to install DLXS Middleware">edit</a>]</span> <span class="mw-headline">Decide where to install DLXS Middleware</span></h3>
+<p>You may want to give some consideration to how you will manage the installation of a subsequent DLXS release.  The main consideration is where you want a later release to reside in your file system, i.e. what its DLXSROOT should be.  You can find a detailed discussion of installing multiple releases in <a href="Multiple_Releases.html" title="Multiple Releases">Multiple Releases</a>.</p>
+<p>The Installer will ask for a path to a directory that initially should not yet exist, 
+e.g. <i>/usr/local/dlxs</i>. The installer will create <i>dlxs</i>  under 
+<i>/usr/local</i> and populate it. This path will be referred to as <b>$DLXSROOT</b>
+and is accessed by the middleware as an environment variable. You should set
+the <a href="Directory_Structure.html#DLXSROOT_Environment_Variable" title="Directory Structure">DLXSROOT environment variable</a>:</p>
+<ul><li> in your unix shell (setting DLXSROOT in the shell is necessary when running  some DLXS command line scripts)
+</li><li> in the Apache web server (<a href="#Apache_config_sample_files" title="">web server configuration</a> info below).
+</li></ul>
+<p>We recommend you install as a normal user with a <b>umask</b> of 002, which  creates files that are group-writable.</p>
+<a name="Running_the_Installation_Script"></a><h2><span class="editsection">[<a href="http://localhost/mediawiki/index.php?title=Installation_Instructions&amp;action=edit&amp;section=7" title="Edit section: Running the Installation Script">edit</a>]</span> <span class="mw-headline">Running the Installation Script</span></h2>
+<p>If for any reason the install is unsuccessful, you can repeat the process. Simply delete the <tt>DLXSROOT</tt> directory (if it has been created) and run Installer again.
+</p>
+<a name="Installation_Script:_Outline"></a><h3><span class="editsection">[<a href="http://localhost/mediawiki/index.php?title=Installation_Instructions&amp;action=edit&amp;section=8" title="Edit section: Installation Script: Outline">edit</a>]</span> <span class="mw-headline">Installation Script: Outline</span></h3>
+<p>A general outline of the interactive installation script follows. This installation script will first confirm the location of various resources, install the middleware  and some sample data, and then configure the middleware.</p>
+<p>As the Installer runs, it prompts you to answer a number of questions. <tt>Installer.pl</tt> does not hard code a Perl path, so be sure to run it as an argument to the Perl command line. For example, suppose the .iso file is mounted on a directory named <tt>cd</tt>:
+</p>
+<pre>   cd /l1/INSTALL_CDROM/cd
+   perl ./Installer.pl
+</pre>
+<p>The Installer runs through the following steps:
+</p>
+<ol><li> create needed subdirectories under $DLXSROOT
+</li><li> checks Perl dependencies     
+</li><li> records the installation locationsof the requires and optional binaries as symlinks
+</li><li> extracts and installs the middleware, including sample collection templates and data
+</li><li> modifies configuration files using your choices for: 
+<ol><li> database server name,collectioon database name, database username and password
+</li><li> email addresses
+</li><li> various global variables to configure the class DLXS middleware
+</li></ol>
+</li><li> replaces Perl "hash bang" strings (e.g. <tt>/l/local/bin/perl</tt>) in utility programs (mainly in <tt>$DLXSROOT/bin/*</tt>) with local Perl path. 
+</li><li> substitutes local value of <tt>DLXSROOT</tt> environment variable in sample data dictionary (<tt>.dd</tt>). 
+</li><li> generates localized example files. The sysadmin may add their content to several non-DLXS configuration files. For example:
+<ol><li> Apache host directives
+</li><li> Unix cron job commands to manage session expiration and cache size
+</li></ol>
+</li></ol>
+<a name="Step-by-Step_Installation_Instructions"></a><h2><span class="editsection">[<a href="http://localhost/mediawiki/index.php?title=Installation_Instructions&amp;action=edit&amp;section=9" title="Edit section: Step-by-Step Installation Instructions">edit</a>]</span> <span class="mw-headline"><a href="Step-by-Step_Installation_Instructions.html" title="Step-by-Step Installation Instructions">Step-by-Step Installation Instructions</a></span></h2>
+      <p>Click here for a step-by-step walk-through via the screen printout of the installation program.</p>
+<a name="First_Time_Installation_vs._Update"></a><h2><span class="editsection">[<a href="http://localhost/mediawiki/index.php?title=Installation_Instructions&amp;action=edit&amp;section=10" title="Edit section: First Time Installation vs. Update">edit</a>]</span> <span class="mw-headline">First Time Installation vs. Update</span></h2>
+<p>If this is a first time installation of the DLXS middleware at your site, little
+will be required beyond following the installation script and having your Sysadmin  
+do the tasks requested by the installation script outline (for example, insert configuration snippets into the Apache server conf file, create and make "nobody" 
+the owner of the DLXSROOT/web/cache directory, install sample database data, etc.).</p>
+<p>However, if this is not your first time installing DLXS middleware, some or  all of the following additional steps may be necesary:</p>
+<ul><li> if the middleware requires database format changes, instructions will be  given to run the programs required to convert the collection database.  This includes the possibility that you are running a CSV database for DLXS.
+</li></ul>
+<ul><li> Although changes to the middleware are made to be backward-compatible, you  should check any program files you have changed to see whether they will work  with the new version. A simple UNIX diff can be helpful. A version control  system (at DLPS, we use CVS) can help with comparing and merging code. 
+</li></ul>
+<p><br />    
+</p>
+<a name="Post-installation_Steps"></a><h2><span class="editsection">[<a href="http://localhost/mediawiki/index.php?title=Installation_Instructions&amp;action=edit&amp;section=11" title="Edit section: Post-installation Steps">edit</a>]</span> <span class="mw-headline">Post-installation Steps</span></h2>
+<p> After these post-installation steps are complete you can test you installation by visiting the URLs below in your browser.  Substitute your actual virtual host for the string "YOURVIRTUALHOST" below.</p>
+    <table border="1" cellpadding="5" width="50%" align="CENTER">
+        <tr>
+          <td><b>Collmgr:</b></td> <td><code>http://YOURVIRTUALHOST/cgi/c/collmgr/collmgr</code></td>
+        </tr>
+        <tr>
+
+          <td><b>BibClass:</b></td> <td><code>http://YOURVIRTUALHOST/cgi/b/bib/bib-idx?c=samplebc</code></td>
+        </tr>
+        <tr>
+          <td><b>FindaidClass:</b></td> <td><code>http://YOURVIRTUALHOST/cgi/f/findaid/findaid-idx?c=samplefa</code></td>
+        </tr>
+        <tr>
+
+          <td><b>ImageClass:</b></td> <td><code>http://YOURVIRTUALHOST/cgi/i/image/image-idx?c=sampleic</code></td>
+        </tr>
+        <tr>
+          <td><b>TextClass:</b></td> <td><code>http://YOURVIRTUALHOST/cgi/t/text/text-idx?c=sampletc_utf8</code></td>
+        </tr>
+    </table>
+<p><br />
+</p>
+<a name="Change_cache_directory_permissions"></a><h3><span class="editsection">[<a href="http://localhost/mediawiki/index.php?title=Installation_Instructions&amp;action=edit&amp;section=12" title="Edit section: Change cache directory permissions">edit</a>]</span> <span class="mw-headline">Change cache directory permissions</span></h3>
+<p>The Installer creates <tt>$DLXSROOT/web/<b>cache</b></tt> with <tt>777</tt> permissions.  Optionally, you may want to change permissions on this directory to make  it writeable only to the UID of the web server.</p>
+<a name="Configure_crontab"></a><h3><span class="editsection">[<a href="http://localhost/mediawiki/index.php?title=Installation_Instructions&amp;action=edit&amp;section=13" title="Edit section: Configure crontab">edit</a>]</span> <span class="mw-headline">Configure crontab</span></h3>
+<p>The <tt>$DLXSROOT/bin/managesessions.pl, $DLXSROOT/bin/manageportfolios.pl</tt> and <tt>DLXSROOT/bin/managecache.sh</tt> scripts are typically run by a cron job to periodically expire user sessions, remove temporary ImageClass portfolios, and maintain <tt>DLXSROOT/web/cache</tt> at the desired size. An example crontab can be found in <tt>$DLXSROOT/bin/installer/config-example/crontab.dlxs</tt>. For more information, see <a href="Setting_up_cron_jobs_for_DLXS.html" title="Setting up cron jobs for DLXS">Setting up cron jobs for DLXS</a>.
+</p>
+<a name="Apache_config_sample_files"></a><h3><span class="editsection">[<a href="http://localhost/mediawiki/index.php?title=Installation_Instructions&amp;action=edit&amp;section=14" title="Edit section: Apache config sample files">edit</a>]</span> <span class="mw-headline">Apache config sample files</span></h3>
+<p>Examine <tt>$DLXSROOT/bin/installer/config-examples/httpd.conf.dlxs</tt>. You may integrate this segment into your Apache configuration file, adapting  as necessary. It assumes you want to run your DLXS installation on a virtual host called <i>dlxs.</i> <tt>&lt;?dlxs-install var="hostname"?&gt;</tt>(where the part between the braces will be replaced with the hostnameof the machine you installed on) and that you have created the proper DNS record, typically dlxs. <tt>&lt;?dlxs-install var="hostname"?&gt; IN CNAME &lt;?dlxs-install var="hostname"?&gt;</tt>
+</p><p><a href="Example_Apache_virtual_host_configuration.html" title="Example Apache virtual host configuration">Here is an example Apache virtual host configuration.</a>
+</p><p>If you would like to run your DLXS installation on a different virtual host, please consult your Apache documentation.
+</p><p>You <i>can</i> comment out the Basic Authentication section in <tt>httpd.conf.dlxs</tt> which implements basic authentication for the collmgr. If you disable this, be aware that the collmgr 
+requires some form of authentication that sets the REMOTE_USER environment variable 
+for proper operation. So, to run "out of the box," the easiest thing to do is to use the "Basic Auth" sample configuration. See <a href="Authentication_and_Authorization.html" title="Authentication and Authorization">Authentication and Authorization</a> for more information.
+</p><p>The file <tt>$DLXSROOT/bin/installer/config-examples/htpasswd.dlxs</tt>  codes the administrative password <b>dlxsadm</b> for the collmgr with the password  <b><i>collmgr. </i></b>You will probably also want to change the password to  a different value using the Apache program:
+</p>
+        <pre>&nbsp;% htpasswd passwordfile username </pre>
+<p>where <i>passwordfile</i> is <tt>APACHE/conf/htpasswd.dlxs</tt>  and <i>username</i> is <tt>dlxsadm</tt>.  Note <tt>htpasswd.dlxs</tt> will then need to be placed  in the <tt>conf</tt> subdirectory of your Apache installation. For more information, see <a href="http://www.apache.org/" class="external text" title="http://www.apache.org" rel="nofollow">the Apache Web Site</a>.
+
+      
+      
+<a name="Database_conversion_and_migration_following_installation"></a><h3><span class="editsection">[<a href="http://localhost/mediawiki/index.php?title=Installation_Instructions&amp;action=edit&amp;section=15" title="Edit section: Database conversion and migration following installation">edit</a>]</span> <span class="mw-headline">Database conversion and migration following installation</span></h3>
+<p>If you have a DLXS installation that is Release 9 or later, you will need to run the <tt>upgrade_<i>N_N+1</i></tt> utilities (one or more) that are delivered with the DLXS software. This should be done following a successful installation. These will migrate your data from one version of the database to another. For example, if you are currently running Release 12 of the software, which uses version 5 of the database, and are installing Release 13, which uses database version 6, you should run <tt>upgrade_5_6</tt> to move your current data into the new format. See the <a href="DLXS_Database_Upgrade_Utility.html" title="DLXS Database Upgrade Utility">upgrade documentation</a> for more information.
+</p><p>For first-time installations, your database will be MySQL.  You will have created an empty database as described <a href="Installing_and_Upgrading_the_Database.html#MySQL_configuration" title="Installing and Upgrading the Database">in Installing and Upgrading the Database</a>.  The next step is to install the sample database data contained in  <tt> $DLXSROOT/misc/db/db-dump-vN.0-release.sql</tt> where N is 6 for release 13 and 7 for release 14, etc. as follows.  Let <b>dlxs_vN</b> be the database name you chose for this installtion.  Load the dump via the <b>mysql</b> command line client like this:
+</p>
+<pre>  &nbsp;% mysql -u dlxsadm -p dlxs_vN &lt; $DLXSROOT/misc/db/db-dump-vN.0-release.sql
+</pre>
+<a name="Configuration_Example_Files"></a><h3><span class="editsection">[<a href="http://localhost/mediawiki/index.php?title=Installation_Instructions&amp;action=edit&amp;section=16" title="Edit section: Configuration Example Files">edit</a>]</span> <span class="mw-headline">Configuration Example Files</span></h3>
+<p>The configuration example files generated by the installation script will be found in the <tt>$DLXSROOT/bin/installer/config-examples</tt> directory. The Sysadmin should be notified  of these and s/he should use them to make the changes necessary, e.g., the web  server configuration file, <a href="Setting_up_cron_jobs_for_DLXS.html" title="Setting up cron jobs for DLXS">crontab</a>.
+</p>
+<a name="Sysadmin_tasks"></a><h3><span class="editsection">[<a href="http://localhost/mediawiki/index.php?title=Installation_Instructions&amp;action=edit&amp;section=17" title="Edit section: Sysadmin tasks">edit</a>]</span> <span class="mw-headline">Sysadmin tasks</span></h3>
+<p>The $DLXSROOT/bin/installer/config-examples directory will also contain a file called README-postinstall that will contain a set of instructions that someone with sysadmin rights will need to follow. These include setting specific permissions on special directories:
+</p>
+<ul><li> Permissions on <tt>$DLXSROOT/web/cache</tt>: this directory too will need  to be owned by the runner of the web server processes, again, often "nobody".
+</li></ul>
+<ul><li> Configure crontab:
+</li></ul>
+<p>The DLXSROOT/bin/managesessions.pl, DLXSROOT/bin/manageportfolios.pl and DLXSROOT/bin/managecache.sh scripts are typically run by a cron job to periodically expire user sessions, remove temporary ImageClass portfolios and maintain DLXSROOT/web/cache at the desired size. An example crontab can be found in DLXSROOT/bin/installer/config-examples/crontab.dlxs.
+</p><p>If you are running the web server on one machine and the data resides on another  you will have to <a href="DLXS_Daemon__Installing_and_Configuring.html" title="DLXS Daemon: Installing and Configuring">install the daemons</a> that allow for the two hosts to communicate. This requires root access.
+</p>
+<a name="Collection_Manager_Authorization"></a><h3><span class="editsection">[<a href="http://localhost/mediawiki/index.php?title=Installation_Instructions&amp;action=edit&amp;section=18" title="Edit section: Collection Manager Authorization">edit</a>]</span> <span class="mw-headline">Collection Manager Authorization</span></h3>
+<p>The <a href="Working_with_the_Collection_Manager.html" title="Working with the Collection Manager">DLXS collection manager</a> requires  user authentication (i.e., access by username and password) to be able to check  in, check out, and release changes. If you do not wish to use these functions,  then at a bare minimum, it requires access by username and password as the administrator  user, dlxsadm.
+</p><p>For your convenience, DLXS is installed with this minimum configuration using  standard HTTP Basic Authentication. When you access the collection manager,  you will be prompted for a username and password; enter "dlxsadm" with  the password "collmgr", and you will be given access.
+</p><p>DLXS recommends that you change the default password after installation with  the following command, which will prompt you for a new password:
+</p>
+<pre>  APACHE/bin/htpasswd APACHE/conf/htpasswd.dlxs dlxsadm
+</pre>
+<p>where <tt>APACHE</tt> is the directory in which Apache is installed  on your system.
+</p><p>You may permit other users to the collection manager, collmgr, using this mechanism; see your Apache documentation for more information on configuring Basic Authentication. You may also replace the authentication method entirely, so long as it provides the name of the authenticated user in the environment variable <a href="Working_with_the_Collection_Manager.html#Definitions" title="Working with the Collection Manager">REMOTE_USER</a>. Also see 
+<a href="Authentication_and_Authorization.html" title="Authentication and Authorization">Authentication and Authorization</a> for more information.
+</p><p><br />
+</p>
+<a name="Image_Class_JavaScript_Document_Domain"></a><h3><span class="editsection">[<a href="http://localhost/mediawiki/index.php?title=Installation_Instructions&amp;action=edit&amp;section=19" title="Edit section: Image Class JavaScript Document Domain">edit</a>]</span> <span class="mw-headline">Image Class JavaScript Document Domain</span></h3>
+<p>Set the value of the document.domain variable to match your web server domain in the file... 
+</p>
+<code><pre>$DLXSROOT/web/i/image/js/imageclass.js</pre></code>
+<a href="#top" title="">Top</a></p>
+
+<!-- 
+NewPP limit report
+Preprocessor node count: 193/1000000
+Post-expand include size: 0/2097152 bytes
+Template argument size: 0/2097152 bytes
+Expensive parser function count: 0/100
+-->
+
+<!-- Saved in parser cache with key mediawiki_dlxsdocs_15:pcache:idhash:113-0!1!0!!en!2 and timestamp 20250202211405 -->
+<div class="printfooter">
+Retrieved from "<a href="Installation_Instructions.html">http://localhost/wiki/Installation_Instructions</a>"</div>
+						<!-- end content -->
+			<div class="visualClear"></div>
+		</div>
+	</div>
+		</div>
+		<div id="column-one">
+	<div id="p-cactions" class="portlet">
+		<h5>Views</h5>
+		<div class="pBody">
+			<ul>
+	
+				 <li id="ca-nstab-main" class="selected"><a href="Installation_Instructions.html" title="View the content page [c]" accesskey="c">Page</a></li>
+				 <li id="ca-talk" class="new"><a href="http://localhost/mediawiki/index.php?title=Talk:Installation_Instructions&amp;action=edit" title="Discussion about the content page [t]" accesskey="t">Discussion</a></li>
+				 <li id="ca-edit"><a href="http://localhost/mediawiki/index.php?title=Installation_Instructions&amp;action=edit" title="You can edit this page.&#10;Please use the preview button before saving. [e]" accesskey="e">Edit</a></li>
+				 <li id="ca-history"><a href="http://localhost/mediawiki/index.php?title=Installation_Instructions&amp;action=history" title="Past versions of this page. [h]" accesskey="h">History</a></li>			</ul>
+		</div>
+	</div>
+	<div class="portlet" id="p-personal">
+		<h5>Personal tools</h5>
+		<div class="pBody">
+			<ul>
+				<li id="pt-login"><a href="http://localhost/mediawiki/index.php?title=Special:UserLogin&amp;returnto=Installation_Instructions" title="You are encouraged to log in, it is not mandatory however. [o]" accesskey="o">Log in / create account</a></li>
+			</ul>
+		</div>
+	</div>
+	<div class="portlet" id="p-logo">
+		<a style="background-image: url(../dlxs15/uploads/DLXS_logo2.gif);" href="Main_Page.html" title="Visit the Main Page [z]" accesskey="z"></a>
+	</div>
+	<script type="text/javascript"> if (window.isMSIE55) fixalpha(); </script>
+	<div class='generated-sidebar portlet' id='p-navigation'>
+		<h5>Navigation</h5>
+		<div class='pBody'>
+			<ul>
+				<li id="n-mainpage-description"><a href="Main_Page.html">Main Page</a></li>
+				<li id="n-portal"><a href="DLXS_Documentation_Community_Portal.html" title="About the project, what you can do, where to find things">Community portal</a></li>
+				<li id="n-currentevents"><a href="DLXS_Documentation_Current_events.html" title="Find background information on current events">Current events</a></li>
+				<li id="n-recentchanges"><a href="Special_RecentChanges.html" title="The list of recent changes in the wiki. [r]" accesskey="r">Recent changes</a></li>
+				<li id="n-randompage"><a href="Mounting_a_Bib_Class_Collection.html" title="Load a random page [x]" accesskey="x">Random page</a></li>
+				<li id="n-help"><a href="Help_Contents.html" title="The place to find out.">Help</a></li>
+			</ul>
+		</div>
+	</div>
+	<div id="p-search" class="portlet">
+		<h5><label for="searchInput">Search</label></h5>
+		<div id="searchBody" class="pBody">
+			<form action="http://localhost/wiki/Special:Search" id="searchform"><div>
+				<input id="searchInput" name="search" type="text" title="Search DLXS Documentation [f]" accesskey="f" value="" />
+				<input type='submit' name="go" class="searchButton" id="searchGoButton"	value="Go" title="Go to a page with this exact name if exists" />&nbsp;
+				<input type='submit' name="fulltext" class="searchButton" id="mw-searchButton" value="Search" title="Search the pages for this text" />
+			</div></form>
+		</div>
+	</div>
+	<div class="portlet" id="p-tb">
+		<h5>Toolbox</h5>
+		<div class="pBody">
+			<ul>
+				<li id="t-whatlinkshere"><a href="Special_WhatLinksHere/Installation_Instructions.html" title="List of all wiki pages that link here [j]" accesskey="j">What links here</a></li>
+				<li id="t-recentchangeslinked"><a href="Special_RecentChangesLinked/Installation_Instructions.html" title="Recent changes in pages linked from this page [k]" accesskey="k">Related changes</a></li>
+<li id="t-specialpages"><a href="Special_SpecialPages.html" title="List of all special pages [q]" accesskey="q">Special pages</a></li>
+				<li id="t-print"><a href="http://localhost/mediawiki/index.php?title=Installation_Instructions&amp;printable=yes" title="Printable version of this page [p]" accesskey="p">Printable version</a></li>				<li id="t-permalink"><a href="http://localhost/mediawiki/index.php?title=Installation_Instructions&amp;oldid=3102" title="Permanent link to this version of the page">Permanent link</a></li>			</ul>
+		</div>
+	</div>
+		</div><!-- end of the left (by default at least) column -->
+			<div class="visualClear"></div>
+			<div id="footer">
+				<div id="f-poweredbyico"><a href="http://www.mediawiki.org/"><img src="../mediawiki/skins/common/images/poweredby_mediawiki_88x31.png" alt="Powered by MediaWiki" /></a></div>
+			<ul id="f-list">
+				<li id="lastmod"> This page was last modified on 5 November 2010, at 18:07.</li>
+				<li id="viewcount">This page has been accessed 8,661 times.</li>
+				<li id="privacy"><a href="DLXS_Documentation_Privacy_policy.html" title="DLXS Documentation:Privacy policy">Privacy policy</a></li>
+				<li id="about"><a href="DLXS_Documentation_About.html" title="DLXS Documentation:About">About DLXS Documentation</a></li>
+				<li id="disclaimer"><a href="DLXS_Documentation_General_disclaimer.html" title="DLXS Documentation:General disclaimer">Disclaimers</a></li>
+			</ul>
+		</div>
+</div>
+
+		<script type="text/javascript">if (window.runOnloadHook) runOnloadHook();</script>
+<!-- Served in 0.108 secs. --></body>
+<!-- Mirrored from localhost/wiki/Installation_Instructions by HTTrack Website Copier/3.x [XR&CO'2014], Mon, 03 Feb 2025 00:28:56 GMT -->
+</html>

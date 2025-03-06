@@ -1,0 +1,452 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en" dir="ltr">
+	
+<!-- Mirrored from localhost/wiki/CGI_Parameter_Standards by HTTrack Website Copier/3.x [XR&CO'2014], Mon, 03 Feb 2025 00:30:54 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=UTF-8" /><!-- /Added by HTTrack -->
+<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+		<meta name="generator" content="MediaWiki 1.13.5" />
+		<meta name="keywords" content="CGI Parameter Standards,DLXS Middleware Library Modules,DLXS Wiki,Programming Issues" />
+		<link rel="shortcut icon" href="http://localhost/favicon.ico" />
+		<link rel="search" type="application/opensearchdescription+xml" href="http://localhost/mediawiki/opensearch_desc.php" title="DLXS Documentation (en)" />
+		<link rel="alternate" type="application/rss+xml" title="DLXS Documentation RSS Feed" href="http://localhost/mediawiki/index.php?title=Special:RecentChanges&amp;feed=rss" />
+		<link rel="alternate" type="application/atom+xml" title="DLXS Documentation Atom Feed" href="http://localhost/mediawiki/index.php?title=Special:RecentChanges&amp;feed=atom" />
+		<title>CGI Parameter Standards - DLXS Documentation</title>
+		<style type="text/css" media="screen, projection">/*<![CDATA[*/
+			@import "../mediawiki/skins/common/sharedfa7c.css?164";
+			@import "../mediawiki/skins/monobook/mainfa7c.css?164";
+		/*]]>*/</style>
+		<link rel="stylesheet" type="text/css" media="print" href="../mediawiki/skins/common/commonPrintfa7c.css?164" />
+		<!--[if lt IE 5.5000]><style type="text/css">@import "/mediawiki/skins/monobook/IE50Fixes.css?164";</style><![endif]-->
+		<!--[if IE 5.5000]><style type="text/css">@import "/mediawiki/skins/monobook/IE55Fixes.css?164";</style><![endif]-->
+		<!--[if IE 6]><style type="text/css">@import "/mediawiki/skins/monobook/IE60Fixes.css?164";</style><![endif]-->
+		<!--[if IE 7]><style type="text/css">@import "/mediawiki/skins/monobook/IE70Fixes.css?164";</style><![endif]-->
+		<!--[if lt IE 7]><script type="text/javascript" src="/mediawiki/skins/common/IEFixes.js?164"></script>
+		<meta http-equiv="imagetoolbar" content="no" /><![endif]-->
+		
+		<script type= "text/javascript">/*<![CDATA[*/
+var skin = "monobook";
+var stylepath = "/mediawiki/skins";
+var wgArticlePath = "/wiki/$1";
+var wgScriptPath = "/mediawiki";
+var wgScript = "http://localhost/mediawiki/index.php";
+var wgVariantArticlePath = false;
+var wgActionPaths = [];
+var wgServer = "http://localhost/";
+var wgCanonicalNamespace = "";
+var wgCanonicalSpecialPageName = false;
+var wgNamespaceNumber = 0;
+var wgPageName = "CGI_Parameter_Standards";
+var wgTitle = "CGI Parameter Standards";
+var wgAction = "view";
+var wgArticleId = "63";
+var wgIsArticle = true;
+var wgUserName = null;
+var wgUserGroups = null;
+var wgUserLanguage = "en";
+var wgContentLanguage = "en";
+var wgBreakFrames = false;
+var wgCurRevisionId = "621";
+var wgVersion = "1.13.5";
+var wgEnableAPI = true;
+var wgEnableWriteAPI = false;
+var wgRestrictionEdit = [];
+var wgRestrictionMove = [];
+/*]]>*/</script>
+                
+		<script type="text/javascript" src="../mediawiki/skins/common/wikibitsfa7c.js?164"><!-- wikibits js --></script>
+		<!-- Head Scripts -->
+		<script type="text/javascript" src="../mediawiki/skins/common/ajaxfa7c.js?164"></script>
+		<script type="text/javascript" src="http://localhost/mediawiki/index.php?title=-&amp;action=raw&amp;gen=js&amp;useskin=monobook"><!-- site js --></script>
+		<style type="text/css">/*<![CDATA[*/
+@import "http://localhost/mediawiki/index.php?title=MediaWiki:Common.css&amp;usemsgcache=yes&amp;action=raw&amp;ctype=text/css&amp;smaxage=18000";
+@import "http://localhost/mediawiki/index.php?title=MediaWiki:Monobook.css&amp;usemsgcache=yes&amp;action=raw&amp;ctype=text/css&amp;smaxage=18000";
+@import "http://localhost/mediawiki/index.php?title=-&amp;action=raw&amp;gen=css&amp;maxage=18000&amp;useskin=monobook";
+/*]]>*/</style>
+	</head>
+<body class="mediawiki ns-0 ltr page-CGI_Parameter_Standards">
+	<div id="globalWrapper">
+		<div id="column-content">
+	<div id="content">
+		<a name="top" id="top"></a>
+				<h1 class="firstHeading">CGI Parameter Standards</h1>
+		<div id="bodyContent">
+			<h3 id="siteSub">From DLXS Documentation</h3>
+			<div id="contentSub"></div>
+									<div id="jump-to-nav">Jump to: <a href="#column-one">navigation</a>, <a href="#searchInput">search</a></div>			<!-- start content -->
+			<p><a href="DLXS_Wiki.html" title="DLXS Wiki">Main Page</a> &gt; <a href="Programming_Issues.html" title="Programming Issues">Programming Issues</a> &gt; CGI Parameter Standards
+</p>
+<p>The following is a catalog of all parameters (arguments supplied in the HTTP query string) supported by DLXS middleware.  These parameters apply to all middleware developed for DLXS collections/classes, as well as existing non-DLXS middleware when it undergoes 
+<i>significant</i> rework to bring it into the DLXS framework. The goals for this are:</p>
+<ul><li> to provide consistency for statistics gathering;
+</li><li> to provide consistency for interoperability between collections (and between digital libraries in the future);
+</li><li> and to provide a definition that is scalable for future growth.
+</li></ul>
+<p>All keywords used for CGI parameters and region names should adhere to the 
+following naming principles:</p>
+<ul><li> They should not be too short (and thus cryptic) and yet not too long (and thus create browser problems).
+</li><li> They should be be lowercase.
+</li><li> They should be alphanumeric only, and include no punctuation.
+</li></ul>
+<p><br />    
+</p>
+<table id="toc" class="toc" summary="Contents"><tr><td><div id="toctitle"><h2>Contents</h2></div>
+<ul>
+<li class="toclevel-1"><a href="#Searches"><span class="tocnumber">1</span> <span class="toctext">Searches</span></a></li>
+<li class="toclevel-1"><a href="#Browses"><span class="tocnumber">2</span> <span class="toctext">Browses</span></a></li>
+<li class="toclevel-1"><a href="#Views"><span class="tocnumber">3</span> <span class="toctext">Views</span></a></li>
+<li class="toclevel-1"><a href="#Collection_Identification"><span class="tocnumber">4</span> <span class="toctext">Collection Identification</span></a></li>
+<li class="toclevel-1"><a href="#Page"><span class="tocnumber">5</span> <span class="toctext">Page</span></a></li>
+<li class="toclevel-1"><a href="#Misc"><span class="tocnumber">6</span> <span class="toctext">Misc</span></a></li>
+</ul>
+</td></tr></table><script type="text/javascript"> if (window.showTocToggle) { var tocShowText = "show"; var tocHideText = "hide"; showTocToggle(); } </script>
+<a name="Searches"></a><h2><span class="editsection">[<a href="http://localhost/mediawiki/index.php?title=CGI_Parameter_Standards&amp;action=edit&amp;section=1" title="Edit section: Searches">edit</a>]</span> <span class="mw-headline">Searches</span></h2>
+      <p>Most searches make use of one of the three basic search types: simple, boolean, and proximity.  They also use "Region" names derived from the XML or SGML and are reflected in the DLXS <a href="DLXS_Middleware_Library_Modules.html#TerminologyMapper.pm" title="DLXS Middleware Library Modules">TerminologyMapper</a> map file where they are mapped to XPAT region names.  The automatic generation of XPAT queries from these mapped parameters is implemented using the DLXS <a href="DLXS_Middleware_Library_Modules.html#QueryFactory.pm" title="DLXS Middleware Library Modules">QueryFactory</a> module.</p>
+      <p>The existing list of region names will be expanded as DLXS continues to develop a class-based architecture. Typically, DLXS Collection Managers review existing region naming across similar classes before defining new region names.</p>
+      <p>An unimplemented proposal to make statistics gathering more precise proposes the "<b>nostats</b>" CGI parameter to screen out search results from a usage statistics gathering process. For example, where the search would otherwise produce multiple "hits" when viewing different parts of a result.</p>
+      <table border="1">
+          <tr>
+            <td><b>Description</b></td>
+            <td><b>CGI Parameter: type=</b></td>
+            <td><b>CGI Optional Parameter: subtype=</b></td>
+            <td><b>Region Names</b></td></tr>
+          <tr>
+            <td>simple</td>
+            <td>simple</td>
+            <td>lookup | browse | headword | orths | bookbag</td>
+            <td>n/a</td></tr>
+          <tr>
+            <td>boolean</td>
+            <td>boolean</td>
+            <td>frequency</td>
+            <td>author | title | citation | speech</td></tr>
+          <tr>
+            <td>proximity</td>
+            <td>proximity</td>
+            <td>n/a</td>
+            <td>n/a</td></tr>
+          <tr>
+            <td>random</td>
+            <td>random</td>
+            <td>n/a</td>
+            <td>n/a</td></tr>
+          <tr>
+            <td>List of items to search (Image Services)</td>
+            <td>ilist</td>
+            <td>n/a</td>
+            <td>n/a</td></tr></table>
+<a name="Browses"></a><h2><span class="editsection">[<a href="http://localhost/mediawiki/index.php?title=CGI_Parameter_Standards&amp;action=edit&amp;section=2" title="Edit section: Browses">edit</a>]</span> <span class="mw-headline">Browses</span></h2>
+      <p> Note that the following parameters were derived from existing non-DLXS browse categories and that currently none are implemented in DLXS middleware. As these browse categories are implemented in DLXS middleware their descriptions will be expanded in more detail.</p>
+      <table border="1">
+          <tr>
+            <td>
+      <table border="1">
+                  <tr>
+                    <td><b>Description</b></td>
+                    <td><b>CGI Parameter: browse=</b></td></tr>
+                  <tr>
+                    <td>all items by selected author</td>
+                    <td>exactauth</td></tr>
+                  <tr>
+                    <td>all authors of selected item</td>
+                    <td>author</td></tr>
+                  <tr>
+
+                    <td>period</td>
+                    <td>period</td></tr>
+                  <tr>
+                    <td>wordwheel</td>
+                    <td>wordwheel</td></tr>
+                  <tr>
+                    <td>volume</td>
+                    <td>volume</td></tr>
+                  <tr>
+                    <td>bible</td>
+                    <td>bible</td></tr>
+                  <tr>
+                    <td>title</td>
+                    <td>title</td></tr>
+                  <tr>
+                    <td>speaker/speech event</td>
+                    <td>speaker</td></tr>
+                  <tr>
+                    <td>genre</td>
+                    <td>genre</td></tr>
+                  <tr>
+
+                    <td>journal</td>
+                    <td>journal</td></tr></table></td>
+            <td>
+      <table border="1">
+                  <tr>
+                    <td><b>Description</b></td>
+                    <td><b>CGI Parameter: browse=</b></td></tr>
+                  <tr>
+                    <td>country</td>
+                    <td>country</td></tr>
+                  <tr>
+                    <td>classification</td>
+                    <td>class</td></tr>
+                  <tr>
+                    <td>stencil</td>
+                    <td>allstencils</td></tr>
+                  <tr>
+                    <td>manuscript</td>
+                    <td>allmss</td></tr>
+                  <tr>
+
+                    <td>document</td>
+                    <td>alldoc</td></tr>
+                  <tr>
+                    <td>subject</td>
+                    <td>subject</td></tr>
+                  <tr>
+                    <td>culture</td>
+                    <td>culture</td></tr>
+                  <tr>
+                    <td>tradition</td>
+                    <td>tradition</td></tr>
+                  <tr>
+                    <td>letter</td>
+                    <td>letter</td></tr>
+                  <tr>
+                    <td>page</td>
+                    <td>page</td></tr></table></td></tr></table>
+<p><br />    
+</p>
+<a name="Views"></a><h2><span class="editsection">[<a href="http://localhost/mediawiki/index.php?title=CGI_Parameter_Standards&amp;action=edit&amp;section=3" title="Edit section: Views">edit</a>]</span> <span class="mw-headline">Views</span></h2>
+      <p>Note that the following parameters were derived from non-DLXS view categories and that, consequently, many are not yet implemented in DLXS middleware. </p>
+      <table border="1">
+
+          <tr>
+            <td><b>Description</b></td>
+            <td><b>CGI Parameter: view=</b></td>
+            <td><b>Optional CGI Parameter: subview=</b></td></tr>
+          <tr>
+            <td>t.o.c.</td>
+            <td>toc</td>
+            <td>n/a</td></tr>
+          <tr>
+            <td>t.o.c. - fullheader</td>
+            <td>header</td>
+            <td>n/a</td></tr>
+          <tr>
+            <td>text</td>
+            <td>text</td>
+            <td>n/a</td></tr>
+          <tr>
+            <td>text - SGML</td>
+            <td>sgml</td>
+            <td>n/a</td></tr>
+          <tr>
+            <td>entry</td>
+            <td>entry</td>
+            <td>detail | getsid</td></tr>
+          <tr>
+            <td>Digital image (gif, jpeg, etc.)</td>
+            <td>image</td>
+            <td>n/a</td></tr>
+          <tr>
+            <td>Digital image (pdf)</td>
+            <td>pdf</td>
+            <td>n/a</td></tr>
+          <tr>
+            <td>results with thumbnail</td>
+            <td>thumb</td>
+            <td>n/a</td></tr>
+          <tr>
+            <td>target (e.g. footnote)</td>
+            <td>trgt</td>
+            <td>n/a</td></tr>
+          <tr>
+            <td>results list</td>
+            <td>reslist</td>
+            <td>short | detail</td></tr>
+          <tr>
+            <td>utterance</td>
+            <td>utter</td>
+            <td>n/a</td></tr>
+          <tr>
+            <td>comparison (formerly a search type)</td>
+            <td>compare</td>
+            <td>n/a</td></tr>
+          <tr>
+            <td>slide-show results (images)</td>
+            <td>slide</td>
+            <td>n/a</td></tr>
+			          <tr>
+            <td>Findaid: outline view with keyword in context results or with a focused region (focusrgn=)</td>
+            <td>outline</td>
+            <td>kwic, NONE</td></tr>
+		</table>
+<p><br />    
+</p>
+<a name="Collection_Identification"></a><h2><span class="editsection">[<a href="http://localhost/mediawiki/index.php?title=CGI_Parameter_Standards&amp;action=edit&amp;section=4" title="Edit section: Collection Identification">edit</a>]</span> <span class="mw-headline">Collection Identification</span></h2>
+      <p>Any additions or changes to collection parameters must be reviewed by the Architecture group. </p>
+      <table border="1">
+          <tr>
+            <td><b>Description</b></td>
+            <td><b>CGI Parameter:</b></td></tr>
+          <tr>
+            <td>Collection identifier (repeatable)</td>
+            <td>c=&lt;identifier&gt;</td></tr>
+          <tr>
+            <td>Single Collection identifer to retrieve detail</td>
+            <td>cc=&lt;identifier&gt;</td></tr>
+          <tr>
+            <td>Boolean flag to indicate a cross-collecton search</td>
+            <td>xc=1</td></tr>
+          <tr>
+            <td>Group (of collections) identifier (repeatable)</td>
+            <td>g=&lt;identifier&gt;</td></tr>
+      </table>
+<p><br />    
+</p>
+<a name="Page"></a><h2><span class="editsection">[<a href="http://localhost/mediawiki/index.php?title=CGI_Parameter_Standards&amp;action=edit&amp;section=5" title="Edit section: Page">edit</a>]</span> <span class="mw-headline">Page</span></h2>
+      <p>Any additions or changes to page parameters must be reviewed by the Architecture group. </p>
+      <table border="1">
+          <tr>
+            <td><b>Description</b></td>
+            <td><b>CGI Parameter: page=</b></td></tr>
+          <tr>
+            <td>Generate simple search page</td>
+            <td>simple</td></tr>
+          <tr>
+            <td>Generate boolean search page</td>
+            <td>boolean</td></tr>
+          <tr>
+            <td>Generate proximity search page</td>
+            <td>proximity</td></tr>
+          <tr>
+            <td>Generate random search page</td>
+            <td>random</td></tr>
+          <tr>
+
+            <td>Generate idlist search page</td>
+            <td>idlist</td></tr>
+          <tr>
+            <td>Generate wordwheel "start" page</td>
+            <td>wwstart</td></tr>
+          <tr>
+            <td>Generate wordwheel "full" results page</td>
+            <td>wwfull</td></tr>
+          <tr>
+            <td>Display current session search history</td>
+            <td>history</td></tr>
+          <tr>
+            <td>Display current session bookbag</td>
+            <td>bbaglist</td></tr>
+          <tr>
+            <td>Display bookbag email entry form</td>
+            <td>bbagemail</td></tr></table>
+<p><br />    
+</p>
+<a name="Misc"></a><h2><span class="editsection">[<a href="http://localhost/mediawiki/index.php?title=CGI_Parameter_Standards&amp;action=edit&amp;section=6" title="Edit section: Misc">edit</a>]</span> <span class="mw-headline">Misc</span></h2>
+      <p>Any additions or changes to miscellaneous parameters must be reviewed by the Architecture group. </p>
+      <table border="1">
+
+          <tr>
+            <td><b>Description</b></td>
+            <td><b>CGI Parameter</b></td></tr>
+          <tr>
+            <td>Specify arbitrary coll-specific template</td>
+            <td>tpl</td></tr>
+          <tr>
+
+            <td>Specify session identifier</td>
+            <td>sid</td></tr>
+      </table>
+<p><br />
+<a href="#top" title="">Top</a>
+</p>
+<!-- 
+NewPP limit report
+Preprocessor node count: 260/1000000
+Post-expand include size: 0/2097152 bytes
+Template argument size: 0/2097152 bytes
+Expensive parser function count: 0/100
+-->
+
+<!-- Saved in parser cache with key mediawiki_dlxsdocs_15:pcache:idhash:63-0!1!0!!en!2 and timestamp 20250202211516 -->
+<div class="printfooter">
+Retrieved from "<a href="CGI_Parameter_Standards.html">http://localhost/wiki/CGI_Parameter_Standards</a>"</div>
+						<!-- end content -->
+			<div class="visualClear"></div>
+		</div>
+	</div>
+		</div>
+		<div id="column-one">
+	<div id="p-cactions" class="portlet">
+		<h5>Views</h5>
+		<div class="pBody">
+			<ul>
+	
+				 <li id="ca-nstab-main" class="selected"><a href="CGI_Parameter_Standards.html" title="View the content page [c]" accesskey="c">Page</a></li>
+				 <li id="ca-talk" class="new"><a href="http://localhost/mediawiki/index.php?title=Talk:CGI_Parameter_Standards&amp;action=edit" title="Discussion about the content page [t]" accesskey="t">Discussion</a></li>
+				 <li id="ca-edit"><a href="http://localhost/mediawiki/index.php?title=CGI_Parameter_Standards&amp;action=edit" title="You can edit this page.&#10;Please use the preview button before saving. [e]" accesskey="e">Edit</a></li>
+				 <li id="ca-history"><a href="http://localhost/mediawiki/index.php?title=CGI_Parameter_Standards&amp;action=history" title="Past versions of this page. [h]" accesskey="h">History</a></li>			</ul>
+		</div>
+	</div>
+	<div class="portlet" id="p-personal">
+		<h5>Personal tools</h5>
+		<div class="pBody">
+			<ul>
+				<li id="pt-login"><a href="http://localhost/mediawiki/index.php?title=Special:UserLogin&amp;returnto=CGI_Parameter_Standards" title="You are encouraged to log in, it is not mandatory however. [o]" accesskey="o">Log in / create account</a></li>
+			</ul>
+		</div>
+	</div>
+	<div class="portlet" id="p-logo">
+		<a style="background-image: url(../dlxs15/uploads/DLXS_logo2.gif);" href="Main_Page.html" title="Visit the Main Page [z]" accesskey="z"></a>
+	</div>
+	<script type="text/javascript"> if (window.isMSIE55) fixalpha(); </script>
+	<div class='generated-sidebar portlet' id='p-navigation'>
+		<h5>Navigation</h5>
+		<div class='pBody'>
+			<ul>
+				<li id="n-mainpage-description"><a href="Main_Page.html">Main Page</a></li>
+				<li id="n-portal"><a href="DLXS_Documentation_Community_Portal.html" title="About the project, what you can do, where to find things">Community portal</a></li>
+				<li id="n-currentevents"><a href="DLXS_Documentation_Current_events.html" title="Find background information on current events">Current events</a></li>
+				<li id="n-recentchanges"><a href="Special_RecentChanges.html" title="The list of recent changes in the wiki. [r]" accesskey="r">Recent changes</a></li>
+				<li id="n-randompage"><a href="Mounting_a_Bib_Class_Collection.html" title="Load a random page [x]" accesskey="x">Random page</a></li>
+				<li id="n-help"><a href="Help_Contents.html" title="The place to find out.">Help</a></li>
+			</ul>
+		</div>
+	</div>
+	<div id="p-search" class="portlet">
+		<h5><label for="searchInput">Search</label></h5>
+		<div id="searchBody" class="pBody">
+			<form action="http://localhost/wiki/Special:Search" id="searchform"><div>
+				<input id="searchInput" name="search" type="text" title="Search DLXS Documentation [f]" accesskey="f" value="" />
+				<input type='submit' name="go" class="searchButton" id="searchGoButton"	value="Go" title="Go to a page with this exact name if exists" />&nbsp;
+				<input type='submit' name="fulltext" class="searchButton" id="mw-searchButton" value="Search" title="Search the pages for this text" />
+			</div></form>
+		</div>
+	</div>
+	<div class="portlet" id="p-tb">
+		<h5>Toolbox</h5>
+		<div class="pBody">
+			<ul>
+				<li id="t-whatlinkshere"><a href="Special_WhatLinksHere/CGI_Parameter_Standards.html" title="List of all wiki pages that link here [j]" accesskey="j">What links here</a></li>
+				<li id="t-recentchangeslinked"><a href="Special_RecentChangesLinked/CGI_Parameter_Standards.html" title="Recent changes in pages linked from this page [k]" accesskey="k">Related changes</a></li>
+<li id="t-specialpages"><a href="Special_SpecialPages.html" title="List of all special pages [q]" accesskey="q">Special pages</a></li>
+				<li id="t-print"><a href="http://localhost/mediawiki/index.php?title=CGI_Parameter_Standards&amp;printable=yes" title="Printable version of this page [p]" accesskey="p">Printable version</a></li>				<li id="t-permalink"><a href="http://localhost/mediawiki/index.php?title=CGI_Parameter_Standards&amp;oldid=621" title="Permanent link to this version of the page">Permanent link</a></li>			</ul>
+		</div>
+	</div>
+		</div><!-- end of the left (by default at least) column -->
+			<div class="visualClear"></div>
+			<div id="footer">
+				<div id="f-poweredbyico"><a href="http://www.mediawiki.org/"><img src="../mediawiki/skins/common/images/poweredby_mediawiki_88x31.png" alt="Powered by MediaWiki" /></a></div>
+			<ul id="f-list">
+				<li id="lastmod"> This page was last modified on 13 August 2007, at 21:21.</li>
+				<li id="viewcount">This page has been accessed 1,756 times.</li>
+				<li id="privacy"><a href="DLXS_Documentation_Privacy_policy.html" title="DLXS Documentation:Privacy policy">Privacy policy</a></li>
+				<li id="about"><a href="DLXS_Documentation_About.html" title="DLXS Documentation:About">About DLXS Documentation</a></li>
+				<li id="disclaimer"><a href="DLXS_Documentation_General_disclaimer.html" title="DLXS Documentation:General disclaimer">Disclaimers</a></li>
+			</ul>
+		</div>
+</div>
+
+		<script type="text/javascript">if (window.runOnloadHook) runOnloadHook();</script>
+<!-- Served in 0.114 secs. --></body>
+<!-- Mirrored from localhost/wiki/CGI_Parameter_Standards by HTTrack Website Copier/3.x [XR&CO'2014], Mon, 03 Feb 2025 00:30:56 GMT -->
+</html>

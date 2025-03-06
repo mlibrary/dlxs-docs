@@ -1,0 +1,327 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en" dir="ltr">
+	
+<!-- Mirrored from localhost/wiki/Authentication_and_Authorization by HTTrack Website Copier/3.x [XR&CO'2014], Mon, 03 Feb 2025 00:25:28 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=UTF-8" /><!-- /Added by HTTrack -->
+<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+		<meta name="generator" content="MediaWiki 1.13.5" />
+		<meta name="keywords" content="Authentication and Authorization,DLXS Wiki,Example Apache virtual host configuration,Installation Instructions" />
+		<link rel="shortcut icon" href="http://localhost/favicon.ico" />
+		<link rel="search" type="application/opensearchdescription+xml" href="http://localhost/mediawiki/opensearch_desc.php" title="DLXS Documentation (en)" />
+		<link rel="alternate" type="application/rss+xml" title="DLXS Documentation RSS Feed" href="http://localhost/mediawiki/index.php?title=Special:RecentChanges&amp;feed=rss" />
+		<link rel="alternate" type="application/atom+xml" title="DLXS Documentation Atom Feed" href="http://localhost/mediawiki/index.php?title=Special:RecentChanges&amp;feed=atom" />
+		<title>Authentication and Authorization - DLXS Documentation</title>
+		<style type="text/css" media="screen, projection">/*<![CDATA[*/
+			@import "../mediawiki/skins/common/sharedfa7c.css?164";
+			@import "../mediawiki/skins/monobook/mainfa7c.css?164";
+		/*]]>*/</style>
+		<link rel="stylesheet" type="text/css" media="print" href="../mediawiki/skins/common/commonPrintfa7c.css?164" />
+		<!--[if lt IE 5.5000]><style type="text/css">@import "/mediawiki/skins/monobook/IE50Fixes.css?164";</style><![endif]-->
+		<!--[if IE 5.5000]><style type="text/css">@import "/mediawiki/skins/monobook/IE55Fixes.css?164";</style><![endif]-->
+		<!--[if IE 6]><style type="text/css">@import "/mediawiki/skins/monobook/IE60Fixes.css?164";</style><![endif]-->
+		<!--[if IE 7]><style type="text/css">@import "/mediawiki/skins/monobook/IE70Fixes.css?164";</style><![endif]-->
+		<!--[if lt IE 7]><script type="text/javascript" src="/mediawiki/skins/common/IEFixes.js?164"></script>
+		<meta http-equiv="imagetoolbar" content="no" /><![endif]-->
+		
+		<script type= "text/javascript">/*<![CDATA[*/
+var skin = "monobook";
+var stylepath = "/mediawiki/skins";
+var wgArticlePath = "/wiki/$1";
+var wgScriptPath = "/mediawiki";
+var wgScript = "http://localhost/mediawiki/index.php";
+var wgVariantArticlePath = false;
+var wgActionPaths = [];
+var wgServer = "http://localhost/";
+var wgCanonicalNamespace = "";
+var wgCanonicalSpecialPageName = false;
+var wgNamespaceNumber = 0;
+var wgPageName = "Authentication_and_Authorization";
+var wgTitle = "Authentication and Authorization";
+var wgAction = "view";
+var wgArticleId = "23";
+var wgIsArticle = true;
+var wgUserName = null;
+var wgUserGroups = null;
+var wgUserLanguage = "en";
+var wgContentLanguage = "en";
+var wgBreakFrames = false;
+var wgCurRevisionId = "3150";
+var wgVersion = "1.13.5";
+var wgEnableAPI = true;
+var wgEnableWriteAPI = false;
+var wgRestrictionEdit = [];
+var wgRestrictionMove = [];
+/*]]>*/</script>
+                
+		<script type="text/javascript" src="../mediawiki/skins/common/wikibitsfa7c.js?164"><!-- wikibits js --></script>
+		<!-- Head Scripts -->
+		<script type="text/javascript" src="../mediawiki/skins/common/ajaxfa7c.js?164"></script>
+		<script type="text/javascript" src="http://localhost/mediawiki/index.php?title=-&amp;action=raw&amp;gen=js&amp;useskin=monobook"><!-- site js --></script>
+		<style type="text/css">/*<![CDATA[*/
+@import "http://localhost/mediawiki/index.php?title=MediaWiki:Common.css&amp;usemsgcache=yes&amp;action=raw&amp;ctype=text/css&amp;smaxage=18000";
+@import "http://localhost/mediawiki/index.php?title=MediaWiki:Monobook.css&amp;usemsgcache=yes&amp;action=raw&amp;ctype=text/css&amp;smaxage=18000";
+@import "http://localhost/mediawiki/index.php?title=-&amp;action=raw&amp;gen=css&amp;maxage=18000&amp;useskin=monobook";
+/*]]>*/</style>
+	</head>
+<body class="mediawiki ns-0 ltr page-Authentication_and_Authorization">
+	<div id="globalWrapper">
+		<div id="column-content">
+	<div id="content">
+		<a name="top" id="top"></a>
+				<h1 class="firstHeading">Authentication and Authorization</h1>
+		<div id="bodyContent">
+			<h3 id="siteSub">From DLXS Documentation</h3>
+			<div id="contentSub"></div>
+									<div id="jump-to-nav">Jump to: <a href="#column-one">navigation</a>, <a href="#searchInput">search</a></div>			<!-- start content -->
+			<p><a href="DLXS_Wiki.html" title="DLXS Wiki">Main Page</a> &gt; Authentication and Authorization
+</p>
+<table id="toc" class="toc" summary="Contents"><tr><td><div id="toctitle"><h2>Contents</h2></div>
+<ul>
+<li class="toclevel-1"><a href="#Definitions"><span class="tocnumber">1</span> <span class="toctext">Definitions</span></a></li>
+<li class="toclevel-1"><a href="#Overview"><span class="tocnumber">2</span> <span class="toctext">Overview</span></a></li>
+<li class="toclevel-1"><a href="#Setting_the_List.28s.29_of_Accessible.2FAuthorized_Collections"><span class="tocnumber">3</span> <span class="toctext">Setting the List(s) of Accessible/Authorized Collections</span></a>
+<ul>
+<li class="toclevel-2"><a href="#Using_Static_Settings_to_Set_the_Collections_Lists"><span class="tocnumber">3.1</span> <span class="toctext">Using Static Settings to Set the Collections Lists</span></a></li>
+<li class="toclevel-2"><a href="#Using_a_Custom_.28Dynamic.29_Authorization_System_to_Set_the_Collections_Lists"><span class="tocnumber">3.2</span> <span class="toctext">Using a Custom (Dynamic) Authorization System to Set the Collections Lists</span></a></li>
+</ul>
+</li>
+<li class="toclevel-1"><a href="#Setting_Up_Authentication_For_Use_With_DLXS"><span class="tocnumber">4</span> <span class="toctext">Setting Up Authentication For Use With DLXS</span></a>
+<ul>
+<li class="toclevel-2"><a href="#Using_Basic_Authentication"><span class="tocnumber">4.1</span> <span class="toctext">Using Basic Authentication</span></a></li>
+<li class="toclevel-2"><a href="#Using_a_Custom_Authentication_System"><span class="tocnumber">4.2</span> <span class="toctext">Using a Custom Authentication System</span></a></li>
+</ul>
+</li>
+<li class="toclevel-1"><a href="#An_Example_of_a_Lightweight.2C_Semi-secure_Authentication_and_Authorization_System"><span class="tocnumber">5</span> <span class="toctext">An Example of a Lightweight, Semi-secure Authentication and Authorization System</span></a></li>
+<li class="toclevel-1"><a href="#Authentication_and_Authorization_.28AUTHNZ.29_Extension_Module"><span class="tocnumber">6</span> <span class="toctext">Authentication and Authorization (AUTHNZ) Extension Module</span></a></li>
+</ul>
+</td></tr></table><script type="text/javascript"> if (window.showTocToggle) { var tocShowText = "show"; var tocHideText = "hide"; showTocToggle(); } </script>
+<a name="Definitions"></a><h2><span class="editsection">[<a href="http://localhost/mediawiki/index.php?title=Authentication_and_Authorization&amp;action=edit&amp;section=1" title="Edit section: Definitions">edit</a>]</span> <span class="mw-headline">Definitions</span></h2>
+<p>It is important to clarify the meanings of the terms authentication and authorization in the following discussion.  
+</p>
+<dl><dt>Authentication</dt><dd> is the process by which the <i>identity</i> of a user trying to access resources is established.
+</dd></dl>
+<dl><dt>Authorization</dt><dd> is the process by which the system establishes the <i>resources</i> an authenticated use is  entitled to access.  So, for instance, a user may be authenticated but authorized to see some resources and not others, depending upon the institution they belong to.
+</dd></dl>
+<a name="Overview"></a><h2><span class="editsection">[<a href="http://localhost/mediawiki/index.php?title=Authentication_and_Authorization&amp;action=edit&amp;section=2" title="Edit section: Overview">edit</a>]</span> <span class="mw-headline">Overview</span></h2>
+<p>The system uses three variables in the web server (CGI) environment for authentication and authorization operations.
+</p><p>The variables which determine the collections the current user is authorized to access are:
+</p><p><code><b>AUTHZD_COLL</b></code>
+</p>
+<dl><dd>a colon-separated list of collection identifiers that the current user is explicitly authorized to access; i.e., authorized collections
+</dd></dl>
+<p><code><b>PUBLIC_COLL</b></code>
+</p>
+<dl><dd>a colon-separated list of collection identifiers that the current user may access without explicit authorization; i.e., public collections
+</dd></dl>
+<p>and the variable that contains the username of the current authenticated user (for middleware such as the Collection Manager that requires you to log in) is:
+</p><p><code><b>REMOTE_USER</b></code>
+</p>
+<dl><dd>the username of the current authenticated user (if the user has logged in)
+</dd></dl>
+<p>To set up authentication and authorization in DLXS, mechanisms must be put in place to set the values of these variables according to your requirements. The following sections contain several examples of different methods to do this.
+</p><p><b>Important note</b>: the collection identifier lists in <code>AUTHZD_COLL</code> and <code>PUBLIC_COLL</code> must begin and end with a colon, and be colon-separated.
+</p>
+<a name="Setting_the_List.28s.29_of_Accessible.2FAuthorized_Collections"></a><h2><span class="editsection">[<a href="http://localhost/mediawiki/index.php?title=Authentication_and_Authorization&amp;action=edit&amp;section=3" title="Edit section: Setting the List(s) of Accessible/Authorized Collections">edit</a>]</span> <span class="mw-headline">Setting the List(s) of Accessible/Authorized Collections</span></h2>
+<a name="Using_Static_Settings_to_Set_the_Collections_Lists"></a><h3><span class="editsection">[<a href="http://localhost/mediawiki/index.php?title=Authentication_and_Authorization&amp;action=edit&amp;section=4" title="Edit section: Using Static Settings to Set the Collections Lists">edit</a>]</span> <span class="mw-headline">Using Static Settings to Set the Collections Lists</span></h3>
+<p>Probably the simplest way to set the list of accessible/authorized collections is to statically set the just the <code>PUBLIC_COLL</code> environment variable in the web server virtual host configuration(s). The advantage of this approach is that it is easy and fast; the disadvantage is that it is not very flexible: every user accessing the DLXS server will have the same access permissions. This approach works particularly well for a server which hosts only public collections, since hosting non-public collections generally entails allowing access to some users and not to others. For more information on setting static environment variables with the Apache web server, consult the documentation for the SetEnv configuration directive at the Apache server home page.
+</p><p>The DLXS installation process creates a partial Apache configuration file that uses static settings as an example for you to work from. For more information about this example file, see the Example <a href="Example_Apache_virtual_host_configuration.html" title="Example Apache virtual host configuration">Apache config sample files documentation</a>.
+</p>
+<a name="Using_a_Custom_.28Dynamic.29_Authorization_System_to_Set_the_Collections_Lists"></a><h3><span class="editsection">[<a href="http://localhost/mediawiki/index.php?title=Authentication_and_Authorization&amp;action=edit&amp;section=5" title="Edit section: Using a Custom (Dynamic) Authorization System to Set the Collections Lists">edit</a>]</span> <span class="mw-headline">Using a Custom (Dynamic) Authorization System to Set the Collections Lists</span></h3>
+<p>If you require different users to have different lists of authorized resources, then you will need to put a more powerful mechanism in place to dynamically set the values of <code>AUTHZD_COLL</code> and/or <code>PUBLIC_COLL</code> based on the IP address of the user's workstation, domain name, or some other method of authentication. Depending on your requirements, this will probably involve interaction with a campus-wide authentication system combined with a database associating authenticated users with lists of authorized resources.
+</p><p>At DLPS, the environment variables above are dynamically set for use by the DLXS system by an Apache module that queries an Oracle database (for more information on this system, see DLXS Authentication and Authorization System documentation) [LINK].
+</p>
+<a name="Setting_Up_Authentication_For_Use_With_DLXS"></a><h2><span class="editsection">[<a href="http://localhost/mediawiki/index.php?title=Authentication_and_Authorization&amp;action=edit&amp;section=6" title="Edit section: Setting Up Authentication For Use With DLXS">edit</a>]</span> <span class="mw-headline">Setting Up Authentication For Use With DLXS</span></h2>
+<a name="Using_Basic_Authentication"></a><h3><span class="editsection">[<a href="http://localhost/mediawiki/index.php?title=Authentication_and_Authorization&amp;action=edit&amp;section=7" title="Edit section: Using Basic Authentication">edit</a>]</span> <span class="mw-headline">Using Basic Authentication</span></h3>
+<p>For sites with simple authentication requirements (e.g., if you only need to control several users' access to the <b>Collection Manager</b>), we recommend using standard <a href="http://en.wikipedia.org/wiki/Basic_access_authentication" class="external text" title="http://en.wikipedia.org/wiki/Basic_access_authentication" rel="nofollow">HTTP Basic Authentication</a>. Note that this mechanism is probably not what you would want to use for controlling access to your collections themselves unless access to all of your collections is available only to authenticated users. That is rarely the case.
+</p><p>Basic Authentication will ask users to enter a username and password for access to the directories you specify; after a user successfully authenticates, the environment variable <code>REMOTE_USER</code> will be set to the user's username, and then can be used by the DLXS system. For more information on configuring Basic Authentication with the Apache web server, consult the documentation at the <a href="http://httpd.apache.org/" class="external text" title="http://httpd.apache.org/" rel="nofollow">Apache server home page.</a>
+</p><p>The DLXS installation process creates a partial Apache configuration file that hard codes the <code>PUBLIC_COLL</code> environment variable for several collections and configures Basic Authentication for the Collection Manager as an example for you to work from.  This block of code must be edited further to correspond to your particular server environment. For more information about this example file, see the <a href="Example_Apache_virtual_host_configuration.html" title="Example Apache virtual host configuration">Apache config sample files documentation</a>.
+</p>
+<a name="Using_a_Custom_Authentication_System"></a><h3><span class="editsection">[<a href="http://localhost/mediawiki/index.php?title=Authentication_and_Authorization&amp;action=edit&amp;section=8" title="Edit section: Using a Custom Authentication System">edit</a>]</span> <span class="mw-headline">Using a Custom Authentication System</span></h3>
+<p>Any authentication mechanism that sets the <code>REMOTE_USER</code> environment variable (which, by the way, is conventional for all properly-written web authentication systems) will work with DLXS. There are myriad available systems, varying mainly in the specific database or file method used to store usernames and passwords. For more information on authentication modules available for the Apache web server, see the <a href="http://modules.apache.org/" class="external text" title="http://modules.apache.org/" rel="nofollow">Apache Module Registry.</a>
+</p>
+<a name="An_Example_of_a_Lightweight.2C_Semi-secure_Authentication_and_Authorization_System"></a><h2><span class="editsection">[<a href="http://localhost/mediawiki/index.php?title=Authentication_and_Authorization&amp;action=edit&amp;section=9" title="Edit section: An Example of a Lightweight, Semi-secure Authentication and Authorization System">edit</a>]</span> <span class="mw-headline">An Example of a Lightweight, Semi-secure Authentication and Authorization System</span></h2>
+<p>If it will suffice to give your users additional access to a fixed list of restricted resources limited by either or both of:
+</p>
+<ul><li> the IP address of the user's workstation
+</li><li> the user's username in a static list you maintain by hand
+</li></ul>
+<p>then the following setup may meet your needs.  It is a mechanism to dynamically set the value of <code>AUTHZD_COLL</code> based on the IP address of the user's workstation or on a user's username (which you maintain together with a password in an Apache htpasswd file).  The mechanism uses HTTP Basic Authentication and Apache web server configuration to set <code>AUTHZD_COLL</code> and optionally  <code>REMOTE_USER</code>, should the user need to login from outside the IP address range.
+</p><p>The first component of the mechanism consists of two Apache web server Directory configurations. 
+</p>
+<pre>   &lt;Directory "/usr/local/dlxs/cgi"&gt; 
+     # 
+     # manually set DLXS authorization 
+     #
+     # public 
+     SetEnv PUBLIC_COLL=:MMM:NNN:
+     # non-public
+     # IP address implies authorization 
+     SetEnvIf Remote_Addr "^AAA[.]BBB[.]" dlxs_authzd=true
+     # authentication implies authorization 
+     SetEnvIf Cookie "session=4g28dh5bfh" dlxs_authzd=true
+     SetEnvIf dlxs_authzd "true" AUTHZD_COLL=:XXX:YYY: 
+   &lt;/Directory&gt;
+</pre>
+<pre>   &lt;Directory "/usr/local/dlxs/cgi/login"&gt; 
+     AuthName "State University Digital Library Collections" 
+     AuthType Basic
+     AuthUserFile conf/htpasswd.dlxs 
+     Require valid-user
+     Satisfy all 
+   &lt;/Directory&gt;
+</pre>
+<p>Make these edits:
+</p>
+<ul><li>change AAA and BBB to be the first to component of you institution's IP address range
+</li><li>change XXX, YYY, etc. to the collection identifiers of the collections that have restricted access
+</li><li>change MMM, NNN, etc. to the collection identifiers of the collections that are publicly available
+</li><li>change <code>/usr/local/dlxs</code> to your <code>$DLXSROOT</code> value
+</li><li>change "State University Digital Library Collections" so the name of your institution will appear in the Basic Authentication dialog box 
+</li></ul>
+<p>Add the usernames and passwords to the htpasswd.dlxs file as explained in the <a href="Installation_Instructions.html#Apache_config_sample_files" title="Installation Instructions">Apache config sample files documentation</a> 
+</p><p>The second component of the mechanism is a small shell script to provide a mechanism to set a cookie and redirect to the user's original URL after successful Basic Authentication.
+</p>
+<pre>   #! /bin/sh
+   DOMAIN=`echo $SERVER_NAME | cut -d. -f2-`
+   echo "Content-type: text/html" 
+   echo "Set-Cookie: session=4g28dh5bfh; domain=$DOMAIN" 
+   echo ""
+   echo "&lt;html&gt;" 
+   echo "&lt;meta http-equiv=\"Refresh\" content=\"1; URL=$QUERY_STRING\"&gt;" 
+   echo "&lt;/html&gt;"
+</pre>
+<p>Finally in $DLXSROOT/lib/LibGlobals.cfg, set $gLoginUrl to
+</p>
+<pre>   http://{your server name}/cgi/login?
+</pre>
+<p>DLXS will add the current URL after the question mark (?) in the $gLoginUrl and the <code>login</code> script will redirect to that URL after setting the cookie named <code>session</code>.  The redirect to the original URL will re-run DLXS, now with the cookie set, <code>AUTHZD_COLL</code> will be set by the webserver which will see the cookie and the user will have access to the collections in <code>AUTHZD_COLL</code>.
+</p><p>This will give you a workable, albeit weak security system. In summary, here's how 
+this mechanism works:
+</p>
+<ul><li>All users (public) will access the middleware and have access to the collections listed in PUBLIC_COLL. Those within your IP address range will also have access to the restricted collections.
+</li></ul>
+<ul><li>The middleware will present a login link when appropriate. This link will take users to the tiny login script above. The Basic Authentication will control access to this script according to the entries you make in the <code>htpasswd.dlxs</code> file. Users that get in successfully will have a mysterious-looking cookie set for them and then return via &lt;meta http-equiv="Refresh" ...&gt; to the middleware.
+</li></ul>
+<ul><li>Upon return to the middleware, with the cookie set properly, AUTHZD_COLL will be populated and the user will thereby have access to the restricted collections in addition to the public ones. This authorization will last until the browser is closed (and the cookie thus discarded).
+</li></ul>
+<p>The obvious weakness here is that anyone capable of setting the cookie properly can gain access to the restricted collections. It is disguised to look like a session identifier, but it is only a disguise; any value will work.
+</p>
+<a name="Authentication_and_Authorization_.28AUTHNZ.29_Extension_Module"></a><h2><span class="editsection">[<a href="http://localhost/mediawiki/index.php?title=Authentication_and_Authorization&amp;action=edit&amp;section=10" title="Edit section: Authentication and Authorization (AUTHNZ) Extension Module">edit</a>]</span> <span class="mw-headline">Authentication and Authorization (AUTHNZ) Extension Module</span></h2>
+<p>DLXS implements access to the AUTHZD_COLL and PUBLIC_COLL environment variables described above via a perl base class called AuthNZ defined by <code>lib/AuthNZ.pm.</code> Extensions to other authentication and authorization systems can be created.  Following is a brief description of the configuration to extend this module.  
+</p><p>Looking at, for example <code>DLXSROOT/web/t/text/home.xsl</code>, observe that the href for the login link comes from the <code>&lt;ReauthLink&gt;</code> XML element. You can see this as XML by viewing your home page with "debug=xml" added to your URL. Set the global variable called <code>$gAuthenticationEnabled</code> in <code>DLXSROOT/lib/LibGlobals.pm</code> to <code>q{1}</code> (use the curly brace syntax).
+</p><p>In <code>DLXSROOT/lib/AuthNZ.cfg</code>, supply the values to your local authentication URLs in the <code>AUTHNZ_libum</code> section. <code>&lt;ReauthLink&gt;</code> XML will now be populated with those URL hrefs and you'll have a login link.
+</p><p>Note that once the user clicks on the login link they are in your local authentication system, not DLXS. It is up to your local authentication system to set the <code>REMOTE_USER</code> and <code>AUTHZD_COLL</code> and <code>PUBLIC_COLL</code> environment variables upon successful authentication and then redirect back to DLXS. This is the way DLXS interfaces to an authentication system.
+</p><p>In addition to access to these variables (which constitute the default communication with the AUTHNZ system) AuthNZ can be subclassed to interface to other AUTHNZ systems such as Shiboleth. <code>AuthNZ.pm</code> defines an object-oriented class that implements methods to:
+</p>
+<ul><li> Recognize one of several possible appropriate authentication and authorization modules
+</li><li> Load that module dynamically
+</li><li> Determine whether a requested resource is authorized by that module
+</li><li> Create side-effects in the AUTHZD_COLL and PUBLIC_COLL and REMOTE_USER environment variables and store information in the session object (dso) to record this authorization
+</li><li> Provide services supporting the creation of login and logout URLs
+</li></ul>
+<p>The AuthNZ class instantiation as an object (anzo) encapsulates and records the results of the authentication and authorization process, This object is attached to the session object (dso) for later reference.
+</p><p>The public interface to this module consists of the following routines.
+</p>
+<ul><li> HandleAuthNandAuthZ
+</li><li> BuildLoginOptionsPageURL
+</li><li> HandleSpecificLoginUrlPI
+</li><li> BuildSpecificLoginURL
+</li><li> HandleGeneralLoginUrlPI
+</li><li> GetGeneralLoginUrl
+</li><li> GetCollidLoginURL
+</li></ul>
+<p><br />
+<a href="#top" title="">Top</a>
+</p>
+<!-- 
+NewPP limit report
+Preprocessor node count: 48/1000000
+Post-expand include size: 0/2097152 bytes
+Template argument size: 0/2097152 bytes
+Expensive parser function count: 0/100
+-->
+
+<!-- Saved in parser cache with key mediawiki_dlxsdocs_15:pcache:idhash:23-0!1!0!!en!2 and timestamp 20250202211307 -->
+<div class="printfooter">
+Retrieved from "<a href="Authentication_and_Authorization.html">http://localhost/wiki/Authentication_and_Authorization</a>"</div>
+						<!-- end content -->
+			<div class="visualClear"></div>
+		</div>
+	</div>
+		</div>
+		<div id="column-one">
+	<div id="p-cactions" class="portlet">
+		<h5>Views</h5>
+		<div class="pBody">
+			<ul>
+	
+				 <li id="ca-nstab-main" class="selected"><a href="Authentication_and_Authorization.html" title="View the content page [c]" accesskey="c">Page</a></li>
+				 <li id="ca-talk" class="new"><a href="http://localhost/mediawiki/index.php?title=Talk:Authentication_and_Authorization&amp;action=edit" title="Discussion about the content page [t]" accesskey="t">Discussion</a></li>
+				 <li id="ca-edit"><a href="http://localhost/mediawiki/index.php?title=Authentication_and_Authorization&amp;action=edit" title="You can edit this page.&#10;Please use the preview button before saving. [e]" accesskey="e">Edit</a></li>
+				 <li id="ca-history"><a href="http://localhost/mediawiki/index.php?title=Authentication_and_Authorization&amp;action=history" title="Past versions of this page. [h]" accesskey="h">History</a></li>			</ul>
+		</div>
+	</div>
+	<div class="portlet" id="p-personal">
+		<h5>Personal tools</h5>
+		<div class="pBody">
+			<ul>
+				<li id="pt-login"><a href="http://localhost/mediawiki/index.php?title=Special:UserLogin&amp;returnto=Authentication_and_Authorization" title="You are encouraged to log in, it is not mandatory however. [o]" accesskey="o">Log in / create account</a></li>
+			</ul>
+		</div>
+	</div>
+	<div class="portlet" id="p-logo">
+		<a style="background-image: url(../dlxs15/uploads/DLXS_logo2.gif);" href="Main_Page.html" title="Visit the Main Page [z]" accesskey="z"></a>
+	</div>
+	<script type="text/javascript"> if (window.isMSIE55) fixalpha(); </script>
+	<div class='generated-sidebar portlet' id='p-navigation'>
+		<h5>Navigation</h5>
+		<div class='pBody'>
+			<ul>
+				<li id="n-mainpage-description"><a href="Main_Page.html">Main Page</a></li>
+				<li id="n-portal"><a href="DLXS_Documentation_Community_Portal.html" title="About the project, what you can do, where to find things">Community portal</a></li>
+				<li id="n-currentevents"><a href="DLXS_Documentation_Current_events.html" title="Find background information on current events">Current events</a></li>
+				<li id="n-recentchanges"><a href="Special_RecentChanges.html" title="The list of recent changes in the wiki. [r]" accesskey="r">Recent changes</a></li>
+				<li id="n-randompage"><a href="Mounting_a_Bib_Class_Collection.html" title="Load a random page [x]" accesskey="x">Random page</a></li>
+				<li id="n-help"><a href="Help_Contents.html" title="The place to find out.">Help</a></li>
+			</ul>
+		</div>
+	</div>
+	<div id="p-search" class="portlet">
+		<h5><label for="searchInput">Search</label></h5>
+		<div id="searchBody" class="pBody">
+			<form action="http://localhost/wiki/Special:Search" id="searchform"><div>
+				<input id="searchInput" name="search" type="text" title="Search DLXS Documentation [f]" accesskey="f" value="" />
+				<input type='submit' name="go" class="searchButton" id="searchGoButton"	value="Go" title="Go to a page with this exact name if exists" />&nbsp;
+				<input type='submit' name="fulltext" class="searchButton" id="mw-searchButton" value="Search" title="Search the pages for this text" />
+			</div></form>
+		</div>
+	</div>
+	<div class="portlet" id="p-tb">
+		<h5>Toolbox</h5>
+		<div class="pBody">
+			<ul>
+				<li id="t-whatlinkshere"><a href="Special_WhatLinksHere/Authentication_and_Authorization.html" title="List of all wiki pages that link here [j]" accesskey="j">What links here</a></li>
+				<li id="t-recentchangeslinked"><a href="Special_RecentChangesLinked/Authentication_and_Authorization.html" title="Recent changes in pages linked from this page [k]" accesskey="k">Related changes</a></li>
+<li id="t-specialpages"><a href="Special_SpecialPages.html" title="List of all special pages [q]" accesskey="q">Special pages</a></li>
+				<li id="t-print"><a href="http://localhost/mediawiki/index.php?title=Authentication_and_Authorization&amp;printable=yes" title="Printable version of this page [p]" accesskey="p">Printable version</a></li>				<li id="t-permalink"><a href="http://localhost/mediawiki/index.php?title=Authentication_and_Authorization&amp;oldid=3150" title="Permanent link to this version of the page">Permanent link</a></li>			</ul>
+		</div>
+	</div>
+		</div><!-- end of the left (by default at least) column -->
+			<div class="visualClear"></div>
+			<div id="footer">
+				<div id="f-poweredbyico"><a href="http://www.mediawiki.org/"><img src="../mediawiki/skins/common/images/poweredby_mediawiki_88x31.png" alt="Powered by MediaWiki" /></a></div>
+			<ul id="f-list">
+				<li id="lastmod"> This page was last modified on 16 December 2011, at 15:21.</li>
+				<li id="viewcount">This page has been accessed 8,219 times.</li>
+				<li id="privacy"><a href="DLXS_Documentation_Privacy_policy.html" title="DLXS Documentation:Privacy policy">Privacy policy</a></li>
+				<li id="about"><a href="DLXS_Documentation_About.html" title="DLXS Documentation:About">About DLXS Documentation</a></li>
+				<li id="disclaimer"><a href="DLXS_Documentation_General_disclaimer.html" title="DLXS Documentation:General disclaimer">Disclaimers</a></li>
+			</ul>
+		</div>
+</div>
+
+		<script type="text/javascript">if (window.runOnloadHook) runOnloadHook();</script>
+<!-- Served in 0.120 secs. --></body>
+<!-- Mirrored from localhost/wiki/Authentication_and_Authorization by HTTrack Website Copier/3.x [XR&CO'2014], Mon, 03 Feb 2025 00:25:31 GMT -->
+</html>

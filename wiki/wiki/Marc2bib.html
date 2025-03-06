@@ -1,0 +1,665 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en" dir="ltr">
+	
+<!-- Mirrored from localhost/wiki/Marc2bib.pl by HTTrack Website Copier/3.x [XR&CO'2014], Mon, 03 Feb 2025 00:40:46 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=UTF-8" /><!-- /Added by HTTrack -->
+<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+		<meta name="generator" content="MediaWiki 1.13.5" />
+		<meta name="keywords" content="Marc2bib.pl,DLXS Wiki,Mounting Collections: Class-specific Steps,Mounting a Bib Class Collection,Preparing BibClass Data" />
+		<link rel="shortcut icon" href="http://localhost/favicon.ico" />
+		<link rel="search" type="application/opensearchdescription+xml" href="http://localhost/mediawiki/opensearch_desc.php" title="DLXS Documentation (en)" />
+		<link rel="alternate" type="application/rss+xml" title="DLXS Documentation RSS Feed" href="http://localhost/mediawiki/index.php?title=Special:RecentChanges&amp;feed=rss" />
+		<link rel="alternate" type="application/atom+xml" title="DLXS Documentation Atom Feed" href="http://localhost/mediawiki/index.php?title=Special:RecentChanges&amp;feed=atom" />
+		<title>Marc2bib.pl - DLXS Documentation</title>
+		<style type="text/css" media="screen, projection">/*<![CDATA[*/
+			@import "../mediawiki/skins/common/sharedfa7c.css?164";
+			@import "../mediawiki/skins/monobook/mainfa7c.css?164";
+		/*]]>*/</style>
+		<link rel="stylesheet" type="text/css" media="print" href="../mediawiki/skins/common/commonPrintfa7c.css?164" />
+		<!--[if lt IE 5.5000]><style type="text/css">@import "/mediawiki/skins/monobook/IE50Fixes.css?164";</style><![endif]-->
+		<!--[if IE 5.5000]><style type="text/css">@import "/mediawiki/skins/monobook/IE55Fixes.css?164";</style><![endif]-->
+		<!--[if IE 6]><style type="text/css">@import "/mediawiki/skins/monobook/IE60Fixes.css?164";</style><![endif]-->
+		<!--[if IE 7]><style type="text/css">@import "/mediawiki/skins/monobook/IE70Fixes.css?164";</style><![endif]-->
+		<!--[if lt IE 7]><script type="text/javascript" src="/mediawiki/skins/common/IEFixes.js?164"></script>
+		<meta http-equiv="imagetoolbar" content="no" /><![endif]-->
+		
+		<script type= "text/javascript">/*<![CDATA[*/
+var skin = "monobook";
+var stylepath = "/mediawiki/skins";
+var wgArticlePath = "/wiki/$1";
+var wgScriptPath = "/mediawiki";
+var wgScript = "http://localhost/mediawiki/index.php";
+var wgVariantArticlePath = false;
+var wgActionPaths = [];
+var wgServer = "http://localhost/";
+var wgCanonicalNamespace = "";
+var wgCanonicalSpecialPageName = false;
+var wgNamespaceNumber = 0;
+var wgPageName = "Marc2bib.html";
+var wgTitle = "Marc2bib.html";
+var wgAction = "view";
+var wgArticleId = "198";
+var wgIsArticle = true;
+var wgUserName = null;
+var wgUserGroups = null;
+var wgUserLanguage = "en";
+var wgContentLanguage = "en";
+var wgBreakFrames = false;
+var wgCurRevisionId = "1789";
+var wgVersion = "1.13.5";
+var wgEnableAPI = true;
+var wgEnableWriteAPI = false;
+var wgRestrictionEdit = [];
+var wgRestrictionMove = [];
+/*]]>*/</script>
+                
+		<script type="text/javascript" src="../mediawiki/skins/common/wikibitsfa7c.js?164"><!-- wikibits js --></script>
+		<!-- Head Scripts -->
+		<script type="text/javascript" src="../mediawiki/skins/common/ajaxfa7c.js?164"></script>
+		<script type="text/javascript" src="http://localhost/mediawiki/index.php?title=-&amp;action=raw&amp;gen=js&amp;useskin=monobook"><!-- site js --></script>
+		<style type="text/css">/*<![CDATA[*/
+@import "http://localhost/mediawiki/index.php?title=MediaWiki:Common.css&amp;usemsgcache=yes&amp;action=raw&amp;ctype=text/css&amp;smaxage=18000";
+@import "http://localhost/mediawiki/index.php?title=MediaWiki:Monobook.css&amp;usemsgcache=yes&amp;action=raw&amp;ctype=text/css&amp;smaxage=18000";
+@import "http://localhost/mediawiki/index.php?title=-&amp;action=raw&amp;gen=css&amp;maxage=18000&amp;useskin=monobook";
+/*]]>*/</style>
+	</head>
+<body class="mediawiki ns-0 ltr page-Marc2bib_pl">
+	<div id="globalWrapper">
+		<div id="column-content">
+	<div id="content">
+		<a name="top" id="top"></a>
+				<h1 class="firstHeading">Marc2bib.pl</h1>
+		<div id="bodyContent">
+			<h3 id="siteSub">From DLXS Documentation</h3>
+			<div id="contentSub"></div>
+									<div id="jump-to-nav">Jump to: <a href="#column-one">navigation</a>, <a href="#searchInput">search</a></div>			<!-- start content -->
+			<p><a href="DLXS_Wiki.html" title="DLXS Wiki">Main Page</a> &gt; <a href="Mounting_Collections__Class-specific_Steps.html" title="Mounting Collections: Class-specific Steps">Mounting Collections: Class-specific Steps</a> &gt; <a href="Mounting_a_Bib_Class_Collection.html" title="Mounting a Bib Class Collection">Mounting a Bib Class Collection</a> &gt; <a href="Preparing_BibClass_Data.html" title="Preparing BibClass Data">Preparing BibClass Data</a> &gt; marc2bib.pl
+</p>
+<hr />
+<pre>
+#!/l/local/bin/perl
+
+#
+#
+# added better character support (borrowed from MARC.pm), 20000815, jpw
+
+$count = &quot;0&quot;;
+
+# Set input file from command line or from default
+
+if ( $#ARGV &gt;= 0 )
+   { $inputfile = $ARGV[0]; }
+else
+   { $inputfile = &quot;records.marc&quot;; }
+
+open (NOTIS, $inputfile) or die &quot;ERROR: Unable to open input file --&quot;;
+
+# grab all the notis ids/ root paths extents and titles from the moa lists
+
+while (&lt;NOTIS&gt;) {
+        chop;
+        
+	local ($notis, $root, $pageextent, $moatitle)= split (/\|\|\|/, $_);
+        
+	$EXTENT{$notis} =$pageextent;
+	$MOATITLE{$notis} = $moatitle;
+	
+
+}
+
+#been running this on each separate file
+$/ = &quot;\035&quot;;
+$field = &quot;\036&quot;;
+$subfield = &quot;\037&quot;;
+
+$index = 0;
+
+
+while (&lt;&gt;) {
+
+    chomp;
+
+    my(%record);
+
+    $record{'leader'} = substr($_, 0, 24);
+    $record{'logical_record_length'} = substr($record{'leader'}, 0, 5);
+    $record{'record_status'} = substr($record{'leader'}, 5, 1);
+    $record{'type_of_record'} = substr($record{'leader'}, 6, 1);
+    $record{'bibliographic_level'} = substr($record{'leader'}, 7, 1);
+    $record{'type_of_control'} = substr($record{'leader'}, 8, 1);
+    $record{'undefined'} = substr($record{'leader'}, 9, 1);
+    $record{'indicator_count'} = substr($record{'leader'}, 10, 1);
+    $record{'subfield_code_count'} = substr($record{'leader'}, 11, 1);
+    $record{'base_address_of_data'} = substr($record{'leader'}, 12, 5);
+    $record{'encoding_level'} = substr($record{'leader'}, 17, 1);
+    $record{'descriptive_cataloging_form'} = substr($record{'leader'}, 18, 1);
+    $record{'linked_record_requirement'} = substr($record{'leader'}, 19, 1);
+    $record{'entry_map'} = substr($record{'leader'}, 20, 4);
+    ## entry_map is more complicated by the standard, but apparently
+    ## only ever holds default values so far...
+
+    $record{'all_data'} = substr($_, $record{'base_address_of_data'});
+
+    substr($_, 0, 24) = '';
+
+    while ($_ =~ s,^(\d{12}),,) {
+	my($entry) = $1;
+	my($tag) = substr($entry, 0, 3);
+
+        #this accomodates that fact that sometimes there are multiples of a single field
+
+	foreach $oldtag (sort(keys (%record))) {
+	    if ($tag eq $oldtag) {
+		$tag=&quot;$tag&quot; . &quot;a&quot;;
+
+	    }
+	}
+	my($field_length) = substr($entry, 3, 4);
+	my($fl) = $field_length;
+	$fl =~ s,^0+,,;
+	my($starting_character_position) = substr($entry, 7, 5);
+	my($scp) = $starting_character_position;
+	$scp =~ s,^0+,,;
+	$record{&quot;$tag&quot;}{&quot;field_length&quot;} = $field_length;
+	$record{&quot;$tag&quot;}{&quot;starting_character_position&quot;} = 
+	    $starting_character_position;
+	$record{&quot;$tag&quot;}{&quot;data&quot;} = substr($record{'all_data'}, $scp, $fl);
+	$record{&quot;$tag&quot;}{&quot;data&quot;} =~ s,$field,,;
+# jpw       if (! ($tag =~ m,(260),) )
+# jpw          { $record{&quot;$tag&quot;}{&quot;data&quot;} =~ s,$subfield([b-z]),&nbsp;; ,g; }
+        $record{&quot;$tag&quot;}{&quot;data&quot;} =~ s,$subfield(\w),|lesssubtag|M.\u$1|moresubtag|,g;
+    }
+
+    foreach $field (sort(keys (%record))) {
+
+
+ 	if ($field =~ m,(^\d{3}$|^\d{3}\w+$),) {
+
+	    $inform = &quot;$record{$field}{'data'}&quot;;
+	    $inform =~ s,\&amp;,\&amp;,g;
+	    $inform =~ s,&lt;,\&amp;lt\;,g;
+	    $inform =~ s,&gt;,\&amp;gt\;,g;
+	    $inform =~ s,\|lesssubtag\|,&lt;,g;
+	    $inform =~ s,\|moresubtag\|,&gt;,g;
+	    $inform =~ s,&lt;(M.\w)&gt;([^&lt;]*),&lt;$1&gt;$2&lt;/$1&gt;,g;
+	    $inform =~ s,&lt;(M.\w)&gt;([^&lt;]*)$,&lt;$1&gt;$2&lt;/$1&gt;,g;
+	    $inform =~ s,^\s+,,g;
+	    $inform =~ s,^\d+\s?&lt;,&lt;,g;
+	    $inform =~ s,^\d+\?\s?&lt;,&lt;,g;
+	    $inform =~ s,^\?+\s?&lt;,&lt;,g;
+            
+# jpw            if (!($field =~ m,(260),)) {
+# jpw               $inform =~ s,&lt;M.A&gt;,,g;
+# jpw               $inform =~ s,&lt;/M.A&gt;,,g;
+# jpw            }
+            $inform =~ s,&lt;M.[0-9]&gt;[^&lt;]*&lt;/M.[0-9]&gt;,,g;
+	    
+	$inform =~ s,\x1b,\&amp;esc;,g;	# escape
+	$inform =~ s,\x24,\&amp;dollar;,g;	# dollar sign
+	$inform =~ s,\x5c,\&amp;bsol;,g;	# back slash (reverse solidus)
+	$inform =~ s,\x7b,\&amp;lcub;,g;	# opening curly brace
+	$inform =~ s,\x7d,\&amp;rcub;,g;	# closing curly brace
+	$inform =~ s,\x8d,\&amp;joiner;,g;	# zero width joiner
+	$inform =~ s,\x8e,\&amp;nonjoin;,g;	# zero width non-joiner
+	$inform =~ s,\xa1,\&amp;Lstrok;,g;	# latin capital letter l with stroke
+	$inform =~ s,\xa2,\&amp;Ostrok;,g;	# latin capital letter o with stroke
+	$inform =~ s,\xa3,\&amp;Dstrok;,g;	# latin capital letter d with stroke
+	$inform =~ s,\xa4,\&THORN;,g;	# latin capital letter thorn (icelandic)
+	$inform =~ s,\xa5,\&AElig;,g;	# latin capital letter AE
+	$inform =~ s,\xa6,\&OElig;,g;	# latin capital letter OE
+	$inform =~ s,\xa7,\&amp;softsign;,g;	# modifier letter soft sign
+	$inform =~ s,\xa8,\&middot;,g;	# middle dot
+	$inform =~ s,\xa9,\&amp;flat;,g;	# musical flat sign
+	$inform =~ s,\xaa,\&reg;,g;	# registered sign
+	$inform =~ s,\xab,\&plusmn;,g;	# plus-minus sign
+	$inform =~ s,\xac,\&amp;Ohorn;,g;	# latin capital letter o with horn
+	$inform =~ s,\xad,\&amp;Uhorn;,g;	# latin capital letter u with horn
+	$inform =~ s,\xae,\&amp;mlrhring;,g;	# modifier letter right half ring (alif)
+	$inform =~ s,\xb0,\&amp;mllhring;,g;	# modifier letter left half ring (ayn)
+	$inform =~ s,\xb1,\&amp;lstrok;,g;	# latin small letter l with stroke
+	$inform =~ s,\xb2,\&amp;ostrok;,g;	# latin small letter o with stroke
+	$inform =~ s,\xb3,\&amp;dstrok;,g;	# latin small letter d with stroke
+	$inform =~ s,\xb4,\&thorn;,g;	# latin small letter thorn (icelandic)
+	$inform =~ s,\xb5,\&aelig;,g;	# latin small letter ae
+	$inform =~ s,\xb6,\&oelig;,g;	# latin small letter oe
+	$inform =~ s,\xb7,\&amp;hardsign;,g;	# modifier letter hard sign
+	$inform =~ s,\xb8,\&amp;inodot;,g;	# latin small letter dotless i
+	$inform =~ s,\xb9,\&pound;,g;	# pound sign
+	$inform =~ s,\xba,\&eth;,g;	# latin small letter eth
+	$inform =~ s,\xbc,\&amp;ohorn;,g;	# latin small letter o with horn
+	$inform =~ s,\xbd,\&amp;uhorn;,g;	# latin small letter u with horn
+	$inform =~ s,\xc0,\&deg;,g;	# degree sign
+	$inform =~ s,\xc1,\&amp;scriptl;,g;	# latin small letter script l
+	$inform =~ s,\xc2,\&amp;phono;,g;	# sound recording copyright
+	$inform =~ s,\xc3,\&copy;,g;	# copyright sign
+	$inform =~ s,\xc4,\&amp;sharp;,g;	# sharp
+	$inform =~ s,\xc5,\&iquest;,g;	# inverted question mark
+	$inform =~ s,\xc6,\&iexcl;,g;	# inverted exclamation mark
+	$inform =~ s,\xe0(.),\&amp;$1hooka;,g;	# combining hook above
+	$inform =~ s,\xe1(.),\&amp;$1grave;,g;	# combining grave
+	$inform =~ s,\xe2(.),\&amp;$1acute;,g;	# combining acute
+	$inform =~ s,\xe3(.),\&amp;$1circ;,g;	# combining circumflex
+	$inform =~ s,\xe4(.),\&amp;$1tilde;,g;	# combining tilde
+	$inform =~ s,\xe5(.),\&amp;$1macr;,g;	# combining macron
+	$inform =~ s,\xe6(.),\&amp;$1breve;,g;	# combining breve
+	$inform =~ s,\xe7(.),\&amp;$1dot;,g;	# combining dot above
+	$inform =~ s,\xe8(.),\&amp;$1uml;,g;	# combining diaeresis (umlaut)
+	$inform =~ s,\xe9(.),\&amp;$1caron;,g;	# combining hacek
+	$inform =~ s,\xea(.),\&amp;$1ring;,g;	# combining ring above
+	$inform =~ s,\xeb(.),\&amp;$1llig;,g;	# combining ligature left half
+	$inform =~ s,\xec(.),\&amp;$1rlig;,g;	# combining ligature right half
+	$inform =~ s,\xed(.),\&amp;$1rcommaa;,g;	# combining comma above right
+	$inform =~ s,\xee(.),\&amp;$1dblac;,g;	# combining double acute
+	$inform =~ s,\xef(.),\&amp;$1candra;,g;	# combining candrabindu
+	$inform =~ s,\xf0(.),\&amp;$1cedil;,g;	# combining cedilla
+	$inform =~ s,\xf1(.),\&amp;$1ogon;,g;	# combining ogonek
+	$inform =~ s,\xf2(.),\&amp;$1dotb;,g;	# combining dot below
+	$inform =~ s,\xf3(.),\&amp;$1dbldotb;,g;	# combining double dot below
+	$inform =~ s,\xf4(.),\&amp;$1ringb;,g;	# combining ring below
+	$inform =~ s,\xf5(.),\&amp;$1dblunder;,g;	# combining double underscore
+	$inform =~ s,\xf6(.),\&amp;$1under;,g;	# combining underscore
+	$inform =~ s,\xf7(.),\&amp;$1commab;,g;	# combining comma below
+	$inform =~ s,\xf8(.),\&amp;$1rcedil;,g;	# combining right cedilla
+	$inform =~ s,\xf9(.),\&amp;$1breveb;,g;	# combining breve below
+	$inform =~ s,\xfa(.),\&amp;$1ldbltil;,g;	# combining double tilde left half
+	$inform =~ s,\xfb(.),\&amp;$1rdbltil;,g;	# combining double tilde right half
+	$inform =~ s,\xfe(.),\&amp;$1commaa;,g;	# combining comma above
+# JPW's additions
+	$inform =~ s,\xd4,&lt;sub&gt;4&lt;/sub&gt;,g;	# subscript 4
+	$inform =~ s,\xd2,&lt;sub&gt;2&lt;/sub&gt;,g;	# subscript 2
+	$inform =~ s,\xb0,\&amp;lsquo\;,g;	# left single quote
+	$inform =~ s,\xae,\&amp;rsquo\;,g;	# right single quote
+	$inform =~ s,\xca,+,g;	# from Liz's work
+	    if ($field =~ m,245,) {
+		push @titles, $inform;
+	    }
+
+# uncomment this and the pressing out of SGML if a Media Union title
+            elsif ($field =~ m,035,) {
+               push @dlpsID, $inform;
+            }
+            elsif ($field =~ m,099,) {
+               push @mu_callnum, $inform;
+            }
+
+	    elsif ($field =~ m,(111|210|211|212|214|222|240|242|243|246|247),) {
+		push @othernotes, $inform;
+
+	    }
+	    elsif  ($field =~ m,(100|110|130),) {
+		push @author, $inform;
+   	    }	
+	    elsif ($field =~ m,(250|254|255|256|257|261|262|263|265),) {
+		$inform =&quot;$field--$inform&quot;;
+		push @imprint, $inform;
+
+	    }
+            elsif ($field =~ m,(260),) {
+		push @pubstmt, $inform;
+	    }            
+	    elsif ($field =~ m,(300|305|306|310|315|321|340|350|351|355|357|362),) {
+		 push @extent, $inform;
+            }
+	    elsif ($field =~ m,(400|410|411|440|490),){
+		push @series, $inform;
+	    }
+	    elsif ($field =~ m,^5,) {
+		push @notes, $inform;
+
+	    }
+	    elsif ($field =~ m,(^6|830|810),) {
+		push @subjects, $inform;
+
+	    }
+	    elsif ($field =~ m,^7,) {
+		push @addentries, $inform;
+
+	    }			# 
+	    elsif ($field =~ m,^9,) {
+		if (not $field =~ m,998,) {
+		    push @XXentries, $inform;
+
+	    }
+        }
+     }  
+    }
+	
+	$notisid = $record{'001'}{'data'};
+	$notisid =~ s,^UL,,;
+	$notisid =~ s,\s,,g;
+	if (-e &quot;sgmlout/$notisid.bib&quot;) {
+	    print &quot;$notisid duplicate\n&quot;;
+	}
+
+	$digextent = $EXTENT{$notisid};
+	$comtitle = $MOATITLE{$notisid};
+	$count ++;
+        
+        &amp;CreateTei;
+}
+
+    print $count;
+
+    
+sub CreateTei {
+    $sgmfile = &quot;sgmlout/$notisid.bib&quot;;
+    my $now = `date +&quot;%Y-%m-%d&quot;`; chop $now;
+
+    open (SGMDOC, &quot;&gt;$sgmfile&quot;) or die &quot;ERROR: Unable to open output file --&quot;;
+    print SGMDOC (qq{&lt;A ID=&quot;$notisid&quot; DT=&quot;$now&quot;&gt;});
+
+    print SGMDOC (qq{&lt;B&gt;});
+    print SGMDOC (qq{&lt;K&gt;});
+    if (@titles) {
+	foreach $item (@titles) {
+            $item =~ s,&lt;M.A&gt;,,g;
+            $item =~ s,&lt;/M.A&gt;,,g;
+            $item =~ s,&lt;M.B&gt;, ,g;
+            $item =~ s,&lt;/M.B&gt;,,g;
+            $item =~ s,&lt;M.C&gt;, / ,g;
+            $item =~ s,&lt;/M.C&gt;,,g;
+	    $item =~ s,&lt;M..&gt;, ,g;
+	    $item =~ s,&lt;/M..&gt;,,g;
+            print SGMDOC $item;
+	}
+	print SGMDOC (qq{&lt;/K&gt;});
+    }	
+
+
+
+    if (@author) {
+	foreach $item (@author) {
+	    print SGMDOC (qq{&lt;L&gt;});
+            $item =~ s,&lt;M.A&gt;,,g;
+            $item =~ s,&lt;/M.A&gt;,,g;
+            $item =~ s,&lt;M.Q&gt;, ,g;
+            $item =~ s,&lt;/M.Q&gt;,,g;
+            $item =~ s,&lt;M..&gt;, ,g;
+            $item =~ s,&lt;/M..&gt;,,g;
+            print SGMDOC $item;
+	    print SGMDOC (qq{&lt;/L&gt;});
+	}
+    }
+
+
+    print SGMDOC (qq{&lt;/B&gt;});
+
+    if (@extent) {
+	foreach $item (@extent) {
+            $item =~ s,&lt;M.A&gt;,,g;
+            $item =~ s,&lt;M..&gt;,&nbsp;; ,g;
+            $item =~ s,&lt;/M..&gt;,,g;
+	    $item = '&lt;D&gt;' . $item . '&lt;/D&gt;';
+            print SGMDOC $item;
+	}
+    }
+
+# not sure what we're losing here, but possibly edition statements. check with Jackie
+# jpw, 20 Dec. 1999
+#      if (@imprint) {
+#          $typeitem = $item;
+#          $typeitem =~ s,^([\d]{3})--.*,$1,;
+#          $item =~ s,^[\d]{3}--(.*)$,$1,;
+#          print SGMDOC (qq{&lt;AG&gt;});
+#          print SGMDOC ($item);
+#          print SGMDOC (qq{&lt;/AG&gt;});
+#      }
+
+    print SGMDOC (qq{&lt;E&gt;});
+    
+    if (@pubstmt) {
+       foreach $item (@pubstmt) {
+           $item =~ s,&lt;M.A&gt;,&lt;U&gt;,g;
+           $item =~ s,&lt;/M.A&gt;,&lt;/U&gt;,g;
+           $item =~ s,&lt;M.B&gt;,&lt;T&gt;,g;
+           $item =~ s,&lt;/M.B&gt;,&lt;/T&gt;,g;
+           $item =~ s,&lt;M.C&gt;,&lt;YR&gt;,g;
+           $item =~ s,&lt;/M.C&gt;,&lt;/YR&gt;,g;
+           $item =~ s,&lt;M.D&gt;,&lt;U&gt;,g;
+	   $item =~ s,&lt;/M.D&gt;,&lt;/U&gt;,g;
+	   $item =~ s,&lt;M.E&gt;,&lt;U&gt;,g;
+	   $item =~ s,&lt;/M.E&gt;,&lt;/U&gt;,g;
+	   $item =~ s,&lt;M.F&gt;,&lt;T&gt;,g;
+	   $item =~ s,&lt;/M.F&gt;,&lt;/T&gt;,g;
+	   $item =~ s,&lt;M.G&gt;,&lt;YR&gt;,g;
+	   $item =~ s,&lt;/M.G&gt;,&lt;/YR&gt;,g;
+           print SGMDOC $item;
+       }    
+    }
+    
+    if (@dlpsID) {
+	print SGMDOC (qq{&lt;W A=&quot;DLPSID&quot;&gt;});
+	foreach $item (@dlpsID) {
+	    $item =~ s,\(OCoLC\)[^\(]*,,g;
+	    $item =~ s,&lt;M.A&gt;,,g;
+	    $item =~ s,&lt;/M.A&gt;,,g;
+	    $item =~ s,\(DAAP\)ch,,g;
+	    $item =~ s,\(AMPO\)chd,,g;
+	    $item =~ s,\(EVD\)chd,,g;
+	    $item =~ s, *,,g;
+	    print SGMDOC $item;
+	}
+	print SGMDOC (qq{&lt;/W&gt;});
+    }
+#    print SGMDOC (qq{&lt;W A=&quot;NOTIS&quot;&gt;$notisid&lt;/W&gt;});
+#    print SGMDOC (qq{&lt;W A=&quot;CALLNO&quot;&gt;@mu_callnum&lt;/W&gt;});
+
+
+    print SGMDOC (qq{&lt;X&gt;Publicly accessible text for non-commercial applications.&lt;/X&gt;});
+    print SGMDOC (qq{&lt;/E&gt;});
+
+ if (@series) {
+	print SGMDOC (qq{&lt;F&gt;});
+    print SGMDOC (qq{&lt;K&gt;});
+    if (@titles) {
+	foreach $item (@titles) {
+            $item =~ s,&lt;M.A&gt;,,g;
+            $item =~ s,&lt;/M.A&gt;,,g;
+            $item =~ s,&lt;M.B&gt;, ,g;
+            $item =~ s,&lt;/M.B&gt;,,g;
+            $item =~ s,&lt;M.C&gt;, / ,g;
+            $item =~ s,&lt;/M.C&gt;,,g;
+	    $item =~ s,&lt;M..&gt;, ,g;
+	    $item =~ s,&lt;/M..&gt;,,g;
+            print SGMDOC $item;
+	}
+	print SGMDOC (qq{&lt;/K&gt;});
+	print SGMDOC (qq{&lt;/F&gt;});
+    }
+} 
+    
+ 
+#  These multiples of NOTESSTMTs (the G's) should be made single
+  	if (@notes) {
+	    foreach $item (@notes) {
+		$item =~ s,&lt;/?M.A&gt;,,g;
+		$item =~ s,&lt;M..&gt;, ,g;
+		$item =~ s,&lt;/M..&gt;,,g;
+		$item = '&lt;G&gt;&lt;AA&gt;' . $item . '&lt;/AA&gt;&lt;/G&gt;';
+		print SGMDOC $item;
+	    }
+      }
+  	if (@othernotes) {
+	    foreach $item (@othernotes) {
+		$item =~ s,&lt;/?M.A&gt;,,g;
+		$item =~ s,&lt;M..&gt;, ,g;
+		$item =~ s,&lt;/M..&gt;,,g;
+		$item = '&lt;G&gt;&lt;AA&gt;' . $item . '&lt;/AA&gt;&lt;/G&gt;';
+		print SGMDOC $item;
+	    }
+      }
+  	if (@XXentries) {
+	    foreach $item (@XXentries) {
+		$item =~ s,&lt;/?M.A&gt;,,g;
+		$item =~ s,&lt;M..&gt;, ,g;
+		$item =~ s,&lt;/M..&gt;,,g;
+		$item = '&lt;G&gt;&lt;AA&gt;' . $item . '&lt;/AA&gt;&lt;/G&gt;';
+		print SGMDOC $item;
+	    }
+      }
+
+  	if (@addentries) {
+	    foreach $item (@addentries) {
+		$item =~ s,&lt;/?M.A&gt;,,g;
+		$item =~ s,&lt;M..&gt;, ,g;
+		$item =~ s,&lt;/M..&gt;,,g;
+		$item = '&lt;G&gt;&lt;AA&gt;' . $item . '&lt;/AA&gt;&lt;/G&gt;';
+		print SGMDOC $item;
+	    }
+      }	
+
+    
+	if (@subjects){
+	    print SGMDOC (qq{&lt;I2&gt;&lt;SG&gt;});
+            foreach $item (@subjects) {
+		$item =~ s,&lt;/?M.A&gt;,,g;
+                $item =~ s,&lt;M..&gt;,--,g;
+		$item =~ s,&lt;/M..&gt;,,g;
+		$item = '&lt;SU&gt;' . $item . '&lt;/SU&gt;';
+                print SGMDOC $item;
+	    }
+	    print SGMDOC (qq{&lt;/SG&gt;&lt;/I2&gt;});
+	}	
+	print SGMDOC (qq{&lt;J&gt;&lt;URL&gt;http://ets.umdl.umich.edu/bin/FOO/FOO-idx?type=header\&amp;id=BAR&lt;/URL&gt;&lt;/J&gt;}); # MOA1 and MOA4
+#	print SGMDOC (qq{&lt;J&gt;&lt;URL&gt;http://www.hti.umich.edu/cgi/t/text/text-idx?c=moa\&amp;idno=$notisid&lt;/URL&gt;&lt;/J&gt;}); # MOA1 and MOA4
+#	print SGMDOC (qq{&lt;J&gt;&lt;URL&gt;http://moa.umdl.umich.edu/moa4/availability.html&lt;/URL&gt;&lt;/J&gt;}); # MOA4
+#	print SGMDOC (qq{&lt;J&gt;&lt;URL&gt;http://www.hti.umich.edu/cgi/u/umr/pageviewer?id=$notisid&lt;/URL&gt;&lt;/J&gt;}); # UMR
+#	print SGMDOC (qq{&lt;J&gt;&lt;COLLS&gt;&lt;COLL&gt;moa&lt;/COLL&gt;&lt;/COLLS&gt;}); # for MOA, need to alter to draw from colldb
+				
+
+    print SGMDOC (qq{&lt;/A&gt;\n});
+    
+    close SGMDOC;
+    @subjects = ();
+    @titles = ();
+    @mu_callnum = ();
+    @imprint = ();
+    @pubstmt = ();
+    @author = ();
+    @addentries =();
+    @XXentries =();
+    @othernotes = ();
+    @extent = ();
+    @series = ();
+    @notes = ();
+    $notisid ='';
+}
+
+
+#some error checking to make sure that we haven't mixed up materials
+
+open (PROCESS, &quot;&gt;&gt;processing&quot;);
+$testtitle = $titles[0];
+$testtitle =~ s,&lt;\w&gt;,,g;
+$testtitle =~ s,&lt;/\w&gt;,,g;
+$testtitle =~ s,\n,,g;
+$testtitle =~ s,^(\S+\s\S+\s\S+\s).*,$1,g;
+
+
+$comtitle =~ s,^(\S+\s\S+\s\S+\s).*,$1,g;
+
+
+if ($comtitle =~ m,$testtile,) {
+}
+else {
+    print PROCESS (qq{MARC: $testtitle/ MOA: $comtitle - $notisid\n\n});
+}
+
+close PROCESS;
+</pre>
+<p><a href="#top" title="">Top</a>
+</p>
+<!-- 
+NewPP limit report
+Preprocessor node count: 5/1000000
+Post-expand include size: 0/2097152 bytes
+Template argument size: 0/2097152 bytes
+Expensive parser function count: 0/100
+-->
+
+<!-- Saved in parser cache with key mediawiki_dlxsdocs_15:pcache:idhash:198-0!1!0!!en!2 and timestamp 20250202212436 -->
+<div class="printfooter">
+Retrieved from "<a href="Marc2bib.html">http://localhost/wiki/Marc2bib.pl</a>"</div>
+						<!-- end content -->
+			<div class="visualClear"></div>
+		</div>
+	</div>
+		</div>
+		<div id="column-one">
+	<div id="p-cactions" class="portlet">
+		<h5>Views</h5>
+		<div class="pBody">
+			<ul>
+	
+				 <li id="ca-nstab-main" class="selected"><a href="Marc2bib.html" title="View the content page [c]" accesskey="c">Page</a></li>
+				 <li id="ca-talk" class="new"><a href="http://localhost/mediawiki/index.php?title=Talk:Marc2bib.pl&amp;action=edit" title="Discussion about the content page [t]" accesskey="t">Discussion</a></li>
+				 <li id="ca-edit"><a href="http://localhost/mediawiki/index.php?title=Marc2bib.pl&amp;action=edit" title="You can edit this page.&#10;Please use the preview button before saving. [e]" accesskey="e">Edit</a></li>
+				 <li id="ca-history"><a href="http://localhost/mediawiki/index.php?title=Marc2bib.pl&amp;action=history" title="Past versions of this page. [h]" accesskey="h">History</a></li>			</ul>
+		</div>
+	</div>
+	<div class="portlet" id="p-personal">
+		<h5>Personal tools</h5>
+		<div class="pBody">
+			<ul>
+				<li id="pt-anonuserpage"><a href="User_172.20.0.html" title="The user page for the ip you&#039;re editing as [.]" accesskey="." class="new">172.20.0.1</a></li>
+				<li id="pt-anontalk"><a href="User_talk_172.20.0.html" title="Discussion about edits from this ip address [n]" accesskey="n" class="new">Talk for this IP</a></li>
+				<li id="pt-anonlogin"><a href="http://localhost/mediawiki/index.php?title=Special:UserLogin&amp;returnto=Marc2bib.pl" title="You are encouraged to log in, it is not mandatory however. [o]" accesskey="o">Log in / create account</a></li>
+			</ul>
+		</div>
+	</div>
+	<div class="portlet" id="p-logo">
+		<a style="background-image: url(../dlxs15/uploads/DLXS_logo2.gif);" href="Main_Page.html" title="Visit the Main Page [z]" accesskey="z"></a>
+	</div>
+	<script type="text/javascript"> if (window.isMSIE55) fixalpha(); </script>
+	<div class='generated-sidebar portlet' id='p-navigation'>
+		<h5>Navigation</h5>
+		<div class='pBody'>
+			<ul>
+				<li id="n-mainpage-description"><a href="Main_Page.html">Main Page</a></li>
+				<li id="n-portal"><a href="DLXS_Documentation_Community_Portal.html" title="About the project, what you can do, where to find things">Community portal</a></li>
+				<li id="n-currentevents"><a href="DLXS_Documentation_Current_events.html" title="Find background information on current events">Current events</a></li>
+				<li id="n-recentchanges"><a href="Special_RecentChanges.html" title="The list of recent changes in the wiki. [r]" accesskey="r">Recent changes</a></li>
+				<li id="n-randompage"><a href="Mounting_a_Bib_Class_Collection.html" title="Load a random page [x]" accesskey="x">Random page</a></li>
+				<li id="n-help"><a href="Help_Contents.html" title="The place to find out.">Help</a></li>
+			</ul>
+		</div>
+	</div>
+	<div id="p-search" class="portlet">
+		<h5><label for="searchInput">Search</label></h5>
+		<div id="searchBody" class="pBody">
+			<form action="http://localhost/wiki/Special:Search" id="searchform"><div>
+				<input id="searchInput" name="search" type="text" title="Search DLXS Documentation [f]" accesskey="f" value="" />
+				<input type='submit' name="go" class="searchButton" id="searchGoButton"	value="Go" title="Go to a page with this exact name if exists" />&nbsp;
+				<input type='submit' name="fulltext" class="searchButton" id="mw-searchButton" value="Search" title="Search the pages for this text" />
+			</div></form>
+		</div>
+	</div>
+	<div class="portlet" id="p-tb">
+		<h5>Toolbox</h5>
+		<div class="pBody">
+			<ul>
+				<li id="t-whatlinkshere"><a href="Special_WhatLinksHere/Marc2bib.html" title="List of all wiki pages that link here [j]" accesskey="j">What links here</a></li>
+				<li id="t-recentchangeslinked"><a href="Special_RecentChangesLinked/Marc2bib.html" title="Recent changes in pages linked from this page [k]" accesskey="k">Related changes</a></li>
+<li id="t-specialpages"><a href="Special_SpecialPages.html" title="List of all special pages [q]" accesskey="q">Special pages</a></li>
+				<li id="t-print"><a href="http://localhost/mediawiki/index.php?title=Marc2bib.pl&amp;printable=yes" title="Printable version of this page [p]" accesskey="p">Printable version</a></li>				<li id="t-permalink"><a href="http://localhost/mediawiki/index.php?title=Marc2bib.pl&amp;oldid=1789" title="Permanent link to this version of the page">Permanent link</a></li>			</ul>
+		</div>
+	</div>
+		</div><!-- end of the left (by default at least) column -->
+			<div class="visualClear"></div>
+			<div id="footer">
+				<div id="f-poweredbyico"><a href="http://www.mediawiki.org/"><img src="../mediawiki/skins/common/images/poweredby_mediawiki_88x31.png" alt="Powered by MediaWiki" /></a></div>
+			<ul id="f-list">
+				<li id="lastmod"> This page was last modified on 10 October 2007, at 13:38.</li>
+				<li id="viewcount">This page has been accessed 1,170 times.</li>
+				<li id="privacy"><a href="DLXS_Documentation_Privacy_policy.html" title="DLXS Documentation:Privacy policy">Privacy policy</a></li>
+				<li id="about"><a href="DLXS_Documentation_About.html" title="DLXS Documentation:About">About DLXS Documentation</a></li>
+				<li id="disclaimer"><a href="DLXS_Documentation_General_disclaimer.html" title="DLXS Documentation:General disclaimer">Disclaimers</a></li>
+			</ul>
+		</div>
+</div>
+
+		<script type="text/javascript">if (window.runOnloadHook) runOnloadHook();</script>
+<!-- Served in 0.129 secs. --></body>
+<!-- Mirrored from localhost/wiki/Marc2bib.pl by HTTrack Website Copier/3.x [XR&CO'2014], Mon, 03 Feb 2025 00:40:48 GMT -->
+</html>

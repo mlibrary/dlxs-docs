@@ -1,0 +1,922 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en" dir="ltr">
+	
+<!-- Mirrored from localhost/wiki/Image_Class_Data_Loading:_MySQL by HTTrack Website Copier/3.x [XR&CO'2014], Mon, 03 Feb 2025 00:36:20 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=UTF-8" /><!-- /Added by HTTrack -->
+<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+		<meta name="generator" content="MediaWiki 1.13.5" />
+		<meta name="keywords" content="Image Class Data Loading: MySQL,Collection Manager Field Descriptions,DLPS Development Environment,DLXS Wiki,Guidelines for Mapping to Core Categories for Image Services,Image Class Access Control,Image Class and JPEG2000,Loading Image Files,Mapping Image Structures,Mounting Collections: Class-specific Steps,Mounting an Image Class Collection" />
+		<link rel="shortcut icon" href="http://localhost/favicon.ico" />
+		<link rel="search" type="application/opensearchdescription+xml" href="http://localhost/mediawiki/opensearch_desc.php" title="DLXS Documentation (en)" />
+		<link rel="alternate" type="application/rss+xml" title="DLXS Documentation RSS Feed" href="http://localhost/mediawiki/index.php?title=Special:RecentChanges&amp;feed=rss" />
+		<link rel="alternate" type="application/atom+xml" title="DLXS Documentation Atom Feed" href="http://localhost/mediawiki/index.php?title=Special:RecentChanges&amp;feed=atom" />
+		<title>Image Class Data Loading: MySQL - DLXS Documentation</title>
+		<style type="text/css" media="screen, projection">/*<![CDATA[*/
+			@import "../mediawiki/skins/common/sharedfa7c.css?164";
+			@import "../mediawiki/skins/monobook/mainfa7c.css?164";
+		/*]]>*/</style>
+		<link rel="stylesheet" type="text/css" media="print" href="../mediawiki/skins/common/commonPrintfa7c.css?164" />
+		<!--[if lt IE 5.5000]><style type="text/css">@import "/mediawiki/skins/monobook/IE50Fixes.css?164";</style><![endif]-->
+		<!--[if IE 5.5000]><style type="text/css">@import "/mediawiki/skins/monobook/IE55Fixes.css?164";</style><![endif]-->
+		<!--[if IE 6]><style type="text/css">@import "/mediawiki/skins/monobook/IE60Fixes.css?164";</style><![endif]-->
+		<!--[if IE 7]><style type="text/css">@import "/mediawiki/skins/monobook/IE70Fixes.css?164";</style><![endif]-->
+		<!--[if lt IE 7]><script type="text/javascript" src="/mediawiki/skins/common/IEFixes.js?164"></script>
+		<meta http-equiv="imagetoolbar" content="no" /><![endif]-->
+		
+		<script type= "text/javascript">/*<![CDATA[*/
+var skin = "monobook";
+var stylepath = "/mediawiki/skins";
+var wgArticlePath = "/wiki/$1";
+var wgScriptPath = "/mediawiki";
+var wgScript = "http://localhost/mediawiki/index.php";
+var wgVariantArticlePath = false;
+var wgActionPaths = [];
+var wgServer = "http://localhost/";
+var wgCanonicalNamespace = "";
+var wgCanonicalSpecialPageName = false;
+var wgNamespaceNumber = 0;
+var wgPageName = "Image_Class_Data_Loading:_MySQL";
+var wgTitle = "Image Class Data Loading: MySQL";
+var wgAction = "view";
+var wgArticleId = "162";
+var wgIsArticle = true;
+var wgUserName = null;
+var wgUserGroups = null;
+var wgUserLanguage = "en";
+var wgContentLanguage = "en";
+var wgBreakFrames = false;
+var wgCurRevisionId = "3054";
+var wgVersion = "1.13.5";
+var wgEnableAPI = true;
+var wgEnableWriteAPI = false;
+var wgRestrictionEdit = [];
+var wgRestrictionMove = [];
+/*]]>*/</script>
+                
+		<script type="text/javascript" src="../mediawiki/skins/common/wikibitsfa7c.js?164"><!-- wikibits js --></script>
+		<!-- Head Scripts -->
+		<script type="text/javascript" src="../mediawiki/skins/common/ajaxfa7c.js?164"></script>
+		<script type="text/javascript" src="http://localhost/mediawiki/index.php?title=-&amp;action=raw&amp;gen=js&amp;useskin=monobook"><!-- site js --></script>
+		<style type="text/css">/*<![CDATA[*/
+@import "http://localhost/mediawiki/index.php?title=MediaWiki:Common.css&amp;usemsgcache=yes&amp;action=raw&amp;ctype=text/css&amp;smaxage=18000";
+@import "http://localhost/mediawiki/index.php?title=MediaWiki:Monobook.css&amp;usemsgcache=yes&amp;action=raw&amp;ctype=text/css&amp;smaxage=18000";
+@import "http://localhost/mediawiki/index.php?title=-&amp;action=raw&amp;gen=css&amp;maxage=18000&amp;useskin=monobook";
+/*]]>*/</style>
+	</head>
+<body class="mediawiki ns-0 ltr page-Image_Class_Data_Loading_MySQL">
+	<div id="globalWrapper">
+		<div id="column-content">
+	<div id="content">
+		<a name="top" id="top"></a>
+				<h1 class="firstHeading">Image Class Data Loading: MySQL</h1>
+		<div id="bodyContent">
+			<h3 id="siteSub">From DLXS Documentation</h3>
+			<div id="contentSub"></div>
+									<div id="jump-to-nav">Jump to: <a href="#column-one">navigation</a>, <a href="#searchInput">search</a></div>			<!-- start content -->
+			<p><a href="DLXS_Wiki.html" title="DLXS Wiki">Main Page</a> &gt; <a href="Mounting_Collections__Class-specific_Steps.html" title="Mounting Collections: Class-specific Steps">Mounting Collections: Class-specific Steps</a> &gt; <a href="Mounting_an_Image_Class_Collection.html" title="Mounting an Image Class Collection">Mounting an Image Class Collection</a> &gt; Image Class Data Loading: MYSQL
+</p>
+<table id="toc" class="toc" summary="Contents"><tr><td><div id="toctitle"><h2>Contents</h2></div>
+<ul>
+<li class="toclevel-1"><a href="#Requirements"><span class="tocnumber">1</span> <span class="toctext">Requirements</span></a></li>
+<li class="toclevel-1"><a href="#Introduction"><span class="tocnumber">2</span> <span class="toctext">Introduction</span></a></li>
+<li class="toclevel-1"><a href="#Preparing_and_Loading_Image_Files"><span class="tocnumber">3</span> <span class="toctext">Preparing and Loading Image Files</span></a></li>
+<li class="toclevel-1"><a href="#Configuration_for_Loading_Records"><span class="tocnumber">4</span> <span class="toctext">Configuration for Loading Records</span></a>
+<ul>
+<li class="toclevel-2"><a href="#Data_Records_Must_be_Unicode_UTF8_Encoded"><span class="tocnumber">4.1</span> <span class="toctext">Data Records Must be Unicode UTF8 Encoded</span></a></li>
+<li class="toclevel-2"><a href="#Specifying_the_Fields_to_Load"><span class="tocnumber">4.2</span> <span class="toctext">Specifying the Fields to Load</span></a></li>
+<li class="toclevel-2"><a href="#Administrative_Mappings"><span class="tocnumber">4.3</span> <span class="toctext">Administrative Mappings</span></a></li>
+<li class="toclevel-2"><a href="#Cross_Collection_Field_Mappings"><span class="tocnumber">4.4</span> <span class="toctext">Cross Collection Field Mappings</span></a></li>
+<li class="toclevel-2"><a href="#Main_Entry"><span class="tocnumber">4.5</span> <span class="toctext">Main Entry</span></a></li>
+<li class="toclevel-2"><a href="#Mapping_for_Sorting"><span class="tocnumber">4.6</span> <span class="toctext">Mapping for Sorting</span></a></li>
+<li class="toclevel-2"><a href="#Item_Level_Access"><span class="tocnumber">4.7</span> <span class="toctext">Item Level Access</span></a></li>
+<li class="toclevel-2"><a href="#Searchable_Items"><span class="tocnumber">4.8</span> <span class="toctext">Searchable Items</span></a></li>
+<li class="toclevel-2"><a href="#Data_Table_and_Media_Table"><span class="tocnumber">4.9</span> <span class="toctext">Data Table and Media Table</span></a></li>
+<li class="toclevel-2"><a href="#Searchable_Fields"><span class="tocnumber">4.10</span> <span class="toctext">Searchable Fields</span></a></li>
+</ul>
+</li>
+<li class="toclevel-1"><a href="#Loading_Data_Records"><span class="tocnumber">5</span> <span class="toctext">Loading Data Records</span></a>
+<ul>
+<li class="toclevel-2"><a href="#Overview_of_Provided_Tools"><span class="tocnumber">5.1</span> <span class="toctext">Overview of Provided Tools</span></a></li>
+<li class="toclevel-2"><a href="#Overview_of_Input_Formats"><span class="tocnumber">5.2</span> <span class="toctext">Overview of Input Formats</span></a></li>
+<li class="toclevel-2"><a href="#The_Data_Prep_Directory_and_File_Naming_Conventions"><span class="tocnumber">5.3</span> <span class="toctext">The Data Prep Directory and File Naming Conventions</span></a></li>
+<li class="toclevel-2"><a href="#Data_Record_Source_Selection_Precedence"><span class="tocnumber">5.4</span> <span class="toctext">Data Record Source Selection Precedence</span></a></li>
+<li class="toclevel-2"><a href="#Detailed_Steps"><span class="tocnumber">5.5</span> <span class="toctext">Detailed Steps</span></a></li>
+</ul>
+</li>
+<li class="toclevel-1"><a href="#Basic_Troubleshooting"><span class="tocnumber">6</span> <span class="toctext">Basic Troubleshooting</span></a>
+<ul>
+<li class="toclevel-2"><a href="#Customized_Data_Loading"><span class="tocnumber">6.1</span> <span class="toctext">Customized Data Loading</span></a></li>
+</ul>
+</li>
+</ul>
+</td></tr></table><script type="text/javascript"> if (window.showTocToggle) { var tocShowText = "show"; var tocHideText = "hide"; showTocToggle(); } </script>
+<a name="Requirements"></a><h2><span class="editsection">[<a href="http://localhost/mediawiki/index.php?title=Image_Class_Data_Loading:_MySQL&amp;action=edit&amp;section=1" title="Edit section: Requirements">edit</a>]</span> <span class="mw-headline">Requirements</span></h2>
+<ul><li> Source data must be <span class="style1">Unicode UTF8</span> encoded.
+</li><li> <span class="style1">MySQL 4.1</span> or newer is <strong>required</strong>. Image Class uses the full text search and Unicode capabilities of MySQL.
+</li><li> Using MySQL for Image Class content requires that MySQL also be used for the CollMgr Collection Database.
+</li><li> Also see: <a href="System_Requirements.html" title="System Requirements">System Requirements</a>
+</li></ul>
+<p><br />
+</p>
+<a name="Introduction"></a><h2><span class="editsection">[<a href="http://localhost/mediawiki/index.php?title=Image_Class_Data_Loading:_MySQL&amp;action=edit&amp;section=2" title="Edit section: Introduction">edit</a>]</span> <span class="mw-headline">Introduction</span></h2>
+<p>Image Class is an image database access system designed to accomodate data
+	  from a wide variety of sources for the purpose of search and retrieval
+	  on the web. Image Class provides powerful functionality for searching across
+	  multiple, uniquely defined, data collections, robust handling of multiple
+	  image files per record, and panning and zooming of very large images.</p>
+<p>The basic assumption is that a collection of digital images exists in the form of a set of well-formed data records, the only true requirement being a unique record identifier. A designated field for image filenames is also recommended, though if the images are named after the record identifier, the identifier field can double as a filename field. Image Class allows any number and type of other fields.</p>
+<p>Image Class is not a data management system. The creation and management of
+  data records happens outside of Image Class. Data managed in Oracle, FileMaker
+  Pro, Microsoft Access, Excel, and any other database system can be brought
+  in to Image Class as long as data can be exported from the management system
+  to a standard format or at least a format that is machine parsable. </p>
+<p>Image Class does not try to replicate the sometimes complex data models employed in management systems. There are far too many possibilities. Instead, Image Class relies on a simple, flattened, representation of data. This generally works well and rarely requires a compromise in search, retrieval, and display functionality. Additional data preparation steps are sometimes necessary to flatten data for ingest into Image Class. However most cases involve relatively simple and direct import.</p>
+<p>JPEG2000 is the preferred image file format for Image Class. Master images
+  can be converted to JPEG2000 using the provided command line utilities built
+  on the <a href="http://www.kakadusoftware.com/" class="external text" title="http://www.kakadusoftware.com/" rel="nofollow">Kakadu Software</a> JPEG2000
+  software development kit. JPEG2000 easily achieves 20:1 compression and includes
+  multiple levels of resolution in a single file. Also supported is the MrSID
+  format, which is a proprietary predecessor to JPEG2000, with similar qualities.
+  Tools for creating MrSID files may be licensed from <a href="http://www.lizardtech.com/" class="external text" title="http://www.lizardtech.com/" rel="nofollow">LizardTech</a>.
+  Image Class comes with the ability to decode
+  JPEG2000 and MrSID files. Out of the box Image Class can serve both of these
+  formats.</p>
+<p>Many other media formats are supported as well. Formats commonly supported
+  by web browsers are supported. Furthermore, Image Class allows an image to
+  be stored as a series of image files covering a range of sizes, and can display
+  the sizes appropriately.</p>
+<p>Image Class is not just limited to images. Basic support is included for virtually any file format including QuickTime and MP3. Use of such formats may require special data preparation and configuration that require an advanced understanding of Image Class along with assistance from DLXS staff. It depends on the situation.</p>
+<p>It is difficult to provide end-to-end documentation for the content deployment process because many aspects depend on individual situations. The following high level work flow graph might help.</p>
+<p><a href="Image_ImageClassWorkFlow.html" class="image" title="Image:ImageClassWorkFlow.jpg"><img alt="Image:ImageClassWorkFlow.jpg" src="../mediawiki/images/d/d2/ImageClassWorkFlow.jpg" width="568" height="726" border="0" /></a>
+</p><p>I highly recommend simply reading the <a href="http://www.dlxs.org/training/workshop200508/imageclass/icoutline.html" class="external text" title="http://www.dlxs.org/training/workshop200508/imageclass/icoutline.html" rel="nofollow">Image Class Collection Implementation workshop</a>. It takes a very direct and linear approach deploying an image database in Image Class. It can be read in a few minutes, and gives a good overview of the process. 
+</p><p>The remainder of this document describes in detail the tasks and tools of the data preparation process for Image Class with MySQL.
+</p>
+<a name="Preparing_and_Loading_Image_Files"></a><h2><span class="editsection">[<a href="http://localhost/mediawiki/index.php?title=Image_Class_Data_Loading:_MySQL&amp;action=edit&amp;section=3" title="Edit section: Preparing and Loading Image Files">edit</a>]</span> <span class="mw-headline">Preparing and Loading Image Files</span></h2>
+<p>Prepare image files for online use by converting to JPEG2000 or another suitable
+  and supported format. Other than a unix command line utitlity for making JPEG2000
+  files, DLXS does not include scripts for automating or otherwise managing the
+  conversion process due to the fact that workflow tends to vary radically from
+  place to place. </p>
+<p>Image Class requires that thumbnail images be generated as separate
+files. The original JPEG format is commonly used with a longest side
+pixel dimension of 100 (flexible). It works well to generate the
+JPEG2000 file first, and then to extract a low resolution image from
+the JPEG2000, scale it down to 100x100 (requires a utility such as <a href="http://www.imagemagick.org/" class="external text" title="http://www.imagemagick.org" rel="nofollow">ImageMagick</a>) and save as JPEG. Generating the thumbnail from the master is usually much slower with no real advantage in terms of quality.</p>
+<p>It is generally reasonable to target a 20:1 ratio for JPEG2000 compression. Depending on the situation, greater ratios may be possible with tolerable degradation of visual image quality. Determining the number of levels (image sizes) to include in the file is necessary. The following table suggests the number of levels to use based on the maximum pixel dimension of the image.</p>
+<table>
+<tr>
+<th>Maximum Pixel Dimension</th><th>Levels</th>
+</tr>
+<tr>
+<td>0-800</td><td>2</td>
+</tr>
+<tr>
+<td>801-1600</td><td>3</td>
+</tr>
+<tr>
+<td>1601-3200</td><td>4</td>
+</tr>
+<tr>
+
+<td>3201-6400</td><td>5</td>
+</tr>
+<tr>
+<td>6401-12800</td><td>6</td>
+</tr>
+<tr>
+<td>12801 and up</td><td>7</td>
+</tr>
+</table>
+<p>Before getting too far, read about <a href="Loading_Image_Files.html" title="Loading Image Files">Loading Image Files</a> which precisely describes how image
+    files are to be stored on the server, which may affect the naming and directory
+    structure used when generating the files.</p>
+<p><br /> 
+</p>
+<p>Please also see <a href="Image_Class_and_JPEG2000.html" title="Image Class and JPEG2000">Image Class and JPEG2000</a> for details on using the provided tools for generating JPEG2000 files.</p>
+<p>If the image files have been loaded properly and imageprep executed following instructions in the above two pages, everything should be in place to load the data records.</p>
+<p>And you should start with a basic familiarity with <a href="Working_with_the_Collection_Manager.html" title="Working with the Collection Manager">CollMgr</a>, which is a web/CGI program for configuration DLXS collections.
+
+<a name="Configuration_for_Loading_Records"></a><h2><span class="editsection">[<a href="http://localhost/mediawiki/index.php?title=Image_Class_Data_Loading:_MySQL&amp;action=edit&amp;section=4" title="Edit section: Configuration for Loading Records">edit</a>]</span> <span class="mw-headline">Configuration for Loading Records</span></h2>
+<p>The data record loading tools need certain information in order to do their job.
+</p>
+<ul><li> <a href="#Data_Records_Must_be_Unicode_UTF8_Encoded" title="">Data Records Must be Unicode UTF8 Encoded</a>
+</li><li> <a href="#Specifying_the_Fields_to_Load" title="">Specifying the Fields to Load</a>
+</li><li> <a href="#Table_of_Administrative_Mappings" title="">Table of Administrative Mappings</a>
+</li><li> <a href="#Searching_the_Entire_Record" title="">Searching the Entire Record</a>
+</li><li> <a href="#Table_of_Default_Cross_Collection_Fields" title="">Table of Default Cross Collection Fields</a>
+</li><li> <a href="#Main_Entry" title="">Main Entry</a>
+</li><li> <a href="#Mapping_for_Sorting" title="">Mapping for Sorting</a>
+</li><li> <a href="#Item_Level_Access_.28Entry_Auth.29" title="">Item Level Access (Entry Auth)</a>
+</li><li> <a href="#Searchable_Items" title="">Searchable Items</a>
+</li><li> <a href="#Data_and_Media_Table" title="">Data and Media Table</a>
+</li><li> <a href="#Searchable_Fields" title="">Searchable Fields</a>
+</li></ul>
+<p><br />
+</p>
+<a name="Data_Records_Must_be_Unicode_UTF8_Encoded"></a><h3><span class="editsection">[<a href="http://localhost/mediawiki/index.php?title=Image_Class_Data_Loading:_MySQL&amp;action=edit&amp;section=5" title="Edit section: Data Records Must be Unicode UTF8 Encoded">edit</a>]</span> <span class="mw-headline">Data Records Must be Unicode UTF8 Encoded</span></h3>
+<p>The data source file  must be UTF8 Encoded. XML exported from FileMaker Pro 6 and up is UTF8. Straight ASCII is also UTF8. If your data contains special characters (accented, etc.) it is not straight ASCII. If  it is not already UTF8, it must be converted to UTF8. Non-UTF8 data in MySQL tables
+</p>
+can be converted in place. Please read the <a href="Working_with_Unicode.html" title="Working with Unicode">Working with Unicode</a> documentation for more information. </p>
+<a name="Specifying_the_Fields_to_Load"></a><h3><span class="editsection">[<a href="http://localhost/mediawiki/index.php?title=Image_Class_Data_Loading:_MySQL&amp;action=edit&amp;section=6" title="Edit section: Specifying the Fields to Load">edit</a>]</span> <span class="mw-headline">Specifying the Fields to Load</span></h3>
+<p><a href="Collection_Manager_Field_Descriptions.html" title="Collection Manager Field Descriptions">CollMgr</a> field: <strong>field_load_maps</strong></p> 
+<p>Use CollMgr to populate the field <strong>field_load_maps</strong>. List all
+  fields to be imported from the data source file, one per line. Optionally follow
+  each field name with an abbreviation. If an abbreviation
+  is included, all subsequent references to the field must be by abbreviation.</p>
+<p>If all fields are to be loaded to Image Class and none need to be renamed or abbreviated on import, then the <strong>field_load_maps</strong> field may be left blank. However if working with a legacy collection, fields and abbreviations must be listed if <strong>previously used</strong> field abbreviations are to be maintained, which is advisable to avoid bookmark breakages.</p>
+<p>Sometimes it is helpful to abbreviate fields for clarity or brevity. Shorter names mean shorter URLs.</p>
+<p>Abbreviations must not include period. Underscore is OK, and must
+  be used in place of period for legacy collections. Try to use alphanumerics
+  and underscore only, and it is best if the first character is a character of
+  the alphabet, not a number or anything else. Also, spaces are not allowed in
+  the abbreviation.</p>
+<p>Field names in the source data file may contain spaces. Represent such spaces
+  with the underscore character in <strong>field_load_maps</strong>.</p>
+<p>Historically in Image Class the convention has been to start an abbreviation with the collid, 
+followed by underscore (previously period), and then characters representing an abbreviation of the fieldname. This is still a good convention, but not required.</p>
+<p><strong>Again, If abbreviations are specified, then abbreviations must be used in all other configurations and references to the field throughout the system.</strong></p>
+<a name="Administrative_Mappings"></a><h3><span class="editsection">[<a href="http://localhost/mediawiki/index.php?title=Image_Class_Data_Loading:_MySQL&amp;action=edit&amp;section=7" title="Edit section: Administrative Mappings">edit</a>]</span> <span class="mw-headline">Administrative Mappings</span></h3>
+<p><a href="Collection_Manager_Field_Descriptions.html" title="Collection Manager Field Descriptions">CollMgr</a> field: <strong>field_admin_maps</strong></p> 
+<p>Administrative mappings are used to mark the record identifer field, image filename fields, and other mission critical fields that facilitate the loading of data. Some Administrative Mappings are used in both data loading and searching (CGI/middleware).</p>
+<p>Additional, contextual, help for this field is available in CollMgr.</p>
+<p><br />
+</p>
+<table border="1">
+<tr> 
+<td> 
+<p><b>Admin Name Abbreviation</b>
+</p>
+</td>
+<td> 
+<p><b>Admin Name</b>
+</p>
+</td>
+<td>
+<p><strong>Used For</strong>
+</p>
+</td>
+</tr>
+
+<tr> 
+<td> 
+<p>ic_id
+</p>
+</td>
+<td> 
+<p>Record ID
+</p>
+</td>
+<td>loading, searching</td>		  
+</tr>
+<tr>
+<td>ic_all</td>
+<td>All Fields</td>
+<td>loading</td>
+</tr>
+<tr> 
+<td> 
+<p>ic_vi
+</p>
+</td>
+
+<td> 
+<p>View/Caption. Fields mapped to ic_vi are stored multiple ways. 1) They are in the Data table like all other fields. 2) They are concenated together in the istruct_caption field of the Media table. 3) When a record has multiple media items and captions, fields mapped to ic_vi are also placed in the Media table, except with the caption for multiple items appropriately split per media item. The field abbreviations are prefixed with "istruct_caption_" and all uses of these fields for searching or display should include the prefix. 
+</p>
+</td>
+<td>loading</td>		  
+</tr>
+<tr> 
+<td> 
+<p>ic_fn
+</p>
+</td>
+<td> 
+<p>Image Filename
+</p>
+</td>
+<td>loading, searching</td>		  
+</tr>
+
+<tr> 
+<td> 
+<p>dlxs_ea
+</p>
+</td>
+<td> 
+<p>Entry Auth (please see <a href="Image_Class_Access_Control.html" title="Image Class Access Control">Image Class Access Control</a>)
+</p>
+</td>
+<td>searching</td>		  
+</tr>
+<tr>
+<td>ic_exact</td>
+<td>Match the entire field value when searching. Fields mapped to ic_exact here, as an Administrative mapping, forces queries on the fields to always be exact match queries. <div class="release_15">"ic_exact" is also an option within the "searchtypes" Collection Manager field, which provides a way for the user to select how the field should be matched among other options.</div></td>
+<td>searching</td>		  
+</tr>
+<tr>
+<td>ic_range</td>
+<td>Match the field value if it is numeric and falls between two other values specified by the user. Useful for date range searching where dates are specified as sortable number (e.g., 18980121 for January 21, 1898). Mapping a field to ic_range presents the user with a way to enter two values in the search form. The field must also be in the <strong>dfltsearchflds</strong> <a href="Collection_Manager_Field_Descriptions.html" title="Collection Manager Field Descriptions">CollMgr</a> field.</td>
+<td>searching</td>		  
+</tr>
+
+<tr>
+<td>browse_striparticles</td>
+<td>Leading articles ("a", "the", etc.) are stripped off when the field value is prepped for <a href="Setting_up_Dynamic_Browsing.html" title="Setting up Dynamic Browsing">browsing</a>. This does not affect search and display in Image Class generally.</td>
+<td>loading</td>		  
+</tr><tr>
+<td>ic_xml</td>
+<td>A field containing well-formed XML must be mapped to ic_xml prior to loading for proper handling. The XML will be sent to the browser as is by the Image Class middleware, so in most cases it is best for it to be XHTML. Note that the entire contents of the field must be wrapped in XML in order for it to be well-formed.</td>
+<td>loading</td>		  
+</tr>
+</table>
+<p><br />
+</p>
+<p>Collections with multiple images per record may require advanced use of Administrative Mappings for images, also known as <a href="Mapping_Image_Structures.html" title="Mapping Image Structures">Image Structures</a>.</p>
+<p><b>Tips for successful mapping of administrative categories:</b>
+</p>
+<ul>
+  <li>You must map one and only one field to ic_id</li>
+  <li>Image files are not required of a database, so it is <b>not</b> a requirement 
+    to map ic_fn or ic_vi to fields.</li>
+  <li>If a database <b>does</b> have image files, then it is essential to map 
+    ic_fn to the field that holds image file names. Multiple fields can be mapped to ic_fn and ic_vi if necessary. See <a href="Mapping_Image_Structures.html" title="Mapping Image Structures">Mapping Image Structures</a> for more information.</li>
+  <li>It is sometimes desirable to use more than one database field for views/captions 
+    (i.e. ic_vi). Some databases have a very obvious "view" field, and other times a combination of fields provide the best view/caption. Example: "view of north facade."</li>
+  <li>Even in cases where there is only one image per record, it is a good idea 
+    to map at least one field to ic_vi, even if it is just the filename field.</li>
+  <li>ic_all when used in <strong>field_admin_maps</strong>, dictates the fields
+    to be copied together into the ic_all field in the MySQL data table. this
+    is the preferred usage. it may also be used in <strong>field_xcoll_maps</strong> (see
+    below), though to do both would be  redundant.</li>
+</ul>
+<a name="Cross_Collection_Field_Mappings"></a><h3><span class="editsection">[<a href="http://localhost/mediawiki/index.php?title=Image_Class_Data_Loading:_MySQL&amp;action=edit&amp;section=8" title="Edit section: Cross Collection Field Mappings">edit</a>]</span> <span class="mw-headline">Cross Collection Field Mappings</span></h3>
+<p><a href="Collection_Manager_Field_Descriptions.html" title="Collection Manager Field Descriptions">CollMgr</a> field: <strong>field_xcoll_maps</strong></p> 
+<p>
+Collection specific fields must be mapped to cross collection fields for the purpose of searching multiple collections simultaneously. </p>
+<p>This can include the mapping for <strong>ic_all</strong>, providing an alternative
+  way to specify which fields are searched when the user chooses to search "Anywhere
+  in Record". The preferred use of <strong>ic_all</strong> is in <strong>field_admin_maps</strong> (see above).</p>
+<p>In versions previous to DLXS 12, it was also necessary to map <strong>collid_all</strong> (e.g.,
+  sampleic_all) to ic_all, vice-versa, or the equivalent set of fields to be
+  used when searching the entire record. This is no longer necessary. It was
+  simply confusing. Now collid_all is only needed to maintain backward compatability
+  for URLs that include collid_all as a search field value (rgnX parameter).
+  If your collection preceeds DLXS12, map collid_all to ic_all in <strong>field_xcoll_maps</strong>.
+  Use <strong>ic_all</strong> everywhere else <strong>collid_all</strong> was used in the past, such as <strong>dfltsearchflds</strong>.</p>
+<p>
+Mappings influence the building of indexes at the time of data loading, and when indexes are rebuilt using provided tools.
+
+</p>
+<p>"DC"&#160;stands for <a href="http://purl.oclc.org/dc/" class="external text" title="http://purl.oclc.org/dc/" rel="nofollow">Dublin Core</a>. The 
+  cross collection fields are loosely based on Dublin Core categories. "dc_de" is an abbreviation 
+  for Dublin Core Description. Since field  names vary greatly among collections, 
+  categories are mapped to the common set of meta-categories. When multiple 
+  collections are searched together, searching is done on the meta-categories. 
+  Alternatively, a collection may be searched independently by the collection specific 
+  categories.</p>
+<p>For example, a search across multiple collections using the DC Description 
+  field searches all of the collection specific fields that have been mapped to 
+	    DC&#160;Description.</p>
+<p>Image Class uses Dublin Core by default, however cross collection fields may be created at will simply by adding newly conceived fields to field_xcoll_maps. To use the newly added fields at the group level for cross collection searching, use <a href="Working_with_the_Collection_Manager.html" title="Working with the Collection Manager">CollMgr</a> to create and/or modify the <strong>group</strong> record, adding the new field abbreviations and desired field labels to the <strong>field_labels</strong> field. Also be sure to select the desired collections in the group record.</p>
+<p>While multiple sets of cross collection fields may be used, it is probably a good idea to map all collections to Dublin Core (or something similar) so that searching across all collections is an option. It is not necessary to use every cross collection field mapping.</p>
+<ul>
+  <li>A cross collection field can be mapped to multiple collection specific fields, each separated by <strong>one</strong> space.</li>
+  <li>Collection specific fields may be mapped to multiple cross collection fields.</li>
+</ul>
+<p><br />
+</p>
+<p>Please see <a href="Guidelines_for_Mapping_to_Core_Categories_for_Image_Services.html" title="Guidelines for Mapping to Core Categories for Image Services">Guidelines for Mapping to Core Categories for Image Services</a> for detailed guidance on mapping.</p>
+<p><br />
+</p>
+<table border="1">
+<tr> 
+<th colspan="2"> 
+<p>Table of Default Cross Collection Fields
+</p>
+</th>
+</tr>
+
+<tr> 
+<td> 
+<p><b>Abbreviation</b>
+</p>
+</td>
+<td> 
+<p><b>Field</b>
+</p>
+</td>
+</tr>
+<tr> 
+<td> 
+<p>dc_ti
+</p>
+</td>
+
+<td> 
+<p>Title
+</p>
+</td>
+</tr>
+<tr> 
+<td> 
+<p>dc_cr
+</p>
+</td>
+<td> 
+<p>Creator
+</p>
+</td>
+</tr>
+
+<tr> 
+<td> 
+<p>dc_su
+</p>
+</td>
+<td> 
+<p>Subject
+</p>
+</td>
+</tr>
+<tr> 
+<td> 
+<p>dc_de
+</p>
+</td>
+<td> 
+<p>Description
+</p>
+</td>
+
+</tr>
+<tr> 
+<td> 
+<p>dc_pu
+</p>
+</td>
+<td> 
+<p>Publisher
+</p>
+</td>
+</tr>
+<tr> 
+<td> 
+<p>dc_co
+</p>
+</td>
+
+<td> 
+<p>Contributors
+</p>
+</td>
+</tr>
+<tr> 
+<td> 
+<p>dc_da
+</p>
+</td>
+<td> 
+<p>Date
+</p>
+</td>
+</tr>
+
+<tr> 
+<td> 
+<p>dc_ty
+</p>
+</td>
+<td> 
+<p>Type
+</p>
+</td>
+</tr>
+<tr> 
+<td> 
+<p>dc_fo
+</p>
+</td>
+<td> 
+<p>Format
+</p>
+</td>
+
+</tr>
+<tr> 
+<td> 
+<p>dc_id
+</p>
+</td>
+<td> 
+<p>Identifier
+</p>
+</td>
+</tr>
+<tr> 
+<td> 
+<p>dc_so
+</p>
+</td>
+
+<td> 
+<p>Source
+</p>
+</td>
+</tr>
+<tr> 
+<td> 
+<p>dc_la
+</p>
+</td>
+<td> 
+<p>Language
+</p>
+</td>
+</tr>
+
+<tr> 
+<td> 
+<p>dc_re
+</p>
+</td>
+<td> 
+<p>Relation
+</p>
+</td>
+</tr>
+<tr> 
+<td> 
+<p>dc_co
+</p>
+</td>
+<td> 
+<p>Coverage
+</p>
+</td>
+
+</tr>
+<tr> 
+<td> 
+<p>dc_ri
+</p>
+</td>
+<td> 
+<p>Rights
+</p>
+</td>
+</tr>
+<tr> 
+<td> 
+<p>dlxs_ma
+</p>
+</td>
+
+<td> 
+<p>Main Entry
+</p>
+</td>
+</tr>
+<tr> 
+<td> 
+<p>IC.misc (deprecated)
+</p>
+</td>
+<td> 
+<p>Miscellaneous
+</p>
+</td>
+</tr>
+</table>
+<a name="Main_Entry"></a><h3><span class="editsection">[<a href="http://localhost/mediawiki/index.php?title=Image_Class_Data_Loading:_MySQL&amp;action=edit&amp;section=9" title="Edit section: Main Entry">edit</a>]</span> <span class="mw-headline">Main Entry</span></h3>
+<p>Notice "dlxs_ma" in the table above. dlxs_ma is used to identify fields that 
+  should be used when displaying results in a cross collection search. It is strongly 
+  recommended that each collection have at least one field mapped to dlxs_ma. In truth, dlxs_ma is minimally utilized by the middleware, however it does serve a useful role in the full-record view, and may be used more widely in the future.</p>
+<p><br />
+</p>
+<a name="Mapping_for_Sorting"></a><h3><span class="editsection">[<a href="http://localhost/mediawiki/index.php?title=Image_Class_Data_Loading:_MySQL&amp;action=edit&amp;section=10" title="Edit section: Mapping for Sorting">edit</a>]</span> <span class="mw-headline">Mapping for Sorting</span></h3>
+<p>Image Class can sort search results by any collection specific or
+cross collection field. Cross collection fields pose an interesting
+challenge since there are often multiple collection specific fields
+mapped to a single cross collection field. Image Class sorts on the value
+of the first collection specific field in the list of
+mappings. 
+</p>
+<p><br />
+</p>
+<a name="Item_Level_Access"></a><h3><span class="editsection">[<a href="http://localhost/mediawiki/index.php?title=Image_Class_Data_Loading:_MySQL&amp;action=edit&amp;section=11" title="Edit section: Item Level Access">edit</a>]</span> <span class="mw-headline">Item Level Access</span></h3>
+<p>To gain a broader understanding of Image Class access restrictions, please see [[Image Class 
+  Access Control Summary and Examples Table]] as well as Image Class Collection 
+  <a href="Image_Class_Access_Control.html" title="Image Class Access Control">Image Class Access Control</a>.</p>
+<p><a href="Collection_Manager_Field_Descriptions.html" title="Collection Manager Field Descriptions">CollMgr</a> field: <strong>entryauth</strong></p> 
+<p>The <strong>entryauth</strong> field holds the default item access control value to be included in the media_table record for each item (image or other media file). Set the <strong>entryauth</strong> field to one of "world", collid (the actual collid), or "no access".</p>
+<p>To truly achieve item level access control, where access to each item of a collection is individually determined, the incoming data needs to have a field containing one of the three values for each record.The field must also be mapped to to <strong>dlxs_ea</strong> in <a href="Collection_Manager_Field_Descriptions.html" title="Collection Manager Field Descriptions">CollMgr</a> field <strong>field_admin_maps</strong>. Note that if the field is empty for a given record, the collid will be used. If the field value is not one of the three, the collection default will be used. "nobody" is a synonyn for "no access". "restricted" is a synonym for the collid. These synonyms may only be used in the records, and <strong>not</strong> in the entryauth <a href="Collection_Manager_Field_Descriptions.html" title="Collection Manager Field Descriptions">CollMgr</a> field.</p>
+<table border="1">
+  <tr> 
+<th width="75">Value</th><th>Restriction</th>
+</tr>
+<tr>
+<td>world</td><td>unrestricted access to full-size images.</td>
+</tr>
+<tr>
+<td>[collid]</td><td>access to full-size images restricted to authorized users of the collection. note: use the actual collid, not "[collid]".</td>
+</tr>
+<tr>
+<td>no access</td><td>access to full-size image is completely restricted. nobody can see it.</td>
+</tr>
+</table>
+<a name="Searchable_Items"></a><h3><span class="editsection">[<a href="http://localhost/mediawiki/index.php?title=Image_Class_Data_Loading:_MySQL&amp;action=edit&amp;section=12" title="Edit section: Searchable Items">edit</a>]</span> <span class="mw-headline">Searchable Items</span></h3>
+<p><a href="Collection_Manager_Field_Descriptions.html" title="Collection Manager Field Descriptions">CollMgr</a> field: <strong>searchable_items</strong></p> 
+<p>Controls display of images in search results when a record has multiple images. Values are "detail", "summary", "both". "Both" is the default value. If records only have one image, "summary" and "both" are safe choices. Read about <a href="Mapping_Image_Structures.html" title="Mapping Image Structures">Advanced Image Structures</a> for more information.</p>
+<a name="Data_Table_and_Media_Table"></a><h3><span class="editsection">[<a href="http://localhost/mediawiki/index.php?title=Image_Class_Data_Loading:_MySQL&amp;action=edit&amp;section=13" title="Edit section: Data Table and Media Table">edit</a>]</span> <span class="mw-headline">Data Table and Media Table</span></h3>
+<p><a href="Collection_Manager_Field_Descriptions.html" title="Collection Manager Field Descriptions">CollMgr</a> field: <strong>data_table</strong></p> 
+<p><a href="Collection_Manager_Field_Descriptions.html" title="Collection Manager Field Descriptions">CollMgr</a> field: <strong>media_table</strong></p> 
+<p>
+Each collection's data is loaded into a set of two MySQL tables. One is the Data Table, and the second the Media Table. The actual table names are configurable by setting the values of the <strong>data_table</strong> and <strong>media_table</strong> fields in CollMgr. The suggested convention is to base the table names on the Collection ID. For example, use the collid for the Data Table name, and the collid plus "_media" for the Media Table name.</p>
+<p>
+
+Note that in order to not disrupt access to a collection while loading new data, the data loading tools use the data_table and media_table values with "_prep" appended. Once loaded and tested, the tables can be renamed, dropping "_prep".</p>
+<p>Please see <a href="http://localhost/mediawiki/index.php?title=Image_Class_Data_and_Media_Tables&amp;action=edit&amp;redlink=1" class="new" title="Image Class Data and Media Tables (not yet written)">Image Class Data and Media Tables</a> for more information. </p>
+<a name="Searchable_Fields"></a><h3><span class="editsection">[<a href="http://localhost/mediawiki/index.php?title=Image_Class_Data_Loading:_MySQL&amp;action=edit&amp;section=14" title="Edit section: Searchable Fields">edit</a>]</span> <span class="mw-headline">Searchable Fields</span></h3>
+<p><a href="Collection_Manager_Field_Descriptions.html" title="Collection Manager Field Descriptions">CollMgr</a> field: <strong>dfltsrchflds</strong></p> 
+<p>The <strong>dfltsrchflds</strong> CollMgr field must contain the list of fields
+  (as abbreviations, when abbreviations are in use) that are to be searchable. <strong>Important:</strong> MySQL
+  index building is influenced by this list of fields. The cross collection field
+  mappings (<strong>field_xcoll_maps</strong>) are also used to determine the
+  fields to index. Changes to either of these fields may warrant rebuilding the
+  indexes if the data is not to be promptly be reloaded/indexed.</p>
+<a name="Loading_Data_Records"></a><h2><span class="editsection">[<a href="http://localhost/mediawiki/index.php?title=Image_Class_Data_Loading:_MySQL&amp;action=edit&amp;section=15" title="Edit section: Loading Data Records">edit</a>]</span> <span class="mw-headline">Loading Data Records</span></h2>
+<ul><li> <a href="#Overview_of_Provided_Tools" title="">Overview of Provided Tools</a>
+</li><li> <a href="#Overview_of_Input_Formats" title="">Overview of Input Formats</a>
+</li><li> <a href="#Data_Prep_Directory_and_File_Naming_Conventions" title="">Data Prep Directory and File Naming Conventions</a>
+</li><li> <a href="#Data_Record_Source_Selection_Precendence" title="">Data Record Source Selection Precendence</a>
+</li><li> <a href="#Detailed_Steps" title="">Detailed Steps</a>
+</li><li> <a href="#Basic_Troubleshooting" title="">Basic Troubleshooting</a>
+</li><li> <a href="#Customized_Data_Loading" title="">Customized Data Loading</a>
+</li></ul>
+<p>Loading of data for Image Class involves several complex steps that are tedious and difficult to perform without the provided tools. The image loading and configuration work of the first two steps above set the stage for a set of provided tools (Perl scripts) to handle the details of data ingest. To give you an idea of what goes on, here are some of the tasks that are handled.</p>
+<ul>
+<li>IDs are checked for uniqueness and conformance to requirements.</li>
+<li>Image filename references are linked to actual image files.</li>
+<li>Image and other media types are accurately identified and tagged for proper handling.</li>
+<li>Illegal or problematic characters are identified and sometimes filtered.</li>
+<li>When there are multiple images per record, images are linked to captions, and both are translated into Image Structures for advanced search and display functionality.</li>
+<li>Item level access restrictions are set.</li>
+<li>Field names and abbreviations are checked for conformance to requirements.</li>
+<li>MySQL tables are safely dropped and created as necessary.</li>
+</ul>
+<p><br />
+</p>
+<a name="Overview_of_Provided_Tools"></a><h3><span class="editsection">[<a href="http://localhost/mediawiki/index.php?title=Image_Class_Data_Loading:_MySQL&amp;action=edit&amp;section=16" title="Edit section: Overview of Provided Tools">edit</a>]</span> <span class="mw-headline">Overview of Provided Tools</span></h3>
+<table border="1">
+  <tr> 
+<th width="75">Tool</th><th>Function</th>
+</tr>
+<tr>
+<td>load.pl</td><td>Provides automated handling of the several steps that make up the record loading process. Allows custom modifications to be made to data in MySQL by creating a collection specific code subclass.</td>
+</tr>
+<tr>
+<td>icdbprep.pl</td><td>Called by load.pl or independently executed, it actually loads data from any one of a variety of source formats to Image Class Data and Media Tables in MySQL. May be subclassed to handle additional source formats, or variations. Also optimizes field definitions once loaded, and automatically determines which fields need to be indexed, and builds indexes. </td>
+</tr>
+<tr>
+<td>data2db.pl</td><td>Called by load.pl as needed or independently executed, it reads a data file, creates a matching MySQL table, and loads the contents of the file to the table. It is not only for use with Image Class, as it simply tries to load a data file into a simple table. Once loaded, the Image Class load.pl script creates the tables Image Class needs.
+<ul>Supported file formats:
+<li>FileMaker Pro XML using the FMPDSO grammar export option.</li>
+<li>DLXS Bib Class XML</li>
+<li>End Note v10 XML</li>
+</ul>
+<p>The FileMaker Pro XML support is the most comprehensive and thoroughly tested, and is the most useful for loading data to Image Class. If you have data in another format, and it can easily be imported in to FileMaker, it is strongly suggested that you do so even if only to export it as XML for Image Class.
+</p>
+</td>
+</tr>
+<tr><td>droptable.pl</td><td>Drops a MySQL table.</td></tr>
+<tr><td>swaptables.pl</td><td>Swaps two MySQL tables.</td></tr>
+<tr>
+  <td>prep2prod.pl</td>
+  <td>Moves Image Class Data and Media tables into production from "prep".</td></tr>
+</table>
+<p><br />
+</p>
+<a name="Overview_of_Input_Formats"></a><h3><span class="editsection">[<a href="http://localhost/mediawiki/index.php?title=Image_Class_Data_Loading:_MySQL&amp;action=edit&amp;section=17" title="Edit section: Overview of Input Formats">edit</a>]</span> <span class="mw-headline">Overview of Input Formats</span></h3>
+<p>The following formats are supported by Image Class tools for data record ingest.</p>
+<table border="1">
+  <tr> 
+<th>Format</th><th>Notes</th>
+</tr>
+<tr>
+<td>Tab Delimited  Text</td>
+<td>Field names must be in first row.</td>
+</tr>
+<tr>
+<td>FileMaker Pro HTML Table Export</td><td>Export data from FileMaker Pro as HTML.</td>
+</tr>
+<tr>
+<td>FileMaker Pro 6/7 XML (FMPDSORESULT)</td>
+<td>Export data from FileMaker Pro as XML. FileMaker offers two XML format options, use <strong>FMPDSORESULT</strong>.</td>
+</tr>
+<tr>
+<td>MySQL Table</td><td>Import data from a single MySQL table (no joins, etc.)</td>
+</tr>
+<tr>
+<td>Any Other Format</td>
+<td>Other formats can be handled by writing a Perl code subclass of <tt>$DLXSROOT/bin/i/image/recs.pm.</tt>
+  Existing subclass examples are in the <tt>$DLXSROOT/bin/i/image/recs</tt> directory. </td>
+</tr>
+
+</table>
+<p><br />
+</p>
+<p><strong>Note about Macintosh Line Breaks:</strong>Macintosh line breaks are
+  not supported by the load scripts directly. This applies to HTML and tab delimited
+  text files, but is not a factor for XML. Convert Macintosh line breaks first
+  with a Perl inline substitution.<br />
+  <code>perl -pi -e 's,\x0d,\x0a,g' [filename]</code></p>
+<a name="The_Data_Prep_Directory_and_File_Naming_Conventions"></a><h3><span class="editsection">[<a href="http://localhost/mediawiki/index.php?title=Image_Class_Data_Loading:_MySQL&amp;action=edit&amp;section=18" title="Edit section: The Data Prep Directory and File Naming Conventions">edit</a>]</span> <span class="mw-headline">The Data Prep Directory and File Naming Conventions</span></h3>
+<p>The load scripts expect the data input file to be in $DLXSROOT/prep/c/collid .</p>
+<p>The general data record input filenaming convention is to use the Collection ID appended with the string "-data" plus the filename extension. <strong>The extensions must be exacty as shown here.</strong></p>
+<p><strong>Remember to use the actual collid!</strong></p>
+<ul>
+<li>collid-data.tab</li>
+<li>collid-data.htm</li>
+<li>collid-data.xml</li>
+</ul>
+<p>When loading directly from a MySQL table, the table must be in the DLXS database, and it must be named like this:</p>
+<ul>
+<li>collid_preload</li>
+</ul>
+<p>Note that when loading data from a FileMaker Pro XML file, a collid_preload table will be generated automatically as part of the process, and deleted at the end. A pre-existing collid_preload table will be replaced without warning. </p>
+<a name="Data_Record_Source_Selection_Precedence"></a><h3><span class="editsection">[<a href="http://localhost/mediawiki/index.php?title=Image_Class_Data_Loading:_MySQL&amp;action=edit&amp;section=19" title="Edit section: Data Record Source Selection Precedence">edit</a>]</span> <span class="mw-headline">Data Record Source Selection Precedence</span></h3>
+<p>If the data is present in multiple formats, the following order of precedence is used by the load tools to select a source.</p>
+<ul>
+<li>MySQL Table</li>
+<li>FileMaker Pro XML</li>
+<li>FileMaker Pro HTML</li>
+<li>Tab Delimited ASCII Text</li>
+</ul>
+<a name="Detailed_Steps"></a><h3><span class="editsection">[<a href="http://localhost/mediawiki/index.php?title=Image_Class_Data_Loading:_MySQL&amp;action=edit&amp;section=20" title="Edit section: Detailed Steps">edit</a>]</span> <span class="mw-headline">Detailed Steps</span></h3>
+<p>Finally! All the hard stuff is done, and with a little luck, the actual loading process will be a piece of cake.</p>
+<p><strong>Check List</strong>
+<ul>
+<li>Images Loaded</li>
+<li>CollMgr Record Configured</li>
+<li>Data File In Place</li>
+</ul>
+</p>
+<p>
+Execute the following command (substituting the actual collid). This will create two tables in the DLXS MySQL database: <strong>collid_prep</strong> and <strong>collid_media_prep</strong>. It replaces existing prep tables if they exist. Production tables, if any, are not touched.</p>
+<p>
+<code><strong>$DLXSROOT/bin/i/image/load.pl c=collid</strong></code>
+</p>
+<p>When load.pl runs, uses a combination of the <a href="#Overview_of_Provided_Tools" title="">tool scripts</a> depending on the situation.</p>
+<p>
+The process can take anywhere from a few seconds to hours depending on the amount
+  of data. If it seems like it is going to take forever and you are just trying
+  it for the first time, use the <strong>maxload</strong> option to limit the number of records
+  processed.</p>
+<p><code><strong>$DLXSROOT/bin/i/image/load.pl c=collid maxload=100 </strong></code></p>
+<p><strong>Test</strong> the <strong>collid_prep</strong> and <strong>collid_media_prep</strong> tables with the middleware by adding prep=1 to the URL.</p>
+<p>If not completely satisfied with the results, make adjustments, and run load.pl again.</p>
+<p>When the collection behaves as desired, it can be moved out of preparation and into production. This generally involves two steps.</p>
+<ol>
+<li>Release the collection's Collection Database record to production using CollMgr.</li>
+<li>Rename the Data and Media prep tables.</li>
+</ol>
+<p>See the <a href="Working_with_the_Collection_Manager.html" title="Working with the Collection Manager">Collmgr documentation</a> for instructions on how to release the Collection Database record to production.</p>
+<p>The perl script prep2prod.pl can be used to rename the Data and Media prep tables for production use.</p>
+<p><strong><code>$DLXSROOT/bin/i/image/prep2prod.pl c=collid</code></strong>
+</p>
+<p>prep2prod.pl actually does several things...</p>
+<ul>
+<li>Gets the values of data_table and media_table from the Collection Database, and uses the values as the basis for all table names.</li>
+<li>Checks for the existance of prep Data and Media tables, and exits if either is not present.</li>
+<li>Renames the existing prep Data and Media Tables as "old". Prexisting "old" tables are first dropped.</li>
+<li>Renames the existing prep Data and Media Tables without the "prep", essentially putting them into production.</li>
+</ul>
+<p>prep2prod.pl uses a combination of the DLPS_DEV environment variable and the optional DLPS_DEV command line option to determine which rows of the Collection Database to read. The command line option overrides the value of the DLPS_DEV environment variable. At Michigan it, and anywhere else employing user/developer specific database rows and virtual hosts, it may be desirable to set DLPS_DEV=userid when invoking the command.</p>
+<p>For example...</p>
+<p><strong><code>$DLXSROOT/bin/i/image/prep2prod.pl c=sampleic DLPS_DEV=jweise</code></strong>
+</p>
+<p>The value of the command line option becomes obvious in the situation where production tools are being used on the command line, yet it is necessary to read development rows from the database. By default DLPS_DEV is 1, which is a good choice for most situations at most institutions. At Michigan, using the command line option to set DLPS_DEV explicitly to your username is probably more appropriate.</p>
+<p>Confused? Try reading about <a href="Working_with_the_Collection_Metadata_Database.html" title="Working with the Collection Metadata Database">Working with the Collection Metadata Database</a>.</p>
+<a name="Basic_Troubleshooting"></a><h2> <span class="mw-headline"><strong>Basic Troubleshooting</strong></span></h2>
+<p><strong>DLPS_DEV environment variable not set???</strong><br />It is important that the DLPS_DEV environment variable to be set. It dictates whether the production or release rows of the Collection Database are used to obtain configuration information. The assumption is that release rows are desired, since it is a data preparation situation. Set DLPS_DEV to 1 unless your implementation employs <a href="DLPS_Development_Environment.html#Support_for_Multiple_Virtual_Host-based_Work_Directories" title="DLPS Development Environment">working directories</a> (only Michigan does at the time of this writing) in which case set DLPS_DEV to your user id.</p>
+<p><strong>The script ran but there is only one record???</strong><br />
+Assuming there should be more than just one, chances are the ic_id field is not configured properly, or, the field_load_maps are not correct. For example, if the ID field is called "ID" in the data file, and it is mapped to collid_id in field_load_maps (ID:::collid_id) but in field_admin_maps the mapping is erroneously ic_id:::collid_idno, well, you might end up with only one record. (and for the umteenth time remember, substitue "collid" with the actuall collid.)</p> 
+<p><strong>The script ran, there are plenty of records, but none of the image files link up???</strong><br />
+
+First, make sure there is an index directory at $DLXSROOT/img/c/collid. Second, double check field configurations in CollMgr to make sure ic_fn is mapped properly in field_admin_maps, for instance. Did the script output a long list of image filenames not found? This is a sign that ic_fn might be mapped properly, but for some other reason the links are still not being made. Investigate by comparing filenames as they appear in the data records to the actual filenames in $DLXSROOT/img/c/collid.</p>
+<a name="Customized_Data_Loading"></a><h3><span class="editsection">[<a href="http://localhost/mediawiki/index.php?title=Image_Class_Data_Loading:_MySQL&amp;action=edit&amp;section=21" title="Edit section: Customized Data Loading">edit</a>]</span> <span class="mw-headline">Customized Data Loading</span></h3>
+<p>The <tt>load.pm</tt> Perl module is used by the load.pl script. load.pm can be subclassed
+  per collection to manipulate the data before and/or after loading. This is
+  a very powerful option allowing complex manipulations to take place and be
+  reliably repeated each time the data is loaded.</p>
+<p>Creating a subclass of <tt>load.pm</tt> requires a working knowledge of Perl and likely
+  SQL as well.</p>
+<p>Store subclass modules in the <tt>$DLXSROOT/bin/i/image/load</tt> directory. Name modules
+  using the convention <tt>load_collid.pm.</tt></p>
+<p>Manipulation of data using MySQL requires the data be first loaded into a
+  MySQL table. The default preloadData method in load.pm does this for FileMaker
+  Pro XML data. It loads it straight into a MySQL table named like collid_preload
+  before doing anything else. Therefore if you are working with FileMaker Pro
+  XML data and a subclass for additional manipulations is needed, it works well
+  to first call SUPER from your subclassed preloadData method.</p>
+<p>A subclass of load.pm for the workshopic collection can be found at <tt>$DLXSROOT/bin/i/image/load/load_workshopic.pm.</tt>
+  It provides a useful example of how to <tt>subclass load.pm</tt> to add a new field
+  and populate it with information derived from another field. </p>
+<p>&nbsp;</p>
+<p>&nbsp; </p>
+<p><a href="#top" title="">Top</a>
+</p>
+<!-- 
+NewPP limit report
+Preprocessor node count: 416/1000000
+Post-expand include size: 0/2097152 bytes
+Template argument size: 0/2097152 bytes
+Expensive parser function count: 0/100
+-->
+
+<!-- Saved in parser cache with key mediawiki_dlxsdocs_15:pcache:idhash:162-0!1!0!!en!2 and timestamp 20250202211727 -->
+<div class="printfooter">
+Retrieved from "<a href="Image_Class_Data_Loading__MySQL.html">http://localhost/wiki/Image_Class_Data_Loading:_MySQL</a>"</div>
+						<!-- end content -->
+			<div class="visualClear"></div>
+		</div>
+	</div>
+		</div>
+		<div id="column-one">
+	<div id="p-cactions" class="portlet">
+		<h5>Views</h5>
+		<div class="pBody">
+			<ul>
+	
+				 <li id="ca-nstab-main" class="selected"><a href="Image_Class_Data_Loading__MySQL.html" title="View the content page [c]" accesskey="c">Page</a></li>
+				 <li id="ca-talk" class="new"><a href="http://localhost/mediawiki/index.php?title=Talk:Image_Class_Data_Loading:_MySQL&amp;action=edit" title="Discussion about the content page [t]" accesskey="t">Discussion</a></li>
+				 <li id="ca-edit"><a href="http://localhost/mediawiki/index.php?title=Image_Class_Data_Loading:_MySQL&amp;action=edit" title="You can edit this page.&#10;Please use the preview button before saving. [e]" accesskey="e">Edit</a></li>
+				 <li id="ca-history"><a href="http://localhost/mediawiki/index.php?title=Image_Class_Data_Loading:_MySQL&amp;action=history" title="Past versions of this page. [h]" accesskey="h">History</a></li>			</ul>
+		</div>
+	</div>
+	<div class="portlet" id="p-personal">
+		<h5>Personal tools</h5>
+		<div class="pBody">
+			<ul>
+				<li id="pt-anonuserpage"><a href="User_172.20.0.html" title="The user page for the ip you&#039;re editing as [.]" accesskey="." class="new">172.20.0.1</a></li>
+				<li id="pt-anontalk"><a href="User_talk_172.20.0.html" title="Discussion about edits from this ip address [n]" accesskey="n" class="new">Talk for this IP</a></li>
+				<li id="pt-anonlogin"><a href="http://localhost/mediawiki/index.php?title=Special:UserLogin&amp;returnto=Image_Class_Data_Loading:_MySQL" title="You are encouraged to log in, it is not mandatory however. [o]" accesskey="o">Log in / create account</a></li>
+			</ul>
+		</div>
+	</div>
+	<div class="portlet" id="p-logo">
+		<a style="background-image: url(../dlxs15/uploads/DLXS_logo2.gif);" href="Main_Page.html" title="Visit the Main Page [z]" accesskey="z"></a>
+	</div>
+	<script type="text/javascript"> if (window.isMSIE55) fixalpha(); </script>
+	<div class='generated-sidebar portlet' id='p-navigation'>
+		<h5>Navigation</h5>
+		<div class='pBody'>
+			<ul>
+				<li id="n-mainpage-description"><a href="Main_Page.html">Main Page</a></li>
+				<li id="n-portal"><a href="DLXS_Documentation_Community_Portal.html" title="About the project, what you can do, where to find things">Community portal</a></li>
+				<li id="n-currentevents"><a href="DLXS_Documentation_Current_events.html" title="Find background information on current events">Current events</a></li>
+				<li id="n-recentchanges"><a href="Special_RecentChanges.html" title="The list of recent changes in the wiki. [r]" accesskey="r">Recent changes</a></li>
+				<li id="n-randompage"><a href="Mounting_a_Bib_Class_Collection.html" title="Load a random page [x]" accesskey="x">Random page</a></li>
+				<li id="n-help"><a href="Help_Contents.html" title="The place to find out.">Help</a></li>
+			</ul>
+		</div>
+	</div>
+	<div id="p-search" class="portlet">
+		<h5><label for="searchInput">Search</label></h5>
+		<div id="searchBody" class="pBody">
+			<form action="http://localhost/wiki/Special:Search" id="searchform"><div>
+				<input id="searchInput" name="search" type="text" title="Search DLXS Documentation [f]" accesskey="f" value="" />
+				<input type='submit' name="go" class="searchButton" id="searchGoButton"	value="Go" title="Go to a page with this exact name if exists" />&nbsp;
+				<input type='submit' name="fulltext" class="searchButton" id="mw-searchButton" value="Search" title="Search the pages for this text" />
+			</div></form>
+		</div>
+	</div>
+	<div class="portlet" id="p-tb">
+		<h5>Toolbox</h5>
+		<div class="pBody">
+			<ul>
+				<li id="t-whatlinkshere"><a href="Special_WhatLinksHere/Image_Class_Data_Loading__MySQL.html" title="List of all wiki pages that link here [j]" accesskey="j">What links here</a></li>
+				<li id="t-recentchangeslinked"><a href="Special_RecentChangesLinked/Image_Class_Data_Loading__MySQL.html" title="Recent changes in pages linked from this page [k]" accesskey="k">Related changes</a></li>
+<li id="t-specialpages"><a href="Special_SpecialPages.html" title="List of all special pages [q]" accesskey="q">Special pages</a></li>
+				<li id="t-print"><a href="http://localhost/mediawiki/index.php?title=Image_Class_Data_Loading:_MySQL&amp;printable=yes" title="Printable version of this page [p]" accesskey="p">Printable version</a></li>				<li id="t-permalink"><a href="http://localhost/mediawiki/index.php?title=Image_Class_Data_Loading:_MySQL&amp;oldid=3054" title="Permanent link to this version of the page">Permanent link</a></li>			</ul>
+		</div>
+	</div>
+		</div><!-- end of the left (by default at least) column -->
+			<div class="visualClear"></div>
+			<div id="footer">
+				<div id="f-poweredbyico"><a href="http://www.mediawiki.org/"><img src="../mediawiki/skins/common/images/poweredby_mediawiki_88x31.png" alt="Powered by MediaWiki" /></a></div>
+			<ul id="f-list">
+				<li id="lastmod"> This page was last modified on 28 October 2010, at 15:25.</li>
+				<li id="viewcount">This page has been accessed 6,599 times.</li>
+				<li id="privacy"><a href="DLXS_Documentation_Privacy_policy.html" title="DLXS Documentation:Privacy policy">Privacy policy</a></li>
+				<li id="about"><a href="DLXS_Documentation_About.html" title="DLXS Documentation:About">About DLXS Documentation</a></li>
+				<li id="disclaimer"><a href="DLXS_Documentation_General_disclaimer.html" title="DLXS Documentation:General disclaimer">Disclaimers</a></li>
+			</ul>
+		</div>
+</div>
+
+		<script type="text/javascript">if (window.runOnloadHook) runOnloadHook();</script>
+<!-- Served in 0.119 secs. --></body>
+<!-- Mirrored from localhost/wiki/Image_Class_Data_Loading:_MySQL by HTTrack Website Copier/3.x [XR&CO'2014], Mon, 03 Feb 2025 00:36:24 GMT -->
+</html>

@@ -1,0 +1,208 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en" dir="ltr">
+	
+<!-- Mirrored from localhost/wiki/Picklist_customization_for_serial_articles by HTTrack Website Copier/3.x [XR&CO'2014], Mon, 03 Feb 2025 00:31:53 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=UTF-8" /><!-- /Added by HTTrack -->
+<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+		<meta name="generator" content="MediaWiki 1.13.5" />
+		<meta name="keywords" content="Picklist customization for serial articles,Programming Issues" />
+		<link rel="shortcut icon" href="http://localhost/favicon.ico" />
+		<link rel="search" type="application/opensearchdescription+xml" href="http://localhost/mediawiki/opensearch_desc.php" title="DLXS Documentation (en)" />
+		<link rel="alternate" type="application/rss+xml" title="DLXS Documentation RSS Feed" href="http://localhost/mediawiki/index.php?title=Special:RecentChanges&amp;feed=rss" />
+		<link rel="alternate" type="application/atom+xml" title="DLXS Documentation Atom Feed" href="http://localhost/mediawiki/index.php?title=Special:RecentChanges&amp;feed=atom" />
+		<title>Picklist customization for serial articles - DLXS Documentation</title>
+		<style type="text/css" media="screen, projection">/*<![CDATA[*/
+			@import "../mediawiki/skins/common/sharedfa7c.css?164";
+			@import "../mediawiki/skins/monobook/mainfa7c.css?164";
+		/*]]>*/</style>
+		<link rel="stylesheet" type="text/css" media="print" href="../mediawiki/skins/common/commonPrintfa7c.css?164" />
+		<!--[if lt IE 5.5000]><style type="text/css">@import "/mediawiki/skins/monobook/IE50Fixes.css?164";</style><![endif]-->
+		<!--[if IE 5.5000]><style type="text/css">@import "/mediawiki/skins/monobook/IE55Fixes.css?164";</style><![endif]-->
+		<!--[if IE 6]><style type="text/css">@import "/mediawiki/skins/monobook/IE60Fixes.css?164";</style><![endif]-->
+		<!--[if IE 7]><style type="text/css">@import "/mediawiki/skins/monobook/IE70Fixes.css?164";</style><![endif]-->
+		<!--[if lt IE 7]><script type="text/javascript" src="/mediawiki/skins/common/IEFixes.js?164"></script>
+		<meta http-equiv="imagetoolbar" content="no" /><![endif]-->
+		
+		<script type= "text/javascript">/*<![CDATA[*/
+var skin = "monobook";
+var stylepath = "/mediawiki/skins";
+var wgArticlePath = "/wiki/$1";
+var wgScriptPath = "/mediawiki";
+var wgScript = "http://localhost/mediawiki/index.php";
+var wgVariantArticlePath = false;
+var wgActionPaths = [];
+var wgServer = "http://localhost/";
+var wgCanonicalNamespace = "";
+var wgCanonicalSpecialPageName = false;
+var wgNamespaceNumber = 0;
+var wgPageName = "Picklist_customization_for_serial_articles";
+var wgTitle = "Picklist customization for serial articles";
+var wgAction = "view";
+var wgArticleId = "367";
+var wgIsArticle = true;
+var wgUserName = null;
+var wgUserGroups = null;
+var wgUserLanguage = "en";
+var wgContentLanguage = "en";
+var wgBreakFrames = false;
+var wgCurRevisionId = "3084";
+var wgVersion = "1.13.5";
+var wgEnableAPI = true;
+var wgEnableWriteAPI = false;
+var wgRestrictionEdit = [];
+var wgRestrictionMove = [];
+/*]]>*/</script>
+                
+		<script type="text/javascript" src="../mediawiki/skins/common/wikibitsfa7c.js?164"><!-- wikibits js --></script>
+		<!-- Head Scripts -->
+		<script type="text/javascript" src="../mediawiki/skins/common/ajaxfa7c.js?164"></script>
+		<script type="text/javascript" src="http://localhost/mediawiki/index.php?title=-&amp;action=raw&amp;gen=js&amp;useskin=monobook"><!-- site js --></script>
+		<style type="text/css">/*<![CDATA[*/
+@import "http://localhost/mediawiki/index.php?title=MediaWiki:Common.css&amp;usemsgcache=yes&amp;action=raw&amp;ctype=text/css&amp;smaxage=18000";
+@import "http://localhost/mediawiki/index.php?title=MediaWiki:Monobook.css&amp;usemsgcache=yes&amp;action=raw&amp;ctype=text/css&amp;smaxage=18000";
+@import "http://localhost/mediawiki/index.php?title=-&amp;action=raw&amp;gen=css&amp;maxage=18000&amp;useskin=monobook";
+/*]]>*/</style>
+	</head>
+<body class="mediawiki ns-0 ltr page-Picklist_customization_for_serial_articles">
+	<div id="globalWrapper">
+		<div id="column-content">
+	<div id="content">
+		<a name="top" id="top"></a>
+				<h1 class="firstHeading">Picklist customization for serial articles</h1>
+		<div id="bodyContent">
+			<h3 id="siteSub">From DLXS Documentation</h3>
+			<div id="contentSub"></div>
+									<div id="jump-to-nav">Jump to: <a href="#column-one">navigation</a>, <a href="#searchInput">search</a></div>			<!-- start content -->
+			<p>As of <span class="release_15"><b>Release_15</b></span>, new functionality has been added to picklists to create a volume/issue view for serials. 
+</p><p>Since the particulars are collection-specific, an API is available in DlpsLocalUtil. However, to use this API, a collection-specific TextClass subclass must be created, and the relevant subroutines from DlpsLocalUtil must be overridden. (I.e., you do not directly invoke the methods from DlpsLocalUtil.)
+</p><p>(Visit <a href="Programming_Issues.html" title="Programming Issues">Programming Issues</a> to learn more about subclassing and related programming topics.)
+</p><p>In this brief guide, we'll describe how this new functionality works and explain enough to get started developing customized picklist views.
+</p><p>By default, picklists are rendered in “classic mode”, which is the original picklist mode.
+</p><p><a href="Image_Picklist-1-classic.html" class="image" title="A picklist rendered in classic mode"><img alt="A picklist rendered in classic mode" src="../mediawiki/images/d/dd/Picklist-1-classic.png" width="487" height="301" border="0" /></a>
+</p><p>If “issue/volume mode” is enabled, picklists will be rendered to show the contents of a collection,  volume or issue based on where the idno is truncated. 
+</p><p>To understand how idno trunction works, consider a sample idno, “5550190.0011.b02”, which corresponds to an article in the ARKIVOC collection. 
+</p><p>Normally, the collection portion of the idno is “5550190”, so we would say that a partial idno of “5550190” maps to a collection view.
+</p><p><a href="Image_Picklist-2-collection.html" class="image" title="An example of a collection picklist view"><img alt="An example of a collection picklist view" src="../mediawiki/images/7/7a/Picklist-2-collection.png" width="487" height="301" border="0" /></a>
+</p><p>Since we map a volume to “5550190.xxxx”, this means that “5550190.0011” maps to a particular volume (probably volume #11, which is named after the year of publication, 2010).
+</p><p><a href="Image_Picklist-3-volume.html" class="image" title="An example of a volume picklist view"><img alt="An example of a volume picklist view" src="../mediawiki/images/c/c4/Picklist-3-volume.png" width="488" height="301" border="0" /></a>
+</p><p>Sicne we map an issue to “5550190.xxxx.x”, which means that “5550190.0011.b” maps to a particular issue (probably volume #11, issue #11).
+</p><p><a href="Image_Picklist-4-issue.html" class="image" title="An example of a issue picklist view"><img alt="An example of a issue picklist view" src="../mediawiki/images/a/ad/Picklist-4-issue.png" width="487" height="301" border="0" /></a>
+</p><p>Since this mapping is arbitrary, subroutines in DlpsLocalUtils.pm (MapCollectionToIdno, MapVolumeToIdno and MapIssueToIdno) can be overridden with the appropriate regular expression to map these values for a given collection.
+</p><p>Let's say we have a collection for which a volume is represented by “xxxxxxx.xx” and an issue is represented by “xxxxxxx.xxxx”. (E.g., “abcdefg.0503” would be volume 5, issue 3.) If we created a subclass called “Example1TC.pm” that subclassed TextClass.pm (and this collection's collmgr record is set to use Example1TC), we would need to turn on the new functionality and override the two mapping subroutines:
+</p>
+<pre> sub UseVolumeIssuePicklist { 1 } # Enable issue/volume mode
+ sub MapVolumeToIdno { '\w+\.\w{2}' }
+ sub MapIssueToIdno { '\w+\.\w{4}' }
+</pre>
+<p>Now when the idno CGI parameter corresponds to “abcdefg.05”, the picklist view for volume 5 is rendered. However, which the idno CGI parameter is “abcdefg.0503”, the picklist view for volume 5, issue 3 is shown.
+</p><p>The API supports many detailed customizations. The most common is a serial that only has issues or volumes but not both (DisableIssuesForPicklist and DisableVolumesForPicklist). 
+</p><p>Let's say we have a hypothetical collection that has issues but not volumes, and the issue corresponds to “xxxxxxx.xxxx”. In “Example2TC.pm”, we would need to include the following:
+</p>
+<pre> sub UseVolumeIssuePicklist { 1 } # Enable issue/volume mode
+ sub MapIssueToIdno { '\w+\.\w{4}' }
+ sub DisableVolumesForPicklist { 1} # Disable volumes
+</pre>
+<p>More advanced features includes modifying how volume and issue numbers are located in the item's XML, customizing the logic that determines which view should be rendered, as well as a hook for sorting items in an issue, etc. However, the above should meet most collection-customization needs.
+</p><p>Additionally, the picklist XSL in picklist.xsl and picklistheader.xsl is highly modular and designed for easy customization. For example, you could override&nbsp;:
+</p>
+<pre> &lt;!-- The context is Picklist/Volume --&gt;
+ &lt;xsl:template name="groupByVolume"&gt;
+   &lt;!-- Want to use HTML 5 features like section element and h1 header for each section --&gt;
+   &lt;section&gt;
+     &lt;h1&gt;&lt;xsl:value-of select=”VOLNO”/&gt;&lt;/h1&gt;
+     &lt;xsl:call-template name="IterateIssues"/&gt;
+   &lt;/section&gt;
+ &lt;/xsl&gt;
+</pre>
+<!-- 
+NewPP limit report
+Preprocessor node count: 2/1000000
+Post-expand include size: 0/2097152 bytes
+Template argument size: 0/2097152 bytes
+Expensive parser function count: 0/100
+-->
+
+<!-- Saved in parser cache with key mediawiki_dlxsdocs_15:pcache:idhash:367-0!1!0!!en!2 and timestamp 20250202211539 -->
+<div class="printfooter">
+Retrieved from "<a href="Picklist_customization_for_serial_articles.html">http://localhost/wiki/Picklist_customization_for_serial_articles</a>"</div>
+						<!-- end content -->
+			<div class="visualClear"></div>
+		</div>
+	</div>
+		</div>
+		<div id="column-one">
+	<div id="p-cactions" class="portlet">
+		<h5>Views</h5>
+		<div class="pBody">
+			<ul>
+	
+				 <li id="ca-nstab-main" class="selected"><a href="Picklist_customization_for_serial_articles.html" title="View the content page [c]" accesskey="c">Page</a></li>
+				 <li id="ca-talk" class="new"><a href="http://localhost/mediawiki/index.php?title=Talk:Picklist_customization_for_serial_articles&amp;action=edit" title="Discussion about the content page [t]" accesskey="t">Discussion</a></li>
+				 <li id="ca-edit"><a href="http://localhost/mediawiki/index.php?title=Picklist_customization_for_serial_articles&amp;action=edit" title="You can edit this page.&#10;Please use the preview button before saving. [e]" accesskey="e">Edit</a></li>
+				 <li id="ca-history"><a href="http://localhost/mediawiki/index.php?title=Picklist_customization_for_serial_articles&amp;action=history" title="Past versions of this page. [h]" accesskey="h">History</a></li>			</ul>
+		</div>
+	</div>
+	<div class="portlet" id="p-personal">
+		<h5>Personal tools</h5>
+		<div class="pBody">
+			<ul>
+				<li id="pt-login"><a href="http://localhost/mediawiki/index.php?title=Special:UserLogin&amp;returnto=Picklist_customization_for_serial_articles" title="You are encouraged to log in, it is not mandatory however. [o]" accesskey="o">Log in / create account</a></li>
+			</ul>
+		</div>
+	</div>
+	<div class="portlet" id="p-logo">
+		<a style="background-image: url(../dlxs15/uploads/DLXS_logo2.gif);" href="Main_Page.html" title="Visit the Main Page [z]" accesskey="z"></a>
+	</div>
+	<script type="text/javascript"> if (window.isMSIE55) fixalpha(); </script>
+	<div class='generated-sidebar portlet' id='p-navigation'>
+		<h5>Navigation</h5>
+		<div class='pBody'>
+			<ul>
+				<li id="n-mainpage-description"><a href="Main_Page.html">Main Page</a></li>
+				<li id="n-portal"><a href="DLXS_Documentation_Community_Portal.html" title="About the project, what you can do, where to find things">Community portal</a></li>
+				<li id="n-currentevents"><a href="DLXS_Documentation_Current_events.html" title="Find background information on current events">Current events</a></li>
+				<li id="n-recentchanges"><a href="Special_RecentChanges.html" title="The list of recent changes in the wiki. [r]" accesskey="r">Recent changes</a></li>
+				<li id="n-randompage"><a href="Mounting_a_Bib_Class_Collection.html" title="Load a random page [x]" accesskey="x">Random page</a></li>
+				<li id="n-help"><a href="Help_Contents.html" title="The place to find out.">Help</a></li>
+			</ul>
+		</div>
+	</div>
+	<div id="p-search" class="portlet">
+		<h5><label for="searchInput">Search</label></h5>
+		<div id="searchBody" class="pBody">
+			<form action="http://localhost/wiki/Special:Search" id="searchform"><div>
+				<input id="searchInput" name="search" type="text" title="Search DLXS Documentation [f]" accesskey="f" value="" />
+				<input type='submit' name="go" class="searchButton" id="searchGoButton"	value="Go" title="Go to a page with this exact name if exists" />&nbsp;
+				<input type='submit' name="fulltext" class="searchButton" id="mw-searchButton" value="Search" title="Search the pages for this text" />
+			</div></form>
+		</div>
+	</div>
+	<div class="portlet" id="p-tb">
+		<h5>Toolbox</h5>
+		<div class="pBody">
+			<ul>
+				<li id="t-whatlinkshere"><a href="Special_WhatLinksHere/Picklist_customization_for_serial_articles.html" title="List of all wiki pages that link here [j]" accesskey="j">What links here</a></li>
+				<li id="t-recentchangeslinked"><a href="Special_RecentChangesLinked/Picklist_customization_for_serial_articles.html" title="Recent changes in pages linked from this page [k]" accesskey="k">Related changes</a></li>
+<li id="t-specialpages"><a href="Special_SpecialPages.html" title="List of all special pages [q]" accesskey="q">Special pages</a></li>
+				<li id="t-print"><a href="http://localhost/mediawiki/index.php?title=Picklist_customization_for_serial_articles&amp;printable=yes" title="Printable version of this page [p]" accesskey="p">Printable version</a></li>				<li id="t-permalink"><a href="http://localhost/mediawiki/index.php?title=Picklist_customization_for_serial_articles&amp;oldid=3084" title="Permanent link to this version of the page">Permanent link</a></li>			</ul>
+		</div>
+	</div>
+		</div><!-- end of the left (by default at least) column -->
+			<div class="visualClear"></div>
+			<div id="footer">
+				<div id="f-poweredbyico"><a href="http://www.mediawiki.org/"><img src="../mediawiki/skins/common/images/poweredby_mediawiki_88x31.png" alt="Powered by MediaWiki" /></a></div>
+			<ul id="f-list">
+				<li id="lastmod"> This page was last modified on 4 November 2010, at 16:33.</li>
+				<li id="viewcount">This page has been accessed 2,026 times.</li>
+				<li id="privacy"><a href="DLXS_Documentation_Privacy_policy.html" title="DLXS Documentation:Privacy policy">Privacy policy</a></li>
+				<li id="about"><a href="DLXS_Documentation_About.html" title="DLXS Documentation:About">About DLXS Documentation</a></li>
+				<li id="disclaimer"><a href="DLXS_Documentation_General_disclaimer.html" title="DLXS Documentation:General disclaimer">Disclaimers</a></li>
+			</ul>
+		</div>
+</div>
+
+		<script type="text/javascript">if (window.runOnloadHook) runOnloadHook();</script>
+<!-- Served in 0.117 secs. --></body>
+<!-- Mirrored from localhost/wiki/Picklist_customization_for_serial_articles by HTTrack Website Copier/3.x [XR&CO'2014], Mon, 03 Feb 2025 00:32:03 GMT -->
+</html>

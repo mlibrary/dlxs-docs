@@ -1,0 +1,943 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en" dir="ltr">
+	
+<!-- Mirrored from localhost/wiki/DLXS_Authentication_and_Authorization_System by HTTrack Website Copier/3.x [XR&CO'2014], Mon, 03 Feb 2025 00:29:19 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=UTF-8" /><!-- /Added by HTTrack -->
+<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+		<meta name="generator" content="MediaWiki 1.13.5" />
+		<meta name="keywords" content="DLXS Authentication and Authorization System,Ancillary Resources,DLXS Wiki" />
+		<link rel="shortcut icon" href="http://localhost/favicon.ico" />
+		<link rel="search" type="application/opensearchdescription+xml" href="http://localhost/mediawiki/opensearch_desc.php" title="DLXS Documentation (en)" />
+		<link rel="alternate" type="application/rss+xml" title="DLXS Documentation RSS Feed" href="http://localhost/mediawiki/index.php?title=Special:RecentChanges&amp;feed=rss" />
+		<link rel="alternate" type="application/atom+xml" title="DLXS Documentation Atom Feed" href="http://localhost/mediawiki/index.php?title=Special:RecentChanges&amp;feed=atom" />
+		<title>DLXS Authentication and Authorization System - DLXS Documentation</title>
+		<style type="text/css" media="screen, projection">/*<![CDATA[*/
+			@import "../mediawiki/skins/common/sharedfa7c.css?164";
+			@import "../mediawiki/skins/monobook/mainfa7c.css?164";
+		/*]]>*/</style>
+		<link rel="stylesheet" type="text/css" media="print" href="../mediawiki/skins/common/commonPrintfa7c.css?164" />
+		<!--[if lt IE 5.5000]><style type="text/css">@import "/mediawiki/skins/monobook/IE50Fixes.css?164";</style><![endif]-->
+		<!--[if IE 5.5000]><style type="text/css">@import "/mediawiki/skins/monobook/IE55Fixes.css?164";</style><![endif]-->
+		<!--[if IE 6]><style type="text/css">@import "/mediawiki/skins/monobook/IE60Fixes.css?164";</style><![endif]-->
+		<!--[if IE 7]><style type="text/css">@import "/mediawiki/skins/monobook/IE70Fixes.css?164";</style><![endif]-->
+		<!--[if lt IE 7]><script type="text/javascript" src="/mediawiki/skins/common/IEFixes.js?164"></script>
+		<meta http-equiv="imagetoolbar" content="no" /><![endif]-->
+		
+		<script type= "text/javascript">/*<![CDATA[*/
+var skin = "monobook";
+var stylepath = "/mediawiki/skins";
+var wgArticlePath = "/wiki/$1";
+var wgScriptPath = "/mediawiki";
+var wgScript = "http://localhost/mediawiki/index.php";
+var wgVariantArticlePath = false;
+var wgActionPaths = [];
+var wgServer = "http://localhost/";
+var wgCanonicalNamespace = "";
+var wgCanonicalSpecialPageName = false;
+var wgNamespaceNumber = 0;
+var wgPageName = "DLXS_Authentication_and_Authorization_System";
+var wgTitle = "DLXS Authentication and Authorization System";
+var wgAction = "view";
+var wgArticleId = "50";
+var wgIsArticle = true;
+var wgUserName = null;
+var wgUserGroups = null;
+var wgUserLanguage = "en";
+var wgContentLanguage = "en";
+var wgBreakFrames = false;
+var wgCurRevisionId = "3168";
+var wgVersion = "1.13.5";
+var wgEnableAPI = true;
+var wgEnableWriteAPI = false;
+var wgRestrictionEdit = [];
+var wgRestrictionMove = [];
+/*]]>*/</script>
+                
+		<script type="text/javascript" src="../mediawiki/skins/common/wikibitsfa7c.js?164"><!-- wikibits js --></script>
+		<!-- Head Scripts -->
+		<script type="text/javascript" src="../mediawiki/skins/common/ajaxfa7c.js?164"></script>
+		<script type="text/javascript" src="http://localhost/mediawiki/index.php?title=-&amp;action=raw&amp;gen=js&amp;useskin=monobook"><!-- site js --></script>
+		<style type="text/css">/*<![CDATA[*/
+@import "http://localhost/mediawiki/index.php?title=MediaWiki:Common.css&amp;usemsgcache=yes&amp;action=raw&amp;ctype=text/css&amp;smaxage=18000";
+@import "http://localhost/mediawiki/index.php?title=MediaWiki:Monobook.css&amp;usemsgcache=yes&amp;action=raw&amp;ctype=text/css&amp;smaxage=18000";
+@import "http://localhost/mediawiki/index.php?title=-&amp;action=raw&amp;gen=css&amp;maxage=18000&amp;useskin=monobook";
+/*]]>*/</style>
+	</head>
+<body class="mediawiki ns-0 ltr page-DLXS_Authentication_and_Authorization_System">
+	<div id="globalWrapper">
+		<div id="column-content">
+	<div id="content">
+		<a name="top" id="top"></a>
+				<h1 class="firstHeading">DLXS Authentication and Authorization System</h1>
+		<div id="bodyContent">
+			<h3 id="siteSub">From DLXS Documentation</h3>
+			<div id="contentSub"></div>
+									<div id="jump-to-nav">Jump to: <a href="#column-one">navigation</a>, <a href="#searchInput">search</a></div>			<!-- start content -->
+			<p><a href="DLXS_Wiki.html" title="DLXS Wiki">Main Page</a> &gt; <a href="Ancillary_Resources.html" title="Ancillary Resources">Ancillary Resources</a> &gt; DLXS Authentication and Authorization System
+</p>
+<table id="toc" class="toc" summary="Contents"><tr><td><div id="toctitle"><h2>Contents</h2></div>
+<ul>
+<li class="toclevel-1"><a href="#Functional_overview"><span class="tocnumber">1</span> <span class="toctext">Functional overview</span></a></li>
+<li class="toclevel-1"><a href="#Technical_overview"><span class="tocnumber">2</span> <span class="toctext">Technical overview</span></a></li>
+<li class="toclevel-1"><a href="#Requirements"><span class="tocnumber">3</span> <span class="toctext">Requirements</span></a></li>
+<li class="toclevel-1"><a href="#Installation"><span class="tocnumber">4</span> <span class="toctext">Installation</span></a></li>
+<li class="toclevel-1"><a href="#Adding_access_controls"><span class="tocnumber">5</span> <span class="toctext">Adding access controls</span></a>
+<ul>
+<li class="toclevel-2"><a href="#Example:_Creating_a_collection_record"><span class="tocnumber">5.1</span> <span class="toctext">Example: Creating a collection record</span></a></li>
+<li class="toclevel-2"><a href="#Example:_Associating_a_server_and_directory_with_a_collection"><span class="tocnumber">5.2</span> <span class="toctext">Example: Associating a server and directory with a collection</span></a></li>
+<li class="toclevel-2"><a href="#Example:_Creating_an_institution_record"><span class="tocnumber">5.3</span> <span class="toctext">Example: Creating an institution record</span></a></li>
+<li class="toclevel-2"><a href="#Example:_Associating_an_IP_address_range_with_an_institution"><span class="tocnumber">5.4</span> <span class="toctext">Example: Associating an IP address range with an institution</span></a></li>
+<li class="toclevel-2"><a href="#Example:_Permitting_an_institution_to_a_collection"><span class="tocnumber">5.5</span> <span class="toctext">Example: Permitting an institution to a collection</span></a></li>
+<li class="toclevel-2"><a href="#Example:_Creating_a_user"><span class="tocnumber">5.6</span> <span class="toctext">Example: Creating a user</span></a></li>
+<li class="toclevel-2"><a href="#Example:_Associating_a_user_with_an_institution"><span class="tocnumber">5.7</span> <span class="toctext">Example: Associating a user with an institution</span></a></li>
+<li class="toclevel-2"><a href="#Example:_Permitting_a_user_to_a_collection"><span class="tocnumber">5.8</span> <span class="toctext">Example: Permitting a user to a collection</span></a></li>
+<li class="toclevel-2"><a href="#Example:_Creating_a_DLXS_text_class_collection_record"><span class="tocnumber">5.9</span> <span class="toctext">Example: Creating a DLXS text class collection record</span></a></li>
+<li class="toclevel-2"><a href="#Example:_Permitting_an_institution_to_a_DLXS_text_class_collection"><span class="tocnumber">5.10</span> <span class="toctext">Example: Permitting an institution to a DLXS text class collection</span></a></li>
+</ul>
+</li>
+<li class="toclevel-1"><a href="#Appendix:_Features_of_the_UM_Digital_Library_Services_installation"><span class="tocnumber">6</span> <span class="toctext">Appendix: Features of the UM Digital Library Services installation</span></a></li>
+</ul>
+</td></tr></table><script type="text/javascript"> if (window.showTocToggle) { var tocShowText = "show"; var tocHideText = "hide"; showTocToggle(); } </script>
+<a name="Functional_overview"></a><h2><span class="editsection">[<a href="http://localhost/mediawiki/index.php?title=DLXS_Authentication_and_Authorization_System&amp;action=edit&amp;section=1" title="Edit section: Functional overview">edit</a>]</span> <span class="mw-headline">Functional overview</span></h2>
+<p>The DLXS Authentication and Authorization system is a complete access control system designed primarily for use in digital library environments. It can interoperate with core DLXS middleware to control access to collections, or it can be used as a standalone access control system in a general web environment.
+</p><p>The system has the following general capabilities:
+</p>
+<ul><li> user authentication, using either a self-contained encrypted password or existing Kerberos authentication server(s)
+</li><li> user self-service: each user can set or reset his/her password, and will receive automated confirmation email after doing so
+</li><li> institutional authentication using IP address ranges
+</li><li> centralized management of all user, institution, and access information in an Oracle database
+</li></ul>
+<p>Designed to function with a heterogenous mix of resources, both public and restricted, this system could be useful if you are looking to do any of the following:
+</p>
+<ul><li> provide off-campus users with authenticated access to locally-hosted resources
+</li><li> leverage an existing Kerberos authentication infrastructure in a web environment
+</li><li> provide other institutions with IP address range-based access to locally-hosted resources
+</li></ul>
+<a name="Technical_overview"></a><h2><span class="editsection">[<a href="http://localhost/mediawiki/index.php?title=DLXS_Authentication_and_Authorization_System&amp;action=edit&amp;section=2" title="Edit section: Technical overview">edit</a>]</span> <span class="mw-headline">Technical overview</span></h2>
+<p>The system is made up of three components:
+</p>
+<ol><li> authentication and authorization database: Here is stored all information on user accounts and user groups, institution names and IP address ranges, collections or resources, and access permissions--which users and institutions may access which collections or resources. This must be an Oracle database.
+</li><li> Apache web server module: This modular extension to Apache acts as a gatekeeper to all of the material on the web server, consulting the database in real time. It uses the access control information in the database to grant access, deny access, or request authentication. In addition, it implements the user interface which accepts a username and password, or which guides new users through the process of setting their initial password.
+</li><li> Page templates: The Apache module uses these fully-customizable HTML templates to generate the pages in the user interface.
+</li></ol>
+<a name="Requirements"></a><h2><span class="editsection">[<a href="http://localhost/mediawiki/index.php?title=DLXS_Authentication_and_Authorization_System&amp;action=edit&amp;section=3" title="Edit section: Requirements">edit</a>]</span> <span class="mw-headline">Requirements</span></h2>
+<p>This is a robust system that supplies a complete campus authentication and authorization environment, and as such, it has heavy requirements that may be out of reach for some institutions or impractical for some purposes. DLXS acknowledges this, and will also be undertaking development of a "Lite" version of this system that requires nothing beyond the [../intro/sysreq.html standard DLXS system requirements]. This product is currently being shaped, but will probably be geared strictly toward interoperation only with DLXS middleware, and will provide simple access control assuming a pre-existing web authentication mechanism. Thoughts into the preliminary design of this system are welcome...and encouraged! Please <a href="mailto:csnavely@umich.edu?subject=thoughts%20on%20dlxs%20auth%20%22lite%22" class="external text" title="mailto:csnavely@umich.edu?subject=thoughts%20on%20dlxs%20auth%20%22lite%22" rel="nofollow">contact the author of this document</a> to share your ideas.
+</p><p>The following software or systems are required:
+</p>
+<ul><li> <a href="http://httpd.apache.org/" class="external text" title="http://httpd.apache.org/" rel="nofollow">Apache 1.3.26</a> or higher with <a href="http://www.modssl.org/" class="external text" title="http://www.modssl.org/" rel="nofollow">mod_ssl 2.8.10</a> or higher and mod_so, but not Apache 2.x
+</li><li> <a href="http://web.mit.edu/kerberos/www/" class="external text" title="http://web.mit.edu/kerberos/www/" rel="nofollow">Kerberos V5</a> 1.2 or higher
+</li><li> <a href="http://www.openssl.org/" class="external text" title="http://www.openssl.org/" rel="nofollow">OpenSSL 0.9.6</a> or higher<br />
+</li><li> <a href="http://www.oracle.com/" class="external text" title="http://www.oracle.com/" rel="nofollow">Oracle 9i Server</a> or higher.
+</li></ul>
+<p>In addition, the following skills or staff will be required for installation and/or maintenance:<br />
+</p>
+<ul><li> familiarity with the C programming language
+</li><li> administrative access to the Apache server and Oracle Server installations
+</li><li> familiarity with Oracle administration and with SQL syntax for inserting, deleting, and manipulating data in tables<br />
+</li></ul>
+<p>Note: it is OK, and in fact preferred, for an instance of Apache to run on the same server with Oracle to provide only the user interface of the system. It is <i>not</i> recommended that Oracle Server be installed alongside Apache on servers that are intended for heavy web service use.
+</p><p>Note: This system will establish an Oracle session for each Apache server process. If you expect the number of Apache web servers to be high, it is recommended that you configure Oracle to use shared servers to ensure scalability.
+</p>
+<a name="Installation"></a><h2><span class="editsection">[<a href="http://localhost/mediawiki/index.php?title=DLXS_Authentication_and_Authorization_System&amp;action=edit&amp;section=4" title="Edit section: Installation">edit</a>]</span> <span class="mw-headline">Installation</span></h2>
+<ol><li> <b>Unpack the distribution archive.</b> The system is distributed as a compressed tar archive. Extract the contents of the archive into an area on your system where software is typically installed; e.g., <tt> /usr/local/dlps_auth</tt> .<br />
+</li><li> <b>Set up the Oracle tablespace. </b>The following instructions will create an Oracle user, tablespace, and tables to support the system. Ideally, you should have your Oracle administrator at least looking over your shoulder for this portion of the installation.
+<ol><li> Change to the directory where SQL scripts are supplied with the command (e.g.) <tt>cd /usr/local/dlps_auth/sql</tt> .
+</li><li> Carefully edit the file <tt>create_tablespace.sql</tt> , substituting the correct local customizations for Oracle data file locations as needed.
+</li><li> Carefully edit the file <tt>create_tables.sql</tt> , substituting the correct system administrator email address for sysadmin@your.domain on line 133.<br />
+</li><li> Start the SQL monitor with the command <tt>sqlplus system</tt> (you will be prompted for the Oracle system password).
+</li><li> Create the schema and tablespace with the command <tt> @create_tablespace</tt> .
+</li><li> Set a new password for the dlps_auth user, exit from the SQL monitor, and restart the SQL monitor with the command <tt> sqlplus dlps_auth</tt> (you will be prompted for the new dlps_auth password).
+</li><li> Create all required tables with the command<tt> @create_tables</tt> .
+</li><li> <tt>C</tt>reate the unique identifier and timestamp triggers with the command <tt>@create_triggers</tt>.
+</li><li> Define the primary keys with the command <tt> @key</tt> .
+</li><li> Create the auxiliary indexes with the command <tt> @index</tt> .
+</li><li> Define the stored procedures with the command <tt> @dlps_auth</tt> .
+</li></ol>
+</li><li> <b>Modify the module source code.</b> Several behaviors and settings are still compiled into the module source (<tt>mod_dlps_auth.c</tt> ), and will require hand customization.
+<ol><li> Starting on line 345, the function change_passwd contains user interface logic that lets a user select one of two Kerberos realms, and is specific to the UM environment. This section will probably need modification based on your local authentication environment.
+</li><li> Starting on line 686, the confirmation email message that is sent when a user successfully changes his/her password will need modification as is appropriate to your environment.
+</li><li> On line 1437, the domain name associated with the cookie that is used for persistent authentication should be changed to your local domain.
+</li></ol>
+</li><li> <b>Compile and install the module.</b>
+<ol><li> Carefully edit the file <tt>Makefile</tt>, substituting the installation paths of Kerberos, OpenSSL, and Oracle as appropriate.
+</li><li> Compile the module with the command <tt>make</tt> .
+</li><li> Install the module into your Apache installation with the command <tt>make install</tt>.
+</li></ol>
+</li><li> <b>Configure and activate the system.</b> The following instructions will modify your Apache configuration and immediately create some amount of load on your Oracle server. Ideally, you should have your Apache administrator at least looking over your shoulder for this portion of the installation.
+<ol><li> Carefully edit the configuration file (e.g.) <tt> /usr/local/dlps_auth/etc/dlps_auth.conf</tt> , substituting the appropriate local values, as indicated below:
+<ol><li> Set <tt>DLPSAuthOracleHome</tt> to your Oracle installation home directory.
+</li><li> Set <tt>DLPSAuthOracleTNSName</tt> to the global TNS name of your Oracle server.
+</li><li> Set <tt>DLPSAuthOraclePassword</tt> to the password you assigned for the dlps_auth user in Step 2.6.
+</li><li> Set <tt>DLPSAuthEncryptionKey</tt> to 16 random characters.
+</li><li> Set <tt>DLPSAuthEnterPasswordServer</tt> to the server name you'll use to host the login page.
+</li><li> Set <tt>DLPSAuthCookieLifetime</tt> to the number of seconds you'd like authentication to persist, or 0 if you'd like authentication to expire when the user's browser is closed.
+</li><li> Set <tt>DLPSAuthChangePasswordServer</tt> to the server name you'll use to host the login page.
+</li><li> Set <tt>DLPSAuthPasswordResultsServer</tt> to the server name you'll use to host the login page.
+</li><li> Set <tt>DLPSAuthDefDestOnAuthenSuccess</tt> to a URL that the system should redirect users to after successful authentication if, for some reason, it is unable to determine the referring page.
+</li><li> Set <tt>DLPSAuthDelayOnAuthenSuccess</tt> to the number of seconds to display the page that informs the user that he/she authenticated successfully (before redirecting him/her back to the referring page).
+</li><li> Set <tt>DLPSAuthDocumentRoot</tt> to the directory containing the HTML templates, e.g. <tt>/usr/local/dlps_auth/html/templates</tt> .<br />
+</li><li> Set <tt>DLPSAuthHelpContact</tt> to the email address that should receive replies to password change confirmation emails from users.
+</li><li> Set <tt>DLPSAuthSysAdminContact</tt> to the email address that should receive bounced delivery attempts to password confirmation emails
+</li></ol>
+</li><li> Reference this configuration file in your Apache configuration file with the directive (e.g.) <tt>Include /usr/local/dlps_auth/etc/dlps_auth.conf</tt> .<br />
+</li><li> Restart Apache with the command <tt>apachectl restart</tt> , and check the error log to ensure that the server restarted successfully. If it didn't, you can easily remove the system from your configuration by placing a <tt> #</tt> character in front of the <tt>Include</tt> directive above and restarting Apache.
+</li></ol>
+</li></ol>
+<p>If all went well, the system is now running and ready to accept access controls!<br />
+</p>
+<a name="Adding_access_controls"></a><h2><span class="editsection">[<a href="http://localhost/mediawiki/index.php?title=DLXS_Authentication_and_Authorization_System&amp;action=edit&amp;section=5" title="Edit section: Adding access controls">edit</a>]</span> <span class="mw-headline">Adding access controls</span></h2>
+<p>In the database, an access control is made up of three parts: 1) a collection record, which is essentially one or more server names and directory paths; 2) a user or institution record; and 3) an access record indicating the user or institution and the collection. In this way, collections, users, and institutions can be defined, and access permissions can be given in any combination.
+</p><p>The following sequence of example SQL commands will demonstrate the routine tasks associated with maintaining access controls in the database.
+</p>
+<a name="Example:_Creating_a_collection_record"></a><h4><span class="editsection">[<a href="http://localhost/mediawiki/index.php?title=DLXS_Authentication_and_Authorization_System&amp;action=edit&amp;section=6" title="Edit section: Example: Creating a collection record">edit</a>]</span> <span class="mw-headline"> Example: Creating a collection record </span></h4>
+<table cellspacing="2" cellpadding="2">
+<tr>
+<td valign="top">
+<pre><br />
+
+         insert into aa_coll (uniqueIdentifier,<br />
+
+         commonName,<br />
+
+         description,<br />
+
+         dlpsClass, dlpsSource,<br />
+
+         dlpsAuthenMethod, dlpsAuthzType,<br />
+
+         dlpsPartlyPublic,<br />
+
+         manager,<br />
+
+         lastModifiedTime, lastModifiedBy,<br />
+
+         dlpsDeleted)<br />
+
+         values ('jbt',<br />
+
+         'Journal of Bobbles and Trinkets',<br />
+
+         'An online resource focusing on the<br />
+
+         study of buttons, plastic toys,<br />
+
+         do-nothing machines, and the like',<br />
+
+         'local', 'local',<br />
+
+         'any', 'n',<br />
+
+         'f',<br />
+
+         0,<br />
+
+         SYSDATE, 'root', 'f');
+</pre>
+</td><td valign="top">
+<p>Description of database columns:<br />
+</p>
+<table width="100%" cellspacing="2" cellpadding="2">
+<tr>
+<td valign="top"> <tt>uniqueIdentifier</tt><br />
+</td><td valign="top"> the (unique) collection identifier<br />
+</td></tr>
+<tr>
+<td valign="top"> <tt>commonName</tt><br />
+</td><td valign="top"> the collection name<br />
+</td></tr>
+<tr>
+<td valign="top"> <tt>description</tt><br />
+</td><td valign="top"> a textual description of the collection<br />
+</td></tr>
+<tr>
+<td valign="top"> <tt>dlpsClass</tt><br />
+</td><td valign="top"> the collection class (for use with DLXS middleware classes)<br />
+</td></tr>
+<tr>
+<td valign="top"> <tt>dlpsSource</tt><br />
+</td><td valign="top"> the source of the material<br />
+</td></tr>
+<tr>
+<td valign="top"> <tt>dlpsAuthenMethod</tt><br />
+</td><td valign="top"> the authentication method to use: either 'ip' (IP address range-based authentication, 'pw' (forced password authentication), or 'any' (a combination of the two)<br />
+</td></tr>
+<tr>
+<td valign="top"> <tt>dlpsAuthzType</tt><br />
+</td><td valign="top"> the authorization type to use: either 'n' (normal) or 'd' (delegated)<br />
+</td></tr>
+<tr>
+<td valign="top">
+<pre>dlpsPartlyPublic
+</pre>
+</td><td valign="top"> a flag indicating whether the material is public: either 't' (true) or 'f' (false)<br />
+</td></tr>
+<tr>
+<td valign="top"> <tt>manager</tt><br />
+</td><td valign="top"> the user group responsible for managing this collection entry<br />
+</td></tr>
+<tr>
+<td valign="top"> <tt>lastModifiedTime</tt><br />
+</td><td valign="top"> the date and time this record was last modified<br />
+</td></tr>
+<tr>
+<td valign="top"> <tt>lastModifiedBy</tt><br />
+</td><td valign="top"> the username of the user who last modified this record<br />
+</td></tr>
+<tr>
+<td valign="top"> <tt>dlpsDeleted</tt><br />
+</td><td valign="top"> a flag indicating whether this record is deleted: either 't' (true) or 'f' (false)<br />
+</td></tr></table>
+</td></tr></table>
+<a name="Example:_Associating_a_server_and_directory_with_a_collection"></a><h4><span class="editsection">[<a href="http://localhost/mediawiki/index.php?title=DLXS_Authentication_and_Authorization_System&amp;action=edit&amp;section=7" title="Edit section: Example: Associating a server and directory with a collection">edit</a>]</span> <span class="mw-headline"> Example: Associating a server and directory with a collection </span></h4>
+<table width="75%" cellspacing="2" cellpadding="2">
+<tr>
+<td valign="top">
+<pre><br />
+
+         insert into aa_coll_obj (dlpsServer,<br />
+
+         dlpsPath,<br />
+
+         coll,<br />
+
+         lastModifiedTime, lastModifiedBy,<br />
+
+         dlpsDeleted)<br />
+
+         values ('www.your.domain',<br />
+
+         '/usr/local/apache/htdocs/jbt%',<br />
+
+         'jbt',<br />
+
+         SYSDATE, 'root', 'f');<br />
+
+         <br />
+
+
+</pre>
+</td><td valign="top">
+<p>Description of database columns:<br />
+</p>
+<table width="100%" cellspacing="2" cellpadding="2">
+<tr>
+<td valign="top">
+<pre>dlpsServer
+</pre>
+</td><td valign="top"> the hostname of the web server<br />
+</td></tr>
+<tr>
+<td valign="top">
+<pre>dlpsPath
+</pre>
+</td><td valign="top"> the full file system path where the material is stored; note the "%" wildcard at the end of the path, which allows the access control to be applied to all contained files and directories<br />
+</td></tr>
+<tr>
+<td valign="top">
+<pre>coll
+</pre>
+</td><td valign="top"> the corresponding collection identifier<br />
+</td></tr>
+<tr>
+<td valign="top">
+<pre>lastModifiedTime
+</pre>
+</td><td valign="top"> the date and time this record was last modified<br />
+</td></tr>
+<tr>
+<td valign="top">
+<pre>lastModifiedBy
+</pre>
+</td><td valign="top"> the username of the user who last modified this record<br />
+</td></tr>
+<tr>
+<td valign="top">
+<pre>dlpsDeleted<br />
+
+
+</pre>
+</td><td valign="top"> a flag indicating whether this record is deleted: either 't' (true) or 'f' (false)<br />
+</td></tr></table>
+</td></tr></table>
+<p>At this point, any attempt to access this resource, which is non-public and yet has no access permissions, should result in a prompt for authentication.
+</p>
+<a name="Example:_Creating_an_institution_record"></a><h4><span class="editsection">[<a href="http://localhost/mediawiki/index.php?title=DLXS_Authentication_and_Authorization_System&amp;action=edit&amp;section=8" title="Edit section: Example: Creating an institution record">edit</a>]</span> <span class="mw-headline"> Example: Creating an institution record </span></h4>
+<table cellspacing="2" cellpadding="2">
+<tr>
+<td valign="top">
+<pre><br />
+
+         insert into aa_inst (uniqueIdentifier,<br />
+
+         organizationName, manager,<br />
+
+         lastModifiedTime, lastModifiedBy,<br />
+
+         dlpsDeleted)<br />
+
+         values (1000,<br />
+
+         'University of Michigan', 0,<br />
+
+         SYSDATE, 'root', 'f');
+</pre>
+</td><td valign="top">
+<p>Description of database columns:<br />
+</p>
+<table width="100%" cellspacing="2" cellpadding="2">
+<tr>
+<td valign="top"> <tt>uniqueIdentifier</tt>
+</td><td valign="top"> the (unique) institution identifier<br />
+</td></tr>
+<tr>
+<td valign="top"> <tt>organizationName</tt><br />
+</td><td valign="top"> the institution name<br />
+</td></tr>
+<tr>
+<td valign="top"> <tt>manager</tt><br />
+</td><td valign="top"> the user group responsible for managing this collection entry<br />
+</td></tr>
+<tr>
+<td valign="top"> <tt>lastModifiedTime</tt><br />
+</td><td valign="top"> the date and time this record was last modified<br />
+</td></tr>
+<tr>
+<td valign="top"> <tt>lastModifiedBy</tt><br />
+</td><td valign="top"> the username of the user who last modified this record<br />
+</td></tr>
+<tr>
+<td valign="top"> <tt>dlpsDeleted</tt><br />
+</td><td valign="top"> a flag indicating whether this record is deleted: either 't' (true) or 'f' (false)<br />
+</td></tr></table>
+</td></tr></table>
+<a name="Example:_Associating_an_IP_address_range_with_an_institution"></a><h4><span class="editsection">[<a href="http://localhost/mediawiki/index.php?title=DLXS_Authentication_and_Authorization_System&amp;action=edit&amp;section=9" title="Edit section: Example: Associating an IP address range with an institution">edit</a>]</span> <span class="mw-headline"> Example: Associating an IP address range with an institution </span></h4>
+<table cellspacing="2" cellpadding="2">
+<tr>
+<td valign="top">
+<pre><br />
+
+         insert into aa_network (dlpsCIDRAddress,<br />
+
+         dlpsAddressStart, dlpsAddressEnd,<br />
+
+         dlpsAccessSwitch, inst,<br />
+
+         lastModifiedTime, lastModifiedBy,<br />
+
+         dlpsDeleted)<br />
+
+         values ('141.211.0.0/15',<br />
+
+         2379415552,2379546623,<br />
+
+         'allow', 1000,<br />
+
+         SYSDATE, 'root', 'f');
+</pre>
+</td><td valign="top">
+<p>Description of database columns:<br />
+</p>
+<table width="100%" cellspacing="2" cellpadding="2">
+<tr>
+<td valign="top">
+<pre>dlpsCIDRAddress
+</pre>
+</td><td valign="top"> the IP address range in CIDR format<br />
+</td></tr>
+<tr>
+<td valign="top">
+<pre>dlpsAddressStart
+</pre>
+</td><td valign="top"> the numeric starting address of the range<br />
+</td></tr>
+<tr>
+<td valign="top">
+<pre>dlpsAddressEnd
+</pre>
+</td><td valign="top"> the numeric ending address of the range<br />
+</td></tr>
+<tr>
+<td valign="top">
+<pre>dlpsAccessSwitch
+</pre>
+</td><td valign="top"> a flag indicating whether this address range is to be allowed or denied: either 'allow' or 'deny'<br />
+</td></tr>
+<tr>
+<td valign="top">
+<pre>inst
+</pre>
+</td><td valign="top"> the corresponding institution identifier<br />
+</td></tr>
+<tr>
+<td valign="top">
+<pre>lastModifiedTime
+</pre>
+</td><td valign="top"> the date and time this record was last modified<br />
+</td></tr>
+<tr>
+<td valign="top">
+<pre>lastModifiedBy
+</pre>
+</td><td valign="top"> the username of the user who last modified this record<br />
+</td></tr>
+<tr>
+<td valign="top">
+<pre>dlpsDeleted
+</pre>
+</td><td valign="top"> a flag indicating whether this record is deleted: either 't' (true) or 'f' (false)<br />
+</td></tr></table>
+</td></tr></table>
+<p>The system allows multiple IP address ranges to be associated with each institution.
+</p>
+<a name="Example:_Permitting_an_institution_to_a_collection"></a><h4><span class="editsection">[<a href="http://localhost/mediawiki/index.php?title=DLXS_Authentication_and_Authorization_System&amp;action=edit&amp;section=10" title="Edit section: Example: Permitting an institution to a collection">edit</a>]</span> <span class="mw-headline"> Example: Permitting an institution to a collection </span></h4>
+<table cellspacing="2" cellpadding="2">
+<tr>
+<td valign="top">
+<pre><br />
+
+         insert into aa_may_access (inst, coll,<br />
+
+         lastModifiedTime, lastModifiedBy,<br />
+
+         dlpsDeleted)<br />
+
+         values (1000, 'jbt',<br />
+
+         SYSDATE, 'root', 'f');<br />
+
+
+</pre>
+</td><td valign="top">
+<p>Description of database columns:<br />
+</p>
+<table width="100%" cellspacing="2" cellpadding="2">
+<tr>
+<td valign="top">
+<pre>inst
+</pre>
+</td><td valign="top"> the corresponding institution identifier<br />
+</td></tr>
+<tr>
+<td valign="top">
+<pre>coll
+</pre>
+</td><td valign="top"> the corresponding collection identifier<br />
+</td></tr>
+<tr>
+<td valign="top">
+<pre>lastModifiedTime
+</pre>
+</td><td valign="top"> the date and time this record was last modified<br />
+</td></tr>
+<tr>
+<td valign="top">
+<pre>lastModifiedBy
+</pre>
+</td><td valign="top"> the username of the user who last modified this record<br />
+</td></tr>
+<tr>
+<td valign="top">
+<pre>dlpsDeleted
+</pre>
+</td><td valign="top"> a flag indicating whether this record is deleted: either 't' (true) or 'f' (false)<br />
+</td></tr></table>
+</td></tr></table>
+<p>At this point, the resource will be accessible from the UM campus, but any attempt to access it from elsewhere should result in a prompt for authentication. However, as no users currently exist, it will not be possible to authenticate.
+</p>
+<a name="Example:_Creating_a_user"></a><h4><span class="editsection">[<a href="http://localhost/mediawiki/index.php?title=DLXS_Authentication_and_Authorization_System&amp;action=edit&amp;section=11" title="Edit section: Example: Creating a user">edit</a>]</span> <span class="mw-headline"> Example: Creating a user </span></h4>
+<table cellspacing="2" cellpadding="2">
+<tr>
+<td valign="top">
+<pre><br />
+
+         insert inst aa_user (userid,<br />
+
+         givenName, initials, surname,<br />
+
+         rfc822Mailbox,<br />
+
+         dlpsKey, userPassword,<br />
+
+         lastModifiedTime, lastModifiedBy,<br />
+
+         dlpsDeleted)<br />
+
+         values ('cufarley',<br />
+
+         'Charles', 'U.', 'Farley',<br />
+
+         'cufarley@your.domain',<br />
+
+         '123-45-6789', '!none',<br />
+
+         SYSDATE, 'root', 'f');<br />
+
+
+</pre>
+</td><td valign="top">
+<p>Description of database columns:<br />
+</p>
+<table width="100%" cellspacing="2" cellpadding="2">
+<tr>
+<td valign="top">
+<pre>userid
+</pre>
+</td><td valign="top"> the (unique) user identifier<br />
+</td></tr>
+<tr>
+<td valign="top">
+<pre>givenName
+</pre>
+</td><td valign="top"> the given (first) name<br />
+</td></tr>
+<tr>
+<td valign="top">
+<pre>initials
+</pre>
+</td><td valign="top"> the middle initial(s)<br />
+</td></tr>
+<tr>
+<td valign="top">
+<pre>surname
+</pre>
+</td><td valign="top"> the surname<br />
+</td></tr>
+<tr>
+<td valign="top">
+<pre>rfc822Mailbox
+</pre>
+</td><td valign="top"> the email address<br />
+</td></tr>
+<tr>
+<td valign="top">
+<pre>dlpsKey
+</pre>
+</td><td valign="top"> the "key" value which will permit the user to establish or change their password using the self-serve user interface; this should be known only to the user<br />
+</td></tr>
+<tr>
+<td valign="top">
+<pre>userPassword
+</pre>
+</td><td valign="top"> the encrypted password or Kerberos authentication realm; this should be initially set to '!none', and will be set by the user<br />
+</td></tr>
+<tr>
+<td valign="top">
+<pre>lastModifiedTime
+</pre>
+</td><td valign="top"> the date and time this record was last modified<br />
+</td></tr>
+<tr>
+<td valign="top">
+<pre>lastModifiedBy
+</pre>
+</td><td valign="top"> the username of the user who last modified this record<br />
+</td></tr>
+<tr>
+<td valign="top">
+<pre>dlpsDeleted
+</pre>
+</td><td valign="top"> a flag indicating whether this record is deleted: either 't' (true) or 'f' (false)<br />
+</td></tr></table>
+</td></tr></table>
+<a name="Example:_Associating_a_user_with_an_institution"></a><h4><span class="editsection">[<a href="http://localhost/mediawiki/index.php?title=DLXS_Authentication_and_Authorization_System&amp;action=edit&amp;section=12" title="Edit section: Example: Associating a user with an institution">edit</a>]</span> <span class="mw-headline"> Example: Associating a user with an institution </span></h4>
+<table cellspacing="2" cellpadding="2">
+<tr>
+<td valign="top">
+<pre><br />
+
+         insert into aa_is_member_of_inst (userid, inst,<br />
+
+         lastModifiedTime, lastModifiedBy,<br />
+
+         dlpsDeleted)<br />
+
+         values ('cufarley', 1000,<br />
+
+         SYSDATE, 'root', 'f');<br />
+
+
+</pre>
+</td><td valign="top">
+<p>Description of database columns: 
+</p>
+<table width="100%" cellspacing="2" cellpadding="2">
+<tr>
+<td valign="top">
+<pre>userid
+</pre>
+</td><td valign="top"> the corresponding user identifier<br />
+</td></tr>
+<tr>
+<td valign="top">
+<pre>inst
+</pre>
+</td><td valign="top"> the corresponding institution identifier<br />
+</td></tr>
+<tr>
+<td valign="top">
+<pre>lastModifiedTime
+</pre>
+</td><td valign="top"> the date and time this record was last modified<br />
+</td></tr>
+<tr>
+<td valign="top">
+<pre>lastModifiedBy
+</pre>
+</td><td valign="top"> the username of the user who last modified this record<br />
+</td></tr>
+<tr>
+<td valign="top">
+<pre>dlpsDeleted
+</pre>
+</td><td valign="top"> a flag indicating whether this record is deleted: either 't' (true) or 'f' (false)<br />
+</td></tr></table>
+</td></tr></table>
+<p>At this point, after being prompted for authentication, the user may authenticate and will be given access to the resource.
+</p>
+<a name="Example:_Permitting_a_user_to_a_collection"></a><h4><span class="editsection">[<a href="http://localhost/mediawiki/index.php?title=DLXS_Authentication_and_Authorization_System&amp;action=edit&amp;section=13" title="Edit section: Example: Permitting a user to a collection">edit</a>]</span> <span class="mw-headline"> Example: Permitting a user to a collection </span></h4>
+<p>Access to collections may be given to individual users directly instead of via association with an institution. The following commands would modify the database to remove the association of the user with the institution, and explicitly permit the user to the collection. (Compare with <b>Permitting an institution to a collection</b>, above.)
+</p>
+<table width="75%" cellspacing="2" cellpadding="2">
+<tr>
+<td valign="top">
+<pre><br />
+
+         delete from aa_is_member_of_inst<br />
+
+         where userid = 'cufarley' and inst = 1000;<br />
+
+         <br />
+
+         insert into aa_may_access (userid, coll,<br />
+
+         lastModifiedTime, lastModifiedBy,<br />
+
+         dlpsDeleted)<br />
+
+         values ('cufarley', 'jbt',<br />
+
+         SYSDATE, 'root', 'f');
+</pre>
+</td></tr></table>
+<a name="Example:_Creating_a_DLXS_text_class_collection_record"></a><h4><span class="editsection">[<a href="http://localhost/mediawiki/index.php?title=DLXS_Authentication_and_Authorization_System&amp;action=edit&amp;section=14" title="Edit section: Example: Creating a DLXS text class collection record">edit</a>]</span> <span class="mw-headline"> Example: Creating a DLXS text class collection record </span></h4>
+<p>Collections served by DLXS class middleware use a special mode of the system called "delegated authorization", which will be explained in more detail in the next example. First, though, to trigger this mode, DLXS class collections must specify both their class (e.g. text or image) and the appropriate authorization type flag, as shown below:
+</p>
+<table cellspacing="2" cellpadding="2">
+<tr>
+<td valign="top">
+<pre><br />
+
+         insert into aa_coll (uniqueIdentifier,<br />
+
+         commonName,<br />
+
+         description,<br />
+
+         dlpsClass, dlpsSource,<br />
+
+         dlpsAuthenMethod, dlpsAuthzType,<br />
+
+         dlpsPartlyPublic,<br />
+
+         manager,<br />
+
+         lastModifiedTime, lastModifiedBy,<br />
+
+         dlpsDeleted)<br />
+
+         values ('jbt-text',<br />
+
+         'Journal of Bobbles and Trinkets',<br />
+
+         'An online resource focusing on the<br />
+
+         study of buttons, plastic toys,<br />
+
+         do-nothing machines, and the like',<br />
+
+         'text', 'local',<br />
+
+         'any', 'd',<br />
+
+         'f',<br />
+
+         0,<br />
+
+         SYSDATE, 'root', 'f');
+</pre>
+</td><td valign="top">
+<p>Description of database columns, where different from <b>Creating a collection record.</b> above:<br />
+</p>
+<table width="100%" cellspacing="2" cellpadding="2">
+<tr>
+<td valign="top"> <tt>dlpsClass</tt><br />
+</td><td valign="top"> the collection class (for use with DLXS middleware classes)<br />
+</td></tr>
+<tr>
+<td valign="top"> <tt>dlpsAuthzType</tt><br />
+</td><td valign="top"> the authorization type to use: either 'n' (normal) or 'd' (delegated)<br />
+</td></tr></table><br />
+</td></tr></table>
+<a name="Example:_Permitting_an_institution_to_a_DLXS_text_class_collection"></a><h4><span class="editsection">[<a href="http://localhost/mediawiki/index.php?title=DLXS_Authentication_and_Authorization_System&amp;action=edit&amp;section=15" title="Edit section: Example: Permitting an institution to a DLXS text class collection">edit</a>]</span> <span class="mw-headline"> Example: Permitting an institution to a DLXS text class collection </span></h4>
+<p>When a permission is given to a collection that is set for delegated authorization, as above, the system behaves in a completely different way. Instead of acting as a gatekeeper, the system instead collects all pertinent authorization information and passes that information via environment variables to the DLXS middleware. The DLXS middleware will then use that information to decide which collections to present to the user.
+</p><p>This mode is necessary because DLXS middleware supports searching across multiple collections. Because any given user may have different access permissions based on institutional associations or explicit permissions, it is impossible to simply grant or deny access on a global basis. Instead, the DLXS middleware must be supplied with a customized list of authorized collections on a per-transaction basis in order to present the user with all of the material they are permitted to access, and none of the material for which they are not. The authorization type is referred to as "delegated" because the system is "delegating" the authorization decision to the DLXS middleware.
+</p><p>For a description of the information that is passed from the system to the DLXS middleware and how it is used, see [../auth/index.html DLXS Authentication and Authorization].
+</p><p>As you can see below, the command required to add the permission is the same regardless of the authorization type:
+</p>
+<table cellspacing="2" cellpadding="2">
+<tr>
+<td valign="top">
+<pre><br />
+
+         insert into aa_may_access (inst, coll,<br />
+
+         lastModifiedTime, lastModifiedBy,<br />
+
+         dlpsDeleted)<br />
+
+         values (1000, 'jbt-text',<br />
+
+         SYSDATE, 'root', 'f');
+</pre>
+<p><br />
+</p>
+</td><td valign="top">
+<p>Description of database columns:<br />
+</p>
+<table width="100%" cellspacing="2" cellpadding="2">
+<tr>
+<td valign="top">
+<pre>inst
+</pre>
+</td><td valign="top"> the corresponding institution identifier<br />
+</td></tr>
+<tr>
+<td valign="top">
+<pre>coll
+</pre>
+</td><td valign="top"> the corresponding collection identifier<br />
+</td></tr>
+<tr>
+<td valign="top">
+<pre>lastModifiedTime
+</pre>
+</td><td valign="top"> the date and time this record was last modified<br />
+</td></tr>
+<tr>
+<td valign="top">
+<pre>lastModifiedBy
+</pre>
+</td><td valign="top"> the username of the user who last modified this record<br />
+</td></tr>
+<tr>
+<td valign="top">
+<pre>dlpsDeleted
+</pre>
+</td><td valign="top"> a flag indicating whether this record is deleted: either 't' (true) or 'f' (false)
+</td></tr></table><br />
+</td></tr></table>
+<a name="Appendix:_Features_of_the_UM_Digital_Library_Services_installation"></a><h1><span class="editsection">[<a href="http://localhost/mediawiki/index.php?title=DLXS_Authentication_and_Authorization_System&amp;action=edit&amp;section=16" title="Edit section: Appendix: Features of the UM Digital Library Services installation">edit</a>]</span> <span class="mw-headline"> Appendix: Features of the UM Digital Library Services installation </span></h1>
+<p>Our local installation of this system includes the following:
+</p>
+<ul><li> <b>Oracle configuration.</b> Two Oracle 9i servers are installed in two different, and distant, parts of campus. These servers use replication features of Oracle to stay in near-real-time synchronization; if a change is made on one server, that change will be replicated to the other server in less than one minute. All Oracle client software has been configured with connect-time and session failover capabilities so that the Oracle server which is physically closest is preferred under normal circumstances, but the other will be chosen in the event of a failure. One server is Sun hardware running Solaris, and the other is Intel hardware running Linux.
+</li><li> <b>Apache web server configuration.</b> Apache, equipped with mod_ssl and the DLXS authentication and authorization system, is running alongside Oracle on each server. Each Apache installation is configured with a copy of a server certificate for the name "login.umdl.umich.edu" and has identical appearance in all respects.
+</li><li> <b>Load balancing and failover.</b> A DNS-based system has been put in place to dynamically direct users' browsers to the Apache server that is physically closest under normal circumstances, to the least loaded server under heavy usage conditions, or to the only available server in the event of a failure. A user accessing the server "login.umdl.umich.edu" may transparently hit either server.<br />
+</li><li> <b>Locally-hosted text and image resources.</b> Servers that are dedicated to serving text and image content are equipped with the DLXS authentication and authorization system if they host any non-public content. The database is maintained with records which restrict access to these materials as needed. At the time of this writing, there are approximately 500 active institutions records in the database for institutions with subscriptions to resources hosted by DLS.
+</li><li> <b>Library web server.</b> The library's main web server also has the system installed, and restricted access to materials such as course reserves and staff-only areas of the website is provided through the system via IP address range or password authentication, as appropriate.
+</li><li> <b>Library catalog.</b> The Web-accessible interface to the library's catalog has been enhanced to honor the authentication cookie used by the system, and uses that to enable saved record sets, patron self-service functions, and other functions requiring authentication.
+</li><li> <b>Library proxy server.</b> The library's proxy server, EZProxy, was enhanced with a small custom script to honor the authentication cookie used by the system to initialize a proxy session. UM affiliates who have authenticated for other reasons are automatically granted a proxy session.<br />
+</li></ul>
+<p><a href="#top" title="">Top</a>
+</p>
+<!-- 
+NewPP limit report
+Preprocessor node count: 272/1000000
+Post-expand include size: 0/2097152 bytes
+Template argument size: 0/2097152 bytes
+Expensive parser function count: 0/100
+-->
+
+<!-- Saved in parser cache with key mediawiki_dlxsdocs_15:pcache:idhash:50-0!1!0!!en!2 and timestamp 20250202211428 -->
+<div class="printfooter">
+Retrieved from "<a href="DLXS_Authentication_and_Authorization_System.html">http://localhost/wiki/DLXS_Authentication_and_Authorization_System</a>"</div>
+						<!-- end content -->
+			<div class="visualClear"></div>
+		</div>
+	</div>
+		</div>
+		<div id="column-one">
+	<div id="p-cactions" class="portlet">
+		<h5>Views</h5>
+		<div class="pBody">
+			<ul>
+	
+				 <li id="ca-nstab-main" class="selected"><a href="DLXS_Authentication_and_Authorization_System.html" title="View the content page [c]" accesskey="c">Page</a></li>
+				 <li id="ca-talk" class="new"><a href="http://localhost/mediawiki/index.php?title=Talk:DLXS_Authentication_and_Authorization_System&amp;action=edit" title="Discussion about the content page [t]" accesskey="t">Discussion</a></li>
+				 <li id="ca-edit"><a href="http://localhost/mediawiki/index.php?title=DLXS_Authentication_and_Authorization_System&amp;action=edit" title="You can edit this page.&#10;Please use the preview button before saving. [e]" accesskey="e">Edit</a></li>
+				 <li id="ca-history"><a href="http://localhost/mediawiki/index.php?title=DLXS_Authentication_and_Authorization_System&amp;action=history" title="Past versions of this page. [h]" accesskey="h">History</a></li>			</ul>
+		</div>
+	</div>
+	<div class="portlet" id="p-personal">
+		<h5>Personal tools</h5>
+		<div class="pBody">
+			<ul>
+				<li id="pt-login"><a href="http://localhost/mediawiki/index.php?title=Special:UserLogin&amp;returnto=DLXS_Authentication_and_Authorization_System" title="You are encouraged to log in, it is not mandatory however. [o]" accesskey="o">Log in / create account</a></li>
+			</ul>
+		</div>
+	</div>
+	<div class="portlet" id="p-logo">
+		<a style="background-image: url(../dlxs15/uploads/DLXS_logo2.gif);" href="Main_Page.html" title="Visit the Main Page [z]" accesskey="z"></a>
+	</div>
+	<script type="text/javascript"> if (window.isMSIE55) fixalpha(); </script>
+	<div class='generated-sidebar portlet' id='p-navigation'>
+		<h5>Navigation</h5>
+		<div class='pBody'>
+			<ul>
+				<li id="n-mainpage-description"><a href="Main_Page.html">Main Page</a></li>
+				<li id="n-portal"><a href="DLXS_Documentation_Community_Portal.html" title="About the project, what you can do, where to find things">Community portal</a></li>
+				<li id="n-currentevents"><a href="DLXS_Documentation_Current_events.html" title="Find background information on current events">Current events</a></li>
+				<li id="n-recentchanges"><a href="Special_RecentChanges.html" title="The list of recent changes in the wiki. [r]" accesskey="r">Recent changes</a></li>
+				<li id="n-randompage"><a href="Mounting_a_Bib_Class_Collection.html" title="Load a random page [x]" accesskey="x">Random page</a></li>
+				<li id="n-help"><a href="Help_Contents.html" title="The place to find out.">Help</a></li>
+			</ul>
+		</div>
+	</div>
+	<div id="p-search" class="portlet">
+		<h5><label for="searchInput">Search</label></h5>
+		<div id="searchBody" class="pBody">
+			<form action="http://localhost/wiki/Special:Search" id="searchform"><div>
+				<input id="searchInput" name="search" type="text" title="Search DLXS Documentation [f]" accesskey="f" value="" />
+				<input type='submit' name="go" class="searchButton" id="searchGoButton"	value="Go" title="Go to a page with this exact name if exists" />&nbsp;
+				<input type='submit' name="fulltext" class="searchButton" id="mw-searchButton" value="Search" title="Search the pages for this text" />
+			</div></form>
+		</div>
+	</div>
+	<div class="portlet" id="p-tb">
+		<h5>Toolbox</h5>
+		<div class="pBody">
+			<ul>
+				<li id="t-whatlinkshere"><a href="Special_WhatLinksHere/DLXS_Authentication_and_Authorization_System.html" title="List of all wiki pages that link here [j]" accesskey="j">What links here</a></li>
+				<li id="t-recentchangeslinked"><a href="Special_RecentChangesLinked/DLXS_Authentication_and_Authorization_System.html" title="Recent changes in pages linked from this page [k]" accesskey="k">Related changes</a></li>
+<li id="t-specialpages"><a href="Special_SpecialPages.html" title="List of all special pages [q]" accesskey="q">Special pages</a></li>
+				<li id="t-print"><a href="http://localhost/mediawiki/index.php?title=DLXS_Authentication_and_Authorization_System&amp;printable=yes" title="Printable version of this page [p]" accesskey="p">Printable version</a></li>				<li id="t-permalink"><a href="http://localhost/mediawiki/index.php?title=DLXS_Authentication_and_Authorization_System&amp;oldid=3168" title="Permanent link to this version of the page">Permanent link</a></li>			</ul>
+		</div>
+	</div>
+		</div><!-- end of the left (by default at least) column -->
+			<div class="visualClear"></div>
+			<div id="footer">
+				<div id="f-poweredbyico"><a href="http://www.mediawiki.org/"><img src="../mediawiki/skins/common/images/poweredby_mediawiki_88x31.png" alt="Powered by MediaWiki" /></a></div>
+			<ul id="f-list">
+				<li id="lastmod"> This page was last modified on 5 July 2016, at 15:11.</li>
+				<li id="viewcount">This page has been accessed 4,029 times.</li>
+				<li id="privacy"><a href="DLXS_Documentation_Privacy_policy.html" title="DLXS Documentation:Privacy policy">Privacy policy</a></li>
+				<li id="about"><a href="DLXS_Documentation_About.html" title="DLXS Documentation:About">About DLXS Documentation</a></li>
+				<li id="disclaimer"><a href="DLXS_Documentation_General_disclaimer.html" title="DLXS Documentation:General disclaimer">Disclaimers</a></li>
+			</ul>
+		</div>
+</div>
+
+		<script type="text/javascript">if (window.runOnloadHook) runOnloadHook();</script>
+<!-- Served in 0.284 secs. --></body>
+<!-- Mirrored from localhost/wiki/DLXS_Authentication_and_Authorization_System by HTTrack Website Copier/3.x [XR&CO'2014], Mon, 03 Feb 2025 00:29:21 GMT -->
+</html>

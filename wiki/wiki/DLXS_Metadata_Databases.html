@@ -1,0 +1,350 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en" dir="ltr">
+	
+<!-- Mirrored from localhost/wiki/DLXS_Metadata_Databases by HTTrack Website Copier/3.x [XR&CO'2014], Mon, 03 Feb 2025 00:38:10 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=UTF-8" /><!-- /Added by HTTrack -->
+<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+		<meta name="generator" content="MediaWiki 1.13.5" />
+		<meta name="keywords" content="DLXS Metadata Databases,Collection Manager Field Descriptions,DLPS&#039;s Development Environment for DLXS Software,DLXS Wiki,Directory Structure,Working with DLXS Components,Working with the Collection Manager,Working with the Collection Metadata Database" />
+		<link rel="shortcut icon" href="http://localhost/favicon.ico" />
+		<link rel="search" type="application/opensearchdescription+xml" href="http://localhost/mediawiki/opensearch_desc.php" title="DLXS Documentation (en)" />
+		<link rel="alternate" type="application/rss+xml" title="DLXS Documentation RSS Feed" href="http://localhost/mediawiki/index.php?title=Special:RecentChanges&amp;feed=rss" />
+		<link rel="alternate" type="application/atom+xml" title="DLXS Documentation Atom Feed" href="http://localhost/mediawiki/index.php?title=Special:RecentChanges&amp;feed=atom" />
+		<title>DLXS Metadata Databases - DLXS Documentation</title>
+		<style type="text/css" media="screen, projection">/*<![CDATA[*/
+			@import "../mediawiki/skins/common/sharedfa7c.css?164";
+			@import "../mediawiki/skins/monobook/mainfa7c.css?164";
+		/*]]>*/</style>
+		<link rel="stylesheet" type="text/css" media="print" href="../mediawiki/skins/common/commonPrintfa7c.css?164" />
+		<!--[if lt IE 5.5000]><style type="text/css">@import "/mediawiki/skins/monobook/IE50Fixes.css?164";</style><![endif]-->
+		<!--[if IE 5.5000]><style type="text/css">@import "/mediawiki/skins/monobook/IE55Fixes.css?164";</style><![endif]-->
+		<!--[if IE 6]><style type="text/css">@import "/mediawiki/skins/monobook/IE60Fixes.css?164";</style><![endif]-->
+		<!--[if IE 7]><style type="text/css">@import "/mediawiki/skins/monobook/IE70Fixes.css?164";</style><![endif]-->
+		<!--[if lt IE 7]><script type="text/javascript" src="/mediawiki/skins/common/IEFixes.js?164"></script>
+		<meta http-equiv="imagetoolbar" content="no" /><![endif]-->
+		
+		<script type= "text/javascript">/*<![CDATA[*/
+var skin = "monobook";
+var stylepath = "/mediawiki/skins";
+var wgArticlePath = "/wiki/$1";
+var wgScriptPath = "/mediawiki";
+var wgScript = "http://localhost/mediawiki/index.php";
+var wgVariantArticlePath = false;
+var wgActionPaths = [];
+var wgServer = "http://localhost/";
+var wgCanonicalNamespace = "";
+var wgCanonicalSpecialPageName = false;
+var wgNamespaceNumber = 0;
+var wgPageName = "DLXS_Metadata_Databases";
+var wgTitle = "DLXS Metadata Databases";
+var wgAction = "view";
+var wgArticleId = "147";
+var wgIsArticle = true;
+var wgUserName = null;
+var wgUserGroups = null;
+var wgUserLanguage = "en";
+var wgContentLanguage = "en";
+var wgBreakFrames = false;
+var wgCurRevisionId = "1041";
+var wgVersion = "1.13.5";
+var wgEnableAPI = true;
+var wgEnableWriteAPI = false;
+var wgRestrictionEdit = [];
+var wgRestrictionMove = [];
+/*]]>*/</script>
+                
+		<script type="text/javascript" src="../mediawiki/skins/common/wikibitsfa7c.js?164"><!-- wikibits js --></script>
+		<!-- Head Scripts -->
+		<script type="text/javascript" src="../mediawiki/skins/common/ajaxfa7c.js?164"></script>
+		<script type="text/javascript" src="http://localhost/mediawiki/index.php?title=-&amp;action=raw&amp;gen=js&amp;useskin=monobook"><!-- site js --></script>
+		<style type="text/css">/*<![CDATA[*/
+@import "http://localhost/mediawiki/index.php?title=MediaWiki:Common.css&amp;usemsgcache=yes&amp;action=raw&amp;ctype=text/css&amp;smaxage=18000";
+@import "http://localhost/mediawiki/index.php?title=MediaWiki:Monobook.css&amp;usemsgcache=yes&amp;action=raw&amp;ctype=text/css&amp;smaxage=18000";
+@import "http://localhost/mediawiki/index.php?title=-&amp;action=raw&amp;gen=css&amp;maxage=18000&amp;useskin=monobook";
+/*]]>*/</style>
+	</head>
+<body class="mediawiki ns-0 ltr page-DLXS_Metadata_Databases">
+	<div id="globalWrapper">
+		<div id="column-content">
+	<div id="content">
+		<a name="top" id="top"></a>
+				<h1 class="firstHeading">DLXS Metadata Databases</h1>
+		<div id="bodyContent">
+			<h3 id="siteSub">From DLXS Documentation</h3>
+			<div id="contentSub"></div>
+									<div id="jump-to-nav">Jump to: <a href="#column-one">navigation</a>, <a href="#searchInput">search</a></div>			<!-- start content -->
+			<p><a href="DLXS_Wiki.html" title="DLXS Wiki">Main Page</a> &gt; <a href="Working_with_DLXS_Components.html" title="Working with DLXS Components">Working with DLXS Components</a> &gt; <a href="Working_with_the_Collection_Metadata_Database.html" title="Working with the Collection Metadata Database">Working with the Collection Metadata Database</a> &gt; DLXS Metadata Databases
+</p>
+    <p>This document describes some of the metadata used by the DLXS middleware. The <i>dlxs</i> database contains metadata about the collections and the collection groups.</p>
+<table id="toc" class="toc" summary="Contents"><tr><td><div id="toctitle"><h2>Contents</h2></div>
+<ul>
+<li class="toclevel-1"><a href="#Database_schema"><span class="tocnumber">1</span> <span class="toctext">Database schema</span></a></li>
+<li class="toclevel-1"><a href="#User_IDs"><span class="tocnumber">2</span> <span class="toctext">User IDs</span></a></li>
+<li class="toclevel-1"><a href="#Additional_privilege_for_dlxsadm"><span class="tocnumber">3</span> <span class="toctext">Additional privilege for dlxsadm</span></a></li>
+<li class="toclevel-1"><a href="#Database_fields"><span class="tocnumber">4</span> <span class="toctext">Database fields</span></a></li>
+<li class="toclevel-1"><a href="#Interaction_between_database_rows.2C_users.2C_DLXS_Middleware_and_the_Collection_Manager"><span class="tocnumber">5</span> <span class="toctext">Interaction between database rows, users, DLXS Middleware and the Collection Manager</span></a>
+<ul>
+<li class="toclevel-2"><a href="#Two_rows:_Release_and_Production"><span class="tocnumber">5.1</span> <span class="toctext">Two rows: Release and Production</span></a></li>
+<li class="toclevel-2"><a href="#Middleware"><span class="tocnumber">5.2</span> <span class="toctext">Middleware</span></a></li>
+<li class="toclevel-2"><a href="#Collection_Manager"><span class="tocnumber">5.3</span> <span class="toctext">Collection Manager</span></a></li>
+<li class="toclevel-2"><a href="#Three_or_more_rows:_Release.2C_Production_and_individual_developers"><span class="tocnumber">5.4</span> <span class="toctext">Three or more rows: Release, Production and individual developers</span></a></li>
+<li class="toclevel-2"><a href="#Middleware_2"><span class="tocnumber">5.5</span> <span class="toctext">Middleware</span></a></li>
+<li class="toclevel-2"><a href="#Collection_Manager_2"><span class="tocnumber">5.6</span> <span class="toctext">Collection Manager</span></a></li>
+</ul>
+</li>
+</ul>
+</td></tr></table><script type="text/javascript"> if (window.showTocToggle) { var tocShowText = "show"; var tocHideText = "hide"; showTocToggle(); } </script>
+<a name="Database_schema"></a><h2><span class="editsection">[<a href="http://localhost/mediawiki/index.php?title=DLXS_Metadata_Databases&amp;action=edit&amp;section=1" title="Edit section: Database schema">edit</a>]</span> <span class="mw-headline">Database schema</span></h2>
+<p>The <a href="Working_with_the_Collection_Manager.html" title="Working with the Collection Manager">Collection Manager</a> (collmgr program) maintains all collection and group information in tables. These tables are the following:</p>
+    <table border="1">
+        <tr><td>No</td><td>Table</td><td>Description</td>
+        </tr>
+        <tr><td>1</td><td>Collection</td><td>This table contains all the collection parameters common to all the classes. In some cases, a particular parameter may not currently be used by a class, but may be in future releases.</td>
+        </tr>
+
+        <tr><td>3</td><td>BibClass</td><td>This table contains all the collection parameters that are specific to a bib class collection.</td>
+        </tr>
+
+        <tr><td>5</td><td>TextClass</td><td>This table contains all the collection parameters that are specific to a text class collection.</td>
+        </tr>
+
+        <tr><td>7</td><td>ImageClass</td><td>This table contains all the collection parameters that are specific to an image class collection.</td>
+        </tr>
+
+        <tr><td>9</td><td>GroupData</td><td>This table contains all the group parameters that are common to all the classes. In some cases, the parameter is not currently being used by a class, but may be in future releases.</td>
+        </tr>
+
+        <tr><td>11</td><td>BibClassGroup</td><td>This table contains all the group parameters that are specific to bib class.</td>
+        </tr>
+
+        <tr><td>13</td><td>TextClassGroup</td><td>This table contains all the group parameters that are specific to text class.</td>
+        </tr>
+
+        <tr><td>15</td><td>ImageClassGroup</td><td>This table contains all the group parameters that are specific to image class collections.</td>
+        </tr>
+
+        <tr><td>17</td><td>GroupColl</td><td>This table contains the relationship between groups and collections. It tells which collections are in which groups.</td>
+        </tr>
+
+        <tr><td>19</td><td>CheckinCollection</td><td>This table is used to maintain a record of which user checked in which collection and at what time.</td>
+        </tr>
+        <tr><td>20</td><td>CheckoutCollection</td><td>This table is used to maintain a record of which user checked out which collection and at what time.</td>
+        </tr>
+        <tr><td>21</td><td>CheckinGroup</td><td>This table is used to maintain a record of which user checked in which group and at what time.</td>
+        </tr>
+        <tr><td>22</td><td>CheckoutGroup</td><td>This table is used to maintain a record of which user checked out which group and at what time.</td>
+        </tr>
+
+        <tr><td>24</td><td>Version</td><td>This table maintains the version number of the database.</td>
+        </tr>
+    </table>
+    <p>These tables serve to identify and locate the various modules, objects, and search restrictions that are used by the class middleware to serve each collection available in the various classes. <a href="Working_with_the_Collection_Manager.html" title="Working with the Collection Manager">See more on the tables in the database</a> in the collmgr documentation.</p>
+<p><br />    
+</p>
+    <p>Some of the columns contain data that are required; others contain optional data. Multiple values, which are allowed in some fields, are entered through collmgr, into the appropriate fields one value per line.</p>
+<a name="User_IDs"></a><h2><span class="editsection">[<a href="http://localhost/mediawiki/index.php?title=DLXS_Metadata_Databases&amp;action=edit&amp;section=2" title="Edit section: User IDs">edit</a>]</span> <span class="mw-headline">User IDs</span></h2>
+    <p>All but Version table have a field called <i>userid</i>. <i>userid</i> can take on several values with very specific meaning. One is that of the <i>dlxsadm</i>. The other important value is <i>production</i>. Finally, another value might be that of a specific developer logged into collmgr, say <i>smith</i>. These are explained here.</p>
+<p>The userid <i>dlxsadm</i> is referred to as the <i>release user</i>. The middleware will read rows keyed by userid <i>dlxsadmn</i> from these tables when the following are true:</p>
+    <ul>
+      <li> the userid is <i>dlxsadm</i></li>
+      <li> the environment variable DLPS_DEV is set to 1 
+      </li>
+      <li>a DLXS CGI program is being run from the release directory; e.g; <a href="Directory_Structure.html#DLXSROOT" title="Directory Structure">$DLXSROOT</a>/b/bib/.</li>
+    </ul>
+    <p>The userid <i>production</i> is referred to as the <i>production user</i>. The middleware will read rows keyed by userid <i>production</i> from these tables when:</p>
+    <ul>
+      <li>when the environment DLPS_DEV is not set</li>
+    </ul>
+    <p>The userid <i>smith</i>, for example, is referred to as the <i>development user</i>. The middleware will read rows keyed by this userid when:</p>
+    <ul>
+      <li> the userid is <i>smith</i></li>
+      <li>when the environment DLPS_DEV is set to <i>smith</i></li>
+      <li>the executable used to run the middleware is located in  <i>smith</i>'s development directory which corresponds to the value of the DLXSROOT environment variable (e.g., /l1/dev/smith) normally set by  <i>smith</i>'s virtual host, e.g.  <i>smith.dev.umdl.umich.edu</i></li>
+    </ul>
+    <p>This will allow <i>smith</i> to perform testing based on collections and groups of his choice that he can set up using the <a href="Working_with_the_Collection_Manager.html" title="Working with the Collection Manager">Collection Manager</a>. Most institutions will not need to use this third type of user because there will not be a need to have several users work against the same collections. For those institutions, it will only be necessary to log in to the Collection Managmer as <i>dlxsadm</i>. All data management can happen through that userid.</p>
+<a name="Additional_privilege_for_dlxsadm"></a><h2><span class="editsection">[<a href="http://localhost/mediawiki/index.php?title=DLXS_Metadata_Databases&amp;action=edit&amp;section=3" title="Edit section: Additional privilege for dlxsadm">edit</a>]</span> <span class="mw-headline">Additional privilege for <i>dlxsadm</i></span></h2>
+    <p>In addition to being able to delete, add, or edit collections and groups associated with the <i>dlxsadm</i> user, this administrative login userid has other privileges. The <i>dlxsadm</i> will be able to add fields to classes, and delete fields from classes. This will change the structure of the tables associated with the classes. </p>
+    <p><b>Note</b> that when the userid <i>dlxsadm</i> deletes a collection or group, a backup of the deleted collection or group is kept in the appropriate backup tables.</p>
+    <p>The user <i>dlxsadm</i> also has privileges to release classes to production. "Releasing to production" effectively copies every <i>dlxsadm</i> row to a row keyed by the userid <i>production</i>. This distinction between <i>dlxsadm</i> and <i>production</i>, allows you to work on collections and groups independent of the collections and groups that are accessible by the version of the middleware that is running in production.</p>
+<p><br />    
+</p><p><br />    
+</p>
+<a name="Database_fields"></a><h2><span class="editsection">[<a href="http://localhost/mediawiki/index.php?title=DLXS_Metadata_Databases&amp;action=edit&amp;section=4" title="Edit section: Database fields">edit</a>]</span> <span class="mw-headline">Database fields</span></h2>
+    <p>For information on the individual fields, please see the <a href="Collection_Manager_Field_Descriptions.html" title="Collection Manager Field Descriptions">help file</a> used by the <a href="Working_with_the_Collection_Manager.html" title="Working with the Collection Manager">Collection Manager</a> (collmgr).</p>
+<p><br />    
+</p>
+<a name="Interaction_between_database_rows.2C_users.2C_DLXS_Middleware_and_the_Collection_Manager"></a><h2><span class="editsection">[<a href="http://localhost/mediawiki/index.php?title=DLXS_Metadata_Databases&amp;action=edit&amp;section=5" title="Edit section: Interaction between database rows, users, DLXS Middleware and the Collection Manager">edit</a>]</span> <span class="mw-headline">Interaction between database rows, users, DLXS Middleware and the Collection Manager</span></h2>
+<a name="Two_rows:_Release_and_Production"></a><h3><span class="editsection">[<a href="http://localhost/mediawiki/index.php?title=DLXS_Metadata_Databases&amp;action=edit&amp;section=6" title="Edit section: Two rows: Release and Production">edit</a>]</span> <span class="mw-headline">Two rows: Release and Production</span></h3>
+    <p>Most users of DLXS Middleware will likely have the following situation. A collection manager will be making changes to the collection information database, changing, adding or deleting collections. Then at some point, the new set of collections to be delivered will need to go into production. The database holds both sets of rows. </p>
+    <ul>
+      <li>One set of rows containing collections and groups as they are tested in 
+        a development environment. When ready, these will be moved to production.</li>
+      <li>One set of rows containing collections and groups that are used by the production 
+        environment.</li>
+    </ul>
+<p><br />    
+</p>
+<a name="Middleware"></a><h3><span class="editsection">[<a href="http://localhost/mediawiki/index.php?title=DLXS_Metadata_Databases&amp;action=edit&amp;section=7" title="Edit section: Middleware">edit</a>]</span> <span class="mw-headline">Middleware</span></h3>
+    <p>The middleware can be set to look at either the <i>release rows </i>(for testing and subsequent release) or the <i>production rows</i> (rows actually being used by the production system). This is accomplished through the setting of the environment variable <b>DLPS_DEV</b>. If set to 1, the <i>release rows</i> and their values are used by the middleware. If set to 0 or not present, the <i>production rows</i> are used by the middleware. </p>
+    <p>Therefore, two environments need to be set up: one for release and one for production. These can be set up as separate <i>virtual hosts</i> on a web server, each defining its own environment variables, or as servers on two <i>separate machines</i>. At DLPS, we have a separate development machine and more than one production machine, but it seems to be the case that most DLXS partners have one machine where both development and production are done.</p>
+    <p>In either case, the situation is that there are <i>two sets of rows</i> in the database and two servers (whether they are virtual hosts or actual separate physical hosts is irrelevant).  (In addition there is an <a href="DLPS%27s_Development_Environment_for_DLXS_Software.html" title="DLPS's Development Environment for DLXS Software">extension</a> to this scheme whereby each individual developer can have his/her own set of rows in order to develop without disturbing the database values in the release and production rows.)  </p>
+    <p>For example, assume there is one machine with two virtual hosts (<i>dev.domain.edu</i> and <i>prod.domain.edu</i>). The configuration for the virtual host <i>dev.domain.edu</i> should have a SetEnv directive setting DLPS_DEV to 1. The configuration for the <i>prod.domain.edu</i> virtual host should not include this environment variable setting.</p>
+    <p>When the <i>dev.domain.edu</i> server is asked to run the middleware it will access the <i>release rows</i> in the database and use their values.</p>
+    <p><b>Note</b>: As mentioned, if you want to run the cgi programs on the command line or within a debugger, you'll need to set your own shell environment to include a DLPS_DEV variable set to 1.</p>
+    <p>Likewise, the <i>production rows</i> and their values will be used for any cgi call to the <i>prod.domain.edu</i> virtual host because the user that the web server runs as (e.g., <i>nobody</i>) will not have the DLPS_DEV environment variable set. This is because no SetEnv directive in the <i>prod.domain.edu</i>'s virtual host configuration will have been set.</p>
+<a name="Collection_Manager"></a><h3><span class="editsection">[<a href="http://localhost/mediawiki/index.php?title=DLXS_Metadata_Databases&amp;action=edit&amp;section=8" title="Edit section: Collection Manager">edit</a>]</span> <span class="mw-headline">Collection Manager</span></h3>
+    <p>When running the <a href="Working_with_the_Collection_Manager.html" title="Working with the Collection Manager">Collection Manager</a> cgi, you should log in as user <i>dlxsadm </i>in order to add, remove, edit rows that are the <i>release rows</i>. When you want the working production system to actually use your changes, the Collection Manager lets you "move release rows to production", which actually copies the rows keyed by the user <i>dlxsadm</i> to rows keyed by the user <i>production</i>. You cannot directly manipulate the production rows. This layer of protection is something akin to "checking in" data. Click here for more on the <a href="Working_with_the_Collection_Manager.html" title="Working with the Collection Manager">collmgr workflow</a>.</p>
+    <table border="1">
+        <tr><td><i>to use</i></td><td>collmgr</td>
+        </tr>
+        <tr><td>release rows</td><td>log in as dlxsadm, view and edit rows</td>
+        </tr>
+        <tr><td>production rows</td><td>log in a s dlxsadm, view rows, copy release rows onto production rows</td>
+        </tr>
+    </table>
+<p><br />
+</p>
+<a name="Three_or_more_rows:_Release.2C_Production_and_individual_developers"></a><h3><span class="editsection">[<a href="http://localhost/mediawiki/index.php?title=DLXS_Metadata_Databases&amp;action=edit&amp;section=9" title="Edit section: Three or more rows: Release, Production and individual developers">edit</a>]</span> <span class="mw-headline">Three or more rows: Release, Production and individual developers</span></h3>
+    <p>If you do work where different users require individualized versions of the database rows, as we do at DLPS, the databases can also be set up with, in addition to the <i>release</i> and <i>production</i> rows described above, rows keyed by <i>username</i>.  In addition to the material below, please refer also to the instructions related to configuring this <i>username</i> <a href="DLPS%27s_Development_Environment_for_DLXS_Software.html" title="DLPS's Development Environment for DLXS Software">extension</a>. </p>
+    <p>Here, there are at least three sets of rows: the same two as before, but with additional sets for individual developers. A user can:</p>
+    <ul>
+      <li>check out rows from release (essentially a copy of the rows from those marked 
+        as <i>release</i>, creating or overwriting the user's previous rows for those collections)</li>
+      <li>view or edit rows keyed by his/her user name</li>
+      <li>check in rows to release (essentially a copy of the rows from those keyed 
+        by the user name, overwriting <i>release</i>'s previous rows for those collections)</li>
+      <li>later, using the <a href="Working_with_the_Collection_Manager.html" title="Working with the Collection Manager">Collection Manager</a>, logged in as dlxsadm, one can "move" release to production as described above</li>
+    </ul>
+<a name="Middleware_2"></a><h3><span class="editsection">[<a href="http://localhost/mediawiki/index.php?title=DLXS_Metadata_Databases&amp;action=edit&amp;section=10" title="Edit section: Middleware">edit</a>]</span> <span class="mw-headline">Middleware</span></h3>
+    <p>The middleware can be set to use the release rows or the user name rows. This is accomplished by:</p>
+    <ul>
+      <li>Having the DLPS_DEV variable set to 1, as in the 
+        two row scenario explained above. If running through a browser, the host web server will 
+        have to be configured to have the DLPS_DEV variable set, or if on a 
+        command line or in a debugger, the user will have to have the variable set 
+        in his/her environment.</li>
+      <li>Running the middleware CGI programs.</li>
+    </ul>
+    <p>The middleware can also be set to use the user specific rows. This is generally done to test new functionality in the middleware or to try out potential changes to the database field values. This is accomplished 
+      by:</p>
+    <ul>
+      <li>Having the DLPS_DEV variable set to  <i>username</i>. If running through a browser, the developer's virtual host will 
+        have to have been configured to have the DLPS_DEV variable set, or if on a 
+        command line or in a debugger, the user will have to have the variable set 
+        in his/her environment.</li>
+<p><br />      
+</p>
+    </ul>
+<a name="Collection_Manager_2"></a><h3><span class="editsection">[<a href="http://localhost/mediawiki/index.php?title=DLXS_Metadata_Databases&amp;action=edit&amp;section=11" title="Edit section: Collection Manager">edit</a>]</span> <span class="mw-headline">Collection Manager</span></h3>
+    <p>When running the <b>Collection Manager</b> cgi, in order to make changes to the rows keyed by your user name, you should log in as <i>username</i>. This allows you to check out rows from the release rows, view and edit your own rows, and check them back in to release. Click here for more on the <a href="Working_with_the_Collection_Manager.html" title="Working with the Collection Manager">Collection Manager
+        workflow</a>.</p>
+    <table border="1">
+        <tr><td><i>to use</i></td><td>collmgr</td>
+        </tr>
+        <tr><td>release rows</td><td>log in as dlxsadm, view and edit rows</td>
+        </tr>
+        <tr><td>production rows</td><td>log in as dlxsadm, view rows, copy release rows onto production rows</td>
+        </tr>
+        <tr><td>username rows</td><td>log in as user, checkout release rows, view, edit user rows, checkin 
+            rows to release</td>
+        </tr>
+    </table>
+    <p>Imagine your username is <i>smith</i>. When you log in to the <b>Collection Manager</b> cgi, you can check out rows from the release rows (they are copied) to rows that are keyed by the userid <i>smith</i>. You can make changes to these rows so that when you access them through the middleware (running under a virtual host with DLPS_DEV set to  <i>smith</i> and DLXSROOT set to smith's copy of the code tree under development), the values from those rows will be used. If or when you check them back in, the values you entered/changed in the <i>smith</i>-keyed rows will be copied into the corresponding release rows.</p>
+    <p>Later, when ready, logging in as dlxsadm, one can "move" release to production.</p>
+<p><br />
+<a href="#top" title="">Top</a>
+</p>
+<!-- 
+NewPP limit report
+Preprocessor node count: 219/1000000
+Post-expand include size: 0/2097152 bytes
+Template argument size: 0/2097152 bytes
+Expensive parser function count: 0/100
+-->
+
+<!-- Saved in parser cache with key mediawiki_dlxsdocs_15:pcache:idhash:147-0!1!0!!en!2 and timestamp 20250202211935 -->
+<div class="printfooter">
+Retrieved from "<a href="DLXS_Metadata_Databases.html">http://localhost/wiki/DLXS_Metadata_Databases</a>"</div>
+						<!-- end content -->
+			<div class="visualClear"></div>
+		</div>
+	</div>
+		</div>
+		<div id="column-one">
+	<div id="p-cactions" class="portlet">
+		<h5>Views</h5>
+		<div class="pBody">
+			<ul>
+	
+				 <li id="ca-nstab-main" class="selected"><a href="DLXS_Metadata_Databases.html" title="View the content page [c]" accesskey="c">Page</a></li>
+				 <li id="ca-talk" class="new"><a href="http://localhost/mediawiki/index.php?title=Talk:DLXS_Metadata_Databases&amp;action=edit" title="Discussion about the content page [t]" accesskey="t">Discussion</a></li>
+				 <li id="ca-edit"><a href="http://localhost/mediawiki/index.php?title=DLXS_Metadata_Databases&amp;action=edit" title="You can edit this page.&#10;Please use the preview button before saving. [e]" accesskey="e">Edit</a></li>
+				 <li id="ca-history"><a href="http://localhost/mediawiki/index.php?title=DLXS_Metadata_Databases&amp;action=history" title="Past versions of this page. [h]" accesskey="h">History</a></li>			</ul>
+		</div>
+	</div>
+	<div class="portlet" id="p-personal">
+		<h5>Personal tools</h5>
+		<div class="pBody">
+			<ul>
+				<li id="pt-anonuserpage"><a href="User_172.20.0.html" title="The user page for the ip you&#039;re editing as [.]" accesskey="." class="new">172.20.0.1</a></li>
+				<li id="pt-anontalk"><a href="User_talk_172.20.0.html" title="Discussion about edits from this ip address [n]" accesskey="n" class="new">Talk for this IP</a></li>
+				<li id="pt-anonlogin"><a href="http://localhost/mediawiki/index.php?title=Special:UserLogin&amp;returnto=DLXS_Metadata_Databases" title="You are encouraged to log in, it is not mandatory however. [o]" accesskey="o">Log in / create account</a></li>
+			</ul>
+		</div>
+	</div>
+	<div class="portlet" id="p-logo">
+		<a style="background-image: url(../dlxs15/uploads/DLXS_logo2.gif);" href="Main_Page.html" title="Visit the Main Page [z]" accesskey="z"></a>
+	</div>
+	<script type="text/javascript"> if (window.isMSIE55) fixalpha(); </script>
+	<div class='generated-sidebar portlet' id='p-navigation'>
+		<h5>Navigation</h5>
+		<div class='pBody'>
+			<ul>
+				<li id="n-mainpage-description"><a href="Main_Page.html">Main Page</a></li>
+				<li id="n-portal"><a href="DLXS_Documentation_Community_Portal.html" title="About the project, what you can do, where to find things">Community portal</a></li>
+				<li id="n-currentevents"><a href="DLXS_Documentation_Current_events.html" title="Find background information on current events">Current events</a></li>
+				<li id="n-recentchanges"><a href="Special_RecentChanges.html" title="The list of recent changes in the wiki. [r]" accesskey="r">Recent changes</a></li>
+				<li id="n-randompage"><a href="Mounting_a_Bib_Class_Collection.html" title="Load a random page [x]" accesskey="x">Random page</a></li>
+				<li id="n-help"><a href="Help_Contents.html" title="The place to find out.">Help</a></li>
+			</ul>
+		</div>
+	</div>
+	<div id="p-search" class="portlet">
+		<h5><label for="searchInput">Search</label></h5>
+		<div id="searchBody" class="pBody">
+			<form action="http://localhost/wiki/Special:Search" id="searchform"><div>
+				<input id="searchInput" name="search" type="text" title="Search DLXS Documentation [f]" accesskey="f" value="" />
+				<input type='submit' name="go" class="searchButton" id="searchGoButton"	value="Go" title="Go to a page with this exact name if exists" />&nbsp;
+				<input type='submit' name="fulltext" class="searchButton" id="mw-searchButton" value="Search" title="Search the pages for this text" />
+			</div></form>
+		</div>
+	</div>
+	<div class="portlet" id="p-tb">
+		<h5>Toolbox</h5>
+		<div class="pBody">
+			<ul>
+				<li id="t-whatlinkshere"><a href="Special_WhatLinksHere/DLXS_Metadata_Databases.html" title="List of all wiki pages that link here [j]" accesskey="j">What links here</a></li>
+				<li id="t-recentchangeslinked"><a href="Special_RecentChangesLinked/DLXS_Metadata_Databases.html" title="Recent changes in pages linked from this page [k]" accesskey="k">Related changes</a></li>
+<li id="t-specialpages"><a href="Special_SpecialPages.html" title="List of all special pages [q]" accesskey="q">Special pages</a></li>
+				<li id="t-print"><a href="http://localhost/mediawiki/index.php?title=DLXS_Metadata_Databases&amp;printable=yes" title="Printable version of this page [p]" accesskey="p">Printable version</a></li>				<li id="t-permalink"><a href="http://localhost/mediawiki/index.php?title=DLXS_Metadata_Databases&amp;oldid=1041" title="Permanent link to this version of the page">Permanent link</a></li>			</ul>
+		</div>
+	</div>
+		</div><!-- end of the left (by default at least) column -->
+			<div class="visualClear"></div>
+			<div id="footer">
+				<div id="f-poweredbyico"><a href="http://www.mediawiki.org/"><img src="../mediawiki/skins/common/images/poweredby_mediawiki_88x31.png" alt="Powered by MediaWiki" /></a></div>
+			<ul id="f-list">
+				<li id="lastmod"> This page was last modified on 27 August 2007, at 18:34.</li>
+				<li id="viewcount">This page has been accessed 2,591 times.</li>
+				<li id="privacy"><a href="DLXS_Documentation_Privacy_policy.html" title="DLXS Documentation:Privacy policy">Privacy policy</a></li>
+				<li id="about"><a href="DLXS_Documentation_About.html" title="DLXS Documentation:About">About DLXS Documentation</a></li>
+				<li id="disclaimer"><a href="DLXS_Documentation_General_disclaimer.html" title="DLXS Documentation:General disclaimer">Disclaimers</a></li>
+			</ul>
+		</div>
+</div>
+
+		<script type="text/javascript">if (window.runOnloadHook) runOnloadHook();</script>
+<!-- Served in 0.111 secs. --></body>
+<!-- Mirrored from localhost/wiki/DLXS_Metadata_Databases by HTTrack Website Copier/3.x [XR&CO'2014], Mon, 03 Feb 2025 00:38:12 GMT -->
+</html>

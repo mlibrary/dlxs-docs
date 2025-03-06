@@ -1,0 +1,347 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en" dir="ltr">
+	
+<!-- Mirrored from localhost/wiki/Debugging_DLXS_Perl_Code by HTTrack Website Copier/3.x [XR&CO'2014], Mon, 03 Feb 2025 00:31:07 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=UTF-8" /><!-- /Added by HTTrack -->
+<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+		<meta name="generator" content="MediaWiki 1.13.5" />
+		<meta name="keywords" content="Debugging DLXS Perl Code,DLPS&#039;s Development Environment for DLXS Software,DLXS Wiki,Programming Issues" />
+		<link rel="shortcut icon" href="http://localhost/favicon.ico" />
+		<link rel="search" type="application/opensearchdescription+xml" href="http://localhost/mediawiki/opensearch_desc.php" title="DLXS Documentation (en)" />
+		<link rel="alternate" type="application/rss+xml" title="DLXS Documentation RSS Feed" href="http://localhost/mediawiki/index.php?title=Special:RecentChanges&amp;feed=rss" />
+		<link rel="alternate" type="application/atom+xml" title="DLXS Documentation Atom Feed" href="http://localhost/mediawiki/index.php?title=Special:RecentChanges&amp;feed=atom" />
+		<title>Debugging DLXS Perl Code - DLXS Documentation</title>
+		<style type="text/css" media="screen, projection">/*<![CDATA[*/
+			@import "../mediawiki/skins/common/sharedfa7c.css?164";
+			@import "../mediawiki/skins/monobook/mainfa7c.css?164";
+		/*]]>*/</style>
+		<link rel="stylesheet" type="text/css" media="print" href="../mediawiki/skins/common/commonPrintfa7c.css?164" />
+		<!--[if lt IE 5.5000]><style type="text/css">@import "/mediawiki/skins/monobook/IE50Fixes.css?164";</style><![endif]-->
+		<!--[if IE 5.5000]><style type="text/css">@import "/mediawiki/skins/monobook/IE55Fixes.css?164";</style><![endif]-->
+		<!--[if IE 6]><style type="text/css">@import "/mediawiki/skins/monobook/IE60Fixes.css?164";</style><![endif]-->
+		<!--[if IE 7]><style type="text/css">@import "/mediawiki/skins/monobook/IE70Fixes.css?164";</style><![endif]-->
+		<!--[if lt IE 7]><script type="text/javascript" src="/mediawiki/skins/common/IEFixes.js?164"></script>
+		<meta http-equiv="imagetoolbar" content="no" /><![endif]-->
+		
+		<script type= "text/javascript">/*<![CDATA[*/
+var skin = "monobook";
+var stylepath = "/mediawiki/skins";
+var wgArticlePath = "/wiki/$1";
+var wgScriptPath = "/mediawiki";
+var wgScript = "http://localhost/mediawiki/index.php";
+var wgVariantArticlePath = false;
+var wgActionPaths = [];
+var wgServer = "http://localhost/";
+var wgCanonicalNamespace = "";
+var wgCanonicalSpecialPageName = false;
+var wgNamespaceNumber = 0;
+var wgPageName = "Debugging_DLXS_Perl_Code";
+var wgTitle = "Debugging DLXS Perl Code";
+var wgAction = "view";
+var wgArticleId = "74";
+var wgIsArticle = true;
+var wgUserName = null;
+var wgUserGroups = null;
+var wgUserLanguage = "en";
+var wgContentLanguage = "en";
+var wgBreakFrames = false;
+var wgCurRevisionId = "2571";
+var wgVersion = "1.13.5";
+var wgEnableAPI = true;
+var wgEnableWriteAPI = false;
+var wgRestrictionEdit = [];
+var wgRestrictionMove = [];
+/*]]>*/</script>
+                
+		<script type="text/javascript" src="../mediawiki/skins/common/wikibitsfa7c.js?164"><!-- wikibits js --></script>
+		<!-- Head Scripts -->
+		<script type="text/javascript" src="../mediawiki/skins/common/ajaxfa7c.js?164"></script>
+		<script type="text/javascript" src="http://localhost/mediawiki/index.php?title=-&amp;action=raw&amp;gen=js&amp;useskin=monobook"><!-- site js --></script>
+		<style type="text/css">/*<![CDATA[*/
+@import "http://localhost/mediawiki/index.php?title=MediaWiki:Common.css&amp;usemsgcache=yes&amp;action=raw&amp;ctype=text/css&amp;smaxage=18000";
+@import "http://localhost/mediawiki/index.php?title=MediaWiki:Monobook.css&amp;usemsgcache=yes&amp;action=raw&amp;ctype=text/css&amp;smaxage=18000";
+@import "http://localhost/mediawiki/index.php?title=-&amp;action=raw&amp;gen=css&amp;maxage=18000&amp;useskin=monobook";
+/*]]>*/</style>
+	</head>
+<body class="mediawiki ns-0 ltr page-Debugging_DLXS_Perl_Code">
+	<div id="globalWrapper">
+		<div id="column-content">
+	<div id="content">
+		<a name="top" id="top"></a>
+				<h1 class="firstHeading">Debugging DLXS Perl Code</h1>
+		<div id="bodyContent">
+			<h3 id="siteSub">From DLXS Documentation</h3>
+			<div id="contentSub"></div>
+									<div id="jump-to-nav">Jump to: <a href="#column-one">navigation</a>, <a href="#searchInput">search</a></div>			<!-- start content -->
+			<p><a href="DLXS_Wiki.html" title="DLXS Wiki">Main Page</a> &gt; <a href="Programming_Issues.html" title="Programming Issues">Programming Issues</a> &gt; Debugging DLXS Perl Code
+</p>
+<p>Much code debugging can be accomplished in whatever development environment you may be using.  At DLPS we generally use XEmacs, along with its Comint mode for the Perl debugger. However, it is often helpful to investigate a program's behavior within the browser environment as well. There are occasional debugging statements in the code that will print values of specific variables or even dump entire objects in HTML. These are controlled by adding a parameter to any URL. Simply add a "
+<tt>
+<b>;debug=<i>value</i></b>
+</tt>
+" to a URL in your browser where 
+               <i>value</i>
+                is any of the following described below.</p>
+            <p>Note that the value 
+               <b>all</b>
+                turns on all debugging switches and produces a considerable quantity of output, especially in the case of searches.</p>
+<p><br />                
+</p>
+<table id="toc" class="toc" summary="Contents"><tr><td><div id="toctitle"><h2>Contents</h2></div>
+<ul>
+<li class="toclevel-1"><a href="#Debug_Values_Available_in_All_Classes"><span class="tocnumber">1</span> <span class="toctext">Debug Values Available in All Classes</span></a></li>
+<li class="toclevel-1"><a href="#Unique_Text_Class_Debug_Values"><span class="tocnumber">2</span> <span class="toctext">Unique Text Class Debug Values</span></a></li>
+<li class="toclevel-1"><a href="#Unique_Bib_Class_Debug_Values"><span class="tocnumber">3</span> <span class="toctext">Unique Bib Class Debug Values</span></a></li>
+<li class="toclevel-1"><a href="#Unique_Image_Class_Debug_Values"><span class="tocnumber">4</span> <span class="toctext">Unique Image Class Debug Values</span></a></li>
+<li class="toclevel-1"><a href="#Environment_Variables"><span class="tocnumber">5</span> <span class="toctext">Environment Variables</span></a></li>
+<li class="toclevel-1"><a href="#Support_for_Virtual_Host-based_Work_Directories"><span class="tocnumber">6</span> <span class="toctext">Support for Virtual Host-based Work Directories</span></a></li>
+</ul>
+</td></tr></table><script type="text/javascript"> if (window.showTocToggle) { var tocShowText = "show"; var tocHideText = "hide"; showTocToggle(); } </script>
+<a name="Debug_Values_Available_in_All_Classes"></a><h1> <span class="mw-headline">Debug Values Available in All Classes</span></h1>
+<p>These values pertain to the debugging output produced by modules in Lib i.e. DLXSROOT/lib
+and as such they are common to all of the class middleware.</p>
+<dl><dt><b>tpl</b>
+</dt><dd>show the path where files subject to fallback resolution (.xml, .xsl, .css, .js) are found. 
+</dd></dl>
+<dl><dt><b>xml</b>
+</dt><dd>emit the raw xml from the middleware not subjected to XSLT transformation to HTML. 
+</dd></dl>
+<dl><dt><b>xslt</b>
+</dt><dd>emit the virtual stylesheet constructed by the middleware. 
+</dd></dl>
+<dl><dt><b>xsltwrite</b>
+</dt><dd>writes the virtual stylesheet constructed by the middleware and the xml file to $DLXSROOT/web/cache as<b> temp.xsl</b> and<b> temp.xml</b> (or REMOTE_USER.temp.xml REMOTE_USER.temp.xsl if the REMOTE_USER environment variable is set). 
+</dd></dl>
+<dl><dt><b>auth</b>
+</dt><dd>Prints the contents of the <tt>AUTHZD_COLL</tt> and <tt>PUBLIC_COLL</tt> environment variables.
+</dd></dl>
+<dl><dt><b>cache</b>
+</dt><dd>Prints information regarding the process of caching information in the session and when profiling time spent in certain parts of the code. See the debug variable <b>time</b> below.
+</dd></dl>
+<dl><dt><b>collsinfo</b>
+</dt><dd>Prints a variety of information about the Collection Information (<tt>CollsInfo</tt>) object primarily related to the contents of the object, also whether the object has been "reused" (e.g., from the cache) or created fresh from the database. 
+</dd></dl>
+<ul>
+<li>Dumps the contents of the CollsInfo object as a list of table rows, one per collection.</li>
+<li>Indicates whether a session-cached <tt>CollsInfo</tt> object is reused or a new one is created by reading the database.</li>
+<li>Prints the path to the database and the database table in use. Prints the database user name accessing the rows: a specific <i>userid</i>, <i>dlxsadm</i> or <i>production</i>.</li>
+<li>Prints warnings about collections that are authorized according to the auth variables but that do not appear in the database and vice versa.</li>
+<li>Reports the successful addition of a Class (Text, Bib, Image) object supporting each collection in the CollsInfo object that is marked as requested by the user.</li>
+<li>Reports the Group Information object (<tt>GroupsInfo</tt>) in the same way as the <tt>CollsInfo</tt> object. Additionally, prints a warning if a database group is deleted from the object if none of the group's collections are authorized.</li>
+<li>Reports the creation of a object for each collection to be supported.</li>
+</ul>
+<dl><dt><b>reauth</b>
+</dt><dd>Prints out the contents of the link generated to redirect the user to your site's authorization system.
+</dd></dl>
+<dl><dt><b>results</b>
+</dt><dd>Prints each query just before it is sent to XPAT for evaluation and prints a formatted representation of the raw results returned by XPAT. Prints the "clean" result after XPAT result markup tags have been removed, displaying the order in which the result came back from XPAT, its byte offset, the data and the size of the data.
+</dd></dl>
+<dl><dt><b>resultset</b>
+</dt><dd>Prints the type and label of each XPat Result Object as it is added to the given Result Set object (<tt>XPatResutlSet</tt>).
+</dd></dl>
+<dl><dt><b>session</b>
+</dt><dd>Prints the session id under which the current invocation of the cgi
+</dd></dl>
+<p>program is running and indicates whether this is a new session id or the id of
+a previous session retrieved from the session cache.
+</p>
+<dl><dt><b>xpat</b>
+</dt><dd>Prints a dump of the <tt>XPat</tt> object when it is first created. Prints the local or remote startup command string to be sent to the forked process running XPAT and each query string sent to XPAT for evaluation. 
+</dd></dl>
+<dl><dt><b>cgi</b>
+</dt><dd>Prints a dump of the CGI object created from the URL that invoked the cgi program. It is a <tt>key=value</tt>list of the URL parameters. 
+</dd></dl>
+<dl><dt><b>env</b>
+</dt><dd>Prints a dump of the environment variables in effect when the cgi program runs.
+</dd></dl>
+<dl><dt><b>search</b>
+</dt><dd><ul>
+</dd></dl>
+<li>Prints the query and query type for each search query sent to XPAT for a variety of different search types.</li>
+<li>Prints status information when the Class CGI is unable to start up an XPAT process for a given collection. This normally fails silently so as not to interrupt a startup loop over multiple collections.</li>
+</ul>
+<dl><dt><b>time</b>
+</dt><dd>Prints a summary of the amount of time it takes the Class CGI to
+</dd></dl>
+<p>run. It displays the elapsed time to compile and run the entire program (which
+includes time to communicate with a local or remote XPAT process, and so
+includes process startup, context switching, network latency, and inter-process
+communication overhead). It also displays the CPU time devoted solely to the
+process running the Class CGI. The difference between these two numbers is a
+rough indication of the overhead to which the CGI is subject. 
+</p>
+<dl><dt><b>version</b>
+</dt><dd>Prints the value <tt>$LibVersion::VERSION</tt> that is the version of the separate Lib deliverable in use by the Class CGI.  Prints the Release number of the middleware.  Prints the Perl version number.  Prints the main program version number.
+</dd></dl>
+<dl><dt><b>db</b>
+</dt><dd>Prints connect string used to access the database and the database user name the connect was issued under.  For example, 
+</dd></dl>
+<pre>
+&lt;tt&gt;DSN=DBI:mysql:dlxs:mysql.umdl.umich.edu:, Username=dlxs&lt;/tt&gt;.
+</pre>
+<a name="Unique_Text_Class_Debug_Values"></a><h1> <span class="mw-headline">Unique Text Class Debug Values</span></h1>
+<dl><dt><b>filter</b>
+</dt><dd>Prints the result of applying various filters to the results returned from a given query. Currently, the following filters' results are printed:
+</dd></dl>
+<ul>
+<li>
+<tt>FilterDivhead</tt>
+</li>
+<li>
+<tt>FilterMainHeader</tt>
+</li>
+<li>
+<tt>StripMainHeader</tt>
+</li>
+<li>
+<tt>_HeaderFilter</tt>
+</li>
+</ul>
+<dl><dt><b>links</b>
+</dt><dd>Prints the contents of the 'search within' link generated by <tt>TextClass::_SearchWithinLinks</tt>
+</dd></dl>
+<dl><dt><b>qf</b>
+</dt><dd>Prints status when the QueryFactory object is created for a given collection object.  If the collection implements the use of XPAT mapping of special characters (e.g. 'Y' for yogh in Middle English) the transformation of these characters in the CGI object is called out at this point.
+</dd></dl>
+<dl><dt><b>target</b>
+</dt><dd>Useful for tracing the construction of searches for the target of &lt;PTR&gt; type notes.  Prints which mode of target region search was used, i.e. fabricated region search or explicitly coded list of regions.  Prints the XPAT query for the target region and the parent region of the target region.  Prints the overall restriction applied to limit the search to a particular main region.  This debug output appears in the note popup window when the note is displayed.
+</dd></dl>
+<dl><dt><b>sort</b>
+</dt><dd>Prints information regarding the process of sorting results and when profiling time spent in certain parts of the code. See the debug variable <b>time</b> below.
+</dd></dl>
+<dl><dt><b>pageviewer</b>
+</dt><dd>Prints a variety of information related to page viewing (<tt>pageviewer-idx</tt>) including: 
+</dd></dl>
+<ul>
+<li>A dump of the Page View object's (<tt>PageView</tt>) contents.</li>
+<li>Entry trace information for the subroutines that serve the frames in the Pageviewer frameset.</li>
+<li>The contents of the URL that the Pageviewer CGI uses to redirect to the TextClass CGI for text-mode page viewing.</li>
+</ul>
+<dl><dt><b>ww</b>
+</dt><dd>Prints a variety of information about the Wordwheel CGI and Wordwheel Object. The information printed for the CGI includes the environment and the contents of the CGI object created from the URL that invoked the wordwheel CGI. The information printed for the Wordwheel object (<tt>WW</tt>)consists of:
+</dd></dl>
+<ul>
+<li>Status information about failure to start XPAT (if failed)</li>
+<li>A dump of the Wordwheel object contents.</li>
+<li>A dump of the table of words constructed by the <tt>GetCombinedTable</tt> object method.</li>
+<li>A dump of the search results returned by the XPAT queries usedto generate the wordwheel table.</li>
+</ul>
+<a name="Unique_Bib_Class_Debug_Values"></a><h1> <span class="mw-headline">Unique Bib Class Debug Values</span></h1>
+<dl><dt><b>fisheye</b>
+</dt><dd>A dump of the data computed for the construction of the fisheye navigation string.
+</dd></dl>
+<a name="Unique_Image_Class_Debug_Values"></a><h1> <span class="mw-headline">Unique Image Class Debug Values</span></h1>
+<p>There are not many distinct values unique to Image Class for the <tt>debug</tt> URL parameter.  Assigning any value to <tt>debug</tt> (e.g. <tt>1</tt>) will turn on debugging output globally within Image Class.  Of course, the common distinct values mentioned earlier must be specified as documented to turn on their given debug function. </p>
+<dl><dt><b>hs</b>
+</dt><dd>Prints the collection ID for each collection processes in the <tt>HandleSearch</tt> subroutine.
+</dd></dl>
+<a name="Environment_Variables"></a><h1> <span class="mw-headline">Environment Variables</span></h1>
+<dl><dt><b>DBI_TRACE</b>
+</dt><dd>This will enable a dump of the interaction of the middleware with the Perl DBI (database interface) module. It must be set <i>before</i> Perl executes. Refer to the POD for <tt>DBI.pm</tt> in your Perl install tree (At the shell prompt type: <tt>perldoc DBI.pm</tt>).
+</dd></dl>
+<dl><dt><b>ASSERTION_EMAIL</b>
+</dt><dd>Setting this environment variable to an email address (e.g. <tt>umdl-errors@umich.edu</tt>) will cause the <tt>ASSERT</tt>subroutine to send a complete email summary of the data that caused an assertion failure.  This is useful in monitoring the health of production code in the absence of user feedback. Set in the apache <b>httpd.conf</b> file for the virtual host using "SetEnv ASSERT"
+</dd></dl>
+<p><br />
+</p>
+<dl><dt><b>XPAT_LOGGING</b>
+</dt><dd>Setting this environment variable to the name of a file will cause the <tt>XPat.pm</tt> module to log process ids and associated URL strings for each XPAT process forked to execute a query.  At DLPS we couple this log file with a runaway process killer which kills XPAT processes that run for more than 1.5 minutes.  The process killer sends email notification and with the additional logged data we can determine the URL that generated the runaway and resolve the problem. Set in the apache <b>httpd.conf</b> file for the virtual host using "SetEnv ASSERT"
+</dd></dl>
+<a name="Support_for_Virtual_Host-based_Work_Directories"></a><h1> <span class="mw-headline">Support for Virtual Host-based Work Directories</span></h1>
+<p>Related to the issue of debugging is the issue off having multiple work directories for each developer. DLXS middleware supports this. There are ways of setting up "sandboxes" so that individuals can have their own environments for running and testing changes they are making, independently of others' work. For more information, see <a href="DLPS%27s_Development_Environment_for_DLXS_Software.html" title="DLPS's Development Environment for DLXS Software">DLPS's Development Environment for DLXS Software</a>.
+</p>
+<p><br />
+<a href="#top" title="">Top</a>
+</p>
+<!-- 
+NewPP limit report
+Preprocessor node count: 113/1000000
+Post-expand include size: 0/2097152 bytes
+Template argument size: 0/2097152 bytes
+Expensive parser function count: 0/100
+-->
+
+<!-- Saved in parser cache with key mediawiki_dlxsdocs_15:pcache:idhash:74-0!1!0!!en!2 and timestamp 20250202211521 -->
+<div class="printfooter">
+Retrieved from "<a href="Debugging_DLXS_Perl_Code.html">http://localhost/wiki/Debugging_DLXS_Perl_Code</a>"</div>
+						<!-- end content -->
+			<div class="visualClear"></div>
+		</div>
+	</div>
+		</div>
+		<div id="column-one">
+	<div id="p-cactions" class="portlet">
+		<h5>Views</h5>
+		<div class="pBody">
+			<ul>
+	
+				 <li id="ca-nstab-main" class="selected"><a href="Debugging_DLXS_Perl_Code.html" title="View the content page [c]" accesskey="c">Page</a></li>
+				 <li id="ca-talk" class="new"><a href="http://localhost/mediawiki/index.php?title=Talk:Debugging_DLXS_Perl_Code&amp;action=edit" title="Discussion about the content page [t]" accesskey="t">Discussion</a></li>
+				 <li id="ca-edit"><a href="http://localhost/mediawiki/index.php?title=Debugging_DLXS_Perl_Code&amp;action=edit" title="You can edit this page.&#10;Please use the preview button before saving. [e]" accesskey="e">Edit</a></li>
+				 <li id="ca-history"><a href="http://localhost/mediawiki/index.php?title=Debugging_DLXS_Perl_Code&amp;action=history" title="Past versions of this page. [h]" accesskey="h">History</a></li>			</ul>
+		</div>
+	</div>
+	<div class="portlet" id="p-personal">
+		<h5>Personal tools</h5>
+		<div class="pBody">
+			<ul>
+				<li id="pt-login"><a href="http://localhost/mediawiki/index.php?title=Special:UserLogin&amp;returnto=Debugging_DLXS_Perl_Code" title="You are encouraged to log in, it is not mandatory however. [o]" accesskey="o">Log in / create account</a></li>
+			</ul>
+		</div>
+	</div>
+	<div class="portlet" id="p-logo">
+		<a style="background-image: url(../dlxs15/uploads/DLXS_logo2.gif);" href="Main_Page.html" title="Visit the Main Page [z]" accesskey="z"></a>
+	</div>
+	<script type="text/javascript"> if (window.isMSIE55) fixalpha(); </script>
+	<div class='generated-sidebar portlet' id='p-navigation'>
+		<h5>Navigation</h5>
+		<div class='pBody'>
+			<ul>
+				<li id="n-mainpage-description"><a href="Main_Page.html">Main Page</a></li>
+				<li id="n-portal"><a href="DLXS_Documentation_Community_Portal.html" title="About the project, what you can do, where to find things">Community portal</a></li>
+				<li id="n-currentevents"><a href="DLXS_Documentation_Current_events.html" title="Find background information on current events">Current events</a></li>
+				<li id="n-recentchanges"><a href="Special_RecentChanges.html" title="The list of recent changes in the wiki. [r]" accesskey="r">Recent changes</a></li>
+				<li id="n-randompage"><a href="Mounting_a_Bib_Class_Collection.html" title="Load a random page [x]" accesskey="x">Random page</a></li>
+				<li id="n-help"><a href="Help_Contents.html" title="The place to find out.">Help</a></li>
+			</ul>
+		</div>
+	</div>
+	<div id="p-search" class="portlet">
+		<h5><label for="searchInput">Search</label></h5>
+		<div id="searchBody" class="pBody">
+			<form action="http://localhost/wiki/Special:Search" id="searchform"><div>
+				<input id="searchInput" name="search" type="text" title="Search DLXS Documentation [f]" accesskey="f" value="" />
+				<input type='submit' name="go" class="searchButton" id="searchGoButton"	value="Go" title="Go to a page with this exact name if exists" />&nbsp;
+				<input type='submit' name="fulltext" class="searchButton" id="mw-searchButton" value="Search" title="Search the pages for this text" />
+			</div></form>
+		</div>
+	</div>
+	<div class="portlet" id="p-tb">
+		<h5>Toolbox</h5>
+		<div class="pBody">
+			<ul>
+				<li id="t-whatlinkshere"><a href="Special_WhatLinksHere/Debugging_DLXS_Perl_Code.html" title="List of all wiki pages that link here [j]" accesskey="j">What links here</a></li>
+				<li id="t-recentchangeslinked"><a href="Special_RecentChangesLinked/Debugging_DLXS_Perl_Code.html" title="Recent changes in pages linked from this page [k]" accesskey="k">Related changes</a></li>
+<li id="t-specialpages"><a href="Special_SpecialPages.html" title="List of all special pages [q]" accesskey="q">Special pages</a></li>
+				<li id="t-print"><a href="http://localhost/mediawiki/index.php?title=Debugging_DLXS_Perl_Code&amp;printable=yes" title="Printable version of this page [p]" accesskey="p">Printable version</a></li>				<li id="t-permalink"><a href="http://localhost/mediawiki/index.php?title=Debugging_DLXS_Perl_Code&amp;oldid=2571" title="Permanent link to this version of the page">Permanent link</a></li>			</ul>
+		</div>
+	</div>
+		</div><!-- end of the left (by default at least) column -->
+			<div class="visualClear"></div>
+			<div id="footer">
+				<div id="f-poweredbyico"><a href="http://www.mediawiki.org/"><img src="../mediawiki/skins/common/images/poweredby_mediawiki_88x31.png" alt="Powered by MediaWiki" /></a></div>
+			<ul id="f-list">
+				<li id="lastmod"> This page was last modified on 7 August 2008, at 20:35.</li>
+				<li id="viewcount">This page has been accessed 2,920 times.</li>
+				<li id="privacy"><a href="DLXS_Documentation_Privacy_policy.html" title="DLXS Documentation:Privacy policy">Privacy policy</a></li>
+				<li id="about"><a href="DLXS_Documentation_About.html" title="DLXS Documentation:About">About DLXS Documentation</a></li>
+				<li id="disclaimer"><a href="DLXS_Documentation_General_disclaimer.html" title="DLXS Documentation:General disclaimer">Disclaimers</a></li>
+			</ul>
+		</div>
+</div>
+
+		<script type="text/javascript">if (window.runOnloadHook) runOnloadHook();</script>
+<!-- Served in 0.109 secs. --></body>
+<!-- Mirrored from localhost/wiki/Debugging_DLXS_Perl_Code by HTTrack Website Copier/3.x [XR&CO'2014], Mon, 03 Feb 2025 00:31:09 GMT -->
+</html>

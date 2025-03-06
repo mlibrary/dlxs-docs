@@ -1,0 +1,545 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en" dir="ltr">
+	
+<!-- Mirrored from localhost/wiki/Customizing_BibClass by HTTrack Website Copier/3.x [XR&CO'2014], Mon, 03 Feb 2025 00:32:34 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=UTF-8" /><!-- /Added by HTTrack -->
+<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+		<meta name="generator" content="MediaWiki 1.13.5" />
+		<meta name="keywords" content="Customizing BibClass,Bib.dtd,Bib.map,DLXS Wiki,Mounting Collections: Class-specific Steps,Mounting a Bib Class Collection,Working with Map Files,Working with the Collection Manager" />
+		<link rel="shortcut icon" href="http://localhost/favicon.ico" />
+		<link rel="search" type="application/opensearchdescription+xml" href="http://localhost/mediawiki/opensearch_desc.php" title="DLXS Documentation (en)" />
+		<link rel="alternate" type="application/rss+xml" title="DLXS Documentation RSS Feed" href="http://localhost/mediawiki/index.php?title=Special:RecentChanges&amp;feed=rss" />
+		<link rel="alternate" type="application/atom+xml" title="DLXS Documentation Atom Feed" href="http://localhost/mediawiki/index.php?title=Special:RecentChanges&amp;feed=atom" />
+		<title>Customizing BibClass - DLXS Documentation</title>
+		<style type="text/css" media="screen, projection">/*<![CDATA[*/
+			@import "../mediawiki/skins/common/sharedfa7c.css?164";
+			@import "../mediawiki/skins/monobook/mainfa7c.css?164";
+		/*]]>*/</style>
+		<link rel="stylesheet" type="text/css" media="print" href="../mediawiki/skins/common/commonPrintfa7c.css?164" />
+		<!--[if lt IE 5.5000]><style type="text/css">@import "/mediawiki/skins/monobook/IE50Fixes.css?164";</style><![endif]-->
+		<!--[if IE 5.5000]><style type="text/css">@import "/mediawiki/skins/monobook/IE55Fixes.css?164";</style><![endif]-->
+		<!--[if IE 6]><style type="text/css">@import "/mediawiki/skins/monobook/IE60Fixes.css?164";</style><![endif]-->
+		<!--[if IE 7]><style type="text/css">@import "/mediawiki/skins/monobook/IE70Fixes.css?164";</style><![endif]-->
+		<!--[if lt IE 7]><script type="text/javascript" src="/mediawiki/skins/common/IEFixes.js?164"></script>
+		<meta http-equiv="imagetoolbar" content="no" /><![endif]-->
+		
+		<script type= "text/javascript">/*<![CDATA[*/
+var skin = "monobook";
+var stylepath = "/mediawiki/skins";
+var wgArticlePath = "/wiki/$1";
+var wgScriptPath = "/mediawiki";
+var wgScript = "http://localhost/mediawiki/index.php";
+var wgVariantArticlePath = false;
+var wgActionPaths = [];
+var wgServer = "http://localhost/";
+var wgCanonicalNamespace = "";
+var wgCanonicalSpecialPageName = false;
+var wgNamespaceNumber = 0;
+var wgPageName = "Customizing_BibClass";
+var wgTitle = "Customizing BibClass";
+var wgAction = "view";
+var wgArticleId = "234";
+var wgIsArticle = true;
+var wgUserName = null;
+var wgUserGroups = null;
+var wgUserLanguage = "en";
+var wgContentLanguage = "en";
+var wgBreakFrames = false;
+var wgCurRevisionId = "1822";
+var wgVersion = "1.13.5";
+var wgEnableAPI = true;
+var wgEnableWriteAPI = false;
+var wgRestrictionEdit = [];
+var wgRestrictionMove = [];
+/*]]>*/</script>
+                
+		<script type="text/javascript" src="../mediawiki/skins/common/wikibitsfa7c.js?164"><!-- wikibits js --></script>
+		<!-- Head Scripts -->
+		<script type="text/javascript" src="../mediawiki/skins/common/ajaxfa7c.js?164"></script>
+		<script type="text/javascript" src="http://localhost/mediawiki/index.php?title=-&amp;action=raw&amp;gen=js&amp;useskin=monobook"><!-- site js --></script>
+		<style type="text/css">/*<![CDATA[*/
+@import "http://localhost/mediawiki/index.php?title=MediaWiki:Common.css&amp;usemsgcache=yes&amp;action=raw&amp;ctype=text/css&amp;smaxage=18000";
+@import "http://localhost/mediawiki/index.php?title=MediaWiki:Monobook.css&amp;usemsgcache=yes&amp;action=raw&amp;ctype=text/css&amp;smaxage=18000";
+@import "http://localhost/mediawiki/index.php?title=-&amp;action=raw&amp;gen=css&amp;maxage=18000&amp;useskin=monobook";
+/*]]>*/</style>
+	</head>
+<body class="mediawiki ns-0 ltr page-Customizing_BibClass">
+	<div id="globalWrapper">
+		<div id="column-content">
+	<div id="content">
+		<a name="top" id="top"></a>
+				<h1 class="firstHeading">Customizing BibClass</h1>
+		<div id="bodyContent">
+			<h3 id="siteSub">From DLXS Documentation</h3>
+			<div id="contentSub"></div>
+									<div id="jump-to-nav">Jump to: <a href="#column-one">navigation</a>, <a href="#searchInput">search</a></div>			<!-- start content -->
+			<p><a href="DLXS_Wiki.html" title="DLXS Wiki">Main Page</a> &gt; <a href="Mounting_Collections__Class-specific_Steps.html" title="Mounting Collections: Class-specific Steps">Mounting Collections: Class-specific Steps</a> &gt; <a href="Mounting_a_Bib_Class_Collection.html" title="Mounting a Bib Class Collection">Mounting a Bib Class Collection</a> &gt; Customizing BibClass
+</p>
+<table id="toc" class="toc" summary="Contents"><tr><td><div id="toctitle"><h2>Contents</h2></div>
+<ul>
+<li class="toclevel-1"><a href="#Adding_New_Searchable_Fields"><span class="tocnumber">1</span> <span class="toctext">Adding New Searchable Fields</span></a>
+<ul>
+<li class="toclevel-2"><a href="#Overview"><span class="tocnumber">1.1</span> <span class="toctext">Overview</span></a></li>
+<li class="toclevel-2"><a href="#Creating_and_Modifying_the_Map_File"><span class="tocnumber">1.2</span> <span class="toctext">Creating and Modifying the Map File</span></a></li>
+<li class="toclevel-2"><a href="#Collmgr_Steps_Needed_to_Support_Additional_Searchable_Fields"><span class="tocnumber">1.3</span> <span class="toctext">Collmgr Steps Needed to Support Additional Searchable Fields</span></a></li>
+</ul>
+</li>
+<li class="toclevel-1"><a href="#Creating_and_Editing_Filtering_Routines"><span class="tocnumber">2</span> <span class="toctext">Creating and Editing Filtering Routines</span></a>
+<ul>
+<li class="toclevel-2"><a href="#Overview_2"><span class="tocnumber">2.1</span> <span class="toctext">Overview</span></a></li>
+<li class="toclevel-2"><a href="#Creating_New_Filters"><span class="tocnumber">2.2</span> <span class="toctext">Creating New Filters</span></a></li>
+<li class="toclevel-2"><a href="#Creating_transformations"><span class="tocnumber">2.3</span> <span class="toctext">Creating transformations</span></a></li>
+<li class="toclevel-2"><a href="#Sample_Filtering_Routines"><span class="tocnumber">2.4</span> <span class="toctext">Sample Filtering Routines</span></a></li>
+</ul>
+</li>
+</ul>
+</td></tr></table><script type="text/javascript"> if (window.showTocToggle) { var tocShowText = "show"; var tocHideText = "hide"; showTocToggle(); } </script>
+<a name="Adding_New_Searchable_Fields"></a><h2><span class="editsection">[<a href="http://localhost/mediawiki/index.php?title=Customizing_BibClass&amp;action=edit&amp;section=1" title="Edit section: Adding New Searchable Fields">edit</a>]</span> <span class="mw-headline">Adding New Searchable Fields</span></h2>
+<a name="Overview"></a><h4><span class="editsection">[<a href="http://localhost/mediawiki/index.php?title=Customizing_BibClass&amp;action=edit&amp;section=2" title="Edit section: Overview">edit</a>]</span> <span class="mw-headline">Overview</span></h4>
+<p>A basic set of fields has been declared in the <a href="Bib-3.html" title="Bib.map">bib.map</a> file and these can be used along with <a href="Working_with_the_Collection_Manager.html" title="Working with the Collection Manager">collmgr</a> to enable or turn on searches for those fields. The basic fields currently include:
+</p>
+<ul><li> <tt>author</tt>
+</li><li> <tt>title</tt>
+</li><li> <tt>entire record</tt>
+</li><li> <tt>publisher</tt>
+</li><li> <tt>place of publication</tt>
+</li><li> <tt>year</tt> (i.e., date of publication)
+</li><li> <tt>series</tt>
+</li><li> <tt>notes</tt>
+</li><li> <tt>collection</tt> (i.e., collection ID)
+</li><li> <tt>format</tt> (e.g., HTML)
+</li><li> <tt>type</tt> (e.g., text)
+</li><li> <tt>language</tt>
+</li><li> <tt>id</tt> (i.e., the ID of the record)
+</li><li> <tt>dt</tt> (i.e., the OAI-specified date of last update for a record)
+</li></ul>
+<p>and all are based on encoding that conforms to the <a href="Bib.html" title="Bib.dtd"><tt>bib.dtd</tt></a>.
+</p><p>It may be necessary to define additional fields or to substitute values (based on different encoding practices) for the values used in this <tt>bib.map</tt>. This section outlines the steps necessary to create a new map file, and the steps in the collmgr needed to take advantage of these new (i.e., additional or different) fields.
+</p>
+<a name="Creating_and_Modifying_the_Map_File"></a><h4><span class="editsection">[<a href="http://localhost/mediawiki/index.php?title=Customizing_BibClass&amp;action=edit&amp;section=3" title="Edit section: Creating and Modifying the Map File">edit</a>]</span> <span class="mw-headline">Creating and Modifying the Map File</span></h4>
+<p>Rather than modifying the file <tt>bib.map</tt>, a new map file should be created for each collection. The file <tt>bib.map</tt> and the new map file you will create are (or will be) located in the <tt>{DLXSROOT}/misc/b/bib/maps</tt> directory. For the purposes of this documentation, we will use the example "patent.map" for a hypothetical collection with the collection ID "patent". For more information, go to <a href="Working_with_Map_Files.html" title="Working with Map Files">a generic overview of map files</a>.
+</p><p>Each mapping element in a map file consists of the following:
+</p>
+<dl><dt> <tt>label</tt>
+</dt><dd> This element determines what will display in the user's browser when constructing searches, and is case sensitive. It must match the value used in the collmgr.
+</dd><dt> <tt>synthetic</tt>
+</dt><dd> This element determines the variable name that is used in the cgi.
+</dd><dt> <tt>native</tt>
+</dt><dd> The "native" element provides an appropriate XPAT search that the system will use to discover the appropriate content. The search may be simple (e.g., <tt>region YR</tt>) or complex (e.g., <tt>(region origin within region citation) + (region publish within region citation)</tt>)
+</dd><dt> <tt>nativeregionname</tt>
+</dt><dd> This element is not used by BibClass and so content within the element may be omitted.
+</dd><dt> <tt>summarylabel</tt>
+</dt><dd> This element determines what will display in the user's browser when reporting the search and corresponding results, and is frequently used to declare an abbreviation such as "date" for "date of publication".
+</dd></dl>
+<p>Create the file <tt>patent.map</tt> with any standard text editor and copy the contents of <tt>bib.map</tt> to it. Each map file consists of a section of "operator" mappings (e.g., ), followed by a section of "region" mappings; each section is introduced by a comment such as <tt>&lt;!-- operator mapping --&gt;</tt>. An example of an operator mapping is as follows:
+</p>
+<pre>&lt;mapping&gt;
+   &lt;label&gt;And&lt;/label&gt;
+   &lt;synthetic&gt;AND&lt;/synthetic&gt;
+   &lt;native&gt;^&lt;/native&gt;
+&lt;/mapping&gt;
+</pre>
+<p>Operator mappings use the synthetic element in BibClass; region mappings do not.
+</p><p>Begin by removing all mapping groups that are not relevant to your collection. For example, let us say that our example collection, <tt>patent</tt>, consists of records without authors; in this case, we would remove the region mapping for author that looks like this:
+</p>
+<pre>&lt;mapping&gt;
+   &lt;label&gt;author&lt;/label&gt;
+   &lt;synthetic&gt;&lt;/synthetic&gt;
+   &lt;native&gt;region L&lt;/native&gt;
+   &lt;nativeregionname&gt;&lt;/nativeregionname&gt;
+   &lt;summarylabel&gt;au&lt;/summarylabel&gt;
+&lt;/mapping&gt;
+</pre>
+<p>Next, add new mappings for the fields that you would like to make searchable in the interface. (Remember, each BibClass record will typically be searchable across <i>all</i> fields by using the mapping <tt>entire record</tt>, which is mapped to <tt>region A</tt>.) In the following three examples, we declare (1) a new, simple field based on a single element, (2) a re-mapping of an element already declared for BibClass, and (3) a new element based on the combination of two complex searches:
+</p>
+<pre>&lt;mapping&gt;
+   &lt;label&gt;patent number&lt;/label&gt;
+   &lt;synthetic&gt;&lt;/synthetic&gt;
+   &lt;native&gt;region PATNO&lt;/native&gt;
+   &lt;nativeregionname&gt;&lt;/nativeregionname&gt;
+   &lt;summarylabel&gt;patent #&lt;/summarylabel&gt;
+&lt;/mapping&gt;
+</pre>
+<pre>&lt;mapping&gt;
+   &lt;label&gt;year&lt;/label&gt;
+   &lt;synthetic&gt;&lt;/synthetic&gt;
+   &lt;native&gt;region YR within region citation&lt;/native&gt;
+   &lt;nativeregionname&gt;&lt;/nativeregionname&gt;
+   &lt;summarylabel&gt;year&lt;/summarylabel&gt;
+&lt;/mapping&gt;
+</pre>
+<pre>&lt;mapping&gt;
+   &lt;label&gt;data type&lt;/label&gt;
+   &lt;synthetic&gt;&lt;/synthetic&gt;
+   &lt;native&gt;(region geoform within region citation) + (region formname)&lt;/native&gt;
+   &lt;nativeregionname&gt;&lt;/nativeregionname&gt;
+   &lt;summarylabel&gt;data type&lt;/summarylabel&gt;
+&lt;/mapping&gt;
+</pre>
+<a name="Collmgr_Steps_Needed_to_Support_Additional_Searchable_Fields"></a><h4><span class="editsection">[<a href="http://localhost/mediawiki/index.php?title=Customizing_BibClass&amp;action=edit&amp;section=4" title="Edit section: Collmgr Steps Needed to Support Additional Searchable Fields">edit</a>]</span> <span class="mw-headline">Collmgr Steps Needed to Support Additional Searchable Fields</span></h4>
+<p>You will need to have the colldb database point to your new map file, and to declare the new searchable fields for the user interface. First, in <a href="Working_with_the_Collection_Manager.html" title="Working with the Collection Manager">collmgr</a>'s <tt>map</tt> field, declare your map file (e.g., <tt>patent.map</tt>). Next, in collmgr's <tt>regionsearch</tt> field, add your searchable fields. These must correspond to the <tt>label</tt> elements in the mapping, described above.
+</p><p>You may also need to support searchable fields such as date of publication (e.g., for sorting) or ID (for record-oriented operations like using the bookbag), but not need to show these as being searchable in the user interface. In these cases, you should create mappings, but not declare the regions in collmgr.
+</p>
+<a name="Creating_and_Editing_Filtering_Routines"></a><h2><span class="editsection">[<a href="http://localhost/mediawiki/index.php?title=Customizing_BibClass&amp;action=edit&amp;section=5" title="Edit section: Creating and Editing Filtering Routines">edit</a>]</span> <span class="mw-headline">Creating and Editing Filtering Routines</span></h2>
+<a name="Overview_2"></a><h4><span class="editsection">[<a href="http://localhost/mediawiki/index.php?title=Customizing_BibClass&amp;action=edit&amp;section=6" title="Edit section: Overview">edit</a>]</span> <span class="mw-headline">Overview</span></h4>
+<p>BibClass is delivered with a default set of filtering routines based on the <a href="Bib.html" title="Bib.dtd">DTD</a> and relatively conventional uses of the DTD. The content you are putting online may employ unusual use of the tags, may require different display labels, or may simply use different encoding that consequently requires different filtering routines.
+</p><p>The default filtering can be found in the <tt>{DLXSROOT}/cgi/b/bib/</tt> folder. By using the keyword <tt>BibClass</tt> for the <tt>subclassmodule</tt> field in collmgr, you will be drawing on the corresponding subroutines in the file <tt>{DLXSROOT}/cgi/b/bib/BibClass.pm</tt>. New, custom filters can be written to override those in the base class <tt>BibClass.pm</tt> by creating subclass modules and placing them in <tt>{DLXSROOT}/cgi/b/bib/BibClass/</tt>, e.g., for the <tt>patents</tt> collection, <tt>patents.pm</tt>. Any methods in a new module will override the ones in <tt>BibClass.pm</tt>.
+</p>
+<a name="Creating_New_Filters"></a><h4><span class="editsection">[<a href="http://localhost/mediawiki/index.php?title=Customizing_BibClass&amp;action=edit&amp;section=7" title="Edit section: Creating New Filters">edit</a>]</span> <span class="mw-headline">Creating New Filters</span></h4>
+<p><b>Declaring new subroutines</b>
+</p><p>Each new filter is declared by creating a method in a new .pm file in <tt>{DLXSROOT}/cgi/b/bib/</tt>. You create a method and supply the transformations that will take place in that method. In this example, we will create a "short" record display filter for a collection called "patents".
+</p>
+<pre>sub ShortRecordFilter {
+</pre>
+<p>... and ...
+</p>
+<pre>}
+</pre>
+<p>Within the braces, you will supply the filtering parameters. For example:
+</p>
+<pre>
+ my $self = shift;
+ my ( $i, $cgi, $dso ) = @_;
+    $$i =~ s,&lt;/A&gt;,,gs;
+    $$i =~ s,&lt;A [^&gt;]*&gt;,,gs;
+    $$i =~ s,&lt;T&gt;(.*?)&lt;/T&gt;,&lt;strong&gt;Publisher:&lt;/strong&gt; $1&lt;br&gt;,gs;
+ # more transformations follow
+</pre>
+<a name="Creating_transformations"></a><h4><span class="editsection">[<a href="http://localhost/mediawiki/index.php?title=Customizing_BibClass&amp;action=edit&amp;section=8" title="Edit section: Creating transformations">edit</a>]</span> <span class="mw-headline">Creating transformations</span></h4>
+<p>Transformations in BibClass are done in perl using regular expressions. Many can be relatively simple, substituting an HTML value for an existing SGML or XML value. For example, in order to transform the content of the element <tt>V</tt>, which in BibClass represents an address, into a link of text with a preceding label, an expression like the following would be used:
+</p>
+<pre> $$i =~ s,&lt;V&gt;(.*?)&lt;/V&gt;,&lt;strong&gt;Address:&lt;/strong&gt; $1&lt;br&gt;,gs;
+</pre>
+<p>Similarly, an element <tt>URL</tt> which has an ID value and no other attributes, could be transformed in the following way if the ID of the URL had no real value in the display of information for users:
+</p>
+<pre> $$i =~ s,&lt;URL ID="[^"]*"&gt;(.*?)&lt;/URL&gt;,&lt;strong&gt;URL:&lt;/strong&gt; &lt;A HREF="$1"&gt;$1&lt;/A&gt;,gs;
+</pre>
+<p>And, in the following case, the contents of the <tt>IDNO</tt> element with an attribute whose value is <tt>"BMP"</tt> could be transformed in the following way into HTML:
+</p>
+<pre> $$i =~ s,&lt;IDNO TYPE="BMP"&gt;(.*?)&lt;/IDNO&gt;,&lt;strong&gt;BMP number:&lt;/strong&gt; $1&lt;br&gt;,gs;
+</pre>
+<p>While many transformations are relatively simple, as in these cases, it is possible to use the entire range of possibilities in perl to create more sophisticated displays, even moving entire blocks of information around for the eventual browser output. At the end of this document you will find two examples that represent the range of these possibilities. The American Film Institute Index filtering routine is especially complex, and is designed to take a significant body of encoded information and create a display similiar to the printed entries from the source.
+</p>
+<a name="Sample_Filtering_Routines"></a><h4><span class="editsection">[<a href="http://localhost/mediawiki/index.php?title=Customizing_BibClass&amp;action=edit&amp;section=9" title="Edit section: Sample Filtering Routines">edit</a>]</span> <span class="mw-headline">Sample Filtering Routines</span></h4>
+<p><b>Times of London/Palmer's Index to the Times filtering</b>
+</p>
+<pre>
+ sub ShortRecordFilter
+ {
+     my $self = shift;
+ 
+     my ( $i, $cgi, $dso ) = @_;
+ 
+     $$i =~ s,&lt;/A&gt;,,gs;
+     $$i =~ s,&lt;A&gt;,,gs;
+     $$i =~ s,&lt;A [^&gt;]*&gt;,,gs;
+     $$i =~ s,&lt;/?B&gt;,,gs;           ## ----- TITLESTMT
+     $$i =~ s|&lt;F&gt;\s*&lt;K[^&gt;]*&gt;(.*?)&lt;/K&gt;\s*&lt;Z&gt;\s*&lt;YR&gt;(.*?)&lt;/YR&gt;\s*&lt;PG&gt;(.*?)&lt;/PG&gt;\s*&lt;/Z&gt;\s*&lt;/F&gt;|
+qq{&lt;strong&gt;Citation:&lt;/strong&gt; $1, } . &amp;BibClassUtils::_YYYYMMDD2English($2) . 
+qq{, $3&lt;br&gt;}|gse;    ## ----- SERIESSTMT, CITE, YR, PG
+     $$i =~ s,&lt;K[^&gt;]*&gt;(.*?)&lt;/K&gt;,&lt;strong&gt;Title:&lt;/strong&gt; $1&lt;br&gt;,gs;    ## ----- TITLE
+     $$i =~ s,(.*)&lt;L[^&gt;]*&gt;(.*?)&lt;/L&gt;,&lt;strong&gt;Author:&lt;/strong&gt; $2&lt;br&gt;$1,gs;  ## ----- AUTHOR
+     $$i =~ s,&lt;H[^&gt;]*&gt;.*&lt;/H&gt;,,gs;      ## ----- SOURCEDESC
+     $$i =~ s,&lt;I2[^&gt;]*&gt;.*&lt;/I2&gt;,,gs;    ## ----- TEXTCLASS
+ }
+ 
+ sub LongRecordFilter
+ {
+     my $self = shift;
+ 
+     my ( $i, $cgi, $dso ) = @_;
+ 
+     $$i =~ s,&lt;/A&gt;,,gs;
+     $$i =~ s,&lt;A&gt;,,gs;
+     $$i =~ s,&lt;A [^&gt;]*&gt;,,gs;
+     $$i =~ s,&lt;/?B&gt;,,gs;
+     $$i =~ s,&lt;/?I2&gt;,,gs;
+     $$i =~ s|&lt;F&gt;\s*&lt;K[^&gt;]*&gt;(.*?)&lt;/K&gt;\s*&lt;Z&gt;\s*&lt;YR&gt;(.*?)&lt;/YR&gt;\s*&lt;PG&gt;(.*?)&lt;/PG&gt;\s*&lt;/Z&gt;\s*&lt;/F&gt;|
+qq{&lt;strong&gt;Citation:&lt;/strong&gt; $1, } . &amp;BibClassUtils::_YYYYMMDD2English($2) . 
+qq{, $3&lt;br&gt;}|gse;
+     $$i =~ s,&lt;K[^&gt;]*&gt;(.*?)&lt;/K&gt;,&lt;strong&gt;Title:&lt;/strong&gt; $1&lt;br&gt;,gs;
+     $$i =~ s,(.*)&lt;L[^&gt;]*&gt;(.*?)&lt;/L&gt;,&lt;strong&gt;Author:&lt;/strong&gt; $2&lt;br&gt;$1,gs;
+     $$i =~ s,&lt;H[^&gt;]*&gt;\s*&lt;P&gt;(.*)&lt;/P&gt;\s*&lt;/H&gt;,&lt;strong&gt;Volume:&lt;/strong&gt; $1&lt;br&gt;,gs;
+     $$i =~ s,&lt;KW[^&gt;]*&gt;\s*&lt;AF&gt;(.*?)&lt;/AF&gt;\s*&lt;/KW&gt;,&lt;strong&gt;Subject:&lt;/strong&gt; $1&lt;br&gt;,gs;
+ }
+</pre>
+<p><b>American Film Institute Index filtering</b>
+</p>
+<pre>
+ sub ShortRecordFilter
+ {
+     my $self = shift;
+ 
+     my ( $i, $cgi, $dso ) = @_;
+ 
+     my $i = shift;
+ 
+     # This section is getting rid of bounding elements with no
+     # specific content other than other elements
+     $$i =~ s,&lt;/A&gt;,,gs;
+     $$i =~ s,&lt;A [^&gt;]*&gt;,,gs;
+     $$i =~ s,&lt;SOMHD&gt;,,g;
+     $$i =~ s,&lt;/SOMHD&gt;,,g;
+ 
+     # Now some basic formatting things for both short and long
+     $$i =~ s,&lt;PLS&gt;&lt;/PLS&gt;,,g;
+     $$i =~ s,&lt;NUM&gt;[^&lt;]*&lt;/NUM&gt;,,g;
+ 
+     # Now some things that are for short or long
+     $$i =~ s,&lt;K&gt;([^&lt;]*)&lt;/K&gt;,&lt;strong&gt;Title:&lt;/strong&gt; $1&lt;br&gt;,gs;
+     $$i =~ s,&lt;YR&gt;([^&lt;]*)&lt;/YR&gt;,&lt;strong&gt;Release year:&lt;/strong&gt; $1&lt;br&gt;,gs;
+     $$i =~ s,&lt;DIR&gt;&lt;NAME&gt;([^&lt;]*)&lt;/NAME&gt;&lt;NAMEINV&gt;[^&lt;]*&lt;/NAMEINV&gt;&lt;/DIR&gt;,&lt;strong&gt;Director:&lt;/strong&gt; $1&lt;br&gt;,g;
+     $$i =~ s,&lt;DCO&gt;([^&lt;]*)&lt;/DCO&gt;,&lt;strong&gt;Distribution company:&lt;/strong&gt; $1&lt;br&gt;,g;
+     $$i =~ s,&lt;PCO&gt;([^&lt;]*)&lt;/PCO&gt;,&lt;strong&gt;Production company:&lt;/strong&gt; $1&lt;br&gt;,g;
+ 
+     # Now to get rid of some things specifically for long
+     $$i =~ s,&lt;DIR&gt;&lt;NAME&gt;[^&lt;]*&lt;/NAME&gt;&lt;NAMEINV&gt;[^&lt;]*&lt;/NAMEINV&gt;&lt;CREDIT&gt;[^&lt;]*&lt;/CREDIT&gt;&lt;/DIR&gt;,,g;
+     $$i =~ s,&lt;DIR&gt;.*?&lt;/DIR&gt;,,g;
+     $$i =~ s,&lt;ANI&gt;.*?&lt;/ANI&gt;,,g;
+     $$i =~ s,&lt;ART&gt;.*?&lt;/ART&gt;,,g;
+     $$i =~ s,&lt;ATI&gt;.*?&lt;/ATI&gt;,,g;
+     $$i =~ s,&lt;BR&gt;.*?&lt;/BR&gt;,,g;
+     $$i =~ s,&lt;CAS&gt;.*?&lt;/CAS&gt;,,g;
+     $$i =~ s,&lt;CDT&gt;.*?&lt;/CDT&gt;,,g;
+     $$i =~ s,&lt;CHR&gt;.*?&lt;/CHR&gt;,,g;
+     $$i =~ s,&lt;CNO&gt;.*?&lt;/CNO&gt;,,g;
+     $$i =~ s,&lt;COC&gt;.*?&lt;/COC&gt;,,g;
+     $$i =~ s,&lt;COL&gt;.*?&lt;/COL&gt;,,g;
+     $$i =~ s,&lt;COPYRIGHT&gt;.*?&lt;/COPYRIGHT&gt;,,g;
+     $$i =~ s,&lt;COS&gt;.*?&lt;/COS&gt;,,g;
+     $$i =~ s,&lt;CREDIT&gt;.*?&lt;/CREDIT&gt;,,g;
+     $$i =~ s,&lt;CTL&gt;.*?&lt;/CTL&gt;,,g;
+     $$i =~ s,&lt;CTY&gt;.*?&lt;/CTY&gt;,,g;
+     $$i =~ s,&lt;DAN&gt;.*?&lt;/DAN&gt;,,g;
+     $$i =~ s,&lt;DRF&gt;.*?&lt;/DRF&gt;,,g;
+     $$i =~ s,&lt;DRM&gt;.*?&lt;/DRM&gt;,,g;
+     $$i =~ s,&lt;DRR&gt;.*?&lt;/DRR&gt;,,g;
+     $$i =~ s,&lt;EDI&gt;.*?&lt;/EDI&gt;,,g;
+     $$i =~ s,&lt;ESG&gt;.*?&lt;/ESG&gt;,,g;
+     $$i =~ s,&lt;EST&gt;.*?&lt;/EST&gt;,,g;
+     $$i =~ s,&lt;ETH&gt;.*?&lt;/ETH&gt;,,g;
+     $$i =~ s,&lt;GEN&gt;.*?&lt;/GEN&gt;,,g;
+     $$i =~ s,&lt;LANG&gt;.*?&lt;/LANG&gt;,,g;
+     $$i =~ s,&lt;MAK&gt;.*?&lt;/MAK&gt;,,g;
+     $$i =~ s,&lt;MTX&gt;.*?&lt;/MTX&gt;,,g;
+     $$i =~ s,&lt;MUS&gt;.*?&lt;/MUS&gt;,,g;
+     $$i =~ s,&lt;NAME&gt;.*?&lt;/NAME&gt;,,g;
+     $$i =~ s,&lt;NAMEINV&gt;.*?&lt;/NAMEINV&gt;,,g;
+     $$i =~ s,&lt;NOT&gt;.*?&lt;/NOT&gt;,,g;
+     $$i =~ s,&lt;PCN&gt;.*?&lt;/PCN&gt;,,g;
+     $$i =~ s,&lt;PDA&gt;.*?&lt;/PDA&gt;,,g;
+     $$i =~ s,&lt;PDQ&gt;.*?&lt;/PDQ&gt;,,g;
+     $$i =~ s,&lt;PHO&gt;.*?&lt;/PHO&gt;,,g;
+     $$i =~ s,&lt;PHY&gt;.*?&lt;/PHY&gt;,,g;
+     $$i =~ s,&lt;PRE&gt;.*?&lt;/PRE&gt;,,g;
+     $$i =~ s,&lt;PRM&gt;.*?&lt;/PRM&gt;,,g;
+     $$i =~ s,&lt;PRO&gt;.*?&lt;/PRO&gt;,,g;
+     $$i =~ s,&lt;RDO&gt;.*?&lt;/RDO&gt;,,g;
+     $$i =~ s,&lt;RDT&gt;.*?&lt;/RDT&gt;,,g;
+     $$i =~ s,&lt;SAU&gt;.*?&lt;/SAU&gt;,,g;
+     $$i =~ s,&lt;SBA&gt;.*?&lt;/SBA&gt;,,g;
+     $$i =~ s,&lt;SBI&gt;.*?&lt;/SBI&gt;,,g;
+     $$i =~ s,&lt;SCT&gt;.*?&lt;/SCT&gt;,,g;
+     $$i =~ s,&lt;SDO&gt;.*?&lt;/SDO&gt;,,g;
+     $$i =~ s,&lt;SER&gt;.*?&lt;/SER&gt;,,g;
+     $$i =~ s,&lt;SET&gt;.*?&lt;/SET&gt;,,g;
+     $$i =~ s,&lt;SFX&gt;.*?&lt;/SFX&gt;,,g;
+     $$i =~ s,&lt;SIG&gt;.*?&lt;/SIG&gt;,,g;
+     $$i =~ s,&lt;SOU&gt;.*?&lt;/SOU&gt;,,g;
+     $$i =~ s,&lt;STA&gt;.*?&lt;/STA&gt;,,g;
+     $$i =~ s,&lt;STX&gt;.*?&lt;/STX&gt;,,g;
+     $$i =~ s,&lt;SUM&gt;.*?&lt;/SUM&gt;,,g;
+     $$i =~ s,&lt;WRT&gt;.*?&lt;/WRT&gt;,,g;
+ }
+ 
+ 
+ sub LongRecordFilter
+ {
+     my $self = shift;
+ 
+     my ( $i, $cgi, $dso ) = @_;
+ 
+     my $output;
+ 
+     # Construct output by matching specific elements of the A element
+     # and reassembling them conditionally
+ 
+     # Title (three of these K elements aren't followed by a YR
+     my ( $title, $x, $year ) = ( $$i =~ m,&lt;K&gt;(.*?)&lt;/K&gt;(&lt;YR&gt;(.*?)&lt;/YR&gt;)?, );
+     $output .= $year&nbsp;? &quot;&lt;h3&gt;$title ($year)&lt;/h3&gt;&quot;&nbsp;: &quot;&lt;h3&gt;$title&lt;/h3&gt;&quot;;
+ 
+     # Next a blockquote around the production info and the alternate
+     # title (no label) Looks like it's these elements:
+     # PDQ|DCO|RDO|RDT|PDA|DRF|SER|PRE|DRM|COC|CDT|CNO|DRR|PHY|PCN|CTL|ATI
+     $output .= '&lt;blockquote&gt;&lt;nowiki&gt;';
+     $output .= &amp;AFI_DoElement( $cgi, $i, 'CTY', '(', '', '; ' );
+     $output .= &amp;AFI_DoElement( $cgi, $i, 'LANG', '', '', ') ' );
+     $output .= &amp;AFI_DoElement( $cgi, $i, 'ATI', 'Alternate Title ', 'i', ' ' );
+     $output .= &amp;AFI_DoElement( $cgi, $i, 'PCO', 'Production Co. ', 'i', ' ' );
+     $output .= &amp;AFI_DoElement( $cgi, $i, 'PDQ', '', '', ' ' );
+     $output .= &amp;AFI_DoElement( $cgi, $i, 'DCO', 'Distribution Co. ', 'i', ' ' );
+     $output .= &amp;AFI_DoElement( $cgi, $i, 'PRE', '', '', ' ' );
+     $output .= &amp;AFI_DoElement( $cgi, $i, 'RDT', 'Release ', 'i', ' ' );
+     $output .= &amp;AFI_DoElement( $cgi, $i, 'RDO', 'Release ', 'i', ' ' );
+     $output .= &amp;AFI_DoElement( $cgi, $i, 'PDA', 'Production ', 'i', ' ' );
+ 
+     if ( $$i =~ m,&lt;COPYRIGHT&gt;Y, )
+     {
+         $output .= '[© ';
+         $output .= &amp;AFI_DoElement( $cgi, $i, 'COC', '', '', '; ' );
+         $output .= &amp;AFI_DoElement( $cgi, $i, 'CDT', '', '', '; ' );
+         $output .= &amp;AFI_DoElement( $cgi, $i, 'CNO', '', '', ';' );
+         $output .= '] ';
+     }
+     $output .= &amp;AFI_DoElement( $cgi, $i, 'DRM', '', '', ' min.; ' );
+     $output .= &amp;AFI_DoElement( $cgi, $i, 'DRF', '', '', ' ft.; ' );
+     $output .= &amp;AFI_DoElement( $cgi, $i, 'DRR', '', '', ' reels.; ' );
+     $output .= &amp;AFI_DoElement( $cgi, $i, 'PHY', '', '', '; ' );
+     $output .= &amp;AFI_DoElement( $cgi, $i, 'PCN', 'PCA cert no. ', '', ' ' );
+     $output .= '&lt;/blockquote&gt;';
+ 
+     # Source
+     $output .= &quot;&lt;p&gt;&quot; . &amp;AFI_DoElement( $cgi, $i, 'SOU', 'Source: ', 'strong' ) . &quot;&lt;/p&gt;&quot;;
+     # Series
+     $output .= &quot;&lt;p&gt;&quot; . &amp;AFI_DoElement( $cgi, $i, 'SER', 'Series: ', 'strong' ) . &quot;&lt;/p&gt;&quot;;
+     # Production Credits:
+     $output .= &quot;&lt;p&gt;&lt;strong&gt;Production Credits: &lt;/strong&gt;&quot;;
+     $output .= &amp;AFI_DoProductionCredit( $i, 'PRO', 'Producer' );
+     $output .= &amp;AFI_DoProductionCredit( $i, 'DIR', 'Director' );
+     $output .= &amp;AFI_DoProductionCredit( $i, 'WRT', 'Writer' );
+     $output .= &amp;AFI_DoProductionCredit( $i, 'PHO', 'Photography' );
+     $output .= &amp;AFI_DoProductionCredit( $i, 'ART', 'Art' );
+     $output .= &amp;AFI_DoProductionCredit( $i, 'EDI', 'Editor' );
+     $output .= &amp;AFI_DoProductionCredit( $i, 'SET', 'Set' );
+     $output .= &amp;AFI_DoProductionCredit( $i, 'COS', 'Costumes' );
+     $output .= &amp;AFI_DoProductionCredit( $i, 'MUS', 'Music' );
+     $output .= &amp;AFI_DoProductionCredit( $i, 'MTX', 'Music text' );
+     $output .= &amp;AFI_DoProductionCredit( $i, 'SDO', 'Sound' );
+     $output .= &amp;AFI_DoProductionCredit( $i, 'DAN', 'Dance' );
+     $output .= &amp;AFI_DoProductionCredit( $i, 'MAK', 'Makeup/hair' );
+     $output .= &amp;AFI_DoProductionCredit( $i, 'SFX', 'Special Effects' );
+     $output .= &amp;AFI_DoProductionCredit( $i, 'PRM', 'Production misc.' );
+     $output .= &amp;AFI_DoProductionCredit( $i, 'STA', 'Stand-ins' );
+     $output .= &amp;AFI_DoProductionCredit( $i, 'COL', 'Color personnel' );
+     $output .= &amp;AFI_DoProductionCredit( $i, 'ANI', 'Animation' );
+     $output .= &quot;&lt;/p&gt;&quot;;
+ 
+     # Cast
+     $output .= &quot;&lt;p&gt;&lt;strong&gt;Cast: &lt;/strong&gt;&quot;;
+     $output .= &amp;AFI_DoCast( $cgi, $i ) . &quot;&lt;/p&gt;&quot;;
+     # Songs/Music
+     $output .= &quot;&lt;p&gt;&quot; . &amp;AFI_DoElement( $cgi, $i, 'STX', 'Songs/Music: ', 'strong' ) . &quot;&lt;/p&gt;&quot;;
+     # Genre
+     $output .= &quot;&lt;p&gt;&quot; . &amp;AFI_DoElement( $cgi, $i, 'GEN', 'Genre: ', 'strong' ) . &quot;&lt;/p&gt;&quot;;
+     # Broad Subject
+     $output .= &quot;&lt;p&gt;&quot; . &amp;AFI_DoElement( $cgi, $i, 'SBA', 'Broad Subjects: ', 'strong' ) . &quot;&lt;/p&gt;&quot;;
+     # Specific Subject
+     $output .= &quot;&lt;p&gt;&quot; . &amp;AFI_DoElement( $cgi, $i, 'SBI', 'Specific Subjects: ', 'strong' ) . &quot;&lt;/p&gt;&quot;;
+     # Plot Summary
+     $output .= &quot;&lt;p&gt;&quot; . &amp;AFI_DoElement( $cgi, $i, 'SUM', 'Plot Summary: ', 'strong' ) . &quot;&lt;/p&gt;&quot;;
+     # Note
+     $output .= qq{&lt;p&gt;&lt;font size=&quot;-1&quot;&gt;} . &amp;AFI_DoElement( $cgi, $i, 'NOT', 'Note: ', 'strong' ) . &quot;&lt;/font&gt;&lt;/p&gt;&quot;;
+     # Source Citations
+     $output .= &quot;&lt;p&gt;&quot; . &amp;AFI_DoElement( $cgi, $i, 'SCT', 'Source Citations: ', 'strong' ) . &quot;&lt;/p&gt;&quot;;
+     # Finally, a footer
+     $output .= qq{&lt;p&gt;&lt;font size=&quot;-1&quot;&gt;&lt;code&gt;[ ]&lt;/code&gt; = offscreen credit&lt;br&gt;
+Data copyright 1999 The American Film Institute&lt;/font&gt;&lt;/p&gt;}&nbsp;;
+ 
+     $$i = $output;
+ }
+</pre>
+<p><br />
+<a href="#top" title="">Top</a>
+</p>
+<!-- 
+NewPP limit report
+Preprocessor node count: 69/1000000
+Post-expand include size: 0/2097152 bytes
+Template argument size: 0/2097152 bytes
+Expensive parser function count: 0/100
+-->
+
+<!-- Saved in parser cache with key mediawiki_dlxsdocs_15:pcache:idhash:234-0!1!0!!en!2 and timestamp 20250202211749 -->
+<div class="printfooter">
+Retrieved from "<a href="Customizing_BibClass.html">http://localhost/wiki/Customizing_BibClass</a>"</div>
+						<!-- end content -->
+			<div class="visualClear"></div>
+		</div>
+	</div>
+		</div>
+		<div id="column-one">
+	<div id="p-cactions" class="portlet">
+		<h5>Views</h5>
+		<div class="pBody">
+			<ul>
+	
+				 <li id="ca-nstab-main" class="selected"><a href="Customizing_BibClass.html" title="View the content page [c]" accesskey="c">Page</a></li>
+				 <li id="ca-talk" class="new"><a href="http://localhost/mediawiki/index.php?title=Talk:Customizing_BibClass&amp;action=edit" title="Discussion about the content page [t]" accesskey="t">Discussion</a></li>
+				 <li id="ca-edit"><a href="http://localhost/mediawiki/index.php?title=Customizing_BibClass&amp;action=edit" title="You can edit this page.&#10;Please use the preview button before saving. [e]" accesskey="e">Edit</a></li>
+				 <li id="ca-history"><a href="http://localhost/mediawiki/index.php?title=Customizing_BibClass&amp;action=history" title="Past versions of this page. [h]" accesskey="h">History</a></li>			</ul>
+		</div>
+	</div>
+	<div class="portlet" id="p-personal">
+		<h5>Personal tools</h5>
+		<div class="pBody">
+			<ul>
+				<li id="pt-login"><a href="http://localhost/mediawiki/index.php?title=Special:UserLogin&amp;returnto=Customizing_BibClass" title="You are encouraged to log in, it is not mandatory however. [o]" accesskey="o">Log in / create account</a></li>
+			</ul>
+		</div>
+	</div>
+	<div class="portlet" id="p-logo">
+		<a style="background-image: url(../dlxs15/uploads/DLXS_logo2.gif);" href="Main_Page.html" title="Visit the Main Page [z]" accesskey="z"></a>
+	</div>
+	<script type="text/javascript"> if (window.isMSIE55) fixalpha(); </script>
+	<div class='generated-sidebar portlet' id='p-navigation'>
+		<h5>Navigation</h5>
+		<div class='pBody'>
+			<ul>
+				<li id="n-mainpage-description"><a href="Main_Page.html">Main Page</a></li>
+				<li id="n-portal"><a href="DLXS_Documentation_Community_Portal.html" title="About the project, what you can do, where to find things">Community portal</a></li>
+				<li id="n-currentevents"><a href="DLXS_Documentation_Current_events.html" title="Find background information on current events">Current events</a></li>
+				<li id="n-recentchanges"><a href="Special_RecentChanges.html" title="The list of recent changes in the wiki. [r]" accesskey="r">Recent changes</a></li>
+				<li id="n-randompage"><a href="Mounting_a_Bib_Class_Collection.html" title="Load a random page [x]" accesskey="x">Random page</a></li>
+				<li id="n-help"><a href="Help_Contents.html" title="The place to find out.">Help</a></li>
+			</ul>
+		</div>
+	</div>
+	<div id="p-search" class="portlet">
+		<h5><label for="searchInput">Search</label></h5>
+		<div id="searchBody" class="pBody">
+			<form action="http://localhost/wiki/Special:Search" id="searchform"><div>
+				<input id="searchInput" name="search" type="text" title="Search DLXS Documentation [f]" accesskey="f" value="" />
+				<input type='submit' name="go" class="searchButton" id="searchGoButton"	value="Go" title="Go to a page with this exact name if exists" />&nbsp;
+				<input type='submit' name="fulltext" class="searchButton" id="mw-searchButton" value="Search" title="Search the pages for this text" />
+			</div></form>
+		</div>
+	</div>
+	<div class="portlet" id="p-tb">
+		<h5>Toolbox</h5>
+		<div class="pBody">
+			<ul>
+				<li id="t-whatlinkshere"><a href="Special_WhatLinksHere/Customizing_BibClass.html" title="List of all wiki pages that link here [j]" accesskey="j">What links here</a></li>
+				<li id="t-recentchangeslinked"><a href="Special_RecentChangesLinked/Customizing_BibClass.html" title="Recent changes in pages linked from this page [k]" accesskey="k">Related changes</a></li>
+<li id="t-specialpages"><a href="Special_SpecialPages.html" title="List of all special pages [q]" accesskey="q">Special pages</a></li>
+				<li id="t-print"><a href="http://localhost/mediawiki/index.php?title=Customizing_BibClass&amp;printable=yes" title="Printable version of this page [p]" accesskey="p">Printable version</a></li>				<li id="t-permalink"><a href="http://localhost/mediawiki/index.php?title=Customizing_BibClass&amp;oldid=1822" title="Permanent link to this version of the page">Permanent link</a></li>			</ul>
+		</div>
+	</div>
+		</div><!-- end of the left (by default at least) column -->
+			<div class="visualClear"></div>
+			<div id="footer">
+				<div id="f-poweredbyico"><a href="http://www.mediawiki.org/"><img src="../mediawiki/skins/common/images/poweredby_mediawiki_88x31.png" alt="Powered by MediaWiki" /></a></div>
+			<ul id="f-list">
+				<li id="lastmod"> This page was last modified on 10 October 2007, at 13:56.</li>
+				<li id="viewcount">This page has been accessed 2,858 times.</li>
+				<li id="privacy"><a href="DLXS_Documentation_Privacy_policy.html" title="DLXS Documentation:Privacy policy">Privacy policy</a></li>
+				<li id="about"><a href="DLXS_Documentation_About.html" title="DLXS Documentation:About">About DLXS Documentation</a></li>
+				<li id="disclaimer"><a href="DLXS_Documentation_General_disclaimer.html" title="DLXS Documentation:General disclaimer">Disclaimers</a></li>
+			</ul>
+		</div>
+</div>
+
+		<script type="text/javascript">if (window.runOnloadHook) runOnloadHook();</script>
+<!-- Served in 0.121 secs. --></body>
+<!-- Mirrored from localhost/wiki/Customizing_BibClass by HTTrack Website Copier/3.x [XR&CO'2014], Mon, 03 Feb 2025 00:32:37 GMT -->
+</html>

@@ -1,0 +1,276 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en" dir="ltr">
+	
+<!-- Mirrored from localhost/wiki/DLXS_Daemon:_Installing_and_Configuring by HTTrack Website Copier/3.x [XR&CO'2014], Mon, 03 Feb 2025 00:28:58 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=UTF-8" /><!-- /Added by HTTrack -->
+<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+		<meta name="generator" content="MediaWiki 1.13.5" />
+		<meta name="keywords" content="DLXS Daemon: Installing and Configuring,DLXS Wiki,Installing DLXS,System Requirements,Working with the Collection Manager" />
+		<link rel="shortcut icon" href="http://localhost/favicon.ico" />
+		<link rel="search" type="application/opensearchdescription+xml" href="http://localhost/mediawiki/opensearch_desc.php" title="DLXS Documentation (en)" />
+		<link rel="alternate" type="application/rss+xml" title="DLXS Documentation RSS Feed" href="http://localhost/mediawiki/index.php?title=Special:RecentChanges&amp;feed=rss" />
+		<link rel="alternate" type="application/atom+xml" title="DLXS Documentation Atom Feed" href="http://localhost/mediawiki/index.php?title=Special:RecentChanges&amp;feed=atom" />
+		<title>DLXS Daemon: Installing and Configuring - DLXS Documentation</title>
+		<style type="text/css" media="screen, projection">/*<![CDATA[*/
+			@import "../mediawiki/skins/common/sharedfa7c.css?164";
+			@import "../mediawiki/skins/monobook/mainfa7c.css?164";
+		/*]]>*/</style>
+		<link rel="stylesheet" type="text/css" media="print" href="../mediawiki/skins/common/commonPrintfa7c.css?164" />
+		<!--[if lt IE 5.5000]><style type="text/css">@import "/mediawiki/skins/monobook/IE50Fixes.css?164";</style><![endif]-->
+		<!--[if IE 5.5000]><style type="text/css">@import "/mediawiki/skins/monobook/IE55Fixes.css?164";</style><![endif]-->
+		<!--[if IE 6]><style type="text/css">@import "/mediawiki/skins/monobook/IE60Fixes.css?164";</style><![endif]-->
+		<!--[if IE 7]><style type="text/css">@import "/mediawiki/skins/monobook/IE70Fixes.css?164";</style><![endif]-->
+		<!--[if lt IE 7]><script type="text/javascript" src="/mediawiki/skins/common/IEFixes.js?164"></script>
+		<meta http-equiv="imagetoolbar" content="no" /><![endif]-->
+		
+		<script type= "text/javascript">/*<![CDATA[*/
+var skin = "monobook";
+var stylepath = "/mediawiki/skins";
+var wgArticlePath = "/wiki/$1";
+var wgScriptPath = "/mediawiki";
+var wgScript = "http://localhost/mediawiki/index.php";
+var wgVariantArticlePath = false;
+var wgActionPaths = [];
+var wgServer = "http://localhost/";
+var wgCanonicalNamespace = "";
+var wgCanonicalSpecialPageName = false;
+var wgNamespaceNumber = 0;
+var wgPageName = "DLXS_Daemon:_Installing_and_Configuring";
+var wgTitle = "DLXS Daemon: Installing and Configuring";
+var wgAction = "view";
+var wgArticleId = "143";
+var wgIsArticle = true;
+var wgUserName = null;
+var wgUserGroups = null;
+var wgUserLanguage = "en";
+var wgContentLanguage = "en";
+var wgBreakFrames = false;
+var wgCurRevisionId = "773";
+var wgVersion = "1.13.5";
+var wgEnableAPI = true;
+var wgEnableWriteAPI = false;
+var wgRestrictionEdit = [];
+var wgRestrictionMove = [];
+/*]]>*/</script>
+                
+		<script type="text/javascript" src="../mediawiki/skins/common/wikibitsfa7c.js?164"><!-- wikibits js --></script>
+		<!-- Head Scripts -->
+		<script type="text/javascript" src="../mediawiki/skins/common/ajaxfa7c.js?164"></script>
+		<script type="text/javascript" src="http://localhost/mediawiki/index.php?title=-&amp;action=raw&amp;gen=js&amp;useskin=monobook"><!-- site js --></script>
+		<style type="text/css">/*<![CDATA[*/
+@import "http://localhost/mediawiki/index.php?title=MediaWiki:Common.css&amp;usemsgcache=yes&amp;action=raw&amp;ctype=text/css&amp;smaxage=18000";
+@import "http://localhost/mediawiki/index.php?title=MediaWiki:Monobook.css&amp;usemsgcache=yes&amp;action=raw&amp;ctype=text/css&amp;smaxage=18000";
+@import "http://localhost/mediawiki/index.php?title=-&amp;action=raw&amp;gen=css&amp;maxage=18000&amp;useskin=monobook";
+/*]]>*/</style>
+	</head>
+<body class="mediawiki ns-0 ltr page-DLXS_Daemon_Installing_and_Configuring">
+	<div id="globalWrapper">
+		<div id="column-content">
+	<div id="content">
+		<a name="top" id="top"></a>
+				<h1 class="firstHeading">DLXS Daemon: Installing and Configuring</h1>
+		<div id="bodyContent">
+			<h3 id="siteSub">From DLXS Documentation</h3>
+			<div id="contentSub"></div>
+									<div id="jump-to-nav">Jump to: <a href="#column-one">navigation</a>, <a href="#searchInput">search</a></div>			<!-- start content -->
+			<p><a href="DLXS_Wiki.html" title="DLXS Wiki">Main Page</a> &gt; <a href="Installing_DLXS.html" title="Installing DLXS">Installing DLXS</a> &gt; DLXS Daemon: Installing and Configuring
+</p>
+<hr />
+<p>DLXS provides network software which allows middleware on one server to transparently search and display content
+hosted on another. This tool, called a daemon, can be used for a variety of purposes:
+<ul>
+<li>to distribute resources across servers to balance load</li>
+<li>to bridge together resources hosted by different departments on separate servers</li>
+<li>to locate data on a remote or more tightly-secured server while running middleware on a server where staff have
+login access</li>
+<li>(in theory) to provide inter-institutional repositories of content (some institutions are indeed currently
+experimenting with such a model)</li>
+</ul>
+</p>
+<p>If you don't plan on doing any of these things, you don't need to install this tool. If you think this sounds
+interesting and you might want to do it in the future, you can wait until then to install.</p>
+<p>If you want to use the DLXS daemon, it makes sense to install it last because
+<ul>
+<li>it has the same <a href="System_Requirements.html" title="System Requirements">requirements</a> as the DLXS middleware, and</li>
+<li>it's not useful until the middleware is up and running anyway.</li>
+</ul>
+</p>
+<p><br />
+</p>
+<a name="Installing_the_DLXS_daemon"></a><h2><span class="editsection">[<a href="http://localhost/mediawiki/index.php?title=DLXS_Daemon:_Installing_and_Configuring&amp;action=edit&amp;section=1" title="Edit section: Installing the DLXS daemon">edit</a>]</span> <span class="mw-headline">Installing the DLXS daemon</span></h2>
+<p>The DLXS daemon uses configuration files to store site-specific information. The configuration files
+are in the <code>etc</code> directory of the dlxsd distribution.</p>
+<ol>
+<li>Make the following modifications to <code>access.conf</code> to specify up to 60 access control parameters.
+
+<ol>
+1. Add lines to specify allowable domains.  For example,
+<pre>  allow .umich.edu</pre>
+<p>allows access from any machine in the <code>umich.edu</code> domain, while
+</p>
+<pre>  allow .umdl.umich.edu</pre>
+<p>is more restrictive, allowing access only from the <code>umdl.umich.edu</code> domain, and
+</p>
+<pre>  allow .umich.edu
+  allow .cornell.edu</pre>
+<p>permits access from machines at both Cornell and Michigan.
+</p><p>2. Add lines to <i>refuse</i> access from specific domains.  For example,
+</p>
+<pre>  deny .hackers.org</pre>
+</ol>
+</li>
+<li>Make the following modifications to <code>verbs.conf</code> to specify how middleware will invoke utilities
+through the daemon.
+<ol>
+1. Adapt the existing lines with the proper paths to DLXS required software for built-in page viewing functions.
+For example,
+
+<pre>  TIF2GIF /usr/local/bin/tif2web -G -N $1 -g $2 $3 -o $4 $5
+  TIF2PDF /usr/local/bin/c42pdf  -o $1 REST_OF_ARGS
+  TIF2PNG /usr/local/bin/tif2web -P -N $1 -g $2 $3 -o $4 $5
+  XPAT /usr/local/bin/xpat $1 -q -s $2
+  DELIVERFILE /bin/cp $1 $2</pre>
+<p>2. If needed, add lines with new verbs and customized command strings to support extensions you make to DLXS
+middleware. For example,
+</p>
+<pre>  HACKME /bin/mailx -s HereYouGo $1 &lt; /etc/passwd</pre>
+<p>The <i>positional parameter</i> <code>$1</code> (you can have up to <code>$9</code>) and the special parameter REST_OF_ARGS
+shown in the previous example above are used to pass arguments from the middleware to the daemon. They are named in the
+order supplied (<code>$1</code>, <code>$2</code>, etc.) and are substituted as placed in the command string.
+</p>
+<p><b>Important note:</b> Clearly, providing the ability for remote execution of commands without authentication makes for
+huge potential security holes. The "HACKME" example configuration, above, is a ridiculously reckless example of the 
+<b>danger this service can
+pose if configured improperly</b>. (It emails an extremely sensitive UNIX file to a random recipient.) The daemon provides
+some protection against this by not allowing certain characters in the arguments (to prevent <i>poisoning</i>), but <b>care should
+be taken</b> that this tool is not used in such a way as to introduce security risks into your environment.</p>
+</ol>
+</li>
+</ol>
+<p>You can recompile the DLXS daemon if you do not wish to use the binary distribution for your platform, or if you are attempting to run DLXS on a platform other than Linux or Solaris. For further instructions on building the DLXS daemon, consult the file <code>README</code> in the <code>src</code> directory of the DLXS daemon source distribution.
+</p><p><br />
+</p>
+<a name="Configuring_the_Internet_services_daemon_.28inetd.29_to_use_the_DLXS_daemon"></a><h2><span class="editsection">[<a href="http://localhost/mediawiki/index.php?title=DLXS_Daemon:_Installing_and_Configuring&amp;action=edit&amp;section=2" title="Edit section: Configuring the Internet services daemon (inetd) to use the DLXS daemon">edit</a>]</span> <span class="mw-headline">Configuring the Internet services daemon (inetd) to use the DLXS daemon</span></h2>
+<ol>
+<li>Add the line below to the <code>/etc/inetd.conf</code> (Linux) or <code>/etc/inet/inetd.conf</code> (Solaris)
+file, as appropriate. For example:
+<pre>
+   dlxsd     stream tcp nowait nobody /usr/local/dlxsd/bin/dlxsd    /usr/local/dlxsd/bin/dlxsd
+</pre>
+<p>Notes:
+
+<ul>
+The user ("<code>nobody</code>" in the example above) should be consistent with the userid under which
+the web server runs.</li>
+<li>The path to <code>dlxsd</code> should be consistent with where you have installed the binary.</li>
+</ul>
+</p>
+</li>
+<li>Add the line below to the <code>/etc/services</code> (Linux) or <code>/etc/inet/services</code> (Solaris) file,
+as appropriate.  For example:
+
+<pre>
+   dlxsd      620/tcp  # dlxsd server daemon
+</pre>We recommend using port 620, but if you need to use a different port number, you will need to change the value
+<p>in the <code>port</code> column in your <code>colldb</code> for each class. For information on the
+<code>colldb</code>, please see the online help in the
+</p>
+<a href="Working_with_the_Collection_Manager.html" title="Working with the Collection Manager">Collection Manager</a> utility.</li>
+<li>Signal inetd to use the new configuration, typically by issuing the command <code>kill -HUP <i>pid</i> </code>where
+
+<i>pid</i> is the process ID of the inetd daemon.</li>
+</ol>
+<p><a href="#top" title="">Top</a>
+</p>
+<!-- 
+NewPP limit report
+Preprocessor node count: 82/1000000
+Post-expand include size: 0/2097152 bytes
+Template argument size: 0/2097152 bytes
+Expensive parser function count: 0/100
+-->
+
+<!-- Saved in parser cache with key mediawiki_dlxsdocs_15:pcache:idhash:143-0!1!0!!en!2 and timestamp 20250202211407 -->
+<div class="printfooter">
+Retrieved from "<a href="DLXS_Daemon__Installing_and_Configuring.html">http://localhost/wiki/DLXS_Daemon:_Installing_and_Configuring</a>"</div>
+						<!-- end content -->
+			<div class="visualClear"></div>
+		</div>
+	</div>
+		</div>
+		<div id="column-one">
+	<div id="p-cactions" class="portlet">
+		<h5>Views</h5>
+		<div class="pBody">
+			<ul>
+	
+				 <li id="ca-nstab-main" class="selected"><a href="DLXS_Daemon__Installing_and_Configuring.html" title="View the content page [c]" accesskey="c">Page</a></li>
+				 <li id="ca-talk" class="new"><a href="http://localhost/mediawiki/index.php?title=Talk:DLXS_Daemon:_Installing_and_Configuring&amp;action=edit" title="Discussion about the content page [t]" accesskey="t">Discussion</a></li>
+				 <li id="ca-edit"><a href="http://localhost/mediawiki/index.php?title=DLXS_Daemon:_Installing_and_Configuring&amp;action=edit" title="You can edit this page.&#10;Please use the preview button before saving. [e]" accesskey="e">Edit</a></li>
+				 <li id="ca-history"><a href="http://localhost/mediawiki/index.php?title=DLXS_Daemon:_Installing_and_Configuring&amp;action=history" title="Past versions of this page. [h]" accesskey="h">History</a></li>			</ul>
+		</div>
+	</div>
+	<div class="portlet" id="p-personal">
+		<h5>Personal tools</h5>
+		<div class="pBody">
+			<ul>
+				<li id="pt-login"><a href="http://localhost/mediawiki/index.php?title=Special:UserLogin&amp;returnto=DLXS_Daemon:_Installing_and_Configuring" title="You are encouraged to log in, it is not mandatory however. [o]" accesskey="o">Log in / create account</a></li>
+			</ul>
+		</div>
+	</div>
+	<div class="portlet" id="p-logo">
+		<a style="background-image: url(../dlxs15/uploads/DLXS_logo2.gif);" href="Main_Page.html" title="Visit the Main Page [z]" accesskey="z"></a>
+	</div>
+	<script type="text/javascript"> if (window.isMSIE55) fixalpha(); </script>
+	<div class='generated-sidebar portlet' id='p-navigation'>
+		<h5>Navigation</h5>
+		<div class='pBody'>
+			<ul>
+				<li id="n-mainpage-description"><a href="Main_Page.html">Main Page</a></li>
+				<li id="n-portal"><a href="DLXS_Documentation_Community_Portal.html" title="About the project, what you can do, where to find things">Community portal</a></li>
+				<li id="n-currentevents"><a href="DLXS_Documentation_Current_events.html" title="Find background information on current events">Current events</a></li>
+				<li id="n-recentchanges"><a href="Special_RecentChanges.html" title="The list of recent changes in the wiki. [r]" accesskey="r">Recent changes</a></li>
+				<li id="n-randompage"><a href="Mounting_a_Bib_Class_Collection.html" title="Load a random page [x]" accesskey="x">Random page</a></li>
+				<li id="n-help"><a href="Help_Contents.html" title="The place to find out.">Help</a></li>
+			</ul>
+		</div>
+	</div>
+	<div id="p-search" class="portlet">
+		<h5><label for="searchInput">Search</label></h5>
+		<div id="searchBody" class="pBody">
+			<form action="http://localhost/wiki/Special:Search" id="searchform"><div>
+				<input id="searchInput" name="search" type="text" title="Search DLXS Documentation [f]" accesskey="f" value="" />
+				<input type='submit' name="go" class="searchButton" id="searchGoButton"	value="Go" title="Go to a page with this exact name if exists" />&nbsp;
+				<input type='submit' name="fulltext" class="searchButton" id="mw-searchButton" value="Search" title="Search the pages for this text" />
+			</div></form>
+		</div>
+	</div>
+	<div class="portlet" id="p-tb">
+		<h5>Toolbox</h5>
+		<div class="pBody">
+			<ul>
+				<li id="t-whatlinkshere"><a href="Special_WhatLinksHere/DLXS_Daemon__Installing_and_Configuring.html" title="List of all wiki pages that link here [j]" accesskey="j">What links here</a></li>
+				<li id="t-recentchangeslinked"><a href="Special_RecentChangesLinked/DLXS_Daemon__Installing_and_Configuring.html" title="Recent changes in pages linked from this page [k]" accesskey="k">Related changes</a></li>
+<li id="t-specialpages"><a href="Special_SpecialPages.html" title="List of all special pages [q]" accesskey="q">Special pages</a></li>
+				<li id="t-print"><a href="http://localhost/mediawiki/index.php?title=DLXS_Daemon:_Installing_and_Configuring&amp;printable=yes" title="Printable version of this page [p]" accesskey="p">Printable version</a></li>				<li id="t-permalink"><a href="http://localhost/mediawiki/index.php?title=DLXS_Daemon:_Installing_and_Configuring&amp;oldid=773" title="Permanent link to this version of the page">Permanent link</a></li>			</ul>
+		</div>
+	</div>
+		</div><!-- end of the left (by default at least) column -->
+			<div class="visualClear"></div>
+			<div id="footer">
+				<div id="f-poweredbyico"><a href="http://www.mediawiki.org/"><img src="../mediawiki/skins/common/images/poweredby_mediawiki_88x31.png" alt="Powered by MediaWiki" /></a></div>
+			<ul id="f-list">
+				<li id="lastmod"> This page was last modified on 14 August 2007, at 21:25.</li>
+				<li id="viewcount">This page has been accessed 2,083 times.</li>
+				<li id="privacy"><a href="DLXS_Documentation_Privacy_policy.html" title="DLXS Documentation:Privacy policy">Privacy policy</a></li>
+				<li id="about"><a href="DLXS_Documentation_About.html" title="DLXS Documentation:About">About DLXS Documentation</a></li>
+				<li id="disclaimer"><a href="DLXS_Documentation_General_disclaimer.html" title="DLXS Documentation:General disclaimer">Disclaimers</a></li>
+			</ul>
+		</div>
+</div>
+
+		<script type="text/javascript">if (window.runOnloadHook) runOnloadHook();</script>
+<!-- Served in 0.124 secs. --></body>
+<!-- Mirrored from localhost/wiki/DLXS_Daemon:_Installing_and_Configuring by HTTrack Website Copier/3.x [XR&CO'2014], Mon, 03 Feb 2025 00:29:00 GMT -->
+</html>

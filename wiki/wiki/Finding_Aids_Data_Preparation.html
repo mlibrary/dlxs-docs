@@ -1,0 +1,355 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en" dir="ltr">
+	
+<!-- Mirrored from localhost/wiki/Finding_Aids_Data_Preparation by HTTrack Website Copier/3.x [XR&CO'2014], Mon, 03 Feb 2025 00:34:07 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=UTF-8" /><!-- /Added by HTTrack -->
+<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+		<meta name="generator" content="MediaWiki 1.13.5" />
+		<meta name="keywords" content="Finding Aids Data Preparation,DLXS Wiki,Example entityref errors,Mounting Collections: Class-specific Steps,Mounting a Finding Aids Collection,Validateeach.csh,Validateeach.sh" />
+		<link rel="shortcut icon" href="http://localhost/favicon.ico" />
+		<link rel="search" type="application/opensearchdescription+xml" href="http://localhost/mediawiki/opensearch_desc.php" title="DLXS Documentation (en)" />
+		<link rel="alternate" type="application/rss+xml" title="DLXS Documentation RSS Feed" href="http://localhost/mediawiki/index.php?title=Special:RecentChanges&amp;feed=rss" />
+		<link rel="alternate" type="application/atom+xml" title="DLXS Documentation Atom Feed" href="http://localhost/mediawiki/index.php?title=Special:RecentChanges&amp;feed=atom" />
+		<title>Finding Aids Data Preparation - DLXS Documentation</title>
+		<style type="text/css" media="screen, projection">/*<![CDATA[*/
+			@import "../mediawiki/skins/common/sharedfa7c.css?164";
+			@import "../mediawiki/skins/monobook/mainfa7c.css?164";
+		/*]]>*/</style>
+		<link rel="stylesheet" type="text/css" media="print" href="../mediawiki/skins/common/commonPrintfa7c.css?164" />
+		<!--[if lt IE 5.5000]><style type="text/css">@import "/mediawiki/skins/monobook/IE50Fixes.css?164";</style><![endif]-->
+		<!--[if IE 5.5000]><style type="text/css">@import "/mediawiki/skins/monobook/IE55Fixes.css?164";</style><![endif]-->
+		<!--[if IE 6]><style type="text/css">@import "/mediawiki/skins/monobook/IE60Fixes.css?164";</style><![endif]-->
+		<!--[if IE 7]><style type="text/css">@import "/mediawiki/skins/monobook/IE70Fixes.css?164";</style><![endif]-->
+		<!--[if lt IE 7]><script type="text/javascript" src="/mediawiki/skins/common/IEFixes.js?164"></script>
+		<meta http-equiv="imagetoolbar" content="no" /><![endif]-->
+		
+		<script type= "text/javascript">/*<![CDATA[*/
+var skin = "monobook";
+var stylepath = "/mediawiki/skins";
+var wgArticlePath = "/wiki/$1";
+var wgScriptPath = "/mediawiki";
+var wgScript = "http://localhost/mediawiki/index.php";
+var wgVariantArticlePath = false;
+var wgActionPaths = [];
+var wgServer = "http://localhost/";
+var wgCanonicalNamespace = "";
+var wgCanonicalSpecialPageName = false;
+var wgNamespaceNumber = 0;
+var wgPageName = "Finding_Aids_Data_Preparation";
+var wgTitle = "Finding Aids Data Preparation";
+var wgAction = "view";
+var wgArticleId = "221";
+var wgIsArticle = true;
+var wgUserName = null;
+var wgUserGroups = null;
+var wgUserLanguage = "en";
+var wgContentLanguage = "en";
+var wgBreakFrames = false;
+var wgCurRevisionId = "2156";
+var wgVersion = "1.13.5";
+var wgEnableAPI = true;
+var wgEnableWriteAPI = false;
+var wgRestrictionEdit = [];
+var wgRestrictionMove = [];
+/*]]>*/</script>
+                
+		<script type="text/javascript" src="../mediawiki/skins/common/wikibitsfa7c.js?164"><!-- wikibits js --></script>
+		<!-- Head Scripts -->
+		<script type="text/javascript" src="../mediawiki/skins/common/ajaxfa7c.js?164"></script>
+		<script type="text/javascript" src="http://localhost/mediawiki/index.php?title=-&amp;action=raw&amp;gen=js&amp;useskin=monobook"><!-- site js --></script>
+		<style type="text/css">/*<![CDATA[*/
+@import "http://localhost/mediawiki/index.php?title=MediaWiki:Common.css&amp;usemsgcache=yes&amp;action=raw&amp;ctype=text/css&amp;smaxage=18000";
+@import "http://localhost/mediawiki/index.php?title=MediaWiki:Monobook.css&amp;usemsgcache=yes&amp;action=raw&amp;ctype=text/css&amp;smaxage=18000";
+@import "http://localhost/mediawiki/index.php?title=-&amp;action=raw&amp;gen=css&amp;maxage=18000&amp;useskin=monobook";
+/*]]>*/</style>
+	</head>
+<body class="mediawiki ns-0 ltr page-Finding_Aids_Data_Preparation">
+	<div id="globalWrapper">
+		<div id="column-content">
+	<div id="content">
+		<a name="top" id="top"></a>
+				<h1 class="firstHeading">Finding Aids Data Preparation</h1>
+		<div id="bodyContent">
+			<h3 id="siteSub">From DLXS Documentation</h3>
+			<div id="contentSub"></div>
+									<div id="jump-to-nav">Jump to: <a href="#column-one">navigation</a>, <a href="#searchInput">search</a></div>			<!-- start content -->
+			<p><a href="DLXS_Wiki.html" title="DLXS Wiki">Main Page</a> &gt; <a href="Mounting_Collections__Class-specific_Steps.html" title="Mounting Collections: Class-specific Steps">Mounting Collections: Class-specific Steps</a> &gt; <a href="Mounting_a_Finding_Aids_Collection.html" title="Mounting a Finding Aids Collection">Mounting a Finding Aids Collection</a> &gt; Finding Aids Data Preparation
+</p>
+<table id="toc" class="toc" summary="Contents"><tr><td><div id="toctitle"><h2>Contents</h2></div>
+<ul>
+<li class="toclevel-1"><a href="#Preprocessing"><span class="tocnumber">1</span> <span class="toctext">Preprocessing</span></a></li>
+<li class="toclevel-1"><a href="#Validating_and_Normalizing_Your_Data"><span class="tocnumber">2</span> <span class="toctext">Validating and Normalizing Your Data</span></a>
+<ul>
+<li class="toclevel-2"><a href="#Step_1:_Validating_the_files_individually_against_the_EAD_2002_DTD"><span class="tocnumber">2.1</span> <span class="toctext">Step 1: Validating the files individually against the EAD 2002 DTD</span></a>
+<ul>
+<li class="toclevel-3"><a href="#Common_error_messages_and_solutions:"><span class="tocnumber">2.1.1</span> <span class="toctext">Common error messages and solutions:</span></a></li>
+</ul>
+</li>
+<li class="toclevel-2"><a href="#Step_2:_Concatentating_the_files_into_one_larger_XML_file_.28and_running_some_preprocessing_commands.29"><span class="tocnumber">2.2</span> <span class="toctext">Step 2: Concatentating the files into one larger XML file (and running some preprocessing commands)</span></a></li>
+<li class="toclevel-2"><a href="#Step_3:_Validating_the_concatenated_file_against_the_dlxsead2002_DTD"><span class="tocnumber">2.3</span> <span class="toctext">Step 3: Validating the concatenated file against the dlxsead2002 DTD</span></a>
+<ul>
+<li class="toclevel-3"><a href="#Common_common_causes_of_error_messages_and_solutions"><span class="tocnumber">2.3.1</span> <span class="toctext">Common common causes of error messages and solutions</span></a></li>
+</ul>
+</li>
+<li class="toclevel-2"><a href="#Step_4:_Normalizing_the_concatenated_file"><span class="tocnumber">2.4</span> <span class="toctext">Step 4: Normalizing the concatenated file</span></a></li>
+<li class="toclevel-2"><a href="#Step_5:_Validating_the_normalized_file_against_the_dlxsead2002_DTD"><span class="tocnumber">2.5</span> <span class="toctext">Step 5: Validating the normalized file against the dlxsead2002 DTD</span></a></li>
+</ul>
+</li>
+</ul>
+</td></tr></table><script type="text/javascript"> if (window.showTocToggle) { var tocShowText = "show"; var tocHideText = "hide"; showTocToggle(); } </script>
+<a name="Preprocessing"></a><h3><span class="editsection">[<a href="http://localhost/mediawiki/index.php?title=Finding_Aids_Data_Preparation&amp;action=edit&amp;section=1" title="Edit section: Preprocessing">edit</a>]</span> <span class="mw-headline">Preprocessing</span></h3>
+<a name="Validating_and_Normalizing_Your_Data"></a><h3><span class="editsection">[<a href="http://localhost/mediawiki/index.php?title=Finding_Aids_Data_Preparation&amp;action=edit&amp;section=2" title="Edit section: Validating and Normalizing Your Data">edit</a>]</span> <span class="mw-headline">Validating and Normalizing Your Data</span></h3>
+<a name="Step_1:_Validating_the_files_individually_against_the_EAD_2002_DTD"></a><h4><span class="editsection">[<a href="http://localhost/mediawiki/index.php?title=Finding_Aids_Data_Preparation&amp;action=edit&amp;section=3" title="Edit section: Step 1: Validating the files individually against the EAD 2002 DTD">edit</a>]</span> <span class="mw-headline"> <span id="dataprep_step1"><b>Step 1: Validating the files individually against the EAD 2002 DTD</b></span> </span></h4>
+<pre>cd $DLXSROOT/bin/w/workshopfa
+make validateeach
+
+
+</pre>
+<p>The Makefile runs the following command:
+</p>
+<pre>% $DLXSROOT/prep/w/workshopfa/validateeach.csh
+</pre>
+<p><br />
+</p>
+What's happening: The makefile is running the c-shell script <a href="Validateeach.html" title="Validateeach.csh">validateeach.csh</a> <div class="release">Release 14<a href="Validateeach-2.html" title="Validateeach.sh">validateeach.sh</a></div>in the prep directory. The script creates a temporary file without the public DOCTYPE declaration, and then runs <span class="unixcommand">onsgmls</span> on each of the resulting XML files in the <span class="unixcommand">data</span> subdirectory to make sure they conform with the EAD 2002 DTD. If validation errors occur, error files will be in the <span class="unixcommand">data</span> subdirectory with the same name as the finding aids file but with an extension of <span class="unixcommand">.err</span>. If there are validation errors, fix the problems in the source XML files and re-run.
+<p>Check the error files by running the following commands
+</p>
+<pre> ls -l $DLXSROOT/prep/w/workshopfa/data/*err
+</pre>
+<p>if there are any *err files, you can look at them with the following command: 
+</p>
+<pre> less  $DLXSROOT/prep/w/workshopfa/data/*err
+</pre>
+<a name="Common_error_messages_and_solutions:"></a><h5><span class="editsection">[<a href="http://localhost/mediawiki/index.php?title=Finding_Aids_Data_Preparation&amp;action=edit&amp;section=4" title="Edit section: Common error messages and solutions:">edit</a>]</span> <span class="mw-headline">Common error messages and solutions:</span></h5>
+<dl><dt>onsgmls:  Command not found
+</dt><dd>path to your installation of the onsgmls binary incorrect in $DLXSROOT/prep/s/samplefa/validateeach.csh
+</dd></dl>
+<dl><dt>onsgmls:/l1/dev/tburtonw/misc/sgml/xml.dcl:1:W: SGML declaration was not implied
+</dt><dd>This is a warning (note the :W:) not an error and can be ignored. This warning can be silenced by changing line 6 of $DLXSROOT/prep/s/samplefa/validateeach.csh (or your customized version) 
+</dd></dl>
+<p>from:
+</p>
+<pre>onsgmls -s -f $file.err $DLXSROOT/misc/sgml/xml.dcl $DLXSROOT/prep/s/samplefa/samplefa.text.inp $file.tmp
+</pre>
+<p>to:
+</p>
+<pre>onsgmls -wxml -w no-explicit-sgml-decl -s -f $file.err $DLXSROOT/misc/sgml/xml.dcl $DLXSROOT/prep/s/samplefa/samplefa.text.inp $file.tmp
+</pre>
+<dl><dt>entityref errors such as "general entity 'foobar' not defined" 
+</dt><dd>If you use entityrefs in your EADs, you may see errors relating to problems resolving entities. <a href="Example_entityref_errors.html" title="Example entityref errors">Example entityref errors</a>. The solution is to add the entityref declarations to the doctype declaration in these two files:
+</dd></dl>
+<dl><dt>$DLXSROOT/prep/s/samplefa/samplefa.text.inp
+</dt><dd> This is the doctype declaration used by the validateeach.csh script that points to the EAD2002 DTD.
+</dd></dl>
+<dl><dt>$DLXSROOT/prep/s/samplefa/samplefa.xml.inp
+</dt><dd> This is the doctype declaration that points to the dlxs2002 dtd.  The dlxs2002 dtd is used by the "make validate" target of the Makefile to validate the concatenated file containing all of your EADs.
+</dd></dl>
+<a name="Step_2:_Concatentating_the_files_into_one_larger_XML_file_.28and_running_some_preprocessing_commands.29"></a><h4><span class="editsection">[<a href="http://localhost/mediawiki/index.php?title=Finding_Aids_Data_Preparation&amp;action=edit&amp;section=5" title="Edit section: Step 2: Concatentating the files into one larger XML file (and running some preprocessing commands)">edit</a>]</span> <span class="mw-headline"> <span id="dataprep_step2"><b>Step 2: Concatentating the files into one larger XML file (and running some preprocessing commands) </b></span> </span></h4>
+<blockquote>
+
+ 
+ cd $DLXSROOT/bin/w/workshopfa
+ make prepdocs
+
+</blockquote><blockquote>
+<pre>The Makefile runs the following command:
+$DLXSROOT/bin/w/workshopfa/preparedocs.pl $DLXSROOT/prep/w/workshopfa/data $DLXSROOT/obj/w/workshopfa/workshopfa.xml $DLXSROOT/prep/w/workshopfa/logfile.txt
+</pre>
+ This runs the preparedocs.pl script on all the files in the specified data directory and writes the output to the workshopfa.xml file in the appropriate /obj subdirectory. It also outputs a logfile to the /prep directory:</blockquote>
+<p>The Perl script does two sets of things:
+</p>
+<ol><li> Concatenates all the files
+</li><li> Runs a number of preprocessing steps on all the files
+</li></ol>
+<p><b>Concatenating the files </b>
+</p><p>The script finds all XML files in the <span class="unixcommand">data</span> subdirectory,and then strips off the XML declaration and doctype declaration from each file before concatenating them together. It also wraps the concatenated EADs in a &lt;COLL&gt; tag . The end result looks like:
+</p><p><br /> 
+</p>
+<pre>&lt;COLL&gt;<br />&lt;ead&gt;&lt;eadheader&gt;&lt;eadid&gt;1&lt;/eadid&gt;...&lt;/eadheader&gt;... content&lt;/ead&gt;<br />&lt;ead&gt;&lt;eadheader&gt;&lt;eadid&gt;2&lt;/eadid&gt;...&lt;/eadheader&gt;... content&lt;/ead&gt;<br />&lt;ead&gt;&lt;eadheader&gt;&lt;eadid&gt;3&lt;/eadid&gt;...&lt;/eadheader&gt;... content&lt;/ead&gt;<br />&lt;/COLL&gt;
+
+</pre>
+<p><b>WARNING!</b>    If are extra characters or some other problem with the part of the program that strips out the xml declaration and the docytype declearation the file will end up like:
+</p><p><br /> 
+</p>
+<pre>&lt;COLL&gt;<br />baddata&lt;ead&gt;&lt;eadheader&gt;&lt;eadid&gt;1&lt;/eadid&gt;...&lt;/eadheader&gt;... content&lt;/ead&gt;<br />baddata&lt;ead&gt;&lt;eadheader&gt;&lt;eadid&gt;2&lt;/eadid&gt;...&lt;/eadheader&gt;... content&lt;/ead&gt;<br />baddata&lt;ead&gt;&lt;eadheader&gt;&lt;eadid&gt;3&lt;/eadid&gt;...&lt;/eadheader&gt;... content&lt;/ead&gt;<br />&lt;/COLL&gt;
+</pre>
+<p>This will cause the document to be invalid since the dlxsead2002.dtd does not allow anything between the closing tag of one &lt;/ead&gt; and the opening tag of the next one &lt;ead&gt;
+</p><p>Some of the possible causes of such a problem are:
+</p>
+<ul><li> UTF-8 Byte Order Marks at the beginning of the file
+</li><li> DOCTYPE declaration on more than one line
+</li><li> XML processing instructions
+</li></ul>
+<p><b>Preprocessing steps</b>
+</p><p>The perl program also does some preprocessing on all the files. These steps are customized to the needs of the Bentley. You should look at the perl code and modify it so it is appropriate for your encoding practices.
+</p><p>The preprocessing steps are:
+</p>
+<ul><li> finds all id attributes and prepends a number to them
+</li><li> adds a prefix string "dao-bhl" to all DAO links (You probably will want to change this)
+</li><li> removes empty <span class="unixcommand">persname</span>, <span class="unixcommand">corpname</span>, and <span class="unixcommand">famname</span> elements
+</li></ul>
+<p>The output of the combined concatenation and preprocessing steps will be the one collection named xml file which is deposited into the obj subdirectory.
+</p><p>If your collections need to be transformed in any way, or if you do not want the transformations to take place (the DAO changes, for example), edit preparedocs.pl file to effect the changes. Some changes you may want to make include:
+</p>
+<ul><li> Changing the algorithm used to make id attibute unique. For example if your encoding practices use id attributes and targets, the out-of-the-box algorithm will remove the relationship between the attributes and targets. One possible modification might be to modify the algorithm to prepend the eadid or filename to all id and target attributes.
+</li><li> Modifying the program to read a list of files or list of eadids so that the files are concatenated in a particular order. The default sort order for search results is in occurance order, which translates to the order in which the eads are concatenated. If you write a script which looks at the eads for some element that you want to sort by and then outputs a list of filenames sorted by that order, you could then pass that file to a modified preparedocs.pl so it would concatenate the files in the order listed.
+</li></ul>
+<hr />
+<a name="Step_3:_Validating_the_concatenated_file_against_the_dlxsead2002_DTD"></a><h4><span class="editsection">[<a href="http://localhost/mediawiki/index.php?title=Finding_Aids_Data_Preparation&amp;action=edit&amp;section=6" title="Edit section: Step 3: Validating the concatenated file against the dlxsead2002 DTD">edit</a>]</span> <span class="mw-headline"> <span id="dataprep_step3"><b>Step 3: Validating the concatenated file against the dlxsead2002 DTD</b></span> </span></h4>
+<pre>make validate
+</pre>
+<p>The Makefile runs the following command:
+</p>
+<pre>onsgmls -wxml -s -f $DLXSROOT/prep/w/workshopfa/workshopfa.errors $DLXSROOT/misc/sgml/xml.dcl   $DLXSROOT/prep/w/workshopfa/workshopfa.xml.inp $DLXSROOT/obj/w/workshopfa/workshopfa.xml
+</pre>
+<p>This runs the onsgmls command against the concatenated file using the dlxs2002dtd, and writes any errors to the workshopfa.errors file in the appropriate subdirectory in $DLXSROOT/prep/c/collection.. <a href="http://www.dlxs.org/training/workshop200707/findaidclass/validate.html" class="external text" title="http://www.dlxs.org/training/workshop200707/findaidclass/validate.html" rel="nofollow">| More details</a>
+</p><p>Note that we are running this using <span class="unixcommand"><b>workshopfa.xml.inp</b></span> not <span class="unixcommand"><b>workshop.text.inp</b></span>. The <b>workshopfa.xml.inp </b>file points to <b>$DLXSROOT/misc/sgml/dlxsead2002.ead</b> which is the <i>dlxsead2002</i> DTD. The <i>dlxsead2002</i> DTDis exactly the same as the <i>EAD2002</i> DTD, but adds a wrapping element, <span class="unixcommand">&lt;COLL&gt;</span>, to be able to combine more than one <span class="unixcommand">ead</span> element, more than one finding aid, into one file. It is, of course, a good idea to validate the file now before going further.
+</p><p><br />
+Run the following command
+</p>
+<pre> ls -l $DLXSROOT/prep/w/workshopfa/workshopfa.errors
+</pre>
+<p>If there is a workshopfa.errors file then run the following command to look at the errors reported
+</p>
+<pre> less $DLXSROOT/prep/w/workshopfa/workshopfa.errors
+</pre>
+<p><br />
+</p>
+<a name="Common_common_causes_of_error_messages_and_solutions"></a><h5><span class="editsection">[<a href="http://localhost/mediawiki/index.php?title=Finding_Aids_Data_Preparation&amp;action=edit&amp;section=7" title="Edit section: Common common causes of error messages and solutions">edit</a>]</span> <span class="mw-headline">Common common causes of error messages and solutions</span></h5>
+<dl><dt>make: onsgmls: Command not found
+</dt><dd>OSGMLNORM variable in Makefile does not point to correct location of onsgmls for your installation or openSP is not installed.
+</dd></dl>
+<dl><dt>If there were no errors when you ran "make validateeach" but you are now seeing errors
+</dt><dd>there was very likely a problem with the preparedocs.pl processing.
+</dd></dl>
+<ul><li> The DOCTYPE declaration did not get completely removed. (The current scripts don't always remove multiline DOCTYPE declarations)
+</li><li> There was a UTF-8 Byte Order Mark at the begginning of one or more of the concatenated files
+</li></ul>
+<dl><dt>onsgmls</dt><dd>/l1/dev/tburtonw/misc/sgml/xml.dcl:1:W: SGML declaration was not implied
+</dd><dd>The above error can be ignored, but if you see any other errors <b>STOP!</b> You need to determine the cause of the problem, fix it, and rerun the steps until there are no errors from make validate. If you continue with the next steps in the process with an invalid xml document, the errors will compound and it will be very difficult to trace the cause of the problem. To avoid seeing this error add the "-w no-explicit-sgml-decl" flag to the Makefile on line 83. Change line 83 of the Makefile
+</dd></dl>
+<p>from:
+</p>
+<pre>onsgmls -wxml -s -f $(PREPDIR)$(NAMEPREFIX).errors $(XMLDECL) $(XMLDOCTYPE) $(XMLFILE)
+</pre>
+<p>to:
+</p>
+<pre>onsgmls -wxml -w no-explicit-sgml-decl -s -f $(PREPDIR)$(NAMEPREFIX).errors $(XMLDECL) $(XMLDOCTYPE) $(XMLFILE)
+</pre>
+<p><i>There is a patch available which will strip off Byte Order Marks, remove XML processing instructions, removes multiline DOCTYPE declarations and also implements the change to the onsgmls warning flag noted above  <a href="http://www.dlxs.org/products/archive-by-CDROM/13/Patches/24August2007/" class="external text" title="http://www.dlxs.org/products/archive-by-CDROM/13/Patches/24August2007/" rel="nofollow">DLXS13 August 24 Findaid Class Patch</a></i>
+</p>
+<a name="Step_4:_Normalizing_the_concatenated_file"></a><h4><span class="editsection">[<a href="http://localhost/mediawiki/index.php?title=Finding_Aids_Data_Preparation&amp;action=edit&amp;section=8" title="Edit section: Step 4: Normalizing the concatenated file">edit</a>]</span> <span class="mw-headline"> <span id="dataprep_step4"><b>Step 4: Normalizing the concatenated file</b></span> </span></h4>
+<pre>make norm
+</pre>
+<p>The Makefile runs a series of copy statements and two main commands:
+</p><p><br /> 
+</p>
+<pre>1.)   /l/local/bin/osgmlnorm -f $DLXSROOT/prep/s/samplefa/samplefa.errors $DLXSROOT/misc/sgml/xml.dcl $DLXSROOT$DLXSROOT/prep/s/samplefa/samplefa.xml.inp $DLXSROOT/obj/s/samplefa/samplefa.xml.prenorm &gt; /l1/dev/tburtonw/obj/s/samplefa/samplefa.xml.postnorm
+</pre>
+<pre>2.)  /l/local/bin/osx -bUTF-8 -xlower -xempty -xno-nl-in-tag -f /l1/dev/tburtonw/prep/s/samplefa/samplefa.errors /l1/dev/tburtonw/misc/sgml/xml.dcl /l1/dev/tburtonw/prep/s/samplefa/samplefa.xml.inp /l1/dev/tburtonw/obj/s/samplefa/samplefa.xml.postnorm &gt; /l1/dev/tburtonw/obj/s/samplefa/samplefa.xml.postnorm.osx 
+</pre>
+<p><br />
+</p><p>These commands ensure that your collection data is normalized. What this means is that any attributes are put in the order in which they were defined in the DTD. Even though your collection data is XML and attribute order should be irrelevant (according to the XML specification), due to a bug in one of the supporting libraries used by xmlrgn (part of the indexing software), attributes must appear in the order that they are definded in the DTD. If you have "out-of-order" attributes and don't run make norm, you will get <i>"invalid endpoints"</i> errors during the make post step.
+</p><p>Step one, which normalizes the document writes its errors to <span class="unixcommand">$DLXSROOT/prep/s/samplefa/samplefa.errors</span>. Be sure to check this file.
+</p><p>Step 2, which runs osx to convert the normalized document back into XML produces lots of error messages which are written to standard output. These are caused because we are using an XML DTD (the EAD 2002 DTD) and osx is using it to validate against the SGML document created by the osgmlnorm step. These are the only errors which may generally be ignored. However, if the next recommended step, which is to run "make validate" again reveals an invalid document, you may want to rerun osx and look at the errors for clues. (Only do this if you are sure that the problem is not being caused by XML processing instructions in the documents as explained below)
+</p>
+<a name="Step_5:_Validating_the_normalized_file_against_the_dlxsead2002_DTD"></a><h4><span class="editsection">[<a href="http://localhost/mediawiki/index.php?title=Finding_Aids_Data_Preparation&amp;action=edit&amp;section=9" title="Edit section: Step 5: Validating the normalized file against the dlxsead2002 DTD">edit</a>]</span> <span class="mw-headline"> <span id="dataprep_step5"><b>Step 5: Validating the normalized file against the dlxsead2002 DTD</b></span> </span></h4>
+<pre>make validate
+</pre>
+<p>We run this step again to make sure that the normalization process did not produce an invalid document. This is necessary because under some circumstances the "make norm" step can result in invalid XML. One known cause of this is the presense of XML processing instructions. For example: <b>"&lt;?Pub Caret1?&gt;"</b>. Although XML processing instructions are supposed to be ignored by any XML application that does not understand them, the problem is that when we use sgmlnorm and osx, which are SGML tools, they end up munging the output XML. The recommended workaround is to add a preprocessing step to remove any XML processing instructions from your EADs before you run "make prepdocs", or to include some code in preparedocs.pl that will strip out XML priocessing instructions prior to concatenating the EADs.
+</p><p><a href="#top" title="">Top</a>
+</p>
+<!-- 
+NewPP limit report
+Preprocessor node count: 75/1000000
+Post-expand include size: 0/2097152 bytes
+Template argument size: 0/2097152 bytes
+Expensive parser function count: 0/100
+-->
+
+<!-- Saved in parser cache with key mediawiki_dlxsdocs_15:pcache:idhash:221-0!1!0!!en!2 and timestamp 20250202211643 -->
+<div class="printfooter">
+Retrieved from "<a href="Finding_Aids_Data_Preparation.html">http://localhost/wiki/Finding_Aids_Data_Preparation</a>"</div>
+						<!-- end content -->
+			<div class="visualClear"></div>
+		</div>
+	</div>
+		</div>
+		<div id="column-one">
+	<div id="p-cactions" class="portlet">
+		<h5>Views</h5>
+		<div class="pBody">
+			<ul>
+	
+				 <li id="ca-nstab-main" class="selected"><a href="Finding_Aids_Data_Preparation.html" title="View the content page [c]" accesskey="c">Page</a></li>
+				 <li id="ca-talk" class="new"><a href="http://localhost/mediawiki/index.php?title=Talk:Finding_Aids_Data_Preparation&amp;action=edit" title="Discussion about the content page [t]" accesskey="t">Discussion</a></li>
+				 <li id="ca-edit"><a href="http://localhost/mediawiki/index.php?title=Finding_Aids_Data_Preparation&amp;action=edit" title="You can edit this page.&#10;Please use the preview button before saving. [e]" accesskey="e">Edit</a></li>
+				 <li id="ca-history"><a href="http://localhost/mediawiki/index.php?title=Finding_Aids_Data_Preparation&amp;action=history" title="Past versions of this page. [h]" accesskey="h">History</a></li>			</ul>
+		</div>
+	</div>
+	<div class="portlet" id="p-personal">
+		<h5>Personal tools</h5>
+		<div class="pBody">
+			<ul>
+				<li id="pt-anonuserpage"><a href="User_172.20.0.html" title="The user page for the ip you&#039;re editing as [.]" accesskey="." class="new">172.20.0.1</a></li>
+				<li id="pt-anontalk"><a href="User_talk_172.20.0.html" title="Discussion about edits from this ip address [n]" accesskey="n" class="new">Talk for this IP</a></li>
+				<li id="pt-anonlogin"><a href="http://localhost/mediawiki/index.php?title=Special:UserLogin&amp;returnto=Finding_Aids_Data_Preparation" title="You are encouraged to log in, it is not mandatory however. [o]" accesskey="o">Log in / create account</a></li>
+			</ul>
+		</div>
+	</div>
+	<div class="portlet" id="p-logo">
+		<a style="background-image: url(../dlxs15/uploads/DLXS_logo2.gif);" href="Main_Page.html" title="Visit the Main Page [z]" accesskey="z"></a>
+	</div>
+	<script type="text/javascript"> if (window.isMSIE55) fixalpha(); </script>
+	<div class='generated-sidebar portlet' id='p-navigation'>
+		<h5>Navigation</h5>
+		<div class='pBody'>
+			<ul>
+				<li id="n-mainpage-description"><a href="Main_Page.html">Main Page</a></li>
+				<li id="n-portal"><a href="DLXS_Documentation_Community_Portal.html" title="About the project, what you can do, where to find things">Community portal</a></li>
+				<li id="n-currentevents"><a href="DLXS_Documentation_Current_events.html" title="Find background information on current events">Current events</a></li>
+				<li id="n-recentchanges"><a href="Special_RecentChanges.html" title="The list of recent changes in the wiki. [r]" accesskey="r">Recent changes</a></li>
+				<li id="n-randompage"><a href="Mounting_a_Bib_Class_Collection.html" title="Load a random page [x]" accesskey="x">Random page</a></li>
+				<li id="n-help"><a href="Help_Contents.html" title="The place to find out.">Help</a></li>
+			</ul>
+		</div>
+	</div>
+	<div id="p-search" class="portlet">
+		<h5><label for="searchInput">Search</label></h5>
+		<div id="searchBody" class="pBody">
+			<form action="http://localhost/wiki/Special:Search" id="searchform"><div>
+				<input id="searchInput" name="search" type="text" title="Search DLXS Documentation [f]" accesskey="f" value="" />
+				<input type='submit' name="go" class="searchButton" id="searchGoButton"	value="Go" title="Go to a page with this exact name if exists" />&nbsp;
+				<input type='submit' name="fulltext" class="searchButton" id="mw-searchButton" value="Search" title="Search the pages for this text" />
+			</div></form>
+		</div>
+	</div>
+	<div class="portlet" id="p-tb">
+		<h5>Toolbox</h5>
+		<div class="pBody">
+			<ul>
+				<li id="t-whatlinkshere"><a href="Special_WhatLinksHere/Finding_Aids_Data_Preparation.html" title="List of all wiki pages that link here [j]" accesskey="j">What links here</a></li>
+				<li id="t-recentchangeslinked"><a href="Special_RecentChangesLinked/Finding_Aids_Data_Preparation.html" title="Recent changes in pages linked from this page [k]" accesskey="k">Related changes</a></li>
+<li id="t-specialpages"><a href="Special_SpecialPages.html" title="List of all special pages [q]" accesskey="q">Special pages</a></li>
+				<li id="t-print"><a href="http://localhost/mediawiki/index.php?title=Finding_Aids_Data_Preparation&amp;printable=yes" title="Printable version of this page [p]" accesskey="p">Printable version</a></li>				<li id="t-permalink"><a href="http://localhost/mediawiki/index.php?title=Finding_Aids_Data_Preparation&amp;oldid=2156" title="Permanent link to this version of the page">Permanent link</a></li>			</ul>
+		</div>
+	</div>
+		</div><!-- end of the left (by default at least) column -->
+			<div class="visualClear"></div>
+			<div id="footer">
+				<div id="f-poweredbyico"><a href="http://www.mediawiki.org/"><img src="../mediawiki/skins/common/images/poweredby_mediawiki_88x31.png" alt="Powered by MediaWiki" /></a></div>
+			<ul id="f-list">
+				<li id="lastmod"> This page was last modified on 2 July 2008, at 20:09.</li>
+				<li id="viewcount">This page has been accessed 1,569 times.</li>
+				<li id="privacy"><a href="DLXS_Documentation_Privacy_policy.html" title="DLXS Documentation:Privacy policy">Privacy policy</a></li>
+				<li id="about"><a href="DLXS_Documentation_About.html" title="DLXS Documentation:About">About DLXS Documentation</a></li>
+				<li id="disclaimer"><a href="DLXS_Documentation_General_disclaimer.html" title="DLXS Documentation:General disclaimer">Disclaimers</a></li>
+			</ul>
+		</div>
+</div>
+
+		<script type="text/javascript">if (window.runOnloadHook) runOnloadHook();</script>
+<!-- Served in 0.117 secs. --></body>
+<!-- Mirrored from localhost/wiki/Finding_Aids_Data_Preparation by HTTrack Website Copier/3.x [XR&CO'2014], Mon, 03 Feb 2025 00:34:11 GMT -->
+</html>

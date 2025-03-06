@@ -1,0 +1,223 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en" dir="ltr">
+	
+<!-- Mirrored from localhost/wiki/DLPS%27s_Development_Environment_for_DLXS_Software by HTTrack Website Copier/3.x [XR&CO'2014], Mon, 03 Feb 2025 00:31:09 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=UTF-8" /><!-- /Added by HTTrack -->
+<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+		<meta name="generator" content="MediaWiki 1.13.5" />
+		<meta name="keywords" content="DLPS&#039;s Development Environment for DLXS Software,DLXS Wiki,Programming Issues,Working with the Collection Manager,DLXS Directory Structure" />
+		<link rel="shortcut icon" href="http://localhost/favicon.ico" />
+		<link rel="search" type="application/opensearchdescription+xml" href="http://localhost/mediawiki/opensearch_desc.php" title="DLXS Documentation (en)" />
+		<link rel="alternate" type="application/rss+xml" title="DLXS Documentation RSS Feed" href="http://localhost/mediawiki/index.php?title=Special:RecentChanges&amp;feed=rss" />
+		<link rel="alternate" type="application/atom+xml" title="DLXS Documentation Atom Feed" href="http://localhost/mediawiki/index.php?title=Special:RecentChanges&amp;feed=atom" />
+		<title>DLPS's Development Environment for DLXS Software - DLXS Documentation</title>
+		<style type="text/css" media="screen, projection">/*<![CDATA[*/
+			@import "../mediawiki/skins/common/sharedfa7c.css?164";
+			@import "../mediawiki/skins/monobook/mainfa7c.css?164";
+		/*]]>*/</style>
+		<link rel="stylesheet" type="text/css" media="print" href="../mediawiki/skins/common/commonPrintfa7c.css?164" />
+		<!--[if lt IE 5.5000]><style type="text/css">@import "/mediawiki/skins/monobook/IE50Fixes.css?164";</style><![endif]-->
+		<!--[if IE 5.5000]><style type="text/css">@import "/mediawiki/skins/monobook/IE55Fixes.css?164";</style><![endif]-->
+		<!--[if IE 6]><style type="text/css">@import "/mediawiki/skins/monobook/IE60Fixes.css?164";</style><![endif]-->
+		<!--[if IE 7]><style type="text/css">@import "/mediawiki/skins/monobook/IE70Fixes.css?164";</style><![endif]-->
+		<!--[if lt IE 7]><script type="text/javascript" src="/mediawiki/skins/common/IEFixes.js?164"></script>
+		<meta http-equiv="imagetoolbar" content="no" /><![endif]-->
+		
+		<script type= "text/javascript">/*<![CDATA[*/
+var skin = "monobook";
+var stylepath = "/mediawiki/skins";
+var wgArticlePath = "/wiki/$1";
+var wgScriptPath = "/mediawiki";
+var wgScript = "http://localhost/mediawiki/index.php";
+var wgVariantArticlePath = false;
+var wgActionPaths = [];
+var wgServer = "http://localhost/";
+var wgCanonicalNamespace = "";
+var wgCanonicalSpecialPageName = false;
+var wgNamespaceNumber = 0;
+var wgPageName = "DLPS\'s_Development_Environment_for_DLXS_Software";
+var wgTitle = "DLPS\'s Development Environment for DLXS Software";
+var wgAction = "view";
+var wgArticleId = "75";
+var wgIsArticle = true;
+var wgUserName = null;
+var wgUserGroups = null;
+var wgUserLanguage = "en";
+var wgContentLanguage = "en";
+var wgBreakFrames = false;
+var wgCurRevisionId = "626";
+var wgVersion = "1.13.5";
+var wgEnableAPI = true;
+var wgEnableWriteAPI = false;
+var wgRestrictionEdit = [];
+var wgRestrictionMove = [];
+/*]]>*/</script>
+                
+		<script type="text/javascript" src="../mediawiki/skins/common/wikibitsfa7c.js?164"><!-- wikibits js --></script>
+		<!-- Head Scripts -->
+		<script type="text/javascript" src="../mediawiki/skins/common/ajaxfa7c.js?164"></script>
+		<script type="text/javascript" src="http://localhost/mediawiki/index.php?title=-&amp;action=raw&amp;gen=js&amp;useskin=monobook"><!-- site js --></script>
+		<style type="text/css">/*<![CDATA[*/
+@import "http://localhost/mediawiki/index.php?title=MediaWiki:Common.css&amp;usemsgcache=yes&amp;action=raw&amp;ctype=text/css&amp;smaxage=18000";
+@import "http://localhost/mediawiki/index.php?title=MediaWiki:Monobook.css&amp;usemsgcache=yes&amp;action=raw&amp;ctype=text/css&amp;smaxage=18000";
+@import "http://localhost/mediawiki/index.php?title=-&amp;action=raw&amp;gen=css&amp;maxage=18000&amp;useskin=monobook";
+/*]]>*/</style>
+	</head>
+<body class="mediawiki ns-0 ltr page-DLPS_s_Development_Environment_for_DLXS_Software">
+	<div id="globalWrapper">
+		<div id="column-content">
+	<div id="content">
+		<a name="top" id="top"></a>
+				<h1 class="firstHeading">DLPS's Development Environment for DLXS Software</h1>
+		<div id="bodyContent">
+			<h3 id="siteSub">From DLXS Documentation</h3>
+			<div id="contentSub"></div>
+									<div id="jump-to-nav">Jump to: <a href="#column-one">navigation</a>, <a href="#searchInput">search</a></div>			<!-- start content -->
+			<p><a href="DLXS_Wiki.html" title="DLXS Wiki">Main Page</a> &gt; <a href="Programming_Issues.html" title="Programming Issues">Programming Issues</a> &gt; DLPS's Development Environment for DLXS Software
+</p>
+<p>This document describes various aspects of the development environment used at DLPS. There may be, for example some reasonable assumptions about the specific DLPS development environment in parts of our middleware (consulting certain environment variables, etc.). However, the DLXS system does not absolutely rely on most of these in order to work, i.e. in a more "plain vanilla" environment that might be set up by a DLXS site.  Nontheless, there are valuable mechanisms to support development built into DLXS you may wish to take advantage of.</p>
+<a name="Source_Control"></a><h1> <span class="mw-headline">Source Control</span></h1>
+<p>We use <a href="http://ximbiot.com/cvs/cvshome/" class="external text" title="http://ximbiot.com/cvs/cvshome/" rel="nofollow">CVS</a> to handle source control, merging of multiple developers' code, tagging specific configurations of many files, releasing particular tagged versions of files, etc.  The CVS source repository stands between each developer's work space and what we call the <tt>release</tt> directory structure.  Each developer's work space is volatile and is expected to change frequently. </p>
+      <p> Completed work is committed to the CVS repository from the developer's workspace by issuing the <tt>cvs commit</tt> command.  The <tt>release</tt> directory structure is updated via the <tt>cvs update</tt> command which pulls the committed source out of the CVS repository and into the <tt>release</tt> directory structure.  </p>
+      <p>The <tt>release</tt> directory structure is semi-stable and does not change as frequently.  We never modify files in the <tt>release</tt> directory structure directly.  We always change files in the work directory, commit to CVS, and update into the <tt>release</tt> directory structure. </p>
+      <p> The <tt>release</tt> directory structure is an integration test area used to determine if changes from multiple developers work together.  Finally we copy the <tt>release</tt> directory structure to one of our production machines after it has been tested.  The production directory structure is the most stable environment. </p>
+      <p>In the absence of CVS you will need to copy files from your work directories to the release directories manually or with the aid of scripts.  Of course, without CVS or a similar source control system, you will not have file versions, merging, etc.  </p>
+<p><br />    
+</p>
+      <a name="Support_for_Multiple_Virtual_Host-based_Work_Directories"></a><h1> <span class="mw-headline">Support for Multiple Virtual Host-based Work Directories</span></h1>
+      <p>At DLPS, we have separate work directories that mirror most of the release/production &lt;a href="../intro/dirstruct.html"&gt;directory structure&lt;/a&gt;. This allows us to have multiple developers working on code, making changes to collection databases, etc. at the same time.</p>
+<p><br />      
+</p>
+      <p>We use a development model designed to support a workspace (directory structure and environment) for each developer separate from the release directory structure. As of Release #9, this structure will supercede the work directory model that used the special URL syntax in previous DLXS releases. In the virtual-host-based model, a virtual host is configured on the web server for each developer.  </p>
+      <p>Here is an example Apache virtual host configuration supporting a workspace for <i>smith</i>:</p>
+      <pre>
+
+&lt;VirtualHost 123.456.789.123:80&gt;
+  ServerName smith.dev.umdl.umich.edu
+  ServerAlias smith smith.dev smith.dev.umdl
+
+  DocumentRoot          /l1/dev/smith/web
+  ScriptAlias   /cgi/   /l1/dev/smith/cgi/
+
+  SetEnv DLXSROOT       /l1/dev/smith
+  SetEnv DLXSDATAROOT   /l1
+  SetEnv DLPS_DEV       smith
+  SetEnv REMOTE_USER    smith
+&lt;/VirtualHost&gt;
+
+</pre>
+      <p>Note that the DocumentRoot and ScriptAlias point to /l1/dev/smith under which is smith's set of development directories, in particular cgi and web. </p>
+      <p>Each developer has a domain, e.g., <tt>smith.dev.umdl.umich.edu</tt>. Each virtual host sets a unique <tt>DLXSROOT</tt> environment variable value that points to a complete DLXS directory structure.  For example, smith has a <tt>DLXSROOT</tt> value of <tt>/l1/dev/smith</tt>.  Into this directory we check out the CVS repository. This gives each developer a mirror of the entire CVS development directory structure.  </p>
+<p><br />      
+</p>
+      <p>To run smith's development copy of the middleware the basic URL (e.g. TextClass) would be: <tt><a href="http://smith.dev.umdl.umich.edu/cgi/t/text/text-idx" class="external free" title="http://smith.dev.umdl.umich.edu/cgi/t/text/text-idx" rel="nofollow">http://smith.dev.umdl.umich.edu/cgi/t/text/text-idx</a></tt></p>
+     &lt;a name="DLPS_DEV"&gt;&lt;/a&gt; <p><tt>DLPS_DEV</tt> is the environment variable that signals to the middleware that it is running in development mode. The virtual host should set <tt>DLPS_DEV</tt> to the user ID that identifies smith to the system, e.g <tt>smith</tt>. At DLPS we use the developer's uniqname. If you maintain a "release" directory tree (separate from each developers' directory tree)  where code from multiple developers is brought together for integration set DLPS_DEV to "1" for the virtual host that runs middleware from this area. </p>
+      <p> When running in development mode (the DLPS_DEV environment variable is set) the middleware supports a number of mechanisms to assist debugging and general development: 
+      <ul>
+
+        <li>When there is an assertion failure a full stack traceback is displayed instead of just the associated message for consumption by the general public </li>
+        <li>The developer's copy of the database rows are read instead of the production copy.  Note: the "release" (in the above sense) copy of the database rows are read if DLPS_DEV=1 rather than, for example, DLPS_DEV=smith.  <blockquote> This mechanism is a part of a facility in collmgr which gives each developer a set of collection database rows.  This allows each developer to experiment with database changes without affecting the rows in use by the released middleware. Additional information on this mechanism is available in the <a href="Working_with_the_Collection_Manager.html" title="Working with the Collection Manager">collmgr documentation</a>. </blockquote></li>
+        <li>The perl "use strict" pragma is enabled to support additional error checking for such things as references to undeclared variables, for example.</li>
+        <li>It is often convienient for the developer to control exactly which collections are authorized rather than relying on the Authentication/Authorization system to supply this information.  This information is transmitted to the DLXS middleware through the AUTHZD_COLL environment variable.  If this variable is not set (as might be the case for an individual developer's virtual host) the value of this variable is read from a <i>file</i> named AUTHZD_COLL stored in DLXSROOT/cgi/c/class, e.g. /l1/dev/smith/cgi/t/text/AUTHZD_COLL.  The collection IDs that the developer wants to be authorized are listed one per line is this file and the middleware will populate the AUTHZD_COLL environment variable on its own from this data.  </li>
+      </ul> 
+    </p>
+      <p>The <a href="http://localhost/mediawiki/index.php?title=DLXS_Directory_Structure&amp;action=edit&amp;redlink=1" class="new" title="DLXS Directory Structure (not yet written)"><tt>DLXSDATAROOT</tt></a> environment variable allows the data to be under a different directory root than the middleware programs.  We created <tt>DLXSDATAROOT</tt> because data and indexes are too large to duplicate for each developer and are not generally CVS source controlled.  Each virtual host sets this variable to point to the root of the <i>release</i> directory structure (outside of the developer's workspace) that contains the <tt>obj</tt> and <tt>idx</tt> directories where data and indexes reside. <tt>DLXSDATAROOT</tt> is optional.  If it is set, the middleware favors it over <tt>&lt;a href="../intro/dirstruct.html#dlxsrootenv"&gt;DLXSROOT&lt;/a&gt;</tt> when accessing data and indexes.  If it is not set, the
+middleware will use <tt>DLXSROOT</tt> to locate the data. In that event, you would need a copy of the data directories and their content in your development space. </p>
+<p><br />      
+</p>
+      <p>The <tt>&lt;a href="../collmeta/collmgr.html#remoteuserenv"&gt;REMOTE_USER&lt;/a&gt;</tt> environment variable is set for convenience to mimic the action of the authorization system which is absent on the development machines.  The middleware determines whether the user is logged in by testing <tt>REMOTE_USER</tt> for a value.</p>
+<p><br />
+<a href="#top" title="">Top</a>
+</p>
+<!-- 
+NewPP limit report
+Preprocessor node count: 58/1000000
+Post-expand include size: 0/2097152 bytes
+Template argument size: 0/2097152 bytes
+Expensive parser function count: 0/100
+-->
+
+<!-- Saved in parser cache with key mediawiki_dlxsdocs_15:pcache:idhash:75-0!1!0!!en!2 and timestamp 20250202211522 -->
+<div class="printfooter">
+Retrieved from "<a href="DLPS%27s_Development_Environment_for_DLXS_Software.html">http://localhost/wiki/DLPS%27s_Development_Environment_for_DLXS_Software</a>"</div>
+						<!-- end content -->
+			<div class="visualClear"></div>
+		</div>
+	</div>
+		</div>
+		<div id="column-one">
+	<div id="p-cactions" class="portlet">
+		<h5>Views</h5>
+		<div class="pBody">
+			<ul>
+	
+				 <li id="ca-nstab-main" class="selected"><a href="DLPS%27s_Development_Environment_for_DLXS_Software.html" title="View the content page [c]" accesskey="c">Page</a></li>
+				 <li id="ca-talk" class="new"><a href="http://localhost/mediawiki/index.php?title=Talk:DLPS%27s_Development_Environment_for_DLXS_Software&amp;action=edit" title="Discussion about the content page [t]" accesskey="t">Discussion</a></li>
+				 <li id="ca-edit"><a href="http://localhost/mediawiki/index.php?title=DLPS%27s_Development_Environment_for_DLXS_Software&amp;action=edit" title="You can edit this page.&#10;Please use the preview button before saving. [e]" accesskey="e">Edit</a></li>
+				 <li id="ca-history"><a href="http://localhost/mediawiki/index.php?title=DLPS%27s_Development_Environment_for_DLXS_Software&amp;action=history" title="Past versions of this page. [h]" accesskey="h">History</a></li>			</ul>
+		</div>
+	</div>
+	<div class="portlet" id="p-personal">
+		<h5>Personal tools</h5>
+		<div class="pBody">
+			<ul>
+				<li id="pt-login"><a href="http://localhost/mediawiki/index.php?title=Special:UserLogin&amp;returnto=DLPS%27s_Development_Environment_for_DLXS_Software" title="You are encouraged to log in, it is not mandatory however. [o]" accesskey="o">Log in / create account</a></li>
+			</ul>
+		</div>
+	</div>
+	<div class="portlet" id="p-logo">
+		<a style="background-image: url(../dlxs15/uploads/DLXS_logo2.gif);" href="Main_Page.html" title="Visit the Main Page [z]" accesskey="z"></a>
+	</div>
+	<script type="text/javascript"> if (window.isMSIE55) fixalpha(); </script>
+	<div class='generated-sidebar portlet' id='p-navigation'>
+		<h5>Navigation</h5>
+		<div class='pBody'>
+			<ul>
+				<li id="n-mainpage-description"><a href="Main_Page.html">Main Page</a></li>
+				<li id="n-portal"><a href="DLXS_Documentation_Community_Portal.html" title="About the project, what you can do, where to find things">Community portal</a></li>
+				<li id="n-currentevents"><a href="DLXS_Documentation_Current_events.html" title="Find background information on current events">Current events</a></li>
+				<li id="n-recentchanges"><a href="Special_RecentChanges.html" title="The list of recent changes in the wiki. [r]" accesskey="r">Recent changes</a></li>
+				<li id="n-randompage"><a href="Mounting_a_Bib_Class_Collection.html" title="Load a random page [x]" accesskey="x">Random page</a></li>
+				<li id="n-help"><a href="Help_Contents.html" title="The place to find out.">Help</a></li>
+			</ul>
+		</div>
+	</div>
+	<div id="p-search" class="portlet">
+		<h5><label for="searchInput">Search</label></h5>
+		<div id="searchBody" class="pBody">
+			<form action="http://localhost/wiki/Special:Search" id="searchform"><div>
+				<input id="searchInput" name="search" type="text" title="Search DLXS Documentation [f]" accesskey="f" value="" />
+				<input type='submit' name="go" class="searchButton" id="searchGoButton"	value="Go" title="Go to a page with this exact name if exists" />&nbsp;
+				<input type='submit' name="fulltext" class="searchButton" id="mw-searchButton" value="Search" title="Search the pages for this text" />
+			</div></form>
+		</div>
+	</div>
+	<div class="portlet" id="p-tb">
+		<h5>Toolbox</h5>
+		<div class="pBody">
+			<ul>
+				<li id="t-whatlinkshere"><a href="Special_WhatLinksHere/DLPS%27s_Development_Environment_for_DLXS_Software.html" title="List of all wiki pages that link here [j]" accesskey="j">What links here</a></li>
+				<li id="t-recentchangeslinked"><a href="Special_RecentChangesLinked/DLPS%27s_Development_Environment_for_DLXS_Software.html" title="Recent changes in pages linked from this page [k]" accesskey="k">Related changes</a></li>
+<li id="t-specialpages"><a href="Special_SpecialPages.html" title="List of all special pages [q]" accesskey="q">Special pages</a></li>
+				<li id="t-print"><a href="http://localhost/mediawiki/index.php?title=DLPS%27s_Development_Environment_for_DLXS_Software&amp;printable=yes" title="Printable version of this page [p]" accesskey="p">Printable version</a></li>				<li id="t-permalink"><a href="http://localhost/mediawiki/index.php?title=DLPS%27s_Development_Environment_for_DLXS_Software&amp;oldid=626" title="Permanent link to this version of the page">Permanent link</a></li>			</ul>
+		</div>
+	</div>
+		</div><!-- end of the left (by default at least) column -->
+			<div class="visualClear"></div>
+			<div id="footer">
+				<div id="f-poweredbyico"><a href="http://www.mediawiki.org/"><img src="../mediawiki/skins/common/images/poweredby_mediawiki_88x31.png" alt="Powered by MediaWiki" /></a></div>
+			<ul id="f-list">
+				<li id="lastmod"> This page was last modified on 13 August 2007, at 21:31.</li>
+				<li id="viewcount">This page has been accessed 1,588 times.</li>
+				<li id="privacy"><a href="DLXS_Documentation_Privacy_policy.html" title="DLXS Documentation:Privacy policy">Privacy policy</a></li>
+				<li id="about"><a href="DLXS_Documentation_About.html" title="DLXS Documentation:About">About DLXS Documentation</a></li>
+				<li id="disclaimer"><a href="DLXS_Documentation_General_disclaimer.html" title="DLXS Documentation:General disclaimer">Disclaimers</a></li>
+			</ul>
+		</div>
+</div>
+
+		<script type="text/javascript">if (window.runOnloadHook) runOnloadHook();</script>
+<!-- Served in 0.116 secs. --></body>
+<!-- Mirrored from localhost/wiki/DLPS%27s_Development_Environment_for_DLXS_Software by HTTrack Website Copier/3.x [XR&CO'2014], Mon, 03 Feb 2025 00:31:11 GMT -->
+</html>

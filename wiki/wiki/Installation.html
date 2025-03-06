@@ -1,0 +1,460 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en" dir="ltr">
+	
+<!-- Mirrored from localhost/wiki/Installation by HTTrack Website Copier/3.x [XR&CO'2014], Mon, 03 Feb 2025 00:29:13 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=UTF-8" /><!-- /Added by HTTrack -->
+<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+		<meta name="generator" content="MediaWiki 1.13.5" />
+		<meta name="keywords" content="Installation" />
+		<link rel="shortcut icon" href="http://localhost/favicon.ico" />
+		<link rel="search" type="application/opensearchdescription+xml" href="http://localhost/mediawiki/opensearch_desc.php" title="DLXS Documentation (en)" />
+		<link rel="alternate" type="application/rss+xml" title="DLXS Documentation RSS Feed" href="http://localhost/mediawiki/index.php?title=Special:RecentChanges&amp;feed=rss" />
+		<link rel="alternate" type="application/atom+xml" title="DLXS Documentation Atom Feed" href="http://localhost/mediawiki/index.php?title=Special:RecentChanges&amp;feed=atom" />
+		<title>Installation - DLXS Documentation</title>
+		<style type="text/css" media="screen, projection">/*<![CDATA[*/
+			@import "../mediawiki/skins/common/sharedfa7c.css?164";
+			@import "../mediawiki/skins/monobook/mainfa7c.css?164";
+		/*]]>*/</style>
+		<link rel="stylesheet" type="text/css" media="print" href="../mediawiki/skins/common/commonPrintfa7c.css?164" />
+		<!--[if lt IE 5.5000]><style type="text/css">@import "/mediawiki/skins/monobook/IE50Fixes.css?164";</style><![endif]-->
+		<!--[if IE 5.5000]><style type="text/css">@import "/mediawiki/skins/monobook/IE55Fixes.css?164";</style><![endif]-->
+		<!--[if IE 6]><style type="text/css">@import "/mediawiki/skins/monobook/IE60Fixes.css?164";</style><![endif]-->
+		<!--[if IE 7]><style type="text/css">@import "/mediawiki/skins/monobook/IE70Fixes.css?164";</style><![endif]-->
+		<!--[if lt IE 7]><script type="text/javascript" src="/mediawiki/skins/common/IEFixes.js?164"></script>
+		<meta http-equiv="imagetoolbar" content="no" /><![endif]-->
+		
+		<script type= "text/javascript">/*<![CDATA[*/
+var skin = "monobook";
+var stylepath = "/mediawiki/skins";
+var wgArticlePath = "/wiki/$1";
+var wgScriptPath = "/mediawiki";
+var wgScript = "http://localhost/mediawiki/index.php";
+var wgVariantArticlePath = false;
+var wgActionPaths = [];
+var wgServer = "http://localhost/";
+var wgCanonicalNamespace = "";
+var wgCanonicalSpecialPageName = false;
+var wgNamespaceNumber = 0;
+var wgPageName = "Installation";
+var wgTitle = "Installation";
+var wgAction = "view";
+var wgArticleId = "312";
+var wgIsArticle = true;
+var wgUserName = null;
+var wgUserGroups = null;
+var wgUserLanguage = "en";
+var wgContentLanguage = "en";
+var wgBreakFrames = false;
+var wgCurRevisionId = "2354";
+var wgVersion = "1.13.5";
+var wgEnableAPI = true;
+var wgEnableWriteAPI = false;
+var wgRestrictionEdit = [];
+var wgRestrictionMove = [];
+/*]]>*/</script>
+                
+		<script type="text/javascript" src="../mediawiki/skins/common/wikibitsfa7c.js?164"><!-- wikibits js --></script>
+		<!-- Head Scripts -->
+		<script type="text/javascript" src="../mediawiki/skins/common/ajaxfa7c.js?164"></script>
+		<script type="text/javascript" src="http://localhost/mediawiki/index.php?title=-&amp;action=raw&amp;gen=js&amp;useskin=monobook"><!-- site js --></script>
+		<style type="text/css">/*<![CDATA[*/
+@import "http://localhost/mediawiki/index.php?title=MediaWiki:Common.css&amp;usemsgcache=yes&amp;action=raw&amp;ctype=text/css&amp;smaxage=18000";
+@import "http://localhost/mediawiki/index.php?title=MediaWiki:Monobook.css&amp;usemsgcache=yes&amp;action=raw&amp;ctype=text/css&amp;smaxage=18000";
+@import "http://localhost/mediawiki/index.php?title=-&amp;action=raw&amp;gen=css&amp;maxage=18000&amp;useskin=monobook";
+/*]]>*/</style>
+	</head>
+<body class="mediawiki ns-0 ltr page-Installation">
+	<div id="globalWrapper">
+		<div id="column-content">
+	<div id="content">
+		<a name="top" id="top"></a>
+				<h1 class="firstHeading">Installation</h1>
+		<div id="bodyContent">
+			<h3 id="siteSub">From DLXS Documentation</h3>
+			<div id="contentSub"></div>
+									<div id="jump-to-nav">Jump to: <a href="#column-one">navigation</a>, <a href="#searchInput">search</a></div>			<!-- start content -->
+			<p><b>Red Hat 5.1 and DLXS 13 Installation</b><br /><br />
+</p><p>Disclaimer:  These instructions were compiled from notes taken from installing DLXS 13 on a Red Hat 5.1 server.  They are intended to be used as a loose reference and are not, by any stretch of the imagination, the only way to do this or even perhaps the best or most correct way to do this.  Although these instructions did work for us, they are a 'work in progress' and will change as we continue to grow in our knowledge of DLXS 13 and RHEL 5.X.  Use at your own risk and may the force be with you... <br /><br />
+</p><p>Materials list:<br /><br />
+</p><p>1.	RHEL 5.1<br />
+2.	DLXS 13 and XPAT CD’s<br />
+3.	Patch(es) from DLXS<br />
+4.	Server<br />
+5.	Root access<br />
+<br />
+Required Information concerning RHEL 5.1 installation<br /><br />
+</p><p>1.	Your IP address<br />
+2.	Your subnet mask <br />
+3.	Your DNS server IP addresses<br />
+4.	Your gateway IP address<br />
+5.	If you have a service subscription you will also be asked for your activation code.<br />
+6.      Security information (firewall settings, etc.)<br />
+<br />
+<b>Step 1 - Operating system installation.</b>  <br />
+<br />
+I do not put a lot of instructions concerning the RHEL 5.1 install here.  It is pretty much gui driven and I tend to be minimalistic in choosing the packages I want to be installed when I have choices to make.  You will probably not be able to install a server on campus without help from your IT people.  They will be able to give you answers to the questions that you will be asked during the installation.  The questions will deal with things like IP address, subnet mask, DNS Server IP addresses and Gateway IP.  Those are the easy questions.  You will need more indepth information about setting it properly for firewall settings, etc and so that is why I cannot give you better instructions on how to set the server up.  It is a good bet that your IT department will have standards for your Linux install and will take care of it for you. One thing I will mention is that during the RHEL 5.1 install make sure you choose to install Apache, PERL and MySQL and when you get done your Apache, PERL and MySQL should be fine. <br />
+<br />
+</p><p>NOTE: Our campus has a subscription for service from Red Hat.  That means that Red Hat will automatically notify me when there is a suggested update on my server.  Think of it like the Microsoft auto update feature, (or is that a bug?)  Who knows, but regardless, because of our subscription as soon as I complete the RHEL 5.1 install I get a pop up saying that I need to run the updates.  There will be lots of updates that will want to install.  I held off doing the operating system updates until I had installed DLXS and it worked well for me. I did this because I was trying to minimize any problems that updating might introduce concerning perl mods and such.<br />
+<br />
+</p><p>NOTE:  (This paragraph explains why I did not use the latest RHEL release) I tried to use the latest RHEL 5 software.  However, I began to have problems after I had installed RHEL 5, and tried to install the perl mods.  I was able to install most of them without issue except for XML::LibXSLT.   The problem is that the perl mods  XML::LibXSLT and XML::LibXML are closely related to libxml2.  When I tried to install XML::LibXSLT (from cpan) I got an error message saying that libxml2 needed to be a newer version.  That is when the real fun began.  I used rpm (rpm -e libxml and rpm -e libxslt) to remove libxml and libxslt.   It complained of dependencies and would not uninstall so I used the --nodeps switch to force the issue.  I then downloaded the newer libxml2  (libxml2-2.6.27.tar.gz) file and libxslt (libxslt-1.1.18.tar.gz).  I renamed the /usr/include/libxml2 directory and the /usr/include/libxslt directory (so that  the install would create the folders it needed without any name conflict).  I made a directory named libxml2 and installed libxml2-2.6.27.tar.gz in that directory.  I installed the libxslt file.  I used cpan and installed the 2 mods (XML::LibXML and XML::LibXSLT).  The mods installed fine BUT I lost other functionality using this method.  For instance yum quit working.  This meant I had to start from scratch.  I checked our test server and found out that we were running Red Hat 5.1.  I checked the server I had just tried the install on and apparently Red Hat had upgraded their software and the download is now at Red Hat 5.2.  I was able to locate some older RHEL 5 installation CD's and this time I had no problem installing the mods after reinstalling the operating system.<br />
+<br />
+So… That said I suggest you use Red Hat 5.1 to begin with.<br />
+<br />
+</p><p><b>Step 2 - Installing the perl mods.</b><br />
+<br />
+</p><p>As of the date of this writing: 6/12/08 it is important to note that DLXS has an error on the wiki version of the required perl mods. The error is that you need to install Text::CSV_XS instead of Text::CSV. If you do not install Text::CSV_XS your sample collections will still work fine when you finish installing DLXS the problem will not become manifest until you try to build a collection. You will have lots of errors. (At least we did when we tried to build an image collection right after the DLXS install.)<br /><br />
+</p><p>The tough part is to install the required perl mods.  It can be a slow, frustrating process and so if you need to cut back on the caffeine now is the time because we are moving on to actually installing the perl mods. <br /><br />
+</p><p>You need to know what perl mods got installed automagically during the RHEL 5.1 install.  I used a utility called pmdesc3.pl to see what mods were already on board.  (./pmdesc3.pl | grep modname).  You can download this utility from  <a href="http://lug.fh-swf.de/perl/" class="external free" title="http://lug.fh-swf.de/perl/" rel="nofollow">http://lug.fh-swf.de/perl/</a>  <br /> 
+These required mods were onboard after the RHEL 5.1 install (NOTE:  You may have different ones listed and that is fine.  Just use the methods described below to get the ones you are missing.)<br />
+<br />
+a.  DBD::mysql  3.0007<br />
+b.  DBI  1.52<br />
+c.  Attribute_Handlers  0.78_02<br />
+<br />
+From cpan I installed these (cpan install modname)<br />
+<br />
+a.  Apache::Session  1.86<br />
+b.  Text::CSV 1.05  (NOTE:  This was installed due to an error on the DLXS installation pages from the wiki.  I just left it after I found the mistake)<br />
+c.  Text::CSV_XS   0.5  (NOTE:  This one has a ton of dependencies that it will ask you if you want it to append it to the queue to be installed.  I just chose ‘yes’ until it finished.  The install took a while but it worked.<br />
+d.  Mail::Mailer  2.03<br />
+e.  Data::Page  2.0<br />
+f. Test::WWW::Mechanize  1.20<br />
+g.  How to install XML::LibXML and XML::LibXSLT<br /><br />
+</p><p>DOWNLOAD from cpan - Note that there were newer versions that I just did not want to worry with.  These were known good (from installing on my test  server) and so I used the 1.58 versions.<br /><br />
+XML-LibXML-1.58.tar.gz<br />
+XML-LibXSLT-1.58.tar.gz<br /><br />
+I put them in a folder I created named /xx/mods and used gunzip to unzip them.  (gunzip *)<br />
+I untarred them tar (tar -xvf filename)<br />
+I tried to install XML-LibXML first but it bombed and told me I needed to install:<br /><br />
+XML::LibXML::Common<br />
+XML::NamespaceSupport<br />
+XML::SAX<br /><br />
+I used cpan to install these (cpan install modname).<br />
+I installed XML-LibXML-1.58 by going into the XML-LibXML directory and running the following:<br /><br />
+perl Makefile.PL<br />
+make<br />
+make test<br />
+make install<br /><br />
+I then installed XML::LibXSLT by going into the XML-LibXSLT folder and running the following
+perl Makefile.PL<br />
+make<br />
+make test<br />
+make install<br /><br />
+</p><p>h.  In order to install Image::Magick I had to use yum.  You might already have ImageMagick installed but the perl mod isn't listing when you run ./pmdesc.pl |  grep -i ImageMagick.  If that is the case you might want to try updating by using yum update ImageMagick.  I don't believe ImageMagick was installed when I  finished the RHEL 5.1 install (I don't remember) but anyway I just used yum install ImageMagick AND yum install ImageMagick-perl to get the required Image::Magick perl mod installed.  <br /><br />
+</p><p>i.  To install Geo::IP <br />
+go to <a href="http://www.maxmind.com/download/geoip/api/perl" class="external free" title="http://www.maxmind.com/download/geoip/api/perl" rel="nofollow">http://www.maxmind.com/download/geoip/api/perl</a> and download Geo-IP-1.30.tar.gz<br />
+go to <a href="http://www.maxmind.com/download/geoip/api/c" class="external free" title="http://www.maxmind.com/download/geoip/api/c" rel="nofollow">http://www.maxmind.com/download/geoip/api/c</a> and download GeoIP.tar.gz<br />
+install GeoIP.tar.gz by using gunzip GeoIP.tar.gz and then using tar -xvf GeoIP.tar and run these commands:<br /><br />
+./configure<br />
+make<br />
+make check<br />
+make install<br /><br />
+install Geo-IP-1.30.tar.gz by using gunzip Geo-IP-1.30.tar.gz and then using tar -xvf Geo-IP-1.30.tar.gz and run these commands:<br /><br />
+perl Makefile.PL<br />
+make<br />
+make test<br />
+make install<br /><br />
+</p><p><b>Step 3 - Installing OpenSP 1.5</b> <br /><br />
+</p><p>Go to <a href="http://www.linuxfromscratch.org/blfs/view/stable/pst/opensp.html" class="external free" title="http://www.linuxfromscratch.org/blfs/view/stable/pst/opensp.html" rel="nofollow">http://www.linuxfromscratch.org/blfs/view/stable/pst/opensp.html</a> and download OpenSP-1.5.2<br />
+a. Run gunzip OpenSP-1.5.2.tar.gz and then untar the file (tar -xvf OpenSP-1.5.2.tar.gz). <br />
+b. Run the following commands to install OpenSP.  NOTE:  I just copy and paste them into the command line one at a time.  It saves me typing my fingers off.<br /><br />
+</p><p>sed -i 's:32,:253,:' lib/Syntax.cxx &amp;&amp;<br />
+sed -i 's:LITLEN          240&nbsp;:LITLEN          8092:' \<br />
+unicode/{gensyntax.pl,unicode.syn} &amp;&amp;<br />
+./configure --prefix=/usr --disable-static --disable-doc-build \<br />
+--enable-default-catalog=/etc/sgml/catalog --enable-http \<br />
+--enable-default-search-path=/usr/share/sgml &amp;&amp; <br />
+make pkgdatadir=/usr/share/sgml/OpenSP-1.5.2<br /><br />
+</p><p>To test, <br />
+Run the command: make check  <br />
+NOTE:  As many as 8 or 9 of the 22 tests may fail.  Don’t worry about it.  Just smile and move on.  <br /><br />
+</p><p>As root user run the following commands:<br /><br />
+</p><p>make pkgdatadir=/usr/share/sgml/OpenSP-1.5.2 install &amp;&amp;<br />
+ln -v -sf onsgmls /usr/bin/nsgmls &amp;&amp;<br />
+ln -v -sf osgmlnorm /usr/bin/sgmlnorm &amp;&amp;<br />
+ln -v -sf ospam /usr/bin/spam &amp;&amp;<br />
+ln -v -sf ospcat /usr/bin/spcat &amp;&amp;<br />
+ln -v -sf ospent /usr/bin/spent &amp;&amp;<br />
+ln -v -sf osx /usr/bin/sx &amp;&amp;<br />
+ln -v -sf osx /usr/bin/sgml2xml &amp;&amp;<br />
+ln -v -sf libosp.so /usr/lib/libsp.so<br /><br />
+</p><p>NOTE: It is important to note that sgml-common-0.6.3 is listed as a dependency of OpenSP 1.5.  During a previous install I had serious issues with installing  sgml-common-0.6.3.  I emailed Tom Burton-West at DLXS tech support and he told me that as of version 1.5 there were no dependencies on SGML-Common.  So  I said "cool" and just didn't install sgml-common-0.6.3.  As far as I can tell it has not been an issue.<br /><br />
+</p><p><b>Step 4 - Installing the binaries!</b>  <br /><br />
+</p><p>A.  Copy XPAT and the DLXS CD to the server<br />
+XPAT:  cp xpat_linux-5.3.2.tar to /usr/local/<br />
+DLXS:  cp –r * /usr/local/dlxs<br /><br />
+</p><p>B.  cd /usr/local and run tar –xvf xpat_linux-5.3.2.tar<br />
+go to /usr/local/bin and create a symbolic link to the xpat directory using:  ln -s /usr/local/xpat-5.3.2/bin/xpat xpat<br />
+<br />
+C:  cd /usr/local/dlxs and install the following binaries.  (Note that I copied the binary AND created the symlink in /usr/local/bin.  Just my preference.  You  could actually have just created the symlink to where ever you unzipped each of the binaries and placed only the symlinks in /usr/local/bin.  For purposes of this documentation, let's just do it my way and decide the best way later...)<br />
+<br />
+- tif2web –<br /><br />
+cd /usr/local/dlxs/tif2web-1.0.4<br />
+gunzip tif2web-linux-x86.gz<br />
+chmod 755 tif2web-linux-x86<br />
+cp tif2web-linux-x86 to /usr/local/bin<br />
+cd /usr/local/bin<br />
+ln -s /usr/local/bin/tif2web-linux-x86 tif2web<br /><br />
+</p><p>- mrsid_retrieve – <br /><br />
+cd /usr/local/dlxs/iso/mrsid_retrieve-1.3.1<br />
+gunzip mrsid_retrieve-linux-x86.gz<br />
+chmod 755 mrsid_retrieve-linux-x86<br />
+cp mrsid_retrieve-linux-x86 to /usr/local/bin<br />
+cd /usr/local/bin<br />
+ln -s /usr/local/bin/mrsid_retrieve-linux-x86 mrsid_retrieve<br /><br />
+</p><p>- kdu_expand – <br /><br />
+cd /usr/local/dlxs/iso/kakadu-4.0.2<br />
+gunzip kdu_expand-linux-x86.gz<br />
+chmod 755 kdu_expand-linux-x86<br />
+cp kdu_expand-linux-x86 to /usr/local/bin<br />
+cd /usr/local/bin<br />
+ln-s kdu_expand-linux-x86 kdu_expand<br /><br />
+</p><p>- kdu_compress – <br /><br />
+cd /usr/local/dlxs/iso/kakadu-4.0.2 <br />
+gunzip kdu_compress-linux-x86.gz<br />
+chmod 755 kdu_compress-linux-x86<br />
+cp kdu_compress-linux-x86 to /usr/local/bin<br />
+cd /usr/local/bin<br />
+ln -s kdu_compress-linux-x8 kdu_compress<br /><br />
+</p><p>- cjpeg – <br /><br />
+cd /usr/local/dlxs/iso/cjpeg-6b<br />
+gunzip cjpeg-linux-x86.gz<br />
+chmod 755 cjpeg-linux-x86<br />
+cp cjpeg-linux-x86 to /usr/local/bin<br />
+cd /usr/local/bin<br />
+ln -s /usr/local/bin/cjpeg-linux-x86 cjpeg<br /><br />
+</p><p>- c42pdf – <br /><br />
+Download this from <a href="http://c42pdf.ffii.org/" class="external free" title="http://c42pdf.ffii.org" rel="nofollow">http://c42pdf.ffii.org</a> <br />
+if the file says you cannot unzip it because it is not zipped, change the name to drop the .gz  in this case I named it c42pdf<br />
+chmod 755 c42pdf<br />
+copy c42pdf to /usr/local/bin (Note:  I did not need a symlink because I changed the name and copied it here.  In retrospect it would probably have been better if I had simply created symlinks here to the directory that I used when I copied the DLXS CD to the server.<br /><br />
+</p><p><b>Step 5 - Installing DLXS</b> <br /><br />
+</p><p>cd into the directory that you copied the DLXS installation cd to.<br />
+perl Installer.pl<br /><br />
+</p><p>The installation will begin and you will be asked a lot of questions.  It is important that you keep track of the answers you provide as you will need to enter the information again later when you configure MySQL.  Also you will be offered default answers during the install.  Some of the default answers reference paths to the binaries.  If you put created the symlinks in the /usr/local/bin directory as instructed in item 4 then the installer should be offering you the correct location.  If not, you will get a 'can't be found' type of error.  All you have to do is go find what it is asking for and type that path in as the answer to the installer question.  I have installed 3 different versions of DLXS and the documention is a little off from what I saw each time I installed but, from memory, this is pretty much what you will be asked:<br /><br />
+</p><p>- Which platform are you using? (SunOS/Linux) [SunOS]  (You need to choose your platform - in my case Linux -  so I did not accept the default.  I had to type in Linux.<br />
+- Where is Perl installed? [/usr/bin/perl]  (Another issue here - For some reason the .pl files that get installed will need to be changed to reflect your actual perl path.  We have found some of the scripts use #!/usr/bin/perl at the top of the scripts and some of the scripts have #!/usr/bin/local/perl at the top.  You need to go change those scripts to point to your perl install.  In our case it is /usr/bin/perl.<br /><br />
+- Where is XPAT installed? [/l/local/bin/xpat] <br />
+- Do you want to use tif2web (required for TextClass page viewer)? [Y] <br />
+- Where is tif2web installed? [/l/local/bin/tif2web] <br />
+- Do you want to use c42pdf (required for TextClass page viewer)? [Y] <br />
+- Where is c42pdf installed? [/l/local/bin/c42pdf] <br />
+- Do you want to use MrSid (required for ImageClass)? [Y] <br />
+- Where is mrsid_retrieve installed? [/l/local/bin/mrsid_retrieve] <br /><br />
+</p><p>At this point you get the idea.  It is just asking for all the binary locations.<br /><br />
+</p><p>OKAY... The installer now moves on to variable configuration and the actually file installation.<br /><br />
+</p><p>- Is this an I)nitial install or a R)econfiguration? (I/R) [I]  For initial install <br />
+- Where would you like to install DLXS? [//] /somedir/dlxs<br />
+- What is the fully-qualified name of this server? [servername.domain.extension  - example:  servername.richmond.edu]<br />
+- What is the IP address of this server? [000.000.000.000 - example:  You will need to know your actual IP address for your server here]<br />
+- Enter MySQL database name [dlxs_vwhateverversionyouhave  example:  dlxs_13]<br />
+- Enter MySQL database user name (middleware will connect as this user) [dlxs]<br />
+- Enter password for MySQL database user name [somepassword  - example:  just pick a password for the MySQL database user above]<br />
+- Enter MySQL database password for the "dlxsadm" ADMINISTRATIVE user [somepassword - example: just pick a password for dlxsadm]<br />
+- Enter MySQL database server name. [servername.domain.extension  - example:  servername.richmond.edu]<br />
+- Enter the virtual host of the idresolver cgi.   [images.umdl.umich.edu] - Enter a blank here<br />
+- Select sendmail or smtp to deliver mail. (sendmail/smtp) [sendmail]<br />
+- Enter the email address from which the generated (e.g. BookBag) mail will be sent ["UMDL Mailer" &lt;umdl-help@umich.edu&gt;] NOTE:  This is the email address of the lucky person who will be in charge of replying to BookBag questions.<br />
+- Enter your Help email HTML href <a href="mailto:umdl-help@umich.edu" class="external autonumber" title="mailto:umdl-help@umich.edu" rel="nofollow">[1]</a> NOTE:  This is the email address of the lucky person who will be in charge of replying to  help questions.<br />
+- Enter your Help email text string [umdl-help@umich.edu]  I 'think' this is the text someone will see when they want some sort of help.<br /><br />
+</p><p>Okay, here is where it gets confusing (stop laughing, I meant more confusing...)<br /><br />
+</p><p>At this point you are still in the install.  U.R. does not have an OAI Repository set up, so we pretty much just took the defaults.  <i><b>One suggestion for the DLXS developers is to have the installer ask first - "Do you have an OAI Repository set up?" and if you answer "no" then it just skips this section entirely by entering some defaults automatically.</b></i>  But that is future stuff and we must now get back to our install...<br /><br />
+</p><p>- Enter OAI Repository ID [lib.umich.edu] We have no repository so we just took the default.<br />
+- Enter OAI repostiory name [UMDL. DLPS]  We took the default<br />
+- Enter the broker base URL <a href="http://quod.lib.umich.edu/cgi/b/broker20/broker20" class="external autonumber" title="http://quod.lib.umich.edu/cgi/b/broker20/broker20" rel="nofollow">[2]</a>  We, you guessed it... took the default.<br />
+- Enter the broker email address [dlps-broker@umich.edu]  We took the default.<br />
+- Enter a UTCdatetime...  [2000-08-17]  Just take the default.<br />
+- Enter the manner... [no]  Take the default<br />
+- Enter a sample OAI ID [oai:lib.umich.edu:YC023]  Take the default, you know you want to!<br />
+- Enter part 1 of your repository description [ lots of stuff here]  OK this is something you don't need the default for! YAY!  This basically just describes your  collections.<br />
+- Enter part 2 of your repository description [lots of stuff here]  I guess the description just continues here.<br />
+- Enter part 3 of your repository description [lots of stuff here]  Just keep describing your collections.<br />
+- Enter the metadata formats... [oai_dc,mods]  I took the default <br />
+- Enter the sru default collection [oaister]  Took the default<br />
+- Enter the sru host [quod.lib.umich.edu]  Took the default<br />
+- Enter the sru port [620]  Took the default<br />
+- Enter the sru title [University of Michigan Gateway]  Took the default<br />
+- Enter the sru description [SRU Gateway... ]  Took the default<br />
+- Enter your Collmgr Help...HTML href [collmrg info]  <a href="mailto:help@yourschool.edu" class="external free" title="mailto:help@yourschool.edu" rel="nofollow">mailto:help@yourschool.edu</a><br />
+- Enter you Collmgr Help text string [collmgr info]  help@yourschool.edu<br />
+- Enable filtering of DAOs.. (1/0)[1]  Take default<br />
+- Enter the image file server host name... [/]  I took default<br />
+- Enter your name resolver... [http... umich.edu]  Enter an empty string if you do not have a name resolver URL<br />
+- Create web optimized pdfs? [Y]  Take default<br /><br />
+</p><p><br />
+This is the end of the install but now you need to do some post install things.<br /><br />
+</p><p><b>Step 6 - Change ownership</b> <br /><br />
+</p><p>The DLXS documentation says "The $DLXSROOT/web/cache is created by the Install program with 777 permissions. Alternatively, you may want to change permissions on this directory to make it writeable only to the UID of the web server."  We changed ownership to apache on $DLXSROOT/web/cache. <br /><br />
+</p><p>cd /$DLXSR<br />
+chown -R apache cache<br />
+chgrp -R apache cache<br /><br />
+</p><p><b>Step 7 - Set up crontab to take care of system maintenance.</b> <br /><br />
+</p><p>READ this whole paragraph before you go forward.  If you edit your crontab incorrectly you will regret it. NOTE:  Your server will more than likely be much different from mine and you may have an existing crontab file with other cron jobs running already.  If that is the case don’t follow this instruction.  See your sys admin on how to add this to your existing cron job list.  If you still want to set up this cron job:<br /><br />
+</p><p>crontab -e<br />
+copy and paste the text below into crontab.  This is taken directly from the DLXS documentation and is actually a listing of the crontab on the server I just set up.  NOTE: /xx denotes our path in the paths that I list below.  Make sure /xx is changed to your correct path.<br /><br />
+<b>#</b><br />
+<b>#</b> purge DLXS web cache<br />
+21 3 * * * /xx/dlxs/bin/managecache.sh<br />
+<b>#</b> <br />
+<b>#</b> purge DLXS CSV sessions (This is commented out because we don't need it.)<br />
+<b>#</b>11 * * * * (DLXSROOT=/xx/dlxs; export DLXSROOT; $DLXSROOT/bin/managesessions.pl -m clean -a 120 -s CSV  ) <br />&gt; /tmp/managesessions.log 2&gt;&amp;1<br />
+<b>#</b><br />
+<b>#</b> purge DLXS MySQL sessions<br />
+11 * * * * (DLXSROOT=/xx/dlxs; export DLXSROOT; $DLXSROOT/bin/managesessions.pl -m clean -a 120 -s MySQL) &gt; /tmp/managesessions.log 2&gt;&amp;1<br />
+<b>#</b> <br />
+<b>#</b> purge Image Class temporary Portfolios at least 3 days old<br />
+<b>#</b> only necessary if Portfolios are enabled in Image Class<br />
+<b>#</b> Image Class must be properly installed under same DLXSROOT<br />
+30  2 * * * (DLXSROOT=/xx/dlxs /xx/dlxs/bin/manageportfolios.pl) 2&gt; /dev/null<br /><br />
+</p><p><b>Step 8 - Apache configuration.</b>  <br /><br />
+</p><p>This is going to sound a lot more complicated than it actually is. All you have to do is copy one file to /etc/httpd/conf/ , make a back up copy of your /etc/httpd/conf/httpd.conf file and then edit it to paste something at the bottom, and change a password (See?  This is a total piece of cake!)  Let’s do it!<br /><br />
+</p><p>- cp /$DLXSROOT/bin/installer/config-examples/ htpasswd.dlxs  /etc/httpd/conf/  (This is a default authentication file that contains the encrypted password for dlxsadm.  <br /><br />
+</p><p>For your convenience, DLXS is installed with this minimum configuration using standard HTTP Basic Authentication. When you access the collection manager, you will be prompted for a username and password; enter "dlxsadm" with the password "collmgr", and you will be given access.)  DLXS recommends that you change the default password after installation with the following command, which will prompt you for a new password: <br /><br />
+</p><p>- /usr/bin/htpasswd /etc/httpd/conf/htpasswd.dlxs dlxsadm<br /><br />
+</p><p>Again, make a backup copy of your /etc/httpd/conf/httpd.conf file before you do anything to modify it. <br />
+- cp  /etc/httpd/conf/httpd.conf /etc/httpd/conf/httpd.conf.bak<br />
+Now let’s modify the httpd.conf file.<br /><br />
+</p><p>- vi $DLXSROOT/bin/installer/config-examples/httpd.conf.dlxs <br />
+Select all the text and copy it and exit vi.  (You will need this text to paste into your httpd.conf file.)<br /><br />
+- vi /etc/httpd/conf/httpd.conf  (This opens httpd.conf for editing.  You can really mess things up if you are not careful here.) <br />
+- After the file opens go to the bottom and paste the contents of httpd.conf.dlxs.  Save the file and exit vi.  <br /><br />
+</p><p><b>Step 9 - MySQL configuration.</b> <br /><br />
+</p><p>- Start the SQL monitor with the command mysql -u root -p mysql (you will be prompted for the MySQL system password.  At this point you do not have one). <br />
+- create database dlxs_versionnumber; (At this time you could use dlxs_13)<br />
+- grant all privileges on dlxs_versionnumber to dlxsadm identified by 'dlxsadm password'; ex:  grant all privileges on dlxs_13 to dlxsadm identified by  'bluebird'; <br />
+- grant file on *.* to dlxsadm; <br />
+- grant select,insert,update,delete,references on dlxs_versionnumber to dlxs identified by 'password'; NOTE this is the dlxs password chosen during the install for the MySQL database user name.  ex:  grant select,insert,update,delete,references on dlxs_13 to dlxs identified by 'dlxsguyspassword';<br />
+- flush privileges;. <br />
+- quit. <br /><br />
+</p><p>Okay it's time to take a moment to discuss the problems we had with MySQL.  For some reason there was an anonymous login for localhost user listed in the user table for mysql.  It interferes with being able to login as dlxsadm. Check with your sys admins because they may actually have a reason for the account but I do not and so I removed it using:<br /><br />
+mysql -u root -p  (Hit enter when prompted for the password)<br />
+use mysql;<br />
+drop user “”@“localhost”; <br />
+- quit<br /><br />
+</p><p>It's time now to populate the sample collection database.  This will allow you to test your installation of DLXS shortly. <br /> 
+mysql -u dlxsadm -p dlxs_v13 &lt; $DLXSROOT/misc/db/db-dump-v6.0-release.sql  (note that you might have to change the dlxs_v13 to the name of your dlxs database.)<br /><br />
+</p><p><b>Step 10 – File updates and DLXS 13 patches.</b> <br /><br />
+</p><p>You need to edit $DLXSROOT/web/i/image/js/imageclass.js<br />
+- vi $DLXSROOT/web/i/image/js/imageclass.js<br />
+- At the top you will see:  document.domain = 'umdl.umich.edu'; Change the umdl.umich.edu to your server.domain.edu.  ex:  servername.richmond.edu.<br />
+- save the file and exit vi.<br /><br />
+</p><p>- apply DLXS 13 patches – <br /><br />
+</p><p>- go to <a href="http://www.dlxs.org/products/archive-by-CDROM/13/Patches/" class="external free" title="http://www.dlxs.org/products/archive-by-CDROM/13/Patches/" rel="nofollow">http://www.dlxs.org/products/archive-by-CDROM/13/Patches/</a> and download all the patches.  <br />
+- follow the instructions on how to install each of the patches.<br /><br />
+</p><p><b>Step 11 - Do you feel lucky?  Well, do you?  Let’s see…</b> <br /><br />
+</p><p>If you do feel lucky then you can now test your installation by going to the URL's below to log into the various classes and collmgr.  Note:  If you get some kind of error just make sure that mysql and apache are running on the server.  Do that by:<br /><br />
+</p><p>cd //etc/rc.d/init.d<br />
+./httpd start (or ./httpd restart if it is already running.  You ALWAYS have to restart apache when you change the httpd.conf file.<br />
+./mysqld start<br /><br />
+</p><p>In the URL's below just substitute your server in for YOURVIRTUALHOST as in this example: <br /> <a href="http://servername.yourschool.edu/cgi/c/collmgr" class="external free" title="http://servername.yourschool.edu/cgi/c/collmgr" rel="nofollow">http://servername.yourschool.edu/cgi/c/collmgr</a><br /><br />
+</p><p>- Collmgr: <a href="http://yourvirtualhost/cgi/c/collmgr/collmgr" class="external free" title="http://YOURVIRTUALHOST/cgi/c/collmgr/collmgr" rel="nofollow">http://YOURVIRTUALHOST/cgi/c/collmgr/collmgr</a><br />
+- BibClass: <a href="http://yourvirtualhost/cgi/b/bib/bib-idx?c=samplebc" class="external free" title="http://YOURVIRTUALHOST/cgi/b/bib/bib-idx?c=samplebc" rel="nofollow">http://YOURVIRTUALHOST/cgi/b/bib/bib-idx?c=samplebc</a> <br />
+- FindaidClass: <a href="http://yourvirtualhost/cgi/f/findaid/findaid-idx?c=samplefa" class="external free" title="http://YOURVIRTUALHOST/cgi/f/findaid/findaid-idx?c=samplefa" rel="nofollow">http://YOURVIRTUALHOST/cgi/f/findaid/findaid-idx?c=samplefa</a> <br />
+- ImageClass: <a href="http://yourvirtualhost/cgi/i/image/image-idx?c=sampleic" class="external free" title="http://YOURVIRTUALHOST/cgi/i/image/image-idx?c=sampleic" rel="nofollow">http://YOURVIRTUALHOST/cgi/i/image/image-idx?c=sampleic</a> <br />
+- TextClass: <a href="http://yourvirtualhost/cgi/t/text/text-idx?c=sampletc_utf8" class="external free" title="http://YOURVIRTUALHOST/cgi/t/text/text-idx?c=sampletc_utf8" rel="nofollow">http://YOURVIRTUALHOST/cgi/t/text/text-idx?c=sampletc_utf8</a> <br /><br />
+</p><p>Did it work?  If so, buy a lottery ticket on the way home from work.  Also, run the RHEL 5.1 updates.  There will probably be like 200 or more updates needed so you will need to update in smaller groups by using yum check-update.  You will get a list that you can use to update in groups, an example being: yum update in* ip* ir* is* would run updates on items beginning with ip, ir, or is.<br /><br />
+</p><p>If it did not work (Repeat after me:  <b>“@#$**@$#!!</b> )<br /><br />
+</p><p><b>Step 12 - Troubleshooting.</b> <br /><br />
+</p><p>Again!   Make sure Apache and MySQL are running (see step 11 above for instructions).<br /><br />
+</p><p>For troubleshooting you will have to run some debug commands and maybe check some Apache server logs.  I am listing the logs files below but for the more advanced troubleshooting you will need to check out the URL below.<br /><br />
+</p><p>tail -20 /etc/httpd/logs/error_log<br />
+tail -20 /etc/httpd/logs/access_log<br /><br />
+</p><p>These files will give you clues as to incorrect directory permissions or perhaps path issues. <br /> <br />
+</p><p>DLXS has more intense troubleshooting advice here:<br /><br />
+</p><p><a href="http://webapps.itcs.umich.edu/dlxsdocs/index.php/Installation_Troubleshooting" class="external free" title="http://webapps.itcs.umich.edu/dlxsdocs/index.php/Installation_Troubleshooting" rel="nofollow">http://webapps.itcs.umich.edu/dlxsdocs/index.php/Installation_Troubleshooting</a><br /><br />
+</p><p>Rick Neal<br />
+University of Richmond<br />
+rneal@richmond.edu<br />
+</p>
+<!-- 
+NewPP limit report
+Preprocessor node count: 383/1000000
+Post-expand include size: 0/2097152 bytes
+Template argument size: 0/2097152 bytes
+Expensive parser function count: 0/100
+-->
+
+<!-- Saved in parser cache with key mediawiki_dlxsdocs_15:pcache:idhash:312-0!1!0!!en!2 and timestamp 20250202211413 -->
+<div class="printfooter">
+Retrieved from "<a href="Installation.html">http://localhost/wiki/Installation</a>"</div>
+						<!-- end content -->
+			<div class="visualClear"></div>
+		</div>
+	</div>
+		</div>
+		<div id="column-one">
+	<div id="p-cactions" class="portlet">
+		<h5>Views</h5>
+		<div class="pBody">
+			<ul>
+	
+				 <li id="ca-nstab-main" class="selected"><a href="Installation.html" title="View the content page [c]" accesskey="c">Page</a></li>
+				 <li id="ca-talk" class="new"><a href="http://localhost/mediawiki/index.php?title=Talk:Installation&amp;action=edit" title="Discussion about the content page [t]" accesskey="t">Discussion</a></li>
+				 <li id="ca-edit"><a href="http://localhost/mediawiki/index.php?title=Installation&amp;action=edit" title="You can edit this page.&#10;Please use the preview button before saving. [e]" accesskey="e">Edit</a></li>
+				 <li id="ca-history"><a href="http://localhost/mediawiki/index.php?title=Installation&amp;action=history" title="Past versions of this page. [h]" accesskey="h">History</a></li>			</ul>
+		</div>
+	</div>
+	<div class="portlet" id="p-personal">
+		<h5>Personal tools</h5>
+		<div class="pBody">
+			<ul>
+				<li id="pt-login"><a href="http://localhost/mediawiki/index.php?title=Special:UserLogin&amp;returnto=Installation" title="You are encouraged to log in, it is not mandatory however. [o]" accesskey="o">Log in / create account</a></li>
+			</ul>
+		</div>
+	</div>
+	<div class="portlet" id="p-logo">
+		<a style="background-image: url(../dlxs15/uploads/DLXS_logo2.gif);" href="Main_Page.html" title="Visit the Main Page [z]" accesskey="z"></a>
+	</div>
+	<script type="text/javascript"> if (window.isMSIE55) fixalpha(); </script>
+	<div class='generated-sidebar portlet' id='p-navigation'>
+		<h5>Navigation</h5>
+		<div class='pBody'>
+			<ul>
+				<li id="n-mainpage-description"><a href="Main_Page.html">Main Page</a></li>
+				<li id="n-portal"><a href="DLXS_Documentation_Community_Portal.html" title="About the project, what you can do, where to find things">Community portal</a></li>
+				<li id="n-currentevents"><a href="DLXS_Documentation_Current_events.html" title="Find background information on current events">Current events</a></li>
+				<li id="n-recentchanges"><a href="Special_RecentChanges.html" title="The list of recent changes in the wiki. [r]" accesskey="r">Recent changes</a></li>
+				<li id="n-randompage"><a href="Mounting_a_Bib_Class_Collection.html" title="Load a random page [x]" accesskey="x">Random page</a></li>
+				<li id="n-help"><a href="Help_Contents.html" title="The place to find out.">Help</a></li>
+			</ul>
+		</div>
+	</div>
+	<div id="p-search" class="portlet">
+		<h5><label for="searchInput">Search</label></h5>
+		<div id="searchBody" class="pBody">
+			<form action="http://localhost/wiki/Special:Search" id="searchform"><div>
+				<input id="searchInput" name="search" type="text" title="Search DLXS Documentation [f]" accesskey="f" value="" />
+				<input type='submit' name="go" class="searchButton" id="searchGoButton"	value="Go" title="Go to a page with this exact name if exists" />&nbsp;
+				<input type='submit' name="fulltext" class="searchButton" id="mw-searchButton" value="Search" title="Search the pages for this text" />
+			</div></form>
+		</div>
+	</div>
+	<div class="portlet" id="p-tb">
+		<h5>Toolbox</h5>
+		<div class="pBody">
+			<ul>
+				<li id="t-whatlinkshere"><a href="Special_WhatLinksHere/Installation.html" title="List of all wiki pages that link here [j]" accesskey="j">What links here</a></li>
+				<li id="t-recentchangeslinked"><a href="Special_RecentChangesLinked/Installation.html" title="Recent changes in pages linked from this page [k]" accesskey="k">Related changes</a></li>
+<li id="t-specialpages"><a href="Special_SpecialPages.html" title="List of all special pages [q]" accesskey="q">Special pages</a></li>
+				<li id="t-print"><a href="http://localhost/mediawiki/index.php?title=Installation&amp;printable=yes" title="Printable version of this page [p]" accesskey="p">Printable version</a></li>				<li id="t-permalink"><a href="http://localhost/mediawiki/index.php?title=Installation&amp;oldid=2354" title="Permanent link to this version of the page">Permanent link</a></li>			</ul>
+		</div>
+	</div>
+		</div><!-- end of the left (by default at least) column -->
+			<div class="visualClear"></div>
+			<div id="footer">
+				<div id="f-poweredbyico"><a href="http://www.mediawiki.org/"><img src="../mediawiki/skins/common/images/poweredby_mediawiki_88x31.png" alt="Powered by MediaWiki" /></a></div>
+			<ul id="f-list">
+				<li id="lastmod"> This page was last modified on 16 July 2008, at 12:22.</li>
+				<li id="viewcount">This page has been accessed 2,581 times.</li>
+				<li id="privacy"><a href="DLXS_Documentation_Privacy_policy.html" title="DLXS Documentation:Privacy policy">Privacy policy</a></li>
+				<li id="about"><a href="DLXS_Documentation_About.html" title="DLXS Documentation:About">About DLXS Documentation</a></li>
+				<li id="disclaimer"><a href="DLXS_Documentation_General_disclaimer.html" title="DLXS Documentation:General disclaimer">Disclaimers</a></li>
+			</ul>
+		</div>
+</div>
+
+		<script type="text/javascript">if (window.runOnloadHook) runOnloadHook();</script>
+<!-- Served in 0.118 secs. --></body>
+<!-- Mirrored from localhost/wiki/Installation by HTTrack Website Copier/3.x [XR&CO'2014], Mon, 03 Feb 2025 00:29:15 GMT -->
+</html>

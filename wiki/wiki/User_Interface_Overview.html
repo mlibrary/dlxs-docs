@@ -1,0 +1,361 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en" dir="ltr">
+	
+<!-- Mirrored from localhost/wiki/User_Interface_Overview by HTTrack Website Copier/3.x [XR&CO'2014], Mon, 03 Feb 2025 00:29:43 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=UTF-8" /><!-- /Added by HTTrack -->
+<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+		<meta name="generator" content="MediaWiki 1.13.5" />
+		<meta name="keywords" content="User Interface Overview,Customizing the User Interface,DLXS Wiki,Data Conversion and Preparation,User Interface Customization" />
+		<link rel="shortcut icon" href="http://localhost/favicon.ico" />
+		<link rel="search" type="application/opensearchdescription+xml" href="http://localhost/mediawiki/opensearch_desc.php" title="DLXS Documentation (en)" />
+		<link rel="alternate" type="application/rss+xml" title="DLXS Documentation RSS Feed" href="http://localhost/mediawiki/index.php?title=Special:RecentChanges&amp;feed=rss" />
+		<link rel="alternate" type="application/atom+xml" title="DLXS Documentation Atom Feed" href="http://localhost/mediawiki/index.php?title=Special:RecentChanges&amp;feed=atom" />
+		<title>User Interface Overview - DLXS Documentation</title>
+		<style type="text/css" media="screen, projection">/*<![CDATA[*/
+			@import "../mediawiki/skins/common/sharedfa7c.css?164";
+			@import "../mediawiki/skins/monobook/mainfa7c.css?164";
+		/*]]>*/</style>
+		<link rel="stylesheet" type="text/css" media="print" href="../mediawiki/skins/common/commonPrintfa7c.css?164" />
+		<!--[if lt IE 5.5000]><style type="text/css">@import "/mediawiki/skins/monobook/IE50Fixes.css?164";</style><![endif]-->
+		<!--[if IE 5.5000]><style type="text/css">@import "/mediawiki/skins/monobook/IE55Fixes.css?164";</style><![endif]-->
+		<!--[if IE 6]><style type="text/css">@import "/mediawiki/skins/monobook/IE60Fixes.css?164";</style><![endif]-->
+		<!--[if IE 7]><style type="text/css">@import "/mediawiki/skins/monobook/IE70Fixes.css?164";</style><![endif]-->
+		<!--[if lt IE 7]><script type="text/javascript" src="/mediawiki/skins/common/IEFixes.js?164"></script>
+		<meta http-equiv="imagetoolbar" content="no" /><![endif]-->
+		
+		<script type= "text/javascript">/*<![CDATA[*/
+var skin = "monobook";
+var stylepath = "/mediawiki/skins";
+var wgArticlePath = "/wiki/$1";
+var wgScriptPath = "/mediawiki";
+var wgScript = "http://localhost/mediawiki/index.php";
+var wgVariantArticlePath = false;
+var wgActionPaths = [];
+var wgServer = "http://localhost/";
+var wgCanonicalNamespace = "";
+var wgCanonicalSpecialPageName = false;
+var wgNamespaceNumber = 0;
+var wgPageName = "User_Interface_Overview";
+var wgTitle = "User Interface Overview";
+var wgAction = "view";
+var wgArticleId = "124";
+var wgIsArticle = true;
+var wgUserName = null;
+var wgUserGroups = null;
+var wgUserLanguage = "en";
+var wgContentLanguage = "en";
+var wgBreakFrames = false;
+var wgCurRevisionId = "3112";
+var wgVersion = "1.13.5";
+var wgEnableAPI = true;
+var wgEnableWriteAPI = false;
+var wgRestrictionEdit = [];
+var wgRestrictionMove = [];
+/*]]>*/</script>
+                
+		<script type="text/javascript" src="../mediawiki/skins/common/wikibitsfa7c.js?164"><!-- wikibits js --></script>
+		<!-- Head Scripts -->
+		<script type="text/javascript" src="../mediawiki/skins/common/ajaxfa7c.js?164"></script>
+		<script type="text/javascript" src="http://localhost/mediawiki/index.php?title=-&amp;action=raw&amp;gen=js&amp;useskin=monobook"><!-- site js --></script>
+		<style type="text/css">/*<![CDATA[*/
+@import "http://localhost/mediawiki/index.php?title=MediaWiki:Common.css&amp;usemsgcache=yes&amp;action=raw&amp;ctype=text/css&amp;smaxage=18000";
+@import "http://localhost/mediawiki/index.php?title=MediaWiki:Monobook.css&amp;usemsgcache=yes&amp;action=raw&amp;ctype=text/css&amp;smaxage=18000";
+@import "http://localhost/mediawiki/index.php?title=-&amp;action=raw&amp;gen=css&amp;maxage=18000&amp;useskin=monobook";
+/*]]>*/</style>
+	</head>
+<body class="mediawiki ns-0 ltr page-User_Interface_Overview">
+	<div id="globalWrapper">
+		<div id="column-content">
+	<div id="content">
+		<a name="top" id="top"></a>
+				<h1 class="firstHeading">User Interface Overview</h1>
+		<div id="bodyContent">
+			<h3 id="siteSub">From DLXS Documentation</h3>
+			<div id="contentSub"></div>
+									<div id="jump-to-nav">Jump to: <a href="#column-one">navigation</a>, <a href="#searchInput">search</a></div>			<!-- start content -->
+			<p><a href="DLXS_Wiki.html" title="DLXS Wiki">Main Page</a> &gt; <a href="Customizing_the_User_Interface.html" title="Customizing the User Interface">Customizing the User Interface</a> &gt; User Interface Overview
+</p>
+<hr />
+<p>This document describes the key aspects of DLXS User Interface technology.
+  It is intended as a fairly high level overview. It applies to DLXS Image, Text,
+  and FindAid Classes, but not Bib Class which lags behind in support for XML
+  and XSL. </p>
+<table id="toc" class="toc" summary="Contents"><tr><td><div id="toctitle"><h2>Contents</h2></div>
+<ul>
+<li class="toclevel-1"><a href="#Introduction"><span class="tocnumber">1</span> <span class="toctext">Introduction</span></a></li>
+<li class="toclevel-1"><a href="#Breakdown_of_Components"><span class="tocnumber">2</span> <span class="toctext">Breakdown of Components</span></a>
+<ul>
+<li class="toclevel-2"><a href="#XML_Templates"><span class="tocnumber">2.1</span> <span class="toctext">XML Templates</span></a></li>
+<li class="toclevel-2"><a href="#XML"><span class="tocnumber">2.2</span> <span class="toctext">XML</span></a></li>
+<li class="toclevel-2"><a href="#Processing_Instructions"><span class="tocnumber">2.3</span> <span class="toctext">Processing Instructions</span></a></li>
+<li class="toclevel-2"><a href="#XSL"><span class="tocnumber">2.4</span> <span class="toctext">XSL</span></a></li>
+<li class="toclevel-2"><a href="#HTML"><span class="tocnumber">2.5</span> <span class="toctext">HTML</span></a></li>
+<li class="toclevel-2"><a href="#Language_Map"><span class="tocnumber">2.6</span> <span class="toctext">Language Map</span></a></li>
+<li class="toclevel-2"><a href="#Javascript"><span class="tocnumber">2.7</span> <span class="toctext">Javascript</span></a></li>
+<li class="toclevel-2"><a href="#Cascading_Stylesheets_.28CSS.29"><span class="tocnumber">2.8</span> <span class="toctext">Cascading Stylesheets (CSS)</span></a></li>
+<li class="toclevel-2"><a href="#Collection_Manager"><span class="tocnumber">2.9</span> <span class="toctext">Collection Manager</span></a></li>
+<li class="toclevel-2"><a href="#Fallback"><span class="tocnumber">2.10</span> <span class="toctext">Fallback</span></a></li>
+</ul>
+</li>
+</ul>
+</td></tr></table><script type="text/javascript"> if (window.showTocToggle) { var tocShowText = "show"; var tocHideText = "hide"; showTocToggle(); } </script>
+<a name="Introduction"></a><h2><span class="editsection">[<a href="http://localhost/mediawiki/index.php?title=User_Interface_Overview&amp;action=edit&amp;section=1" title="Edit section: Introduction">edit</a>]</span> <span class="mw-headline">Introduction</span></h2>
+<p>The DLXS Classes are CGI based web applications written using the Perl
+  programming language. The CGIs operate
+   between the web server and the data, and are also known as <em>middleware</em>.
+  The middleware is designed to keep data handling tasks separate from user interface
+  tasks as much as possible. The combination of Perl programming code, XML, and
+  XSLT help to achieve this. Each page served  is created by generating
+  an XML data document and transforming it using XSLT to HTML for display in
+   the browser. </p>
+<p>It is beyond the scope of this documentation to teach the fundamentals of
+  Perl, XML, XSLT and HTML. You may find you can comprehend most of
+  this documentation even if you are not very familiar with some of the technologies.
+  We will start with a high level view, increasing the complexity as we go. </p>
+<p>The diagram below illustrates how a CGI takes an  XML template,
+  populates it with data, and transforms it to HTML using an XSL stylesheet.</p>
+<p><a href="Image_Dlxsxmlxslhtml.html" class="image" title="Image:dlxsxmlxslhtml.png"><img alt="Image:dlxsxmlxslhtml.png" src="../mediawiki/images/f/f9/Dlxsxmlxslhtml.png" width="522" height="397" border="0" /></a>
+</p>
+<a name="Breakdown_of_Components"></a><h2><span class="editsection">[<a href="http://localhost/mediawiki/index.php?title=User_Interface_Overview&amp;action=edit&amp;section=2" title="Edit section: Breakdown of Components">edit</a>]</span> <span class="mw-headline">Breakdown of Components</span></h2>
+<a name="XML_Templates"></a><h3><span class="editsection">[<a href="http://localhost/mediawiki/index.php?title=User_Interface_Overview&amp;action=edit&amp;section=3" title="Edit section: XML Templates">edit</a>]</span> <span class="mw-headline">XML Templates</span></h3>
+<p>An XML template exists for every page in the DLXS system. An XML
+  template is an XML file that contains
+  placeholders, called <strong>Processing Instructions</strong>. It is the starting
+  point for what will be an XML document full of dynamically generated data. </p>
+<p>Templates vary depending on the purpose of the page. A search form page has
+  different requirements that a search results page, and the templates reflect
+  this. </p>
+<p>Take a look at this complete <a href="http://www.dlxs.org/training/workshop200808/ui/search_template.xml" class="external text" title="http://www.dlxs.org/training/workshop200808/ui/search_template.xml" rel="nofollow">XML template.</a> (Not all browsers can display XML. Try Firefox.). It is for a search form page in Text Class.
+</p>
+<a name="XML"></a><h3><span class="editsection">[<a href="http://localhost/mediawiki/index.php?title=User_Interface_Overview&amp;action=edit&amp;section=4" title="Edit section: XML">edit</a>]</span> <span class="mw-headline">XML</span></h3>
+<p>The CGI produces an XML document as a result of replacing a templates <strong>Processing
+    Instructions</strong>. The XML contains all of the data to be displayed in
+    the browser, however, the it lacks the formatting instructions needed by
+    the browser to display an attractive and functional user interface. </p>
+<p>Take a look at this <a href="http://www.dlxs.org/training/workshop200808/ui/search.xml" class="external text" title="http://www.dlxs.org/training/workshop200808/ui/search.xml" rel="nofollow">XML</a> document.
+  It is the template above after having the PIs replaced by the CGI.</p>
+<p>XML documents used in the user interface are totally different than the XML
+  documents that hold content such as the full text of a book or an electronic
+  Finding Aid, though portions of content will  replace PIs in the XML for search
+  results page. If you want to know more about preparing data as XML, see <a href="Data_Conversion_and_Preparation.html" title="Data Conversion and Preparation">Data Conversion and Preparation</a>.</p>
+<a name="Processing_Instructions"></a><h3><span class="editsection">[<a href="http://localhost/mediawiki/index.php?title=User_Interface_Overview&amp;action=edit&amp;section=5" title="Edit section: Processing Instructions">edit</a>]</span> <span class="mw-headline">Processing Instructions</span></h3>
+<p><strong>Processing Instructions</strong> or<strong> PIs</strong> are replaced
+  by the CGI with
+  dynamically generated data such as search results, and information used to
+  construct menus, forms and links in the user interface. Every Processing Instruction
+  is paired with a handler in the CGI for replacing the PI with data or other
+  information. </p>
+<pre>  &lt;PI_IDENTIFIER_NAME [modifiername=&quot;value&quot;]*?&gt;
+</pre>
+<p>Above you can see the generic form of a Processing Instruction. PIs can optionally
+  have modifiers, though most do not. Modifiers pass additional information to
+  the CGI, affecting the replacement. </p>
+<p>Processing Instructions are usually wrapped by XML tags for structure and
+  context. Some PIs get replaced by small amounts of data, such as the word &quot;true&quot;
+or &quot;false&quot;, while others are replaced by large amounts of data, sometimes containing
+  additional XML tags.</p>
+<p>The diagram below shows a  snippet of the XML template. </p>
+<p><a href="Image_Xmltemplatesnip.html" class="image" title="Image:xmltemplatesnip.png"><img alt="Image:xmltemplatesnip.png" src="../mediawiki/images/3/3f/Xmltemplatesnip.png" width="530" height="280" border="0" /></a> 
+</p>
+<p>Next you see the  snippet of the XML after Processing Instructions
+  have been replacedby the CGI. </p>
+<p><a href="Image_Xmlsnip.html" class="image" title="Image:xmlsnip.png"><img alt="Image:xmlsnip.png" src="../mediawiki/images/5/5b/Xmlsnip.png" width="530" height="277" border="0" /></a> 
+</p>
+<a name="XSL"></a><h3><span class="editsection">[<a href="http://localhost/mediawiki/index.php?title=User_Interface_Overview&amp;action=edit&amp;section=6" title="Edit section: XSL">edit</a>]</span> <span class="mw-headline">XSL</span></h3>
+<p>XSL is the programming language used to transform the XML to HTML. An XSL
+  program is more commonly called an XSL Stylesheet. Each XML file specifies
+  the XSL Stylesheet to be used for transformation. It is common in DLXS for
+  one stylesheet to incorporate several other stylesheets stored in separate
+  files (for the convenience of sharing code). More on this later.</p>
+<p>Take a look at this <a href="http://www.dlxs.org/training/workshop200808/ui/searchforms.xsl" class="external text" title="http://www.dlxs.org/training/workshop200808/ui/searchforms.xsl" rel="nofollow">XSL Stylesheet</a>.
+  It is one of the stylesheets used to transform XML to HTML for the search form
+  page in Text Class. You might notice that XSL resembles XML. In fact, it <strong>is</strong>  XML.
+  XML takes on many different forms, one is XSL. You might also notice that an
+  XSL stylesheet contains XSL templates. An XSL template is a little bit like
+  a subroutine or function in other programming languages, and are not to be
+  confused with <a href="#XML_Templates" title="">XML Templates</a>. </p>
+<p>The diagram below shows the snippet of XSL that transforms the XML above to
+  HTML. </p>
+<p><a href="Image_Xslsnip.html" class="image" title="Image:xslsnip.png"><img alt="Image:xslsnip.png" src="../mediawiki/images/6/65/Xslsnip.png" width="521" height="294" border="0" /></a>
+</p>
+<a name="HTML"></a><h3><span class="editsection">[<a href="http://localhost/mediawiki/index.php?title=User_Interface_Overview&amp;action=edit&amp;section=7" title="Edit section: HTML">edit</a>]</span> <span class="mw-headline">HTML</span></h3>
+<p>HTML is the format output by the CGI to the browser. It is the result of applying
+  the XSL Stylesheet to the XML.</p>
+<p>Take a look at this <a href="http://www.dlxs.org/training/workshop200808/ui/search_htmlsource.html" class="external text" title="http://www.dlxs.org/training/workshop200808/ui/search_htmlsource.html" rel="nofollow">HTML</a>.
+  It is the complete HTML source for the Text Class search form.</p>
+<p>The diagram below shows the snippet of HTML generated by transforming the
+  XML with XSL. </p>
+<p><a href="Image_Htmlsnip.html" class="image" title="Image:htmlsnip.png"><img alt="Image:htmlsnip.png" src="../mediawiki/images/7/7a/Htmlsnip.png" width="521" height="237" border="0" /></a>
+</p>
+<a name="Language_Map"></a><h3><span class="editsection">[<a href="http://localhost/mediawiki/index.php?title=User_Interface_Overview&amp;action=edit&amp;section=8" title="Edit section: Language Map">edit</a>]</span> <span class="mw-headline">Language Map</span></h3>
+<p>All text that appears as part of the user interface is stored in an XML file.
+  Phrases are assigned keys, and the keys are used in the XSL to retrieve phrases.
+  The potential exists to have interfaces in different languages. A default map
+  resides in the web directory for each Class and is called langmap.en.xml. The
+  CGI incorporates the map file into the XML file. </p>
+<a name="Javascript"></a><h3><span class="editsection">[<a href="http://localhost/mediawiki/index.php?title=User_Interface_Overview&amp;action=edit&amp;section=9" title="Edit section: Javascript">edit</a>]</span> <span class="mw-headline">Javascript</span></h3>
+<p>Javascript is another key technology that plays a role in the user interface.
+  Like CSS, Javascript is applied by the browser, not the server.</p>
+<a name="Cascading_Stylesheets_.28CSS.29"></a><h3><span class="editsection">[<a href="http://localhost/mediawiki/index.php?title=User_Interface_Overview&amp;action=edit&amp;section=10" title="Edit section: Cascading Stylesheets (CSS)">edit</a>]</span> <span class="mw-headline">Cascading Stylesheets (CSS)</span></h3>
+<p>DLXS uses CSS extensively to further refine the layout of the HTML. Cascading
+  Stylesheets are very different from XSL Stylesheets. XSL Stylesheets affect
+  the structure of the HTML document (e.g., the hierarchy of the elements). Cascading
+  Stylesheets affect the display of the HTML structure. CSS is great for formatting
+  with fonts and colors, and it can even be used to show or hide a portion of
+  the HTML. CSS is applied by the browser, not the server.</p>
+<a name="Collection_Manager"></a><h3><span class="editsection">[<a href="http://localhost/mediawiki/index.php?title=User_Interface_Overview&amp;action=edit&amp;section=11" title="Edit section: Collection Manager">edit</a>]</span> <span class="mw-headline">Collection Manager</span></h3>
+<p>Some of the most common customizations can be done in Collection Manager.
+  For example, the title of the collection. Image Class can be customized quite
+  extensively in Collection Manager. For example, the display of data fields
+  can be configured extensively. Customizations are relatively easy to make in
+  Collection Manager. Use it whenever possible. </p>
+<a name="Fallback"></a><h3><span class="editsection">[<a href="http://localhost/mediawiki/index.php?title=User_Interface_Overview&amp;action=edit&amp;section=12" title="Edit section: Fallback">edit</a>]</span> <span class="mw-headline">Fallback</span></h3>
+<p>Fallback is a mechanism  used by DLXS CGIs to handle the task of selecting
+  user interface files (e.g., XML templates) based on whether the end user is
+  working at the class, group, or collection level, and whether user interface
+  customizations have been made.</p>
+<p>DLXS allows  collection specific user interface customizations.  Similarly, custom interfaces can be created for groups, or for arbitrary sets of collections using Custom Fallback Levels.  The DLXS Classes
+  each have a default interface that is used if there are no customizations at
+  the custom, group, or collection levels. </p>
+<p>When the CGI needs a user interface file, for example, search.xml for the
+  text class search form, the Fallback mechanism considers a number of factors
+  when choosing a file.</p>
+<ul>
+  <li>How many collections are involved? </li>
+  <li>Is a group involved?</li>
+  <li>Does the file exist
+    in the collection's web directory?</li>
+  <li>Does the collection have a default
+  group?</li>
+  <li>Does the file exist in the group's
+    web directory?</li>
+  <li>Does the Collection Manager record for the collection define one or more Custom Fallback levels?</li>
+  <li>Does the file exist in any of the Custom Fallback levels?</li>
+</ul>
+<p>Fallback is  complex due to the vast number possible situations,
+  but has great benefits. It allows very specific aspects of the user interface
+  to be customized while all other aspects <em>fall
+  back</em> to the defaults at the group, Custom, or class level. This  reduces
+  duplication and in the long term minimimizes maintenance work (and the headaches
+  that go with it). </p>
+<p><strong>The principle
+    idea is to duplicate code as little as possible, and utilize fallback as
+    much as possible.</strong></p>
+<p>All user interface files are stored in the file system under <tt>$DLXSROOT/web</tt>.  </p>
+<p>There is a directory for files shared across the classes called &quot;lib&quot; and
+  located at $DLXSROOT/web/lib. </p>
+<p>Each class has a directory in &quot;web&quot;.</p>
+<ul>
+  <li>i/image</li>
+  <li>t/text</li>
+  <li>f/findaid</li>
+  <li>b/bib</li>
+</ul>
+<p>If a group or collection requires customization, it may be necessary to create
+  a web directory based on the group or collection ID. </p>
+<ul>
+  <li>c/collid (e.g., a/amverse)</li>
+  <li>g/groupid (e.g., b/bhl)</li>
+</ul>
+<p>New to <span class="release_15"><b>Release_15</b></span>: If certain customizations are common to multiple groups, or to any subset of collections which belong to the same class but not to the same group, then you can manage the corresponding code in one or more Custom Fallback levels.  In the fallback routine, Custom Fallback layers are checked after the collection and group directories, but before the class directories.</p>
+<p>Custom Fallback layers are defined in the Collection Manager record for each collection which will use those customizations.  Simply list in the mutli-value 'customfallbackwebdirs' field all of the directories that the middleware should check for the existence of each file, in the order in which they should be checked.  In a cross-collection context, only vlaues listed by every collection in the request will be used.  <strong>NOTE: listing the same directories in multiple collections, but in a different order, is treated as a configuration error.</strong></p>
+<p>You can see a report of the Fallback file selection process by adding <a href="http://quod.lib.umich.edu/cgi/t/text/text-idx?debug=tpl;page=simple&amp;c=amverse" class="external text" title="http://quod.lib.umich.edu/cgi/t/text/text-idx?debug=tpl;page=simple&amp;c=amverse" rel="nofollow">debug=tpl</a>  to
+  the URL. The CGI first checks for a file in the collection level directory,
+  then group, and finally at the class level. </p>
+<hr size="1" width="90%" />
+<p>Next: <a href="User_Interface_Customization.html" title="User Interface Customization">User Interface Customization</a>
+</p><p><br />
+<a href="#top" title="">Top</a>
+</p>
+<!-- 
+NewPP limit report
+Preprocessor node count: 78/1000000
+Post-expand include size: 0/2097152 bytes
+Template argument size: 0/2097152 bytes
+Expensive parser function count: 0/100
+-->
+
+<!-- Saved in parser cache with key mediawiki_dlxsdocs_15:pcache:idhash:124-0!1!0!!en!2 and timestamp 20250202211447 -->
+<div class="printfooter">
+Retrieved from "<a href="User_Interface_Overview.html">http://localhost/wiki/User_Interface_Overview</a>"</div>
+						<!-- end content -->
+			<div class="visualClear"></div>
+		</div>
+	</div>
+		</div>
+		<div id="column-one">
+	<div id="p-cactions" class="portlet">
+		<h5>Views</h5>
+		<div class="pBody">
+			<ul>
+	
+				 <li id="ca-nstab-main" class="selected"><a href="User_Interface_Overview.html" title="View the content page [c]" accesskey="c">Page</a></li>
+				 <li id="ca-talk" class="new"><a href="http://localhost/mediawiki/index.php?title=Talk:User_Interface_Overview&amp;action=edit" title="Discussion about the content page [t]" accesskey="t">Discussion</a></li>
+				 <li id="ca-edit"><a href="http://localhost/mediawiki/index.php?title=User_Interface_Overview&amp;action=edit" title="You can edit this page.&#10;Please use the preview button before saving. [e]" accesskey="e">Edit</a></li>
+				 <li id="ca-history"><a href="http://localhost/mediawiki/index.php?title=User_Interface_Overview&amp;action=history" title="Past versions of this page. [h]" accesskey="h">History</a></li>			</ul>
+		</div>
+	</div>
+	<div class="portlet" id="p-personal">
+		<h5>Personal tools</h5>
+		<div class="pBody">
+			<ul>
+				<li id="pt-login"><a href="http://localhost/mediawiki/index.php?title=Special:UserLogin&amp;returnto=User_Interface_Overview" title="You are encouraged to log in, it is not mandatory however. [o]" accesskey="o">Log in / create account</a></li>
+			</ul>
+		</div>
+	</div>
+	<div class="portlet" id="p-logo">
+		<a style="background-image: url(../dlxs15/uploads/DLXS_logo2.gif);" href="Main_Page.html" title="Visit the Main Page [z]" accesskey="z"></a>
+	</div>
+	<script type="text/javascript"> if (window.isMSIE55) fixalpha(); </script>
+	<div class='generated-sidebar portlet' id='p-navigation'>
+		<h5>Navigation</h5>
+		<div class='pBody'>
+			<ul>
+				<li id="n-mainpage-description"><a href="Main_Page.html">Main Page</a></li>
+				<li id="n-portal"><a href="DLXS_Documentation_Community_Portal.html" title="About the project, what you can do, where to find things">Community portal</a></li>
+				<li id="n-currentevents"><a href="DLXS_Documentation_Current_events.html" title="Find background information on current events">Current events</a></li>
+				<li id="n-recentchanges"><a href="Special_RecentChanges.html" title="The list of recent changes in the wiki. [r]" accesskey="r">Recent changes</a></li>
+				<li id="n-randompage"><a href="Mounting_a_Bib_Class_Collection.html" title="Load a random page [x]" accesskey="x">Random page</a></li>
+				<li id="n-help"><a href="Help_Contents.html" title="The place to find out.">Help</a></li>
+			</ul>
+		</div>
+	</div>
+	<div id="p-search" class="portlet">
+		<h5><label for="searchInput">Search</label></h5>
+		<div id="searchBody" class="pBody">
+			<form action="http://localhost/wiki/Special:Search" id="searchform"><div>
+				<input id="searchInput" name="search" type="text" title="Search DLXS Documentation [f]" accesskey="f" value="" />
+				<input type='submit' name="go" class="searchButton" id="searchGoButton"	value="Go" title="Go to a page with this exact name if exists" />&nbsp;
+				<input type='submit' name="fulltext" class="searchButton" id="mw-searchButton" value="Search" title="Search the pages for this text" />
+			</div></form>
+		</div>
+	</div>
+	<div class="portlet" id="p-tb">
+		<h5>Toolbox</h5>
+		<div class="pBody">
+			<ul>
+				<li id="t-whatlinkshere"><a href="Special_WhatLinksHere/User_Interface_Overview.html" title="List of all wiki pages that link here [j]" accesskey="j">What links here</a></li>
+				<li id="t-recentchangeslinked"><a href="Special_RecentChangesLinked/User_Interface_Overview.html" title="Recent changes in pages linked from this page [k]" accesskey="k">Related changes</a></li>
+<li id="t-specialpages"><a href="Special_SpecialPages.html" title="List of all special pages [q]" accesskey="q">Special pages</a></li>
+				<li id="t-print"><a href="http://localhost/mediawiki/index.php?title=User_Interface_Overview&amp;printable=yes" title="Printable version of this page [p]" accesskey="p">Printable version</a></li>				<li id="t-permalink"><a href="http://localhost/mediawiki/index.php?title=User_Interface_Overview&amp;oldid=3112" title="Permanent link to this version of the page">Permanent link</a></li>			</ul>
+		</div>
+	</div>
+		</div><!-- end of the left (by default at least) column -->
+			<div class="visualClear"></div>
+			<div id="footer">
+				<div id="f-poweredbyico"><a href="http://www.mediawiki.org/"><img src="../mediawiki/skins/common/images/poweredby_mediawiki_88x31.png" alt="Powered by MediaWiki" /></a></div>
+			<ul id="f-list">
+				<li id="lastmod"> This page was last modified on 9 November 2010, at 03:44.</li>
+				<li id="viewcount">This page has been accessed 2,441 times.</li>
+				<li id="privacy"><a href="DLXS_Documentation_Privacy_policy.html" title="DLXS Documentation:Privacy policy">Privacy policy</a></li>
+				<li id="about"><a href="DLXS_Documentation_About.html" title="DLXS Documentation:About">About DLXS Documentation</a></li>
+				<li id="disclaimer"><a href="DLXS_Documentation_General_disclaimer.html" title="DLXS Documentation:General disclaimer">Disclaimers</a></li>
+			</ul>
+		</div>
+</div>
+
+		<script type="text/javascript">if (window.runOnloadHook) runOnloadHook();</script>
+<!-- Served in 0.108 secs. --></body>
+<!-- Mirrored from localhost/wiki/User_Interface_Overview by HTTrack Website Copier/3.x [XR&CO'2014], Mon, 03 Feb 2025 00:29:55 GMT -->
+</html>

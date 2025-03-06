@@ -1,0 +1,234 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en" dir="ltr">
+	
+<!-- Mirrored from localhost/wiki/Directory_Structure by HTTrack Website Copier/3.x [XR&CO'2014], Mon, 03 Feb 2025 00:25:31 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=UTF-8" /><!-- /Added by HTTrack -->
+<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+		<meta name="generator" content="MediaWiki 1.13.5" />
+		<meta name="keywords" content="Directory Structure,DLXS Wiki,Directory Conventions: Complete Version,Getting Started with DLXS" />
+		<link rel="shortcut icon" href="http://localhost/favicon.ico" />
+		<link rel="search" type="application/opensearchdescription+xml" href="http://localhost/mediawiki/opensearch_desc.php" title="DLXS Documentation (en)" />
+		<link rel="alternate" type="application/rss+xml" title="DLXS Documentation RSS Feed" href="http://localhost/mediawiki/index.php?title=Special:RecentChanges&amp;feed=rss" />
+		<link rel="alternate" type="application/atom+xml" title="DLXS Documentation Atom Feed" href="http://localhost/mediawiki/index.php?title=Special:RecentChanges&amp;feed=atom" />
+		<title>Directory Structure - DLXS Documentation</title>
+		<style type="text/css" media="screen, projection">/*<![CDATA[*/
+			@import "../mediawiki/skins/common/sharedfa7c.css?164";
+			@import "../mediawiki/skins/monobook/mainfa7c.css?164";
+		/*]]>*/</style>
+		<link rel="stylesheet" type="text/css" media="print" href="../mediawiki/skins/common/commonPrintfa7c.css?164" />
+		<!--[if lt IE 5.5000]><style type="text/css">@import "/mediawiki/skins/monobook/IE50Fixes.css?164";</style><![endif]-->
+		<!--[if IE 5.5000]><style type="text/css">@import "/mediawiki/skins/monobook/IE55Fixes.css?164";</style><![endif]-->
+		<!--[if IE 6]><style type="text/css">@import "/mediawiki/skins/monobook/IE60Fixes.css?164";</style><![endif]-->
+		<!--[if IE 7]><style type="text/css">@import "/mediawiki/skins/monobook/IE70Fixes.css?164";</style><![endif]-->
+		<!--[if lt IE 7]><script type="text/javascript" src="/mediawiki/skins/common/IEFixes.js?164"></script>
+		<meta http-equiv="imagetoolbar" content="no" /><![endif]-->
+		
+		<script type= "text/javascript">/*<![CDATA[*/
+var skin = "monobook";
+var stylepath = "/mediawiki/skins";
+var wgArticlePath = "/wiki/$1";
+var wgScriptPath = "/mediawiki";
+var wgScript = "http://localhost/mediawiki/index.php";
+var wgVariantArticlePath = false;
+var wgActionPaths = [];
+var wgServer = "http://localhost/";
+var wgCanonicalNamespace = "";
+var wgCanonicalSpecialPageName = false;
+var wgNamespaceNumber = 0;
+var wgPageName = "Directory_Structure";
+var wgTitle = "Directory Structure";
+var wgAction = "view";
+var wgArticleId = "12";
+var wgIsArticle = true;
+var wgUserName = null;
+var wgUserGroups = null;
+var wgUserLanguage = "en";
+var wgContentLanguage = "en";
+var wgBreakFrames = false;
+var wgCurRevisionId = "2922";
+var wgVersion = "1.13.5";
+var wgEnableAPI = true;
+var wgEnableWriteAPI = false;
+var wgRestrictionEdit = [];
+var wgRestrictionMove = [];
+/*]]>*/</script>
+                
+		<script type="text/javascript" src="../mediawiki/skins/common/wikibitsfa7c.js?164"><!-- wikibits js --></script>
+		<!-- Head Scripts -->
+		<script type="text/javascript" src="../mediawiki/skins/common/ajaxfa7c.js?164"></script>
+		<script type="text/javascript" src="http://localhost/mediawiki/index.php?title=-&amp;action=raw&amp;gen=js&amp;useskin=monobook"><!-- site js --></script>
+		<style type="text/css">/*<![CDATA[*/
+@import "http://localhost/mediawiki/index.php?title=MediaWiki:Common.css&amp;usemsgcache=yes&amp;action=raw&amp;ctype=text/css&amp;smaxage=18000";
+@import "http://localhost/mediawiki/index.php?title=MediaWiki:Monobook.css&amp;usemsgcache=yes&amp;action=raw&amp;ctype=text/css&amp;smaxage=18000";
+@import "http://localhost/mediawiki/index.php?title=-&amp;action=raw&amp;gen=css&amp;maxage=18000&amp;useskin=monobook";
+/*]]>*/</style>
+	</head>
+<body class="mediawiki ns-0 ltr page-Directory_Structure">
+	<div id="globalWrapper">
+		<div id="column-content">
+	<div id="content">
+		<a name="top" id="top"></a>
+				<h1 class="firstHeading">Directory Structure</h1>
+		<div id="bodyContent">
+			<h3 id="siteSub">From DLXS Documentation</h3>
+			<div id="contentSub"></div>
+									<div id="jump-to-nav">Jump to: <a href="#column-one">navigation</a>, <a href="#searchInput">search</a></div>			<!-- start content -->
+			<p><a href="DLXS_Wiki.html" title="DLXS Wiki">Main Page</a> &gt; <a href="Getting_Started_with_DLXS.html" title="Getting Started with DLXS">Getting Started with DLXS</a> &gt; Directory Structure
+</p>
+<hr />
+<p>This document describes the recommended directory structure for all DLXS files. If you want to get up and running quickly, follow the recommended directory structures described here. This structure will be used by default when you install DLXS software. [NB: examples that follow use bold to designate portions that reflect potential choices in your local implementation.]
+</p><p>If you want to use a different structure, please read all the documentation here so that your decision is an informed one. Much more detail is given at <a href="Directory_Conventions__Complete_Version.html" title="Directory Conventions: Complete Version">Directory Conventions: Complete Version</a>.
+</p><p>XPAT and other software used by DLXS should be installed by the sysadmin wherever s/he decides is best.
+</p>
+<table id="toc" class="toc" summary="Contents"><tr><td><div id="toctitle"><h2>Contents</h2></div>
+<ul>
+<li class="toclevel-1"><a href="#DLXSROOT"><span class="tocnumber">1</span> <span class="toctext">DLXSROOT</span></a></li>
+<li class="toclevel-1"><a href="#DLXSDATAROOT_Environment_Variable"><span class="tocnumber">2</span> <span class="toctext">DLXSDATAROOT Environment Variable</span></a></li>
+<li class="toclevel-1"><a href="#The_CGI_Directory"><span class="tocnumber">3</span> <span class="toctext">The CGI Directory</span></a></li>
+<li class="toclevel-1"><a href="#The_lib_.28library.29_directory"><span class="tocnumber">4</span> <span class="toctext">The lib (library) directory</span></a></li>
+<li class="toclevel-1"><a href="#The_class_web_directory"><span class="tocnumber">5</span> <span class="toctext">The class web directory</span></a></li>
+<li class="toclevel-1"><a href="#The_Collection_web_directory"><span class="tocnumber">6</span> <span class="toctext">The Collection web directory</span></a></li>
+<li class="toclevel-1"><a href="#The_Data_Directory"><span class="tocnumber">7</span> <span class="toctext">The Data Directory</span></a></li>
+<li class="toclevel-1"><a href="#The_indexes_directory"><span class="tocnumber">8</span> <span class="toctext">The indexes directory</span></a></li>
+<li class="toclevel-1"><a href="#The_database"><span class="tocnumber">9</span> <span class="toctext">The database</span></a></li>
+<li class="toclevel-1"><a href="#The_map_files"><span class="tocnumber">10</span> <span class="toctext">The map files</span></a></li>
+<li class="toclevel-1"><a href="#The_inline_images_for_text_collections"><span class="tocnumber">11</span> <span class="toctext">The inline images for text collections</span></a></li>
+</ul>
+</td></tr></table><script type="text/javascript"> if (window.showTocToggle) { var tocShowText = "show"; var tocHideText = "hide"; showTocToggle(); } </script>
+<a name="DLXSROOT"></a><h3><span class="editsection">[<a href="http://localhost/mediawiki/index.php?title=Directory_Structure&amp;action=edit&amp;section=1" title="Edit section: DLXSROOT">edit</a>]</span> <span class="mw-headline">DLXSROOT</span></h3>
+<p>All middleware files are to be installed under one main directory on your server that can be anywhere you wish. The environment variable DLXSROOT should be set to the full directory path, should be configured in your web server configuration, and should be set in the UNIX shell environments of anyone who will be working with DLXS. DLXS isntallation will provide an example Apache web server configuration that sets the DLXSROOT variable properly. Consult with your system administrator to set the variable in users' UNIX environments.
+</p>
+<pre>   In this document, we will assume the value of the DLXSROOT environment variable is <code>/dlxs</code>.
+</pre>
+<a name="DLXSDATAROOT_Environment_Variable"></a><h3><span class="editsection">[<a href="http://localhost/mediawiki/index.php?title=Directory_Structure&amp;action=edit&amp;section=2" title="Edit section: DLXSDATAROOT Environment Variable">edit</a>]</span> <span class="mw-headline">DLXSDATAROOT Environment Variable</span></h3>
+<p>If you decide to keep your data (SGML/XML) in a directory outside the $DLXSROOT directory, you can create and set the $DLXSDATAROOT environment variable to point to that directory. The middleware will check the DLXSDATAROOT first, and if it is not set, it will fallback to use the $DLXSROOT directory to find the data in its <code>obj</code> subdirectory.
+</p>
+<a name="The_CGI_Directory"></a><h3><span class="editsection">[<a href="http://localhost/mediawiki/index.php?title=Directory_Structure&amp;action=edit&amp;section=3" title="Edit section: The CGI Directory">edit</a>]</span> <span class="mw-headline">The CGI Directory</span></h3>
+<p><code>/dlxs/cgi/c/class/</code>
+In our example, this would be /dlxs/cgi/t/text. This directory holds all the class-specific middleware programs, their configuration files (if any), and some Text Class specific Perl class modules.
+</p>
+<a name="The_lib_.28library.29_directory"></a><h3><span class="editsection">[<a href="http://localhost/mediawiki/index.php?title=Directory_Structure&amp;action=edit&amp;section=4" title="Edit section: The lib (library) directory">edit</a>]</span> <span class="mw-headline">The lib (library) directory</span></h3>
+<p><code>/dlxs/lib/</code>
+This directory holds all the Perl library modules that are DLXS specific.
+</p>
+<a name="The_class_web_directory"></a><h3><span class="editsection">[<a href="http://localhost/mediawiki/index.php?title=Directory_Structure&amp;action=edit&amp;section=5" title="Edit section: The class web directory">edit</a>]</span> <span class="mw-headline">The class web directory</span></h3>
+<p><code>/dlxs/web/c/class/</code>
+In our example (and for Text Class), this would be /dlxs/web/t/text. This directory holds all the XML files (containing Processing Instructions which will be filled in by the middleware), all the XSL files needed to convert the XML into HTML, css files, etc. These files are used for the class-level, cross collection interface and, for those collections that do not have their own specific requirements, these are used as well. (There may also be other files in certain collection specific web directories for those collections that need a different look and feel or extra functionality. See XSL). Another point to note is that the class-level css file (in this case textclass.css) in this directory is linked to by all the HTML files generated by the XSL files. Collection-specific css files may also be called in.
+</p>
+<a name="The_Collection_web_directory"></a><h3><span class="editsection">[<a href="http://localhost/mediawiki/index.php?title=Directory_Structure&amp;action=edit&amp;section=6" title="Edit section: The Collection web directory">edit</a>]</span> <span class="mw-headline">The <i>Collection</i> web directory</span></h3>
+<p><code>/dlxs/web/c/collid</code>
+In our example, for the collection ID "voltaire," this would be /dlxs/web/v/voltaire. Since the voltaire collection requires a different look for some of its HTML pages, this directory holds the XSL files used by the middleware to create HTML pages for delivery for this collection. 
+</p>
+<a name="The_Data_Directory"></a><h3><span class="editsection">[<a href="http://localhost/mediawiki/index.php?title=Directory_Structure&amp;action=edit&amp;section=7" title="Edit section: The Data Directory">edit</a>]</span> <span class="mw-headline">The Data Directory</span></h3>
+<p><code>/dlxs/obj/c/collid</code> or <code>/dlxs/obj/i/d/e/identifier</code>
+In our example (for "voltaire" or for the item/document id "aas3691") this would be /dlxs/obj/v/voltaire or /dlxs/obj/a/a/s/aas3691. This directory holds the actual encoded data and associated images for an entire collection (e.g., "voltaire") or a volume in a collection ("aas3691"). 
+</p>
+<a name="The_indexes_directory"></a><h3><span class="editsection">[<a href="http://localhost/mediawiki/index.php?title=Directory_Structure&amp;action=edit&amp;section=8" title="Edit section: The indexes directory">edit</a>]</span> <span class="mw-headline">The indexes directory</span></h3>
+<p><code>/dlxs/idx/c/collid</code>
+In our "voltaire" example, this would be /dlxs/idx/v/voltaire. This directory holds the XPAT indexes of the encoded text data.
+</p>
+<a name="The_database"></a><h3><span class="editsection">[<a href="http://localhost/mediawiki/index.php?title=Directory_Structure&amp;action=edit&amp;section=9" title="Edit section: The database">edit</a>]</span> <span class="mw-headline">The database</span></h3>
+<p><code>/dlxs/misc/db</code>
+This directory contains the MySQL dump used to populate your MySQL database. as part of installation. See Collection and Group Information Databases
+</p>
+<a name="The_map_files"></a><h3><span class="editsection">[<a href="http://localhost/mediawiki/index.php?title=Directory_Structure&amp;action=edit&amp;section=10" title="Edit section: The map files">edit</a>]</span> <span class="mw-headline">The map files</span></h3>
+<p><code>/dlxs/misc/c/class/maps</code>
+This directory contains the map files needed by the class in question. See Maps
+</p>
+<a name="The_inline_images_for_text_collections"></a><h3><span class="editsection">[<a href="http://localhost/mediawiki/index.php?title=Directory_Structure&amp;action=edit&amp;section=11" title="Edit section: The inline images for text collections">edit</a>]</span> <span class="mw-headline">The inline images for text collections</span></h3>
+<p><code>/dlxs/img/c/collid</code>
+This directory contains any inline images in the collection in question. The web directory <code>/dlxs/web/c/collid/</code> will have a subdirectory named "images" that is symlink-ed to this directory.
+</p><p><a href="#top" title="">Top</a>
+</p>
+<!-- 
+NewPP limit report
+Preprocessor node count: 26/1000000
+Post-expand include size: 0/2097152 bytes
+Template argument size: 0/2097152 bytes
+Expensive parser function count: 0/100
+-->
+
+<!-- Saved in parser cache with key mediawiki_dlxsdocs_15:pcache:idhash:12-0!1!0!!en!2 and timestamp 20250202211308 -->
+<div class="printfooter">
+Retrieved from "<a href="Directory_Structure.html">http://localhost/wiki/Directory_Structure</a>"</div>
+						<!-- end content -->
+			<div class="visualClear"></div>
+		</div>
+	</div>
+		</div>
+		<div id="column-one">
+	<div id="p-cactions" class="portlet">
+		<h5>Views</h5>
+		<div class="pBody">
+			<ul>
+	
+				 <li id="ca-nstab-main" class="selected"><a href="Directory_Structure.html" title="View the content page [c]" accesskey="c">Page</a></li>
+				 <li id="ca-talk" class="new"><a href="http://localhost/mediawiki/index.php?title=Talk:Directory_Structure&amp;action=edit" title="Discussion about the content page [t]" accesskey="t">Discussion</a></li>
+				 <li id="ca-edit"><a href="http://localhost/mediawiki/index.php?title=Directory_Structure&amp;action=edit" title="You can edit this page.&#10;Please use the preview button before saving. [e]" accesskey="e">Edit</a></li>
+				 <li id="ca-history"><a href="http://localhost/mediawiki/index.php?title=Directory_Structure&amp;action=history" title="Past versions of this page. [h]" accesskey="h">History</a></li>			</ul>
+		</div>
+	</div>
+	<div class="portlet" id="p-personal">
+		<h5>Personal tools</h5>
+		<div class="pBody">
+			<ul>
+				<li id="pt-login"><a href="http://localhost/mediawiki/index.php?title=Special:UserLogin&amp;returnto=Directory_Structure" title="You are encouraged to log in, it is not mandatory however. [o]" accesskey="o">Log in / create account</a></li>
+			</ul>
+		</div>
+	</div>
+	<div class="portlet" id="p-logo">
+		<a style="background-image: url(../dlxs15/uploads/DLXS_logo2.gif);" href="Main_Page.html" title="Visit the Main Page [z]" accesskey="z"></a>
+	</div>
+	<script type="text/javascript"> if (window.isMSIE55) fixalpha(); </script>
+	<div class='generated-sidebar portlet' id='p-navigation'>
+		<h5>Navigation</h5>
+		<div class='pBody'>
+			<ul>
+				<li id="n-mainpage-description"><a href="Main_Page.html">Main Page</a></li>
+				<li id="n-portal"><a href="DLXS_Documentation_Community_Portal.html" title="About the project, what you can do, where to find things">Community portal</a></li>
+				<li id="n-currentevents"><a href="DLXS_Documentation_Current_events.html" title="Find background information on current events">Current events</a></li>
+				<li id="n-recentchanges"><a href="Special_RecentChanges.html" title="The list of recent changes in the wiki. [r]" accesskey="r">Recent changes</a></li>
+				<li id="n-randompage"><a href="Mounting_a_Bib_Class_Collection.html" title="Load a random page [x]" accesskey="x">Random page</a></li>
+				<li id="n-help"><a href="Help_Contents.html" title="The place to find out.">Help</a></li>
+			</ul>
+		</div>
+	</div>
+	<div id="p-search" class="portlet">
+		<h5><label for="searchInput">Search</label></h5>
+		<div id="searchBody" class="pBody">
+			<form action="http://localhost/wiki/Special:Search" id="searchform"><div>
+				<input id="searchInput" name="search" type="text" title="Search DLXS Documentation [f]" accesskey="f" value="" />
+				<input type='submit' name="go" class="searchButton" id="searchGoButton"	value="Go" title="Go to a page with this exact name if exists" />&nbsp;
+				<input type='submit' name="fulltext" class="searchButton" id="mw-searchButton" value="Search" title="Search the pages for this text" />
+			</div></form>
+		</div>
+	</div>
+	<div class="portlet" id="p-tb">
+		<h5>Toolbox</h5>
+		<div class="pBody">
+			<ul>
+				<li id="t-whatlinkshere"><a href="Special_WhatLinksHere/Directory_Structure.html" title="List of all wiki pages that link here [j]" accesskey="j">What links here</a></li>
+				<li id="t-recentchangeslinked"><a href="Special_RecentChangesLinked/Directory_Structure.html" title="Recent changes in pages linked from this page [k]" accesskey="k">Related changes</a></li>
+<li id="t-specialpages"><a href="Special_SpecialPages.html" title="List of all special pages [q]" accesskey="q">Special pages</a></li>
+				<li id="t-print"><a href="http://localhost/mediawiki/index.php?title=Directory_Structure&amp;printable=yes" title="Printable version of this page [p]" accesskey="p">Printable version</a></li>				<li id="t-permalink"><a href="http://localhost/mediawiki/index.php?title=Directory_Structure&amp;oldid=2922" title="Permanent link to this version of the page">Permanent link</a></li>			</ul>
+		</div>
+	</div>
+		</div><!-- end of the left (by default at least) column -->
+			<div class="visualClear"></div>
+			<div id="footer">
+				<div id="f-poweredbyico"><a href="http://www.mediawiki.org/"><img src="../mediawiki/skins/common/images/poweredby_mediawiki_88x31.png" alt="Powered by MediaWiki" /></a></div>
+			<ul id="f-list">
+				<li id="lastmod"> This page was last modified on 15 October 2009, at 20:00.</li>
+				<li id="viewcount">This page has been accessed 3,679 times.</li>
+				<li id="privacy"><a href="DLXS_Documentation_Privacy_policy.html" title="DLXS Documentation:Privacy policy">Privacy policy</a></li>
+				<li id="about"><a href="DLXS_Documentation_About.html" title="DLXS Documentation:About">About DLXS Documentation</a></li>
+				<li id="disclaimer"><a href="DLXS_Documentation_General_disclaimer.html" title="DLXS Documentation:General disclaimer">Disclaimers</a></li>
+			</ul>
+		</div>
+</div>
+
+		<script type="text/javascript">if (window.runOnloadHook) runOnloadHook();</script>
+<!-- Served in 0.119 secs. --></body>
+<!-- Mirrored from localhost/wiki/Directory_Structure by HTTrack Website Copier/3.x [XR&CO'2014], Mon, 03 Feb 2025 00:25:33 GMT -->
+</html>

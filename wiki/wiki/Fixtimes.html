@@ -1,0 +1,518 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en" dir="ltr">
+	
+<!-- Mirrored from localhost/wiki/Fixtimes.pl by HTTrack Website Copier/3.x [XR&CO'2014], Mon, 03 Feb 2025 00:40:51 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=UTF-8" /><!-- /Added by HTTrack -->
+<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+		<meta name="generator" content="MediaWiki 1.13.5" />
+		<meta name="keywords" content="Fixtimes.pl,DLXS Wiki,Mounting Collections: Class-specific Steps,Mounting a Bib Class Collection,Preparing BibClass Data" />
+		<link rel="shortcut icon" href="http://localhost/favicon.ico" />
+		<link rel="search" type="application/opensearchdescription+xml" href="http://localhost/mediawiki/opensearch_desc.php" title="DLXS Documentation (en)" />
+		<link rel="alternate" type="application/rss+xml" title="DLXS Documentation RSS Feed" href="http://localhost/mediawiki/index.php?title=Special:RecentChanges&amp;feed=rss" />
+		<link rel="alternate" type="application/atom+xml" title="DLXS Documentation Atom Feed" href="http://localhost/mediawiki/index.php?title=Special:RecentChanges&amp;feed=atom" />
+		<title>Fixtimes.pl - DLXS Documentation</title>
+		<style type="text/css" media="screen, projection">/*<![CDATA[*/
+			@import "../mediawiki/skins/common/sharedfa7c.css?164";
+			@import "../mediawiki/skins/monobook/mainfa7c.css?164";
+		/*]]>*/</style>
+		<link rel="stylesheet" type="text/css" media="print" href="../mediawiki/skins/common/commonPrintfa7c.css?164" />
+		<!--[if lt IE 5.5000]><style type="text/css">@import "/mediawiki/skins/monobook/IE50Fixes.css?164";</style><![endif]-->
+		<!--[if IE 5.5000]><style type="text/css">@import "/mediawiki/skins/monobook/IE55Fixes.css?164";</style><![endif]-->
+		<!--[if IE 6]><style type="text/css">@import "/mediawiki/skins/monobook/IE60Fixes.css?164";</style><![endif]-->
+		<!--[if IE 7]><style type="text/css">@import "/mediawiki/skins/monobook/IE70Fixes.css?164";</style><![endif]-->
+		<!--[if lt IE 7]><script type="text/javascript" src="/mediawiki/skins/common/IEFixes.js?164"></script>
+		<meta http-equiv="imagetoolbar" content="no" /><![endif]-->
+		
+		<script type= "text/javascript">/*<![CDATA[*/
+var skin = "monobook";
+var stylepath = "/mediawiki/skins";
+var wgArticlePath = "/wiki/$1";
+var wgScriptPath = "/mediawiki";
+var wgScript = "http://localhost/mediawiki/index.php";
+var wgVariantArticlePath = false;
+var wgActionPaths = [];
+var wgServer = "http://localhost/";
+var wgCanonicalNamespace = "";
+var wgCanonicalSpecialPageName = false;
+var wgNamespaceNumber = 0;
+var wgPageName = "Fixtimes.html";
+var wgTitle = "Fixtimes.html";
+var wgAction = "view";
+var wgArticleId = "199";
+var wgIsArticle = true;
+var wgUserName = null;
+var wgUserGroups = null;
+var wgUserLanguage = "en";
+var wgContentLanguage = "en";
+var wgBreakFrames = false;
+var wgCurRevisionId = "1787";
+var wgVersion = "1.13.5";
+var wgEnableAPI = true;
+var wgEnableWriteAPI = false;
+var wgRestrictionEdit = [];
+var wgRestrictionMove = [];
+/*]]>*/</script>
+                
+		<script type="text/javascript" src="../mediawiki/skins/common/wikibitsfa7c.js?164"><!-- wikibits js --></script>
+		<!-- Head Scripts -->
+		<script type="text/javascript" src="../mediawiki/skins/common/ajaxfa7c.js?164"></script>
+		<script type="text/javascript" src="http://localhost/mediawiki/index.php?title=-&amp;action=raw&amp;gen=js&amp;useskin=monobook"><!-- site js --></script>
+		<style type="text/css">/*<![CDATA[*/
+@import "http://localhost/mediawiki/index.php?title=MediaWiki:Common.css&amp;usemsgcache=yes&amp;action=raw&amp;ctype=text/css&amp;smaxage=18000";
+@import "http://localhost/mediawiki/index.php?title=MediaWiki:Monobook.css&amp;usemsgcache=yes&amp;action=raw&amp;ctype=text/css&amp;smaxage=18000";
+@import "http://localhost/mediawiki/index.php?title=-&amp;action=raw&amp;gen=css&amp;maxage=18000&amp;useskin=monobook";
+/*]]>*/</style>
+	</head>
+<body class="mediawiki ns-0 ltr page-Fixtimes_pl">
+	<div id="globalWrapper">
+		<div id="column-content">
+	<div id="content">
+		<a name="top" id="top"></a>
+				<h1 class="firstHeading">Fixtimes.pl</h1>
+		<div id="bodyContent">
+			<h3 id="siteSub">From DLXS Documentation</h3>
+			<div id="contentSub"></div>
+									<div id="jump-to-nav">Jump to: <a href="#column-one">navigation</a>, <a href="#searchInput">search</a></div>			<!-- start content -->
+			<p><a href="DLXS_Wiki.html" title="DLXS Wiki">Main Page</a> &gt; <a href="Mounting_Collections__Class-specific_Steps.html" title="Mounting Collections: Class-specific Steps">Mounting Collections: Class-specific Steps</a> &gt; <a href="Mounting_a_Bib_Class_Collection.html" title="Mounting a Bib Class Collection">Mounting a Bib Class Collection</a> &gt; <a href="Preparing_BibClass_Data.html" title="Preparing BibClass Data">Preparing BibClass Data</a> &gt; fixtimes.pl
+</p>
+<hr />
+<pre>
+#!/l/local/bin/perl
+#
+# pfarber Thu Mar 23 14:23:07 2000
+#
+# Parse times data which conforms to the timesi DTD:
+#
+# &lt;!DOCTYPE timesi [
+# &lt;!ELEMENT timesi - - (mh)+ &gt;
+# &lt;!ELEMENT mh - - (mhead,rec+) +(hi) &gt;
+# &lt;!ELEMENT mhead - - (#pcdata|g)+ &gt;
+# &lt;!ELEMENT rec - - (k,(d190|d191|d192|d193|d194|d197|d198),e+) &gt;
+# &lt;!ELEMENT (d190|d191|d192|d193|d194|d197|d198) - - (#pcdata) &gt;
+# &lt;!ELEMENT k - - (#pcdata) &gt;
+# &lt;!ELEMENT e - - (h,(h2)?,t,r) &gt;
+# 
+# &lt;!ELEMENT (h|h2) - - (#pcdata|g)+ &gt;
+# &lt;!ELEMENT t - - (#pcdata,g?,(c|q)?)* &gt; 
+# &lt;!ELEMENT g - - (#pcdata) &gt; 
+# &lt;!ELEMENT (c|q) - - (#pcdata) &gt;
+# &lt;!ELEMENT r - - ((c|q)?,(d|f)+,p,#pcdata,v?) &gt;
+# &lt;!ELEMENT (d|f) - - (#pcdata) &gt;
+# &lt;!ELEMENT p - - (#pcdata) &gt;
+# &lt;!ELEMENT v - - (#pcdata) &gt;
+# 
+# &lt;!ELEMENT hi - - (#pcdata) &gt; ]&gt;
+#
+# emit the parsed data conforming to the bib DTD: /l1/lib/sgml/bib.dtd
+#
+# In the process, a data structure for each &lt;rec&gt; mirroring the
+# timesi DTD is built: 
+#
+#&nbsp;%recHash = ( 'k' =&gt; pcdata. 'e' =&gt; [] )
+# 
+#   where e[0] = ( 'h' =&gt; pcdata stripped of &lt;g&gt;&lt;/g&gt;
+# 		   'h2'=&gt; pcdata stripped of &lt;g&gt;&lt;/g&gt;
+# 		   't' =&gt; [pcdata, pcdata stripped of &lt;g&gt;&lt;/g&gt;, {-1-} etc. ]
+#                       where -1- = ( 'c' =&gt; pcdata, possibly null
+#                                     'q' =&gt; pcdata ) possibly null
+# 		   'r' =&gt; () )
+#
+
+#       where r[0] = ( {-1-}, [-2-], {-3-}, pcdata, {-4-} )
+#            where -1- = ( 'c' =&gt; pcdata, possibly null
+# 			   'q' =&gt; pcdata ) possibly null
+#            where -2-[0] = ( 'd' =&gt; pcdata, possibly null
+# 			      'f' =&gt; pcdata ) possibly null
+#            where -3- = ( 'p' =&gt; pcdata )
+#            where -4- = ( 'v' =&gt; pcdata )
+
+my&nbsp;%charEntHash;
+
+($sec, $min, $hour, $mday, $mon, $year) = localtime(time);
+my $date = $date = ($year+1900) . $mon . $mday;
+
+# Grab the prefix of the filename arg to this program as a uniquifier
+# for the ID across all files processed
+my $idValPart = ( $ARGV[0] =~ m,(.+?)\..+,&nbsp;? $1&nbsp;: '');
+
+my $id = 0;
+
+$/ = &quot;&lt;/mh&gt;&quot;;
+
+&amp;InitCharEntHash;
+
+while ($mh = &lt;&gt;) 
+{
+    my @recElementArr;
+    
+    #
+    #--- parse &lt;!ELEMENT mh - - (mhead,rec+) +(hi) &gt;
+
+    # kill &lt;mhead&gt; &lt;/mhead&gt; + content -- just skip 
+    # $mh =~ s,&lt;mhead&gt;.*?&lt;/mhead&gt;,,s;
+
+    # kill &lt;g&gt; and &lt;/g&gt; tags
+    $mh =~ s,&lt;/?g&gt;,,sg;
+
+    # get each &lt;rec&gt; saving its content
+    while ($mh =~ s,&lt;rec&gt;(.*?)&lt;/rec&gt;,,s)
+    {
+	push(@recElementArr, $&amp;);
+    }
+
+    #--- within a &lt;rec&gt;
+    foreach $recElement (@recElementArr)
+    {
+	my&nbsp;%recHash;
+	
+	# rid &lt;rec&gt; of all \n to make parsing easier
+	$recElement =~ s,\n,,gs;
+
+	# map char ents to corresponding character
+	# This is no handled by mungeents.pl pfarber Thu Aug 17 12:04:29 2000
+	# $recElement =~s,\&amp;([A-Za-z0-9]+?);,$charEntHash{$1},g;
+
+	# kill e.g. &lt;d191&gt;&lt;/d191&gt; + content
+	$recElement =~ s,&lt;d1..&gt;.*?&lt;/d1..&gt;,,;
+
+	# map &lt;hi&gt; -&gt; &lt;I&gt;, &lt;/hi&gt; -&gt; &lt;/I&gt; gobally
+	$recElement =~ s,&lt;hi&gt;,&lt;I&gt;,g;
+	$recElement =~ s,&lt;/hi&gt;,&lt;/I&gt;,g;
+	
+	# grab content of &lt;k&gt;
+	($recHash{'k'}) = ($recElement =~ m,&lt;k&gt;(.*?)&lt;/k&gt;,);
+
+	#--- eat each &lt;e&gt; and process
+	$recHash{'e'} = [];
+	$eCount = 0;
+	while ($recElement =~ s,&lt;e&gt;.*?&lt;/e&gt;,,)
+	{
+	    my $eElement = $&amp;;
+	    
+	    # print $eElement . &quot;\n&quot;;
+	    
+	    $recHash{'e'}[$eCount] = {
+				 'h' =&gt; &quot;&quot;,
+				 'h2' =&gt; &quot;&quot;,
+				 't' =&gt; {},
+				 'r' =&gt; {},
+				};
+	    
+	    # the content of &lt;h&gt;,&lt;h2&gt; within this &lt;e&gt;
+	    ($recHash{'e'}[$eCount]{'h'}) = ($eElement =~ m,&lt;h&gt;(.*?)&lt;/h&gt;,);
+	    ($recHash{'e'}[$eCount]{'h2'}) = ($eElement =~ m,&lt;h2&gt;(.*?)&lt;/h2&gt;,);
+	    
+	    #--- grab the &lt;t&gt; element within &lt;e&gt;
+	    my ($tElement) = ($eElement =~ m,(&lt;t&gt;.*?&lt;/t&gt;),);
+	    # kill &lt;g&gt;, &lt;/g&gt; within &lt;t&gt;
+	    $tElement =~ s,&lt;/?g&gt;,,;
+
+	    my $temp;
+		
+	    #--- get content of &lt;t&gt; by parsing (#pcdata,g?,(c|q)?)*
+	    $recHash{'e'}[$eCount]{'t'}{'t_pcdata'} = &quot;&quot;;
+	    while ($tElement ne &quot;&lt;t&gt;&lt;/t&gt;&quot;)
+	    {
+		# grab &lt;t&gt; content until &lt;c&gt;, &lt;q&gt; or &lt;/t&gt; and append
+		($temp) = ($tElement =~ m,&lt;t&gt;(.*?)&lt;(/t|c|q)&gt;,);
+		$recHash{'e'}[$eCount]{'t'}{'t_pcdata'} .= $temp;
+
+		# eat leading pcdata (watch out for metacharacters in $temp)
+		if ( $temp ) 
+		{
+		    $tElement =~ s,\Q$temp,,;
+		}
+		
+		# get content of (c|q)?
+		my ( $cElement, $cElementCont ) =  ( $tElement =~ m,(&lt;c&gt;(.*?)&lt;/c&gt;),);		
+		$recHash{'e'}[$eCount]{'t'}{'cq_pcdata'} = $cElementCont;
+		$tElement =~ s,\Q$cElement,, if $cElement;
+		my ( $qElement, $qElementCont ) =  ( $tElement =~ m,(&lt;q&gt;(.*?)&lt;/q&gt;),);
+		$recHash{'e'}[$eCount]{'t'}{'cq_pcdata'} = $qElementCont;
+		$tElement =~ s,\Q$qElement,, if $qElement;
+
+
+	    }
+	    
+	    #--- grab the &lt;r&gt; element within &lt;e&gt;
+	    my ($rElement) = ($eElement =~ m,(&lt;r&gt;.*?&lt;/r&gt;),);	    
+	    
+	    # get content of &lt;r&gt; by parsing ((c|q)?,(d|f)+,p,#pcdata,v?)
+	    $rElement =~ s,&lt;r&gt;,,;	    
+	    # (c|q)?
+	    ($temp) = ($rElement =~ m,&lt;c&gt;(.*?)&lt;/c&gt;|&lt;q&gt;(.*?)&lt;/q&gt;,);
+	    ($recHash{'e'}[$eCount]{'r'}{'cq_pcdata'}) = $temp;
+	    $rElement =~ s,&lt;c&gt;.*?&lt;/c&gt;|&lt;q&gt;.*?&lt;/q&gt;,,;	    
+	    # (d|f)+ we expect no more than one &lt;d&gt; or &lt;f&gt;
+	    ($temp) = ($rElement =~ m,&lt;d&gt;(.*?)&lt;/d&gt;|&lt;f&gt;(.*?)&lt;/f&gt;,);
+	    ($recHash{'e'}[$eCount]{'r'}{'df_pcdata'}) = $temp;
+	    $rElement =~ s,&lt;d&gt;.*?&lt;/d&gt;|&lt;f&gt;.*?&lt;/f&gt;,,;
+	    # p
+	    ($temp) = ($rElement =~ m,&lt;p&gt;(.*?)&lt;/p&gt;,);
+	    $temp = &quot;p\. $temp&quot;;
+	    ($recHash{'e'}[$eCount]{'r'}{'p_pcdata'}) = $temp;
+	    $rElement =~ s,&lt;p&gt;.*?&lt;/p&gt;,,;
+	    # grab pcdata up until &lt;v&gt; or &lt;/r&gt;
+	    ($temp) = ($rElement =~ m,(.*?)&lt;(/r|v)&gt;,);
+	    $temp = &quot;col\. $temp&quot;;
+	    ($recHash{'e'}[$eCount]{'r'}{'r_pcdata'}) = $temp;
+	    $rElement =~ s,\Q$temp,,;
+	    # v?
+	    ($temp) = ($rElement =~ m,&lt;v&gt;(.*?)&lt;/v&gt;,);
+	    ($recHash{'e'}[$eCount]{'r'}{'v_pcdata'}) = &quot; $temp&quot;;
+    
+	    #--- Emit the data for each &lt;e&gt; transformed
+	    
+	    # apparently either &lt;t&gt; has (c|q)? or &lt;r&gt; has (c|q)?, exclusively
+	    my $cqContent = $recHash{'e'}[$eCount]{'t'}{'cq_pcdata'};
+	    if (! $cqContent )
+	    {
+		$cqContent = $recHash{'e'}[$eCount]{'r'}{'cq_pcdata'};
+	    }
+	    my $tContent = $recHash{'e'}[$eCount]{'t'}{'t_pcdata'};
+	    my $dContent = $recHash{'e'}[$eCount]{'r'}{'df_pcdata'};
+	    my $pContent = $recHash{'e'}[$eCount]{'r'}{'p_pcdata'};
+	    my $rContent = $recHash{'e'}[$eCount]{'r'}{'r_pcdata'};
+	    my $vContent = $recHash{'e'}[$eCount]{'r'}{'v_pcdata'};
+	    my $kContent = $recHash{'k'};
+	    my $hContent = $recHash{'e'}[$eCount]{'h'}; 
+	    my $h2Content = $recHash{'e'}[$eCount]{'h2'};
+	    $h2Content = $h2Content&nbsp;? &quot;&lt;AF&gt;&quot; . $h2Content . &quot;&lt;/AF&gt;&quot;&nbsp;: &quot;&quot;;
+	    
+	    my $idVal = &quot;TIMES&quot; . $idValPart . $id;
+	    
+	    printf(
+		   qq{&lt;A ID=\&quot;$idVal\&quot; DT=\&quot;%s\&quot;&gt;} . 
+		   qq{&lt;B&gt;&lt;K&gt;%s&lt;/K&gt;&lt;/B&gt;} .
+		   qq{&lt;F&gt;&lt;K&gt;The Times%s&lt;/K&gt;&lt;Z&gt;&lt;YR&gt;%s&lt;/YR&gt;&lt;PG&gt;%s,&nbsp;%s%s&lt;/PG&gt;&lt;/Z&gt;&lt;/F&gt;} .
+		   qq{&lt;H&gt;&lt;P&gt;%s&lt;/P&gt;&lt;/H&gt;} .
+		   qq{&lt;I2&gt;&lt;KW A=\&quot;Times\&quot;&gt;&lt;AF&gt;%s&lt;/AF&gt;%s&lt;/KW&gt;&lt;/I2&gt;&lt;/A&gt;\n}, 
+		   $date,      # DT attval
+		   $tContent,  # K within B
+		   $cqContent, # K within F
+		   $dContent,  # YR
+		   $pContent,  # PG
+		   $rContent,  # PG following &lt;p&gt; content
+		   $vContent,  # PG following &lt;r&gt; content
+		   $kContent,  # P
+		   $hContent,  # AF
+		   $h2Content  # another AF
+		  );
+	    
+	    $eCount += 1;
+	    $id +=1;
+	}
+    }
+}
+
+
+sub InitCharEntHash {
+   &nbsp;%charEntHash = (
+                    'AElig'    =&gt;   &quot;&AElig;&quot;,    'Aacgr'     =&gt;   &quot;&amp;Aacgr;&quot;,    'Aacute'   =&gt; &quot;&Aacute;&quot;,
+                    'Abar'     =&gt;   &quot;&amp;Abar;&quot;,     'Acirc'     =&gt;   &quot;&Acirc;&quot;,    'Agr'      =&gt; &quot;&amp;Agr;&quot;,
+                    'Agrave'   =&gt;   &quot;&Agrave;&quot;,   'Agvgr'     =&gt;   &quot;&amp;Agvgr;&quot;,    'Atigr'    =&gt; &quot;&amp;Atigr;&quot;,
+                    'Auml'     =&gt;   &quot;&Auml;&quot;,     'Bgr'       =&gt;   &quot;&amp;Bgr;&quot;,      'Ccedil'   =&gt; &quot;&Ccedil;&quot;,
+                    'Dgr'      =&gt;   &quot;&amp;Dgr;&quot;,      'EEacgr'    =&gt;   &quot;&amp;EEacgr;&quot;,   'EEgr'     =&gt; &quot;&amp;EEgr;&quot;,
+                    'EEgvgr'   =&gt;   &quot;&amp;EEgvgr;&quot;,   'EEtigr'    =&gt;   &quot;&amp;EEtigr;&quot;,   'Eacgr'    =&gt; &quot;&amp;Eacgr;&quot;,
+                    'Eacute'   =&gt;   &quot;&Eacute;&quot;,   'Ebreve'    =&gt;   &quot;&amp;Ebreve;&quot;,   'Ecirc'    =&gt; &quot;&Ecirc;&quot;,
+                    'Egr'      =&gt;   &quot;&amp;Egr;&quot;,      'Egrave'    =&gt;   &quot;&Egrave;&quot;,   'Egvgr'    =&gt; &quot;&amp;Egvgr;&quot;,
+                    'Etigr'    =&gt;   &quot;&amp;Etigr;&quot;,    'Euml'      =&gt;   &quot;&Euml;&quot;,     'Ggr'      =&gt; &quot;&amp;Ggr;&quot;,
+                    'Iacgr'    =&gt;   &quot;&amp;Iacgr;&quot;,    'Icirc'     =&gt;   &quot;&Icirc;&quot;,    'Igr'      =&gt; &quot;&amp;Igr;&quot;,
+                    'Igvgr'    =&gt;   &quot;&amp;Igvgr;&quot;,    'Itigr'     =&gt;   &quot;&amp;Itigr;&quot;,    'Iuml'     =&gt; &quot;&Iuml;&quot;,
+                    'KHgr'     =&gt;   &quot;&amp;KHgr;&quot;,     'Kgr'       =&gt;   &quot;&amp;Kgr;&quot;,      'Lgr'      =&gt; &quot;&amp;Lgr;&quot;,
+                    'Mgr'      =&gt;   &quot;&amp;Mgr;&quot;,      'Ngr'       =&gt;   &quot;&amp;Ngr;&quot;,      'OElig'    =&gt; &quot;&OElig;&quot;,
+                    'OHacgr'   =&gt;   &quot;&amp;OHacgr;&quot;,   'OHgr'      =&gt;   &quot;&amp;OHgr;&quot;,     'OHgvgr'   =&gt; &quot;&amp;OHgvgr;&quot;,
+                    'OHtigr'   =&gt;   &quot;&amp;OHtigr;&quot;,   'Oacgr'     =&gt;   &quot;&amp;Oacgr;&quot;,    'Obar'     =&gt; &quot;&amp;Obar;&quot;,
+                    'Ocirc'    =&gt;   &quot;&Ocirc;&quot;,    'Ogr'       =&gt;   &quot;&amp;Ogr;&quot;,      'Ogvgr'    =&gt; &quot;&amp;Ogvgr;&quot;,
+                    'Otigr'    =&gt;   &quot;&amp;Otigr;&quot;,    'Ouml'      =&gt;   &quot;&Ouml;&quot;,     'PHgr'     =&gt; &quot;&amp;PHgr;&quot;,
+                    'PSgr'     =&gt;   &quot;&amp;PSgr;&quot;,     'Pgr'       =&gt;   &quot;&amp;Pgr;&quot;,      'Rgr'      =&gt; &quot;&amp;Rgr;&quot;,
+                    'Sbreve'   =&gt;   &quot;&amp;Sbreve;&quot;,   'Sgr'       =&gt;   &quot;&amp;Sgr;&quot;,      'Slungr'   =&gt; &quot;&amp;Slungr;&quot;,
+                    'THgr'     =&gt;   &quot;&amp;THgr;&quot;,     'Tgr'       =&gt;   &quot;&amp;Tgr;&quot;,      'Uacgr'    =&gt; &quot;&amp;Uacgr;&quot;,
+                    'Ucirc'    =&gt;   &quot;&Ucirc;&quot;,    'Ugr'       =&gt;   &quot;&amp;Ugr;&quot;,      'Ugvgr'    =&gt; &quot;&amp;Ugvgr;&quot;,
+                    'Utigr'    =&gt;   &quot;&amp;Utigr;&quot;,    'Uuml'      =&gt;   &quot;&Uuml;&quot;,     'Xgr'      =&gt; &quot;&amp;Xgr;&quot;,
+                    'Zgr'      =&gt;   &quot;&amp;Zgr;&quot;,      'aacdiagr'  =&gt;   &quot;&amp;aacdiagr;&quot;, 'aacgr'    =&gt; &quot;&amp;aacgr;&quot;,
+                    'aacute'   =&gt;   &quot;&aacute;&quot;,   'abar'      =&gt;   &quot;&amp;abar;&quot;,     'acirc'    =&gt; &quot;&acirc;&quot;,
+                    'adiagr'   =&gt;   &quot;&amp;adiagr;&quot;,   'adiagvgr'  =&gt;   &quot;&amp;adiagvgr;&quot;, 'adiatigr' =&gt; &quot;&amp;adiatigr;&quot;,
+                    'aelig'    =&gt;   &quot;&aelig;&quot;,    'agr'       =&gt;   &quot;&amp;agr;&quot;,      'agrave'   =&gt; &quot;&agrave;&quot;,
+                    'agvgr'    =&gt;   &quot;&amp;agvgr;&quot;,    'aposgr'    =&gt;   &quot;&amp;aposgr;&quot;,
+                    'aring'    =&gt;   &quot;&aring;&quot;,    'ashort'    =&gt;   &quot;&amp;ashort;&quot;,   'ast'      =&gt; &quot;&amp;ast;&quot;,
+                    'atigr'    =&gt;   &quot;&amp;atigr;&quot;,    'atilde'    =&gt;   &quot;&atilde;&quot;,   'auml'     =&gt; &quot;&auml;&quot;,
+                    'bgr'      =&gt;   &quot;&amp;bgr;&quot;,      'cacute'    =&gt;   &quot;&amp;cacute;&quot;,   'cbreve'   =&gt; &quot;&amp;cbreve;&quot;,
+                    'ccedil'   =&gt;   &quot;&ccedil;&quot;,   'colgr'     =&gt;   &quot;&amp;colgr;&quot;,    'deg'      =&gt; &quot;&amp;#176&quot;,
+                    'dgr'      =&gt;   &quot;d&quot;,          'dollar'    =&gt;   &quot;\$&quot;,         'eacgr'    =&gt; &quot;&amp;eacgr;&quot;,
+                    'eacute'   =&gt;   &quot;&eacute;&quot;,   'ebar'      =&gt;   &quot;&amp;ebar;&quot;,     'ebreve'   =&gt; &quot;&amp;ebreve;&quot;,
+                    'ecirc'    =&gt;   &quot;&ecirc;&quot;,    'eeacgr'    =&gt;   &quot;&amp;eeacgr;&quot;,   'eegr'     =&gt; &quot;&amp;eegr;&quot;,
+                    'eegvgr'   =&gt;   &quot;&amp;eegvgr;&quot;,   'eetigr'    =&gt;   &quot;&amp;eetigr;&quot;,   'egr'      =&gt; &quot;&amp;egr;&quot;,
+                    'egrave'   =&gt;   &quot;&egrave;&quot;,   'egvgr'     =&gt;   &quot;&amp;egvgr;&quot;,    'equals'   =&gt; &quot;=&quot;,
+                    'etigr'    =&gt;   &quot;&amp;etigr;&quot;,    'euml'      =&gt;   &quot;&euml;&quot;,     'frac12'   =&gt; &quot;1/2&quot;,
+                    'frac13'   =&gt;   &quot;1/3&quot;,        'frac14'    =&gt;   &quot;1/4&quot;,        'frac18'   =&gt; &quot;1/8&quot;,
+                    'frac34'   =&gt;   &quot;3/4&quot;,        'frac78'    =&gt;   &quot;7/8&quot;,        'fslash'   =&gt; &quot;/&quot;,
+                    'ggr'      =&gt;   &quot;&amp;ggr;&quot;,      'gtigr'     =&gt;   &quot;&amp;gtigr;&quot;,    'hyphen'   =&gt; &quot;-&quot;,
+                    'hyphgr'   =&gt;   &quot;&amp;hyphgr;&quot;,   'iacdiagr'  =&gt;   &quot;&amp;iacdiagr;&quot;, 'iacgr'    =&gt; &quot;&amp;iacgr;&quot;,
+                    'iacute'   =&gt;   &quot;&iacute;&quot;,   'ibar'      =&gt;   &quot;&amp;ibar;&quot;,     'icirc'    =&gt; &quot;&icirc;&quot;,
+                    'idiagr'   =&gt;   &quot;&amp;idiagr;&quot;,   'idiagvgr'  =&gt;   &quot;&amp;idiagvgr;&quot;, 'idiatigr' =&gt; &quot;&amp;idiatigr;&quot;,
+                    'igr'      =&gt;   &quot;&amp;igr;&quot;,      'igrave'    =&gt;   &quot;&igrave;&quot;,   'igvgr'    =&gt; &quot;&amp;igvgr;&quot;,
+                    'ishort'   =&gt;   &quot;&amp;ishort;&quot;,   'isubgr'    =&gt;   &quot;&amp;isubgr;&quot;,   'itigr'    =&gt; &quot;&amp;itigr;&quot;,
+                    'iuml'     =&gt;   &quot;&iuml;&quot;,     'kgr'       =&gt;   &quot;&amp;kgr;&quot;,      'khgr'     =&gt; &quot;&amp;khgr;&quot;,
+                    'ktigr'    =&gt;   &quot;&amp;ktigr;&quot;,    'ldquo'     =&gt;   '&quot;',          'lgr'      =&gt; &quot;&amp;lgr;&quot;,
+                    'lsquo'    =&gt;   &quot;'&quot;,           'mdash'    =&gt;   &quot;--&quot;,         'mgr'      =&gt; &quot;&amp;mgr;&quot;,
+                    'minus'    =&gt;   &quot;-&quot;,          'naugr'     =&gt;   &quot;&amp;naugr;&quot;,    'ndash'    =&gt; &quot;-&quot;,
+                    'ngr'      =&gt;   &quot;&amp;ngr;&quot;,      'ntilde'    =&gt;   &quot;&ntilde;&quot;,   'oacgr'    =&gt; &quot;&amp;oacgr;&quot;,
+                    'oacute'   =&gt;   &quot;&oacute;&quot;,   'obar'      =&gt;   &quot;&amp;obar;&quot;,     'obreve'   =&gt; &quot;&amp;obreve;&quot;,
+                    'ocirc'    =&gt;   &quot;&ocirc;&quot;,    'oelig'     =&gt;   &quot;&oelig;&quot;,    'ogr'      =&gt; &quot;&amp;ogr;&quot;,
+                    'ograve'   =&gt;   &quot;&ograve;&quot;,   'ogvgr'     =&gt;   &quot;&amp;ogvgr;&quot;,    'ohacgr'   =&gt; &quot;&amp;ohacgr;&quot;,
+                    'ohgr'     =&gt;   &quot;&amp;ohgr;&quot;,     'ohgvgr'    =&gt;   &quot;&amp;ohgvgr;&quot;,   'ohmacrgr' =&gt; &quot;&amp;ohmacrgr;&quot;,
+                    'ohtigr'   =&gt;   &quot;&amp;ohtigr;&quot;,   'oshort'    =&gt;   &quot;&amp;oshort;&quot;,   'oslash'   =&gt; &quot;&oslash;&quot;,
+                    'otigr'    =&gt;   &quot;&amp;otigr;&quot;,    'otilde'    =&gt;   &quot;&otilde;&quot;,   'ouml'     =&gt; &quot;&ouml;&quot;,
+                    'percent'  =&gt;   &quot;%&quot;,          'pgr'       =&gt;   &quot;&amp;pgr;&quot;,      'phgr'     =&gt; &quot;&amp;phgr;&quot;,
+                    'pound'    =&gt;   &quot;&pound;&quot;,    'psgr'      =&gt;   &quot;&amp;psgr;&quot;,     'qugr'     =&gt; &quot;&amp;qugr;&quot;,
+                    'rb'       =&gt;   &quot;&amp;rb;&quot;,       'rbAacgr'   =&gt;   &quot;&amp;rbAacgr;&quot;,  'rbAgr'    =&gt; &quot;&amp;rbAgr;&quot;,
+                    'rbAgvgr'  =&gt;   &quot;&amp;rbAgvgr;&quot;,  'rbAtigr'   =&gt;   &quot;&amp;rbAtigr;&quot;,  'rbEEacgr' =&gt; &quot;&amp;rbEEacgr;&quot;,
+                    'rbEEgr'   =&gt;   &quot;&amp;rbEEgr;&quot;,   'rbEEgvgr'  =&gt;   &quot;&amp;rbEEgvgr;&quot;, 'rbEEtigr' =&gt; &quot;&amp;rbEEtigr;&quot;,
+                    'rbEacgr'  =&gt;   &quot;&amp;rbEacgr;&quot;,  'rbEgr'     =&gt;   &quot;&amp;rbEgr;&quot;,    'rbEgvgr'  =&gt; &quot;&amp;rbEgvgr;&quot;,
+                    'rbEtigr'  =&gt;   &quot;&amp;rbEtigr;&quot;,  'rbIacgr'   =&gt;   &quot;&amp;rbIacgr;&quot;,  'rbIgr'    =&gt; &quot;&amp;rbIgr;&quot;,
+                    'rbIgvgr'  =&gt;   &quot;&amp;rbIgvgr;&quot;,  'rbItigr'   =&gt;   &quot;&amp;rbItigr;&quot;,  'rbOHacgr' =&gt; &quot;&amp;rbOHacgr;&quot;,
+                    'rbOHgr'   =&gt;   &quot;&amp;rbOHgr;&quot;,   'rbOHgvgr'  =&gt;   &quot;&amp;rbOHgvgr;&quot;, 'rbOHtigr' =&gt; &quot;&amp;rbOHtigr;&quot;,
+                    'rbOacgr'  =&gt;   &quot;&amp;rbOacgr;&quot;,  'rbOgr'     =&gt;   &quot;&amp;rbOgr;&quot;,    'rbOgvgr'  =&gt; &quot;&amp;rbOgvgr;&quot;,
+                    'rbOtigr'  =&gt;   &quot;&amp;rbOtigr;&quot;,  'rbRgr'     =&gt;   &quot;&amp;rbRgr;&quot;,    'rbUacgr'  =&gt; &quot;&amp;rbUacgr;&quot;,
+                    'rbUgr'    =&gt;   &quot;&amp;rbUgr;&quot;,    'rbUgvgr'   =&gt;   &quot;&amp;rbUgvgr;&quot;,  'rbUtigr'  =&gt; &quot;&amp;rbUtigr;&quot;,
+                    'rbaacgr'  =&gt;   &quot;&amp;rbaacgr;&quot;,  'rbagr'     =&gt;   &quot;&amp;rbagr;&quot;,    'rbagvgr'  =&gt; &quot;&amp;rbagvgr;&quot;,
+                    'rbatigr'  =&gt;   &quot;&amp;rbatigr;&quot;,  'rbeacgr'   =&gt;   &quot;&amp;rbeacgr;&quot;,  'rbeeacgr' =&gt; &quot;&amp;rbeeacgr;&quot;,
+                    'rbeegr'   =&gt;   &quot;&amp;rbeegr;&quot;,   'rbeegvgr'  =&gt;   &quot;&amp;rbeegvgr;&quot;, 'rbeetigr' =&gt; &quot;&amp;rbeetigr;&quot;,
+                    'rbegr'    =&gt;   &quot;&amp;rbegr;&quot;,    'rbegvgr'   =&gt;   &quot;&amp;rbegvgr;&quot;,  'rbetigr'  =&gt; &quot;&amp;rbetigr;&quot;,
+                    'rbiacgr'  =&gt;   &quot;&amp;rbiacgr;&quot;,  'rbigr'     =&gt;   &quot;&amp;rbigr;&quot;,    'rbigvgr'  =&gt; &quot;&amp;rbigvgr;&quot;,
+                    'rbitigr'  =&gt;   &quot;&amp;rbitigr;&quot;,  'rboacgr'   =&gt;   &quot;&amp;rboacgr;&quot;,  'rbogr'    =&gt; &quot;&amp;rbogr;&quot;,
+                    'rbogvgr'  =&gt;   &quot;&amp;rbogvgr;&quot;,  'rbohacgr'  =&gt;   &quot;&amp;rbohacgr;&quot;, 'rbohgr'   =&gt; &quot;&amp;rbohgr;&quot;,
+                    'rbohgvgr' =&gt;   &quot;&amp;rbohgvgr;&quot;, 'rbohtigr'  =&gt;   &quot;&amp;rbohtigr;&quot;, 'rbotigr'  =&gt; &quot;&amp;rbotigr;&quot;,
+                    'rbreve'   =&gt;   &quot;&amp;rbreve;&quot;,   'rbrgr'     =&gt;   &quot;&amp;rbrgr;&quot;,    'rbuacgr'  =&gt; &quot;&amp;rbuacgr;&quot;,
+                    'rbugr'    =&gt;   &quot;&amp;rbugr;&quot;,    'rbugvgr'   =&gt;   &quot;&amp;rbugvgr;&quot;,  'rbutigr'  =&gt; &quot;&amp;rbutigr;&quot;,
+                    'rdquo'    =&gt;   '&quot;',          'rgr'       =&gt;   &quot;&amp;rgr;&quot;,      'rsquo'    =&gt; &quot;'&quot;,
+                    'sb'       =&gt;   &quot;&amp;sb;&quot;,       'sbAacgr'   =&gt;   &quot;&amp;sbAacgr;&quot;,  'sbAgr'    =&gt; &quot;&amp;sbAgr;&quot;,
+                    'sbAgvgr'  =&gt;   &quot;&amp;sbAgvgr;&quot;,  'sbAtigr'   =&gt;   &quot;&amp;sbAtigr;&quot;,  'sbEEacgr' =&gt; &quot;&amp;sbEEacgr;&quot;,
+                    'sbEEgr'   =&gt;   &quot;&amp;sbEEgr;&quot;,   'sbEEgvgr'  =&gt;   &quot;&amp;sbEEgvgr;&quot;, 'sbEEtigr' =&gt; &quot;&amp;sbEEtigr;&quot;,
+                    'sbEacgr'  =&gt;   &quot;&amp;sbEacgr;&quot;,  'sbEgr'     =&gt;   &quot;&amp;sbEgr;&quot;,    'sbEgvgr'  =&gt; &quot;&amp;sbEgvgr;&quot;,
+                    'sbEtigr'  =&gt;   &quot;&amp;sbEtigr;&quot;,  'sbIacgr'   =&gt;   &quot;&amp;sbIacgr;&quot;,  'sbIdiagr' =&gt; &quot;&amp;sbIdiagr;&quot;,
+                    'sbIgr'    =&gt;   &quot;&amp;sbIgr;&quot;,    'sbIgvgr'   =&gt;   &quot;&amp;sbIgvgr;&quot;,  'sbItigr'  =&gt; &quot;&amp;sbItigr;&quot;,
+                    'sbOHacgr' =&gt;   &quot;&amp;sbOHacgr;&quot;, 'sbOHgr'    =&gt;   &quot;&amp;sbOHgr;&quot;,   'sbOHgvgr' =&gt; &quot;&amp;sbOHgvgr;&quot;,
+                    'sbOHtigr' =&gt;   &quot;&amp;sbOHtigr;&quot;, 'sbOacgr'   =&gt;   &quot;&amp;sbOacgr;&quot;,  'sbOgr'    =&gt; &quot;&amp;sbOgr;&quot;,
+                    'sbOgvgr'  =&gt;   &quot;&amp;sbOgvgr;&quot;,  'sbOtigr'   =&gt;   &quot;&amp;sbOtigr;&quot;,  'sbRgr'    =&gt; &quot;&amp;sbRgr;&quot;,
+                    'sbUacgr'  =&gt;   &quot;&amp;sbUacgr;&quot;,  'sbUgr'     =&gt;   &quot;&amp;sbUgr;&quot;,    'sbUgvgr'  =&gt; &quot;&amp;sbUgvgr;&quot;,
+                    'sbUtigr'  =&gt;   &quot;&amp;sbUtigr;&quot;,  'sbaacgr'   =&gt;   &quot;&amp;sbaacgr;&quot;,  'sbagr'    =&gt; &quot;&amp;sbagr;&quot;,
+                    'sbagvgr'  =&gt;   &quot;&amp;sbagvgr;&quot;,  'sbatigr'   =&gt;   &quot;&amp;sbatigr;&quot;,  'sbeacgr'  =&gt; &quot;&amp;sbeacgr;&quot;,
+                    'sbeeacgr' =&gt;   &quot;&amp;sbeeacgr;&quot;, 'sbeegr'    =&gt;   &quot;&amp;sbeegr;&quot;,   'sbeegvgr' =&gt; &quot;&amp;sbeegvgr;&quot;,
+                    'sbeetigr' =&gt;   &quot;&amp;sbeetigr;&quot;, 'sbegr'     =&gt;   &quot;&amp;sbegr;&quot;,    'sbegvgr'  =&gt; &quot;&amp;sbegvgr;&quot;,
+                    'sbetigr'  =&gt;   &quot;&amp;sbetigr;&quot;,  'sbiacgr'   =&gt;   &quot;&amp;sbiacgr;&quot;,  'sbigr'    =&gt; &quot;&amp;sbigr;&quot;,
+                    'sbigvgr'  =&gt;   &quot;&amp;sbigvgr;&quot;,  'sbitigr'   =&gt;   &quot;&amp;sbitigr;&quot;,  'sboacgr'  =&gt; &quot;&amp;sboacgr;&quot;,
+                    'sbogr'    =&gt;   &quot;&amp;sbogr;&quot;,    'sbogvgr'   =&gt;   &quot;&amp;sbogvgr;&quot;,  'sbohacgr' =&gt; &quot;&amp;sbohacgr;&quot;,
+                    'sbohgr'   =&gt;   &quot;&amp;sbohgr;&quot;,   'sbohgvgr'  =&gt;   &quot;&amp;sbohgvgr;&quot;, 'sbohtigr' =&gt; &quot;&amp;sbohtigr;&quot;,
+                    'sbotigr'  =&gt;   &quot;&amp;sbotigr;&quot;,  'sbreve'    =&gt;   &quot;&amp;sbreve;&quot;,   'sbrgr'    =&gt; &quot;&amp;sbrgr;&quot;,
+                    'sbuacgr'  =&gt;   &quot;&amp;sbuacgr;&quot;,  'sbugr'     =&gt;   &quot;&amp;sbugr;&quot;,    'sbugvgr'  =&gt; &quot;&amp;sbugvgr;&quot;,
+                    'sbutigr'  =&gt;   &quot;&amp;sbutigr;&quot;,  'sfgr'      =&gt;   &quot;&amp;sfgr;&quot;,     'sgr'      =&gt; &quot;&amp;sgr;&quot;,
+                    'slungr'   =&gt;   &quot;&amp;slungr;&quot;,   'tblank'    =&gt;   &quot;    &quot;,       'tgr'      =&gt; &quot;&amp;tgr;&quot;,
+                    'thgr'     =&gt;   &quot;&amp;thgr;&quot;,     'uacdiagr'  =&gt;   &quot;&amp;uacdiagr;&quot;, 'uacgr'    =&gt; &quot;&amp;uacgr;&quot;,
+                    'uacute'   =&gt;   &quot;&uacute;&quot;,   'ubar'      =&gt;   &quot;&amp;ubar;&quot;,     'ubreve'   =&gt; &quot;&amp;ubreve;&quot;,
+                    'ucirc'    =&gt;   &quot;&ucirc;&quot;,    'udiagr'    =&gt;   &quot;&amp;udiagr;&quot;,   'udiagvgr' =&gt; &quot;&amp;udiagvgr;&quot;,
+                    'udiatigr' =&gt;   &quot;&amp;udiatigr;&quot;, 'ugr'       =&gt;   &quot;&amp;ugr;&quot;,      'ugrave'   =&gt; &quot;&ugrave;&quot;,
+                    'ugvgr'    =&gt;   &quot;&amp;ugvgr;&quot;,    'ushort'    =&gt;   &quot;&amp;ushort;&quot;,   'utigr'    =&gt; &quot;&amp;utigr;&quot;,
+                    'uuml'     =&gt;   &quot;&uuml;&quot;,     'wblank'    =&gt;   &quot;&amp;wblank;&quot;,   'xgr'      =&gt; &quot;&amp;xgr;&quot;,
+                    'yacute'   =&gt;   &quot;&yacute;&quot;,   'ygrave'    =&gt;   &quot;&amp;ygrave;&quot;,   'yuml'     =&gt; &quot;&yuml;&quot;,
+                    'z'        =&gt;   &quot;&#160;&quot;,     'zbreve'    =&gt;   &quot;z&quot;,          'zgr'      =&gt; &quot;&amp;zgr;&quot;,
+		   )
+} 
+</pre>
+<p><a href="#top" title="">Top</a>
+</p>
+<!-- 
+NewPP limit report
+Preprocessor node count: 5/1000000
+Post-expand include size: 0/2097152 bytes
+Template argument size: 0/2097152 bytes
+Expensive parser function count: 0/100
+-->
+
+<!-- Saved in parser cache with key mediawiki_dlxsdocs_15:pcache:idhash:199-0!1!0!!en!2 and timestamp 20250202212438 -->
+<div class="printfooter">
+Retrieved from "<a href="Fixtimes.html">http://localhost/wiki/Fixtimes.pl</a>"</div>
+						<!-- end content -->
+			<div class="visualClear"></div>
+		</div>
+	</div>
+		</div>
+		<div id="column-one">
+	<div id="p-cactions" class="portlet">
+		<h5>Views</h5>
+		<div class="pBody">
+			<ul>
+	
+				 <li id="ca-nstab-main" class="selected"><a href="Fixtimes.html" title="View the content page [c]" accesskey="c">Page</a></li>
+				 <li id="ca-talk" class="new"><a href="http://localhost/mediawiki/index.php?title=Talk:Fixtimes.pl&amp;action=edit" title="Discussion about the content page [t]" accesskey="t">Discussion</a></li>
+				 <li id="ca-edit"><a href="http://localhost/mediawiki/index.php?title=Fixtimes.pl&amp;action=edit" title="You can edit this page.&#10;Please use the preview button before saving. [e]" accesskey="e">Edit</a></li>
+				 <li id="ca-history"><a href="http://localhost/mediawiki/index.php?title=Fixtimes.pl&amp;action=history" title="Past versions of this page. [h]" accesskey="h">History</a></li>			</ul>
+		</div>
+	</div>
+	<div class="portlet" id="p-personal">
+		<h5>Personal tools</h5>
+		<div class="pBody">
+			<ul>
+				<li id="pt-anonuserpage"><a href="User_172.20.0.html" title="The user page for the ip you&#039;re editing as [.]" accesskey="." class="new">172.20.0.1</a></li>
+				<li id="pt-anontalk"><a href="User_talk_172.20.0.html" title="Discussion about edits from this ip address [n]" accesskey="n" class="new">Talk for this IP</a></li>
+				<li id="pt-anonlogin"><a href="http://localhost/mediawiki/index.php?title=Special:UserLogin&amp;returnto=Fixtimes.pl" title="You are encouraged to log in, it is not mandatory however. [o]" accesskey="o">Log in / create account</a></li>
+			</ul>
+		</div>
+	</div>
+	<div class="portlet" id="p-logo">
+		<a style="background-image: url(../dlxs15/uploads/DLXS_logo2.gif);" href="Main_Page.html" title="Visit the Main Page [z]" accesskey="z"></a>
+	</div>
+	<script type="text/javascript"> if (window.isMSIE55) fixalpha(); </script>
+	<div class='generated-sidebar portlet' id='p-navigation'>
+		<h5>Navigation</h5>
+		<div class='pBody'>
+			<ul>
+				<li id="n-mainpage-description"><a href="Main_Page.html">Main Page</a></li>
+				<li id="n-portal"><a href="DLXS_Documentation_Community_Portal.html" title="About the project, what you can do, where to find things">Community portal</a></li>
+				<li id="n-currentevents"><a href="DLXS_Documentation_Current_events.html" title="Find background information on current events">Current events</a></li>
+				<li id="n-recentchanges"><a href="Special_RecentChanges.html" title="The list of recent changes in the wiki. [r]" accesskey="r">Recent changes</a></li>
+				<li id="n-randompage"><a href="Mounting_a_Bib_Class_Collection.html" title="Load a random page [x]" accesskey="x">Random page</a></li>
+				<li id="n-help"><a href="Help_Contents.html" title="The place to find out.">Help</a></li>
+			</ul>
+		</div>
+	</div>
+	<div id="p-search" class="portlet">
+		<h5><label for="searchInput">Search</label></h5>
+		<div id="searchBody" class="pBody">
+			<form action="http://localhost/wiki/Special:Search" id="searchform"><div>
+				<input id="searchInput" name="search" type="text" title="Search DLXS Documentation [f]" accesskey="f" value="" />
+				<input type='submit' name="go" class="searchButton" id="searchGoButton"	value="Go" title="Go to a page with this exact name if exists" />&nbsp;
+				<input type='submit' name="fulltext" class="searchButton" id="mw-searchButton" value="Search" title="Search the pages for this text" />
+			</div></form>
+		</div>
+	</div>
+	<div class="portlet" id="p-tb">
+		<h5>Toolbox</h5>
+		<div class="pBody">
+			<ul>
+				<li id="t-whatlinkshere"><a href="Special_WhatLinksHere/Fixtimes.html" title="List of all wiki pages that link here [j]" accesskey="j">What links here</a></li>
+				<li id="t-recentchangeslinked"><a href="Special_RecentChangesLinked/Fixtimes.html" title="Recent changes in pages linked from this page [k]" accesskey="k">Related changes</a></li>
+<li id="t-specialpages"><a href="Special_SpecialPages.html" title="List of all special pages [q]" accesskey="q">Special pages</a></li>
+				<li id="t-print"><a href="http://localhost/mediawiki/index.php?title=Fixtimes.pl&amp;printable=yes" title="Printable version of this page [p]" accesskey="p">Printable version</a></li>				<li id="t-permalink"><a href="http://localhost/mediawiki/index.php?title=Fixtimes.pl&amp;oldid=1787" title="Permanent link to this version of the page">Permanent link</a></li>			</ul>
+		</div>
+	</div>
+		</div><!-- end of the left (by default at least) column -->
+			<div class="visualClear"></div>
+			<div id="footer">
+				<div id="f-poweredbyico"><a href="http://www.mediawiki.org/"><img src="../mediawiki/skins/common/images/poweredby_mediawiki_88x31.png" alt="Powered by MediaWiki" /></a></div>
+			<ul id="f-list">
+				<li id="lastmod"> This page was last modified on 10 October 2007, at 13:37.</li>
+				<li id="viewcount">This page has been accessed 1,725 times.</li>
+				<li id="privacy"><a href="DLXS_Documentation_Privacy_policy.html" title="DLXS Documentation:Privacy policy">Privacy policy</a></li>
+				<li id="about"><a href="DLXS_Documentation_About.html" title="DLXS Documentation:About">About DLXS Documentation</a></li>
+				<li id="disclaimer"><a href="DLXS_Documentation_General_disclaimer.html" title="DLXS Documentation:General disclaimer">Disclaimers</a></li>
+			</ul>
+		</div>
+</div>
+
+		<script type="text/javascript">if (window.runOnloadHook) runOnloadHook();</script>
+<!-- Served in 0.122 secs. --></body>
+<!-- Mirrored from localhost/wiki/Fixtimes.pl by HTTrack Website Copier/3.x [XR&CO'2014], Mon, 03 Feb 2025 00:40:53 GMT -->
+</html>

@@ -1,0 +1,238 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en" dir="ltr">
+	
+<!-- Mirrored from localhost/wiki/Installing_and_Upgrading_the_Database by HTTrack Website Copier/3.x [XR&CO'2014], Mon, 03 Feb 2025 00:29:02 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=UTF-8" /><!-- /Added by HTTrack -->
+<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+		<meta name="generator" content="MediaWiki 1.13.5" />
+		<meta name="keywords" content="Installing and Upgrading the Database,DLXS Database Upgrade Utility,DLXS Wiki,Installing DLXS" />
+		<link rel="shortcut icon" href="http://localhost/favicon.ico" />
+		<link rel="search" type="application/opensearchdescription+xml" href="http://localhost/mediawiki/opensearch_desc.php" title="DLXS Documentation (en)" />
+		<link rel="alternate" type="application/rss+xml" title="DLXS Documentation RSS Feed" href="http://localhost/mediawiki/index.php?title=Special:RecentChanges&amp;feed=rss" />
+		<link rel="alternate" type="application/atom+xml" title="DLXS Documentation Atom Feed" href="http://localhost/mediawiki/index.php?title=Special:RecentChanges&amp;feed=atom" />
+		<title>Installing and Upgrading the Database - DLXS Documentation</title>
+		<style type="text/css" media="screen, projection">/*<![CDATA[*/
+			@import "../mediawiki/skins/common/sharedfa7c.css?164";
+			@import "../mediawiki/skins/monobook/mainfa7c.css?164";
+		/*]]>*/</style>
+		<link rel="stylesheet" type="text/css" media="print" href="../mediawiki/skins/common/commonPrintfa7c.css?164" />
+		<!--[if lt IE 5.5000]><style type="text/css">@import "/mediawiki/skins/monobook/IE50Fixes.css?164";</style><![endif]-->
+		<!--[if IE 5.5000]><style type="text/css">@import "/mediawiki/skins/monobook/IE55Fixes.css?164";</style><![endif]-->
+		<!--[if IE 6]><style type="text/css">@import "/mediawiki/skins/monobook/IE60Fixes.css?164";</style><![endif]-->
+		<!--[if IE 7]><style type="text/css">@import "/mediawiki/skins/monobook/IE70Fixes.css?164";</style><![endif]-->
+		<!--[if lt IE 7]><script type="text/javascript" src="/mediawiki/skins/common/IEFixes.js?164"></script>
+		<meta http-equiv="imagetoolbar" content="no" /><![endif]-->
+		
+		<script type= "text/javascript">/*<![CDATA[*/
+var skin = "monobook";
+var stylepath = "/mediawiki/skins";
+var wgArticlePath = "/wiki/$1";
+var wgScriptPath = "/mediawiki";
+var wgScript = "http://localhost/mediawiki/index.php";
+var wgVariantArticlePath = false;
+var wgActionPaths = [];
+var wgServer = "http://localhost/";
+var wgCanonicalNamespace = "";
+var wgCanonicalSpecialPageName = false;
+var wgNamespaceNumber = 0;
+var wgPageName = "Installing_and_Upgrading_the_Database";
+var wgTitle = "Installing and Upgrading the Database";
+var wgAction = "view";
+var wgArticleId = "117";
+var wgIsArticle = true;
+var wgUserName = null;
+var wgUserGroups = null;
+var wgUserLanguage = "en";
+var wgContentLanguage = "en";
+var wgBreakFrames = false;
+var wgCurRevisionId = "2983";
+var wgVersion = "1.13.5";
+var wgEnableAPI = true;
+var wgEnableWriteAPI = false;
+var wgRestrictionEdit = [];
+var wgRestrictionMove = [];
+/*]]>*/</script>
+                
+		<script type="text/javascript" src="../mediawiki/skins/common/wikibitsfa7c.js?164"><!-- wikibits js --></script>
+		<!-- Head Scripts -->
+		<script type="text/javascript" src="../mediawiki/skins/common/ajaxfa7c.js?164"></script>
+		<script type="text/javascript" src="http://localhost/mediawiki/index.php?title=-&amp;action=raw&amp;gen=js&amp;useskin=monobook"><!-- site js --></script>
+		<style type="text/css">/*<![CDATA[*/
+@import "http://localhost/mediawiki/index.php?title=MediaWiki:Common.css&amp;usemsgcache=yes&amp;action=raw&amp;ctype=text/css&amp;smaxage=18000";
+@import "http://localhost/mediawiki/index.php?title=MediaWiki:Monobook.css&amp;usemsgcache=yes&amp;action=raw&amp;ctype=text/css&amp;smaxage=18000";
+@import "http://localhost/mediawiki/index.php?title=-&amp;action=raw&amp;gen=css&amp;maxage=18000&amp;useskin=monobook";
+/*]]>*/</style>
+	</head>
+<body class="mediawiki ns-0 ltr page-Installing_and_Upgrading_the_Database">
+	<div id="globalWrapper">
+		<div id="column-content">
+	<div id="content">
+		<a name="top" id="top"></a>
+				<h1 class="firstHeading">Installing and Upgrading the Database</h1>
+		<div id="bodyContent">
+			<h3 id="siteSub">From DLXS Documentation</h3>
+			<div id="contentSub"></div>
+									<div id="jump-to-nav">Jump to: <a href="#column-one">navigation</a>, <a href="#searchInput">search</a></div>			<!-- start content -->
+			<p><a href="DLXS_Wiki.html" title="DLXS Wiki">Main Page</a> &gt; <a href="Installing_DLXS.html" title="Installing DLXS">Installing DLXS</a> &gt; Installing and Upgrading the Database
+</p>
+<hr />
+<p>For brand new DLXS middleware installations, create a new MySQL database following these instructions:
+</p>
+<table id="toc" class="toc" summary="Contents"><tr><td><div id="toctitle"><h2>Contents</h2></div>
+<ul>
+<li class="toclevel-1"><a href="#MySQL_configuration"><span class="tocnumber">1</span> <span class="toctext">MySQL configuration</span></a></li>
+<li class="toclevel-1"><a href="#Database_upgrading"><span class="tocnumber">2</span> <span class="toctext">Database upgrading</span></a>
+<ul>
+<li class="toclevel-2"><a href="#Upgrading_across_multiple_database_versions"><span class="tocnumber">2.1</span> <span class="toctext">Upgrading across multiple database versions</span></a></li>
+<li class="toclevel-2"><a href="#Database_Versions"><span class="tocnumber">2.2</span> <span class="toctext">Database Versions</span></a></li>
+</ul>
+</li>
+</ul>
+</td></tr></table><script type="text/javascript"> if (window.showTocToggle) { var tocShowText = "show"; var tocHideText = "hide"; showTocToggle(); } </script>
+<a name="MySQL_configuration"></a><h2><span class="editsection">[<a href="http://localhost/mediawiki/index.php?title=Installing_and_Upgrading_the_Database&amp;action=edit&amp;section=1" title="Edit section: MySQL configuration">edit</a>]</span> <span class="mw-headline">MySQL configuration</span></h2>
+<p>For DLXS installations you will use MySQL as your data store. You should execute the following commands to create an empty database, user accounts, and access permissions required for use with DLXS middleware.
+</p>
+<ol><li> Start the SQL monitor with the command <tt>mysql -u root -p mysql</tt> (you will be prompted for the MySQL system password).
+</li><li> Create the DLXS database with the command <tt>create database dlxs;</tt>. Note that you should use the database name you chose when prompted for the name of the database during DLXS middleware installation rather than simply <tt>dlxs</tt>.  We suggest you should choose a name that reflects the version number of the database delivered with the middleware release or perhaps the release number of the middleware.
+</li><li> Create the <tt>dlxsadm</tt> (administrative) account and grant full privileges to it with the command <tt>grant all privileges on dlxs.* to dlxsadm identified by '<i>password</i>';</tt>, where <i>password</i> is the password to be used for DLXS database administration.
+</li><li> Grant FILE privilege to the <tt>dlxsadm</tt> account with the command <tt>grant file on *.* to dlxsadm;</tt>.
+</li><li> Create the <tt>dlxs</tt> account and grant basic privileges to it with the command <tt>grant select,insert,update,delete,references on dlxs.* to dlxs identified by '<i>password</i>';</tt>, where <i>password</i> is the password to be used for general DLXS database usage (such as from within the DLXS middleware).
+</li><li> Activate the changes with the command <tt>flush privileges;</tt>.
+</li><li> Exit the SQL monitor with the command <tt>quit</tt>.
+</li></ol>
+<p><br />
+</p>
+<p>After the database is created, the next step is to install the sample database data contained in $DLXSROOT/misc/db/db-dump-vN.0-release.sql where N is the version of the database that corresponds to the release of DLXS.</p>
+<p>Let <tt><b>dlxs_vN</b></tt> be the database name you chose for this installation. Note that this is the database name you supplied at the prompt when you ran the Installer.  Use the <b>mysql</b> command line client to load the dump file like this:
+</p>
+<pre> &nbsp;% mysql -u dlxsadm -p dlxs_vN &lt; $DLXSROOT/misc/db/db-dump-vN.0-release.sql
+</pre>
+<p>That's it!
+</p>
+<a name="Database_upgrading"></a><h2><span class="editsection">[<a href="http://localhost/mediawiki/index.php?title=Installing_and_Upgrading_the_Database&amp;action=edit&amp;section=2" title="Edit section: Database upgrading">edit</a>]</span> <span class="mw-headline">Database upgrading</span></h2>
+<p><b>NOTE:</b> Please refer to <a href="DLXS_Database_Upgrade_Utility.html" title="DLXS Database Upgrade Utility">DLXS Database Upgrade Utility</a> for this step.
+</p><p><br />
+</p>
+<dl><dt>IMPORTANT NOTE</dt><dd> In the upgrade process, in your shell, <tt>$DLXSROOT</tt> <b>must always</b> be the root of the new DLXS release (or latest) installation.  All previous upgrade_M_N+1 scripts are included with each DLXS release.  
+</dd></dl>
+<a name="Upgrading_across_multiple_database_versions"></a><h3><span class="editsection">[<a href="http://localhost/mediawiki/index.php?title=Installing_and_Upgrading_the_Database&amp;action=edit&amp;section=3" title="Edit section: Upgrading across multiple database versions">edit</a>]</span> <span class="mw-headline">Upgrading across multiple database versions</span></h3>
+<p>If your existing database version is more than one version behind, run the <tt>$DLXSROOT/bin/db/upgrade_*</tt> scripts sequentially on the new database containing the dump of the earlier database version.
+</p><p>For example, if you copied <tt>dlxs_v3</tt> into <tt>dlxs_v6</tt> you would run, in order: <tt>$DLXSROOT/bin/db/upgrade_3_4, $DLXSROOT/bin/db/upgrade_4_5</tt> and finally <tt>$DLXSROOT/bin/db/upgrade_5_6</tt> all from the release 13 (or latest) install tree.  
+</p>
+<div class="redtext">
+<dl><dt>IMPORTANT NOTE when running upgrade_4_5</dt><dd> A file is missing from the release 13 CD and the .ISO file. In your release 13 install tree create this directory:
+</dd></dl>
+</div>
+<pre>% mkdir -p $DLXSROOT/misc/db/ImageClassSampleData/version5
+</pre>
+<p>Download the following file from the DLXS web site and copy it into that directory:
+<a href="http://www.dlxs.org/products/archive-by-CDROM/13/Lib/src/misc/db/ImageClassSampleData/version5/icsample.sql" class="external free" title="http://www.dlxs.org/products/archive-by-CDROM/13/Lib/src/misc/db/ImageClassSampleData/version5/icsample.sql" rel="nofollow">http://www.dlxs.org/products/archive-by-CDROM/13/Lib/src/misc/db/ImageClassSampleData/version5/icsample.sql</a>
+</p>
+<a name="Database_Versions"></a><h3><span class="editsection">[<a href="http://localhost/mediawiki/index.php?title=Installing_and_Upgrading_the_Database&amp;action=edit&amp;section=4" title="Edit section: Database Versions">edit</a>]</span> <span class="mw-headline">Database Versions</span></h3>
+<p>For reference here are the DLXS release numbers and their corresponding database version numbers:
+</p>
+<table border="1" width="30%">
+        <tr><td><b>DLXS release</b></td><td><b>database version</b></td></tr>
+        <tr><td>8</td><td>1</td></tr>
+        <tr><td>9</td><td>2</td></tr>
+        <tr><td>10</td><td>3</td></tr>
+        <tr><td>11, 11a</td><td>4</td></tr>
+        <tr><td>12, 12a</td><td>5</td></tr>
+        <tr><td>13</td><td>6</td></tr>
+        <tr><td>14</td><td>7</td></tr>
+        <tr><td>15</td><td>8</td></tr>
+</table>
+<p><a href="#top" title="">Top</a>
+</p>
+<!-- 
+NewPP limit report
+Preprocessor node count: 62/1000000
+Post-expand include size: 0/2097152 bytes
+Template argument size: 0/2097152 bytes
+Expensive parser function count: 0/100
+-->
+
+<!-- Saved in parser cache with key mediawiki_dlxsdocs_15:pcache:idhash:117-0!1!0!!en!2 and timestamp 20250202211409 -->
+<div class="printfooter">
+Retrieved from "<a href="Installing_and_Upgrading_the_Database.html">http://localhost/wiki/Installing_and_Upgrading_the_Database</a>"</div>
+						<!-- end content -->
+			<div class="visualClear"></div>
+		</div>
+	</div>
+		</div>
+		<div id="column-one">
+	<div id="p-cactions" class="portlet">
+		<h5>Views</h5>
+		<div class="pBody">
+			<ul>
+	
+				 <li id="ca-nstab-main" class="selected"><a href="Installing_and_Upgrading_the_Database.html" title="View the content page [c]" accesskey="c">Page</a></li>
+				 <li id="ca-talk" class="new"><a href="http://localhost/mediawiki/index.php?title=Talk:Installing_and_Upgrading_the_Database&amp;action=edit" title="Discussion about the content page [t]" accesskey="t">Discussion</a></li>
+				 <li id="ca-edit"><a href="http://localhost/mediawiki/index.php?title=Installing_and_Upgrading_the_Database&amp;action=edit" title="You can edit this page.&#10;Please use the preview button before saving. [e]" accesskey="e">Edit</a></li>
+				 <li id="ca-history"><a href="http://localhost/mediawiki/index.php?title=Installing_and_Upgrading_the_Database&amp;action=history" title="Past versions of this page. [h]" accesskey="h">History</a></li>			</ul>
+		</div>
+	</div>
+	<div class="portlet" id="p-personal">
+		<h5>Personal tools</h5>
+		<div class="pBody">
+			<ul>
+				<li id="pt-login"><a href="http://localhost/mediawiki/index.php?title=Special:UserLogin&amp;returnto=Installing_and_Upgrading_the_Database" title="You are encouraged to log in, it is not mandatory however. [o]" accesskey="o">Log in / create account</a></li>
+			</ul>
+		</div>
+	</div>
+	<div class="portlet" id="p-logo">
+		<a style="background-image: url(../dlxs15/uploads/DLXS_logo2.gif);" href="Main_Page.html" title="Visit the Main Page [z]" accesskey="z"></a>
+	</div>
+	<script type="text/javascript"> if (window.isMSIE55) fixalpha(); </script>
+	<div class='generated-sidebar portlet' id='p-navigation'>
+		<h5>Navigation</h5>
+		<div class='pBody'>
+			<ul>
+				<li id="n-mainpage-description"><a href="Main_Page.html">Main Page</a></li>
+				<li id="n-portal"><a href="DLXS_Documentation_Community_Portal.html" title="About the project, what you can do, where to find things">Community portal</a></li>
+				<li id="n-currentevents"><a href="DLXS_Documentation_Current_events.html" title="Find background information on current events">Current events</a></li>
+				<li id="n-recentchanges"><a href="Special_RecentChanges.html" title="The list of recent changes in the wiki. [r]" accesskey="r">Recent changes</a></li>
+				<li id="n-randompage"><a href="Mounting_a_Bib_Class_Collection.html" title="Load a random page [x]" accesskey="x">Random page</a></li>
+				<li id="n-help"><a href="Help_Contents.html" title="The place to find out.">Help</a></li>
+			</ul>
+		</div>
+	</div>
+	<div id="p-search" class="portlet">
+		<h5><label for="searchInput">Search</label></h5>
+		<div id="searchBody" class="pBody">
+			<form action="http://localhost/wiki/Special:Search" id="searchform"><div>
+				<input id="searchInput" name="search" type="text" title="Search DLXS Documentation [f]" accesskey="f" value="" />
+				<input type='submit' name="go" class="searchButton" id="searchGoButton"	value="Go" title="Go to a page with this exact name if exists" />&nbsp;
+				<input type='submit' name="fulltext" class="searchButton" id="mw-searchButton" value="Search" title="Search the pages for this text" />
+			</div></form>
+		</div>
+	</div>
+	<div class="portlet" id="p-tb">
+		<h5>Toolbox</h5>
+		<div class="pBody">
+			<ul>
+				<li id="t-whatlinkshere"><a href="Special_WhatLinksHere/Installing_and_Upgrading_the_Database.html" title="List of all wiki pages that link here [j]" accesskey="j">What links here</a></li>
+				<li id="t-recentchangeslinked"><a href="Special_RecentChangesLinked/Installing_and_Upgrading_the_Database.html" title="Recent changes in pages linked from this page [k]" accesskey="k">Related changes</a></li>
+<li id="t-specialpages"><a href="Special_SpecialPages.html" title="List of all special pages [q]" accesskey="q">Special pages</a></li>
+				<li id="t-print"><a href="http://localhost/mediawiki/index.php?title=Installing_and_Upgrading_the_Database&amp;printable=yes" title="Printable version of this page [p]" accesskey="p">Printable version</a></li>				<li id="t-permalink"><a href="http://localhost/mediawiki/index.php?title=Installing_and_Upgrading_the_Database&amp;oldid=2983" title="Permanent link to this version of the page">Permanent link</a></li>			</ul>
+		</div>
+	</div>
+		</div><!-- end of the left (by default at least) column -->
+			<div class="visualClear"></div>
+			<div id="footer">
+				<div id="f-poweredbyico"><a href="http://www.mediawiki.org/"><img src="../mediawiki/skins/common/images/poweredby_mediawiki_88x31.png" alt="Powered by MediaWiki" /></a></div>
+			<ul id="f-list">
+				<li id="lastmod"> This page was last modified on 19 October 2010, at 19:35.</li>
+				<li id="viewcount">This page has been accessed 3,420 times.</li>
+				<li id="privacy"><a href="DLXS_Documentation_Privacy_policy.html" title="DLXS Documentation:Privacy policy">Privacy policy</a></li>
+				<li id="about"><a href="DLXS_Documentation_About.html" title="DLXS Documentation:About">About DLXS Documentation</a></li>
+				<li id="disclaimer"><a href="DLXS_Documentation_General_disclaimer.html" title="DLXS Documentation:General disclaimer">Disclaimers</a></li>
+			</ul>
+		</div>
+</div>
+
+		<script type="text/javascript">if (window.runOnloadHook) runOnloadHook();</script>
+<!-- Served in 0.122 secs. --></body>
+<!-- Mirrored from localhost/wiki/Installing_and_Upgrading_the_Database by HTTrack Website Copier/3.x [XR&CO'2014], Mon, 03 Feb 2025 00:29:04 GMT -->
+</html>

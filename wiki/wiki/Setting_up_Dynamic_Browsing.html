@@ -1,0 +1,384 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en" dir="ltr">
+	
+<!-- Mirrored from localhost/wiki/Setting_up_Dynamic_Browsing by HTTrack Website Copier/3.x [XR&CO'2014], Mon, 03 Feb 2025 00:35:40 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=UTF-8" /><!-- /Added by HTTrack -->
+<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+		<meta name="generator" content="MediaWiki 1.13.5" />
+		<meta name="keywords" content="Setting up Dynamic Browsing,Collection Manager Field Descriptions,DLPS Development Environment,DLXS Metadata Databases,DLXS Wiki,Working with DLXS Components,Working with XPAT,Working with the Collection Manager,Working with the Collection Metadata Database" />
+		<link rel="shortcut icon" href="http://localhost/favicon.ico" />
+		<link rel="search" type="application/opensearchdescription+xml" href="http://localhost/mediawiki/opensearch_desc.php" title="DLXS Documentation (en)" />
+		<link rel="alternate" type="application/rss+xml" title="DLXS Documentation RSS Feed" href="http://localhost/mediawiki/index.php?title=Special:RecentChanges&amp;feed=rss" />
+		<link rel="alternate" type="application/atom+xml" title="DLXS Documentation Atom Feed" href="http://localhost/mediawiki/index.php?title=Special:RecentChanges&amp;feed=atom" />
+		<title>Setting up Dynamic Browsing - DLXS Documentation</title>
+		<style type="text/css" media="screen, projection">/*<![CDATA[*/
+			@import "../mediawiki/skins/common/sharedfa7c.css?164";
+			@import "../mediawiki/skins/monobook/mainfa7c.css?164";
+		/*]]>*/</style>
+		<link rel="stylesheet" type="text/css" media="print" href="../mediawiki/skins/common/commonPrintfa7c.css?164" />
+		<!--[if lt IE 5.5000]><style type="text/css">@import "/mediawiki/skins/monobook/IE50Fixes.css?164";</style><![endif]-->
+		<!--[if IE 5.5000]><style type="text/css">@import "/mediawiki/skins/monobook/IE55Fixes.css?164";</style><![endif]-->
+		<!--[if IE 6]><style type="text/css">@import "/mediawiki/skins/monobook/IE60Fixes.css?164";</style><![endif]-->
+		<!--[if IE 7]><style type="text/css">@import "/mediawiki/skins/monobook/IE70Fixes.css?164";</style><![endif]-->
+		<!--[if lt IE 7]><script type="text/javascript" src="/mediawiki/skins/common/IEFixes.js?164"></script>
+		<meta http-equiv="imagetoolbar" content="no" /><![endif]-->
+		
+		<script type= "text/javascript">/*<![CDATA[*/
+var skin = "monobook";
+var stylepath = "/mediawiki/skins";
+var wgArticlePath = "/wiki/$1";
+var wgScriptPath = "/mediawiki";
+var wgScript = "http://localhost/mediawiki/index.php";
+var wgVariantArticlePath = false;
+var wgActionPaths = [];
+var wgServer = "http://localhost/";
+var wgCanonicalNamespace = "";
+var wgCanonicalSpecialPageName = false;
+var wgNamespaceNumber = 0;
+var wgPageName = "Setting_up_Dynamic_Browsing";
+var wgTitle = "Setting up Dynamic Browsing";
+var wgAction = "view";
+var wgArticleId = "174";
+var wgIsArticle = true;
+var wgUserName = null;
+var wgUserGroups = null;
+var wgUserLanguage = "en";
+var wgContentLanguage = "en";
+var wgBreakFrames = false;
+var wgCurRevisionId = "3156";
+var wgVersion = "1.13.5";
+var wgEnableAPI = true;
+var wgEnableWriteAPI = false;
+var wgRestrictionEdit = [];
+var wgRestrictionMove = [];
+/*]]>*/</script>
+                
+		<script type="text/javascript" src="../mediawiki/skins/common/wikibitsfa7c.js?164"><!-- wikibits js --></script>
+		<!-- Head Scripts -->
+		<script type="text/javascript" src="../mediawiki/skins/common/ajaxfa7c.js?164"></script>
+		<script type="text/javascript" src="http://localhost/mediawiki/index.php?title=-&amp;action=raw&amp;gen=js&amp;useskin=monobook"><!-- site js --></script>
+		<style type="text/css">/*<![CDATA[*/
+@import "http://localhost/mediawiki/index.php?title=MediaWiki:Common.css&amp;usemsgcache=yes&amp;action=raw&amp;ctype=text/css&amp;smaxage=18000";
+@import "http://localhost/mediawiki/index.php?title=MediaWiki:Monobook.css&amp;usemsgcache=yes&amp;action=raw&amp;ctype=text/css&amp;smaxage=18000";
+@import "http://localhost/mediawiki/index.php?title=-&amp;action=raw&amp;gen=css&amp;maxage=18000&amp;useskin=monobook";
+/*]]>*/</style>
+	</head>
+<body class="mediawiki ns-0 ltr page-Setting_up_Dynamic_Browsing">
+	<div id="globalWrapper">
+		<div id="column-content">
+	<div id="content">
+		<a name="top" id="top"></a>
+				<h1 class="firstHeading">Setting up Dynamic Browsing</h1>
+		<div id="bodyContent">
+			<h3 id="siteSub">From DLXS Documentation</h3>
+			<div id="contentSub"></div>
+									<div id="jump-to-nav">Jump to: <a href="#column-one">navigation</a>, <a href="#searchInput">search</a></div>			<!-- start content -->
+			<p><a href="DLXS_Wiki.html" title="DLXS Wiki">Main Page</a> &gt; <a href="Working_with_DLXS_Components.html" title="Working with DLXS Components">Working with DLXS Components</a> &gt; <a href="Working_with_the_Collection_Metadata_Database.html" title="Working with the Collection Metadata Database">Working with the Collection Metadata Database</a> &gt; Setting Up Dynamic Browsing
+</p>
+<table id="toc" class="toc" summary="Contents"><tr><td><div id="toctitle"><h2>Contents</h2></div>
+<ul>
+<li class="toclevel-1"><a href="#Overview"><span class="tocnumber">1</span> <span class="toctext">Overview</span></a></li>
+<li class="toclevel-1"><a href="#Item_browse_database_tables"><span class="tocnumber">2</span> <span class="toctext">Item browse database tables</span></a></li>
+<li class="toclevel-1"><a href="#Collmgr_fields_for_configuration"><span class="tocnumber">3</span> <span class="toctext">Collmgr fields for configuration</span></a></li>
+<li class="toclevel-1"><a href="#Preparing_collections_for_browsing"><span class="tocnumber">4</span> <span class="toctext">Preparing collections for browsing</span></a>
+<ul>
+<li class="toclevel-2"><a href="#Configure_the_collmgr_fields"><span class="tocnumber">4.1</span> <span class="toctext">Configure the collmgr fields</span></a></li>
+<li class="toclevel-2"><a href="#Populating_the_item_browse_tables"><span class="tocnumber">4.2</span> <span class="toctext">Populating the item browse tables</span></a></li>
+<li class="toclevel-2"><a href="#ItemColl_XMLMETA_and_ImageClass"><span class="tocnumber">4.3</span> <span class="toctext">ItemColl XMLMETA and ImageClass</span></a></li>
+</ul>
+</li>
+</ul>
+</td></tr></table><script type="text/javascript"> if (window.showTocToggle) { var tocShowText = "show"; var tocHideText = "hide"; showTocToggle(); } </script>
+<a name="Overview"></a><h2><span class="editsection">[<a href="http://localhost/mediawiki/index.php?title=Setting_up_Dynamic_Browsing&amp;action=edit&amp;section=1" title="Edit section: Overview">edit</a>]</span> <span class="mw-headline">Overview</span></h2>
+<p> Through a combination of <a href="DLXS_Metadata_Databases.html" title="DLXS Metadata Databases">database</a> tables
+      and <a href="Working_with_the_Collection_Manager.html" title="Working with the Collection Manager">collmgr</a> field configuration,
+      dynamic browsing is available through the DLXS middleware. When the proper
+      CGI-based URL is received, the middleware checks for certain metadata in the
+      database tables, packages some of it in XML, uses some of it, as is in its
+      stored format of XML, and lets XSLT format the results. At run time, no <a href="Working_with_XPAT.html" title="Working with XPAT">XPAT</a> queries are needed, only MySQL queries are run against the item browse tables
+      in the  <a href="DLXS_Metadata_Databases.html" title="DLXS Metadata Databases">dlxs
+        database</a>. </p>
+<p>After the tables are prepared, that is,  populated with item metadata through
+      the <span class="command">$DLXSROOT/bin/browse/updatebrowsedb.pl</span> script (aka &quot;database populator&quot;),
+      configuration for the behavior of dynamic browsing is accomplished by modifying
+      certain <a href="Collection_Manager_Field_Descriptions.html" title="Collection Manager Field Descriptions">collmgr</a> fields.</p>
+    <p>Provisions will soon be made for creating static HTML browse pages with the
+      database populator script. </p>
+<div class="release_15">
+<p>
+<b>Release_15</b>: Dynamic browsing is no longer limited to item metadata starting with 'a'..'z'.
+</p>
+<ul>
+<li>Punctuation items are removed (e.g. &quot;These things&quot; is filed under <em>t</em>)</li>
+<li>Values are transliterated when indexed to match MySQL query semantics (e.g. <tt>zó</tt> is the same as <tt>zo</tt>).</li>
+<li>Charactered that do not transliterate to 'a'..'z' are valid browse items, e.g. <tt>æ</tt>, Greek notation, and numbers.</li>
+</ul>
+<p>
+More items should be discoverable through browse.
+</p>
+</div>
+<a name="Item_browse_database_tables"></a><h2><span class="editsection">[<a href="http://localhost/mediawiki/index.php?title=Setting_up_Dynamic_Browsing&amp;action=edit&amp;section=2" title="Edit section: Item browse database tables">edit</a>]</span> <span class="mw-headline">Item browse database tables</span></h2>
+<p>There are three tables in the dlxs database that are specifically used for
+      dynamic browsing in the middleware:</p>
+    <ul>
+      <li class="command">ItemColl</li>
+      <li class="command">ItemBrowse</li>
+      <li class="command">ItemBrowseCounts</li>
+    </ul>
+<p>The ItemColl table holds, for each item/document and collection combination,
+      one row containing the following columns: </p>
+    <ul>
+      <li>the idno</li>
+      <li>the collection id</li>
+      <li>the modification date of the row's information</li>
+      <li>XML metadata
+        about the item: in the case of TextClass, this is simply the <span class="command">DLXSTEXTCLASS/HEADER</span>      element that is retrieved from an XPAT query in the &quot;database populator&quot; script. In the case of ImageClass, the Perl subclass used by the database populator grabs information from the MySQL or XPAT data and wraps it in specific XML before filling in this field. </li>
+    </ul>
+    <p>The ItemBrowse table holds, for each item/document's browseable field (e.g.,
+      author, title, etc.): </p>
+    <ul>
+      <li>the idno</li>
+      <li>the collection id</li>
+      <li>the field name</li>
+      <li>the value of the field </li>
+      <li>rank (not currently used) </li>
+    </ul>
+    <p>The ItemBrowseCounts table holds, for each collection, a list of rows containing:</p>
+    <ul>
+      <li>the colleciton id</li>
+      <li>the field name </li>
+      <li>the first character or the first two characters of the sortable
+        field's value (sortable title, author's name) </li>
+      <li>the count of items that begin with that first character or those first
+        two characters </li>
+    </ul>
+<a name="Collmgr_fields_for_configuration"></a><h2><span class="editsection">[<a href="http://localhost/mediawiki/index.php?title=Setting_up_Dynamic_Browsing&amp;action=edit&amp;section=3" title="Edit section: Collmgr fields for configuration">edit</a>]</span> <span class="mw-headline">Collmgr fields for configuration</span></h2>
+    <p>The main fields in the collmgr that need to be set properly are:</p>
+    <ul>
+      <li>locale</li>
+      <li>browsenav</li>
+      <li>browsefields</li>
+<li>browseupdatemodule</li>
+    </ul>
+    <p>See <a href="#Configure_the_collmgr_fields" title="">Configure the collmgr fields</a> below for
+      more information.</p>
+<p><br />
+</p>
+<a name="Preparing_collections_for_browsing"></a><h2><span class="editsection">[<a href="http://localhost/mediawiki/index.php?title=Setting_up_Dynamic_Browsing&amp;action=edit&amp;section=4" title="Edit section: Preparing collections for browsing">edit</a>]</span> <span class="mw-headline">Preparing collections for browsing</span></h2>
+<a name="Configure_the_collmgr_fields"></a><h3><span class="editsection">[<a href="http://localhost/mediawiki/index.php?title=Setting_up_Dynamic_Browsing&amp;action=edit&amp;section=5" title="Edit section: Configure the collmgr fields">edit</a>]</span> <span class="mw-headline">Configure the collmgr fields</span></h3>
+    <p>Start collmgr and change the following fields:</p>
+    <ul>
+      <li><span class="command">devhost</span>: if you are running the database populator in a development environment
+        (that is, where <a href="DLPS_Development_Environment.html#DLPS_DEV" title="DLPS Development Environment"><span class="command">DLPS_DEV</span></a> environment variable
+        is set), you can have the middleware use  XPAT-indexed data that is
+        on a  machine different from the usual host. This can be useful for testing
+        purposes. </li>
+      <li><span class="command">locale</span>: (this should be changed to a UTF-8 type of encoding, e.g., <span class="command">en_US.UTF-8</span>)</li>
+<p><br />
+</p>
+      <li><span class="command">browseable</span> A &quot;yes&quot; (case-insensitive) value in this field enables the browse tab in the user interface.  If a file in the collection-specific web directory for this collection contains a file named <code>browse.html</code> that page will be served but only if <span class="command">browsefields</span> is <i>empty</i>. Fallback is applied to select the correct <code>browse.html</code> file for collection-specific customization.  This supports static browse pages.  If <code>browse.html</code> is not present a dynamic browse page will be served based on data from the browse database.  When a dynamic browse page is served the <span class="command">browsenav</span> field value is consulted and must be defined. </li>
+<p><br />
+</p>
+      <li><span class="command">browsenav</span>: enter 0, 1, or 2. If you want no paging, that is, that all
+        items in the colleciton appear on one HTML page for the user to browse,
+        enter 0. Enter 1, if you want &quot;one level of browsing&quot;, that is, that a
+        separate page be created for each first character of the value in question
+        (e.g., title or author) and that a navigation bar be built that allows
+        the user to navigate to each page, for example, jump to the page listing
+        items whose value begins with &quot;M&quot;. Entering 2 in this field will create
+        a &quot;two-level browse&quot;, where two navigation bars will be created. The first
+        bar will allow the user to jump to items whose values begin with a particular
+        first character (e.g., jump to the records that begin with &quot;B&quot;). The second
+        navigation bar will allow the user to jump to items whose values begin
+        with a particular two-character combination, (e.g., records that begin
+        with &quot;Bu&quot;). This decision is left to the collection coordinator. We have
+        found that the level is based on how many total items there are in
+        the collection and therefore what is a reasonable number of browseable
+        items for a single HTML page. </li>
+      <li> <span class="command">browsefields</span>: list the browseable fields for the collection. 
+For example, some collections may have only title browsing, others may need both title and author, etc. For Text class and Findaid class, the first field becomes the default browse page <i>Leave this field empty to enable static browsing.</i> </li>
+<p><br />      
+</p>
+      <li>
+        <p><span class="command">browseupdatemodule</span>: specifies
+          the name of the browse update Perl module that will be used by
+          the updatebrowsedb.pl script to populate the database. This
+          value is analogous to the <tt>appmodule</tt> and
+          <tt>subclassmodule</tt> fields.  (This field exists as of Release 12a;
+          it supersedes a Perl configuration hash used in Release 12.)</p>
+        <p>The module files are located in
+        <tt>DLXSROOT/bin/browse</tt>.  If a dynamic browse page is to
+        be served this field must have a value.  Specialized behavior
+        can be obtained by subclassing the browse update modules.
+        The currently available browse update module values are as follows:
+         </p>
+<p><br />
+</p>
+<dl><dt> ImageClass
+</dt><dd> <tt>BrowseUpdate/ImageMysqlBU</tt>
+</dd><dt> FindaidClass
+</dt><dd> <tt>BrowseUpdate/FindaidBU</tt>
+</dd><dt> TextClass
+<dl><dd><dl><dt> encodingtype = <tt>monograph</tt>
+</dt><dd> <tt>BrowseUpdate/MonographBU</tt>
+</dd><dt> encodingtype = <tt>serialissue</tt>
+</dt><dd> <tt>BrowseUpdate/SerialIssueBU</tt>
+</dd><dd> Note that newspapers are <tt>serialissue</tt> encodingtype.
+</dd><dt> encodingtype = <tt>serialarticle</tt>
+</dt><dd> <tt>BrowseUpdate/SerialArticleBU</tt>
+</dd></dl>
+</dd></dl>
+</dd></dl>
+<p><br />
+</p>
+      </li>
+    </ul>
+<a name="Populating_the_item_browse_tables"></a><h3><span class="editsection">[<a href="http://localhost/mediawiki/index.php?title=Setting_up_Dynamic_Browsing&amp;action=edit&amp;section=6" title="Edit section: Populating the item browse tables">edit</a>]</span> <span class="mw-headline">Populating the item browse tables</span></h3>
+    <p>To initially populate or to update the item browse tables, there is a
+       script called
+       <span class="command">updatebrowsedb.pl</span> which is located in <span class="command">$DLXSROOT/bin/browse</span>.
+       Running this program will populate or update the rows necessary in each
+       of the three ItemBrowse related tables. These tables will be queried when
+       the user requests browsing from the middleware.</p>
+    <p>However, please note: unless you are making changes to or
+       need to debug <span class="command">updatebrowsedb.pl</span>, you should use the &quot;wrapper&quot; shell
+       script provided in the same subdirectory. This wrapper is called <span class="command">ub</span> and
+       was written to ensure that <span class="command">updatebrowsedb.pl</span></p>
+    <ul>
+       <li>is
+             run from the &quot;release&quot; directory and not from a particular developer's
+          directory (for more information about a development environment which
+          uses multiple developers' directories and environments, <a href="DLPS_Development_Environment.html" title="DLPS Development Environment">click
+          here</a>) </li>
+       <li>runs with  certain environment variables properly set</li>
+       <li>assumes the use of the &quot;production&quot; row, if no row is specified, when
+          setting the host from which data will be read</li>
+    </ul>
+    <p class="command">$DLXSROOT/bin/browse/ub -C class -c collection [ -r
+       row [ -h host ] ] [ -f ] [ -p ]</p>
+    <ul>
+       <li>-f&nbsp;: is optional but if supplied, the wrapper will run the updatebrowsedb.pl
+          script without asking for confirmation </li>
+       <li>-p&nbsp;: is used to &quot;purge&quot; all records from the browse tables for a
+          particular collection without re-populating (updating) the collection's
+          browse information</li>
+       <li>-r&nbsp;: Optional. Specifies which row in collmgr should be consulted for this collection. Without it, the &quot;production&quot; row will
+          be assumed and used.</li>
+       <li>-h&nbsp;: if row is supplied, host is optional. The script will force updatebrowsedb.pl
+          to use the host given. If no row is supplied, host cannot be supplied. </li>
+    </ul>
+    <p> If, for any reason, you must override the assumptions made by the &quot;wrapper&quot;
+       script, you can always run the updatebrowsedb.pl directly by entering: </p>
+    <p class="command">$DLXSROOT/bin/browse/updatebrowsedb.pl class=AAA c=BBB
+       host=CCC row=DDD</p>
+    <p>where <span class="command">AAA</span> is either &quot;text&quot; or &quot;image&quot;; <span class="command">BBB</span> is
+       the collection id of the collection you want to create browsing for; <span class="command">CCC</span> is
+      the name of the host on which resides the XPAT index for the collection
+       (this is not relevant to ImageClass, which uses MySQL for all queries);
+       and <span class="command">DDD</span> is
+       key to the row in the database you wish to use (production, dlxsadm, or
+       an individual developer's id). For example, you may want to point the
+       script at new or test data on a machine that is different from your production
+       machine. You could accomplish this by changing the <span class="command">host</span> or <span class="command">devhost</span> field
+       for the collection in the collmgr. NOTE: If <a href="DLPS_Development_Environment.html#DLPS_DEV" title="DLPS Development Environment">DLPS_DEV</a> is set when you invoke <span class="command">updatebrowsedb.pl</span> (without
+       the wrapper <span class="command">ub</span>), the <span class="command">devhost</span> field
+       will be used; otherwise, the 
+       <span class="command">host</span> field will be used. </p>
+<a name="ItemColl_XMLMETA_and_ImageClass"></a><h3><span class="editsection">[<a href="http://localhost/mediawiki/index.php?title=Setting_up_Dynamic_Browsing&amp;action=edit&amp;section=7" title="Edit section: ItemColl XMLMETA and ImageClass">edit</a>]</span> <span class="mw-headline">ItemColl XMLMETA and ImageClass</span></h3>
+<p>ImageClass will create XMLMETA from the collection's <tt>thumbnailresflds</tt> value.
+</p><p><a href="#top" title="">Top</a>
+</p>
+<!-- 
+NewPP limit report
+Preprocessor node count: 123/1000000
+Post-expand include size: 0/2097152 bytes
+Template argument size: 0/2097152 bytes
+Expensive parser function count: 0/100
+-->
+
+<!-- Saved in parser cache with key mediawiki_dlxsdocs_15:pcache:idhash:174-0!1!0!!en!2 and timestamp 20250202211712 -->
+<div class="printfooter">
+Retrieved from "<a href="Setting_up_Dynamic_Browsing.html">http://localhost/wiki/Setting_up_Dynamic_Browsing</a>"</div>
+						<!-- end content -->
+			<div class="visualClear"></div>
+		</div>
+	</div>
+		</div>
+		<div id="column-one">
+	<div id="p-cactions" class="portlet">
+		<h5>Views</h5>
+		<div class="pBody">
+			<ul>
+	
+				 <li id="ca-nstab-main" class="selected"><a href="Setting_up_Dynamic_Browsing.html" title="View the content page [c]" accesskey="c">Page</a></li>
+				 <li id="ca-talk" class="new"><a href="http://localhost/mediawiki/index.php?title=Talk:Setting_up_Dynamic_Browsing&amp;action=edit" title="Discussion about the content page [t]" accesskey="t">Discussion</a></li>
+				 <li id="ca-edit"><a href="http://localhost/mediawiki/index.php?title=Setting_up_Dynamic_Browsing&amp;action=edit" title="You can edit this page.&#10;Please use the preview button before saving. [e]" accesskey="e">Edit</a></li>
+				 <li id="ca-history"><a href="http://localhost/mediawiki/index.php?title=Setting_up_Dynamic_Browsing&amp;action=history" title="Past versions of this page. [h]" accesskey="h">History</a></li>			</ul>
+		</div>
+	</div>
+	<div class="portlet" id="p-personal">
+		<h5>Personal tools</h5>
+		<div class="pBody">
+			<ul>
+				<li id="pt-anonuserpage"><a href="User_172.20.0.html" title="The user page for the ip you&#039;re editing as [.]" accesskey="." class="new">172.20.0.1</a></li>
+				<li id="pt-anontalk"><a href="User_talk_172.20.0.html" title="Discussion about edits from this ip address [n]" accesskey="n" class="new">Talk for this IP</a></li>
+				<li id="pt-anonlogin"><a href="http://localhost/mediawiki/index.php?title=Special:UserLogin&amp;returnto=Setting_up_Dynamic_Browsing" title="You are encouraged to log in, it is not mandatory however. [o]" accesskey="o">Log in / create account</a></li>
+			</ul>
+		</div>
+	</div>
+	<div class="portlet" id="p-logo">
+		<a style="background-image: url(../dlxs15/uploads/DLXS_logo2.gif);" href="Main_Page.html" title="Visit the Main Page [z]" accesskey="z"></a>
+	</div>
+	<script type="text/javascript"> if (window.isMSIE55) fixalpha(); </script>
+	<div class='generated-sidebar portlet' id='p-navigation'>
+		<h5>Navigation</h5>
+		<div class='pBody'>
+			<ul>
+				<li id="n-mainpage-description"><a href="Main_Page.html">Main Page</a></li>
+				<li id="n-portal"><a href="DLXS_Documentation_Community_Portal.html" title="About the project, what you can do, where to find things">Community portal</a></li>
+				<li id="n-currentevents"><a href="DLXS_Documentation_Current_events.html" title="Find background information on current events">Current events</a></li>
+				<li id="n-recentchanges"><a href="Special_RecentChanges.html" title="The list of recent changes in the wiki. [r]" accesskey="r">Recent changes</a></li>
+				<li id="n-randompage"><a href="Mounting_a_Bib_Class_Collection.html" title="Load a random page [x]" accesskey="x">Random page</a></li>
+				<li id="n-help"><a href="Help_Contents.html" title="The place to find out.">Help</a></li>
+			</ul>
+		</div>
+	</div>
+	<div id="p-search" class="portlet">
+		<h5><label for="searchInput">Search</label></h5>
+		<div id="searchBody" class="pBody">
+			<form action="http://localhost/wiki/Special:Search" id="searchform"><div>
+				<input id="searchInput" name="search" type="text" title="Search DLXS Documentation [f]" accesskey="f" value="" />
+				<input type='submit' name="go" class="searchButton" id="searchGoButton"	value="Go" title="Go to a page with this exact name if exists" />&nbsp;
+				<input type='submit' name="fulltext" class="searchButton" id="mw-searchButton" value="Search" title="Search the pages for this text" />
+			</div></form>
+		</div>
+	</div>
+	<div class="portlet" id="p-tb">
+		<h5>Toolbox</h5>
+		<div class="pBody">
+			<ul>
+				<li id="t-whatlinkshere"><a href="Special_WhatLinksHere/Setting_up_Dynamic_Browsing.html" title="List of all wiki pages that link here [j]" accesskey="j">What links here</a></li>
+				<li id="t-recentchangeslinked"><a href="Special_RecentChangesLinked/Setting_up_Dynamic_Browsing.html" title="Recent changes in pages linked from this page [k]" accesskey="k">Related changes</a></li>
+<li id="t-specialpages"><a href="Special_SpecialPages.html" title="List of all special pages [q]" accesskey="q">Special pages</a></li>
+				<li id="t-print"><a href="http://localhost/mediawiki/index.php?title=Setting_up_Dynamic_Browsing&amp;printable=yes" title="Printable version of this page [p]" accesskey="p">Printable version</a></li>				<li id="t-permalink"><a href="http://localhost/mediawiki/index.php?title=Setting_up_Dynamic_Browsing&amp;oldid=3156" title="Permanent link to this version of the page">Permanent link</a></li>			</ul>
+		</div>
+	</div>
+		</div><!-- end of the left (by default at least) column -->
+			<div class="visualClear"></div>
+			<div id="footer">
+				<div id="f-poweredbyico"><a href="http://www.mediawiki.org/"><img src="../mediawiki/skins/common/images/poweredby_mediawiki_88x31.png" alt="Powered by MediaWiki" /></a></div>
+			<ul id="f-list">
+				<li id="lastmod"> This page was last modified on 24 July 2012, at 20:40.</li>
+				<li id="viewcount">This page has been accessed 3,710 times.</li>
+				<li id="privacy"><a href="DLXS_Documentation_Privacy_policy.html" title="DLXS Documentation:Privacy policy">Privacy policy</a></li>
+				<li id="about"><a href="DLXS_Documentation_About.html" title="DLXS Documentation:About">About DLXS Documentation</a></li>
+				<li id="disclaimer"><a href="DLXS_Documentation_General_disclaimer.html" title="DLXS Documentation:General disclaimer">Disclaimers</a></li>
+			</ul>
+		</div>
+</div>
+
+		<script type="text/javascript">if (window.runOnloadHook) runOnloadHook();</script>
+<!-- Served in 0.122 secs. --></body>
+<!-- Mirrored from localhost/wiki/Setting_up_Dynamic_Browsing by HTTrack Website Copier/3.x [XR&CO'2014], Mon, 03 Feb 2025 00:35:42 GMT -->
+</html>
