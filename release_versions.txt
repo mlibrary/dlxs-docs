@@ -1,0 +1,15 @@
+release_number 14
+text       4 7 1
+image      4 11 1
+findaid    6 5 2
+bib        3 8 1
+lib        4 12 2
+mdp        1 26 2
+collmgr    3 3 1
+broker20   1 5 1
+sru        1 2 1
+stats      1 4 1
+xclass     2 2 5
+dlxsdocs   1 4 1
+oai        1 1 2
+idresolver 1 1 1
